@@ -270,7 +270,8 @@ namespace WarLib.MPQ.Crypto
 				return true;
 			}
 
-			uint sectorChecksum = (uint)Adler32.ComputeChecksum(1, sector);
+			uint sectorChecksum = (uint)Adler32.ComputeChecksum(new MemoryStream(sector));
+
 			if (sectorChecksum == 0)
 			{
 				// We can't handle a 0 checksum.

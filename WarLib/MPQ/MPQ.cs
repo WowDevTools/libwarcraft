@@ -238,17 +238,27 @@ namespace WarLib.MPQ
 						compressedSectors.Add(mpqReader.ReadBytes((int)sectorLength));
 					}
 
-					// Read the checksum sector, if there is one
+					// Read the checksum sector, if there is one.
+					// This sector is always compressed.
 					List<uint> sectorChecksums = new List<uint>();
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
 					{
 						long sectorStartPosition = adjustedBlockOffset + checksumSectorOffset;
 						mpqReader.BaseStream.Position = (long)sectorStartPosition;
 
-						for (int i = 0; i < sectorOffsets.Count; ++i)
+						// Here it is - the checksum sector is compressed. Size is from offset to end of data
+						int checksumSectorBytesToRead = sectorOffsets.Count * sizeof(uint);
+						byte[] compressedChecksumSector = mpqReader.ReadBytes(checksumSectorBytesToRead);
+
+						byte[] pendingSector = Compression.DecompressSector(compressedChecksumSector, BlockFlags.BLF_IsCompressed);
+
+						BinaryReader checksumReader = new BinaryReader(new MemoryStream(pendingSector));
+						for (int i = 0; i < sectorOffsets.Count - 1; ++i)
 						{
-							sectorChecksums.Add(mpqReader.ReadUInt32());
+							sectorChecksums.Add(checksumReader.ReadUInt32());						
 						}
+						checksumReader.Close();
+						checksumReader.Dispose();
 					}
 
 					// Begin decompressing and decrypting the sectors
@@ -268,9 +278,10 @@ namespace WarLib.MPQ
 						if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
 						{
 							bool isSectorOK = MPQCrypt.VerifySectorChecksum(pendingSector, sectorChecksums[(int)sectorIndex]);
+
 							if (!isSectorOK)
 							{
-								// TODO: Figure out why the checksums aren't right
+								// TODO: Figure out why the checksums aren't right (git-3)
 								//throw new InvalidDataException("The sector checksum did not match the actual data.");
 							}
 						}
