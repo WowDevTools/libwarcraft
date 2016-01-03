@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DA06A44E-A67B-46C7-B07D-E90AEBED0502}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>WarLib</RootNamespace>
+    <AssemblyName>WarLib</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="log4net">
+      <HintPath>..\..\..\WarLib Examples\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Noemax.Compression.Net4.Trial">
+      <HintPath>..\..\..\WarLib Examples\packages\Noemax.Compression.16.3.5247\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="BLP\BLP.cs" />
+    <Compile Include="BLP\BLPHeader.cs" />
+    <Compile Include="Core\GenericStructs.cs" />
+    <Compile Include="Core\ExtensionMethods.cs" />
+    <Compile Include="BLP\BLPPixelFormat.cs" />
+    <Compile Include="BLP\TextureCompressionType.cs" />
+    <Compile Include="MPQ\MPQ.cs" />
+    <Compile Include="MPQ\MPQHeader.cs" />
+    <Compile Include="MPQ\MPQShunt.cs" />
+    <Compile Include="MPQ\MPQFormat.cs" />
+    <Compile Include="MPQ\Block Table\MPQBlockTable.cs" />
+    <Compile Include="MPQ\Hash Table\MPQHashTable.cs" />
+    <Compile Include="MPQ\Block Table\BlockTableEntry.cs" />
+    <Compile Include="MPQ\Hash Table\HashTableEntry.cs" />
+    <Compile Include="MPQ\Block Table\BlockFlags.cs" />
+    <Compile Include="ADT\ADT.cs" />
+    <Compile Include="Core\Compression\Compression.cs" />
+    <Compile Include="Core\Compression\CompressionAlgorithms.cs" />
+    <Compile Include="Core\Compression\Huffman.cs" />
+    <Compile Include="Core\Compression\ADPCM.cs" />
+    <Compile Include="Core\Compression\BitStream.cs" />
+    <Compile Include="MPQ\Attributes\ExtendedAttributes.cs" />
+    <Compile Include="MPQ\Crypto\MPQCrypt.cs" />
+    <Compile Include="MPQ\Crypto\MPQSign.cs" />
+    <Compile Include="Core\Compression\Blast\Blast.cs" />
+    <Compile Include="Core\Compression\Squish\Alpha.cs" />
+    <Compile Include="Core\Compression\Squish\ClusterFit.cs" />
+    <Compile Include="Core\Compression\Squish\ColourBlock.cs" />
+    <Compile Include="Core\Compression\Squish\ColourFit.cs" />
+    <Compile Include="Core\Compression\Squish\ColourSet.cs" />
+    <Compile Include="Core\Compression\Squish\Flags.cs" />
+    <Compile Include="Core\Compression\Squish\Maths.cs" />
+    <Compile Include="Core\Compression\Squish\Squish.cs" />
+    <Compile Include="Core\Hashing\Adler32.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Core\Compression\Blast\LICENSE" />
+    <None Include="Core\Compression\Blast\README.md" />
+    <None Include="Core\Compression\Blast\reference-code\blast.c" />
+    <None Include="Core\Compression\Blast\reference-code\blast.h" />
+    <None Include="Core\Compression\Squish\README" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <EmbeddedResource Include="log4net.config" />
+    <EmbeddedResource Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BLP\" />
+    <Folder Include="Core\" />
+    <Folder Include="MPQ\" />
+    <Folder Include="MPQ\Hash Table\" />
+    <Folder Include="MPQ\Block Table\" />
+    <Folder Include="ADT\" />
+    <Folder Include="Core\Compression\" />
+    <Folder Include="MPQ\Attributes\" />
+    <Folder Include="MPQ\Crypto\" />
+    <Folder Include="Core\Compression\Blast\" />
+    <Folder Include="Core\Compression\Squish\" />
+    <Folder Include="Core\Hashing\" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileFormatDefault" />
+          <TextStylePolicy inheritsSet="null" scope="text/x-csharp" />
+          <CSharpFormattingPolicy IndentSwitchBody="True" IndentBlocksInsideExpressions="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="DoNotCare" ArrayInitializerWrapping="DoNotChange" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" NewLineBeforeConstructorInitializerColon="NewLine" NewLineAfterConstructorInitializerColon="SameLine" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" SpacesBeforeBrackets="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
+          <TextStylePolicy FileWidth="120" TabsToSpaces="False" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
+          <TextStylePolicy inheritsSet="null" scope="application/config+xml" />
+          <XmlFormattingPolicy inheritsSet="null" scope="application/config+xml" />
+          <TextStylePolicy inheritsSet="null" scope="application/xml" />
+          <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/xml" />
+          <TextStylePolicy inheritsSet="null" scope="text/x-csrc" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>
