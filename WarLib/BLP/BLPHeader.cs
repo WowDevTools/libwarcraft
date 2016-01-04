@@ -94,7 +94,7 @@ namespace WarLib.BLP
 			MemoryStream headerStream = new MemoryStream();
 			BinaryWriter bw = new BinaryWriter(headerStream);
 
-			bw.Write(BitConverter.GetBytes(this.fileType));
+			bw.Write(this.fileType.ToCharArray());
 			bw.Write(this.version);
 			bw.Write((byte)this.compressionType);
 			bw.Write(this.alphaBitDepth);

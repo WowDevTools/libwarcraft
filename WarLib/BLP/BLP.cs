@@ -56,7 +56,7 @@ namespace WarLib.BLP
 			for (int i = 0; i < RawMipMaps.Count; ++i)
 			{
 				byte[] rawMip = RawMipMaps[i];
-				MipMaps.Add(DecompressMipMap(rawMip, (int)Math.Pow(2, i)));
+				MipMaps.Add(DecompressMipMap(rawMip, (uint)Math.Pow(2, i)));
 			}
 
 			br.Close();
@@ -91,17 +91,17 @@ namespace WarLib.BLP
 		/// <returns>The mipmap.</returns>
 		/// <param name="data">Data containing the mipmap level.</param>
 		/// <param name="mipLevel">The mipmap level of the data</param>
-		private Bitmap DecompressMipMap(byte[] data, int mipLevel)
+		private Bitmap DecompressMipMap(byte[] data, uint mipLevel)
 		{
 			Bitmap map = null;	
-			int XResolution = Header.resolution.X / mipLevel;
-			int YResolution = Header.resolution.Y / mipLevel;
+			uint XResolution = Header.resolution.X / mipLevel;
+			uint YResolution = Header.resolution.Y / mipLevel;
 
 			if (data.Length > 0 && XResolution > 0 && YResolution > 0)
 			{
 				if (Header.compressionType == TextureCompressionType.Palettized)
 				{
-					map = new Bitmap(XResolution, YResolution, PixelFormat.Format32bppArgb);
+					map = new Bitmap((int)XResolution, (int)YResolution, PixelFormat.Format32bppArgb);
 					BinaryReader br = new BinaryReader(new MemoryStream(data));
 
 					// Read colour information
@@ -142,11 +142,11 @@ namespace WarLib.BLP
 						squishOptions = SquishOptions.DXT5;
 					}
 
-					map = (Bitmap)Squish.DecompressToBitmap(data, XResolution, YResolution, squishOptions);
+					map = (Bitmap)Squish.DecompressToBitmap(data, (int)XResolution, (int)YResolution, squishOptions);
 				}
 				else if (Header.compressionType == TextureCompressionType.Uncompressed)
 				{
-					map = new Bitmap(XResolution, YResolution, PixelFormat.Format32bppArgb);
+					map = new Bitmap((int)XResolution, (int)YResolution, PixelFormat.Format32bppArgb);
 					BinaryReader br = new BinaryReader(new MemoryStream(data));
 
 					for (int y = 0; y < YResolution; ++y)
