@@ -80,13 +80,13 @@ namespace WarLib.Core
 
 	public struct Resolution
 	{
-		public int X;
-		public int Y;
+		public uint X;
+		public uint Y;
 
-		public Resolution(UInt32 X, UInt32 Y)
+		public Resolution(uint X, uint Y)
 		{
-			this.X = (int)X;
-			this.Y = (int)Y;
+			this.X = X;
+			this.Y = Y;
 		}
 
 		public override string ToString()
