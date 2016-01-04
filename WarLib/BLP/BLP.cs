@@ -19,6 +19,11 @@ namespace WarLib.BLP
 
 		private readonly List<byte[]> RawMipMaps;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="WarLib.BLP.BLP"/> class.
+		/// This constructor reads a binary BLP file from disk.
+		/// </summary>
+		/// <param name="data">Data.</param>
 		public BLP(byte[] data)
 		{
 			BinaryReader br = new BinaryReader(new MemoryStream(data));
@@ -55,6 +60,19 @@ namespace WarLib.BLP
 			}
 
 			br.Close();
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="WarLib.BLP.BLP"/> class.
+		/// This constructor creates a BLP file using the specified compression from a bitmap object.
+		/// If the compression type specifed is DXTC, the default pixel format used is DXT1.
+		/// </summary>
+		/// <param name="Image">Image.</param>
+		/// <param name="CompressionType">Compression type.</param>
+		/// <param name="PixelFormat">Pixel format.</param>
+		public BLP(Bitmap Image, TextureCompressionType CompressionType, BLPPixelFormat PixelFormat = BLPPixelFormat.Pixel_DXT1)
+		{
+			
 		}
 
 		/// <summary>
@@ -148,6 +166,28 @@ namespace WarLib.BLP
 			}		
 
 			return map;
+		}
+
+		/// <summary>
+		/// Compresses an input bitmap into a mipmap using the file's compression settings. 
+		/// Mipmap levels which would produce an image with dimensions smaller than 1x1 will return null instead.
+		/// </summary>
+		/// <returns>The compressed image data.</returns>
+		/// <param name="Image">Image.</param>
+		/// <param name="MipMapLevels">Mip map levels.</param>
+		private byte[] CompressImage(Bitmap Image, int MipMapLevels)
+		{
+			return null;
+		}
+
+		/// <summary>
+		/// Writes the image to disk as a BLP file.
+		/// To write a "normal" image format to disk, retrieve a mipmap (<see cref="WarLib.BLP.BLP.GetMipMap"/>) instead.
+		/// </summary>
+		/// <param name="path">Path.</param>
+		private void WriteImageToDisk(string path)
+		{
+			
 		}
 
 		/// <summary>
