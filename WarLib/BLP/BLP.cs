@@ -169,15 +169,57 @@ namespace WarLib.BLP
 		}
 
 		/// <summary>
-		/// Compresses an input bitmap into a mipmap using the file's compression settings. 
+		/// Compresses an input bitmap into a list of mipmap using the file's compression settings. 
 		/// Mipmap levels which would produce an image with dimensions smaller than 1x1 will return null instead.
+		/// Note that the number of mip levels is 1-based, and not 0-based.
 		/// </summary>
 		/// <returns>The compressed image data.</returns>
-		/// <param name="Image">Image.</param>
-		/// <param name="MipMapLevels">Mip map levels.</param>
-		private byte[] CompressImage(Bitmap Image, int MipMapLevels)
+		/// <param name="Image">The image to be compressed.</param>
+		/// <param name="MipMapLevels">All of the compressed mipmap levels.</param>
+		private List<byte[]> CompressImage(Bitmap Image)
 		{
+			List<byte[]> mipMaps = new List<byte[]>();
+			for (int i = 1; i <= GetNumReasonableMipMapLevels(); ++i)
+			{
+				mipMaps.Add(CompressImage(Image, i));
+			}
+
+			return mipMaps;
+		}
+
+		/// <summary>
+		/// Compresses in input bitmap into a single mipmap at the specified 1-based mipmap level.	
+		/// This function expects the mipmap level to be reasonable (i.e, not a level which would produce a mip smaller than 1x1)
+		/// </summary>
+		/// <returns>The image.</returns>
+		/// <param name="Image">Image.</param>
+		/// <param name="MipLevel">Mip level.</param>
+		private byte[] CompressImage(Bitmap Image, int MipLevel)
+		{
+			// TODO: Stub function
 			return null;
+		}
+
+		/// <summary>
+		/// Gets the number of mipmaps which can be produced in this file without producing a mipmap smaller than 1x1.
+		/// </summary>
+		/// <returns>The number of reasonable mip map levels.</returns>
+		private uint GetNumReasonableMipMapLevels()
+		{
+			uint smallestXRes = this.GetResolution().X;
+			uint smallestYRes = this.GetResolution().Y;
+
+			uint mipLevels = 1;
+			while (smallestXRes > 1 && smallestYRes > 1)
+			{
+				// Bisect the resolution using the current number of mip levels.
+				smallestXRes = smallestXRes / (uint)Math.Pow(2, mipLevels);
+				smallestYRes = smallestYRes / (uint)Math.Pow(2, mipLevels);
+
+				++mipLevels;
+			}
+
+			return mipLevels;
 		}
 
 		/// <summary>
