@@ -197,7 +197,78 @@ namespace WarLib.BLP
 		private byte[] CompressImage(Bitmap Image, int MipLevel)
 		{
 			// TODO: Stub function
-			return null;
+			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel);
+			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel);
+
+			Bitmap resizedImage = new Bitmap(Image, (int)targetXRes, (int)targetYRes);
+
+			byte[] compressedMipMap = null;
+			if (Header.compressionType == TextureCompressionType.Palettized)
+			{
+				// Needs to generate palette valid for all mipmaps, then generate indices for that palette for each level
+			}
+			else if (Header.compressionType == TextureCompressionType.DXTC)
+			{
+				MemoryStream rgbaStream = new MemoryStream();
+				BinaryWriter bw = new BinaryWriter(rgbaStream);
+				for (int y = 0; y < targetYRes; ++y)
+				{
+					for (int x = 0; x < targetXRes; ++x)
+					{
+						bw.Write(resizedImage.GetPixel(x, y).R);
+						bw.Write(resizedImage.GetPixel(x, y).G);
+						bw.Write(resizedImage.GetPixel(x, y).B);
+						bw.Write(resizedImage.GetPixel(x, y).A);
+					}
+				}		
+
+				// Finish writing the data
+				bw.Flush();
+
+				byte[] rgbaBytes = rgbaStream.ToArray();
+
+				bw.Close();
+				bw.Dispose();
+
+				SquishOptions squishOptions = SquishOptions.DXT1;
+				if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT3)
+				{
+					squishOptions = SquishOptions.DXT3;
+				}
+				else if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT5)
+				{
+					squishOptions = SquishOptions.DXT5;
+				}
+
+				compressedMipMap = Squish.CompressImage(rgbaBytes, (int)targetXRes, (int)targetYRes, squishOptions);
+			}
+			else if (Header.compressionType == TextureCompressionType.Uncompressed)
+			{
+				MemoryStream argbStream = new MemoryStream();
+				BinaryWriter bw = new BinaryWriter(argbStream);
+				for (int y = 0; y < targetYRes; ++y)
+				{
+					for (int x = 0; x < targetXRes; ++x)
+					{
+						bw.Write(resizedImage.GetPixel(x, y).A);
+						bw.Write(resizedImage.GetPixel(x, y).R);
+						bw.Write(resizedImage.GetPixel(x, y).G);
+						bw.Write(resizedImage.GetPixel(x, y).B);
+					}
+				}		
+
+				// Finish writing the data
+				bw.Flush();
+
+				byte[] argbBytes = argbStream.ToArray();
+
+				bw.Close();
+				bw.Dispose();
+
+				compressedMipMap = argbBytes;
+			}			
+
+			return compressedMipMap;
 		}
 
 		/// <summary>
