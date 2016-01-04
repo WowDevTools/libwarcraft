@@ -156,8 +156,8 @@ namespace WarLib.MPQ
 					return null;
 				}
 
-				long adjustedBlockOffset = 0;
 				// Seek to the beginning of the file's sectors
+				long adjustedBlockOffset = 0;
 				if (this.Header.GetFormat() == MPQFormat.Extended && RequiresExtendedFormat())
 				{
 					adjustedBlockOffset = (long)fileBlockEntry.GetExtendedBlockOffset(this.ExtendedBlockTable[fileHashEntry.GetBlockEntryIndex()]);
@@ -165,67 +165,49 @@ namespace WarLib.MPQ
 				else
 				{
 					adjustedBlockOffset = fileBlockEntry.GetBlockOffset();
-				}
-
+				}			
 				mpqReader.BaseStream.Position = (long)adjustedBlockOffset;
 
-
-				if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsCompressed) || fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsImploded))
-				{
-
-					// Calculate the decryption key if neccesary
-					uint fileKey = 0;
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
-					{						
-						if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasAdjustedEncryptionKey))
-						{
-							fileKey = MPQCrypt.CalculateSectorKey(Path.GetFileName(filePath), true, (uint)adjustedBlockOffset, (uint)fileBlockEntry.GetFileSize());
-						}
-						else
-						{
-							fileKey = MPQCrypt.CalculateSectorKey(Path.GetFileName(filePath));
-						}
-					}
-
-					//Retrieve the offsets for each sector - these are relative to the beginning of the data.
-					// TODO: Test auto-populated offset table
-					List<uint> sectorOffsets = new List<uint>();
-					if (!fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsCompressed) && !fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsImploded))
+				// Calculate the decryption key if neccesary
+				uint fileKey = 0;
+				if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
+				{						
+					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasAdjustedEncryptionKey))
 					{
-						uint sectorLength = 512 * (uint)Math.Pow(2, this.Header.GetSectorSizeExponent());
-						uint offsetTableSize = (uint)Math.Ceiling((double)fileBlockEntry.GetBlockSize() / (double)sectorLength);
-
-						for (int i = 0; i < offsetTableSize; ++i)
-						{
-							sectorOffsets.Add((uint)(offsetTableSize + sectorLength * i));
-						}
-
-						sectorOffsets.Add(fileBlockEntry.GetBlockSize());
+						fileKey = MPQCrypt.GetFileKey(Path.GetFileName(filePath), true, (uint)adjustedBlockOffset, (uint)fileBlockEntry.GetFileSize());
 					}
 					else
 					{
-						if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
-						{
-							MPQCrypt.DecryptSectorOffsetTable(mpqReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
-						}
-						else
-						{
-							uint dataBlock = 0;
-							while (dataBlock != fileBlockEntry.GetBlockSize())
-							{
-								dataBlock = mpqReader.ReadUInt32();
-								sectorOffsets.Add(dataBlock);
-							}
-						}
+						fileKey = MPQCrypt.GetFileKey(Path.GetFileName(filePath));
 					}
+				}
 
-					// If the file has checksums, read an additional offset from the table - this is an appended sector where 
+				// Examine the file storage types and extract as neccesary
+				if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsCompressed) || fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsImploded))
+				{								
+					//Retrieve the offsets for each sector - these are relative to the beginning of the data.
+					List<uint> sectorOffsets = new List<uint>();
+					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
+					{
+						MPQCrypt.DecryptSectorOffsetTable(mpqReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
+					}
+					else
+					{
+						uint dataBlock = 0;
+						while (dataBlock != fileBlockEntry.GetBlockSize())
+						{
+							dataBlock = mpqReader.ReadUInt32();
+							sectorOffsets.Add(dataBlock);
+						}
+					}					
+
+					/*// If the file has checksums, read an additional offset from the table - this is an appended sector where 
 					// the checksums are stored.
 					uint checksumSectorOffset = 0;
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
 					{
 						checksumSectorOffset = mpqReader.ReadUInt32();
-					}
+					}*/
 
 					// Read all of the raw file sectors.
 					List<byte[]> compressedSectors = new List<byte[]>();
@@ -238,7 +220,7 @@ namespace WarLib.MPQ
 						compressedSectors.Add(mpqReader.ReadBytes((int)sectorLength));
 					}
 
-					// Read the checksum sector, if there is one.
+					/*// Read the checksum sector, if there is one.
 					// This sector is always compressed.
 					List<uint> sectorChecksums = new List<uint>();
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
@@ -259,7 +241,7 @@ namespace WarLib.MPQ
 						}
 						checksumReader.Close();
 						checksumReader.Dispose();
-					}
+					}*/
 
 					// Begin decompressing and decrypting the sectors
 					// TODO: If Checksums are present (check the flags), treat the last sector as a checksum sector
@@ -274,7 +256,7 @@ namespace WarLib.MPQ
 							pendingSector = MPQCrypt.DecryptData(compressedSector, fileKey + sectorIndex);
 						}
 
-						// Verify the sector if neccesary
+						/*// Verify the sector if neccesary
 						if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
 						{
 							bool isSectorOK = MPQCrypt.VerifySectorChecksum(pendingSector, sectorChecksums[(int)sectorIndex]);
@@ -284,7 +266,7 @@ namespace WarLib.MPQ
 								// TODO: Figure out why the checksums aren't right (git-3)
 								//throw new InvalidDataException("The sector checksum did not match the actual data.");
 							}
-						}
+						}*/
 
 						// Decompress the sector if neccesary
 						if (pendingSector.Length < GetMaxSectorSize())
@@ -296,17 +278,7 @@ namespace WarLib.MPQ
 						++sectorIndex;
 					}
 
-					// Pull out your sowing kit, it's stitching time!
-					List<byte> stitchedSectors = new List<byte>();
-					foreach (byte[] decompressedSector in decompressedSectors)
-					{
-						foreach (byte sectorByte in decompressedSector)
-						{
-							stitchedSectors.Add(sectorByte);
-						}
-					}
-
-					return stitchedSectors.ToArray();
+					return StitchSectors(decompressedSectors);
 				}
 				else if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsSingleUnit))
 				{
@@ -334,22 +306,8 @@ namespace WarLib.MPQ
 						}
 					}
 
-					// Decrypt the sectors if neccesary
-					uint fileKey = 0;
-					List<byte[]> finalSectors = new List<byte[]>();
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
-					{						
-						if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasAdjustedEncryptionKey))
-						{
-							fileKey = MPQCrypt.CalculateSectorKey(Path.GetFileName(filePath), true, (uint)adjustedBlockOffset, (uint)fileBlockEntry.GetFileSize());
-						}
-						else
-						{
-							fileKey = MPQCrypt.CalculateSectorKey(Path.GetFileName(filePath));
-						}
-					}
-
 					uint sectorIndex = 0;
+					List<byte[]> finalSectors = new List<byte[]>();
 					foreach (byte[] rawSector in rawSectors)
 					{						
 						byte[] pendingSector = rawSector;
@@ -363,21 +321,31 @@ namespace WarLib.MPQ
 						++sectorIndex;
 					}
 
-					// Pull out your sowing kit, it's stitching time!
-					List<byte> stitchedSectors = new List<byte>();
-					foreach (byte[] finalSector in finalSectors)
-					{
-						foreach (byte sectorByte in finalSector)
-						{
-							stitchedSectors.Add(sectorByte);
-						}
-					}
-
-					return stitchedSectors.ToArray();
+					return StitchSectors(finalSectors);
 				}
 			}
 
 			return null;
+		}
+
+		/// <summary>
+		/// Stitches together a set of file sectors into a final byte list, which can then be used for other things.
+		/// </summary>
+		/// <returns>A byte array representing the final file.</returns>
+		/// <param name="sectors">Input file sectors.</param>
+		private byte[] StitchSectors(List<byte[]> sectors)
+		{
+			// Pull out your sowing kit, it's stitching time!
+			List<byte> stitchedSectors = new List<byte>();
+			foreach (byte[] finalSector in sectors)
+			{
+				foreach (byte sectorByte in finalSector)
+				{
+					stitchedSectors.Add(sectorByte);
+				}
+			}
+
+			return stitchedSectors.ToArray();
 		}
 
 		/// <summary>
