@@ -1,5 +1,4 @@
-﻿
-namespace WarLib.BLP
+﻿namespace WarLib.BLP
 {
 	public enum BLPPixelFormat : uint
 	{
@@ -9,4 +8,3 @@ namespace WarLib.BLP
 		Pixel_DXT5 = 7
 	}
 }
-

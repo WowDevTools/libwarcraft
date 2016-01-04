@@ -1,5 +1,4 @@
-﻿
-namespace WarLib.BLP
+﻿namespace WarLib.BLP
 {
 	public enum TextureCompressionType : uint
 	{

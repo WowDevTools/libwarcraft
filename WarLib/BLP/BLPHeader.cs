@@ -61,6 +61,10 @@ namespace WarLib.BLP
 			br.Close();
 		}
 
+		/// <summary>
+		/// Gets the number of mipmaps defined in the header.
+		/// </summary>
+		/// <returns>The number of mipmaps.</returns>
 		public int GetNumMipMaps()
 		{
 			return mipMapOffsets.Count;

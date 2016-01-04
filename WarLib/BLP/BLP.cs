@@ -6,6 +6,7 @@ using System.IO;
 
 using WarLib.Core;
 using DotSquish;
+using System.Drawing.Imaging;
 
 namespace WarLib.BLP
 {
@@ -56,11 +57,22 @@ namespace WarLib.BLP
 			br.Close();
 		}
 
+		/// <summary>
+		/// Gets a bitmap representing the given mipmap level.
+		/// </summary>
+		/// <returns>A bitmap.</returns>
+		/// <param name="level">Mipmap level.</param>
 		public Bitmap GetMipMap(int level)
 		{			
 			return MipMaps[level];
 		}
 
+		/// <summary>
+		/// Decompresses a mipmap in the file at the specified level from the specified data.
+		/// </summary>
+		/// <returns>The mipmap.</returns>
+		/// <param name="data">Data containing the mipmap level.</param>
+		/// <param name="mipLevel">The mipmap level of the data</param>
 		private Bitmap DecompressMipMap(byte[] data, int mipLevel)
 		{
 			Bitmap map = null;	
@@ -71,7 +83,7 @@ namespace WarLib.BLP
 			{
 				if (Header.compressionType == TextureCompressionType.Palettized)
 				{
-					map = new Bitmap(XResolution, YResolution, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+					map = new Bitmap(XResolution, YResolution, PixelFormat.Format32bppArgb);
 					BinaryReader br = new BinaryReader(new MemoryStream(data));
 
 					// Read colour information
@@ -116,7 +128,7 @@ namespace WarLib.BLP
 				}
 				else if (Header.compressionType == TextureCompressionType.Uncompressed)
 				{
-					map = new Bitmap(XResolution, YResolution, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+					map = new Bitmap(XResolution, YResolution, PixelFormat.Format32bppArgb);
 					BinaryReader br = new BinaryReader(new MemoryStream(data));
 
 					for (int y = 0; y < YResolution; ++y)
@@ -138,36 +150,64 @@ namespace WarLib.BLP
 			return map;
 		}
 
+		/// <summary>
+		/// Gets the magic string that identifies this file.
+		/// </summary>
+		/// <returns>The magic string.</returns>
 		public string GetFileType()
 		{
 			return Header.fileType;
 		}
 
-		public UInt32 GetVersion()
+		/// <summary>
+		/// Gets the version of the BLP file.
+		/// </summary>
+		/// <returns>The version of the file.</returns>
+		public uint GetVersion()
 		{
 			return Header.version;
 		}
 
+		/// <summary>
+		/// Gets the BLP pixel format. This format represents a subtype of the compression used in the file.
+		/// </summary>
+		/// <returns>The pixel format.</returns>
 		public BLPPixelFormat GetPixelFormat()
 		{
 			return Header.pixelFormat;
 		}
 
+		/// <summary>
+		/// Gets the resolution of the image.
+		/// </summary>
+		/// <returns>The resolution.</returns>
 		public Resolution GetResolution()
 		{
 			return Header.resolution;
 		}
 
+		/// <summary>
+		/// Gets the type of compression used in the image.
+		/// </summary>
+		/// <returns>The compression type.</returns>
 		public TextureCompressionType GetCompressionType()
 		{
 			return Header.compressionType;
 		}
 
+		/// <summary>
+		/// Gets the alpha bit depth. This value represents where the alpha value for each pixel is stored.
+		/// </summary>
+		/// <returns>The alpha bit depth.</returns>
 		public int GetAlphaBitDepth()
 		{
 			return Header.alphaBitDepth;
 		}
 
+		/// <summary>
+		/// Gets the number of mipmap levels in the image.
+		/// </summary>
+		/// <returns>The mipmap count.</returns>
 		public int GetMipMapCount()
 		{
 			return MipMaps.Count;
