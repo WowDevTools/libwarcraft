@@ -7,6 +7,7 @@ using System.IO;
 using WarLib.Core;
 using DotSquish;
 using System.Drawing.Imaging;
+using nQuant;
 
 namespace WarLib.BLP
 {
@@ -14,10 +15,10 @@ namespace WarLib.BLP
 	{
 		public BLPHeader Header;
 
-		private readonly List<Bitmap> MipMaps;
-		private readonly List<Color> Palette;
+		private List<Bitmap> MipMaps;
+		private List<Color> Palette;
 
-		private readonly List<byte[]> RawMipMaps;
+		private List<byte[]> RawMipMaps;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WarLib.BLP.BLP"/> class.
@@ -118,17 +119,79 @@ namespace WarLib.BLP
 					long bytesRead = br.BaseStream.Position;
 
 					// Read Alpha information
+					// TODO: Split this into three loops, adjusted for the data density
+					List<byte> alphaValues = new List<byte>();
+					if (this.GetAlphaBitDepth() > 0)
+					{
+						if (this.GetAlphaBitDepth() == 1)
+						{
+							int alphaByteCount = (int)Math.Ceiling(((double)(XResolution * YResolution) / 8));
+							for (int i = 0; i < alphaByteCount; ++i)
+							{
+								// The alpha value is stored per-bit in the byte (8 alpha values per byte)
+								byte alphaByte = br.ReadByte();
+
+								for (byte j = 7; j > 0; --j)
+								{
+									byte alphaBit = (byte)ExtensionMethods.Map((byte)((alphaByte >> i) & 0x01), 0, 1, 0, 255);
+
+									// At this point, alphaBit will be either 0 or 1. Map this to 0 or 255.
+									if (alphaBit > 0)
+									{
+										alphaValues.Add(255);
+									}
+									else
+									{
+										alphaValues.Add(0);
+									}
+								}
+							}
+						}
+						else if (this.GetAlphaBitDepth() == 4)
+						{
+							int alphaByteCount = (int)Math.Ceiling(((double)(XResolution * YResolution) / 2));
+							for (int i = 0; i < alphaByteCount; ++i)
+							{
+								// The alpha value is stored as half a byte (2 alpha values per byte)
+								// Extract these two values and map them to a byte size (4 bits can hold 0 - 15 alpha)
+								byte alphaByte = br.ReadByte();
+										
+								byte alphaValue1 = (byte)ExtensionMethods.Map((byte)(alphaByte >> 4), 0, 15, 0, 255);
+								byte alphaValue2 = (byte)ExtensionMethods.Map((byte)(alphaByte & 0x0F), 0, 15, 0, 255);
+
+								alphaValues.Add(alphaValue1);
+								alphaValues.Add(alphaValue2);
+							}
+						}
+						else if (this.GetAlphaBitDepth() == 8)
+						{
+							for (int i = 0; i < YResolution * XResolution; ++i)
+							{
+								// The alpha value is stored as a whole byte
+								byte alphaValue = br.ReadByte();
+								alphaValues.Add(alphaValue);
+							}
+							
+						}
+					}
+					else
+					{
+						alphaValues.Add(255);
+					}
+
+					// Build the final map
 					for (int y = 0; y < YResolution; ++y)
 					{
 						for (int x = 0; x < XResolution; ++x)
 						{
+							byte alphaValue = alphaValues[x + y];
 							Color pixelColor = map.GetPixel(x, y);
-							byte alphaValue = br.ReadByte();
 							Color finalPixel = Color.FromArgb(alphaValue, pixelColor.R, pixelColor.G, pixelColor.B);
 
 							map.SetPixel(x, y, finalPixel);
 						}
 					}
+
 				}
 				else if (Header.compressionType == TextureCompressionType.DXTC)
 				{     
@@ -171,7 +234,7 @@ namespace WarLib.BLP
 		/// <summary>
 		/// Compresses an input bitmap into a list of mipmap using the file's compression settings. 
 		/// Mipmap levels which would produce an image with dimensions smaller than 1x1 will return null instead.
-		/// Note that the number of mip levels is 1-based, and not 0-based.
+		/// The number of mipmaps returned will be <see cref="GetNumReasonableMipLevels"/> + 1. 
 		/// </summary>
 		/// <returns>The compressed image data.</returns>
 		/// <param name="Image">The image to be compressed.</param>
@@ -179,7 +242,14 @@ namespace WarLib.BLP
 		private List<byte[]> CompressImage(Bitmap Image)
 		{
 			List<byte[]> mipMaps = new List<byte[]>();
-			for (int i = 1; i <= GetNumReasonableMipMapLevels(); ++i)
+
+			// Generate a palette from the unmipped image for use with the mips
+			if (Header.compressionType == TextureCompressionType.Palettized)
+			{
+				this.Palette = GeneratePalette(Image);
+			}
+
+			for (int i = 0; i <= GetNumReasonableMipMapLevels(); ++i)
 			{
 				mipMaps.Add(CompressImage(Image, i));
 			}
@@ -188,7 +258,8 @@ namespace WarLib.BLP
 		}
 
 		/// <summary>
-		/// Compresses in input bitmap into a single mipmap at the specified 1-based mipmap level.	
+		/// Compresses in input bitmap into a single mipmap at the specified mipmap level, where a mip level is a bisection of the resolution.
+		/// For instance, a mip level of 2 applied to a 64x64 image would produce an image with a resolution of 16x16.	
 		/// This function expects the mipmap level to be reasonable (i.e, not a level which would produce a mip smaller than 1x1)
 		/// </summary>
 		/// <returns>The image.</returns>
@@ -205,7 +276,22 @@ namespace WarLib.BLP
 			byte[] compressedMipMap = null;
 			if (Header.compressionType == TextureCompressionType.Palettized)
 			{
-				// Needs to generate palette valid for all mipmaps, then generate indices for that palette for each level
+				byte[] paletteIndices = null;
+				byte[] alphaValues = null;
+				for (int y = 0; y < targetYRes; ++y)
+				{
+					for (int x = 0; x < targetXRes; ++x)
+					{
+						Color nearestColor = FindClosestMatchingColor(resizedImage.GetPixel(x, y));
+						int paletteIndex = this.Palette.IndexOf(nearestColor);
+
+						if (this.GetAlphaBitDepth() > 0)
+						{
+							byte pixelAlpha = resizedImage.GetPixel(x, y).A;
+						}
+
+					}
+				}
 			}
 			else if (Header.compressionType == TextureCompressionType.DXTC)
 			{
@@ -291,6 +377,53 @@ namespace WarLib.BLP
 			}
 
 			return mipLevels;
+		}
+
+		/// <summary>
+		/// Generates an indexed 256-color palette from the specified image.
+		/// Ordinarily, this would be the original mipmap.
+		/// </summary>
+		/// <returns>The palette.</returns>
+		/// <param name="Image">Image.</param>
+		private List<Color> GeneratePalette(Bitmap Image)
+		{
+			WuQuantizer quantizer = new WuQuantizer();
+			Bitmap quantized = (Bitmap)quantizer.QuantizeImage(Image);
+
+			return new List<Color>(quantized.Palette.Entries);
+		}
+
+		/// <summary>
+		/// Finds the closest matching color in the palette for the given input color.
+		/// </summary>
+		/// <returns>The closest matching color.</returns>
+		/// <param name="InColor">Input color.</param>
+		private Color FindClosestMatchingColor(Color InColor)
+		{
+			Color NearestColor = Color.Empty;
+
+			double ColorDistance = 250000.0;
+			foreach (Color PaletteColor in Palette)
+			{				
+				double TestRed = Math.Pow(Convert.ToDouble(PaletteColor.R) - InColor.R, 2.0);
+				double TestGreen = Math.Pow(Convert.ToDouble(PaletteColor.G) - InColor.G, 2.0);
+				double TestBlue = Math.Pow(Convert.ToDouble(PaletteColor.B) - InColor.B, 2.0);
+
+				double DistanceResult = Math.Sqrt(TestBlue + TestGreen + TestRed);			
+
+				if (DistanceResult == 0.0)
+				{
+					NearestColor = PaletteColor;
+					break;
+				}
+				else if (DistanceResult < ColorDistance)
+				{
+					ColorDistance = DistanceResult;
+					NearestColor = PaletteColor;
+				}
+			}
+
+			return NearestColor;
 		}
 
 		/// <summary>

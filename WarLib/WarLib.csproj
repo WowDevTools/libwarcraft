@@ -41,6 +41,9 @@
     <Reference Include="Noemax.Compression.Net4.Trial">
       <HintPath>..\..\..\WarLib Examples\packages\Noemax.Compression.16.3.5247\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
     </Reference>
+    <Reference Include="nQuant.Core">
+      <HintPath>..\..\WarLib Examples\packages\nQuant.1.0.3\Lib\net40\nQuant.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
