@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace WarLib.Core
 {
@@ -18,6 +19,22 @@ namespace WarLib.Core
 		public static int Map(int val, int in_min, int in_max, int out_min, int out_max)
 		{
 			return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+		}
+
+		public static bool HasAlpha(this Bitmap map)
+		{
+			for (int y = 0; y < map.Height; ++y)
+			{
+				for (int x = 0; x < map.Width; ++x)
+				{
+					Color pixel = map.GetPixel(x, y);
+					if (pixel.A != 255)
+					{
+						return true;
+					}
+				}
+			}
+			return false;
 		}
 	}
 }

@@ -7,7 +7,6 @@ using System.IO;
 using WarLib.Core;
 using DotSquish;
 using System.Drawing.Imaging;
-using nQuant;
 
 namespace WarLib.BLP
 {
@@ -66,14 +65,46 @@ namespace WarLib.BLP
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WarLib.BLP.BLP"/> class.
 		/// This constructor creates a BLP file using the specified compression from a bitmap object.
-		/// If the compression type specifed is DXTC, the default pixel format used is DXT1.
+		/// If the compression type specifed is DXTC, the default pixel format used is DXT1 for opaque textures and DXT3 for the rest.
 		/// </summary>
 		/// <param name="Image">Image.</param>
 		/// <param name="CompressionType">Compression type.</param>
 		/// <param name="PixelFormat">Pixel format.</param>
 		public BLP(Bitmap Image, TextureCompressionType CompressionType, BLPPixelFormat PixelFormat = BLPPixelFormat.Pixel_DXT1)
 		{
-			
+			// Set up the header
+			BLPHeader newHeader = new BLPHeader();
+			newHeader.compressionType = CompressionType;
+
+			if (CompressionType == TextureCompressionType.Palettized)
+			{
+				// Determine best alpha bit depth
+				if (Image.HasAlpha())
+				{
+									
+				}
+				else
+				{
+					//newHeader.pixelFormat = BLPPixelFormat.
+				}
+			}
+			else if (CompressionType == TextureCompressionType.DXTC)
+			{
+				// Determine best DXTC type (1, 3 or 5)	
+				if (Image.HasAlpha())
+				{
+					
+				}
+				else
+				{
+					// DXT1 for no alpha
+					newHeader.pixelFormat = BLPPixelFormat.Pixel_DXT1;
+				}
+			}
+			else if (CompressionType == TextureCompressionType.Uncompressed)
+			{
+
+			}
 		}
 
 		/// <summary>
@@ -116,6 +147,7 @@ namespace WarLib.BLP
 						}
 					}
 
+					// Seek to the alpha 
 					long bytesRead = br.BaseStream.Position;
 
 					// Read Alpha information
@@ -165,13 +197,15 @@ namespace WarLib.BLP
 						}
 						else if (this.GetAlphaBitDepth() == 8)
 						{
-							for (int i = 0; i < YResolution * XResolution; ++i)
+							for (int y = 0; y < YResolution; ++y)
 							{
-								// The alpha value is stored as a whole byte
-								byte alphaValue = br.ReadByte();
-								alphaValues.Add(alphaValue);
-							}
-							
+								for (int x = 0; x < XResolution; ++x)
+								{
+									// The alpha value is stored as a whole byte
+									byte alphaValue = br.ReadByte();
+									alphaValues.Add(alphaValue);
+								}
+							}					
 						}
 					}
 					else
@@ -184,7 +218,8 @@ namespace WarLib.BLP
 					{
 						for (int x = 0; x < XResolution; ++x)
 						{
-							byte alphaValue = alphaValues[x + y];
+							int valueIndex = (int)(x + (XResolution * y));
+							byte alphaValue = alphaValues[valueIndex];
 							Color pixelColor = map.GetPixel(x, y);
 							Color finalPixel = Color.FromArgb(alphaValue, pixelColor.R, pixelColor.G, pixelColor.B);
 
@@ -387,10 +422,7 @@ namespace WarLib.BLP
 		/// <param name="Image">Image.</param>
 		private List<Color> GeneratePalette(Bitmap Image)
 		{
-			WuQuantizer quantizer = new WuQuantizer();
-			Bitmap quantized = (Bitmap)quantizer.QuantizeImage(Image);
-
-			return new List<Color>(quantized.Palette.Entries);
+			return null;
 		}
 
 		/// <summary>

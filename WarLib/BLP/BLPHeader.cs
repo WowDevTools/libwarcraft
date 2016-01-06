@@ -43,23 +43,23 @@ namespace WarLib.BLP
 			this.mipMapType = br.ReadByte();
 			this.resolution = new Resolution(br.ReadUInt32(), br.ReadUInt32());
 
-			mipMapOffsets = new List<uint>();
+			this.mipMapOffsets = new List<uint>();
 			for (int i = 0; i < 16; ++i)
 			{
 				uint offset = br.ReadUInt32();
 				if (offset > 0)
 				{
-					mipMapOffsets.Add(offset);
+					this.mipMapOffsets.Add(offset);
 				}
 			}
 
-			mipMapSizes = new List<uint>();
+			this.mipMapSizes = new List<uint>();
 			for (int i = 0; i < 16; ++i)
 			{
 				uint size = br.ReadUInt32();
 				if (size > 0)
 				{
-					mipMapSizes.Add(size);
+					this.mipMapSizes.Add(size);
 				}
 			}
 
