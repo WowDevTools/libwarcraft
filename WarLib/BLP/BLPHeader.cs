@@ -89,7 +89,7 @@ namespace WarLib.BLP
 		/// Gets the data in the header as a byte array, ready to be written to a file.
 		/// </summary>
 		/// <returns>The header bytes.</returns>
-		public byte[] GetHeaderBytes()
+		public byte[] GetBytes()
 		{
 			MemoryStream headerStream = new MemoryStream();
 			BinaryWriter bw = new BinaryWriter(headerStream);
@@ -97,9 +97,9 @@ namespace WarLib.BLP
 			bw.Write(this.fileType.ToCharArray());
 			bw.Write(this.version);
 			bw.Write((byte)this.compressionType);
-			bw.Write(this.alphaBitDepth);
+			bw.Write((byte)this.alphaBitDepth);
 			bw.Write((byte)this.pixelFormat);
-			bw.Write(this.mipMapType);
+			bw.Write((byte)this.mipMapType);
 
 			bw.Write(this.resolution.X);
 			bw.Write(this.resolution.Y);
@@ -141,6 +141,15 @@ namespace WarLib.BLP
 			headerStream.Dispose();
 
 			return headerBytes;
+		}
+
+		/// <summary>
+		/// Gets the size of a complete header. This is always 148 bytes, since the offset and size lists are padded.
+		/// </summary>
+		/// <returns>The size.</returns>
+		public uint GetSize()
+		{
+			return 148;
 		}
 	}
 }
