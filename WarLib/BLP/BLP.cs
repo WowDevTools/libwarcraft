@@ -8,6 +8,7 @@ using WarLib.Core;
 using DotSquish;
 using System.Drawing.Imaging;
 using Warlib.Core.ImageQuantization;
+using System.Collections;
 
 namespace WarLib.BLP
 {
@@ -15,7 +16,6 @@ namespace WarLib.BLP
 	{
 		public BLPHeader Header;
 
-		private readonly List<Bitmap> MipMaps = new List<Bitmap>();
 		private readonly List<Color> Palette = new List<Color>();
 
 		private readonly List<byte[]> RawMipMaps = new List<byte[]>();
@@ -46,19 +46,21 @@ namespace WarLib.BLP
 					Palette.Add(paletteColor);
 				}
 			}
+			else
+			{
+				// Fill up an empty palette - the palette is always present, but we'll be going after offsets anyway
+				for (int i = 0; i < 256; ++i)
+				{
+					Color paletteColor = Color.FromArgb(0, 0, 0, 0);
+					Palette.Add(paletteColor);
+				}
+			}
 
 			// Read the raw mipmap data
 			for (int i = 0; i < Header.GetNumMipMaps(); ++i)
 			{
 				br.BaseStream.Position = Header.mipMapOffsets[i];
 				RawMipMaps.Add(br.ReadBytes((int)Header.mipMapSizes[i]));
-			}
-
-			// Decompress the mipmaps into actual images
-			for (int i = 0; i < RawMipMaps.Count; ++i)
-			{
-				byte[] rawMip = RawMipMaps[i];
-				MipMaps.Add(DecompressMipMap(rawMip, (uint)i));
 			}
 
 			br.Close();
@@ -165,6 +167,8 @@ namespace WarLib.BLP
 				// Push the offset ahead for the next mipmap
 				mipOffset += mipSize;
 			}
+
+			// Finally, 
 		}
 
 		/// <summary>
@@ -172,9 +176,9 @@ namespace WarLib.BLP
 		/// </summary>
 		/// <returns>A bitmap.</returns>
 		/// <param name="level">Mipmap level.</param>
-		public Bitmap GetMipMap(int level)
+		public Bitmap GetMipMap(uint level)
 		{			
-			return MipMaps[level];
+			return DecompressMipMap(RawMipMaps[(int)level], level);
 		}
 
 		/// <summary>
@@ -515,6 +519,7 @@ namespace WarLib.BLP
 					squishOptions = SquishOptions.DXT5;
 				}
 
+				// TODO: Implement squish compression
 				colourData = new List<byte>(Squish.CompressImage(rgbaBytes, (int)targetXRes, (int)targetYRes, squishOptions));
 			}
 			else if (Header.compressionType == TextureCompressionType.Uncompressed)
@@ -580,12 +585,12 @@ namespace WarLib.BLP
 		/// <param name="Image">Image.</param>
 		private void GeneratePalette(Bitmap Image)
 		{
-			OctreeQuantizer quantizer = new OctreeQuantizer(255, 8);
-			using (Bitmap quantizedMap = quantizer.Quantize(Image))
-			{
-				this.Palette.Clear();
-				this.Palette.AddRange(quantizedMap.Palette.Entries);
-			}
+			// TODO: Replace with an algorithm that produces a better result. For now, it works.
+			PaletteQuantizer quantizer = new PaletteQuantizer(new ArrayList());
+			Bitmap quantizedMap = quantizer.Quantize(Image);
+			this.Palette.Clear();
+			this.Palette.AddRange(quantizedMap.Palette.Entries);
+
 		}
 
 		/// <summary>
@@ -746,7 +751,7 @@ namespace WarLib.BLP
 		/// <returns>The mipmap count.</returns>
 		public int GetMipMapCount()
 		{
-			return MipMaps.Count;
+			return RawMipMaps.Count;
 		}
 	}
 }

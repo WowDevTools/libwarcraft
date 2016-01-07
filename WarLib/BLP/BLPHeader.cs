@@ -20,9 +20,9 @@ namespace WarLib.BLP
 
 		public Resolution resolution;
 
-		public List<uint> mipMapOffsets;
+		public List<uint> mipMapOffsets = new List<uint>();
 
-		public List<uint> mipMapSizes;
+		public List<uint> mipMapSizes = new List<uint>();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WarLib.BLP.BLPHeader"/> class.
