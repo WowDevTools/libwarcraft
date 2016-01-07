@@ -79,6 +79,10 @@
     <Compile Include="Core\Compression\Squish\Maths.cs" />
     <Compile Include="Core\Compression\Squish\Squish.cs" />
     <Compile Include="Core\Hashing\Adler32.cs" />
+    <Compile Include="Core\Quantization\GrayscaleQuantizer.cs" />
+    <Compile Include="Core\Quantization\OctreeQuantizer.cs" />
+    <Compile Include="Core\Quantization\PaletteQuantizer.cs" />
+    <Compile Include="Core\Quantization\Quantizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -106,6 +110,7 @@
     <Folder Include="Core\Compression\Blast\" />
     <Folder Include="Core\Compression\Squish\" />
     <Folder Include="Core\Hashing\" />
+    <Folder Include="Core\Quantization\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

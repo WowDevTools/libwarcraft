@@ -7,6 +7,7 @@ using System.IO;
 using WarLib.Core;
 using DotSquish;
 using System.Drawing.Imaging;
+using Warlib.Core.ImageQuantization;
 
 namespace WarLib.BLP
 {
@@ -69,42 +70,87 @@ namespace WarLib.BLP
 		/// </summary>
 		/// <param name="Image">Image.</param>
 		/// <param name="CompressionType">Compression type.</param>
-		/// <param name="PixelFormat">Pixel format.</param>
-		public BLP(Bitmap Image, TextureCompressionType CompressionType, BLPPixelFormat PixelFormat = BLPPixelFormat.Pixel_DXT1)
+		public BLP(Bitmap Image, TextureCompressionType CompressionType)
 		{
 			// Set up the header
-			BLPHeader newHeader = new BLPHeader();
-			newHeader.compressionType = CompressionType;
+			this.Header = new BLPHeader();
+			Header.compressionType = CompressionType;
 
 			if (CompressionType == TextureCompressionType.Palettized)
 			{
+				Header.pixelFormat = BLPPixelFormat.Pixel_Palettized;
 				// Determine best alpha bit depth
 				if (Image.HasAlpha())
 				{
-									
+					List<byte> alphaLevels = new List<byte>();
+					for (int y = 0; y < Image.Height; ++y)
+					{
+						for (int x = 0; x < Image.Width; ++x)
+						{
+							Color pixel = Image.GetPixel(x, y);
+							if (!alphaLevels.Contains(pixel.A))
+							{
+								alphaLevels.Add(pixel.A);
+							}
+
+							if (alphaLevels.Count > 16)
+							{
+								break;
+							}
+						}
+					}										
+
+					if (alphaLevels.Count > 16)
+					{
+						// More than 16? Use a full byte
+						Header.alphaBitDepth = 8;
+					}
+					else if (alphaLevels.Count > 2)
+					{
+						// More than 2, but less than or equal to 16? Use half a byte
+						Header.alphaBitDepth = 4;
+					}
+					else
+					{
+						// Just 2? Use a bit instead
+						Header.alphaBitDepth = 1;
+					}
 				}
 				else
 				{
-					//newHeader.pixelFormat = BLPPixelFormat.
+					// No alpha, so a bit depth of 0.
+					Header.alphaBitDepth = 0;
 				}
 			}
 			else if (CompressionType == TextureCompressionType.DXTC)
 			{
+				Header.alphaBitDepth = 8;
+
 				// Determine best DXTC type (1, 3 or 5)	
 				if (Image.HasAlpha())
 				{
-					
+					// TODO: Differentiate between DXT3 and 5
+					Header.pixelFormat = BLPPixelFormat.Pixel_DXT3;
 				}
 				else
 				{
 					// DXT1 for no alpha
-					newHeader.pixelFormat = BLPPixelFormat.Pixel_DXT1;
+					Header.pixelFormat = BLPPixelFormat.Pixel_DXT1;
 				}
 			}
 			else if (CompressionType == TextureCompressionType.Uncompressed)
 			{
-
+				// The alpha will be stored as a straight ARGB texture, so set it to 8
+				Header.alphaBitDepth = 8;
+				Header.pixelFormat = BLPPixelFormat.Pixel_A8R8G8B8;
 			}
+
+			// What the mip type does is currently unknown, but it's usually set to 1.
+			Header.mipMapType = 1;
+			Header.resolution = new Resolution((uint)Image.Width, (uint)Image.Height);
+
+			// It's now time to compress the image
+
 		}
 
 		/// <summary>
@@ -411,7 +457,7 @@ namespace WarLib.BLP
 				++mipLevels;
 			}
 
-			return mipLevels;
+			return mipLevels.Clamp<uint>(1, 16);
 		}
 
 		/// <summary>
@@ -422,7 +468,10 @@ namespace WarLib.BLP
 		/// <param name="Image">Image.</param>
 		private List<Color> GeneratePalette(Bitmap Image)
 		{
-			return null;
+			OctreeQuantizer quantizer = new OctreeQuantizer(256, 32);
+			Bitmap quantizedMap = quantizer.Quantize(Image);
+
+			return new List<Color>(quantizedMap.Palette.Entries);
 		}
 
 		/// <summary>
