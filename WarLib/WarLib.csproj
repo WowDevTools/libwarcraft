@@ -35,11 +35,9 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="log4net">
-      <HintPath>..\..\..\WarLib Examples\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Numerics" />
     <Reference Include="Noemax.Compression.Net4.Trial">
-      <HintPath>..\..\..\WarLib Examples\packages\Noemax.Compression.16.3.5247\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
+      <HintPath>..\..\WarLib Examples\packages\Noemax.Compression.16.3.5247\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +68,11 @@
     <Compile Include="MPQ\Crypto\MPQCrypt.cs" />
     <Compile Include="MPQ\Crypto\MPQSign.cs" />
     <Compile Include="Core\Compression\Blast\Blast.cs" />
+    <Compile Include="Core\Hashing\Adler32.cs" />
+    <Compile Include="Core\Quantization\GrayscaleQuantizer.cs" />
+    <Compile Include="Core\Quantization\OctreeQuantizer.cs" />
+    <Compile Include="Core\Quantization\PaletteQuantizer.cs" />
+    <Compile Include="Core\Quantization\Quantizer.cs" />
     <Compile Include="Core\Compression\Squish\Alpha.cs" />
     <Compile Include="Core\Compression\Squish\ClusterFit.cs" />
     <Compile Include="Core\Compression\Squish\ColourBlock.cs" />
@@ -78,18 +81,13 @@
     <Compile Include="Core\Compression\Squish\Flags.cs" />
     <Compile Include="Core\Compression\Squish\Maths.cs" />
     <Compile Include="Core\Compression\Squish\Squish.cs" />
-    <Compile Include="Core\Hashing\Adler32.cs" />
-    <Compile Include="Core\Quantization\GrayscaleQuantizer.cs" />
-    <Compile Include="Core\Quantization\OctreeQuantizer.cs" />
-    <Compile Include="Core\Quantization\PaletteQuantizer.cs" />
-    <Compile Include="Core\Quantization\Quantizer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Core\Compression\Blast\LICENSE" />
     <None Include="Core\Compression\Blast\README.md" />
     <None Include="Core\Compression\Blast\reference-code\blast.c" />
     <None Include="Core\Compression\Blast\reference-code\blast.h" />
+    <None Include="packages.config" />
     <None Include="Core\Compression\Squish\README" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -108,7 +106,6 @@
     <Folder Include="MPQ\Attributes\" />
     <Folder Include="MPQ\Crypto\" />
     <Folder Include="Core\Compression\Blast\" />
-    <Folder Include="Core\Compression\Squish\" />
     <Folder Include="Core\Hashing\" />
     <Folder Include="Core\Quantization\" />
   </ItemGroup>

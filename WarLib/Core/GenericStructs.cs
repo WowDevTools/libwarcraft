@@ -32,6 +32,18 @@ namespace WarLib.Core
 			this.Y = Y;
 			this.Z = Z;
 		}
+
+		public Vector3f(float all)
+		{
+			this.X = all;
+			this.Y = all;
+			this.Z = all;
+		}
+
+		public static float Dot(Vector3f start, Vector3f end)
+		{
+			return (start.X * end.X) + (start.Y * end.Y) + (start.Z * end.Z);
+		}
 	}
 
 	/// <summary>
@@ -75,6 +87,30 @@ namespace WarLib.Core
 		{
 			this.X = X;
 			this.Y = Y;
+		}
+	}
+
+	public struct Vector4f
+	{
+		public float X;
+		public float Y;
+		public float Z;
+		public float W;
+
+		public Vector4f(float X, float Y, float Z, float W)
+		{
+			this.X = X;
+			this.Y = Y;
+			this.Z = Z;
+			this.W = W;
+		}
+
+		public Vector4f(float all)
+		{
+			this.X = all;
+			this.Y = all;
+			this.Z = all;
+			this.W = all;
 		}
 	}
 
