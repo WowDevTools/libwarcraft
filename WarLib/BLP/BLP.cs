@@ -5,7 +5,7 @@ using System.Drawing;
 using System.IO;
 
 using WarLib.Core;
-using DotSquish;
+using Squish;
 using System.Drawing.Imaging;
 using Warlib.Core.ImageQuantization;
 using System.Collections;
@@ -15,9 +15,7 @@ namespace WarLib.BLP
 	public class BLP
 	{
 		public BLPHeader Header;
-
 		private readonly List<Color> Palette = new List<Color>();
-
 		private readonly List<byte[]> RawMipMaps = new List<byte[]>();
 
 		/// <summary>
@@ -296,7 +294,7 @@ namespace WarLib.BLP
 
 				}
 				else if (Header.compressionType == TextureCompressionType.DXTC)
-				{     
+				{     					
 					SquishOptions squishOptions = SquishOptions.DXT1;
 					if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT3)
 					{
@@ -307,7 +305,7 @@ namespace WarLib.BLP
 						squishOptions = SquishOptions.DXT5;
 					}
 
-					map = (Bitmap)Squish.DecompressToBitmap(data, (int)targetXRes, (int)targetYRes, squishOptions);
+					map = (Bitmap)Squish.Squish.DecompressToBitmap(data, (int)targetXRes, (int)targetYRes, squishOptions);
 				}
 				else if (Header.compressionType == TextureCompressionType.Uncompressed)
 				{
@@ -327,8 +325,31 @@ namespace WarLib.BLP
 							map.SetPixel(x, y, pixelColor);
 						}
 					}
+
+					br.Dispose();
 				}
 			}		
+
+			return map;
+		}
+
+		private Bitmap RGBAToBitmap(byte[] rgba, int width, int height)
+		{
+			Bitmap map = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+			BinaryReader br = new BinaryReader(new MemoryStream(rgba));
+			for (int y = 0; y < width; ++y)
+			{
+				for (int x = 0; x < height; ++x)
+				{
+					byte R = br.ReadByte();
+					byte G = br.ReadByte();					
+					byte B = br.ReadByte();
+					byte A = br.ReadByte();
+																
+					Color pixelColor = Color.FromArgb(A, R, G, B);
+					map.SetPixel(x, y, pixelColor);
+				}
+			}
 
 			return map;
 		}
@@ -520,7 +541,7 @@ namespace WarLib.BLP
 				}
 
 				// TODO: Implement squish compression
-				colourData = new List<byte>(Squish.CompressImage(rgbaBytes, (int)targetXRes, (int)targetYRes, squishOptions));
+				colourData = new List<byte>(Squish.Squish.CompressImage(rgbaBytes, (int)targetXRes, (int)targetYRes, squishOptions));
 			}
 			else if (Header.compressionType == TextureCompressionType.Uncompressed)
 			{
