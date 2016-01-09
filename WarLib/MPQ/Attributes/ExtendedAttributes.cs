@@ -84,7 +84,7 @@ namespace WarLib.MPQ.Attributes
 						}
 						else
 						{
-							MD5s.Add("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+							MD5s.Add("");
 						}
 					}
 				}

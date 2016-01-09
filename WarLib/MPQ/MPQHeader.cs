@@ -24,7 +24,7 @@ namespace WarLib.MPQ
 		// Extended format, v2
 		private ulong LongArchiveSize;
 		private ulong BETTableOffset;
-		private ulong HETTAbleOffset;
+		private ulong HETTableOffset;
 
 		/// Extended format, v3
 		private ulong CompressedHashTableSize;
@@ -35,12 +35,12 @@ namespace WarLib.MPQ
 
 		private uint ChunkSizeForHashing;
 
-		MD5 MD5_BlockTable;
-		MD5 MD5_HashTable;
-		MD5 MD5_ExtendedBlockTable;
-		MD5 MD5_BETTable;
-		MD5 MD5_HETTable;
-		MD5 MD5_Header;
+		string MD5_BlockTable;
+		string MD5_HashTable;
+		string MD5_ExtendedBlockTable;
+		string MD5_BETTable;
+		string MD5_HETTable;
+		string MD5_Header;
 		// From the start of the signature to the end of the MD5_HETTable
 
 		/// <summary>
@@ -73,6 +73,54 @@ namespace WarLib.MPQ
 				this.ExtendedBlockTableOffset = 0;
 				this.ExtendedFormatHashTableOffsetBits = 0;
 				this.ExtendedFormatBlockTableOffsetBits = 0;
+			}
+
+			if (this.Format >= MPQFormat.Extended_v2)
+			{
+				this.LongArchiveSize = br.ReadUInt64();
+				this.BETTableOffset = br.ReadUInt64();
+				this.HETTableOffset = br.ReadUInt64();
+			}
+			else
+			{
+				this.LongArchiveSize = 0;
+				this.BETTableOffset = 0;
+				this.HETTableOffset = 0;
+			}
+
+			if (this.Format >= MPQFormat.Extended_v3)
+			{
+				this.CompressedHashTableSize = br.ReadUInt64();
+				this.CompressedBlockTableSize = br.ReadUInt64();
+				this.CompressedExtendedBlockTableSize = br.ReadUInt64();
+				this.CompressedHETTableSize = br.ReadUInt64();
+				this.CompressedBETTableSize = br.ReadUInt64();
+
+				this.ChunkSizeForHashing = br.ReadUInt32();
+
+				this.MD5_BlockTable = BitConverter.ToString(br.ReadBytes(16));
+				this.MD5_HashTable = BitConverter.ToString(br.ReadBytes(16));
+				this.MD5_ExtendedBlockTable = BitConverter.ToString(br.ReadBytes(16));
+				this.MD5_BETTable = BitConverter.ToString(br.ReadBytes(16));
+				this.MD5_HETTable = BitConverter.ToString(br.ReadBytes(16));
+				this.MD5_Header = BitConverter.ToString(br.ReadBytes(16));
+			}
+			else
+			{
+				this.CompressedHashTableSize = 0;
+				this.CompressedBlockTableSize = 0;
+				this.CompressedExtendedBlockTableSize = 0;
+				this.CompressedHETTableSize = 0;
+				this.CompressedBETTableSize = 0;
+
+				this.ChunkSizeForHashing = 0;
+
+				this.MD5_BlockTable = "";
+				this.MD5_HashTable = "";
+				this.MD5_ExtendedBlockTable = "";
+				this.MD5_BETTable = "";
+				this.MD5_HETTable = "";
+				this.MD5_Header = "";
 			}
 
 			br.Close();
