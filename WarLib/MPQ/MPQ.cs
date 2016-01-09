@@ -35,7 +35,7 @@ namespace WarLib.MPQ
 				this.Header = new MPQHeader(mpqReader.ReadBytes(44));
 			}
 
-			if (this.Header.GetFormat() == MPQFormat.Extended)
+			if (this.Header.GetFormat() == MPQFormat.Extended_v1)
 			{
 				// Seek to the extended block table and load it, if neccesary			
 				mpqReader.BaseStream.Position = (long)this.Header.GetExtendedBlockTableOffset();
@@ -158,7 +158,7 @@ namespace WarLib.MPQ
 
 				// Seek to the beginning of the file's sectors
 				long adjustedBlockOffset = 0;
-				if (this.Header.GetFormat() == MPQFormat.Extended && RequiresExtendedFormat())
+				if (this.Header.GetFormat() == MPQFormat.Extended_v1 && RequiresExtendedFormat())
 				{
 					adjustedBlockOffset = (long)fileBlockEntry.GetExtendedBlockOffset(this.ExtendedBlockTable[fileHashEntry.GetBlockEntryIndex()]);
 				}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace WarLib.MPQ
 {
@@ -15,14 +16,32 @@ namespace WarLib.MPQ
 		private uint HashTableEntries;
 		private uint BlockTableEntries;
 
-		// Extended format, v2
+		// Extended format, v1
 		private ulong ExtendedBlockTableOffset;
 		private ushort ExtendedFormatHashTableOffsetBits;
 		private ushort ExtendedFormatBlockTableOffsetBits;
 
-		// Extended format, v3
+		// Extended format, v2
+		private ulong LongArchiveSize;
+		private ulong BETTableOffset;
+		private ulong HETTAbleOffset;
 
-		/// Extended format, v4
+		/// Extended format, v3
+		private ulong CompressedHashTableSize;
+		private ulong CompressedBlockTableSize;
+		private ulong CompressedExtendedBlockTableSize;
+		private ulong CompressedHETTableSize;
+		private ulong CompressedBETTableSize;
+
+		private uint ChunkSizeForHashing;
+
+		MD5 MD5_BlockTable;
+		MD5 MD5_HashTable;
+		MD5 MD5_ExtendedBlockTable;
+		MD5 MD5_BETTable;
+		MD5 MD5_HETTable;
+		MD5 MD5_Header;
+		// From the start of the signature to the end of the MD5_HETTable
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WarLib.MPQ.MPQHeader"/> class.
@@ -43,7 +62,7 @@ namespace WarLib.MPQ
 			this.HashTableEntries = br.ReadUInt32();
 			this.BlockTableEntries = br.ReadUInt32();
 
-			if (this.Format == MPQFormat.Extended)
+			if (this.Format >= MPQFormat.Extended_v1)
 			{
 				this.ExtendedBlockTableOffset = br.ReadUInt64();
 				this.ExtendedFormatHashTableOffsetBits = br.ReadUInt16();
