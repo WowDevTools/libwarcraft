@@ -201,14 +201,6 @@ namespace WarLib.MPQ
 						}
 					}					
 
-					/*// If the file has checksums, read an additional offset from the table - this is an appended sector where 
-					// the checksums are stored.
-					uint checksumSectorOffset = 0;
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
-					{
-						checksumSectorOffset = mpqReader.ReadUInt32();
-					}*/
-
 					// Read all of the raw file sectors.
 					List<byte[]> compressedSectors = new List<byte[]>();
 					for (int i = 0; i < sectorOffsets.Count - 1; ++i)
@@ -219,29 +211,6 @@ namespace WarLib.MPQ
 						uint sectorLength = sectorOffsets[i + 1] - sectorOffsets[i];
 						compressedSectors.Add(mpqReader.ReadBytes((int)sectorLength));
 					}
-
-					/*// Read the checksum sector, if there is one.
-					// This sector is always compressed.
-					List<uint> sectorChecksums = new List<uint>();
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
-					{
-						long sectorStartPosition = adjustedBlockOffset + checksumSectorOffset;
-						mpqReader.BaseStream.Position = (long)sectorStartPosition;
-
-						// Here it is - the checksum sector is compressed. Size is from offset to end of data
-						int checksumSectorBytesToRead = sectorOffsets.Count * sizeof(uint);
-						byte[] compressedChecksumSector = mpqReader.ReadBytes(checksumSectorBytesToRead);
-
-						byte[] pendingSector = Compression.DecompressSector(compressedChecksumSector, BlockFlags.BLF_IsCompressed);
-
-						BinaryReader checksumReader = new BinaryReader(new MemoryStream(pendingSector));
-						for (int i = 0; i < sectorOffsets.Count - 1; ++i)
-						{
-							sectorChecksums.Add(checksumReader.ReadUInt32());						
-						}
-						checksumReader.Close();
-						checksumReader.Dispose();
-					}*/
 
 					// Begin decompressing and decrypting the sectors
 					// TODO: If Checksums are present (check the flags), treat the last sector as a checksum sector
@@ -256,22 +225,17 @@ namespace WarLib.MPQ
 							pendingSector = MPQCrypt.DecryptData(compressedSector, fileKey + sectorIndex);
 						}
 
-						/*// Verify the sector if neccesary
-						if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
-						{
-							bool isSectorOK = MPQCrypt.VerifySectorChecksum(pendingSector, sectorChecksums[(int)sectorIndex]);
-
-							if (!isSectorOK)
-							{
-								// TODO: Figure out why the checksums aren't right (git-3)
-								//throw new InvalidDataException("The sector checksum did not match the actual data.");
-							}
-						}*/
-
 						// Decompress the sector if neccesary
 						if (pendingSector.Length < GetMaxSectorSize())
 						{
-							pendingSector = Compression.DecompressSector(pendingSector, fileBlockEntry.Flags);
+							int currentFileSize = CountBytesInSectors(decompressedSectors);
+							bool canSectorCompleteFile = currentFileSize + pendingSector.Length == fileBlockEntry.GetFileSize();
+
+							if (!canSectorCompleteFile)
+							{
+								pendingSector = Compression.DecompressSector(pendingSector, fileBlockEntry.Flags);
+
+							}
 						}
 
 						decompressedSectors.Add(pendingSector);
@@ -326,6 +290,18 @@ namespace WarLib.MPQ
 			}
 
 			return null;
+		}
+
+		private int CountBytesInSectors(List<byte[]> sectors)
+		{
+			int bytes = 0;
+
+			foreach (byte[] sector in sectors)
+			{
+				bytes += sector.Length;
+			}
+
+			return bytes;
 		}
 
 		/// <summary>

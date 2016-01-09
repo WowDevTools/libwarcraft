@@ -41,7 +41,7 @@ namespace Warlib.Core.ImageQuantization
 		/// </summary>
 		/// <param name="pixel">The pixel to quantize</param>
 		/// <returns>The quantized value</returns>
-		protected  override byte QuantizePixel(Color32 pixel)
+		protected override byte QuantizePixel(Color32 pixel)
 		{
 			byte	colorIndex = 0;
 			int colorHash = pixel.ARGB;	
@@ -83,8 +83,8 @@ namespace Warlib.Core.ImageQuantization
 						int	blueDistance = paletteColor.B - blue;
 
 						int distance = (redDistance * redDistance) +
-						                (greenDistance * greenDistance) +
-						                (blueDistance * blueDistance);
+						               (greenDistance * greenDistance) +
+						               (blueDistance * blueDistance);
 
 						if (distance < leastDistance)
 						{
