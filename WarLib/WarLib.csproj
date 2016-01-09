@@ -81,6 +81,8 @@
     <Compile Include="Core\Compression\Squish\Flags.cs" />
     <Compile Include="Core\Compression\Squish\Maths.cs" />
     <Compile Include="Core\Compression\Squish\Squish.cs" />
+    <Compile Include="MPQ\HET Table\HETTable.cs" />
+    <Compile Include="MPQ\BET Table\BETTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -108,6 +110,8 @@
     <Folder Include="Core\Compression\Blast\" />
     <Folder Include="Core\Hashing\" />
     <Folder Include="Core\Quantization\" />
+    <Folder Include="MPQ\HET Table\" />
+    <Folder Include="MPQ\BET Table\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
