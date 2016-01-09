@@ -26,16 +26,9 @@ namespace WarLib.MPQ
 		{
 			mpqReader = new BinaryReader(mpqStream);
 
-			if (PeekFormat() == MPQFormat.Basic)
-			{
-				this.Header = new MPQHeader(mpqReader.ReadBytes(32));
-			}
-			else
-			{
-				this.Header = new MPQHeader(mpqReader.ReadBytes(44));
-			}
+			this.Header = new MPQHeader(PeekHeaderSize());
 
-			if (this.Header.GetFormat() == MPQFormat.Extended_v1)
+			if (this.Header.GetFormat() >= MPQFormat.Extended_v1)
 			{
 				// Seek to the extended block table and load it, if neccesary			
 				mpqReader.BaseStream.Position = (long)this.Header.GetExtendedBlockTableOffset();
@@ -79,6 +72,22 @@ namespace WarLib.MPQ
 			mpqReader.BaseStream.Position = originalPosition;
 
 			return format;
+		}
+
+		/// <summary>
+		/// Peeks at the size of the entire MPQ header without advancing the byte position of the
+		/// binary reader.
+		/// </summary>
+		/// <returns>The header size.</returns>
+		private int PeekHeaderSize()
+		{
+			long originalPosition = mpqReader.BaseStream.Position;
+
+			mpqReader.BaseStream.Position = 4;
+			int headerSize = mpqReader.ReadUInt32();
+			mpqReader.BaseStream.Position = originalPosition;
+
+			return headerSize;
 		}
 
 		/// <summary>
@@ -292,6 +301,11 @@ namespace WarLib.MPQ
 			return null;
 		}
 
+		/// <summary>
+		/// Counts the bytes contained in a list of sectors.
+		/// </summary>
+		/// <returns>The number of bytes.</returns>
+		/// <param name="sectors">The sectors.</param>
 		private int CountBytesInSectors(List<byte[]> sectors)
 		{
 			int bytes = 0;

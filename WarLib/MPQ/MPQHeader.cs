@@ -6,6 +6,7 @@ namespace WarLib.MPQ
 {
 	public class MPQHeader
 	{
+		// Basic format, v0 (World of Warcraft and earlier)
 		private string Filetype;
 		private uint HeaderSize;
 		private uint ArchiveSize;
@@ -16,17 +17,17 @@ namespace WarLib.MPQ
 		private uint HashTableEntries;
 		private uint BlockTableEntries;
 
-		// Extended format, v1
+		// Extended format, v1 (Burning Crusade and newer)
 		private ulong ExtendedBlockTableOffset;
 		private ushort ExtendedFormatHashTableOffsetBits;
 		private ushort ExtendedFormatBlockTableOffsetBits;
 
-		// Extended format, v2
+		// Extended format, v2 (Cataclysm Beta and newer)
 		private ulong LongArchiveSize;
 		private ulong BETTableOffset;
 		private ulong HETTableOffset;
 
-		/// Extended format, v3
+		/// Extended format, v3 (Cataclysm Beta and newer)
 		private ulong CompressedHashTableSize;
 		private ulong CompressedBlockTableSize;
 		private ulong CompressedExtendedBlockTableSize;
@@ -41,7 +42,7 @@ namespace WarLib.MPQ
 		string MD5_BETTable;
 		string MD5_HETTable;
 		string MD5_Header;
-		// From the start of the signature to the end of the MD5_HETTable
+		// The MD5_Header is calculated from the start of the signature to the end of the MD5_HETTable
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WarLib.MPQ.MPQHeader"/> class.
