@@ -83,6 +83,45 @@
     <Compile Include="Core\Compression\Squish\Squish.cs" />
     <Compile Include="MPQ\HET Table\HETTable.cs" />
     <Compile Include="MPQ\BET Table\BETTable.cs" />
+    <Compile Include="WMO\Root File\Root.cs" />
+    <Compile Include="WMO\Root File\RootHeader.cs" />
+    <Compile Include="WMO\Group File\Group.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelGroup.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelPolygons.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelVertexIndices.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelVertices.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelNormals.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelTextureCoordinates.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelRenderBatches.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelLightReferences.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelDoodadReferences.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelBSPNodes.cs" />
+    <Compile Include="WMO\Group File\Chunks\MOBR.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelLiquids.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelVertexColours.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelTriangleStrips.cs" />
+    <Compile Include="WMO\Group File\Chunks\MORB.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelTangentArray.cs" />
+    <Compile Include="WMO\Group File\Chunks\MOBS.cs" />
+    <Compile Include="WMO\Group File\Chunks\MDAL.cs" />
+    <Compile Include="WMO\Group File\Chunks\ModelTerrainPlanes.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelTextures.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelMaterials.cs" />
+    <Compile Include="Core\Shading\ShaderTypes.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelGroupNames.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelGroupInformation.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelSkybox.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelPortals.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelPortalReferences.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelVisibleVertices.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelVisibleBlocks.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelLighting.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelDoodadSets.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelDoodadReferences.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelDoodadInstances.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelFog.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelConvexPlanes.cs" />
+    <Compile Include="WMO\Root File\Chunks\ModelGameobjectFileID.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -112,6 +151,12 @@
     <Folder Include="Core\Quantization\" />
     <Folder Include="MPQ\HET Table\" />
     <Folder Include="MPQ\BET Table\" />
+    <Folder Include="WMO\" />
+    <Folder Include="WMO\Root File\" />
+    <Folder Include="WMO\Group File\" />
+    <Folder Include="WMO\Root File\Chunks\" />
+    <Folder Include="WMO\Group File\Chunks\" />
+    <Folder Include="Core\Shading\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
