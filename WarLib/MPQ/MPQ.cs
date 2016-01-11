@@ -26,7 +26,7 @@ namespace WarLib.MPQ
 		{
 			mpqReader = new BinaryReader(mpqStream);
 
-			this.Header = new MPQHeader(PeekHeaderSize());
+			this.Header = new MPQHeader(mpqReader.ReadBytes((int)PeekHeaderSize()));
 
 			if (this.Header.GetFormat() >= MPQFormat.Extended_v1)
 			{
@@ -79,12 +79,12 @@ namespace WarLib.MPQ
 		/// binary reader.
 		/// </summary>
 		/// <returns>The header size.</returns>
-		private int PeekHeaderSize()
+		private uint PeekHeaderSize()
 		{
 			long originalPosition = mpqReader.BaseStream.Position;
 
 			mpqReader.BaseStream.Position = 4;
-			int headerSize = mpqReader.ReadUInt32();
+			uint headerSize = mpqReader.ReadUInt32();
 			mpqReader.BaseStream.Position = originalPosition;
 
 			return headerSize;
@@ -262,21 +262,21 @@ namespace WarLib.MPQ
 				{
 					// This file is not compressed, but it still has sectors. Read them, decrypt them, stitch them
 					uint finalSectorSize = fileBlockEntry.GetFileSize() % GetMaxSectorSize();
-					uint sectorCount = ((fileBlockEntry.GetFileSize() - finalSectorSize) % GetMaxSectorSize()) + 1;
+
+					// All the even sectors you can fit into the file size
+					uint sectorCount = ((fileBlockEntry.GetFileSize() - finalSectorSize) / GetMaxSectorSize());
 
 					List<byte[]> rawSectors = new List<byte[]>();
 					for (int i = 0; i < sectorCount; ++i)
 					{
-						if (i != sectorCount)
-						{
-							// Read a normal sector (usually 4096)
-							rawSectors.Add(mpqReader.ReadBytes((int)GetMaxSectorSize()));
-						}
-						else
-						{
-							// Read the final sector
-							rawSectors.Add(mpqReader.ReadBytes((int)finalSectorSize));
-						}
+						// Read a normal sector (usually 4096 bytes)
+						rawSectors.Add(mpqReader.ReadBytes((int)GetMaxSectorSize()));
+					}
+
+					// And finally, if there's an uneven sector at the end, read that one too
+					if (finalSectorSize > 0)
+					{
+						rawSectors.Add(mpqReader.ReadBytes((int)finalSectorSize));
 					}
 
 					uint sectorIndex = 0;
