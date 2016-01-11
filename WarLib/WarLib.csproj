@@ -39,6 +39,9 @@
     <Reference Include="Noemax.Compression.Net4.Trial">
       <HintPath>..\..\WarLib Examples\packages\Noemax.Compression.16.9.0\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
     </Reference>
+    <Reference Include="Aspose.3D">
+      <HintPath>..\..\WarLib Examples\packages\Aspose.3D.1.2.0.0\lib\net20\Aspose.3D.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -122,6 +125,7 @@
     <Compile Include="WMO\Root File\Chunks\ModelFog.cs" />
     <Compile Include="WMO\Root File\Chunks\ModelConvexPlanes.cs" />
     <Compile Include="WMO\Root File\Chunks\ModelGameobjectFileID.cs" />
+    <Compile Include="WMO\WMO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />

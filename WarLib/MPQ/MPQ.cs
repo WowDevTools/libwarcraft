@@ -339,7 +339,7 @@ namespace WarLib.MPQ
 		}
 
 		/// <summary>
-		/// Determines whether or not the archive requires the format to be extended (at least 2)
+		/// Determines whether or not the archive requires the format to be extended (at least <see cref="WarLib.MPQ.MPQFormat.Extended_v1"/>)
 		/// </summary>
 		/// <returns><c>true</c>, if extended format is required, <c>false</c> otherwise.</returns>
 		private bool RequiresExtendedFormat()

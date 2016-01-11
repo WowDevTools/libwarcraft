@@ -2,11 +2,10 @@
 
 namespace WarLib.WMO.GroupFile
 {
-	public class Chunk
+	public class Group
 	{
-		public Chunk()
+		public Group()
 		{
 		}
 	}
 }
-
