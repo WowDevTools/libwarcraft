@@ -8,12 +8,14 @@ namespace WarLib.MPQ
 	public class MPQHashTable
 	{
 		public static readonly uint TableKey = MPQCrypt.Hash("(hash table)", HashType.FileKey);
-		private static readonly List<HashTableEntry> Entries = new List<HashTableEntry>();
+		private readonly List<HashTableEntry> Entries;
 
 		public MPQHashTable(byte[] data)
 		{
 			MemoryStream dataStream = new MemoryStream(data);
 			BinaryReader br = new BinaryReader(dataStream);
+
+			this.Entries = new List<HashTableEntry>();
 
 			for (long i = 0; i < data.Length; i += HashTableEntry.GetSize())
 			{

@@ -8,12 +8,14 @@ namespace WarLib.MPQ
 	public class MPQBlockTable
 	{
 		public static readonly uint TableKey = MPQCrypt.Hash("(block table)", HashType.FileKey);
-		private static readonly List<BlockTableEntry> Entries = new List<BlockTableEntry>();
+		private readonly List<BlockTableEntry> Entries;
 
 		public MPQBlockTable(byte[] data)
 		{
 			MemoryStream dataStream = new MemoryStream(data);
 			BinaryReader br = new BinaryReader(dataStream);
+
+			this.Entries = new List<BlockTableEntry>();
 
 			for (long i = 0; i < data.Length; i += BlockTableEntry.GetSize())
 			{

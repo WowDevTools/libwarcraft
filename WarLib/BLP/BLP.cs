@@ -170,7 +170,7 @@ namespace WarLib.BLP
 		}
 
 		/// <summary>
-		/// Gets a bitmap representing the given mipmap level.
+		/// Gets a bitmap representing the given zero-based mipmap level.
 		/// </summary>
 		/// <returns>A bitmap.</returns>
 		/// <param name="level">Mipmap level.</param>
@@ -703,13 +703,42 @@ namespace WarLib.BLP
 		}
 
 		/// <summary>
+		/// Gets the best mip map for the specified resolution, where the specified resolution
+		/// is the maximum resolution for any dimension in the image.
+		/// </summary>
+		/// <returns>The best mip map.</returns>
+		/// <param name="MaxResolution">Max resolution.</param>
+		public Bitmap GetBestMipMap(uint MaxResolution)
+		{
+			// Calulcate the best mip level
+			double XMip = Math.Ceiling((double)GetResolution().X / MaxResolution) - 1;
+			double YMip = Math.Ceiling((double)GetResolution().Y / MaxResolution) - 1;
+
+			if (XMip > YMip)
+			{
+				// Grab the mipmap based on the X Mip
+				return GetMipMap((uint)XMip);
+			}
+			else if (YMip > XMip)
+			{
+				// Grab the mipmap based on the Y Mip
+				return GetMipMap((uint)YMip);
+			}
+			else
+			{
+				// Doesn't matter which one, just grab the X Mip
+				return GetMipMap((uint)XMip);
+			}
+		}
+
+		/// <summary>
 		/// Writes the image to disk as a BLP file.
 		/// To write a "normal" image format to disk, retrieve a mipmap (<see cref="WarLib.BLP.BLP.GetMipMap"/>) instead.
 		/// </summary>
 		/// <param name="path">Path.</param>
 		private void WriteImageToDisk(string path)
 		{
-			
+			File.WriteAllBytes(path, GetBytes());
 		}
 
 		/// <summary>

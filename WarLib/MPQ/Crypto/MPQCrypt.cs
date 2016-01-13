@@ -126,7 +126,6 @@ namespace WarLib.MPQ.Crypto
 		/// <param name="key">The decryption key to use.</param>
 		public static byte[] DecryptData(byte[] data, uint key)
 		{
-
 			if (data == null)
 			{
 				throw new ArgumentNullException("data");
