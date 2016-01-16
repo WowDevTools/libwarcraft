@@ -8,6 +8,8 @@
     <RootNamespace>WarLib</RootNamespace>
     <AssemblyName>WarLib</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,10 +39,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="Noemax.Compression.Net4.Trial">
-      <HintPath>..\..\WarLib Examples\packages\Noemax.Compression.16.9.0\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
-    </Reference>
-    <Reference Include="Aspose.3D">
-      <HintPath>..\..\WarLib Examples\packages\Aspose.3D.1.2.0.0\lib\net20\Aspose.3D.dll</HintPath>
+      <HintPath>..\packages\Noemax.Compression.16.16.0\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
