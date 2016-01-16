@@ -1,14 +1,13 @@
 ﻿using System;
+using System.IO;
+using System.Drawing;
+using System.Collections;
+using System.Drawing.Imaging;
 using System.Collections.Generic;
 
-using System.Drawing;
-using System.IO;
-
-using WarLib.Core;
 using Squish;
-using System.Drawing.Imaging;
+using WarLib.Core;
 using Warlib.Core.ImageQuantization;
-using System.Collections;
 
 namespace WarLib.BLP
 {
@@ -62,6 +61,7 @@ namespace WarLib.BLP
 			}
 
 			br.Close();
+			br.Dispose();
 		}
 
 		/// <summary>
@@ -216,50 +216,20 @@ namespace WarLib.BLP
 						if (this.GetAlphaBitDepth() == 1)
 						{
 							int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 8));
-							for (int i = 0; i < alphaByteCount; ++i)
-							{
-								// The alpha value is stored per-bit in the byte (8 alpha values per byte)
-								byte alphaByte = br.ReadByte();
-
-								for (byte j = 7; j > 0; --j)
-								{
-									byte alphaBit = (byte)ExtensionMethods.Map((byte)((alphaByte >> i) & 0x01), 0, 1, 0, 255);
-
-									// At this point, alphaBit will be either 0 or 1. Map this to 0 or 255.
-									if (alphaBit > 0)
-									{
-										alphaValues.Add(255);
-									}
-									else
-									{
-										alphaValues.Add(0);
-									}
-								}
-							}
+							alphaValues = Decode1BitAlpha(br.ReadBytes(alphaByteCount));
 						}
 						else if (this.GetAlphaBitDepth() == 4)
 						{
 							int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 2));
-							for (int i = 0; i < alphaByteCount; ++i)
-							{
-								// The alpha value is stored as half a byte (2 alpha values per byte)
-								// Extract these two values and map them to a byte size (4 bits can hold 0 - 15 alpha)
-								byte alphaByte = br.ReadByte();
-										
-								byte alphaValue1 = (byte)ExtensionMethods.Map((byte)(alphaByte >> 4), 0, 15, 0, 255);
-								byte alphaValue2 = (byte)ExtensionMethods.Map((byte)(alphaByte & 0x0F), 0, 15, 0, 255);
-
-								alphaValues.Add(alphaValue1);
-								alphaValues.Add(alphaValue2);
-							}
+							alphaValues = Decode4BitAlpha(br.ReadBytes(alphaByteCount));
 						}
 						else if (this.GetAlphaBitDepth() == 8)
 						{
+							// Directly read the alpha values
 							for (int y = 0; y < targetYRes; ++y)
 							{
 								for (int x = 0; x < targetXRes; ++x)
 								{
-									// The alpha value is stored as a whole byte
 									byte alphaValue = br.ReadByte();
 									alphaValues.Add(alphaValue);
 								}
@@ -326,6 +296,7 @@ namespace WarLib.BLP
 						}
 					}
 
+					br.Close();
 					br.Dispose();
 				}
 			}		
@@ -350,6 +321,9 @@ namespace WarLib.BLP
 					map.SetPixel(x, y, pixelColor);
 				}
 			}
+
+			br.Close();
+			br.Dispose();
 
 			return map;
 		}
@@ -575,6 +549,62 @@ namespace WarLib.BLP
 			Buffer.BlockCopy(alphaData.ToArray(), 0, compressedMipMap, colourData.ToArray().Length, alphaData.ToArray().Length);
 
 			return compressedMipMap;
+		}
+
+		private List<byte> Decode1BitAlpha(byte[] data)
+		{
+			List<byte> alphaValues = new List<byte>();
+
+			foreach (byte dataByte in data)
+			{
+				// The alpha value is stored per-bit in the byte (8 alpha values per byte)
+				for (byte j = 7; j > 0; --j)
+				{
+					byte alphaBit = (byte)ExtensionMethods.Map((byte)((dataByte >> i) & 0x01), 0, 1, 0, 255);
+
+					// At this point, alphaBit will be either 0 or 1. Map this to 0 or 255.
+					if (alphaBit > 0)
+					{
+						alphaValues.Add(255);
+					}
+					else
+					{
+						alphaValues.Add(0);
+					}
+				}
+			}
+
+			return alphaValues;
+		}
+
+		private List<byte> Decode4BitAlpha(byte[] data)
+		{
+			List<byte> alphaValues = new List<byte>();
+
+			for (int i = 0; i < data.Length; ++i)
+			{
+				// The alpha value is stored as half a byte (2 alpha values per byte)
+				// Extract these two values and map them to a byte size (4 bits can hold 0 - 15 alpha)
+				byte alphaByte = data[i];
+						
+				byte alphaValue1 = (byte)ExtensionMethods.Map((byte)(alphaByte >> 4), 0, 15, 0, 255);
+				byte alphaValue2 = (byte)ExtensionMethods.Map((byte)(alphaByte & 0x0F), 0, 15, 0, 255);
+
+				alphaValues.Add(alphaValue1);
+				alphaValues.Add(alphaValue2);
+			}
+
+			return alphaValues;
+		}
+
+		private List<byte> Encode1BitAlpha(Bitmap map)
+		{
+			return null;
+		}
+
+		private List<byte> Encode4BitAlpha(Bitmap map)
+		{
+			return null;
 		}
 
 		/// <summary>

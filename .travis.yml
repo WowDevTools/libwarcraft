@@ -1,2 +1,4 @@
 language: csharp
 solution: WarLib.sln
+install:
+    - nuget restore WarLib.sln
