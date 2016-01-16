@@ -560,7 +560,7 @@ namespace WarLib.BLP
 				// The alpha value is stored per-bit in the byte (8 alpha values per byte)
 				for (byte j = 7; j > 0; --j)
 				{
-					byte alphaBit = (byte)ExtensionMethods.Map((byte)((dataByte >> i) & 0x01), 0, 1, 0, 255);
+					byte alphaBit = (byte)ExtensionMethods.Map((byte)((dataByte >> j) & 0x01), 0, 1, 0, 255);
 
 					// At this point, alphaBit will be either 0 or 1. Map this to 0 or 255.
 					if (alphaBit > 0)
