@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace WarLib.Core
+namespace Warcraft.Core
 {
 	static class ExtensionMethods
 	{

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 
-namespace WarLib.MPQ.Attributes
+namespace Warcraft.MPQ.Attributes
 {
 	public class ExtendedAttributes
 	{

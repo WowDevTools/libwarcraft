@@ -31,7 +31,7 @@
 using System;
 using System.IO;
 
-namespace WarLib.Core.Compression
+namespace Warcraft.Core.Compression
 {
 	/// <summary>
 	/// An IMA ADPCM decompress for Mpq files

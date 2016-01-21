@@ -2,12 +2,12 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using WarLib.Core.Compression;
-using Warlib.Core.Compression;
-using WarLib.MPQ.Attributes;
-using WarLib.MPQ.Crypto;
+using Warcraft.Core.Compression;
+using Warcraft.Core.Compression;
+using Warcraft.MPQ.Attributes;
+using Warcraft.MPQ.Crypto;
 
-namespace WarLib.MPQ
+namespace Warcraft.MPQ
 {
 	public class MPQ : IDisposable
 	{

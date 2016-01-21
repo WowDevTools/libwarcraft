@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WarLib.MPQ.Crypto
+namespace Warcraft.MPQ.Crypto
 {
 	// TODO: Implement
 	static class MPQSign

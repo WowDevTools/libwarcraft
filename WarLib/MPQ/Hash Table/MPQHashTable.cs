@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using WarLib.MPQ.Crypto;
+using Warcraft.MPQ.Crypto;
 
-namespace WarLib.MPQ
+namespace Warcraft.MPQ
 {
 	public class MPQHashTable
 	{

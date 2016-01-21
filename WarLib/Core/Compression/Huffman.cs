@@ -31,7 +31,7 @@ using System;
 using System.IO;
 using System.Collections;
 
-namespace WarLib.Core.Compression
+namespace Warcraft.Core.Compression
 {
 	// A node which is both hierachcical (parent/child) and doubly linked (next/prev)
 	internal class LinkedNode

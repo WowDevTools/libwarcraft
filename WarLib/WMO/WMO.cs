@@ -1,10 +1,10 @@
 ﻿using System;
-using WarLib.WMO.RootFile;
-using WarLib.WMO.GroupFile;
+using Warcraft.WMO.RootFile;
+using Warcraft.WMO.GroupFile;
 using System.Collections.Generic;
 
 
-namespace WarLib.WMO
+namespace Warcraft.WMO
 {
 	/// <summary>
 	/// Container class for a World Model Object (WMO).

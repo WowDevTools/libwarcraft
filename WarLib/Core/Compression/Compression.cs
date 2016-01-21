@@ -2,16 +2,16 @@
 using NoeCompression = Noemax.Compression;
 using System.IO;
 using Blast;
-using WarLib.Core.Compression;
-using WarLib.MPQ;
+using Warcraft.Core.Compression;
+using Warcraft.MPQ;
 
-namespace Warlib.Core.Compression
+namespace Warcraft.Core.Compression
 {
 	public static class Compression
 	{
 		static Compression()
 		{
-					
+
 		}
 
 		public static byte[] DecompressSector(byte[] pendingSector, BlockFlags flags)

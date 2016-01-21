@@ -10,9 +10,9 @@ using System.Collections.Generic;
 // Certain parts of the crypto class was taken from this library. Thanks!
 // https://github.com/nickaceves/nmpq/blob/master/Nmpq/Parsing/Crypto.cs
 using System.IO;
-using WarLib.Core.Hashing;
+using Warcraft.Core.Hashing;
 
-namespace WarLib.MPQ.Crypto
+namespace Warcraft.MPQ.Crypto
 {
 	static class MPQCrypt
 	{

@@ -6,10 +6,11 @@ using System.Drawing.Imaging;
 using System.Collections.Generic;
 
 using Squish;
-using WarLib.Core;
-using Warlib.Core.ImageQuantization;
+using Warcraft.Core;
+using Warcraft.Core.ImageQuantization;
+using System.Drawing.Drawing2D;
 
-namespace WarLib.BLP
+namespace Warcraft.BLP
 {
 	public class BLP
 	{
@@ -372,7 +373,8 @@ namespace WarLib.BLP
 			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel);
 			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel);
 
-			Bitmap resizedImage = new Bitmap(Image, (int)targetXRes, (int)targetYRes);
+			Bitmap resizedImage = ResizeImage(Image, (int)targetXRes, (int)targetYRes);
+			resizedImage.Save("/home/jarl/Desktop/debug.png");
 
 			List<byte> colourData = new List<byte>();
 			List<byte> alphaData = new List<byte>();
@@ -551,6 +553,39 @@ namespace WarLib.BLP
 			return compressedMipMap;
 		}
 
+		/// <summary>
+		/// Resize the image to the specified width and height.
+		/// Credit goes to https://stackoverflow.com/questions/1922040/resize-an-image-c-sharp (mpen)
+		/// </summary>
+		/// <param name="image">The image to resize.</param>
+		/// <param name="width">The width to resize to.</param>
+		/// <param name="height">The height to resize to.</param>
+		/// <returns>The resized image.</returns>
+		public static Bitmap ResizeImage(Image image, int width, int height)
+		{
+			var destRect = new Rectangle(0, 0, width, height);
+			var destImage = new Bitmap(width, height);
+
+			destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+			using (var graphics = Graphics.FromImage(destImage))
+			{
+				graphics.CompositingMode = CompositingMode.SourceCopy;
+				graphics.CompositingQuality = CompositingQuality.HighQuality;
+				graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+				graphics.SmoothingMode = SmoothingMode.HighQuality;
+				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+				using (var wrapMode = new ImageAttributes())
+				{
+					wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+					graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+				}
+			}
+
+			return destImage;
+		}
+
 		private List<byte> Decode1BitAlpha(byte[] data)
 		{
 			List<byte> alphaValues = new List<byte>();
@@ -558,9 +593,9 @@ namespace WarLib.BLP
 			foreach (byte dataByte in data)
 			{
 				// The alpha value is stored per-bit in the byte (8 alpha values per byte)
-				for (byte j = 7; j > 0; --j)
+				for (byte i = 0; i < 8; ++i)
 				{
-					byte alphaBit = (byte)ExtensionMethods.Map((byte)((dataByte >> j) & 0x01), 0, 1, 0, 255);
+					byte alphaBit = (byte)ExtensionMethods.Map((byte)((dataByte >> (7 - i)) & 0x01), 0, 1, 0, 255);
 
 					// At this point, alphaBit will be either 0 or 1. Map this to 0 or 255.
 					if (alphaBit > 0)
@@ -652,6 +687,12 @@ namespace WarLib.BLP
 		private Color FindClosestMatchingColor(Color InColor)
 		{
 			Color NearestColor = Color.Empty;
+
+			// Drop out if the palette contains an exact match
+			if (Palette.Contains(InColor))
+			{
+				return InColor;
+			}
 
 			double ColorDistance = 250000.0;
 			foreach (Color PaletteColor in Palette)

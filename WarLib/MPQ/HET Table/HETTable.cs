@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WarLib.MPQ.HETTable
+namespace Warcraft.MPQ.HETTable
 {
 	public class HETTable
 	{

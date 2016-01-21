@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WarLib.MPQ
+namespace Warcraft.MPQ
 {
 	public enum MPQFormat : ushort
 	{

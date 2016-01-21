@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace WarLib.MPQ
+namespace Warcraft.MPQ
 {
 	public class HashTableEntry
 	{

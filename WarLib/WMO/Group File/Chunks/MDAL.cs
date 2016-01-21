@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WarLib.WMO.GroupFile.Chunks
+namespace Warcraft.WMO.GroupFile.Chunks
 {
 	public class MDAL
 	{

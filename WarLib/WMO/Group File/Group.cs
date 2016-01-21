@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WarLib.WMO.GroupFile
+namespace Warcraft.WMO.GroupFile
 {
 	public class Group
 	{

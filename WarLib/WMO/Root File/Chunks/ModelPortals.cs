@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WarLib.WMO.RootFile.Chunks
+namespace Warcraft.WMO.RootFile.Chunks
 {
 	public class ModelPortals
 	{

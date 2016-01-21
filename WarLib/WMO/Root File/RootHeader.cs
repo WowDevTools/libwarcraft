@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WarLib.WMO.RootFile
+namespace Warcraft.WMO.RootFile
 {
 	public class RootHeader
 	{

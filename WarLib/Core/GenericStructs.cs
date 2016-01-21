@@ -1,6 +1,6 @@
 using System;
 
-namespace WarLib.Core
+namespace Warcraft.Core
 {
 	/// <summary>
 	/// A 3D vector of floats.

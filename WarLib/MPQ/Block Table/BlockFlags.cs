@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WarLib.MPQ
+namespace Warcraft.MPQ
 {
 	/// <summary>
 	/// Possible flags for a block entry, designating different flags for a stored file.

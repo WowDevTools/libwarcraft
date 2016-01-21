@@ -8,7 +8,7 @@
 using System;
 using System.IO;
 
-namespace WarLib.Core.Hashing
+namespace Warcraft.Core.Hashing
 {
 	public class Adler32
 	{

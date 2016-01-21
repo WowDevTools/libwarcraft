@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using WarLib.Core;
+using Warcraft.Core;
 using System.Collections.Generic;
 
-namespace WarLib.BLP
+namespace Warcraft.BLP
 {
 	public class BLPHeader
 	{

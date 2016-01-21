@@ -10,10 +10,10 @@ using System.Drawing.Imaging;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-using WarLib.Exceptions;
-using WarLib.Core;
+using Warcraft.Exceptions;
+using Warcraft.Core;
 
-namespace WarLib
+namespace Warcraft
 {
 	namespace ADT
 	{

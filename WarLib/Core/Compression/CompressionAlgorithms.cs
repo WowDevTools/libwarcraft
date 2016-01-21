@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WarLib.Core.Compression
+namespace Warcraft.Core.Compression
 {
 	// It is important that these algorithms are not reordered.
 	// If multiple algorithms are used, the order of algorithms are from top to bottom

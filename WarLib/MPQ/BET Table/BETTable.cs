@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WarLib.MPQ.BETTable
+namespace Warcraft.MPQ.BETTable
 {
 	public class BETTable
 	{

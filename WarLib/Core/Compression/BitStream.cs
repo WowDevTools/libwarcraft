@@ -30,7 +30,7 @@
 using System;
 using System.IO;
 
-namespace WarLib.Core.Compression
+namespace Warcraft.Core.Compression
 {
 	/// <summary>
 	/// A utility class for reading groups of bits from a stream
