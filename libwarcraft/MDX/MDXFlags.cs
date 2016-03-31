@@ -23,8 +23,15 @@ using System;
 
 namespace Warcraft.MDX
 {
-	public enum MDXFlags
+	[Flags]
+	public enum EMDXFlags
 	{
+		TiltX = 0x0001,
+		TiltY = 0x0002,
+		HasBlendModeOverrides = 0x0008,
+		HasPhysicsData = 0x0020,
+		HasSkinLODs = 0x0080,
+		UnknownCameraFlag = 0x0100
 	}
 }
 

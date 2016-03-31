@@ -130,6 +130,7 @@
     <Compile Include="MDX\MDX.cs" />
     <Compile Include="MDX\MDXHeader.cs" />
     <Compile Include="MDX\MDXFormat.cs" />
+    <Compile Include="MDX\MDXFlags.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
