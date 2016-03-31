@@ -24,7 +24,7 @@ using System;
 namespace Warcraft.MDX
 {
 	[Flags]
-	public enum EMDXFlags
+	public enum EMDXFlags : uint
 	{
 		TiltX = 0x0001,
 		TiltY = 0x0002,

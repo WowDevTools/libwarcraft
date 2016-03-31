@@ -32,7 +32,7 @@ namespace Warcraft.MDX
 		public uint Version;
 		public uint NameLength;
 		public uint NameOffset;
-		public uint GlobalModelFlags;
+		public EMDXFlags GlobalModelFlags;
 		public uint GlobalSequenceCount;
 		public uint GlobalSequencesOffset;
 		public uint AnimationCount;
@@ -118,13 +118,14 @@ namespace Warcraft.MDX
 					string Signature = br.ReadChars(4).ToString();
 					if (Signature != MDXHeader.Signature)
 					{
-						throw new ArgumentException("The provided data stream does not contain a valid MDX signature.");
+						throw new ArgumentException("The provided data stream does not contain a valid MDX signature. " +
+							"It might be a Legion file, or you may have omitted the signature, which should be \"MD20\".");
 					}
 
 					this.Version = br.ReadUInt32();
 					this.NameLength = br.ReadUInt32();
 					this.NameOffset = br.ReadUInt32();
-					this.GlobalModelFlags = br.ReadUInt32();
+					this.GlobalModelFlags = (EMDXFlags)br.ReadUInt32();
 					this.GlobalSequenceCount = br.ReadUInt32();
 					this.GlobalSequencesOffset = br.ReadUInt32();
 					this.AnimationCount = br.ReadUInt32();
@@ -194,13 +195,11 @@ namespace Warcraft.MDX
 					this.ParticleEmitterCount = br.ReadUInt32();
 					this.ParticleEmittersOffset = br.ReadUInt32();
 
-					/*
-					if (GlobalModelFlags.HasFlag(EMDXFlags.HasBlendModeOverrides)
+					if (GlobalModelFlags.HasFlag(EMDXFlags.HasBlendModeOverrides))
 					{
 						this.BlendMapCount = br.ReadUInt32();
 						this.BlendMapsOffset = br.ReadUInt32();
 					}
-					*/
 				}
 			}
 		}
