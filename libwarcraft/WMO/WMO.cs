@@ -3,7 +3,6 @@ using Warcraft.WMO.RootFile;
 using Warcraft.WMO.GroupFile;
 using System.Collections.Generic;
 
-
 namespace Warcraft.WMO
 {
 	/// <summary>

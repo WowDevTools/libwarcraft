@@ -30,7 +30,33 @@ namespace Warcraft.MDX
 
 		public MDX(Stream MDXStream)
 		{
+			using (BinaryReader br = new BinaryReader(MDXStream))
+			{
+				EMDXFlags Flags = PeekFlags(br);
+				if (Flags.HasFlag(EMDXFlags.HasBlendModeOverrides))
+				{
+					this.Header = new MDXHeader(br.ReadBytes(308));
+				}
+				else
+				{
+					this.Header = new MDXHeader(br.ReadBytes(312));
+				}
+			}
+		}
 
+		private EMDXFlags PeekFlags(BinaryReader br)
+		{
+			long initialPosition = br.BaseStream.Position;
+
+			// Skip ahead to the flag block
+			br.BaseStream.Position += 16;
+
+			EMDXFlags flags = (EMDXFlags)br.ReadUInt32();
+
+			// Seek back to the initial position
+			br.BaseStream.Position = initialPosition;
+
+			return flags;
 		}
 	}
 }
