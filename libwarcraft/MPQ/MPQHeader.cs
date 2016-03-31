@@ -45,7 +45,7 @@ namespace Warcraft.MPQ
 		// The MD5_Header is calculated from the start of the signature to the end of the MD5_HETTable
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WarLib.MPQ.MPQHeader"/> class.
+		/// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQHeader"/> class.
 		/// </summary>
 		/// <param name="data">A byte array containing the header data of the archive.</param>
 		public MPQHeader(byte[] data)

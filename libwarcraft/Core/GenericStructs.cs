@@ -2,6 +2,46 @@ using System;
 
 namespace Warcraft.Core
 {
+	public struct Box
+	{
+		public Vector3f BottomCorner;
+		public Vector3f TopCorner;
+
+		public Box(Vector3f InBottomCorner, Vector3f InTopCorner)
+		{
+			this.BottomCorner = InBottomCorner;
+			this.TopCorner = InTopCorner;
+		}
+	}
+
+	public struct Sphere
+	{
+		public Vector3f Position;
+		public float Radius;
+
+		public Sphere(Vector3f InPosition, float InRadius)
+		{
+			this.Position = InPosition;
+			this.Radius = InRadius;
+		}
+	}
+
+	public struct ARGB
+	{
+		public byte R;
+		public byte G;
+		public byte B;
+		public byte A;
+
+		public ARGB(byte InA, byte InR, byte InG, byte InB)
+		{
+			this.A = InA;
+			this.R = InR;
+			this.G = InG;
+			this.B = InB;
+		}
+	}
+
 	/// <summary>
 	/// A 3D vector of floats.
 	/// </summary>

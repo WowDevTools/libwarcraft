@@ -8,6 +8,8 @@
     <RootNamespace>Warcraft</RootNamespace>
     <AssemblyName>libwarcraft</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\Documents\Keys &amp; Cryptography\libwarcraft\libwarcraft.key</AssemblyOriginatorKeyFile>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
@@ -39,12 +41,11 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="Noemax.Compression.Net4.Trial">
-      <HintPath>..\..\WarLib Examples\packages\Noemax.Compression.16.16.0\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
+      <HintPath>..\packages\Noemax.Compression.16.86.0\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Exceptions.cs" />
     <Compile Include="BLP\BLP.cs" />
     <Compile Include="BLP\BLPHeader.cs" />
     <Compile Include="Core\GenericStructs.cs" />
@@ -125,6 +126,10 @@
     <Compile Include="WMO\Root File\Chunks\ModelConvexPlanes.cs" />
     <Compile Include="WMO\Root File\Chunks\ModelGameobjectFileID.cs" />
     <Compile Include="WMO\WMO.cs" />
+    <Compile Include="Core\Exceptions.cs" />
+    <Compile Include="MDX\MDX.cs" />
+    <Compile Include="MDX\MDXHeader.cs" />
+    <Compile Include="MDX\MDXFormat.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -160,6 +165,7 @@
     <Folder Include="WMO\Root File\Chunks\" />
     <Folder Include="WMO\Group File\Chunks\" />
     <Folder Include="Core\Shading\" />
+    <Folder Include="MDX\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -175,7 +181,7 @@
           <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/xml" />
           <TextStylePolicy inheritsSet="null" scope="text/x-csrc" />
         </Policies>
-        <Deployment.LinuxDeployData scriptName="warlib" />
+        <Deployment.LinuxDeployData scriptName="libwarcraft" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>

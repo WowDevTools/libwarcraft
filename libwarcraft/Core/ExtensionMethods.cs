@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 
 namespace Warcraft.Core
 {
@@ -35,6 +36,32 @@ namespace Warcraft.Core
 				}
 			}
 			return false;
+		}
+
+		/*
+			Binary Reader Extensions for standard typess
+		*/
+
+		/// <summary>
+		/// Reads a 12-byte Vector3f structure from the data stream	and advances the position of the stream by
+		/// 12 bytes.
+		/// </summary>
+		/// <returns>The vector3f.</returns>
+		/// <param name="br">Br.</param>
+		public static Vector3f ReadVector3f(this BinaryReader br)
+		{
+			return new Vector3f(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+		}
+
+		/// <summary>
+		/// Reads a 24-byte Box structure from the data stream and advances the position of the stream by
+		// 24 bytes.
+		/// </summary>
+		/// <returns>The box.</returns>
+		/// <param name="br">Br.</param>
+		public static Box ReadBox(this BinaryReader br)
+		{
+			return new Box(br.ReadVector3f(), br.ReadVector3f());
 		}
 	}
 }

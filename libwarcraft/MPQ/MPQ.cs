@@ -19,7 +19,7 @@ namespace Warcraft.MPQ
 		private readonly BinaryReader mpqReader;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WarLib.MPQ.MPQ"/> class.
+		/// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQ"/> class.
 		/// </summary>
 		/// <param name="mpqStream">An open stream to data containing an MPQ archive.</param>
 		public MPQ(Stream mpqStream)
