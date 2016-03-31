@@ -1,4 +1,4 @@
 language: csharp
-solution: WarLib.sln
+solution: libwarcraft.sln
 install:
-    - nuget restore WarLib.sln
+    - nuget restore libwarcraft.sln
