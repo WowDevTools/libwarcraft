@@ -1,4 +1,5 @@
 using System;
+using Warcraft.Core.Interpolation;
 
 namespace Warcraft.Core
 {
@@ -118,7 +119,50 @@ namespace Warcraft.Core
 		}
 	}
 
-	public struct Vector2f
+	/// <summary>
+	/// A 3D rotator of floats.
+	/// </summary>
+	public struct Quaternion : IInterpolatable<Quaternion>
+	{
+		/// <summary>
+		/// Pitch of the rotator
+		/// </summary>
+		public float Pitch;
+		/// <summary>
+		/// Yaw of the rotator
+		/// </summary>
+		public float Yaw;
+		/// <summary>
+		/// Roll of the rotator
+		/// </summary>
+		public float Roll;
+		/// <summary>
+		/// The scalar of the quaternion
+		/// </summary>
+		public float Scalar;
+
+		/// <summary>
+		/// Creates a new rotator object from three floats.
+		/// </summary>
+		/// <param name="Pitch">Pitch</param>
+		/// <param name="Yaw">Yaw</param>
+		/// <param name="Roll">Roll</param>
+		/// <param name="Scalar">Scalar</param>
+		public Quaternion(float Pitch, float Yaw, float Roll, float Scalar)
+		{
+			this.Pitch = Pitch;
+			this.Yaw = Yaw;
+			this.Roll = Roll;
+			this.Scalar = Scalar;
+		}
+
+		public Quaternion Interpolate(Quaternion Target, float Alpha, InterpolationType Type)
+		{
+			return new Quaternion(0, 0, 0, 0);
+		}
+	}
+
+	public struct Vector2f : IInterpolatable<Vector2f>
 	{
 		public float X;
 		public float Y;
@@ -127,6 +171,11 @@ namespace Warcraft.Core
 		{
 			this.X = X;
 			this.Y = Y;
+		}
+
+		public Vector2f Interpolate(Vector2f Target, float Alpha, InterpolationType Type)
+		{
+			return new Vector2f(0, 0);
 		}
 	}
 

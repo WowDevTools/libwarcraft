@@ -1,5 +1,5 @@
 ﻿//
-//  MDXFormat.cs
+//  IInterpolatable.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,18 +21,11 @@
 //
 using System;
 
-namespace Warcraft.MDX
+namespace Warcraft.Core.Interpolation
 {
-	public enum MDXFormat
+	public interface IInterpolatable<T>
 	{
-		Unknown = -1,
-		Classic = 1,
-		BurningCrusade = 2,
-		Wrath = 3,
-		Cataclysm = 4,
-		Mists = 5,
-		Warlords = 6,
-		Legion = 7
+		T Interpolate(T Target, float Alpha, InterpolationType Type);
 	}
 }
 

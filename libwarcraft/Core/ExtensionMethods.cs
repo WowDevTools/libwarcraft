@@ -43,6 +43,37 @@ namespace Warcraft.Core
 		*/
 
 		/// <summary>
+		/// Reads a 16-byte 32-bit quaternion structure from the data stream, and advances the position of the stream by
+		/// 16 bytes.
+		/// </summary>
+		/// <returns>The quaternion.</returns>
+		/// <param name="br">Br.</param>
+		public static Quaternion ReadQuaternion32(this BinaryReader br)
+		{
+			return new Quaternion(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+		}
+
+		/// <summary>
+		/// Reads a 8-byte 16-bit quaternion structure from the data stream, and advances the position of the stream by
+		/// 8 bytes.
+		/// </summary>
+		/// <returns>The quaternion.</returns>
+		/// <param name="br">Br.</param>
+		public static Quaternion ReadQuaternion16(this BinaryReader br)
+		{
+			short x = br.ReadInt16();
+			short y = br.ReadInt16();
+			short z = br.ReadInt16();
+			short w = br.ReadInt16();
+			return new Quaternion(ShortQuatValueToFloat(x), ShortQuatValueToFloat(y), ShortQuatValueToFloat(z), ShortQuatValueToFloat(w));
+		}
+
+		private static float ShortQuatValueToFloat(short InShort)
+		{
+			return (float)(InShort < 0 ? InShort + 32768 : InShort - 32768) / 32767.0f;
+		}
+
+		/// <summary>
 		/// Reads a 12-byte Vector3f structure from the data stream	and advances the position of the stream by
 		/// 12 bytes.
 		/// </summary>
@@ -51,6 +82,17 @@ namespace Warcraft.Core
 		public static Vector3f ReadVector3f(this BinaryReader br)
 		{
 			return new Vector3f(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+		}
+
+		/// <summary>
+		/// Reads an 8-byte Vector2f structure from the data stream and advances the position of the stream by
+		/// 8 bytes.
+		/// </summary>
+		/// <returns>The vector2f.</returns>
+		/// <param name="br">Br.</param>
+		public static Vector2f ReadVector2f(this BinaryReader br)
+		{
+			return new Vector2f(br.ReadSingle(), br.ReadSingle());
 		}
 
 		/// <summary>

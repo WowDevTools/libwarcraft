@@ -1,5 +1,5 @@
 ﻿//
-//  MDXFormat.cs
+//  MDXVertexProperty.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.Collections.Generic;
 
-namespace Warcraft.MDX
+namespace Warcraft.MDX.Geometry
 {
-	public enum MDXFormat
+	public class MDXVertexProperty
 	{
-		Unknown = -1,
-		Classic = 1,
-		BurningCrusade = 2,
-		Wrath = 3,
-		Cataclysm = 4,
-		Mists = 5,
-		Warlords = 6,
-		Legion = 7
+		public readonly List<byte> BoneIndices = new List<byte>();
+
+		public MDXVertexProperty(byte InBoneA, byte InBoneB, byte InBoneC, byte InBoneD)
+		{
+			BoneIndices.Add(InBoneA);
+			BoneIndices.Add(InBoneB);
+			BoneIndices.Add(InBoneC);
+			BoneIndices.Add(InBoneD);
+		}
 	}
 }
 

@@ -1,5 +1,5 @@
 ﻿//
-//  MDXFormat.cs
+//  MDXBone.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,37 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using Warcraft.Core;
 
-namespace Warcraft.MDX
+namespace Warcraft.MDX.Animation
 {
-	public enum MDXFormat
+	public class MDXBone
 	{
-		Unknown = -1,
-		Classic = 1,
-		BurningCrusade = 2,
-		Wrath = 3,
-		Cataclysm = 4,
-		Mists = 5,
-		Warlords = 6,
-		Legion = 7
+		public uint AnimationID;
+		public MDXBoneFlags Flags;
+		public short ParentBone;
+		public ushort SubmeshID;
+		public ushort Unknown1;
+		public ushort Unknown2;
+		public MDXTrack<Vector3f> AnimatedTranslation;
+		public MDXTrack<Quaternion> AnimatedRotation;
+		public MDXTrack<Vector3f> AnimatedScale;
+		public Vector3f PivotPoint;
+
+		public MDXBone(byte[] data, MDXFormat Format)
+		{
+		}
+	}
+
+	public enum MDXBoneFlags : uint
+	{
+		SphericalBillboard = 0x8,
+		CylindricalBillboard_LockedX = 0x10,
+		CylindricalBillboard_LockedY = 0x20,
+		CylindricalBillboard_LockedZ = 0x40,
+		Transformed = 0x200,
+		KinematicBone = 0x400,
+		ScaledAnimation = 0x1000
 	}
 }
 

@@ -1,5 +1,5 @@
 ﻿//
-//  MDXFormat.cs
+//  MDXSkin.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,18 +21,13 @@
 //
 using System;
 
-namespace Warcraft.MDX
+namespace Warcraft.MDX.Geometry
 {
-	public enum MDXFormat
+	public class MDXSkin
 	{
-		Unknown = -1,
-		Classic = 1,
-		BurningCrusade = 2,
-		Wrath = 3,
-		Cataclysm = 4,
-		Mists = 5,
-		Warlords = 6,
-		Legion = 7
+		public MDXSkin()
+		{
+		}
 	}
 }
 

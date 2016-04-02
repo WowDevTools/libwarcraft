@@ -10,8 +10,6 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\Documents\Keys &amp; Cryptography\libwarcraft\libwarcraft.key</AssemblyOriginatorKeyFile>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -131,6 +129,24 @@
     <Compile Include="MDX\MDXHeader.cs" />
     <Compile Include="MDX\MDXFormat.cs" />
     <Compile Include="MDX\MDXFlags.cs" />
+    <Compile Include="MDX\Visual\MDXTexture.cs" />
+    <Compile Include="MDX\Geometry\MDXVertex.cs" />
+    <Compile Include="MDX\Geometry\MDXView.cs" />
+    <Compile Include="MDX\Geometry\MDXViewHeader.cs" />
+    <Compile Include="MDX\Geometry\MDXSkin.cs" />
+    <Compile Include="MDX\Geometry\MDXSkinHeader.cs" />
+    <Compile Include="MDX\Geometry\MDXTriangle.cs" />
+    <Compile Include="MDX\Geometry\MDXVertexProperty.cs" />
+    <Compile Include="MDX\Geometry\MDXSubmesh.cs" />
+    <Compile Include="MDX\Visual\MDXTextureUnit.cs" />
+    <Compile Include="MDX\Animation\MDXAnimationSequence.cs" />
+    <Compile Include="MDX\Animation\MDXPlayableAnimationLookupTableEntry.cs" />
+    <Compile Include="MDX\Animation\MDXBone.cs" />
+    <Compile Include="MDX\Animation\MDXTrack.cs" />
+    <Compile Include="MDX\Animation\MDXArray.cs" />
+    <Compile Include="Core\Interpolation\IInterpolatable.cs" />
+    <Compile Include="Core\Interpolation\Interpolation.cs" />
+    <Compile Include="MDX\Visual\MDXRenderFlag.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -167,6 +183,11 @@
     <Folder Include="WMO\Group File\Chunks\" />
     <Folder Include="Core\Shading\" />
     <Folder Include="MDX\" />
+    <Folder Include="MDX\Geometry\" />
+    <Folder Include="MDX\Animation\" />
+    <Folder Include="MDX\Visual\" />
+    <Folder Include="MDX\Visual\FX\" />
+    <Folder Include="Core\Interpolation\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

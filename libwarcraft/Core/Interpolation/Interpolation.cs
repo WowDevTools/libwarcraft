@@ -1,5 +1,5 @@
 ﻿//
-//  MDXFormat.cs
+//  Interpolation.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,18 +21,37 @@
 //
 using System;
 
-namespace Warcraft.MDX
+namespace Warcraft.Core.Interpolation
 {
-	public enum MDXFormat
+	public static class Interpolation
 	{
-		Unknown = -1,
-		Classic = 1,
-		BurningCrusade = 2,
-		Wrath = 3,
-		Cataclysm = 4,
-		Mists = 5,
-		Warlords = 6,
-		Legion = 7
+		public static float InterpolateFlat(float A, float B, float Alpha)
+		{
+			return 0.0f;
+		}
+
+		public static float InterpolateLinear(float A, float B, float Alpha)
+		{
+			return 0.0f;
+		}
+
+		public static float InterpolateHermite(float A, float TangentA, float B, float TangentB, float Alpha)
+		{
+			return 0.0f;
+		}
+
+		public static float InterpolateBezier(float A, float TangentA, float B, float TangentB, float Alpha)
+		{
+			return 0.0f;
+		}
+	}
+
+	public enum InterpolationType : short
+	{
+		Flat = 0,
+		Linear = 1,
+		Hermite = 2,
+		Bezier = 3
 	}
 }
 

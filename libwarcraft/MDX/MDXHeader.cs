@@ -35,25 +35,43 @@ namespace Warcraft.MDX
 		public EMDXFlags GlobalModelFlags;
 		public uint GlobalSequenceCount;
 		public uint GlobalSequencesOffset;
-		public uint AnimationCount;
-		public uint AnimationsOffset;
-		public uint AnimationLookupCount;
-		public uint AnimationLookupsOffset;
+		public uint AnimationSequenceCount;
+		public uint AnimationSequencesOffset;
+		public uint AnimationLookupTableEntryCount;
+		public uint AnimationLookupTableOffset;
+
+		// Pre-Wrath
+		public uint PlayableAnimationLookupTableEntryCount;
+		public uint PlayableAnimationLookupTableOffset;
+		// End Pre-Wrath
+
 		public uint BoneCount;
 		public uint BonesOffset;
-		public uint KeyBoneLookupTableCount;
-		public uint KeyBoneLookupTablesOffset;
+		public uint KeyedBoneLookupTableCount;
+		public uint KeyedBoneLookupTablesOffset;
 		public uint VertexCount;
 		public uint VerticesOffset;
-		public uint LODCount;
-		public uint SubmeshAnimationCount;
-		public uint SubmeshAnimationsOffset;
+		public uint LODViewsCount;
+
+		// Pre-Wrath
+		public uint LODViewsOffset;
+		// End Pre-Wrath
+
+		public uint SubmeshColourAnimationCount;
+		public uint SubmeshColourAnimationsOffset;
 		public uint TextureCount;
 		public uint TexturesOffset;
 		public uint TransparencyCount;
 		public uint TransparenciesOffset;
-		public uint UVAnimationCount;
-		public uint UVAnimationsOffset;
+
+		// Pre-Wrath
+		// Seems to always be 0
+		public uint UnknownCount;
+		public uint UnknownOffset;
+		// End Pre-Wrath
+
+		public uint UVTextureAnimationCount;
+		public uint UVTextureAnimationsOffset;
 		public uint ReplaceableTextureCount;
 		public uint ReplaceableTexturesOffset;
 		public uint RenderFlagCount;
@@ -67,8 +85,8 @@ namespace Warcraft.MDX
 		public uint TextureUnitsOffset;
 		public uint TransparencyLookupTableCount;
 		public uint TransparencyLookupTablesOffset;
-		public uint UVAnimationLookupTableCount;
-		public uint UVAnimationLookupTablesOffset;
+		public uint UVTextureAnimationLookupTableCount;
+		public uint UVTextureAnimationLookupTablesOffset;
 
 		public Box BoundingBox;
 		public float BoundingSphereRadius;
@@ -115,7 +133,7 @@ namespace Warcraft.MDX
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					string Signature = br.ReadChars(4).ToString();
+					string Signature = new string(br.ReadChars(4));
 					if (Signature != MDXHeader.Signature)
 					{
 						throw new ArgumentException("The provided data stream does not contain a valid MDX signature. " +
@@ -128,25 +146,46 @@ namespace Warcraft.MDX
 					this.GlobalModelFlags = (EMDXFlags)br.ReadUInt32();
 					this.GlobalSequenceCount = br.ReadUInt32();
 					this.GlobalSequencesOffset = br.ReadUInt32();
-					this.AnimationCount = br.ReadUInt32();
-					this.AnimationsOffset = br.ReadUInt32();
-					this.AnimationLookupCount = br.ReadUInt32();
-					this.AnimationLookupsOffset = br.ReadUInt32();
+					this.AnimationSequenceCount = br.ReadUInt32();
+					this.AnimationSequencesOffset = br.ReadUInt32();
+					this.AnimationLookupTableEntryCount = br.ReadUInt32();
+					this.AnimationLookupTableOffset = br.ReadUInt32();
+
+					if (GetModelVersion(Version) < MDXFormat.Wrath)
+					{
+						this.PlayableAnimationLookupTableEntryCount = br.ReadUInt32();
+						this.PlayableAnimationLookupTableOffset = br.ReadUInt32();
+					}
+
 					this.BoneCount = br.ReadUInt32();
 					this.BonesOffset = br.ReadUInt32();
-					this.KeyBoneLookupTableCount = br.ReadUInt32();
-					this.KeyBoneLookupTablesOffset = br.ReadUInt32();
+					this.KeyedBoneLookupTableCount = br.ReadUInt32();
+					this.KeyedBoneLookupTablesOffset = br.ReadUInt32();
+
 					this.VertexCount = br.ReadUInt32();
 					this.VerticesOffset = br.ReadUInt32();
-					this.LODCount = br.ReadUInt32();
-					this.SubmeshAnimationCount = br.ReadUInt32();
-					this.SubmeshAnimationsOffset = br.ReadUInt32();
+					this.LODViewsCount = br.ReadUInt32();
+
+					if (GetModelVersion(Version) < MDXFormat.Wrath)
+					{
+						this.LODViewsOffset = br.ReadUInt32();
+					}
+
+					this.SubmeshColourAnimationCount = br.ReadUInt32();
+					this.SubmeshColourAnimationsOffset = br.ReadUInt32();
 					this.TextureCount = br.ReadUInt32();
 					this.TexturesOffset = br.ReadUInt32();
 					this.TransparencyCount = br.ReadUInt32();
 					this.TransparenciesOffset = br.ReadUInt32();
-					this.UVAnimationCount = br.ReadUInt32();
-					this.UVAnimationsOffset = br.ReadUInt32();
+
+					if (GetModelVersion(Version) < MDXFormat.Wrath)
+					{
+						this.UnknownCount = br.ReadUInt32();
+						this.UnknownOffset = br.ReadUInt32();
+					}
+
+					this.UVTextureAnimationCount = br.ReadUInt32();
+					this.UVTextureAnimationsOffset = br.ReadUInt32();
 					this.ReplaceableTextureCount = br.ReadUInt32();
 					this.ReplaceableTexturesOffset = br.ReadUInt32();
 					this.RenderFlagCount = br.ReadUInt32();
@@ -160,8 +199,8 @@ namespace Warcraft.MDX
 					this.TextureUnitsOffset = br.ReadUInt32();
 					this.TransparencyLookupTableCount = br.ReadUInt32();
 					this.TransparencyLookupTablesOffset = br.ReadUInt32();
-					this.UVAnimationLookupTableCount = br.ReadUInt32();
-					this.UVAnimationLookupTablesOffset = br.ReadUInt32();
+					this.UVTextureAnimationLookupTableCount = br.ReadUInt32();
+					this.UVTextureAnimationLookupTablesOffset = br.ReadUInt32();
 
 					this.BoundingBox = br.ReadBox();
 					this.BoundingSphereRadius = br.ReadSingle();
@@ -204,7 +243,7 @@ namespace Warcraft.MDX
 			}
 		}
 
-		public MDXFormat GetModelVersion()
+		public static MDXFormat GetModelVersion(uint Version)
 		{
 			if (Version <= 256)
 			{

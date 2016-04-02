@@ -1,5 +1,5 @@
 ﻿//
-//  MDXFormat.cs
+//  MDXRenderFlag.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,48 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.IO;
 
-namespace Warcraft.MDX
+namespace Warcraft.MDX.Visual
 {
-	public enum MDXFormat
+	public class MDXRenderFlagPair
 	{
-		Unknown = -1,
-		Classic = 1,
-		BurningCrusade = 2,
-		Wrath = 3,
-		Cataclysm = 4,
-		Mists = 5,
-		Warlords = 6,
-		Legion = 7
+		public MDXRenderFlag Flags;
+		public MDXBlendMode BlendingMode;
+
+		public MDXRenderFlagPair(byte[] data)
+		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.Flags = (MDXRenderFlag)br.ReadUInt16();
+					this.BlendingMode = (MDXBlendMode)br.ReadUInt16();
+				}
+			}
+		}
+	}
+
+	[Flags]
+	public enum MDXRenderFlag : ushort
+	{
+		Unlit = 0x01,
+		NoFog = 0x02,
+		TwoSided = 0x04,
+		Unknown = 0x08,
+		DisableZBuffering = 0x10
+	}
+
+	[Flags]
+	public enum MDXBlendMode : ushort
+	{
+		Opaque = 0,
+		AlphaTestOnly = 1,
+		AlphaBlending = 2,
+		Additive = 3,
+		AdditiveAlpha = 4,
+		Modulate = 5,
+		DeeprunTramMagic = 6
 	}
 }
 

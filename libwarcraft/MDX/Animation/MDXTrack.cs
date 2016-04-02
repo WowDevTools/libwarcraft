@@ -1,5 +1,5 @@
 ﻿//
-//  MDXFormat.cs
+//  MDXTrack.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,34 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using Warcraft.Core.Interpolation;
 
-namespace Warcraft.MDX
+namespace Warcraft.MDX.Animation
 {
-	public enum MDXFormat
+	public class MDXTrack<T>
 	{
-		Unknown = -1,
-		Classic = 1,
-		BurningCrusade = 2,
-		Wrath = 3,
-		Cataclysm = 4,
-		Mists = 5,
-		Warlords = 6,
-		Legion = 7
+		public InterpolationType Interpolationtype;
+		public short GlobalSequenceID;
+
+		/*
+			<= BC
+		*/
+		public uint InterpolationRangeCount;
+		public uint InterpolationRangesOffset;
+		public uint TimestampCount;
+		public uint TimestampsOffset;
+		public uint ValueCount;
+		public uint ValuesOffset;
+
+		/*
+			>= Wrath
+		*/
+		public MDXArray<MDXArray<uint>> Timestamps;
+		public MDXArray<MDXArray<T>> Values;
+
+		public MDXTrack(byte[] data)
+		{
+		}
 	}
 }
 

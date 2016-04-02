@@ -1,5 +1,5 @@
 ﻿//
-//  MDXFormat.cs
+//  MDXArray.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.Collections.Generic;
 
-namespace Warcraft.MDX
+namespace Warcraft.MDX.Animation
 {
-	public enum MDXFormat
+	public class MDXArray<T>
 	{
-		Unknown = -1,
-		Classic = 1,
-		BurningCrusade = 2,
-		Wrath = 3,
-		Cataclysm = 4,
-		Mists = 5,
-		Warlords = 6,
-		Legion = 7
+		public uint Count;
+		public uint OffsetElements;
+		public List<T> Values;
+
+		public MDXArray()
+		{
+		}
 	}
 }
 
