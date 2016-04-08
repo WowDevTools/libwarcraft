@@ -1,5 +1,5 @@
 ﻿//
-//  MDXBone.cs
+//  MDXUVAnimation.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,41 +24,15 @@ using Warcraft.Core;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXBone
+	public class MDXUVAnimation
 	{
-		public int AnimationID;
-		public MDXBoneFlags Flags;
-		public short ParentBone;
-		public ushort SubmeshID;
+		public MDXTrack<Vector3f> TranslationTrack;
+		public MDXTrack<Quaternion> RotationTrack;
+		public MDXTrack<Vector3f> ScaleTrack;
 
-		/* 
-			Only present in Version >= BC
-		*/
-		public ushort Unknown1;
-
-		// This one might actually be a short and not a ushort
-		public ushort Unknown2;
-		// ...
-
-		public MDXTrack<Vector3f> AnimatedTranslation;
-		public MDXTrack<Quaternion> AnimatedRotation;
-		public MDXTrack<Vector3f> AnimatedScale;
-		public Vector3f PivotPoint;
-
-		public MDXBone()
+		public MDXUVAnimation()
 		{
 		}
-	}
-
-	public enum MDXBoneFlags : uint
-	{
-		SphericalBillboard = 0x8,
-		CylindricalBillboard_LockedX = 0x10,
-		CylindricalBillboard_LockedY = 0x20,
-		CylindricalBillboard_LockedZ = 0x40,
-		Transformed = 0x200,
-		KinematicBone = 0x400,
-		ScaledAnimation = 0x1000
 	}
 }
 

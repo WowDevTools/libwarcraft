@@ -8,7 +8,7 @@
     <RootNamespace>Warcraft</RootNamespace>
     <AssemblyName>libwarcraft</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\Documents\Keys &amp; Cryptography\libwarcraft\libwarcraft.key</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -147,6 +147,8 @@
     <Compile Include="Core\Interpolation\IInterpolatable.cs" />
     <Compile Include="Core\Interpolation\Interpolation.cs" />
     <Compile Include="MDX\Visual\MDXRenderFlag.cs" />
+    <Compile Include="MDX\Animation\MDXSubmeshColourAnimation.cs" />
+    <Compile Include="MDX\Animation\MDXUVAnimation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />

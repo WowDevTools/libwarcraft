@@ -29,8 +29,8 @@ namespace Warcraft.MDX.Geometry
 		public uint VertexIndexCount;
 		public uint VertexIndicesOffset;
 
-		public uint TriangleCount;
-		public uint TrianglesOffset;
+		public uint TriangleVertexCount;
+		public uint TriangleVertexIndicesOffset;
 
 		public uint VertexPropertyCount;
 		public uint VertexPropertiesOffset;
@@ -52,8 +52,8 @@ namespace Warcraft.MDX.Geometry
 					this.VertexIndexCount = br.ReadUInt32();
 					this.VertexIndicesOffset = br.ReadUInt32();
 
-					this.TriangleCount = br.ReadUInt32();
-					this.TrianglesOffset = br.ReadUInt32();
+					this.TriangleVertexCount = br.ReadUInt32();
+					this.TriangleVertexIndicesOffset = br.ReadUInt32();
 
 					this.VertexPropertyCount = br.ReadUInt32();
 					this.VertexPropertiesOffset = br.ReadUInt32();

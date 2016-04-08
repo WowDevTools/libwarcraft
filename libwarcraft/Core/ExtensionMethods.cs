@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using Warcraft.MDX.Animation;
+using Warcraft.MDX;
+using System.Reflection;
 
 namespace Warcraft.Core
 {

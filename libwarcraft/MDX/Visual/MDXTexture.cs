@@ -31,6 +31,8 @@ namespace Warcraft.MDX.Visual
 		public uint FilenameLength;
 		public uint FilenameOffset;
 
+		public string Filename;
+
 		public MDXTexture(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))

@@ -21,6 +21,9 @@
 //
 using System;
 using Warcraft.Core.Interpolation;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.Core;
 
 namespace Warcraft.MDX.Animation
 {
@@ -31,22 +34,49 @@ namespace Warcraft.MDX.Animation
 
 		/*
 			<= BC
+			Read these values and fill in the lists with
+			the data.
 		*/
-		public uint InterpolationRangeCount;
-		public uint InterpolationRangesOffset;
-		public uint TimestampCount;
-		public uint TimestampsOffset;
-		public uint ValueCount;
-		public uint ValuesOffset;
+
+		public readonly MDXArray<KeyValuePair<int, int>> InterpolationRanges;
 
 		/*
 			>= Wrath
+			Read the lists directly.
 		*/
-		public MDXArray<MDXArray<uint>> Timestamps;
-		public MDXArray<MDXArray<T>> Values;
+		public readonly MDXArray<MDXArray<int>> Timestamps;
+		public readonly MDXArray<MDXArray<T>> Values;
 
-		public MDXTrack(byte[] data)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.MDX.Animation.MDXTrack</c>"/> class.
+		/// This class fires off a new BinaryReader, as it outreferences values elsewhere in the file.
+		/// The value references in the track are not filled, as they can be a number of different types.
+		/// When used, you must fill the values yourself after the creation of the track.
+		/// </summary>
+		/// <param name="data">Data.</param>
+		/// <param name="filePath">File path to the M2 file.</param>
+		/// <param name="Format">Format.</param>
+		public MDXTrack(byte[] data, string filePath, MDXFormat Format)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					Interpolationtype = (InterpolationType)br.ReadInt16();
+					GlobalSequenceID = br.ReadInt16();
+
+					if (Format < MDXFormat.Wrath)
+					{
+						InterpolationRanges = new MDXArray<KeyValuePair<int, int>>(br.ReadBytes(8));
+						Timestamps = new MDXArray<MDXArray<int>>(br.ReadBytes(8));
+						Values = new MDXArray<MDXArray<T>>(br.ReadBytes(8));
+					}
+					else
+					{
+						throw new NotImplementedException();
+					}
+				}
+			}
 		}
 	}
 }

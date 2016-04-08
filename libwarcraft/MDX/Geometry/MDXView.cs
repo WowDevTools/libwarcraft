@@ -22,6 +22,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using Warcraft.MDX.Visual;
 
 namespace Warcraft.MDX.Geometry
 {
@@ -32,6 +33,7 @@ namespace Warcraft.MDX.Geometry
 		public List<MDXTriangle> Triangles;
 		public List<MDXVertexProperty> VertexProperties;
 		public List<MDXSubmesh> Submeshes;
+		public List<MDXTextureUnit> TextureUnits;
 
 		public MDXView()
 		{

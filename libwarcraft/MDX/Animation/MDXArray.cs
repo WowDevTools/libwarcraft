@@ -21,17 +21,26 @@
 //
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Warcraft.MDX.Animation
 {
 	public class MDXArray<T>
 	{
 		public uint Count;
-		public uint OffsetElements;
-		public List<T> Values;
+		public uint ElementsOffset;
+		public readonly List<T> Values = new List<T>();
 
-		public MDXArray()
+		public MDXArray(byte[] data)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.Count = br.ReadUInt32();
+					this.ElementsOffset = br.ReadUInt32();
+				}
+			}
 		}
 	}
 }

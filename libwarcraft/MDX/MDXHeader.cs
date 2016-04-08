@@ -61,8 +61,8 @@ namespace Warcraft.MDX
 		public uint SubmeshColourAnimationsOffset;
 		public uint TextureCount;
 		public uint TexturesOffset;
-		public uint TransparencyCount;
-		public uint TransparenciesOffset;
+		public uint TransparencyAnimationCount;
+		public uint TransparencyAnimationsOffset;
 
 		// Pre-Wrath
 		// Seems to always be 0
@@ -175,8 +175,8 @@ namespace Warcraft.MDX
 					this.SubmeshColourAnimationsOffset = br.ReadUInt32();
 					this.TextureCount = br.ReadUInt32();
 					this.TexturesOffset = br.ReadUInt32();
-					this.TransparencyCount = br.ReadUInt32();
-					this.TransparenciesOffset = br.ReadUInt32();
+					this.TransparencyAnimationCount = br.ReadUInt32();
+					this.TransparencyAnimationsOffset = br.ReadUInt32();
 
 					if (GetModelVersion(Version) < MDXFormat.Wrath)
 					{

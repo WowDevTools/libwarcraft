@@ -8,8 +8,8 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Jarl Gullberg <jarl.gullberg@gmail.com>")]
-[assembly: AssemblyTrademark("Jarl Gullberg 2016")]
+[assembly: AssemblyCopyright("Jarl Gullberg 2016 <jarl.gullberg@gmail.com>")]
+[assembly: AssemblyTrademark("libwarcraft")]
 [assembly: AssemblyCulture("en-GB")]
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,

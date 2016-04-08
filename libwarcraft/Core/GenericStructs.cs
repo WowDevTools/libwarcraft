@@ -43,6 +43,57 @@ namespace Warcraft.Core
 		}
 	}
 
+	public struct RGB
+	{
+		private Vector3f Values;
+
+		public float R
+		{
+			get
+			{
+				return Values.X;
+			}
+			set
+			{
+				Values.X = value;
+			}
+		}
+
+		public float G
+		{
+			get
+			{
+				return Values.Y;
+			}
+			set
+			{
+				Values.Y = value;
+			}
+		}
+
+		public float B
+		{
+			get
+			{
+				return Values.Z;
+			}
+			set
+			{
+				Values.Z = value;
+			}
+		}
+
+		public RGB(float R, float G, float B)
+		{
+			this.Values = new Vector3f(R, G, B);
+		}
+
+		public RGB(Vector3f InValues)
+		{
+			this.Values = InValues;
+		}
+	}
+
 	/// <summary>
 	/// A 3D vector of floats.
 	/// </summary>
@@ -84,6 +135,41 @@ namespace Warcraft.Core
 		public static float Dot(Vector3f start, Vector3f end)
 		{
 			return (start.X * end.X) + (start.Y * end.Y) + (start.Z * end.Z);
+		}
+
+		public static Vector3f Cross(Vector3f start, Vector3f end)
+		{
+			float x = start.Y * end.Z - end.Y * start.Z;
+			float y = (start.X * end.Z - end.X * start.Z) * -1;
+			float z = start.X * end.Y - end.X * start.Y;
+
+			var rtnvector = new Vector3f(x, y, z);
+			return rtnvector;
+		}
+
+		public static Vector3f operator+(Vector3f vect1, Vector3f vect2)
+		{
+			return new Vector3f(vect1.X + vect2.X, vect1.Y + vect2.Y, vect1.Z + vect2.Z);
+		}
+
+		public static Vector3f operator-(Vector3f vect1, Vector3f vect2)
+		{
+			return new Vector3f(vect1.X - vect2.X, vect1.Y - vect2.Y, vect1.Z - vect2.Z);
+		}
+
+		public static Vector3f operator-(Vector3f vect1)
+		{
+			return new Vector3f(-vect1.X, -vect1.Y, -vect1.Z);
+		}
+
+		public static Vector3f operator/(Vector3f vect1, Vector3f vect2)
+		{
+			return new Vector3f(vect1.X / vect2.X, vect1.Y / vect2.Y, vect1.Z / vect2.Z);
+		}
+
+		public static implicit operator Vector3f(int i)
+		{
+			return new Vector3f(i);
 		}
 	}
 
