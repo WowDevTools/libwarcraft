@@ -10,7 +10,7 @@ namespace Warcraft.WMO
 	/// This class hosts the root file with metadata definitions, as well as the 
 	/// group files which contain the actual 3D model data.
 	/// </summary>
-	public class WMO
+	public class WMO : IDisposable
 	{
 		private Root WMORootObject;
 		private List<Group> WMOGroups;
@@ -27,6 +27,18 @@ namespace Warcraft.WMO
 		public void AddModelGroup(Group modelGroup)
 		{
 			
+		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Warcraft.WMO.WMO"/> object.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Warcraft.WMO.WMO"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Warcraft.WMO.WMO"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="Warcraft.WMO.WMO"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="Warcraft.WMO.WMO"/> was occupying.</remarks>
+		public void Dispose()
+		{
+			// TODO: Release files on disk
 		}
 	}
 }

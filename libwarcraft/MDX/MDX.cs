@@ -30,7 +30,7 @@ using Warcraft.Core.Interpolation;
 
 namespace Warcraft.MDX
 {
-	public class MDX
+	public class MDX : IDisposable
 	{
 		public MDXHeader Header;
 
@@ -488,6 +488,18 @@ namespace Warcraft.MDX
 			br.BaseStream.Position = initialPosition;
 
 			return flags;
+		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="Warcraft.MDX.MDX"/> object.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Warcraft.MDX.MDX"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Warcraft.MDX.MDX"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="Warcraft.MDX.MDX"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="Warcraft.MDX.MDX"/> was occupying.</remarks>
+		public void Dispose()
+		{
+			// TODO: Release file on disk
 		}
 	}
 }

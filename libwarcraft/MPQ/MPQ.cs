@@ -191,9 +191,30 @@ namespace Warcraft.MPQ
 					}
 				}
 
+
 				// Examine the file storage types and extract as neccesary
-				if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsCompressed) || fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsImploded))
-				{								
+				if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsSingleUnit))
+				{
+					// This file does not use sectoring, but may still be encrypted or compressed.
+					byte[] fileData = mpqReader.ReadBytes((int)fileBlockEntry.GetBlockSize());
+
+					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
+					{
+						// Decrypt the block
+						fileData = MPQCrypt.DecryptData(fileData, fileKey);
+					}
+
+					// Decompress the sector if neccesary
+					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsCompressed) || fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsImploded))
+					{
+						fileData = Compression.DecompressSector(fileData, fileBlockEntry.Flags);						
+					}
+
+					return fileData;
+				}
+				else if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsCompressed) || fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsImploded))
+				{						
+					// This file uses sectoring, and is compressed. It may be encrypted.		
 					//Retrieve the offsets for each sector - these are relative to the beginning of the data.
 					List<uint> sectorOffsets = new List<uint>();
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
@@ -223,6 +244,7 @@ namespace Warcraft.MPQ
 
 					// Begin decompressing and decrypting the sectors
 					// TODO: If Checksums are present (check the flags), treat the last sector as a checksum sector
+					// TODO: Check "backup.MPQ/realmlist.wtf" for a weird file with checksums that is not working correctly
 					List<byte[]> decompressedSectors = new List<byte[]>();
 					uint sectorIndex = 0;
 					foreach (byte[] compressedSector in compressedSectors)
@@ -240,7 +262,7 @@ namespace Warcraft.MPQ
 							int currentFileSize = CountBytesInSectors(decompressedSectors);
 							bool canSectorCompleteFile = currentFileSize + pendingSector.Length == fileBlockEntry.GetFileSize();
 
-							if (!canSectorCompleteFile)
+							if (!canSectorCompleteFile && currentFileSize != fileBlockEntry.GetFileSize())
 							{
 								pendingSector = Compression.DecompressSector(pendingSector, fileBlockEntry.Flags);
 
@@ -253,14 +275,9 @@ namespace Warcraft.MPQ
 
 					return StitchSectors(decompressedSectors);
 				}
-				else if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsSingleUnit))
-				{
-					// This file does not use sectoring. Just read the data.
-					return mpqReader.ReadBytes((int)fileBlockEntry.GetBlockSize());
-				}
 				else
 				{
-					// This file is not compressed, but it still has sectors. Read them, decrypt them, stitch them
+					// This file uses sectoring, but is not compressed. It may be encrypted.
 					uint finalSectorSize = fileBlockEntry.GetFileSize() % GetMaxSectorSize();
 
 					// All the even sectors you can fit into the file size

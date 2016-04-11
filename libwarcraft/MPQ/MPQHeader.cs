@@ -48,83 +48,92 @@ namespace Warcraft.MPQ
 		/// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQHeader"/> class.
 		/// </summary>
 		/// <param name="data">A byte array containing the header data of the archive.</param>
+		/// <exception cref="FileLoadException">A FileLoadException may be thrown if the archive was not
+		/// an MPQ file starting with the string "MPQ\x1a".</exception>
 		public MPQHeader(byte[] data)
 		{
-			MemoryStream dataStream = new MemoryStream(data);
-			BinaryReader br = new BinaryReader(dataStream);
-
-			this.Filetype = new string(br.ReadChars(4));
-			this.HeaderSize = br.ReadUInt32();
-			this.ArchiveSize = br.ReadUInt32();
-			this.Format = (MPQFormat)br.ReadUInt16();
-			this.SectorSizeExponent = br.ReadUInt16();
-			this.HashTableOffset = br.ReadUInt32();
-			this.BlockTableOffset = br.ReadUInt32();
-			this.HashTableEntries = br.ReadUInt32();
-			this.BlockTableEntries = br.ReadUInt32();
-
-			if (this.Format >= MPQFormat.Extended_v1)
+			using (MemoryStream dataStream = new MemoryStream(data))
 			{
-				this.ExtendedBlockTableOffset = br.ReadUInt64();
-				this.ExtendedFormatHashTableOffsetBits = br.ReadUInt16();
-				this.ExtendedFormatBlockTableOffsetBits = br.ReadUInt16();
+				using (BinaryReader br = new BinaryReader(dataStream))
+				{
+					this.Filetype = new string(br.ReadChars(4));
+
+					if (this.Filetype != "MPQ\x1a")
+					{
+						throw new FileLoadException("The provided file was not an MPQ file.");
+					}
+
+					this.HeaderSize = br.ReadUInt32();
+					this.ArchiveSize = br.ReadUInt32();
+					this.Format = (MPQFormat)br.ReadUInt16();
+					this.SectorSizeExponent = br.ReadUInt16();
+					this.HashTableOffset = br.ReadUInt32();
+					this.BlockTableOffset = br.ReadUInt32();
+					this.HashTableEntries = br.ReadUInt32();
+					this.BlockTableEntries = br.ReadUInt32();
+
+					if (this.Format >= MPQFormat.Extended_v1)
+					{
+						this.ExtendedBlockTableOffset = br.ReadUInt64();
+						this.ExtendedFormatHashTableOffsetBits = br.ReadUInt16();
+						this.ExtendedFormatBlockTableOffsetBits = br.ReadUInt16();
+					}
+					else
+					{
+						this.ExtendedBlockTableOffset = 0;
+						this.ExtendedFormatHashTableOffsetBits = 0;
+						this.ExtendedFormatBlockTableOffsetBits = 0;
+					}
+
+					if (this.Format >= MPQFormat.Extended_v2)
+					{
+						this.LongArchiveSize = br.ReadUInt64();
+						this.BETTableOffset = br.ReadUInt64();
+						this.HETTableOffset = br.ReadUInt64();
+					}
+					else
+					{
+						this.LongArchiveSize = 0;
+						this.BETTableOffset = 0;
+						this.HETTableOffset = 0;
+					}
+
+					if (this.Format >= MPQFormat.Extended_v3)
+					{
+						this.CompressedHashTableSize = br.ReadUInt64();
+						this.CompressedBlockTableSize = br.ReadUInt64();
+						this.CompressedExtendedBlockTableSize = br.ReadUInt64();
+						this.CompressedHETTableSize = br.ReadUInt64();
+						this.CompressedBETTableSize = br.ReadUInt64();
+
+						this.ChunkSizeForHashing = br.ReadUInt32();
+
+						this.MD5_BlockTable = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5_HashTable = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5_ExtendedBlockTable = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5_BETTable = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5_HETTable = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5_Header = BitConverter.ToString(br.ReadBytes(16));
+					}
+					else
+					{
+						this.CompressedHashTableSize = 0;
+						this.CompressedBlockTableSize = 0;
+						this.CompressedExtendedBlockTableSize = 0;
+						this.CompressedHETTableSize = 0;
+						this.CompressedBETTableSize = 0;
+
+						this.ChunkSizeForHashing = 0;
+
+						this.MD5_BlockTable = "";
+						this.MD5_HashTable = "";
+						this.MD5_ExtendedBlockTable = "";
+						this.MD5_BETTable = "";
+						this.MD5_HETTable = "";
+						this.MD5_Header = "";
+					}
+				}
 			}
-			else
-			{
-				this.ExtendedBlockTableOffset = 0;
-				this.ExtendedFormatHashTableOffsetBits = 0;
-				this.ExtendedFormatBlockTableOffsetBits = 0;
-			}
-
-			if (this.Format >= MPQFormat.Extended_v2)
-			{
-				this.LongArchiveSize = br.ReadUInt64();
-				this.BETTableOffset = br.ReadUInt64();
-				this.HETTableOffset = br.ReadUInt64();
-			}
-			else
-			{
-				this.LongArchiveSize = 0;
-				this.BETTableOffset = 0;
-				this.HETTableOffset = 0;
-			}
-
-			if (this.Format >= MPQFormat.Extended_v3)
-			{
-				this.CompressedHashTableSize = br.ReadUInt64();
-				this.CompressedBlockTableSize = br.ReadUInt64();
-				this.CompressedExtendedBlockTableSize = br.ReadUInt64();
-				this.CompressedHETTableSize = br.ReadUInt64();
-				this.CompressedBETTableSize = br.ReadUInt64();
-
-				this.ChunkSizeForHashing = br.ReadUInt32();
-
-				this.MD5_BlockTable = BitConverter.ToString(br.ReadBytes(16));
-				this.MD5_HashTable = BitConverter.ToString(br.ReadBytes(16));
-				this.MD5_ExtendedBlockTable = BitConverter.ToString(br.ReadBytes(16));
-				this.MD5_BETTable = BitConverter.ToString(br.ReadBytes(16));
-				this.MD5_HETTable = BitConverter.ToString(br.ReadBytes(16));
-				this.MD5_Header = BitConverter.ToString(br.ReadBytes(16));
-			}
-			else
-			{
-				this.CompressedHashTableSize = 0;
-				this.CompressedBlockTableSize = 0;
-				this.CompressedExtendedBlockTableSize = 0;
-				this.CompressedHETTableSize = 0;
-				this.CompressedBETTableSize = 0;
-
-				this.ChunkSizeForHashing = 0;
-
-				this.MD5_BlockTable = "";
-				this.MD5_HashTable = "";
-				this.MD5_ExtendedBlockTable = "";
-				this.MD5_BETTable = "";
-				this.MD5_HETTable = "";
-				this.MD5_Header = "";
-			}
-
-			br.Close();
 		}
 
 		/// <summary>

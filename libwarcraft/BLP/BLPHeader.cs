@@ -25,49 +25,52 @@ namespace Warcraft.BLP
 		public List<uint> mipMapSizes = new List<uint>();
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WarLib.BLP.BLPHeader"/> class.
+		/// Initializes a new instance of the <see cref="Warcraft.BLP.BLPHeader"/> class.
 		/// This constructor creates a header from input data read from a BLP file.
 		/// Usually, this is 148 bytes.
 		/// </summary>
 		/// <param name="data">Data.</param>
 		public BLPHeader(byte[] data)
-		{				
-			BinaryReader br = new BinaryReader(new MemoryStream(data));
-			this.fileType = new string(br.ReadChars(4));
-			this.version = (uint)br.ReadInt32();
-
-			this.compressionType = (TextureCompressionType)br.ReadByte();
-
-			this.alphaBitDepth = br.ReadByte();
-			this.pixelFormat = (BLPPixelFormat)br.ReadByte();
-			this.mipMapType = br.ReadByte();
-			this.resolution = new Resolution(br.ReadUInt32(), br.ReadUInt32());
-
-			this.mipMapOffsets = new List<uint>();
-			for (int i = 0; i < 16; ++i)
+		{	
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				uint offset = br.ReadUInt32();
-				if (offset > 0)
+				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.mipMapOffsets.Add(offset);
+					this.fileType = new string(br.ReadChars(4));
+					this.version = (uint)br.ReadInt32();
+
+					this.compressionType = (TextureCompressionType)br.ReadByte();
+
+					this.alphaBitDepth = br.ReadByte();
+					this.pixelFormat = (BLPPixelFormat)br.ReadByte();
+					this.mipMapType = br.ReadByte();
+					this.resolution = new Resolution(br.ReadUInt32(), br.ReadUInt32());
+
+					this.mipMapOffsets = new List<uint>();
+					for (int i = 0; i < 16; ++i)
+					{
+						uint offset = br.ReadUInt32();
+						if (offset > 0)
+						{
+							this.mipMapOffsets.Add(offset);
+						}
+					}
+
+					this.mipMapSizes = new List<uint>();
+					for (int i = 0; i < 16; ++i)
+					{
+						uint size = br.ReadUInt32();
+						if (size > 0)
+						{
+							this.mipMapSizes.Add(size);
+						}
+					}
 				}
 			}
-
-			this.mipMapSizes = new List<uint>();
-			for (int i = 0; i < 16; ++i)
-			{
-				uint size = br.ReadUInt32();
-				if (size > 0)
-				{
-					this.mipMapSizes.Add(size);
-				}
-			}
-
-			br.Close();
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WarLib.BLP.BLPHeader"/> class.
+		/// Initializes a new instance of the <see cref="Warcraft.BLP.BLPHeader"/> class.
 		/// This constructor creates a template header, ready to be filled with data about a new file.
 		/// </summary>
 		public BLPHeader()
@@ -91,54 +94,56 @@ namespace Warcraft.BLP
 		/// <returns>The header bytes.</returns>
 		public byte[] GetBytes()
 		{
-			MemoryStream headerStream = new MemoryStream();
-			BinaryWriter bw = new BinaryWriter(headerStream);
+			byte[] headerBytes = null;
 
-			bw.Write(this.fileType.ToCharArray());
-			bw.Write(this.version);
-			bw.Write((byte)this.compressionType);
-			bw.Write((byte)this.alphaBitDepth);
-			bw.Write((byte)this.pixelFormat);
-			bw.Write((byte)this.mipMapType);
-
-			bw.Write(this.resolution.X);
-			bw.Write(this.resolution.Y);
-
-			for (int i = 0; i < 16; ++i)
+			using (MemoryStream headerStream = new MemoryStream())
 			{
-				if (i < this.mipMapOffsets.Count)
+				using (BinaryWriter bw = new BinaryWriter(headerStream))
 				{
-					// Write a value
-					bw.Write(this.mipMapOffsets[i]);
-				}
-				else
-				{
-					// Write a 0
-					bw.Write((uint)0);
+					bw.Write(this.fileType.ToCharArray());
+					bw.Write(this.version);
+					bw.Write((byte)this.compressionType);
+					bw.Write((byte)this.alphaBitDepth);
+					bw.Write((byte)this.pixelFormat);
+					bw.Write((byte)this.mipMapType);
+
+					bw.Write(this.resolution.X);
+					bw.Write(this.resolution.Y);
+
+					for (int i = 0; i < 16; ++i)
+					{
+						if (i < this.mipMapOffsets.Count)
+						{
+							// Write a value
+							bw.Write(this.mipMapOffsets[i]);
+						}
+						else
+						{
+							// Write a 0
+							bw.Write((uint)0);
+						}
+					}
+
+					for (int i = 0; i < 16; ++i)
+					{
+						if (i < this.mipMapSizes.Count)
+						{
+							// Write a value
+							bw.Write(this.mipMapSizes[i]);
+						}
+						else
+						{
+							// Write a 0
+							bw.Write((uint)0);
+						}
+					}
+
+					// Finished writing data
+					bw.Flush();
+
+					headerBytes = headerStream.ToArray();
 				}
 			}
-
-			for (int i = 0; i < 16; ++i)
-			{
-				if (i < this.mipMapSizes.Count)
-				{
-					// Write a value
-					bw.Write(this.mipMapSizes[i]);
-				}
-				else
-				{
-					// Write a 0
-					bw.Write((uint)0);
-				}
-			}
-
-			// Finished writing data
-			bw.Flush();
-
-			byte[] headerBytes = headerStream.ToArray();
-			bw.Close();
-			bw.Dispose();
-			headerStream.Dispose();
 
 			return headerBytes;
 		}

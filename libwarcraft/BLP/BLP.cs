@@ -19,54 +19,55 @@ namespace Warcraft.BLP
 		private readonly List<byte[]> RawMipMaps = new List<byte[]>();
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WarLib.BLP.BLP"/> class.
+		/// Initializes a new instance of the <see cref="Warcraft.BLP.BLP"/> class.
 		/// This constructor reads a binary BLP file from disk.
 		/// </summary>
 		/// <param name="data">Data.</param>
 		public BLP(byte[] data)
 		{
-			BinaryReader br = new BinaryReader(new MemoryStream(data));
-
-			byte[] fileHeaderBytes = br.ReadBytes(148);
-			this.Header = new BLPHeader(fileHeaderBytes);
-
-			if (Header.compressionType == TextureCompressionType.Palettized)
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				for (int i = 0; i < 256; ++i)
+				using (BinaryReader br = new BinaryReader(ms))
 				{
-					byte B = br.ReadByte();
-					byte G = br.ReadByte();
-					byte R = br.ReadByte();
+					byte[] fileHeaderBytes = br.ReadBytes(148);
+					this.Header = new BLPHeader(fileHeaderBytes);
 
-					// Ignore the alpha. We'll be reading this later.
-					byte A = br.ReadByte();
-					Color paletteColor = Color.FromArgb(A, R, G, B);
-					Palette.Add(paletteColor);
+					if (Header.compressionType == TextureCompressionType.Palettized)
+					{
+						for (int i = 0; i < 256; ++i)
+						{
+							byte B = br.ReadByte();
+							byte G = br.ReadByte();
+							byte R = br.ReadByte();
+
+							// Ignore the alpha. We'll be reading this later.
+							byte A = br.ReadByte();
+							Color paletteColor = Color.FromArgb(A, R, G, B);
+							Palette.Add(paletteColor);
+						}
+					}
+					else
+					{
+						// Fill up an empty palette - the palette is always present, but we'll be going after offsets anyway
+						for (int i = 0; i < 256; ++i)
+						{
+							Color paletteColor = Color.FromArgb(0, 0, 0, 0);
+							Palette.Add(paletteColor);
+						}
+					}
+
+					// Read the raw mipmap data
+					for (int i = 0; i < Header.GetNumMipMaps(); ++i)
+					{
+						br.BaseStream.Position = Header.mipMapOffsets[i];
+						RawMipMaps.Add(br.ReadBytes((int)Header.mipMapSizes[i]));
+					}
 				}
 			}
-			else
-			{
-				// Fill up an empty palette - the palette is always present, but we'll be going after offsets anyway
-				for (int i = 0; i < 256; ++i)
-				{
-					Color paletteColor = Color.FromArgb(0, 0, 0, 0);
-					Palette.Add(paletteColor);
-				}
-			}
-
-			// Read the raw mipmap data
-			for (int i = 0; i < Header.GetNumMipMaps(); ++i)
-			{
-				br.BaseStream.Position = Header.mipMapOffsets[i];
-				RawMipMaps.Add(br.ReadBytes((int)Header.mipMapSizes[i]));
-			}
-
-			br.Close();
-			br.Dispose();
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WarLib.BLP.BLP"/> class.
+		/// Initializes a new instance of the <see cref="Warcraft.BLP.BLP"/> class.
 		/// This constructor creates a BLP file using the specified compression from a bitmap object.
 		/// If the compression type specifed is DXTC, the default pixel format used is DXT1 for opaque textures and DXT3 for the rest.
 		/// </summary>
@@ -166,8 +167,34 @@ namespace Warcraft.BLP
 				// Push the offset ahead for the next mipmap
 				mipOffset += mipSize;
 			}
+		}
 
-			// Finally, 
+		/// <summary>
+		/// Gets a list of formatted strings describing the mipmap levels.
+		/// </summary>
+		/// <returns>The mip map level strings.</returns>
+		public List<string> GetMipMapLevelStrings()
+		{
+			List<string> mipStrings = new List<string>();
+			for (int i = 0; i < GetMipMapCount() - 1; ++i)
+			{
+				mipStrings.Add(String.Format("{0}: {1}", i, GetMipLevelResolution((uint)i)));
+			}
+
+			return mipStrings;
+		}
+
+		/// <summary>
+		/// Gets the resolution of the specified mip level
+		/// </summary>
+		/// <returns>The mip level resolution.</returns>
+		/// <param name="MipLevel">Mip level.</param>
+		public Resolution GetMipLevelResolution(uint MipLevel)
+		{
+			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel);
+			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel);
+
+			return new Resolution(targetXRes, targetYRes);
 		}
 
 		/// <summary>
@@ -185,7 +212,7 @@ namespace Warcraft.BLP
 		/// </summary>
 		/// <returns>The mipmap.</returns>
 		/// <param name="data">Data containing the mipmap level.</param>
-		/// <param name="mipLevel">The mipmap level of the data</param>
+		/// <param name="MipLevel">The mipmap level of the data</param>
 		private Bitmap DecompressMipMap(byte[] data, uint MipLevel)
 		{
 			Bitmap map = null;	
@@ -197,72 +224,75 @@ namespace Warcraft.BLP
 				if (Header.compressionType == TextureCompressionType.Palettized)
 				{
 					map = new Bitmap((int)targetXRes, (int)targetYRes, PixelFormat.Format32bppArgb);
-					BinaryReader br = new BinaryReader(new MemoryStream(data));
-
-					// Read colour information
-					for (int y = 0; y < targetYRes; ++y)
+					using (MemoryStream ms = new MemoryStream(data))
 					{
-						for (int x = 0; x < targetXRes; ++x)
+						using (BinaryReader br = new BinaryReader(ms))
 						{
-							byte colorIndex = br.ReadByte();
-							Color paletteColor = Palette[colorIndex];                           
-							map.SetPixel(x, y, paletteColor);
-						}
-					}
-
-					// Read Alpha information
-					List<byte> alphaValues = new List<byte>();
-					if (this.GetAlphaBitDepth() > 0)
-					{
-						if (this.GetAlphaBitDepth() == 1)
-						{
-							int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 8));
-							alphaValues = Decode1BitAlpha(br.ReadBytes(alphaByteCount));
-						}
-						else if (this.GetAlphaBitDepth() == 4)
-						{
-							int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 2));
-							alphaValues = Decode4BitAlpha(br.ReadBytes(alphaByteCount));
-						}
-						else if (this.GetAlphaBitDepth() == 8)
-						{
-							// Directly read the alpha values
+							// Read colour information
 							for (int y = 0; y < targetYRes; ++y)
 							{
 								for (int x = 0; x < targetXRes; ++x)
 								{
-									byte alphaValue = br.ReadByte();
-									alphaValues.Add(alphaValue);
+									byte colorIndex = br.ReadByte();
+									Color paletteColor = Palette[colorIndex];                           
+									map.SetPixel(x, y, paletteColor);
 								}
-							}					
-						}
-					}
-					else
-					{
-						// The map is fully opaque
-						for (int y = 0; y < targetYRes; ++y)
-						{
-							for (int x = 0; x < targetXRes; ++x)
+							}
+
+							// Read Alpha information
+							List<byte> alphaValues = new List<byte>();
+							if (this.GetAlphaBitDepth() > 0)
 							{
-								alphaValues.Add(255);
+								if (this.GetAlphaBitDepth() == 1)
+								{
+									int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 8));
+									alphaValues = Decode1BitAlpha(br.ReadBytes(alphaByteCount));
+								}
+								else if (this.GetAlphaBitDepth() == 4)
+								{
+									int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 2));
+									alphaValues = Decode4BitAlpha(br.ReadBytes(alphaByteCount));
+								}
+								else if (this.GetAlphaBitDepth() == 8)
+								{
+									// Directly read the alpha values
+									for (int y = 0; y < targetYRes; ++y)
+									{
+										for (int x = 0; x < targetXRes; ++x)
+										{
+											byte alphaValue = br.ReadByte();
+											alphaValues.Add(alphaValue);
+										}
+									}					
+								}
+							}
+							else
+							{
+								// The map is fully opaque
+								for (int y = 0; y < targetYRes; ++y)
+								{
+									for (int x = 0; x < targetXRes; ++x)
+									{
+										alphaValues.Add(255);
+									}
+								}
+							}
+
+							// Build the final map
+							for (int y = 0; y < targetYRes; ++y)
+							{
+								for (int x = 0; x < targetXRes; ++x)
+								{
+									int valueIndex = (int)(x + (targetXRes * y));
+									byte alphaValue = alphaValues[valueIndex];
+									Color pixelColor = map.GetPixel(x, y);
+									Color finalPixel = Color.FromArgb(alphaValue, pixelColor.R, pixelColor.G, pixelColor.B);
+
+									map.SetPixel(x, y, finalPixel);
+								}
 							}
 						}
 					}
-
-					// Build the final map
-					for (int y = 0; y < targetYRes; ++y)
-					{
-						for (int x = 0; x < targetXRes; ++x)
-						{
-							int valueIndex = (int)(x + (targetXRes * y));
-							byte alphaValue = alphaValues[valueIndex];
-							Color pixelColor = map.GetPixel(x, y);
-							Color finalPixel = Color.FromArgb(alphaValue, pixelColor.R, pixelColor.G, pixelColor.B);
-
-							map.SetPixel(x, y, finalPixel);
-						}
-					}
-
 				}
 				else if (Header.compressionType == TextureCompressionType.DXTC)
 				{     					
@@ -281,24 +311,26 @@ namespace Warcraft.BLP
 				else if (Header.compressionType == TextureCompressionType.Uncompressed)
 				{
 					map = new Bitmap((int)targetXRes, (int)targetYRes, PixelFormat.Format32bppArgb);
-					BinaryReader br = new BinaryReader(new MemoryStream(data));
 
-					for (int y = 0; y < targetYRes; ++y)
+					using (MemoryStream ms = new MemoryStream(data))
 					{
-						for (int x = 0; x < targetXRes; ++x)
+						using (BinaryReader br = new BinaryReader(ms))
 						{
-							byte A = br.ReadByte();
-							byte R = br.ReadByte();					
-							byte G = br.ReadByte();
-							byte B = br.ReadByte();
+							for (int y = 0; y < targetYRes; ++y)
+							{
+								for (int x = 0; x < targetXRes; ++x)
+								{
+									byte A = br.ReadByte();
+									byte R = br.ReadByte();					
+									byte G = br.ReadByte();
+									byte B = br.ReadByte();
 																
-							Color pixelColor = Color.FromArgb(A, R, G, B);
-							map.SetPixel(x, y, pixelColor);
+									Color pixelColor = Color.FromArgb(A, R, G, B);
+									map.SetPixel(x, y, pixelColor);
+								}
+							}
 						}
 					}
-
-					br.Close();
-					br.Dispose();
 				}
 			}		
 
@@ -308,23 +340,25 @@ namespace Warcraft.BLP
 		private Bitmap RGBAToBitmap(byte[] rgba, int width, int height)
 		{
 			Bitmap map = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-			BinaryReader br = new BinaryReader(new MemoryStream(rgba));
-			for (int y = 0; y < width; ++y)
+			using (MemoryStream ms = new MemoryStream(rgba))
 			{
-				for (int x = 0; x < height; ++x)
+				using (BinaryReader br = new BinaryReader(ms))
 				{
-					byte R = br.ReadByte();
-					byte G = br.ReadByte();					
-					byte B = br.ReadByte();
-					byte A = br.ReadByte();
+					for (int y = 0; y < width; ++y)
+					{
+						for (int x = 0; x < height; ++x)
+						{
+							byte R = br.ReadByte();
+							byte G = br.ReadByte();					
+							byte B = br.ReadByte();
+							byte A = br.ReadByte();
 																
-					Color pixelColor = Color.FromArgb(A, R, G, B);
-					map.SetPixel(x, y, pixelColor);
+							Color pixelColor = Color.FromArgb(A, R, G, B);
+							map.SetPixel(x, y, pixelColor);
+						}
+					}
 				}
 			}
-
-			br.Close();
-			br.Dispose();
 
 			return map;
 		}
@@ -332,11 +366,10 @@ namespace Warcraft.BLP
 		/// <summary>
 		/// Compresses an input bitmap into a list of mipmap using the file's compression settings. 
 		/// Mipmap levels which would produce an image with dimensions smaller than 1x1 will return null instead.
-		/// The number of mipmaps returned will be <see cref="GetNumReasonableMipLevels"/> + 1. 
+		/// The number of mipmaps returned will be <see cref="Warcraft.BLP.BLP.GetNumReasonableMipMapLevels"/> + 1. 
 		/// </summary>
 		/// <returns>The compressed image data.</returns>
 		/// <param name="Image">The image to be compressed.</param>
-		/// <param name="MipMapLevels">All of the compressed mipmap levels.</param>
 		private List<byte[]> CompressImage(Bitmap Image)
 		{
 			List<byte[]> mipMaps = new List<byte[]>();
@@ -373,177 +406,178 @@ namespace Warcraft.BLP
 			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel);
 			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel);
 
-			Bitmap resizedImage = ResizeImage(Image, (int)targetXRes, (int)targetYRes);
-			resizedImage.Save("/home/jarl/Desktop/debug.png");
-
 			List<byte> colourData = new List<byte>();
 			List<byte> alphaData = new List<byte>();
-
-			if (Header.compressionType == TextureCompressionType.Palettized)
+			using (Bitmap resizedImage = ResizeImage(Image, (int)targetXRes, (int)targetYRes))
 			{				
-				// Generate the colour data
-				for (int y = 0; y < targetYRes; ++y)
-				{
-					for (int x = 0; x < targetXRes; ++x)
-					{
-						Color nearestColor = FindClosestMatchingColor(resizedImage.GetPixel(x, y));
-						byte paletteIndex = (byte)this.Palette.IndexOf(nearestColor);
-
-						colourData.Add(paletteIndex);
-					}
-				}
-
-				// Generate the alpha data
-				if (this.GetAlphaBitDepth() > 0)
-				{
-					if (this.GetAlphaBitDepth() == 1)
-					{
-						int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 8));
-
-						// We're going to be attempting to map 8 pixels on each X iteration
-						for (int y = 0; y < targetYRes; ++y)
-						{
-							for (int x = 0; x < targetXRes; x += 8)
-							{
-								// The alpha value is stored per-bit in the byte (8 alpha values per byte)
-								byte alphaByte = 0;
-
-								for (byte i = 0; (i < 8) && (i < targetXRes); ++i)
-								{
-									byte pixelAlpha = resizedImage.GetPixel(x + i, y).A;
-									if (pixelAlpha > 0)
-									{
-										pixelAlpha = 1;
-									}
-
-									// Shift the value into the correct position in the byte
-									pixelAlpha = (byte)(pixelAlpha << 7 - i);
-									alphaByte = (byte)(alphaByte | pixelAlpha);
-								}
-
-								alphaData.Add(alphaByte);
-							}
-						}
-					}
-					else if (this.GetAlphaBitDepth() == 4)
-					{
-						int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 2));
-
-						// We're going to be attempting to map 2 pixels on each X iteration
-						for (int y = 0; y < targetYRes; ++y)
-						{
-							for (int x = 0; x < targetXRes; x += 2)
-							{
-								// The alpha value is stored as half a byte (2 alpha values per byte)
-								// Extract these two values and map them to a byte size (4 bits can hold 0 - 15 alpha)
-
-								byte alphaByte = 0;
-
-								for (byte i = 0; (i < 2) && (i < targetXRes); ++i)
-								{
-									// Get the value from the image
-									byte pixelAlpha = resizedImage.GetPixel(x + i, y).A;
-										
-									// Map the value to a 4-bit integer
-									pixelAlpha = (byte)ExtensionMethods.Map(pixelAlpha, 0, 255, 0, 15);
-
-									// Shift the value to the upper bits on the first iteration, and leave it where it is
-									// on the second one
-									pixelAlpha = (byte)(pixelAlpha << 4 * (1 - i));
-
-									alphaByte = (byte)(alphaByte | pixelAlpha);
-								}
-
-								alphaData.Add(alphaByte);
-							}
-						}
-					}
-					else if (this.GetAlphaBitDepth() == 8)
-					{
-						for (int y = 0; y < targetYRes; ++y)
-						{
-							for (int x = 0; x < targetXRes; ++x)
-							{
-								// The alpha value is stored as a whole byte
-								byte alphaValue = resizedImage.GetPixel(x, y).A;
-								alphaData.Add(alphaValue);
-							}
-						}					
-					}
-				}
-				else
-				{
-					// The map is fully opaque
+				if (Header.compressionType == TextureCompressionType.Palettized)
+				{				
+					// Generate the colour data
 					for (int y = 0; y < targetYRes; ++y)
 					{
 						for (int x = 0; x < targetXRes; ++x)
 						{
-							alphaData.Add(255);
+							Color nearestColor = FindClosestMatchingColor(resizedImage.GetPixel(x, y));
+							byte paletteIndex = (byte)this.Palette.IndexOf(nearestColor);
+
+							colourData.Add(paletteIndex);
+						}
+					}
+
+					// Generate the alpha data
+					if (this.GetAlphaBitDepth() > 0)
+					{
+						if (this.GetAlphaBitDepth() == 1)
+						{
+							//int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 8));
+
+							// We're going to be attempting to map 8 pixels on each X iteration
+							for (int y = 0; y < targetYRes; ++y)
+							{
+								for (int x = 0; x < targetXRes; x += 8)
+								{
+									// The alpha value is stored per-bit in the byte (8 alpha values per byte)
+									byte alphaByte = 0;
+
+									for (byte i = 0; (i < 8) && (i < targetXRes); ++i)
+									{
+										byte pixelAlpha = resizedImage.GetPixel(x + i, y).A;
+										if (pixelAlpha > 0)
+										{
+											pixelAlpha = 1;
+										}
+
+										// Shift the value into the correct position in the byte
+										pixelAlpha = (byte)(pixelAlpha << 7 - i);
+										alphaByte = (byte)(alphaByte | pixelAlpha);
+									}
+
+									alphaData.Add(alphaByte);
+								}
+							}
+						}
+						else if (this.GetAlphaBitDepth() == 4)
+						{
+							//int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 2));
+
+							// We're going to be attempting to map 2 pixels on each X iteration
+							for (int y = 0; y < targetYRes; ++y)
+							{
+								for (int x = 0; x < targetXRes; x += 2)
+								{
+									// The alpha value is stored as half a byte (2 alpha values per byte)
+									// Extract these two values and map them to a byte size (4 bits can hold 0 - 15 alpha)
+
+									byte alphaByte = 0;
+
+									for (byte i = 0; (i < 2) && (i < targetXRes); ++i)
+									{
+										// Get the value from the image
+										byte pixelAlpha = resizedImage.GetPixel(x + i, y).A;
+										
+										// Map the value to a 4-bit integer
+										pixelAlpha = (byte)ExtensionMethods.Map(pixelAlpha, 0, 255, 0, 15);
+
+										// Shift the value to the upper bits on the first iteration, and leave it where it is
+										// on the second one
+										pixelAlpha = (byte)(pixelAlpha << 4 * (1 - i));
+
+										alphaByte = (byte)(alphaByte | pixelAlpha);
+									}
+
+									alphaData.Add(alphaByte);
+								}
+							}
+						}
+						else if (this.GetAlphaBitDepth() == 8)
+						{
+							for (int y = 0; y < targetYRes; ++y)
+							{
+								for (int x = 0; x < targetXRes; ++x)
+								{
+									// The alpha value is stored as a whole byte
+									byte alphaValue = resizedImage.GetPixel(x, y).A;
+									alphaData.Add(alphaValue);
+								}
+							}					
+						}
+					}
+					else
+					{
+						// The map is fully opaque
+						for (int y = 0; y < targetYRes; ++y)
+						{
+							for (int x = 0; x < targetXRes; ++x)
+							{
+								alphaData.Add(255);
+							}
 						}
 					}
 				}
-			}
-			else if (Header.compressionType == TextureCompressionType.DXTC)
-			{
-				MemoryStream rgbaStream = new MemoryStream();
-				BinaryWriter bw = new BinaryWriter(rgbaStream);
-				for (int y = 0; y < targetYRes; ++y)
+				else if (Header.compressionType == TextureCompressionType.DXTC)
 				{
-					for (int x = 0; x < targetXRes; ++x)
+					using (MemoryStream rgbaStream = new MemoryStream())
 					{
-						bw.Write(resizedImage.GetPixel(x, y).R);
-						bw.Write(resizedImage.GetPixel(x, y).G);
-						bw.Write(resizedImage.GetPixel(x, y).B);
-						bw.Write(resizedImage.GetPixel(x, y).A);
+						using (BinaryWriter bw = new BinaryWriter(rgbaStream))
+						{
+							for (int y = 0; y < targetYRes; ++y)
+							{
+								for (int x = 0; x < targetXRes; ++x)
+								{
+									bw.Write(resizedImage.GetPixel(x, y).R);
+									bw.Write(resizedImage.GetPixel(x, y).G);
+									bw.Write(resizedImage.GetPixel(x, y).B);
+									bw.Write(resizedImage.GetPixel(x, y).A);
+								}
+							}		
+
+							// Finish writing the data
+							bw.Flush();
+
+							byte[] rgbaBytes = rgbaStream.ToArray();
+
+							SquishOptions squishOptions = SquishOptions.DXT1;
+							if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT3)
+							{
+								squishOptions = SquishOptions.DXT3;
+							}
+							else if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT5)
+							{
+								squishOptions = SquishOptions.DXT5;
+							}
+
+							// TODO: Implement squish compression
+							colourData = new List<byte>(Squish.Squish.CompressImage(rgbaBytes, (int)targetXRes, (int)targetYRes, squishOptions));
+						}
 					}
-				}		
 
-				// Finish writing the data
-				bw.Flush();
-
-				byte[] rgbaBytes = rgbaStream.ToArray();
-
-				bw.Close();
-				bw.Dispose();
-
-				SquishOptions squishOptions = SquishOptions.DXT1;
-				if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT3)
-				{
-					squishOptions = SquishOptions.DXT3;
 				}
-				else if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT5)
+				else if (Header.compressionType == TextureCompressionType.Uncompressed)
 				{
-					squishOptions = SquishOptions.DXT5;
-				}
-
-				// TODO: Implement squish compression
-				colourData = new List<byte>(Squish.Squish.CompressImage(rgbaBytes, (int)targetXRes, (int)targetYRes, squishOptions));
-			}
-			else if (Header.compressionType == TextureCompressionType.Uncompressed)
-			{
-				MemoryStream argbStream = new MemoryStream();
-				BinaryWriter bw = new BinaryWriter(argbStream);
-				for (int y = 0; y < targetYRes; ++y)
-				{
-					for (int x = 0; x < targetXRes; ++x)
+					using (MemoryStream argbStream = new MemoryStream())
 					{
-						bw.Write(resizedImage.GetPixel(x, y).A);
-						bw.Write(resizedImage.GetPixel(x, y).R);
-						bw.Write(resizedImage.GetPixel(x, y).G);
-						bw.Write(resizedImage.GetPixel(x, y).B);
+						using (BinaryWriter bw = new BinaryWriter(argbStream))
+						{
+							for (int y = 0; y < targetYRes; ++y)
+							{
+								for (int x = 0; x < targetXRes; ++x)
+								{
+									bw.Write(resizedImage.GetPixel(x, y).A);
+									bw.Write(resizedImage.GetPixel(x, y).R);
+									bw.Write(resizedImage.GetPixel(x, y).G);
+									bw.Write(resizedImage.GetPixel(x, y).B);
+								}
+							}		
+
+							// Finish writing the data
+							bw.Flush();
+
+							byte[] argbBytes = argbStream.ToArray();
+							colourData = new List<byte>(argbBytes);
+						}			
 					}
-				}		
-
-				// Finish writing the data
-				bw.Flush();
-
-				byte[] argbBytes = argbStream.ToArray();
-
-				bw.Close();
-				bw.Dispose();
-
-				colourData = new List<byte>(argbBytes);
-			}			
+				}
+			}
 
 			// After compression of the data, merge the color data and alpha data
 			byte[] compressedMipMap = new byte[colourData.Count + alphaData.Count];
@@ -563,12 +597,12 @@ namespace Warcraft.BLP
 		/// <returns>The resized image.</returns>
 		public static Bitmap ResizeImage(Image image, int width, int height)
 		{
-			var destRect = new Rectangle(0, 0, width, height);
-			var destImage = new Bitmap(width, height);
+			Rectangle destRect = new Rectangle(0, 0, width, height);
+			Bitmap destImage = new Bitmap(width, height);
 
 			destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
-			using (var graphics = Graphics.FromImage(destImage))
+			using (Graphics graphics = Graphics.FromImage(destImage))
 			{
 				graphics.CompositingMode = CompositingMode.SourceCopy;
 				graphics.CompositingQuality = CompositingQuality.HighQuality;
@@ -576,7 +610,7 @@ namespace Warcraft.BLP
 				graphics.SmoothingMode = SmoothingMode.HighQuality;
 				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-				using (var wrapMode = new ImageAttributes())
+				using (ImageAttributes wrapMode = new ImageAttributes())
 				{
 					wrapMode.SetWrapMode(WrapMode.TileFlipXY);
 					graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
@@ -595,7 +629,7 @@ namespace Warcraft.BLP
 				// The alpha value is stored per-bit in the byte (8 alpha values per byte)
 				for (byte i = 0; i < 8; ++i)
 				{
-					byte alphaBit = (byte)ExtensionMethods.Map((byte)((dataByte >> (7 - i)) & 0x01), 0, 1, 0, 255);
+					byte alphaBit = (byte)ExtensionMethods.Map(((dataByte >> (7 - i)) & 0x01), 0, 1, 0, 255);
 
 					// At this point, alphaBit will be either 0 or 1. Map this to 0 or 255.
 					if (alphaBit > 0)
@@ -616,15 +650,12 @@ namespace Warcraft.BLP
 		{
 			List<byte> alphaValues = new List<byte>();
 
-			for (int i = 0; i < data.Length; ++i)
+			foreach (var alphaByte in data)
 			{
 				// The alpha value is stored as half a byte (2 alpha values per byte)
 				// Extract these two values and map them to a byte size (4 bits can hold 0 - 15 alpha)
-				byte alphaByte = data[i];
-						
-				byte alphaValue1 = (byte)ExtensionMethods.Map((byte)(alphaByte >> 4), 0, 15, 0, 255);
-				byte alphaValue2 = (byte)ExtensionMethods.Map((byte)(alphaByte & 0x0F), 0, 15, 0, 255);
-
+				byte alphaValue1 = (byte)ExtensionMethods.Map((alphaByte >> 4), 0, 15, 0, 255);
+				byte alphaValue2 = (byte)ExtensionMethods.Map((alphaByte & 0x0F), 0, 15, 0, 255);
 				alphaValues.Add(alphaValue1);
 				alphaValues.Add(alphaValue2);
 			}
@@ -632,11 +663,13 @@ namespace Warcraft.BLP
 			return alphaValues;
 		}
 
+		// TODO: Implement
 		private List<byte> Encode1BitAlpha(Bitmap map)
 		{
 			return null;
 		}
 
+		// TODO: Implement
 		private List<byte> Encode4BitAlpha(Bitmap map)
 		{
 			return null;
@@ -673,10 +706,11 @@ namespace Warcraft.BLP
 		{
 			// TODO: Replace with an algorithm that produces a better result. For now, it works.
 			PaletteQuantizer quantizer = new PaletteQuantizer(new ArrayList());
-			Bitmap quantizedMap = quantizer.Quantize(Image);
-			this.Palette.Clear();
-			this.Palette.AddRange(quantizedMap.Palette.Entries);
-
+			using (Bitmap quantizedMap = quantizer.Quantize(Image))
+			{
+				this.Palette.Clear();
+				this.Palette.AddRange(quantizedMap.Palette.Entries);
+			}
 		}
 
 		/// <summary>
@@ -703,7 +737,7 @@ namespace Warcraft.BLP
 
 				double DistanceResult = Math.Sqrt(TestBlue + TestGreen + TestRed);			
 
-				if (DistanceResult == 0.0)
+				if (DistanceResult <= 0.0001)
 				{
 					NearestColor = PaletteColor;
 					break;
@@ -804,7 +838,7 @@ namespace Warcraft.BLP
 
 		/// <summary>
 		/// Writes the image to disk as a BLP file.
-		/// To write a "normal" image format to disk, retrieve a mipmap (<see cref="WarLib.BLP.BLP.GetMipMap"/>) instead.
+		/// To write a "normal" image format to disk, retrieve a mipmap (<see cref="Warcraft.BLP.BLP.GetMipMap"/>) instead.
 		/// </summary>
 		/// <param name="path">Path.</param>
 		private void WriteImageToDisk(string path)

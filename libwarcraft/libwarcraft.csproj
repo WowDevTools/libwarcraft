@@ -39,7 +39,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="Noemax.Compression.Net4.Trial">
-      <HintPath>..\packages\Noemax.Compression.16.86.0\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
+      <HintPath>..\..\Everlook\packages\Noemax.Compression.16.100.0\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +149,7 @@
     <Compile Include="MDX\Visual\MDXRenderFlag.cs" />
     <Compile Include="MDX\Animation\MDXSubmeshColourAnimation.cs" />
     <Compile Include="MDX\Animation\MDXUVAnimation.cs" />
+    <Compile Include="Core\FileType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
