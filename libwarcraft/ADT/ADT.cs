@@ -1,19 +1,38 @@
+//
+//  ADT.cs
+//
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2016 Jarl Gullberg
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
-using Warcraft.Exceptions;
 using Warcraft.Core;
 
-namespace Warcraft
+namespace Warcraft.ADT
 {
 	namespace ADT
 	{
@@ -88,21 +107,22 @@ namespace Warcraft
 			/// </summary>
 			internal List<MCNK> ADTMCNKs;
 
+			// TODO: Change to stream-based loading
 			/// <summary>
 			/// Creates a new ADT object from a file on disk
 			/// </summary>
-			/// <param name="filePath">Path to an .adt file on disk</param>
+			/// <param name="FilePath">Path to an .adt file on disk</param>
 			/// <returns>A parsed ADT file with objects for all chunks</returns>
-			public ADT(string filePath)
+			public ADT(string FilePath)
 			{
 				//Is the file an ADT file?
-				if (filePath.EndsWith(".adt"))
+				if (FilePath.EndsWith(".adt"))
 				{                    
 					Console.WriteLine("Found ADT, parsing...");
 
-					ADTName = Path.GetFileNameWithoutExtension(filePath);
+					ADTName = Path.GetFileNameWithoutExtension(FilePath);
 
-					Stream ADTStream = File.OpenRead(filePath);
+					Stream ADTStream = File.OpenRead(FilePath);
 					BinaryReader br = new BinaryReader(ADTStream);
 
 					//initialize the MCNK list
@@ -127,7 +147,7 @@ namespace Warcraft
 								{
 									Console.WriteLine("Found MVER Chunk, parsing...");
 
-									this.ADTVersion = new MVER(filePath, (int)br.BaseStream.Position);
+									this.ADTVersion = new MVER(FilePath, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ADTVersion.size;
 									continue;
 								}
@@ -135,7 +155,7 @@ namespace Warcraft
 								{                                    
 									Console.WriteLine("Found MHDR Chunk, parsing...");
 
-									this.ADTHeader = new MHDR(filePath, (int)br.BaseStream.Position);
+									this.ADTHeader = new MHDR(FilePath, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ADTHeader.size;
 									continue;
 								}
@@ -143,7 +163,7 @@ namespace Warcraft
 								{
 									Console.WriteLine("Found MCIN Chunk, parsing...");
 
-									this.ADTMCNKOffsets = new MCIN(filePath, (int)br.BaseStream.Position);
+									this.ADTMCNKOffsets = new MCIN(FilePath, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ADTMCNKOffsets.size;
 									continue;
 								}
@@ -151,7 +171,7 @@ namespace Warcraft
 								{
 									Console.WriteLine("Found MTEX Chunk, parsing...");
 
-									this.ADTTextures = new MTEX(filePath, (int)br.BaseStream.Position);
+									this.ADTTextures = new MTEX(FilePath, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ADTTextures.size;
 									continue;
 								}
@@ -159,7 +179,7 @@ namespace Warcraft
 								{
 									Console.WriteLine("Found MMDX Chunk, parsing...");
 
-									this.ADTModels = new MMDX(filePath, (int)br.BaseStream.Position);
+									this.ADTModels = new MMDX(FilePath, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ADTModels.size;
 									continue;
 								}
@@ -167,7 +187,7 @@ namespace Warcraft
 								{
 									Console.WriteLine("Found MMID Chunk, parsing...");
 
-									this.ADTModelIndexes = new MMID(filePath, (int)br.BaseStream.Position);
+									this.ADTModelIndexes = new MMID(FilePath, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ADTModelIndexes.size;
 									continue;
 								}
@@ -175,7 +195,7 @@ namespace Warcraft
 								{
 									Console.WriteLine("Found MWMO Chunk, parsing...");
 
-									this.ADTWMOs = new MWMO(filePath, (int)br.BaseStream.Position);
+									this.ADTWMOs = new MWMO(FilePath, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ADTWMOs.size;
 									continue;
 								}
@@ -183,7 +203,7 @@ namespace Warcraft
 								{
 									Console.WriteLine("Found MWID Chunk, parsing...");
 
-									this.ADTWMOIndexes = new MWID(filePath, (int)br.BaseStream.Position);
+									this.ADTWMOIndexes = new MWID(FilePath, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ADTWMOIndexes.size;
 									continue;
 								}
@@ -191,7 +211,7 @@ namespace Warcraft
 								{
 									Console.WriteLine("Found MDDF Chunk, parsing...");
 
-									this.ADTModelPlacementInfo = new MDDF(filePath, (int)br.BaseStream.Position);
+									this.ADTModelPlacementInfo = new MDDF(FilePath, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ADTModelPlacementInfo.size;
 									continue;
 								}
@@ -199,7 +219,7 @@ namespace Warcraft
 								{
 									Console.WriteLine("Found MODF Chunk, parsing...");
 
-									this.ADTWMOPlacementInfo = new MODF(filePath, (int)br.BaseStream.Position);
+									this.ADTWMOPlacementInfo = new MODF(FilePath, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ADTWMOPlacementInfo.size;
 									continue;
 								}
@@ -222,9 +242,8 @@ namespace Warcraft
 								}
 							case "MCNK":
 								{
-									MCNK mcnk = new MCNK(filePath, (int)br.BaseStream.Position);
+									MCNK mcnk = new MCNK(FilePath, (int)br.BaseStream.Position);
 									ADTMCNKs.Add(mcnk);
-									string count = String.Format("Current MCNK count: {0}", ADTMCNKs.Count.ToString());
 
 									Console.WriteLine("Found MCNK Chunk, parsing...");
 
@@ -246,7 +265,7 @@ namespace Warcraft
 				}
 				else
 				{
-					throw new UnsupportedFileException(filePath);
+					throw new FileLoadException("The provided file was not in an ADT format.", FilePath);
 				}
 
 				Console.WriteLine(String.Format("Finished loading ADT with version {0}.", this.ADTVersion.version.ToString()));
@@ -1736,11 +1755,10 @@ namespace Warcraft
 														//subtract the above layer colour from the alphaSection colour
 														//also clamp values to range 0 - 255
 
-
-														int alpha = ExtensionMethods.Clamp<int>(alphaSectionPixel.A - layerMapPixel.A, 0, 255);
-														int red = ExtensionMethods.Clamp<int>(alphaSectionPixel.R - layerMapPixel.R, 0, 255);
-														int green = ExtensionMethods.Clamp<int>(alphaSectionPixel.G - layerMapPixel.G, 0, 255);
-														int blue = ExtensionMethods.Clamp<int>(alphaSectionPixel.B - layerMapPixel.B, 0, 255);
+														int alpha = (alphaSectionPixel.A - layerMapPixel.A).Clamp(0, 255);
+														int red = (alphaSectionPixel.R - layerMapPixel.R).Clamp(0, 255);
+														int green = (alphaSectionPixel.G - layerMapPixel.G).Clamp(0, 255);
+														int blue = (alphaSectionPixel.B - layerMapPixel.B).Clamp(0, 255);
 
 														Color newPixel = Color.FromArgb
                                                             (
@@ -1765,7 +1783,7 @@ namespace Warcraft
 									}
 								}                                
                                         
-								Console.WriteLine("MCNK at " + x.ToString() + "," + y.ToString() + " :" + GetTextureByID(textureID));
+								Console.WriteLine("MCNK at " + x + "," + y + " :" + GetTextureByID(textureID));
 							}
 							else
 							{
@@ -1778,7 +1796,7 @@ namespace Warcraft
                                 
 
 								//read the map (2048 or 4096 bytes) if there is a map
-								if (!(currentAlphaChunk.size == 0))
+								if (currentAlphaChunk.size != 0)
 								{
 									if (currentAlphaChunk.size % 2048 != 0 && !currentLayer.flags.HasFlag(MCLY.MCLYFlags.CompressedAlpha))
 									{

@@ -1,9 +1,9 @@
-﻿/// <summary>
-/// Credits/Copyright: Copyright © 2004-2008 Jon Skeet and Marc Gravell.
-/// Source: http://www.yoda.arachsys.com/csharp/miscutil/
+﻿//
+// Credits/Copyright: Copyright © 2004-2008 Jon Skeet and Marc Gravell.
+// Source: http://www.yoda.arachsys.com/csharp/miscutil/
 //
 // Computes a checksum for a block of data in adler32 format.
-/// </summary>
+//
 
 using System;
 using System.IO;

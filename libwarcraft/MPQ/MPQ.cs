@@ -1,11 +1,38 @@
-﻿using System;
+﻿//
+//  MPQ.cs
+//
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2016 Jarl Gullberg
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+// A massive thanks to Justin Olbrantz (Quantam) and Jean-Francois Roy
+// (BahamutZERO), whose [documentation of the MPQ
+// format](http://wiki.devklog.net/index.php?title=The_MoPaQ_Archive_Format) was
+// instrumental for this implementation. Although their wiki is no longer online, 
+// a backup snapshot taken by the Wayback Machine saved the day. The documentation
+// is available upon request.
+
+using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using Warcraft.Core.Compression;
-using Warcraft.Core.Compression;
-using Warcraft.MPQ.Attributes;
 using Warcraft.MPQ.Crypto;
+using Warcraft.MPQ.BlockTable;
+using Warcraft.MPQ.HashTable;
 
 namespace Warcraft.MPQ
 {
@@ -97,14 +124,7 @@ namespace Warcraft.MPQ
 		public bool HasFileList()
 		{
 			HashTableEntry fileHashEntry = HashTable.FindEntry("(listfile)");
-			if (fileHashEntry != null)
-			{
-				return true;
-			}
-			else
-			{
-				return false;	
-			}
+			return fileHashEntry != null;
 		}
 
 		/// <summary>
@@ -166,7 +186,7 @@ namespace Warcraft.MPQ
 				}
 
 				// Seek to the beginning of the file's sectors
-				long adjustedBlockOffset = 0;
+				long adjustedBlockOffset;
 				if (this.Header.GetFormat() == MPQFormat.Extended_v1 && RequiresExtendedFormat())
 				{
 					adjustedBlockOffset = (long)fileBlockEntry.GetExtendedBlockOffset(this.ExtendedBlockTable[fileHashEntry.GetBlockEntryIndex()]);
@@ -175,7 +195,7 @@ namespace Warcraft.MPQ
 				{
 					adjustedBlockOffset = fileBlockEntry.GetBlockOffset();
 				}			
-				mpqReader.BaseStream.Position = (long)adjustedBlockOffset;
+				mpqReader.BaseStream.Position = adjustedBlockOffset;
 
 				// Calculate the decryption key if neccesary
 				uint fileKey = 0;
@@ -183,7 +203,7 @@ namespace Warcraft.MPQ
 				{						
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasAdjustedEncryptionKey))
 					{
-						fileKey = MPQCrypt.GetFileKey(Path.GetFileName(filePath), true, (uint)adjustedBlockOffset, (uint)fileBlockEntry.GetFileSize());
+						fileKey = MPQCrypt.GetFileKey(Path.GetFileName(filePath), true, (uint)adjustedBlockOffset, fileBlockEntry.GetFileSize());
 					}
 					else
 					{
@@ -236,7 +256,7 @@ namespace Warcraft.MPQ
 					for (int i = 0; i < sectorOffsets.Count - 1; ++i)
 					{
 						long sectorStartPosition = adjustedBlockOffset + sectorOffsets[i];
-						mpqReader.BaseStream.Position = (long)sectorStartPosition;
+						mpqReader.BaseStream.Position = sectorStartPosition;
 
 						uint sectorLength = sectorOffsets[i + 1] - sectorOffsets[i];
 						compressedSectors.Add(mpqReader.ReadBytes((int)sectorLength));
@@ -356,7 +376,7 @@ namespace Warcraft.MPQ
 		}
 
 		/// <summary>
-		/// Determines whether or not the archive requires the format to be extended (at least <see cref="WarLib.MPQ.MPQFormat.Extended_v1"/>)
+		/// Determines whether or not the archive requires the format to be extended (at least <see cref="Warcraft.MPQ.MPQFormat.Extended_v1"/>)
 		/// </summary>
 		/// <returns><c>true</c>, if extended format is required, <c>false</c> otherwise.</returns>
 		private bool RequiresExtendedFormat()
@@ -374,12 +394,12 @@ namespace Warcraft.MPQ
 		}
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="WarLib.MPQ.MPQ"/> object.
+		/// Releases all resource used by the <see cref="Warcraft.MPQ.MPQ"/> object.
 		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="WarLib.MPQ.MPQ"/>. The <see cref="Dispose"/>
-		/// method leaves the <see cref="WarLib.MPQ.MPQ"/> in an unusable state. After calling <see cref="Dispose"/>, you must
-		/// release all references to the <see cref="WarLib.MPQ.MPQ"/> so the garbage collector can reclaim the memory that
-		/// the <see cref="WarLib.MPQ.MPQ"/> was occupying.</remarks>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Warcraft.MPQ.MPQ"/>. The <see cref="Dispose"/>
+		/// method leaves the <see cref="Warcraft.MPQ.MPQ"/> in an unusable state. After calling <see cref="Dispose"/>, you must
+		/// release all references to the <see cref="Warcraft.MPQ.MPQ"/> so the garbage collector can reclaim the memory that
+		/// the <see cref="Warcraft.MPQ.MPQ"/> was occupying.</remarks>
 		public void Dispose()
 		{
 			Header = null;

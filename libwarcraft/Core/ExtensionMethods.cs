@@ -1,9 +1,28 @@
-﻿using System;
+﻿//
+//  ExtensionMethods.cs
+//
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2016 Jarl Gullberg
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+using System;
 using System.Drawing;
 using System.IO;
-using Warcraft.MDX.Animation;
-using Warcraft.MDX;
-using System.Reflection;
 
 namespace Warcraft.Core
 {
@@ -50,10 +69,10 @@ namespace Warcraft.Core
 		/// 16 bytes.
 		/// </summary>
 		/// <returns>The quaternion.</returns>
-		/// <param name="br">Br.</param>
-		public static Quaternion ReadQuaternion32(this BinaryReader br)
+		/// <param name="Reader">Binary reader.</param>
+		public static Quaternion ReadQuaternion32(this BinaryReader Reader)
 		{
-			return new Quaternion(br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+			return new Quaternion(Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle());
 		}
 
 		/// <summary>
@@ -61,13 +80,13 @@ namespace Warcraft.Core
 		/// 8 bytes.
 		/// </summary>
 		/// <returns>The quaternion.</returns>
-		/// <param name="br">Br.</param>
-		public static Quaternion ReadQuaternion16(this BinaryReader br)
+		/// <param name="Reader">Binary reader.</param>
+		public static Quaternion ReadQuaternion16(this BinaryReader Reader)
 		{
-			short x = br.ReadInt16();
-			short y = br.ReadInt16();
-			short z = br.ReadInt16();
-			short w = br.ReadInt16();
+			short x = Reader.ReadInt16();
+			short y = Reader.ReadInt16();
+			short z = Reader.ReadInt16();
+			short w = Reader.ReadInt16();
 			return new Quaternion(ShortQuatValueToFloat(x), ShortQuatValueToFloat(y), ShortQuatValueToFloat(z), ShortQuatValueToFloat(w));
 		}
 
@@ -81,10 +100,10 @@ namespace Warcraft.Core
 		/// 12 bytes.
 		/// </summary>
 		/// <returns>The vector3f.</returns>
-		/// <param name="br">Br.</param>
-		public static Vector3f ReadVector3f(this BinaryReader br)
+		/// <param name="Reader">Binary reader.</param>
+		public static Vector3f ReadVector3f(this BinaryReader Reader)
 		{
-			return new Vector3f(br.ReadSingle(), br.ReadSingle(), br.ReadSingle());
+			return new Vector3f(Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle());
 		}
 
 		/// <summary>
@@ -92,10 +111,10 @@ namespace Warcraft.Core
 		/// 8 bytes.
 		/// </summary>
 		/// <returns>The vector2f.</returns>
-		/// <param name="br">Br.</param>
-		public static Vector2f ReadVector2f(this BinaryReader br)
+		/// <param name="Reader">Binary reader.</param>
+		public static Vector2f ReadVector2f(this BinaryReader Reader)
 		{
-			return new Vector2f(br.ReadSingle(), br.ReadSingle());
+			return new Vector2f(Reader.ReadSingle(), Reader.ReadSingle());
 		}
 
 		/// <summary>
@@ -103,10 +122,10 @@ namespace Warcraft.Core
 		// 24 bytes.
 		/// </summary>
 		/// <returns>The box.</returns>
-		/// <param name="br">Br.</param>
-		public static Box ReadBox(this BinaryReader br)
+		/// <param name="Reader">Binary reader.</param>
+		public static Box ReadBox(this BinaryReader Reader)
 		{
-			return new Box(br.ReadVector3f(), br.ReadVector3f());
+			return new Box(Reader.ReadVector3f(), Reader.ReadVector3f());
 		}
 	}
 }

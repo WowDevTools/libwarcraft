@@ -56,7 +56,7 @@ namespace Warcraft.MDX.Animation
 		/// <param name="data">Data.</param>
 		/// <param name="filePath">File path to the M2 file.</param>
 		/// <param name="Format">Format.</param>
-		public MDXTrack(byte[] data, string filePath, MDXFormat Format)
+		public MDXTrack(byte[] data, string filePath, WarcraftVersion Format)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
@@ -65,7 +65,7 @@ namespace Warcraft.MDX.Animation
 					Interpolationtype = (InterpolationType)br.ReadInt16();
 					GlobalSequenceID = br.ReadInt16();
 
-					if (Format < MDXFormat.Wrath)
+					if (Format < WarcraftVersion.Wrath)
 					{
 						InterpolationRanges = new MDXArray<KeyValuePair<int, int>>(br.ReadBytes(8));
 						Timestamps = new MDXArray<MDXArray<int>>(br.ReadBytes(8));

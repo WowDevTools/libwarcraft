@@ -1,5 +1,5 @@
 ﻿//
-//  MPQBlockTable.cs
+//  RecordParser.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,44 +19,45 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-
 using System;
-using System.Collections.Generic;
+using Newtonsoft.Json;
+using Warcraft.Core;
+using System.Reflection;
 using System.IO;
-using Warcraft.MPQ.Crypto;
+using Newtonsoft.Json.Linq;
 
-namespace Warcraft.MPQ.BlockTable
+namespace Warcraft.DBC.Record
 {
-	public class MPQBlockTable
+	public class RecordParser
 	{
-		public static readonly uint TableKey = MPQCrypt.Hash("(block table)", HashType.FileKey);
-		private readonly List<BlockTableEntry> Entries;
-
-		public MPQBlockTable(byte[] data)
+		public RecordParser()
 		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Entries = new List<BlockTableEntry>();
+		}
 
-					for (long i = 0; i < data.Length; i += BlockTableEntry.GetSize())
+		public static DBCRecordStructure TryGetDBCDefinition(string DBCName, WarcraftVersion Version)
+		{
+			if (String.IsNullOrWhiteSpace(DBCName))
+			{
+				throw new ArgumentNullException("DBCName", "The provided DBC name must not be null or empty.");
+			}
+
+			try
+			{
+				string DBCDefinitionResource = String.Format("Warcraft.DBC.Definitions.{0}.json", DBCName);
+				using (Stream jsonStream = Assembly.GetAssembly(typeof(RecordParser)).GetManifestResourceStream(DBCDefinitionResource))
+				{
+					using (TextReader tr = new StreamReader(jsonStream))
 					{
-						byte[] entryBytes = br.ReadBytes((int)BlockTableEntry.GetSize());
-						Entries.Add(new BlockTableEntry(entryBytes));
+						JObject jsonObject = new JObject(tr.ReadToEnd());					
 					}
 				}
 			}
-		}
+			catch
+			{
 
-		public BlockTableEntry GetEntry(int index)
-		{
-			return Entries[index];
-		}
+			}
 
-		public ulong GetSize()
-		{
-			return (ulong)(Entries.Count * BlockTableEntry.GetSize());
+			return null;
 		}
 	}
 }

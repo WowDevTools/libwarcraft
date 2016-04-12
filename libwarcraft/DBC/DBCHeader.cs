@@ -1,5 +1,5 @@
 ﻿//
-//  BlockFlags.cs
+//  DBCHeader.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,25 +19,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-
 using System;
+using System.Collections.Generic;
 
-namespace Warcraft.MPQ.BlockTable
+namespace Warcraft.DBC
 {
-	/// <summary>
-	/// Possible flags for a block entry, designating different flags for a stored file.
-	/// </summary>
-	[Flags]
-	public enum BlockFlags : uint
+	public class DBCHeader
 	{
-		BLF_IsFile = 0x80000000,
-		BLF_HasChecksums = 0x04000000,
-		BLF_IsDeleted = 0x02000000,
-		BLF_IsSingleUnit = 0x01000000,
-		BLF_HasAdjustedEncryptionKey = 0x00020000,
-		BLF_IsEncrypted = 0x00010000,
-		BLF_IsCompressed = 0x00000200,
-		BLF_IsImploded = 0x00000100
+		public uint Signature;
+		public uint RecordCount;
+		public uint FieldCount;
+		public uint RecordSize;
+		public uint StringBlockSize;
+
+		public DBCHeader()
+		{
+		}
 	}
 }
 

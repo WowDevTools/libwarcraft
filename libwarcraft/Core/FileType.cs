@@ -36,7 +36,6 @@ namespace Warcraft.Core
 				switch (fileExtension)
 				{
 					case "mpq":
-					case "MPQ":
 						{	
 							return EWarcraftFiletype.MoPaQArchive;
 						}
@@ -45,7 +44,6 @@ namespace Warcraft.Core
 							return EWarcraftFiletype.AddonManifest;
 						}
 					case "sig":
-					case "SIG":
 						{
 							return EWarcraftFiletype.AddonManifestSignature;
 						}
@@ -90,13 +88,11 @@ namespace Warcraft.Core
 							return EWarcraftFiletype.Hashmap;
 						}				
 					case "m2":
-					case "M2":
-					case "MDX":
+					case "mdx":
 						{
 							return EWarcraftFiletype.GameObjectModel;
 						}
 					case "wmo":
-					case "WMO":
 						{
 							return EWarcraftFiletype.WorldObjectModel;
 						}

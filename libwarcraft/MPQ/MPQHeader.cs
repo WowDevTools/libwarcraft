@@ -1,6 +1,27 @@
-﻿using System;
+﻿//
+//  MPQHeader.cs
+//
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2016 Jarl Gullberg
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+using System;
 using System.IO;
-using System.Security.Cryptography;
 
 namespace Warcraft.MPQ
 {
@@ -148,7 +169,7 @@ namespace Warcraft.MPQ
 			}
 			else
 			{
-				return (ulong)MergeHighBits(GetBaseHashTableOffset(), GetExtendedHashTableOffsetBits());
+				return MergeHighBits(GetBaseHashTableOffset(), GetExtendedHashTableOffsetBits());
 			}
 		}
 
@@ -173,7 +194,7 @@ namespace Warcraft.MPQ
 			}
 			else
 			{
-				return (ulong)MergeHighBits(GetBaseBlockTableOffset(), GetExtendedBlockTableOffsetBits());
+				return MergeHighBits(GetBaseBlockTableOffset(), GetExtendedBlockTableOffsetBits());
 			}
 		}
 
@@ -267,6 +288,7 @@ namespace Warcraft.MPQ
 
 				ulong furthestOffset = 0;
 				ulong archiveSize = 0;
+
 				// Sort the sizes
 				if (hashTableOffset > furthestOffset)
 				{
@@ -307,7 +329,7 @@ namespace Warcraft.MPQ
 		/// Merges a base 32-bit number with a 16-bit number, forming a 64-bit number where the uppermost 16 bits are 0.
 		/// </summary>
 		/// <returns>The final number.</returns>
-		/// <param name="baseOffset">Base bits.</param>
+		/// <param name="baseBits">Base bits.</param>
 		/// <param name="highBits">High bits.</param>
 		public static ulong MergeHighBits(uint baseBits, ushort highBits)
 		{

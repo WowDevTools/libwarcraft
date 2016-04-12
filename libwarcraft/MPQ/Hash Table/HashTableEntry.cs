@@ -1,8 +1,27 @@
-﻿using System;
+﻿//
+//  HashTableEntry.cs
+//
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2016 Jarl Gullberg
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 using System.IO;
-using System.Runtime.InteropServices;
 
-namespace Warcraft.MPQ
+namespace Warcraft.MPQ.HashTable
 {
 	public class HashTableEntry
 	{
@@ -14,20 +33,21 @@ namespace Warcraft.MPQ
 
 		public HashTableEntry(byte[] data)
 		{
-			MemoryStream dataStream = new MemoryStream(data);
-			BinaryReader br = new BinaryReader(dataStream);
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.FilePathHashA = br.ReadUInt32();
+					this.FilePathHashB = br.ReadUInt32();
+					this.Localization = br.ReadUInt16();
 
-			this.FilePathHashA = br.ReadUInt32();
-			this.FilePathHashB = br.ReadUInt32();
-			this.Localization = br.ReadUInt16();
+					// Read the platform as an int8 and skip the next byte
+					this.Platform = br.ReadByte();
+					br.BaseStream.Position += 1;
 
-			// Read the platform as an int8 and skip the next byte
-			this.Platform = br.ReadByte();
-			br.BaseStream.Position += 1;
-
-			this.FileBlockIndex = br.ReadUInt32();
-
-			br.Close();
+					this.FileBlockIndex = br.ReadUInt32();
+				}
+			}
 		}
 
 		/// <summary>

@@ -1,4 +1,26 @@
-﻿using System;
+﻿//
+//  BLP.cs
+//
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2016 Jarl Gullberg
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+using System;
 using System.IO;
 using System.Drawing;
 using System.Collections;
@@ -12,27 +34,43 @@ using System.Drawing.Drawing2D;
 
 namespace Warcraft.BLP
 {
+	/// <summary>
+	/// This class represents a BLP binary image and its contained data.
+	/// </summary>
 	public class BLP
 	{
+		/// <summary>
+		/// The header. This header contains data about the mipmaps stored in the BLP,
+		/// and storage information such as offsets and sizes.
+		/// </summary>
 		public BLPHeader Header;
+
+		/// <summary>
+		/// The palette of colours used in the BLP image. This is not used for DXTC-compressed
+		/// textures.
+		/// </summary>
 		private readonly List<Color> Palette = new List<Color>();
+
+		/// <summary>
+		/// A list of byte arrays containing the compressed mipmaps.
+		/// </summary>
 		private readonly List<byte[]> RawMipMaps = new List<byte[]>();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.BLP.BLP"/> class.
 		/// This constructor reads a binary BLP file from disk.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public BLP(byte[] data)
+		/// <param name="InData">Data.</param>
+		public BLP(byte[] InData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			using (MemoryStream ms = new MemoryStream(InData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					byte[] fileHeaderBytes = br.ReadBytes(148);
 					this.Header = new BLPHeader(fileHeaderBytes);
 
-					if (Header.compressionType == TextureCompressionType.Palettized)
+					if (Header.CompressionType == TextureCompressionType.Palettized)
 					{
 						for (int i = 0; i < 256; ++i)
 						{
@@ -59,8 +97,8 @@ namespace Warcraft.BLP
 					// Read the raw mipmap data
 					for (int i = 0; i < Header.GetNumMipMaps(); ++i)
 					{
-						br.BaseStream.Position = Header.mipMapOffsets[i];
-						RawMipMaps.Add(br.ReadBytes((int)Header.mipMapSizes[i]));
+						br.BaseStream.Position = Header.MipMapOffsets[i];
+						RawMipMaps.Add(br.ReadBytes((int)Header.MipMapSizes[i]));
 					}
 				}
 			}
@@ -77,11 +115,11 @@ namespace Warcraft.BLP
 		{
 			// Set up the header
 			this.Header = new BLPHeader();
-			Header.compressionType = CompressionType;
+			Header.CompressionType = CompressionType;
 
 			if (CompressionType == TextureCompressionType.Palettized)
 			{
-				Header.pixelFormat = BLPPixelFormat.Pixel_Palettized;
+				Header.PixelFormat = BLPPixelFormat.Pixel_Palettized;
 				// Determine best alpha bit depth
 				if (Image.HasAlpha())
 				{
@@ -106,51 +144,50 @@ namespace Warcraft.BLP
 					if (alphaLevels.Count > 16)
 					{
 						// More than 16? Use a full byte
-						Header.alphaBitDepth = 8;
+						Header.AlphaBitDepth = 8;
 					}
 					else if (alphaLevels.Count > 2)
 					{
 						// More than 2, but less than or equal to 16? Use half a byte
-						Header.alphaBitDepth = 4;
+						Header.AlphaBitDepth = 4;
 					}
 					else
 					{
 						// Just 2? Use a bit instead
-						Header.alphaBitDepth = 1;
+						Header.AlphaBitDepth = 1;
 					}
 				}
 				else
 				{
 					// No alpha, so a bit depth of 0.
-					Header.alphaBitDepth = 0;
+					Header.AlphaBitDepth = 0;
 				}
 			}
 			else if (CompressionType == TextureCompressionType.DXTC)
 			{
-				Header.alphaBitDepth = 8;
+				Header.AlphaBitDepth = 8;
 
 				// Determine best DXTC type (1, 3 or 5)	
 				if (Image.HasAlpha())
 				{
-					// TODO: Differentiate between DXT3 and 5
-					Header.pixelFormat = BLPPixelFormat.Pixel_DXT3;
+					Header.PixelFormat = BLPPixelFormat.Pixel_DXT3;
 				}
 				else
 				{
 					// DXT1 for no alpha
-					Header.pixelFormat = BLPPixelFormat.Pixel_DXT1;
+					Header.PixelFormat = BLPPixelFormat.Pixel_DXT1;
 				}
 			}
 			else if (CompressionType == TextureCompressionType.Uncompressed)
 			{
 				// The alpha will be stored as a straight ARGB texture, so set it to 8
-				Header.alphaBitDepth = 8;
-				Header.pixelFormat = BLPPixelFormat.Pixel_A8R8G8B8;
+				Header.AlphaBitDepth = 8;
+				Header.PixelFormat = BLPPixelFormat.Pixel_A8R8G8B8;
 			}
 
 			// What the mip type does is currently unknown, but it's usually set to 1.
-			Header.mipMapType = 1;
-			Header.resolution = new Resolution((uint)Image.Width, (uint)Image.Height);
+			Header.MipMapType = 1;
+			Header.Resolution = new Resolution((uint)Image.Width, (uint)Image.Height);
 
 			// It's now time to compress the image
 			this.RawMipMaps = CompressImage(Image);
@@ -161,8 +198,8 @@ namespace Warcraft.BLP
 			{
 				uint mipSize = (uint)rawMipMap.Length;
 
-				this.Header.mipMapOffsets.Add(mipOffset);
-				this.Header.mipMapSizes.Add(mipSize);
+				this.Header.MipMapOffsets.Add(mipOffset);
+				this.Header.MipMapSizes.Add(mipSize);
 
 				// Push the offset ahead for the next mipmap
 				mipOffset += mipSize;
@@ -201,30 +238,30 @@ namespace Warcraft.BLP
 		/// Gets a bitmap representing the given zero-based mipmap level.
 		/// </summary>
 		/// <returns>A bitmap.</returns>
-		/// <param name="level">Mipmap level.</param>
-		public Bitmap GetMipMap(uint level)
+		/// <param name="Level">Mipmap level.</param>
+		public Bitmap GetMipMap(uint Level)
 		{			
-			return DecompressMipMap(RawMipMaps[(int)level], level);
+			return DecompressMipMap(RawMipMaps[(int)Level], Level);
 		}
 
 		/// <summary>
 		/// Decompresses a mipmap in the file at the specified level from the specified data.
 		/// </summary>
 		/// <returns>The mipmap.</returns>
-		/// <param name="data">Data containing the mipmap level.</param>
+		/// <param name="InData">Data containing the mipmap level.</param>
 		/// <param name="MipLevel">The mipmap level of the data</param>
-		private Bitmap DecompressMipMap(byte[] data, uint MipLevel)
+		private Bitmap DecompressMipMap(byte[] InData, uint MipLevel)
 		{
 			Bitmap map = null;	
 			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel);
 			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel);
 
-			if (data.Length > 0 && targetXRes > 0 && targetYRes > 0)
+			if (InData.Length > 0 && targetXRes > 0 && targetYRes > 0)
 			{
-				if (Header.compressionType == TextureCompressionType.Palettized)
+				if (Header.CompressionType == TextureCompressionType.Palettized)
 				{
 					map = new Bitmap((int)targetXRes, (int)targetYRes, PixelFormat.Format32bppArgb);
-					using (MemoryStream ms = new MemoryStream(data))
+					using (MemoryStream ms = new MemoryStream(InData))
 					{
 						using (BinaryReader br = new BinaryReader(ms))
 						{
@@ -294,25 +331,25 @@ namespace Warcraft.BLP
 						}
 					}
 				}
-				else if (Header.compressionType == TextureCompressionType.DXTC)
+				else if (Header.CompressionType == TextureCompressionType.DXTC)
 				{     					
 					SquishOptions squishOptions = SquishOptions.DXT1;
-					if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT3)
+					if (Header.PixelFormat == BLPPixelFormat.Pixel_DXT3)
 					{
 						squishOptions = SquishOptions.DXT3;
 					}
-					else if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT5)
+					else if (Header.PixelFormat == BLPPixelFormat.Pixel_DXT5)
 					{
 						squishOptions = SquishOptions.DXT5;
 					}
 
-					map = (Bitmap)Squish.Squish.DecompressToBitmap(data, (int)targetXRes, (int)targetYRes, squishOptions);
+					map = (Bitmap)Squish.Squish.DecompressToBitmap(InData, (int)targetXRes, (int)targetYRes, squishOptions);
 				}
-				else if (Header.compressionType == TextureCompressionType.Uncompressed)
+				else if (Header.CompressionType == TextureCompressionType.Uncompressed)
 				{
 					map = new Bitmap((int)targetXRes, (int)targetYRes, PixelFormat.Format32bppArgb);
 
-					using (MemoryStream ms = new MemoryStream(data))
+					using (MemoryStream ms = new MemoryStream(InData))
 					{
 						using (BinaryReader br = new BinaryReader(ms))
 						{
@@ -337,16 +374,24 @@ namespace Warcraft.BLP
 			return map;
 		}
 
-		private Bitmap RGBAToBitmap(byte[] rgba, int width, int height)
+		/// <summary>
+		/// Converts an R8G8B8A8 byte array to a Bitmap object of the specified width
+		/// and height. 
+		/// </summary>
+		/// <returns>The bitmap.</returns>
+		/// <param name="InRGBA">In RGBA array.</param>
+		/// <param name="Width">Width.</param>
+		/// <param name="Height">Height.</param>
+		private Bitmap RGBAToBitmap(byte[] InRGBA, int Width, int Height)
 		{
-			Bitmap map = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-			using (MemoryStream ms = new MemoryStream(rgba))
+			Bitmap map = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
+			using (MemoryStream ms = new MemoryStream(InRGBA))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					for (int y = 0; y < width; ++y)
+					for (int y = 0; y < Width; ++y)
 					{
-						for (int x = 0; x < height; ++x)
+						for (int x = 0; x < Height; ++x)
 						{
 							byte R = br.ReadByte();
 							byte G = br.ReadByte();					
@@ -369,24 +414,24 @@ namespace Warcraft.BLP
 		/// The number of mipmaps returned will be <see cref="Warcraft.BLP.BLP.GetNumReasonableMipMapLevels"/> + 1. 
 		/// </summary>
 		/// <returns>The compressed image data.</returns>
-		/// <param name="Image">The image to be compressed.</param>
-		private List<byte[]> CompressImage(Bitmap Image)
+		/// <param name="InImage">The image to be compressed.</param>
+		private List<byte[]> CompressImage(Image InImage)
 		{
 			List<byte[]> mipMaps = new List<byte[]>();
 
 			// Generate a palette from the unmipped image for use with the mips
-			if (Header.compressionType == TextureCompressionType.Palettized)
+			if (Header.CompressionType == TextureCompressionType.Palettized)
 			{
-				GeneratePalette(Image);
+				GeneratePalette(InImage);
 			}
 
 			// Add the original image as the first mipmap
-			mipMaps.Add(CompressImage(Image, 0));
+			mipMaps.Add(CompressImage(InImage, 0));
 
 			// Then, compress the image N amount of times into mipmaps
 			for (int i = 0; i < GetNumReasonableMipMapLevels(); ++i)
 			{
-				mipMaps.Add(CompressImage(Image, i));
+				mipMaps.Add(CompressImage(InImage, i));
 			}
 
 			return mipMaps;
@@ -398,19 +443,18 @@ namespace Warcraft.BLP
 		/// This function expects the mipmap level to be reasonable (i.e, not a level which would produce a mip smaller than 1x1)
 		/// </summary>
 		/// <returns>The image.</returns>
-		/// <param name="Image">Image.</param>
+		/// <param name="InImage">Image.</param>
 		/// <param name="MipLevel">Mip level.</param>
-		private byte[] CompressImage(Bitmap Image, int MipLevel)
+		private byte[] CompressImage(Image InImage, int MipLevel)
 		{
-			// TODO: Stub function
 			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel);
 			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel);
 
 			List<byte> colourData = new List<byte>();
 			List<byte> alphaData = new List<byte>();
-			using (Bitmap resizedImage = ResizeImage(Image, (int)targetXRes, (int)targetYRes))
+			using (Bitmap resizedImage = ResizeImage(InImage, (int)targetXRes, (int)targetYRes))
 			{				
-				if (Header.compressionType == TextureCompressionType.Palettized)
+				if (Header.CompressionType == TextureCompressionType.Palettized)
 				{				
 					// Generate the colour data
 					for (int y = 0; y < targetYRes; ++y)
@@ -514,7 +558,7 @@ namespace Warcraft.BLP
 						}
 					}
 				}
-				else if (Header.compressionType == TextureCompressionType.DXTC)
+				else if (Header.CompressionType == TextureCompressionType.DXTC)
 				{
 					using (MemoryStream rgbaStream = new MemoryStream())
 					{
@@ -537,11 +581,11 @@ namespace Warcraft.BLP
 							byte[] rgbaBytes = rgbaStream.ToArray();
 
 							SquishOptions squishOptions = SquishOptions.DXT1;
-							if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT3)
+							if (Header.PixelFormat == BLPPixelFormat.Pixel_DXT3)
 							{
 								squishOptions = SquishOptions.DXT3;
 							}
-							else if (Header.pixelFormat == BLPPixelFormat.Pixel_DXT5)
+							else if (Header.PixelFormat == BLPPixelFormat.Pixel_DXT5)
 							{
 								squishOptions = SquishOptions.DXT5;
 							}
@@ -552,7 +596,7 @@ namespace Warcraft.BLP
 					}
 
 				}
-				else if (Header.compressionType == TextureCompressionType.Uncompressed)
+				else if (Header.CompressionType == TextureCompressionType.Uncompressed)
 				{
 					using (MemoryStream argbStream = new MemoryStream())
 					{
@@ -591,16 +635,16 @@ namespace Warcraft.BLP
 		/// Resize the image to the specified width and height.
 		/// Credit goes to https://stackoverflow.com/questions/1922040/resize-an-image-c-sharp (mpen)
 		/// </summary>
-		/// <param name="image">The image to resize.</param>
-		/// <param name="width">The width to resize to.</param>
-		/// <param name="height">The height to resize to.</param>
+		/// <param name="InImage">The image to resize.</param>
+		/// <param name="Width">The width to resize to.</param>
+		/// <param name="Height">The height to resize to.</param>
 		/// <returns>The resized image.</returns>
-		public static Bitmap ResizeImage(Image image, int width, int height)
+		public static Bitmap ResizeImage(Image InImage, int Width, int Height)
 		{
-			Rectangle destRect = new Rectangle(0, 0, width, height);
-			Bitmap destImage = new Bitmap(width, height);
+			Rectangle destRect = new Rectangle(0, 0, Width, Height);
+			Bitmap destImage = new Bitmap(Width, Height);
 
-			destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+			destImage.SetResolution(InImage.HorizontalResolution, InImage.VerticalResolution);
 
 			using (Graphics graphics = Graphics.FromImage(destImage))
 			{
@@ -613,18 +657,18 @@ namespace Warcraft.BLP
 				using (ImageAttributes wrapMode = new ImageAttributes())
 				{
 					wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-					graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+					graphics.DrawImage(InImage, destRect, 0, 0, InImage.Width, InImage.Height, GraphicsUnit.Pixel, wrapMode);
 				}
 			}
 
 			return destImage;
 		}
 
-		private List<byte> Decode1BitAlpha(byte[] data)
+		private List<byte> Decode1BitAlpha(byte[] InData)
 		{
 			List<byte> alphaValues = new List<byte>();
 
-			foreach (byte dataByte in data)
+			foreach (byte dataByte in InData)
 			{
 				// The alpha value is stored per-bit in the byte (8 alpha values per byte)
 				for (byte i = 0; i < 8; ++i)
@@ -646,11 +690,11 @@ namespace Warcraft.BLP
 			return alphaValues;
 		}
 
-		private List<byte> Decode4BitAlpha(byte[] data)
+		private List<byte> Decode4BitAlpha(byte[] InData)
 		{
 			List<byte> alphaValues = new List<byte>();
 
-			foreach (var alphaByte in data)
+			foreach (var alphaByte in InData)
 			{
 				// The alpha value is stored as half a byte (2 alpha values per byte)
 				// Extract these two values and map them to a byte size (4 bits can hold 0 - 15 alpha)
@@ -664,13 +708,25 @@ namespace Warcraft.BLP
 		}
 
 		// TODO: Implement
-		private List<byte> Encode1BitAlpha(Bitmap map)
+		/// <summary>
+		/// Encodes the alpha data of the provided image as a packed byte array of alpha values.
+		/// 8 alpha values are stored in each byte as a 1 (fully opaque) or a 0 (fully transparent).
+		/// </summary>
+		/// <returns>The bit alpha.</returns>
+		/// <param name="InMap">In map.</param>
+		private List<byte> Encode1BitAlpha(Bitmap InMap)
 		{
 			return null;
 		}
 
 		// TODO: Implement
-		private List<byte> Encode4BitAlpha(Bitmap map)
+		/// <summary>
+		/// Encodes the alpha data of the provided image as a packed byte array of alpha values.
+		/// 2 alpha values are stored in each byte as a uint4_t integer value.
+		/// </summary>
+		/// <returns>The bit alpha.</returns>
+		/// <param name="InMap">In map.</param>
+		private List<byte> Encode4BitAlpha(Bitmap InMap)
 		{
 			return null;
 		}
@@ -701,12 +757,12 @@ namespace Warcraft.BLP
 		/// Generates an indexed 256-color palette from the specified image and overwrites the current palette with it.
 		/// Ordinarily, this would be the original mipmap.
 		/// </summary>
-		/// <param name="Image">Image.</param>
-		private void GeneratePalette(Bitmap Image)
+		/// <param name="InImage">Image.</param>
+		private void GeneratePalette(Image InImage)
 		{
 			// TODO: Replace with an algorithm that produces a better result. For now, it works.
 			PaletteQuantizer quantizer = new PaletteQuantizer(new ArrayList());
-			using (Bitmap quantizedMap = quantizer.Quantize(Image))
+			using (Bitmap quantizedMap = quantizer.Quantize(InImage))
 			{
 				this.Palette.Clear();
 				this.Palette.AddRange(quantizedMap.Palette.Entries);
@@ -794,7 +850,7 @@ namespace Warcraft.BLP
 		/// <returns>The bytes.</returns>
 		public byte[] GetBytes()
 		{
-			byte[] headerBytes = this.Header.GetBytes();
+			byte[] headerBytes = this.Header.ToByteArray();
 			byte[] paletteBytes = GetPaletteBytes();
 			byte[] mipBytes = GetMipMapBytes();
 
@@ -824,26 +880,25 @@ namespace Warcraft.BLP
 				// Grab the mipmap based on the X Mip
 				return GetMipMap((uint)XMip);
 			}
-			else if (YMip > XMip)
+
+			if (XMip < YMip)
 			{
 				// Grab the mipmap based on the Y Mip
 				return GetMipMap((uint)YMip);
 			}
-			else
-			{
-				// Doesn't matter which one, just grab the X Mip
-				return GetMipMap((uint)XMip);
-			}
+					
+			// Doesn't matter which one, just grab the X Mip
+			return GetMipMap((uint)XMip);			
 		}
 
 		/// <summary>
 		/// Writes the image to disk as a BLP file.
 		/// To write a "normal" image format to disk, retrieve a mipmap (<see cref="Warcraft.BLP.BLP.GetMipMap"/>) instead.
 		/// </summary>
-		/// <param name="path">Path.</param>
-		private void WriteImageToDisk(string path)
+		/// <param name="OutputPath">Path.</param>
+		private void WriteImageToDisk(string OutputPath)
 		{
-			File.WriteAllBytes(path, GetBytes());
+			File.WriteAllBytes(OutputPath, GetBytes());
 		}
 
 		/// <summary>
@@ -852,7 +907,7 @@ namespace Warcraft.BLP
 		/// <returns>The magic string.</returns>
 		public string GetFileType()
 		{
-			return Header.fileType;
+			return Header.Signature;
 		}
 
 		/// <summary>
@@ -861,7 +916,7 @@ namespace Warcraft.BLP
 		/// <returns>The version of the file.</returns>
 		public uint GetVersion()
 		{
-			return Header.version;
+			return Header.Version;
 		}
 
 		/// <summary>
@@ -870,7 +925,7 @@ namespace Warcraft.BLP
 		/// <returns>The pixel format.</returns>
 		public BLPPixelFormat GetPixelFormat()
 		{
-			return Header.pixelFormat;
+			return Header.PixelFormat;
 		}
 
 		/// <summary>
@@ -879,7 +934,7 @@ namespace Warcraft.BLP
 		/// <returns>The resolution.</returns>
 		public Resolution GetResolution()
 		{
-			return Header.resolution;
+			return Header.Resolution;
 		}
 
 		/// <summary>
@@ -888,7 +943,7 @@ namespace Warcraft.BLP
 		/// <returns>The compression type.</returns>
 		public TextureCompressionType GetCompressionType()
 		{
-			return Header.compressionType;
+			return Header.CompressionType;
 		}
 
 		/// <summary>
@@ -897,7 +952,7 @@ namespace Warcraft.BLP
 		/// <returns>The alpha bit depth.</returns>
 		public int GetAlphaBitDepth()
 		{
-			return Header.alphaBitDepth;
+			return Header.AlphaBitDepth;
 		}
 
 		/// <summary>

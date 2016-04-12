@@ -1,5 +1,5 @@
 ﻿//
-//  MDXFormat.cs
+//  DBCIntegerField.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.IO;
 
-namespace Warcraft.MDX
+namespace Warcraft.DBC.Record.Fields
 {
-	public enum MDXFormat
+	public sealed class DBCIntegerField : DBCField
 	{
-		Unknown = -1,
-		Classic = 1,
-		BurningCrusade = 2,
-		Wrath = 3,
-		Cataclysm = 4,
-		Mists = 5,
-		Warlords = 6,
-		Legion = 7
+		public uint Value;
+
+		private DBCIntegerField()
+		{
+		}
+
+		public override void Read(BinaryReader br)
+		{
+			this.Value = br.ReadUInt32();
+		}
 	}
 }
 

@@ -151,7 +151,7 @@ namespace Warcraft.MDX
 					this.AnimationLookupTableEntryCount = br.ReadUInt32();
 					this.AnimationLookupTableOffset = br.ReadUInt32();
 
-					if (GetModelVersion(Version) < MDXFormat.Wrath)
+					if (GetModelVersion(Version) < WarcraftVersion.Wrath)
 					{
 						this.PlayableAnimationLookupTableEntryCount = br.ReadUInt32();
 						this.PlayableAnimationLookupTableOffset = br.ReadUInt32();
@@ -166,7 +166,7 @@ namespace Warcraft.MDX
 					this.VerticesOffset = br.ReadUInt32();
 					this.LODViewsCount = br.ReadUInt32();
 
-					if (GetModelVersion(Version) < MDXFormat.Wrath)
+					if (GetModelVersion(Version) < WarcraftVersion.Wrath)
 					{
 						this.LODViewsOffset = br.ReadUInt32();
 					}
@@ -178,7 +178,7 @@ namespace Warcraft.MDX
 					this.TransparencyAnimationCount = br.ReadUInt32();
 					this.TransparencyAnimationsOffset = br.ReadUInt32();
 
-					if (GetModelVersion(Version) < MDXFormat.Wrath)
+					if (GetModelVersion(Version) < WarcraftVersion.Wrath)
 					{
 						this.UnknownCount = br.ReadUInt32();
 						this.UnknownOffset = br.ReadUInt32();
@@ -243,37 +243,37 @@ namespace Warcraft.MDX
 			}
 		}
 
-		public static MDXFormat GetModelVersion(uint Version)
+		public static WarcraftVersion GetModelVersion(uint Version)
 		{
 			if (Version <= 256)
 			{
-				return MDXFormat.Classic;
+				return WarcraftVersion.Classic;
 			}
 			else if (Version <= 263 && Version > 256)
 			{
-				return MDXFormat.BurningCrusade;
+				return WarcraftVersion.BurningCrusade;
 			}
 			else if (Version == 264)
 			{
-				return MDXFormat.Wrath;
+				return WarcraftVersion.Wrath;
 			}
 			else if (Version <= 272 && Version > 264)
 			{
-				return MDXFormat.Cataclysm;
+				return WarcraftVersion.Cataclysm;
 			}
 			else if (Version < 274 && Version > 272)
 			{
 				// It should be noted that this is a guess based on the newer and older
 				// model versions. If it works, great - YMMV
-				return MDXFormat.Warlords;
+				return WarcraftVersion.Warlords;
 			}
 			else if (Version <= 274)
 			{
-				return MDXFormat.Legion;
+				return WarcraftVersion.Legion;
 			}
 			else
 			{
-				return MDXFormat.Unknown;
+				return WarcraftVersion.Unknown;
 			}
 		}
 	}

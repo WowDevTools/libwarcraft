@@ -61,8 +61,8 @@ namespace Warcraft.MDX
 			using (BinaryReader br = new BinaryReader(MDXStream))
 			{
 				// Read Wrath header or read pre-wrath header
-				MDXFormat Format = PeekFormat(br);
-				if (Format < MDXFormat.Wrath)
+				WarcraftVersion Format = PeekFormat(br);
+				if (Format < WarcraftVersion.Wrath)
 				{
 					this.Header = new MDXHeader(br.ReadBytes(324));
 				}
@@ -105,7 +105,7 @@ namespace Warcraft.MDX
 					AnimationSequenceLookupTable.Add(br.ReadInt16());
 				}
 
-				if (MDXHeader.GetModelVersion(Header.Version) < MDXFormat.Wrath)
+				if (MDXHeader.GetModelVersion(Header.Version) < WarcraftVersion.Wrath)
 				{
 					// Seek to Playable Animations Lookup Table
 					br.BaseStream.Position = Header.PlayableAnimationLookupTableOffset;
@@ -127,7 +127,7 @@ namespace Warcraft.MDX
 					Bone.ParentBone = br.ReadInt16();
 					Bone.SubmeshID = br.ReadUInt16();
 
-					if (MDXHeader.GetModelVersion(Header.Version) >= MDXFormat.BurningCrusade)
+					if (MDXHeader.GetModelVersion(Header.Version) >= WarcraftVersion.BurningCrusade)
 					{
 						Bone.Unknown1 = br.ReadUInt16();
 						Bone.Unknown1 = br.ReadUInt16();
@@ -193,7 +193,7 @@ namespace Warcraft.MDX
 				}
 
 				// Seek to view block
-				if (MDXHeader.GetModelVersion(Header.Version) < MDXFormat.Wrath)
+				if (MDXHeader.GetModelVersion(Header.Version) < WarcraftVersion.Wrath)
 				{
 					br.BaseStream.Position = Header.LODViewsOffset;
 
@@ -253,7 +253,7 @@ namespace Warcraft.MDX
 						for (int j = 0; j < View.Header.SubmeshCount; ++j)
 						{
 							byte[] submeshData;
-							if (MDXHeader.GetModelVersion(Header.Version) >= MDXFormat.BurningCrusade)
+							if (MDXHeader.GetModelVersion(Header.Version) >= WarcraftVersion.BurningCrusade)
 							{
 								submeshData = br.ReadBytes(48);
 							}
@@ -460,7 +460,7 @@ namespace Warcraft.MDX
 			}
 		}
 
-		private MDXFormat PeekFormat(BinaryReader br)
+		private WarcraftVersion PeekFormat(BinaryReader br)
 		{
 			long initialPosition = br.BaseStream.Position;
 
