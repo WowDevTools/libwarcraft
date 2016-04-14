@@ -10,6 +10,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\Documents\Keys &amp; Cryptography\libwarcraft\libwarcraft.key</AssemblyOriginatorKeyFile>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ReleaseVersion>1.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,17 +36,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="Noemax.Compression.Net4.Trial">
-      <HintPath>..\..\Everlook\packages\Noemax.Compression.16.100.0\lib\net40\Noemax.Compression.Net4.Trial.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\Everlook\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\Everlook\packages\DotNetZip.1.9.8\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,11 +57,6 @@
     <Compile Include="MPQ\MPQHeader.cs" />
     <Compile Include="MPQ\MPQShunt.cs" />
     <Compile Include="MPQ\MPQFormat.cs" />
-    <Compile Include="MPQ\Block Table\MPQBlockTable.cs" />
-    <Compile Include="MPQ\Hash Table\MPQHashTable.cs" />
-    <Compile Include="MPQ\Block Table\BlockTableEntry.cs" />
-    <Compile Include="MPQ\Hash Table\HashTableEntry.cs" />
-    <Compile Include="MPQ\Block Table\BlockFlags.cs" />
     <Compile Include="ADT\ADT.cs" />
     <Compile Include="Core\Compression\Compression.cs" />
     <Compile Include="Core\Compression\CompressionAlgorithms.cs" />
@@ -85,47 +80,7 @@
     <Compile Include="Core\Compression\Squish\Flags.cs" />
     <Compile Include="Core\Compression\Squish\Maths.cs" />
     <Compile Include="Core\Compression\Squish\Squish.cs" />
-    <Compile Include="MPQ\HET Table\HETTable.cs" />
-    <Compile Include="MPQ\BET Table\BETTable.cs" />
-    <Compile Include="WMO\Root File\Root.cs" />
-    <Compile Include="WMO\Root File\RootHeader.cs" />
-    <Compile Include="WMO\Group File\Group.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelGroup.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelPolygons.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelVertexIndices.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelVertices.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelNormals.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelTextureCoordinates.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelRenderBatches.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelLightReferences.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelDoodadReferences.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelBSPNodes.cs" />
-    <Compile Include="WMO\Group File\Chunks\MOBR.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelLiquids.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelVertexColours.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelTriangleStrips.cs" />
-    <Compile Include="WMO\Group File\Chunks\MORB.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelTangentArray.cs" />
-    <Compile Include="WMO\Group File\Chunks\MOBS.cs" />
-    <Compile Include="WMO\Group File\Chunks\MDAL.cs" />
-    <Compile Include="WMO\Group File\Chunks\ModelTerrainPlanes.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelTextures.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelMaterials.cs" />
     <Compile Include="Core\Shading\ShaderTypes.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelGroupNames.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelGroupInformation.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelSkybox.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelPortals.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelPortalReferences.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelVisibleVertices.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelVisibleBlocks.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelLighting.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelDoodadSets.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelDoodadReferences.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelDoodadInstances.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelFog.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelConvexPlanes.cs" />
-    <Compile Include="WMO\Root File\Chunks\ModelGameobjectFileID.cs" />
     <Compile Include="WMO\WMO.cs" />
     <Compile Include="MDX\MDX.cs" />
     <Compile Include="MDX\MDXHeader.cs" />
@@ -164,6 +119,53 @@
     <Compile Include="DBC\Record\RecordFieldType.cs" />
     <Compile Include="Core\WarcraftVersion.cs" />
     <Compile Include="BLP\BLPFormat.cs" />
+    <Compile Include="MDX\Visual\FX\MDXParticleEmitter.cs" />
+    <Compile Include="MDX\Visual\FX\MDXRibbonEmitter.cs" />
+    <Compile Include="MPQ\Tables\BET\BETTable.cs" />
+    <Compile Include="MPQ\Tables\Block\BlockFlags.cs" />
+    <Compile Include="MPQ\Tables\Block\BlockTableEntry.cs" />
+    <Compile Include="MPQ\Tables\Block\MPQBlockTable.cs" />
+    <Compile Include="MPQ\Tables\Hash\HashTableEntry.cs" />
+    <Compile Include="MPQ\Tables\Hash\MPQHashTable.cs" />
+    <Compile Include="MPQ\Tables\HET\HETTable.cs" />
+    <Compile Include="WMO\GroupFile\Group.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelGroup.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelPolygons.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelVertexIndices.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelVertices.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelNormals.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelTextureCoordinates.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelRenderBatches.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelLightReferences.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelDoodadReferences.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelBSPNodes.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\MOBR.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelLiquids.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelVertexColours.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelTriangleStrips.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\MORB.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelTangentArray.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\MOBS.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\MDAL.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelTerrainPlanes.cs" />
+    <Compile Include="WMO\RootFile\Root.cs" />
+    <Compile Include="WMO\RootFile\RootHeader.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelTextures.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelMaterials.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelGroupNames.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelGroupInformation.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelSkybox.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelPortals.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelPortalReferences.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelVisibleVertices.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelVisibleBlocks.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelLighting.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelDoodadSets.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelDoodadReferences.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelDoodadInstances.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelFog.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelConvexPlanes.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelGameobjectFileID.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -175,7 +177,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <EmbeddedResource Include="log4net.config" />
     <EmbeddedResource Include="App.config" />
     <EmbeddedResource Include="DBC\Definitions\AnimationData.json" />
   </ItemGroup>
@@ -183,8 +184,6 @@
     <Folder Include="BLP\" />
     <Folder Include="Core\" />
     <Folder Include="MPQ\" />
-    <Folder Include="MPQ\Hash Table\" />
-    <Folder Include="MPQ\Block Table\" />
     <Folder Include="ADT\" />
     <Folder Include="Core\Compression\" />
     <Folder Include="MPQ\Attributes\" />
@@ -192,13 +191,7 @@
     <Folder Include="Core\Compression\Blast\" />
     <Folder Include="Core\Hashing\" />
     <Folder Include="Core\Quantization\" />
-    <Folder Include="MPQ\HET Table\" />
-    <Folder Include="MPQ\BET Table\" />
     <Folder Include="WMO\" />
-    <Folder Include="WMO\Root File\" />
-    <Folder Include="WMO\Group File\" />
-    <Folder Include="WMO\Root File\Chunks\" />
-    <Folder Include="WMO\Group File\Chunks\" />
     <Folder Include="Core\Shading\" />
     <Folder Include="MDX\" />
     <Folder Include="MDX\Geometry\" />
@@ -210,6 +203,15 @@
     <Folder Include="DBC\Record\" />
     <Folder Include="DBC\Record\Fields\" />
     <Folder Include="DBC\Definitions\" />
+    <Folder Include="MPQ\Tables\" />
+    <Folder Include="MPQ\Tables\BET\" />
+    <Folder Include="MPQ\Tables\Block\" />
+    <Folder Include="MPQ\Tables\Hash\" />
+    <Folder Include="MPQ\Tables\HET\" />
+    <Folder Include="WMO\GroupFile\" />
+    <Folder Include="WMO\GroupFile\Chunks\" />
+    <Folder Include="WMO\RootFile\" />
+    <Folder Include="WMO\RootFile\Chunks\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

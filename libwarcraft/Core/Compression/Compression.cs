@@ -21,10 +21,10 @@
 //
 
 using System;
-using NoeCompression = Noemax.Compression;
+using Ionic.Zlib;
+using Ionic.BZip2;
 using System.IO;
-using Warcraft.Core.Compression;
-using Warcraft.MPQ.BlockTable;
+using Warcraft.MPQ.Tables.Block;
 
 namespace Warcraft.Core.Compression
 {
@@ -109,40 +109,73 @@ namespace Warcraft.Core.Compression
 
 		public static byte[] DecompressADPCMMono(byte[] InData)
 		{
-			return MpqWavCompression.Decompress(new MemoryStream(InData), 1);
+			using (MemoryStream ms = new MemoryStream(InData))
+			{
+				return MpqWavCompression.Decompress(ms, 1);			
+			}
 		}
 
 		public static byte[] DecompressADPCMStereo(byte[] InData)
 		{
-			return MpqWavCompression.Decompress(new MemoryStream(InData), 2);
+			using (MemoryStream ms = new MemoryStream(InData))
+			{
+				return MpqWavCompression.Decompress(ms, 2);			
+			}
 		}
 
 		public static byte[] DecompressHuffman(byte[] InData)
 		{
-			return MpqHuffman.Decompress(new MemoryStream(InData)).ToArray();
+			using (MemoryStream ms = new MemoryStream(InData))
+			{
+				return MpqHuffman.Decompress(ms).ToArray();
+			}
 		}
 
 		public static byte[] DecompressDeflate(byte[] InData)
 		{
-			return NoeCompression.CompressionFactory.Deflate.Decompress(new MemoryStream(InData));
+			using (MemoryStream ms = new MemoryStream(InData))
+			{
+				using (ZlibStream zs = new ZlibStream(ms, CompressionMode.Decompress))
+				{
+					using (MemoryStream output = new MemoryStream())
+					{
+						zs.CopyTo(output);
+						return output.ToArray();
+					}
+				}
+			}
 		}
 
 		public static byte[] DecompressPKWAREImplode(byte[] InData)
 		{
-			MemoryStream decompressedStream = new MemoryStream();
-			new Blast.Blast(new MemoryStream(InData), decompressedStream).Decompress();
-
-			return decompressedStream.ToArray();
+			using (MemoryStream decompressedStream = new MemoryStream())
+			{
+				using (MemoryStream compressedStream = new MemoryStream(InData))
+				{
+					new Blast.Blast(compressedStream, decompressedStream).Decompress();
+					return decompressedStream.ToArray();
+				}
+			}
 		}
 
 		public static byte[] DecompressBZip2(byte[] InData)
 		{
-			return NoeCompression.CompressionFactory.BZip2.Decompress(new MemoryStream(InData));
+			using (MemoryStream ms = new MemoryStream(InData))
+			{
+				using (BZip2InputStream input = new BZip2InputStream(ms, false))
+				{
+					using (MemoryStream decompressedData = new MemoryStream())
+					{
+						input.CopyTo(decompressedData);
+						return decompressedData.ToArray();
+					}				
+				}
+			}
 		}
 
 		public static byte[] DecompressLZMA(byte[] InData)
 		{
-			return NoeCompression.CompressionFactory.Lzma.Decompress(new MemoryStream(InData));
+			throw new NotImplementedException("LZMA decompression has not yet been implemented.");
 		}
 	}
 }

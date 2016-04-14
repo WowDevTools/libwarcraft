@@ -148,6 +148,7 @@ Global
 		$24.IncludeStaticEntities = True
 		$0.VersionControlPolicy = $26
 		$26.inheritsSet = Mono
+		version = 1.0
 		StartupItem = libwarcraft\libwarcraft.csproj
 	EndGlobalSection
 EndGlobal

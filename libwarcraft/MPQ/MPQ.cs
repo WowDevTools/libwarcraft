@@ -31,8 +31,9 @@ using System.IO;
 using System.Collections.Generic;
 using Warcraft.Core.Compression;
 using Warcraft.MPQ.Crypto;
-using Warcraft.MPQ.BlockTable;
-using Warcraft.MPQ.HashTable;
+
+using Warcraft.MPQ.Tables.Hash;
+using Warcraft.MPQ.Tables.Block;
 
 namespace Warcraft.MPQ
 {
