@@ -30,11 +30,6 @@ namespace Warcraft.Core.Compression
 {
 	public static class Compression
 	{
-		static Compression()
-		{
-
-		}
-
 		public static byte[] DecompressSector(byte[] PendingSector, BlockFlags Flags)
 		{
 			if (Flags.HasFlag(BlockFlags.BLF_IsCompressed))

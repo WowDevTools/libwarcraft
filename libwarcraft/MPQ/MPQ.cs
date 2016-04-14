@@ -34,6 +34,7 @@ using Warcraft.MPQ.Crypto;
 
 using Warcraft.MPQ.Tables.Hash;
 using Warcraft.MPQ.Tables.Block;
+using Warcraft.MPQ.FileInfo;
 
 namespace Warcraft.MPQ
 {
@@ -167,6 +168,27 @@ namespace Warcraft.MPQ
 			}
 
 			return fileList;
+		}
+
+		public bool DoesFileExist(string filePath)
+		{
+			HashTableEntry fileHashEntry = HashTable.FindEntry(filePath);
+			return fileHashEntry != null;
+		}
+
+		public MPQFileInfo GetFileInfo(string filePath)
+		{
+			if (DoesFileExist(filePath))
+			{
+				HashTableEntry hashEntry = HashTable.FindEntry(filePath);
+				BlockTableEntry blockEntry = BlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
+
+				return new MPQFileInfo(filePath, hashEntry, blockEntry);
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		// TODO: Filter files based on language and platform

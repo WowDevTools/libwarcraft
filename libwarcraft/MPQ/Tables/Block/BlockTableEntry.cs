@@ -26,9 +26,9 @@ namespace Warcraft.MPQ.Tables.Block
 {
 	public class BlockTableEntry
 	{
-		private uint BlockOffset;
-		private uint BlockSize;
-		private uint FileSize;
+		private readonly uint BlockOffset;
+		private readonly uint BlockSize;
+		private readonly uint FileSize;
 		public BlockFlags Flags;
 
 		public BlockTableEntry(byte[] data)
@@ -75,6 +75,15 @@ namespace Warcraft.MPQ.Tables.Block
 		public uint GetBlockSize()
 		{
 			return this.BlockSize;
+		}
+
+		/// <summary>
+		/// Gets the flags.
+		/// </summary>
+		/// <returns>The flags.</returns>
+		public BlockFlags GetFlags()
+		{
+			return this.Flags;
 		}
 
 		/// <summary>

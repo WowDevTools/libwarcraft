@@ -86,10 +86,10 @@ namespace Warcraft.BLP
 					}
 					else
 					{
-						fileHeaderBytes = br.ReadBytes(156);					
+						fileHeaderBytes = br.ReadBytes(156);
 					}
 
-					this.Header = new BLPHeader(fileHeaderBytes);							
+					this.Header = new BLPHeader(fileHeaderBytes);
 
 					if (Header.CompressionType == TextureCompressionType.JPEG)
 					{
@@ -187,7 +187,7 @@ namespace Warcraft.BLP
 								break;
 							}
 						}
-					}										
+					}
 
 					if (alphaLevels.Count > 16)
 					{
@@ -255,6 +255,15 @@ namespace Warcraft.BLP
 		}
 
 		/// <summary>
+		/// Gets the format of the BLP image.
+		/// </summary>
+		/// <returns>The format.</returns>
+		public BLPFormat GetFormat()
+		{
+			return this.Header.Format;
+		}
+
+		/// <summary>
 		/// Gets a list of formatted strings describing the mipmap levels.
 		/// </summary>
 		/// <returns>The mip map level strings.</returns>
@@ -288,7 +297,7 @@ namespace Warcraft.BLP
 		/// <returns>A bitmap.</returns>
 		/// <param name="Level">Mipmap level.</param>
 		public Bitmap GetMipMap(uint Level)
-		{			
+		{
 			return DecompressMipMap(RawMipMaps[(int)Level], Level);
 		}
 
@@ -300,7 +309,7 @@ namespace Warcraft.BLP
 		/// <param name="MipLevel">The mipmap level of the data</param>
 		private Bitmap DecompressMipMap(byte[] InData, uint MipLevel)
 		{
-			Bitmap map = null;	
+			Bitmap map = null;
 			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel);
 			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel);
 
@@ -319,7 +328,7 @@ namespace Warcraft.BLP
 								for (int x = 0; x < targetXRes; ++x)
 								{
 									byte colorIndex = br.ReadByte();
-									Color paletteColor = Palette[colorIndex];                           
+									Color paletteColor = Palette[colorIndex];
 									map.SetPixel(x, y, paletteColor);
 								}
 							}
@@ -348,7 +357,7 @@ namespace Warcraft.BLP
 											byte alphaValue = br.ReadByte();
 											alphaValues.Add(alphaValue);
 										}
-									}					
+									}
 								}
 							}
 							else
@@ -380,7 +389,7 @@ namespace Warcraft.BLP
 					}
 				}
 				else if (Header.CompressionType == TextureCompressionType.DXTC)
-				{     					
+				{
 					SquishOptions squishOptions = SquishOptions.DXT1;
 					if (Header.PixelFormat == BLPPixelFormat.Pixel_DXT3)
 					{
@@ -406,10 +415,10 @@ namespace Warcraft.BLP
 								for (int x = 0; x < targetXRes; ++x)
 								{
 									byte A = br.ReadByte();
-									byte R = br.ReadByte();					
+									byte R = br.ReadByte();
 									byte G = br.ReadByte();
 									byte B = br.ReadByte();
-																
+
 									Color pixelColor = Color.FromArgb(A, R, G, B);
 									map.SetPixel(x, y, pixelColor);
 								}
@@ -425,11 +434,11 @@ namespace Warcraft.BLP
 					Buffer.BlockCopy(InData, 0, JPEGImage, (int)JPEGHeaderSize, InData.Length);
 
 					using (MemoryStream ms = new MemoryStream(JPEGImage))
-					{						
+					{
 						map = new Bitmap(ms).Invert();
 					}
 				}
-			}		
+			}
 
 			return map;
 		}
@@ -454,10 +463,10 @@ namespace Warcraft.BLP
 						for (int x = 0; x < Height; ++x)
 						{
 							byte R = br.ReadByte();
-							byte G = br.ReadByte();					
+							byte G = br.ReadByte();
 							byte B = br.ReadByte();
 							byte A = br.ReadByte();
-																
+
 							Color pixelColor = Color.FromArgb(A, R, G, B);
 							map.SetPixel(x, y, pixelColor);
 						}
@@ -513,9 +522,9 @@ namespace Warcraft.BLP
 			List<byte> colourData = new List<byte>();
 			List<byte> alphaData = new List<byte>();
 			using (Bitmap resizedImage = ResizeImage(InImage, (int)targetXRes, (int)targetYRes))
-			{				
+			{
 				if (Header.CompressionType == TextureCompressionType.Palettized)
-				{				
+				{
 					// Generate the colour data
 					for (int y = 0; y < targetYRes; ++y)
 					{
@@ -578,7 +587,7 @@ namespace Warcraft.BLP
 									{
 										// Get the value from the image
 										byte pixelAlpha = resizedImage.GetPixel(x + i, y).A;
-										
+
 										// Map the value to a 4-bit integer
 										pixelAlpha = (byte)ExtensionMethods.Map(pixelAlpha, 0, 255, 0, 15);
 
@@ -603,7 +612,7 @@ namespace Warcraft.BLP
 									byte alphaValue = resizedImage.GetPixel(x, y).A;
 									alphaData.Add(alphaValue);
 								}
-							}					
+							}
 						}
 					}
 					else
@@ -633,7 +642,7 @@ namespace Warcraft.BLP
 									bw.Write(resizedImage.GetPixel(x, y).B);
 									bw.Write(resizedImage.GetPixel(x, y).A);
 								}
-							}		
+							}
 
 							// Finish writing the data
 							bw.Flush();
@@ -671,14 +680,14 @@ namespace Warcraft.BLP
 									bw.Write(resizedImage.GetPixel(x, y).G);
 									bw.Write(resizedImage.GetPixel(x, y).B);
 								}
-							}		
+							}
 
 							// Finish writing the data
 							bw.Flush();
 
 							byte[] argbBytes = argbStream.ToArray();
 							colourData = new List<byte>(argbBytes);
-						}			
+						}
 					}
 				}
 			}
@@ -846,12 +855,12 @@ namespace Warcraft.BLP
 
 			double ColorDistance = 250000.0;
 			foreach (Color PaletteColor in Palette)
-			{				
+			{
 				double TestRed = Math.Pow(Convert.ToDouble(PaletteColor.R) - InColor.R, 2.0);
 				double TestGreen = Math.Pow(Convert.ToDouble(PaletteColor.G) - InColor.G, 2.0);
 				double TestBlue = Math.Pow(Convert.ToDouble(PaletteColor.B) - InColor.B, 2.0);
 
-				double DistanceResult = Math.Sqrt(TestBlue + TestGreen + TestRed);			
+				double DistanceResult = Math.Sqrt(TestBlue + TestGreen + TestRed);
 
 				if (DistanceResult <= 0.0001)
 				{
@@ -946,9 +955,9 @@ namespace Warcraft.BLP
 				// Grab the mipmap based on the Y Mip
 				return GetMipMap((uint)YMip);
 			}
-					
+
 			// Doesn't matter which one, just grab the X Mip
-			return GetMipMap((uint)XMip);			
+			return GetMipMap((uint)XMip);
 		}
 
 		/// <summary>

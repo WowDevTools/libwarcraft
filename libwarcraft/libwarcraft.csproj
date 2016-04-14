@@ -10,9 +10,6 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\Documents\Keys &amp; Cryptography\libwarcraft\libwarcraft.key</AssemblyOriginatorKeyFile>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>1.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -166,6 +163,8 @@
     <Compile Include="WMO\RootFile\Chunks\ModelFog.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelConvexPlanes.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelGameobjectFileID.cs" />
+    <Compile Include="MPQ\FileInfo\MPQFileInfo.cs" />
+    <Compile Include="Core\Locale\LocaleID.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -212,6 +211,8 @@
     <Folder Include="WMO\GroupFile\Chunks\" />
     <Folder Include="WMO\RootFile\" />
     <Folder Include="WMO\RootFile\Chunks\" />
+    <Folder Include="MPQ\FileInfo\" />
+    <Folder Include="Core\Locale\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

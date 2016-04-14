@@ -34,7 +34,6 @@ namespace Warcraft.BLP
 	/// </summary>
 	public class BLPHeader
 	{
-		public static readonly List<string> ValidSignatures = new List<string>(){ "BLP0", "BLP1", "BLP2" };
 		/// <summary>
 		/// The binary signature of a BLP file.
 		/// </summary>
@@ -89,7 +88,7 @@ namespace Warcraft.BLP
 		/// </summary>
 		/// <param name="InData">Data.</param>
 		public BLPHeader(byte[] InData)
-		{	
+		{
 			using (MemoryStream ms = new MemoryStream(InData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
@@ -263,7 +262,7 @@ namespace Warcraft.BLP
 		/// </summary>
 		/// <returns>The size.</returns>
 		public uint GetSize()
-		{	
+		{
 			if (this.Signature == "BLP2")
 			{
 				return 148;

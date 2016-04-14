@@ -20,16 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System.IO;
+using Warcraft.Core.Locale;
 
 namespace Warcraft.MPQ.Tables.Hash
 {
 	public class HashTableEntry
 	{
-		private uint FilePathHashA;
-		private uint FilePathHashB;
-		private ushort Localization;
-		private ushort Platform;
-		private uint FileBlockIndex;
+		private readonly uint FilePathHashA;
+		private readonly uint FilePathHashB;
+		private readonly LocaleID Localization;
+		private readonly ushort Platform;
+		private readonly uint FileBlockIndex;
 
 		public HashTableEntry(byte[] data)
 		{
@@ -39,7 +40,7 @@ namespace Warcraft.MPQ.Tables.Hash
 				{
 					this.FilePathHashA = br.ReadUInt32();
 					this.FilePathHashB = br.ReadUInt32();
-					this.Localization = br.ReadUInt16();
+					this.Localization = (LocaleID)br.ReadUInt16();
 
 					// Read the platform as an int8 and skip the next byte
 					this.Platform = br.ReadByte();
@@ -60,7 +61,8 @@ namespace Warcraft.MPQ.Tables.Hash
 		}
 
 		/// <summary>
-		/// Determines whether this file exists.
+		/// Determines whether this file exists in the archive. If this returns false for a valid hash
+		/// table entry, it is most likely a deletion marker.
 		/// </summary>
 		/// <returns><c>true</c>, if the file exists, <c>false</c> otherwise.</returns>
 		public bool DoesFileExist()
@@ -93,6 +95,24 @@ namespace Warcraft.MPQ.Tables.Hash
 		public uint GetSecondaryHash()
 		{
 			return this.FilePathHashB;
+		}
+
+		/// <summary>
+		/// Gets the localization ID.
+		/// </summary>
+		/// <returns>The localization ID.</returns>
+		public LocaleID GetLocalizationID()
+		{
+			return this.Localization;
+		}
+
+		/// <summary>
+		/// Gets the platform ID.
+		/// </summary>
+		/// <returns>The platform ID.</returns>
+		public ushort GetPlatformID()
+		{
+			return this.Platform;
 		}
 
 		/// <summary>
