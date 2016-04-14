@@ -52,6 +52,18 @@ namespace Warcraft.BLP
 		private readonly List<Color> Palette = new List<Color>();
 
 		/// <summary>
+		/// The size of the JPEG header. This is not used for palettized or DXTC-compressed
+		/// textures.
+		/// </summary>
+		private readonly uint JPEGHeaderSize;
+
+		/// <summary>
+		/// The JPEG header. This is not used for palettized or DXTC-compressed
+		/// textures.
+		/// </summary>
+		private readonly byte[] JPEGHeader;
+
+		/// <summary>
 		/// A list of byte arrays containing the compressed mipmaps.
 		/// </summary>
 		private readonly List<byte[]> RawMipMaps = new List<byte[]>();
@@ -67,10 +79,24 @@ namespace Warcraft.BLP
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					byte[] fileHeaderBytes = br.ReadBytes(148);
-					this.Header = new BLPHeader(fileHeaderBytes);
+					byte[] fileHeaderBytes;
+					if (PeekFormat(br) == BLPFormat.BLP2)
+					{
+						fileHeaderBytes = br.ReadBytes(148);
+					}
+					else
+					{
+						fileHeaderBytes = br.ReadBytes(156);					
+					}
 
-					if (Header.CompressionType == TextureCompressionType.Palettized)
+					this.Header = new BLPHeader(fileHeaderBytes);							
+
+					if (Header.CompressionType == TextureCompressionType.JPEG)
+					{
+						this.JPEGHeaderSize = br.ReadUInt32();
+						this.JPEGHeader = br.ReadBytes((int)this.JPEGHeaderSize);
+					}
+					else if (Header.CompressionType == TextureCompressionType.Palettized)
 					{
 						for (int i = 0; i < 256; ++i)
 						{
@@ -101,6 +127,28 @@ namespace Warcraft.BLP
 						RawMipMaps.Add(br.ReadBytes((int)Header.MipMapSizes[i]));
 					}
 				}
+			}
+		}
+
+		/// <summary>
+		/// Peeks the format of the current file.
+		/// </summary>
+		/// <returns>The format.</returns>
+		/// <param name="br">Br.</param>
+		/// <exception cref="FileLoadException">If no format was detected, a FileLoadException will be thrown.</exception>
+		private BLPFormat PeekFormat(BinaryReader br)
+		{
+			long startPosition = br.BaseStream.Position;
+			string Signature = new string(br.ReadChars(4));
+			BLPFormat Format;
+			if (Enum.TryParse(Signature, out Format))
+			{
+				br.BaseStream.Position = startPosition;
+				return Format;
+			}
+			else
+			{
+				throw new FileLoadException("The provided data did not have a BLP signature.");
 			}
 		}
 
@@ -213,7 +261,7 @@ namespace Warcraft.BLP
 		public List<string> GetMipMapLevelStrings()
 		{
 			List<string> mipStrings = new List<string>();
-			for (int i = 0; i < GetMipMapCount() - 1; ++i)
+			for (int i = 0; i < GetMipMapCount(); ++i)
 			{
 				mipStrings.Add(String.Format("{0}: {1}", i, GetMipLevelResolution((uint)i)));
 			}
@@ -367,6 +415,18 @@ namespace Warcraft.BLP
 								}
 							}
 						}
+					}
+				}
+				else if (Header.CompressionType == TextureCompressionType.JPEG)
+				{
+					// Merge the JPEG header with the data in the mipmap
+					byte[] JPEGImage = new byte[JPEGHeaderSize + InData.Length];
+					Buffer.BlockCopy(JPEGHeader, 0, JPEGImage, 0, (int)JPEGHeaderSize);
+					Buffer.BlockCopy(InData, 0, JPEGImage, (int)JPEGHeaderSize, InData.Length);
+
+					using (MemoryStream ms = new MemoryStream(JPEGImage))
+					{						
+						map = new Bitmap(ms).Invert();
 					}
 				}
 			}		
@@ -950,7 +1010,7 @@ namespace Warcraft.BLP
 		/// Gets the alpha bit depth. This value represents where the alpha value for each pixel is stored.
 		/// </summary>
 		/// <returns>The alpha bit depth.</returns>
-		public int GetAlphaBitDepth()
+		public uint GetAlphaBitDepth()
 		{
 			return Header.AlphaBitDepth;
 		}

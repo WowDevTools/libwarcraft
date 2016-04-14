@@ -1,5 +1,5 @@
 ﻿//
-//  BLPPixelFormat.cs
+//  BLPVersion.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,17 +19,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+using System;
 
 namespace Warcraft.BLP
 {
-	public enum BLPPixelFormat : uint
+	public enum BLPFormat
 	{
-		Pixel_DXT1 = 0,
-		Pixel_DXT3 = 1,
-		Pixel_A8R8G8B8 = 3,
-		Pixel_A8R8G8B8_2 = 4,
-		Pixel_R8G8B8A8_InvertedAlpha = 5,
-		Pixel_DXT5 = 7,
-		Pixel_Palettized = 8
+		BLP0,
+		BLP1,
+		BLP2
 	}
 }
+

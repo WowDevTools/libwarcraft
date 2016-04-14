@@ -44,6 +44,31 @@ namespace Warcraft.Core
 			return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 		}
 
+		public static Bitmap Invert(this Bitmap map, bool KeepAlpha = true)
+		{
+			Bitmap outMap = new Bitmap(map);
+
+			for (int y = 0; y < map.Height; ++y)
+			{
+				for (int x = 0; x < map.Width; ++x)
+				{
+					Color pixel = map.GetPixel(x, y);
+					byte pixelAlpha = pixel.A;
+					if (!KeepAlpha)
+					{
+						pixelAlpha = (byte)(255 - pixel.A);
+					}
+
+					Color negativePixel = Color.FromArgb(pixelAlpha, 255 - pixel.R, 255 - pixel.G, 255 - pixel.B);
+					//Color negativePixel = Color.FromArgb(pixelAlpha, 255 - pixel.G, 255 - pixel.B, 255 - pixel.A);
+
+					outMap.SetPixel(x, y, negativePixel);
+				}
+			}
+
+			return outMap;
+		}
+
 		public static bool HasAlpha(this Bitmap map)
 		{
 			for (int y = 0; y < map.Height; ++y)

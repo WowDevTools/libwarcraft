@@ -23,6 +23,7 @@
 using System.IO;
 using Warcraft.Core;
 using System.Collections.Generic;
+using System;
 
 namespace Warcraft.BLP
 {
@@ -33,10 +34,13 @@ namespace Warcraft.BLP
 	/// </summary>
 	public class BLPHeader
 	{
+		public static readonly List<string> ValidSignatures = new List<string>(){ "BLP0", "BLP1", "BLP2" };
 		/// <summary>
 		/// The binary signature of a BLP file.
 		/// </summary>
 		public string Signature;
+
+		public BLPFormat Format;
 
 		/// <summary>
 		/// The version of the BLP file.
@@ -51,7 +55,7 @@ namespace Warcraft.BLP
 		/// <summary>
 		/// The alpha bit depth of the mipmaps. Depends on the compression type.
 		/// </summary>
-		public int AlphaBitDepth;
+		public uint AlphaBitDepth;
 
 		/// <summary>
 		/// The pixel format of the compressed textures.
@@ -61,7 +65,7 @@ namespace Warcraft.BLP
 		/// <summary>
 		/// The type of the mip map stored in the image.
 		/// </summary>
-		public int MipMapType;
+		public uint MipMapType;
 
 		/// <summary>
 		/// The resolution of the image.
@@ -92,38 +96,84 @@ namespace Warcraft.BLP
 				{
 					this.Signature = new string(br.ReadChars(4));
 
-					if (Signature != "BLP2")
+					if (Enum.TryParse(this.Signature, out this.Format))
+					{
+						if (this.Format == BLPFormat.BLP2)
+						{
+							this.Version = (uint)br.ReadInt32();
+						}
+
+						if (this.Format == BLPFormat.BLP2)
+						{
+							this.CompressionType = (TextureCompressionType)br.ReadByte();
+						}
+						else
+						{
+							this.CompressionType = (TextureCompressionType)br.ReadUInt32();
+						}
+
+						if (this.Format == BLPFormat.BLP2)
+						{
+							this.AlphaBitDepth = br.ReadByte();
+						}
+						else
+						{
+							this.AlphaBitDepth = br.ReadUInt32();
+						}
+
+						// BLP0 & BLP1 stores the resolution here
+						if (this.Format < BLPFormat.BLP2)
+						{
+							this.Resolution = new Resolution(br.ReadUInt32(), br.ReadUInt32());
+						}
+
+						if (this.Format == BLPFormat.BLP2)
+						{
+							this.PixelFormat = (BLPPixelFormat)br.ReadByte();
+						}
+						else
+						{
+							this.PixelFormat = (BLPPixelFormat)br.ReadUInt32();
+						}
+
+						if (this.Format == BLPFormat.BLP2)
+						{
+							this.MipMapType = br.ReadByte();
+						}
+						else
+						{
+							this.MipMapType = br.ReadUInt32();
+						}
+
+						// BLP2 stores the resolution here
+						if (this.Format == BLPFormat.BLP2)
+						{
+							this.Resolution = new Resolution(br.ReadUInt32(), br.ReadUInt32());
+						}
+
+						this.MipMapOffsets = new List<uint>();
+						for (int i = 0; i < 16; ++i)
+						{
+							uint offset = br.ReadUInt32();
+							if (offset > 0)
+							{
+								this.MipMapOffsets.Add(offset);
+							}
+						}
+
+						this.MipMapSizes = new List<uint>();
+						for (int i = 0; i < 16; ++i)
+						{
+							uint size = br.ReadUInt32();
+							if (size > 0)
+							{
+								this.MipMapSizes.Add(size);
+							}
+						}
+					}
+					else
 					{
 						throw new FileLoadException("The provided data did not have a BLP signature.");
-					}
-
-					this.Version = (uint)br.ReadInt32();
-
-					this.CompressionType = (TextureCompressionType)br.ReadByte();
-
-					this.AlphaBitDepth = br.ReadByte();
-					this.PixelFormat = (BLPPixelFormat)br.ReadByte();
-					this.MipMapType = br.ReadByte();
-					this.Resolution = new Resolution(br.ReadUInt32(), br.ReadUInt32());
-
-					this.MipMapOffsets = new List<uint>();
-					for (int i = 0; i < 16; ++i)
-					{
-						uint offset = br.ReadUInt32();
-						if (offset > 0)
-						{
-							this.MipMapOffsets.Add(offset);
-						}
-					}
-
-					this.MipMapSizes = new List<uint>();
-					for (int i = 0; i < 16; ++i)
-					{
-						uint size = br.ReadUInt32();
-						if (size > 0)
-						{
-							this.MipMapSizes.Add(size);
-						}
 					}
 				}
 			}
@@ -213,8 +263,19 @@ namespace Warcraft.BLP
 		/// </summary>
 		/// <returns>The size.</returns>
 		public uint GetSize()
-		{
-			return 148;
+		{	
+			if (this.Signature == "BLP2")
+			{
+				return 148;
+			}
+			else if (this.Signature == "BLP1")
+			{
+				return 156;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 	}
 }

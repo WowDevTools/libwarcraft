@@ -163,6 +163,7 @@
     <Compile Include="DBC\Record\DBCRecordStructure.cs" />
     <Compile Include="DBC\Record\RecordFieldType.cs" />
     <Compile Include="Core\WarcraftVersion.cs" />
+    <Compile Include="BLP\BLPFormat.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
