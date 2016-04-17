@@ -285,8 +285,8 @@ namespace Warcraft.BLP
 		/// <param name="MipLevel">Mip level.</param>
 		public Resolution GetMipLevelResolution(uint MipLevel)
 		{
-			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel);
-			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel);
+			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().X);
+			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().Y);
 
 			return new Resolution(targetXRes, targetYRes);
 		}
@@ -310,8 +310,8 @@ namespace Warcraft.BLP
 		private Bitmap DecompressMipMap(byte[] InData, uint MipLevel)
 		{
 			Bitmap map = null;
-			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel);
-			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel);
+			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().X);
+			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().Y);
 
 			if (InData.Length > 0 && targetXRes > 0 && targetYRes > 0)
 			{
@@ -516,8 +516,8 @@ namespace Warcraft.BLP
 		/// <param name="MipLevel">Mip level.</param>
 		private byte[] CompressImage(Image InImage, int MipLevel)
 		{
-			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel);
-			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel);
+			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().X);
+			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().Y);
 
 			List<byte> colourData = new List<byte>();
 			List<byte> alphaData = new List<byte>();
