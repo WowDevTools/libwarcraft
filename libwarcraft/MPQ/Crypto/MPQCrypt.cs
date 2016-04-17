@@ -67,124 +67,81 @@ namespace Warcraft.MPQ.Crypto
 		}
 
 		/// <summary>
-		/// Encrypts the given input data. Bytes outside of an even 4-byte boundary (even int32s) are not encrypted.
+		/// Encrypts the given input data. Bytes outside of an even 4-byte boundary are not encrypted, and
+		/// are simply appended at the end of the data block.
 		/// </summary>
 		/// <returns>The encrypted data.</returns>
 		/// <param name="data">Data to be encrypted.</param>
 		/// <param name="key">The encryption key to use.</param>
 		public static byte[] EncryptData(byte[] data, uint key)
 		{
-			if (data == null)
-			{
-				throw new ArgumentNullException("data");
-			}
-
-			// If the input is not aligned to 4 bytes (even 32-bit numbers),
-			// cut out the dangling bytes and don't encrypt them
-
-			// Find out how many dangling bytes we have
-			uint danglingBytes = (uint)data.Length % 4;
-			byte[] dataToBeEncrypted = new byte[data.Length - danglingBytes];
-
-			// Copy the aligned bytes to the new array
-			Buffer.BlockCopy(data, 0, dataToBeEncrypted, 0, (int)(data.Length - danglingBytes));
-
-
-			uint encryptionSeed = 0xEEEEEEEE;
-			List<byte> encryptedData = new List<byte>();
-
-			for (int i = 0; i < dataToBeEncrypted.Length; i += sizeof(uint))
-			{
-				uint encryptionTarget = BitConverter.ToUInt32(dataToBeEncrypted, i);
-				uint encryptedValue;
-
-				// Retrieve the decryption seed from the generated table
-				encryptionSeed += encryptionTable[0x400 + (key & 0xFF)];
-
-				// Encrypt the data by XORing it with the seed and key
-				encryptedValue = encryptionTarget ^ (key + encryptionSeed);
-
-				// Modify the seed and key for the next value
-				key = ((~key << 0x15) + 0x11111111) | (key >> 0x0B);
-				encryptionSeed = encryptionTarget + encryptionSeed + (encryptionSeed << 5) + 3;
-
-				byte[] encryptedBytes = BitConverter.GetBytes(encryptedValue);
-				foreach (byte encryptedByte in encryptedBytes)
-				{
-					encryptedData.Add(encryptedByte);
-				}
-			}
-
-			// If we did have some dangling bytes, copy them to a new array
-			if (danglingBytes > 0)
-			{
-				byte[] decryptedDataBlock = encryptedData.ToArray();
-				byte[] finalDecryptedData = new byte[decryptedDataBlock.Length + danglingBytes];
-
-				Buffer.BlockCopy(decryptedDataBlock, 0, finalDecryptedData, 0, decryptedDataBlock.Length);
-				Buffer.BlockCopy(data, (int)(data.Length - danglingBytes), finalDecryptedData, decryptedDataBlock.Length, (int)danglingBytes);
-
-				return finalDecryptedData;
-			}
-			else
-			{
-				// Else we can just return the data as-is
-				return encryptedData.ToArray();
-			}
+			return InternalEncryptDecrypt(data, key);
 		}
 
 		/// <summary>
-		/// Decrypts the given input data. Bytes outside of an even 4-byte boundary (even int32s) are not decrypted.
+		/// Decrypts the given input data. Bytes outside of an even 4-byte boundary are not decrypted, and 
+		/// are considered not encrypted.
 		/// </summary>
 		/// <returns>The decrypted data.</returns>
 		/// <param name="data">Data to be decrypted.</param>
 		/// <param name="key">The decryption key to use.</param>
 		public static byte[] DecryptData(byte[] data, uint key)
 		{
+			return InternalEncryptDecrypt(data, key);
+		}
+
+		/// <summary>
+		/// Internal XOR function that encrypts and decrypts a block of data.
+		/// </summary>
+		/// <returns>The encrypted or decrypted data.</returns>
+		/// <param name="data">Data.</param>
+		/// <param name="key">Key.</param>
+		private static byte[] InternalEncryptDecrypt(byte[] data, uint key)
+		{
 			if (data == null)
 			{
-				throw new ArgumentNullException("data");
+				throw new ArgumentNullException("data", "Input data must be populated.");
 			}
 
 			// If the input is not aligned to 4 bytes (even 32-bit numbers),
-			// cut out the dangling bytes and don't decrypt them
+			// cut out the dangling bytes and don't XOR them
 
 			// Find out how many dangling bytes we have
 			uint danglingBytes = (uint)data.Length % 4;
-			byte[] dataToBeDecrypted = new byte[data.Length - danglingBytes];
+			byte[] dataToBeXORed = new byte[data.Length - danglingBytes];
 
 			// Copy the aligned bytes to the new array
-			Buffer.BlockCopy(data, 0, dataToBeDecrypted, 0, (int)(data.Length - danglingBytes));
+			Buffer.BlockCopy(data, 0, dataToBeXORed, 0, (int)(data.Length - danglingBytes));
 
 
-			uint decryptionSeed = 0xEEEEEEEE;		
-			List<byte> decryptedData = new List<byte>();
+			uint encryptionSeed = 0xEEEEEEEE;
+			List<byte> finalizedData = new List<byte>();
 
-			for (int i = 0; i < dataToBeDecrypted.Length; i += sizeof(uint))
+			for (int i = 0; i < dataToBeXORed.Length; i += sizeof(uint))
 			{
-				var decryptionTarget = BitConverter.ToUInt32(dataToBeDecrypted, i);
+				uint encryptionTarget = BitConverter.ToUInt32(dataToBeXORed, i);
 
 				// Retrieve the decryption seed from the generated table
-				decryptionSeed += encryptionTable[0x400 + (key & 0xFF)];
+				encryptionSeed += encryptionTable[0x400 + (key & 0xFF)];
 
-				// Decrypt the data by XORing it with the seed and key
-				decryptionTarget = decryptionTarget ^ (key + decryptionSeed);
+				// Encrypt or decrypt the data by XORing it with the seed and key
+				encryptionTarget = encryptionTarget ^ (key + encryptionSeed);
 
 				// Modify the seed and key for the next value
 				key = ((~key << 0x15) + 0x11111111) | (key >> 0x0B);
-				decryptionSeed = decryptionTarget + decryptionSeed + (decryptionSeed << 5) + 3;
+				encryptionSeed = encryptionTarget + encryptionSeed + (encryptionSeed << 5) + 3;
 
-				var decryptedBytes = BitConverter.GetBytes(decryptionTarget);
-				foreach (byte decryptedByte in decryptedBytes)
+				byte[] encryptedBytes = BitConverter.GetBytes(encryptionTarget);
+				foreach (byte encryptedByte in encryptedBytes)
 				{
-					decryptedData.Add(decryptedByte);
+					finalizedData.Add(encryptedByte);
 				}
 			}
 
 			// If we did have some dangling bytes, copy them to a new array
 			if (danglingBytes > 0)
 			{
-				byte[] decryptedDataBlock = decryptedData.ToArray();
+				byte[] decryptedDataBlock = finalizedData.ToArray();
 				byte[] finalDecryptedData = new byte[decryptedDataBlock.Length + danglingBytes];
 
 				Buffer.BlockCopy(decryptedDataBlock, 0, finalDecryptedData, 0, decryptedDataBlock.Length);
@@ -195,7 +152,7 @@ namespace Warcraft.MPQ.Crypto
 			else
 			{
 				// Else we can just return the data as-is
-				return decryptedData.ToArray();
+				return finalizedData.ToArray();
 			}
 		}
 

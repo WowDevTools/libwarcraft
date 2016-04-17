@@ -121,9 +121,7 @@
     <Compile Include="MPQ\Tables\BET\BETTable.cs" />
     <Compile Include="MPQ\Tables\Block\BlockFlags.cs" />
     <Compile Include="MPQ\Tables\Block\BlockTableEntry.cs" />
-    <Compile Include="MPQ\Tables\Block\MPQBlockTable.cs" />
     <Compile Include="MPQ\Tables\Hash\HashTableEntry.cs" />
-    <Compile Include="MPQ\Tables\Hash\MPQHashTable.cs" />
     <Compile Include="MPQ\Tables\HET\HETTable.cs" />
     <Compile Include="WMO\GroupFile\Group.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelGroup.cs" />
@@ -165,6 +163,10 @@
     <Compile Include="WMO\RootFile\Chunks\ModelGameobjectFileID.cs" />
     <Compile Include="MPQ\FileInfo\MPQFileInfo.cs" />
     <Compile Include="Core\Locale\LocaleID.cs" />
+    <Compile Include="MPQ\Tables\HET\HETTableHeader.cs" />
+    <Compile Include="MPQ\Tables\BET\BETTableHeader.cs" />
+    <Compile Include="MPQ\Tables\Hash\HashTable.cs" />
+    <Compile Include="MPQ\Tables\Block\BlockTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />

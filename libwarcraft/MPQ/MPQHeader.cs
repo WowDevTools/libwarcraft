@@ -22,33 +22,76 @@
 
 using System;
 using System.IO;
+using Warcraft.MPQ.Tables.Hash;
+using Warcraft.MPQ.Tables.Block;
 
 namespace Warcraft.MPQ
 {
 	public class MPQHeader
 	{
-		// Basic format, v0 (World of Warcraft and earlier)
-		private string Filetype;
-		private uint HeaderSize;
-		private uint ArchiveSize;
+		/*
+			Fields present in Basic Format (v0)
+		*/
+
+		public string Signature
+		{
+			get
+			{
+				return "MPQ\x1a";
+			}
+		}
+
+		public uint HeaderSize
+		{
+			get;
+			private set;
+		}
+
+		private uint BasicArchiveSize;
+
+		public ulong ArchiveSize
+		{
+			get
+			{
+				return GetArchiveSize();
+			}
+		}
+
 		private MPQFormat Format;
 		private ushort SectorSizeExponent;
+
 		private uint HashTableOffset;
 		private uint BlockTableOffset;
-		private uint HashTableEntries;
-		private uint BlockTableEntries;
 
-		// Extended format, v1 (Burning Crusade and newer)
+		public uint HashTableEntryCount
+		{
+			get;
+			private set;
+		}
+
+		public uint BlockTableEntryCount
+		{
+			get;
+			private set;
+		}
+
+		/*
+			Fields present in Extended Format (v1)
+		*/
 		private ulong ExtendedBlockTableOffset;
 		private ushort ExtendedFormatHashTableOffsetBits;
 		private ushort ExtendedFormatBlockTableOffsetBits;
 
-		// Extended format, v2 (Cataclysm Beta and newer)
+		/*
+			Fields present in Extended Format (v2)
+		*/
 		private ulong LongArchiveSize;
 		private ulong BETTableOffset;
 		private ulong HETTableOffset;
 
-		/// Extended format, v3 (Cataclysm Beta and newer)
+		/*
+			Fields present in Extended Format (v3)
+		*/
 		private ulong CompressedHashTableSize;
 		private ulong CompressedBlockTableSize;
 		private ulong CompressedExtendedBlockTableSize;
@@ -77,21 +120,19 @@ namespace Warcraft.MPQ
 			{
 				using (BinaryReader br = new BinaryReader(dataStream))
 				{
-					this.Filetype = new string(br.ReadChars(4));
-
-					if (this.Filetype != "MPQ\x1a")
+					if (this.Signature != new string(br.ReadChars(4)))
 					{
 						throw new FileLoadException("The provided file was not an MPQ file.");
 					}
 
 					this.HeaderSize = br.ReadUInt32();
-					this.ArchiveSize = br.ReadUInt32();
+					this.BasicArchiveSize = br.ReadUInt32();
 					this.Format = (MPQFormat)br.ReadUInt16();
 					this.SectorSizeExponent = br.ReadUInt16();
 					this.HashTableOffset = br.ReadUInt32();
 					this.BlockTableOffset = br.ReadUInt32();
-					this.HashTableEntries = br.ReadUInt32();
-					this.BlockTableEntries = br.ReadUInt32();
+					this.HashTableEntryCount = br.ReadUInt32();
+					this.BlockTableEntryCount = br.ReadUInt32();
 
 					if (this.Format >= MPQFormat.Extended_v1)
 					{
@@ -158,6 +199,33 @@ namespace Warcraft.MPQ
 		}
 
 		/// <summary>
+		/// Gets the size of the hash table.
+		/// </summary>
+		/// <returns>The hash table size.</returns>
+		public ulong GetHashTableSize()
+		{
+			return (ulong)(this.HashTableEntryCount * HashTableEntry.GetSize());
+		}
+
+		/// <summary>
+		/// Gets the size of the block table.
+		/// </summary>
+		/// <returns>The block table size.</returns>
+		public ulong GetBlockTableSize()
+		{
+			return (ulong)(this.BlockTableEntryCount * BlockTableEntry.GetSize());
+		}
+
+		/// <summary>
+		/// Gets the size of the extended block table.
+		/// </summary>
+		/// <returns>The extended block table size.</returns>
+		public ulong GetExtendedBlockTableSize()
+		{
+			return (ulong)this.BlockTableEntryCount * sizeof(ushort);
+		}
+
+		/// <summary>
 		/// Gets the offset of the hash table, adjusted using the high bits if neccesary
 		/// </summary>
 		/// <returns>The hash table offset.</returns>
@@ -211,18 +279,18 @@ namespace Warcraft.MPQ
 		/// Gets the number of entries in the hash table.
 		/// </summary>
 		/// <returns>The number of hash table entries.</returns>
-		public uint GetNumHashTableEntries()
+		public uint GetHashTableEntryCount()
 		{
-			return this.HashTableEntries;
+			return this.HashTableEntryCount;
 		}
 
 		/// <summary>
 		/// Gets the number of entries in the block table.
 		/// </summary>
 		/// <returns>The number of block table entries.</returns>
-		public uint GetNumBlockTableEntries()
+		public uint GetBlockTableEntryCount()
 		{
-			return this.BlockTableEntries;
+			return this.BlockTableEntryCount;
 		}
 
 		/// <summary>
@@ -265,22 +333,16 @@ namespace Warcraft.MPQ
 		/// Gets the size of the archive.
 		/// </summary>
 		/// <returns>The archive size.</returns>
-		/// <param name="hashTableSize">Hash table size.</param>
-		/// <param name="blockTableSize">Block table size.</param>
-		/// <param name="extendedBlockTableSize">Extended block table size.</param>
-		public ulong GetArchiveSize(ulong hashTableSize, ulong blockTableSize, ulong extendedBlockTableSize)
-		{
+		public ulong GetArchiveSize()
+		{			
 			if (this.Format == MPQFormat.Basic)
 			{
-				return (ulong)this.ArchiveSize;
+				return (ulong)this.BasicArchiveSize;
 			}
-			else
+			else if (this.Format == MPQFormat.Extended_v1)
 			{
 				// Calculate the size from the start of the header to the end of the 
 				// hash table, block table or extended block table (whichever is furthest away)
-
-				ulong archiveStart = 0;
-				ulong archiveEnd = 0;
 
 				ulong hashTableOffset = this.GetHashTableOffset();
 				ulong blockTableOffset = this.GetBlockTableOffset();
@@ -294,25 +356,28 @@ namespace Warcraft.MPQ
 				{
 					furthestOffset = hashTableOffset;
 
-					archiveEnd = furthestOffset + hashTableSize;
+					archiveSize = furthestOffset + GetHashTableSize();
 				}
 
 				if (blockTableOffset > furthestOffset)
 				{
 					furthestOffset = blockTableOffset;
 
-					archiveEnd = furthestOffset + blockTableSize;
+					archiveSize = furthestOffset + GetBlockTableSize();
 				}
 
 				if (extendedBlockTableOffset > furthestOffset)
 				{
 					furthestOffset = extendedBlockTableOffset;
 
-					archiveEnd = furthestOffset + extendedBlockTableSize;
+					archiveSize = furthestOffset + GetExtendedBlockTableSize();
 				}
 
-				archiveSize = archiveEnd - archiveStart;
 				return archiveSize;
+			}
+			else
+			{
+				return this.LongArchiveSize;
 			}
 		}
 

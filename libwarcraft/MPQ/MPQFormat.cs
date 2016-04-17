@@ -26,9 +26,24 @@ namespace Warcraft.MPQ
 {
 	public enum MPQFormat : ushort
 	{
+		/// <summary>
+		/// The basic archive format. Used in games prior to and including Classic World of Warcraft.
+		/// </summary>
 		Basic = 0,
+
+		/// <summary>
+		/// The extended v1 archive format. Used in games after and including World of Warcraft: The Burning Crusade.
+		/// </summary>
 		Extended_v1 = 1,
+
+		/// <summary>
+		/// The extended v2 archive format. Used briefly during the Cataclysm Beta.
+		/// </summary>
 		Extended_v2 = 2,
+
+		/// <summary>
+		/// The extended v3 archive format. Used in games after and including World of Warcraft: Cataclysm.
+		/// </summary>
 		Extended_v3 = 3
 	}
 }

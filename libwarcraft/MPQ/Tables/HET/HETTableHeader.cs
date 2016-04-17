@@ -1,5 +1,5 @@
 ﻿//
-//  MPQBlockTable.cs
+//  HETTableHeader.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,44 +19,36 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-
 using System;
 using System.Collections.Generic;
-using System.IO;
-using Warcraft.MPQ.Crypto;
 
-namespace Warcraft.MPQ.Tables.Block
+namespace Warcraft.MPQ.Tables.HET
 {
-	public class MPQBlockTable
+	public class HETTableHeader
 	{
-		public static readonly uint TableKey = MPQCrypt.Hash("(block table)", HashType.FileKey);
-		private readonly List<BlockTableEntry> Entries;
-
-		public MPQBlockTable(byte[] data)
+		public string Signature
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			get
 			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Entries = new List<BlockTableEntry>();
-
-					for (long i = 0; i < data.Length; i += BlockTableEntry.GetSize())
-					{
-						byte[] entryBytes = br.ReadBytes((int)BlockTableEntry.GetSize());
-						Entries.Add(new BlockTableEntry(entryBytes));
-					}
-				}
+				return "HET\x1A";
 			}
 		}
 
-		public BlockTableEntry GetEntry(int index)
-		{
-			return Entries[index];
-		}
+		public uint Version;
+		public uint DataSize;
 
-		public ulong GetSize()
+		public uint TableSize;
+		public uint MaxFileCount;
+		public uint HashTableSize;
+		public uint HashEntrySize;
+		public uint IndexSizeExtra;
+		public uint IndexSize;
+		public uint BlockTableSize;
+
+		List<byte> HETHashTable = new List<byte>();
+
+		public HETTableHeader()
 		{
-			return (ulong)(Entries.Count * BlockTableEntry.GetSize());
 		}
 	}
 }

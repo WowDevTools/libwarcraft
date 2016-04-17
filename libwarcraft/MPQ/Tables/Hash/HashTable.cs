@@ -27,12 +27,12 @@ using Warcraft.MPQ.Crypto;
 
 namespace Warcraft.MPQ.Tables.Hash
 {
-	public class MPQHashTable
+	public class HashTable
 	{
 		public static readonly uint TableKey = MPQCrypt.Hash("(hash table)", HashType.FileKey);
 		private readonly List<HashTableEntry> Entries;
 
-		public MPQHashTable(byte[] data)
+		public HashTable(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
