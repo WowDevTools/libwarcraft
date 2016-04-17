@@ -1,5 +1,5 @@
 ﻿//
-//  ShaderTypes.cs
+//  MapChunkVertexColours.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,30 +19,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-
 using System;
 
-namespace Warcraft.Core.Shading
+namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public enum ShaderTypes
+	/// <summary>
+	/// MCLV Chunk - Contains vertex colour data
+	/// </summary>
+	public class MapChunkVertexColours
 	{
-		Diffuse = 0,
-		Specular = 1,
-		Metal = 2,
-		Env = 3,
-		Opaque = 4,
-		EnvMetal = 5,
-		TwoLayerDiffuse = 6,
-		TwolayerEnvMetal = 7,
-		TwoLayerTerrain = 8,
-		DiffuseEmissive = 9,
-		WaterWindow = 10,
-		MaskedEnvMetal = 11,
-		EnvMetalEmissive = 12,
-		TwoLayerDiffuseOpaque = 13,
-		TwoLayerDiffuseEmissive = 14,
-		DiffuseTerrain = 16,
-		AdditiveMaskedEnvMetal = 17
+		//vertex colours. Not needed.
 	}
 }
 

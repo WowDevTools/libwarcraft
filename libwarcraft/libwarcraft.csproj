@@ -36,6 +36,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\Everlook\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Package>monodevelop</Package>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\Everlook\packages\DotNetZip.1.9.8\lib\net20\Ionic.Zip.dll</HintPath>
@@ -167,6 +168,30 @@
     <Compile Include="MPQ\Tables\BET\BETTableHeader.cs" />
     <Compile Include="MPQ\Tables\Hash\HashTable.cs" />
     <Compile Include="MPQ\Tables\Block\BlockTable.cs" />
+    <Compile Include="ADT\Chunks\TerrainVersion.cs" />
+    <Compile Include="ADT\Chunks\TerrainHeader.cs" />
+    <Compile Include="ADT\Chunks\TerrainMapChunkOffsets.cs" />
+    <Compile Include="ADT\Chunks\TerrainTextures.cs" />
+    <Compile Include="ADT\Chunks\TerrainModels.cs" />
+    <Compile Include="ADT\Chunks\TerrainModelIndices.cs" />
+    <Compile Include="ADT\Chunks\TerrainWorldModelObjects.cs" />
+    <Compile Include="ADT\Chunks\TerrainWorldModelObjectIndices.cs" />
+    <Compile Include="ADT\Chunks\TerrainModelPlacementInfo.cs" />
+    <Compile Include="ADT\Chunks\TerrainWorldModelObjectPlacementInfo.cs" />
+    <Compile Include="ADT\Chunks\TerrainWater.cs" />
+    <Compile Include="ADT\Chunks\TerrainMapChunk.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkHeightmap.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkVertexColours.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkVertexShading.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkVertexNormals.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkAlphaMapDefinitions.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkAlphaMaps.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkModelReferences.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkBakedShadows.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkLiquids.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkSoundEmitters.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkBoundingBox.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkTextureMetadata.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -215,6 +240,8 @@
     <Folder Include="WMO\RootFile\Chunks\" />
     <Folder Include="MPQ\FileInfo\" />
     <Folder Include="Core\Locale\" />
+    <Folder Include="ADT\Chunks\" />
+    <Folder Include="ADT\Chunks\Subchunks\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
