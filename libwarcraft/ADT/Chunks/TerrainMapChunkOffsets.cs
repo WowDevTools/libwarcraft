@@ -28,72 +28,67 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MCIN Chunk - Contains a list of all MCNKs with associated information in the ADT file.
 	/// </summary>
-	public class TerrainMapChunkOffsets
+	public class TerrainMapChunkOffsets : TerrainChunk
+	{
+		public const string Signature = "MCIN";
+
+		/// <summary>
+		/// An array of 256 MCIN entries, containing map chunk offsets and sizes.
+		/// </summary>
+		public List<MapChunkOffsetEntry> Entries = new List<MapChunkOffsetEntry>();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainMapChunkOffsets"/> class.
+		/// </summary>
+		public TerrainMapChunkOffsets(byte[] data)
+		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					//read size, n of entries is size / 16
+					long nEntries = br.BaseStream.Length / 16;
+
+					for (int i = 0; i < nEntries; ++i)
+					{
+						MapChunkOffsetEntry entry = new MapChunkOffsetEntry();
+
+						entry.MapChunkOffset = br.ReadInt32();
+						entry.MapChunkSize = br.ReadInt32();
+						entry.Flags = br.ReadInt32();
+						entry.AsynchronousLoadingID = br.ReadInt32();
+
+						Entries.Add(entry);
+					}
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// A struct containing information about the referenced MCNK
+	/// </summary>
+	public class MapChunkOffsetEntry
 	{
 		/// <summary>
-		/// Size of the MCIN chunk
+		/// Absolute offset of the MCNK
 		/// </summary>
-		public int size;
+		public int MapChunkOffset;
 
 		/// <summary>
-		/// A struct containing information about the referenced MCNK
+		/// Size of the MCNK
 		/// </summary>
-		public struct MCINEntry
-		{
-			/// <summary>
-			/// Absolute offset of the MCNK
-			/// </summary>
-			public int MCNKOffset;
-			/// <summary>
-			/// Size of the MCNK
-			/// </summary>
-			public int size;
-			/// <summary>
-			/// Flags of the MCNK. This is only set on the client, and is as such always 0.
-			/// </summary>
-			public int flags;
-			/// <summary>
-			/// Async loading ID of the MCNK. This is only set on the client, and is as such always 0.
-			/// </summary>
-			public int asyncID;
-		}
+		public int MapChunkSize;
 
 		/// <summary>
-		/// An array of 256 MCIN entries, containing MCNK offsets and sizes.
+		/// Flags of the MCNK. This is only set on the client, and is as such always 0.
 		/// </summary>
-		public List<MCINEntry> entries;
+		public int Flags;
 
 		/// <summary>
-		/// Creates a new MCIN object from a file path and offset into the file
+		/// Async loading ID of the MCNK. This is only set on the client, and is as such always 0.
 		/// </summary>
-		/// <param name="adtFile">Path to the file on disk</param>                
-		/// <param name="position">Offset into the file where the MCIN chunk begins</param>
-		/// <returns>An MCIN object containing an array with information about all MCNK chunks</returns>
-		public TerrainMapChunkOffsets(string adtFile, int position)
-		{
-			Stream adtStream = File.OpenRead(adtFile);
-			BinaryReader br = new BinaryReader(adtStream);
-			br.BaseStream.Position = position;
-
-			//read size, n of entries is size / 16
-			this.size = br.ReadInt32();                    
-			int nEntries = size / 16;
-			entries = new List<MCINEntry>();
-
-			for (int i = 0; i < nEntries; i++)
-			{
-				MCINEntry entry = new MCINEntry();
-
-				entry.MCNKOffset = br.ReadInt32();
-				entry.size = br.ReadInt32();
-				entry.flags = br.ReadInt32();
-				entry.asyncID = br.ReadInt32();
-
-				entries.Add(entry);
-			}
-			br.Close();
-			adtStream.Close();
-		}
+		public int AsynchronousLoadingID;
 	}
 }
 

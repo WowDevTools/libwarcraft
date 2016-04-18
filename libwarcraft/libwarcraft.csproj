@@ -178,13 +178,11 @@
     <Compile Include="ADT\Chunks\TerrainWorldModelObjectIndices.cs" />
     <Compile Include="ADT\Chunks\TerrainModelPlacementInfo.cs" />
     <Compile Include="ADT\Chunks\TerrainWorldModelObjectPlacementInfo.cs" />
-    <Compile Include="ADT\Chunks\TerrainWater.cs" />
     <Compile Include="ADT\Chunks\TerrainMapChunk.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkHeightmap.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkVertexColours.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkVertexShading.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkVertexNormals.cs" />
-    <Compile Include="ADT\Chunks\Subchunks\MapChunkAlphaMapDefinitions.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkAlphaMaps.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkModelReferences.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkBakedShadows.cs" />
@@ -192,6 +190,13 @@
     <Compile Include="ADT\Chunks\Subchunks\MapChunkSoundEmitters.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkBoundingBox.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkTextureMetadata.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkTextureLayers.cs" />
+    <Compile Include="ADT\Chunks\TerrainChunk.cs" />
+    <Compile Include="ADT\Chunks\TerrainLiquid.cs" />
+    <Compile Include="ADT\Chunks\TerrainTextureFlags.cs" />
+    <Compile Include="ADT\Chunks\TerrainBoundingBox.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkVertexLighting.cs" />
+    <Compile Include="ADT\Chunks\Subchunks\MapChunkHeader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />

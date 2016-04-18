@@ -28,38 +28,32 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MMID Chunk - Contains a list of WMO model indexes
 	/// </summary>
-	public class TerrainWorldObjectModelIndices
+	public class TerrainWorldObjectModelIndices : TerrainChunk
 	{
-		/// <summary>
-		/// Size of the MWID chunk.
-		/// </summary>
-		public int size;
+		public const string Signature = "MWID";
 
 		/// <summary>
 		/// List indexes for WMO models in an MWMO chunk
 		/// </summary>
-		public List<int> WMOIndex;
+		public List<uint> WorldModelObjectFilenameOffsets = new List<uint>();
 
-		public TerrainWorldObjectModelIndices(string adtFile, int position)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldObjectModelIndices"/> class.
+		/// </summary>
+		/// <param name="data">Data.</param>
+		public TerrainWorldObjectModelIndices(byte[] data)
 		{
-			Stream adtStream = File.OpenRead(adtFile);
-			BinaryReader br = new BinaryReader(adtStream);
-			br.BaseStream.Position = position;
-
-			//read size
-			this.size = br.ReadInt32();
-
-			//create new empty list
-			this.WMOIndex = new List<int>();
-
-			int i = 0;
-			while (i > this.size)
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				this.WMOIndex.Add(br.ReadInt32());
-				i += 4;
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					int offsetCount = data.Length / 4;
+					for (int i = 0; i < offsetCount; ++i)
+					{
+						WorldModelObjectFilenameOffsets.Add(br.ReadUInt32());
+					}
+				}
 			}
-			br.Close();
-			adtStream.Close();
 		}
 	}
 }

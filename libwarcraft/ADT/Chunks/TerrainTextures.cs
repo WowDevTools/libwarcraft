@@ -22,83 +22,38 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MTEX Chunk - Contains a list of all referenced textures in this ADT.
 	/// </summary>
-	public class TerrainTextures
+	public class TerrainTextures : TerrainChunk
 	{
-		/// <summary>
-		/// Size of the MTEX chunk.
-		/// </summary>
-		public int size;
+		public const string Signature = "MTEX";
 
 		/// <summary>
 		///A list of full paths to the textures referenced in this ADT.
 		/// </summary>
-		public List<string> fileNames;
+		public List<string> Filenames = new List<string>();
 
 		/// <summary>
-		/// Creates a new MTEX object from a file path and offset into the file
+		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainTextures"/> class.
 		/// </summary>
-		/// <param name="adtFile">Path to the file on disk</param>                
-		/// <param name="position">Offset into the file where the MTEX chunk begins</param>
-		/// <returns>An MTEX object containing a list of full texture paths</returns>
-		public TerrainTextures(string adtFile, int position)
+		/// <param name="data">Data.</param>
+		public TerrainTextures(byte[] data)
 		{
-			Stream adtStream = File.OpenRead(adtFile);
-			BinaryReader br = new BinaryReader(adtStream);
-			br.BaseStream.Position = position;
-
-			//read the MTEX size
-			this.size = br.ReadInt32();
-
-			//create an empty list
-			this.fileNames = new List<string>();
-
-			string str = "";
-			//we add four, because otherwise we miss out on the last string because of the fact that the chunk identifier (MTEX) 
-			//needs to be included in the calculations
-			while (br.BaseStream.Position <= position + this.size + 4)
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				char letterChar = br.ReadChar();
-				if (letterChar != Char.MinValue)
+				using (BinaryReader br = new BinaryReader(ms))
 				{
-					str = str + letterChar.ToString();
-				}
-				else
-				{
-					this.fileNames.Add(str);
-					//clear string for a new filename
-					str = "";
+					while (br.BaseStream.Position != br.BaseStream.Length)
+					{
+						Filenames.Add(br.ReadNullTerminatedString());
+					}
 				}
 			}
-
-			br.Close();
-			adtStream.Close();
-		}
-
-		public string GetFileName(int nameIndex, bool keepExtension)
-		{
-			string fileName = "";
-			if (nameIndex <= this.fileNames.Count)
-			{
-				if (keepExtension == false)
-				{
-					fileName = this.fileNames[nameIndex].Substring(this.fileNames[nameIndex].LastIndexOf(@"\") + 1).Replace(".blp", "");
-				}
-				else
-				{
-					fileName = this.fileNames[nameIndex].Substring(this.fileNames[nameIndex].LastIndexOf(@"\") + 1);
-				}                        
-			}
-			else
-			{
-
-			}   
-			return fileName;
 		}
 	}
 }

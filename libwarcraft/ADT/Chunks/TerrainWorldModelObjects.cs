@@ -22,57 +22,35 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MWMO Chunk - Contains a list of all referenced WMO models in this ADT.
 	/// </summary>
-	public class TerrainWorldModelObjects
+	public class TerrainWorldModelObjects : TerrainChunk
 	{
-		/// <summary>
-		/// Size of the MWMO chunk.
-		/// </summary>
-		public int size;
+		public const string Signature = "MWMO";
 
 		/// <summary>
 		///A list of full paths to the M2 models referenced in this ADT.
 		/// </summary>
-		public List<string> fileNames;
+		public List<string> Filenames;
 
-		public TerrainWorldModelObjects(string adtFile, int position)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldModelObjects"/> class.
+		/// </summary>
+		/// <param name="data">Data.</param>
+		public TerrainWorldModelObjects(byte[] data)
 		{
-			Stream adtStream = File.OpenRead(adtFile);
-			BinaryReader br = new BinaryReader(adtStream);
-			br.BaseStream.Position = position;
-
-			//read the MWMO size
-			this.size = br.ReadInt32();
-
-			//create an empty list
-			this.fileNames = new List<string>();
-
-			string str = "";
-			int i = 0;
-
-			while (i < +this.size)
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				char letterChar = br.ReadChar();
-				if (letterChar != Char.MinValue)
+				using (BinaryReader br = new BinaryReader(ms))
 				{
-					str = str + letterChar.ToString();
+					Filenames.Add(br.ReadNullTerminatedString());
 				}
-				else
-				{
-					this.fileNames.Add(str);
-					//clear string for a new filename
-					str = "";
-				}
-				i += 1;
 			}
-
-			br.Close();
-			adtStream.Close();
 		}
 	}
 }

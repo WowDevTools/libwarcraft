@@ -1,5 +1,6 @@
 using System;
 using Warcraft.Core.Interpolation;
+using System.Collections.Generic;
 
 namespace Warcraft.Core
 {
@@ -173,6 +174,26 @@ namespace Warcraft.Core
 		}
 	}
 
+	public struct Plane
+	{
+		public List<List<short>> Coordinates;
+
+		public Plane(short InAllCoordinates)
+		{
+			this.Coordinates = new List<List<short>>();
+
+			for (int y = 0; y < 3; ++y)
+			{
+				List<short> CoordinateRow = new List<short>();
+				for (int x = 0; x < 3; ++x)
+				{
+					CoordinateRow.Add(InAllCoordinates);
+				}
+				Coordinates.Add(CoordinateRow);
+			}
+		}
+	}
+
 	/// <summary>
 	/// A 3D rotator of floats.
 	/// </summary>
@@ -202,6 +223,17 @@ namespace Warcraft.Core
 			this.Pitch = Pitch;
 			this.Yaw = Yaw;
 			this.Roll = Roll;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.Core.Rotator"/> struct.
+		/// </summary>
+		/// <param name="InVector">In vector.</param>
+		public Rotator(Vector3f InVector)
+		{
+			this.Pitch = InVector.X;
+			this.Yaw = InVector.Y;
+			this.Roll = InVector.Z;
 		}
 	}
 

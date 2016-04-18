@@ -27,7 +27,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MHDR Chunk - Contains offset for all major chunks in the ADT. All offsets are from the start of the MHDR + 4 bytes to compensate for the size field.
 	/// </summary>
-	public class TerrainHeader
+	public class TerrainHeader : TerrainChunk
 	{
 		public const string Signature = "MHDR";
 
@@ -84,7 +84,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Offset into the file where the MTXF Chunk can be found. 
 		/// </summary>
-		public int TextureMetadataOffset;
+		public int TextureFlagsOffset;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainHeader"/> class.
@@ -113,7 +113,7 @@ namespace Warcraft.ADT.Chunks
 
 					this.BoundingBoxOffset = br.ReadInt32();
 					this.WaterOffset = br.ReadInt32();
-					this.TextureMetadataOffset = br.ReadInt32();
+					this.TextureFlagsOffset = br.ReadInt32();
 				}
 			}
 		}

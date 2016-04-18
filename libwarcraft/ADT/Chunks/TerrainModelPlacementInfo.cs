@@ -23,115 +23,122 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
-using System.Runtime.InteropServices;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MMDF Chunk - Contains M2 model placement information
 	/// </summary>
-	public class TerrainModelPlacementInfo
+	public class TerrainModelPlacementInfo : TerrainChunk
 	{
-		/// <summary>
-		/// Flags for the model
-		/// </summary>
-		[Flags]
-		public enum MDDFFlags
-		{
-			/// <summary>
-			/// Biodome flag
-			/// </summary>
-			MDDF_BioDome = 1,
-			/// <summary>
-			/// BRING ME A SHRUBBERY
-			/// </summary>
-			MMDF_Shrubbery = 2,
-		}
-
-		/// <summary>
-		/// An entry struct containing information about the model
-		/// </summary>
-		public struct MDDFEntry
-		{
-			/// <summary>
-			/// Specifies which model to use via the MMID chunk
-			/// </summary>
-			public int MMIDEntry;
-			/// <summary>
-			/// A unique actor ID for the model. Blizzard implements this as game global, but it's only checked in loaded tiles
-			/// </summary>
-			public int uniqueID;
-
-			/// <summary>
-			/// Position of the model
-			/// </summary>
-			public Vector3f position;
-			/// <summary>
-			/// Rotation of the model
-			/// </summary>
-			public Rotator rotation;
-
-			/// <summary>
-			/// Scale of the model. 1024 is the default value, equating to 1.0f. There is no uneven scaling of objects
-			/// </summary>
-			public int scale;
-			/// <summary>
-			/// MMDF flags for the object
-			/// </summary>
-			public MDDFFlags flags;
-		}
-
-		/// <summary>
-		/// Size of the MDDF chunk
-		/// </summary>
-		public int size;
+		public const string Signature = "MMDF";
 
 		/// <summary>
 		/// Contains a list of MDDF entries with model placement information
 		/// </summary>
-		public List<MDDFEntry> entries;
+		public List<ModelPlacementEntry> Entries = new List<ModelPlacementEntry>();
 
-
-		public TerrainModelPlacementInfo(string adtFile, int position)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainModelPlacementInfo"/> class.
+		/// </summary>
+		/// <param name="data">Data.</param>
+		public TerrainModelPlacementInfo(byte[] data)
 		{
-			Stream adtStream = File.OpenRead(adtFile);
-			BinaryReader br = new BinaryReader(adtStream);
-			br.BaseStream.Position = position;
-
-			//read size
-			this.size = br.ReadInt32();
-
-			//create a new empty list
-			this.entries = new List<MDDFEntry>();
-
-			int i = 0;
-			while (i < this.size)
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				MDDFEntry entry = new MDDFEntry();
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					long EntryCount = br.BaseStream.Length / ModelPlacementEntry.GetSize();
 
-				entry.MMIDEntry = br.ReadInt32();
-				entry.uniqueID = br.ReadInt32();
-
-				entry.position.X = br.ReadSingle();
-				entry.position.Y = br.ReadSingle();
-				entry.position.Z = br.ReadSingle();
-
-				entry.rotation.Pitch = br.ReadSingle();
-				entry.rotation.Yaw = br.ReadSingle();
-				entry.rotation.Roll = br.ReadSingle();
-
-				entry.scale = br.ReadInt16();
-				entry.flags = (MDDFFlags)br.ReadInt16();
-
-				this.entries.Add(entry);
-
-				i += Marshal.SizeOf(entry);
+					for (int i = 0; i < EntryCount; ++i)
+					{
+						this.Entries.Add(new ModelPlacementEntry(br.ReadBytes(ModelPlacementEntry.GetSize())));				
+					}
+				}
 			}
-
-			br.Close();
-			adtStream.Close();
 		}
 	}
 
+	/// <summary>
+	/// An entry struct containing information about the model
+	/// </summary>
+	public class ModelPlacementEntry
+	{
+		/// <summary>
+		/// Specifies which model to use via the MMID chunk
+		/// </summary>
+		public uint ModelEntryIndex;
+
+		/// <summary>
+		/// A unique actor ID for the model. Blizzard implements this as game global, but it's only checked in loaded tiles
+		/// </summary>
+		public uint UniqueID;
+
+		/// <summary>
+		/// Position of the model
+		/// </summary>
+		public Vector3f Position;
+		/// <summary>
+		/// Rotation of the model
+		/// </summary>
+		public Rotator Rotation;
+
+		/// <summary>
+		/// Scale of the model. 1024 is the default value, equating to 1.0f. There is no uneven scaling of objects
+		/// </summary>
+		public ushort ScalingFactor;
+
+		/// <summary>
+		/// MMDF flags for the object
+		/// </summary>
+		public ModelPlacementFlags Flags;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.ModelPlacementEntry"/> class.
+		/// </summary>
+		/// <param name="data">Data.</param>
+		public ModelPlacementEntry(byte[] data)
+		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.ModelEntryIndex = br.ReadUInt32();
+					this.UniqueID = br.ReadUInt32();
+					this.Position = br.ReadVector3f();
+					this.Rotation = br.ReadRotator();
+
+					this.ScalingFactor = br.ReadUInt16();
+					this.Flags = (ModelPlacementFlags)br.ReadUInt16();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the size of an entry.
+		/// </summary>
+		/// <returns>The size.</returns>
+		public static int GetSize()
+		{
+			return 36;
+		}
+	}
+
+	/// <summary>
+	/// Flags for the model
+	/// </summary>
+	[Flags]
+	public enum ModelPlacementFlags : ushort
+	{
+		/// <summary>
+		/// Biodome. Perhaps a skybox?
+		/// </summary>
+		Biodome = 1,
+
+		/// <summary>
+		/// Possibly used for vegetation and grass.
+		/// </summary>
+		Shrubbery = 2,
+	}
 }
 

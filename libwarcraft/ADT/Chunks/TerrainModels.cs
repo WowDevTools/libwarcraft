@@ -22,60 +22,35 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MMDX Chunk - Contains a list of all referenced M2 models in this ADT.
 	/// </summary>
-	public class TerrainModels
+	public class TerrainModels : TerrainChunk
 	{
-		/// <summary>
-		/// Size of the MMDX chunk.
-		/// </summary>
-		public int size;
+		public const string Signature = "MMDX";
 
 		/// <summary>
 		///A list of full paths to the M2 models referenced in this ADT.
 		/// </summary>
-		public List<string> fileNames;
+		public List<string> Filenames = new List<string>();
 
 		/// <summary>
-		/// Creates a new MMDX object from a file path and offset into the file
+		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainModels"/> class.
 		/// </summary>
-		/// <param name="adtFile">Path to the file on disk</param>                
-		/// <param name="position">Offset into the file where the MMDX chunk begins</param>
-		/// <returns>An MMDX object containing a list of full M2 model paths</returns>
-		public TerrainModels(string adtFile, int position)
+		/// <param name="data">Data.</param>
+		public TerrainModels(byte[] data)
 		{
-			Stream adtStream = File.OpenRead(adtFile);
-			BinaryReader br = new BinaryReader(adtStream);
-			br.BaseStream.Position = position;
-
-			//read the MMDX size
-			this.size = br.ReadInt32();
-
-			//create an empty list
-			this.fileNames = new List<string>();
-
-			string str = "";
-			while (br.BaseStream.Position < position + this.size)
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				char letterChar = br.ReadChar();
-				if (letterChar != Char.MinValue)
+				using (BinaryReader br = new BinaryReader(ms))
 				{
-					str = str + letterChar.ToString();
-				}
-				else
-				{
-					this.fileNames.Add(str);
-					//clear string for a new filename
-					str = "";
+					Filenames.Add(br.ReadNullTerminatedString());
 				}
 			}
-
-			br.Close();
-			adtStream.Close();
 		}
 	}
 }

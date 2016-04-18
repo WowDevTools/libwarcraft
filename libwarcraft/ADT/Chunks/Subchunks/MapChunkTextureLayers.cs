@@ -29,7 +29,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	/// <summary>
 	/// MCLY Chunk - Contains definitions for the alpha map layers.
 	/// </summary>
-	public class MapChunkAlphaMapDefinitions
+	public class MapChunkTextureLayers
 	{
 		public int size;
 
@@ -37,7 +37,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// Chunk flags
 		/// </summary>
 		[Flags]
-		public enum MCLYFlags
+		public enum TextureLayerFlags
 		{
 			Anim45Rot = 0x001,
 
@@ -65,12 +65,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// <summary>
 		/// An array of alpha map layers in this MCNK.
 		/// </summary>
-		public List<MCLYEntry> Layer;
+		public List<TextureLayerEntry> Layer;
 
 		/// <summary>
 		/// A struct defining a layer entry
 		/// </summary>
-		public struct MCLYEntry
+		public struct TextureLayerEntry
 		{
 			/// <summary>
 			/// Index of the texture in the MTEX chunk
@@ -79,7 +79,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 			/// <summary>
 			/// Flags for the texture. Used for animation data.
 			/// </summary>
-			public MCLYFlags flags;
+			public TextureLayerFlags flags;
 			/// <summary>
 			/// Offset into MCAL where the alpha map begins.
 			/// </summary>
@@ -96,7 +96,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// <param name="adtFile">Path to the file on disk</param>                
 		/// <param name="position">Offset into the file where the MCLY chunk begins</param>
 		/// <returns>An MCLY object containing an array of layer entries</returns>
-		public MapChunkAlphaMapDefinitions(string adtFile, int position)
+		public MapChunkTextureLayers(string adtFile, int position)
 		{
 			Stream adtStream = File.OpenRead(adtFile);
 			BinaryReader br = new BinaryReader(adtStream);
@@ -104,13 +104,13 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 			this.size = br.ReadInt32();
 			int nLayers = this.size / 16;
-			Layer = new List<MCLYEntry>();
+			Layer = new List<TextureLayerEntry>();
 
 			for (int i = 0; i < nLayers; i++)
 			{
-				MCLYEntry newEntry = new MCLYEntry();
+				TextureLayerEntry newEntry = new TextureLayerEntry();
 				newEntry.textureID = br.ReadInt32();
-				newEntry.flags = (MCLYFlags)br.ReadInt32();
+				newEntry.flags = (TextureLayerFlags)br.ReadInt32();
 				newEntry.offsetMCAL = br.ReadInt32();
 				newEntry.effectID = br.ReadInt32();
 
@@ -118,9 +118,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
 			}
 		}
 
-		public MCLYEntry GetEntryForTextureID(int ID)
+		public TextureLayerEntry GetEntryForTextureID(int ID)
 		{
-			MCLYEntry matchingEntry = new MCLYEntry();
+			TextureLayerEntry matchingEntry = new TextureLayerEntry();
 			bool foundEntry = false;
 			//set the offset for the data that corresponds to texture i
 
@@ -137,7 +137,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 			{
 				//set all values to -1 to denote a missing or disabled chunk
 				matchingEntry.effectID = -1;
-				matchingEntry.flags = (MCLYFlags)0;
+				matchingEntry.flags = (TextureLayerFlags)0;
 				matchingEntry.offsetMCAL = -1;
 				matchingEntry.textureID = -1;
 

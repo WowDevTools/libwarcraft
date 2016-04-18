@@ -1,5 +1,5 @@
 ﻿//
-//  TerrainWater.cs
+//  TerrainBoundingBox.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,16 +20,29 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using Warcraft.Core;
+using System.IO;
 
 namespace Warcraft.ADT.Chunks
 {
-	/// <summary>
-	/// MH2O Chunk - Contains liquid information about the ADT file, superseding the older MCLQ chunk.
-	/// </summary>
-	public class TerrainWater
+	public class TerrainBoundingBox : TerrainChunk
 	{
-		//TODO
-	}
+		public const string Signature = "MFBO";
 
+		public Plane Maximum;
+		public Plane Minimum;
+
+		public TerrainBoundingBox(byte[] data)
+		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.Maximum = br.ReadPlane();
+					this.Minimum = br.ReadPlane();
+				}
+			}
+		}
+	}
 }
 

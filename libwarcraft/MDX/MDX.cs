@@ -226,17 +226,7 @@ namespace Warcraft.MDX
 						{
 							MDXTriangle Triangle = new MDXTriangle(br.ReadUInt16(), br.ReadUInt16(), br.ReadUInt16());
 
-							// TODO: Figure out why the damn triangles are going bad
-							if (Triangle.VertexA > View.VertexIndices.Count - 1 ||
-							    Triangle.VertexB > View.VertexIndices.Count - 1 ||
-							    Triangle.VertexC > View.VertexIndices.Count - 1)
-							{
-								Console.WriteLine(String.Format("Bad vertex index in triangle {0}. Dropping triangle from list.", j));
-							}
-							else
-							{
-								View.Triangles.Add(Triangle);						
-							}
+							View.Triangles.Add(Triangle);							
 						}
 
 						// Read view vertex properties

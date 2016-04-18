@@ -26,7 +26,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Warcraft.ADT.Chunks;
 using Warcraft.ADT.Chunks.Subchunks;
 using Warcraft.Core;
@@ -93,7 +92,12 @@ namespace Warcraft.ADT
 			/// <summary>
 			/// Contains water data for this ADT. This chunk is present in WOTLK chunks and above.
 			/// </summary>
-			public TerrainWater Water;
+			public TerrainLiquid Water;
+
+			/// <summary>
+			/// The texture flags. This chunk is present in WOTLK chunks and above.
+			/// </summary>
+			public TerrainTextureFlags TextureFlags;
 
 			/// <summary>
 			/// Contains an array of all MCNKs in this ADT.
@@ -112,9 +116,56 @@ namespace Warcraft.ADT
 				{
 					using (BinaryReader br = new BinaryReader(ms))
 					{
-						while (br.BaseStream.Position != br.BaseStream.Length)
+						// In all ADT files, the version chunk and header chunk are at the beginning of the file, 
+						// with the header following the version. From them, the rest of the chunks can be
+						// seeked to and read.
+
+						// Read Version Chunk
+						this.Version = (TerrainVersion)br.ReadTerrainChunk();
+
+						// Read the header chunk
+						this.Header = (TerrainHeader)br.ReadTerrainChunk();
+
+						if (this.Header.MapChunkOffsetsOffset > 0)
 						{
-							ReadChunk(br);
+							br.BaseStream.Position = this.Header.MapChunkOffsetsOffset;
+							this.MapChunkOffsets = (TerrainMapChunkOffsets)br.ReadTerrainChunk();
+						}
+
+						if (this.Header.TexturesOffset > 0)
+						{
+							br.BaseStream.Position = this.Header.TexturesOffset;
+							this.Textures = (TerrainTextures)br.ReadTerrainChunk();
+						}
+
+						if (this.Header.ModelsOffset > 0)
+						{
+							br.BaseStream.Position = this.Header.ModelsOffset;
+							this.Models = (TerrainModels)br.ReadTerrainChunk();
+						}
+
+						if (this.Header.ModelIndicesOffset > 0)
+						{
+							br.BaseStream.Position = this.Header.ModelIndicesOffset;
+							this.ModelIndices = (TerrainModelIndices)br.ReadTerrainChunk();
+						}
+
+						if (this.Header.WorldModelObjectsOffset > 0)
+						{
+							br.BaseStream.Position = this.Header.WorldModelObjectsOffset;
+							this.WorldModelObjects = (TerrainWorldModelObjects)br.ReadTerrainChunk();
+						}
+
+						if (this.Header.WorldModelObjectIndicesOffset > 0)
+						{
+							br.BaseStream.Position = this.Header.WorldModelObjectIndicesOffset;
+							this.WorldModelObjectIndices = (TerrainWorldObjectModelIndices)br.ReadTerrainChunk();
+						}
+
+						if (this.Header.WaterOffset > 0)
+						{
+							br.BaseStream.Position = this.Header.WaterOffset;
+							this.Water = (TerrainLiquid)br.ReadTerrainChunk();
 						}
 					}
 				}
@@ -124,8 +175,6 @@ namespace Warcraft.ADT
 				//Is the file an ADT file?
 				if (Data.EndsWith(".adt"))
 				{                    
-					Console.WriteLine("Found ADT, parsing...");
-
 					Stream ADTStream = File.OpenRead(Data);
 					BinaryReader br = new BinaryReader(ADTStream);
 
@@ -149,7 +198,6 @@ namespace Warcraft.ADT
 						{
 							case "MVER":
 								{
-									Console.WriteLine("Found MVER Chunk, parsing...");
 
 									this.Version = new TerrainVersion(Data, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.Version.size;
@@ -157,7 +205,6 @@ namespace Warcraft.ADT
 								}
 							case "MHDR":
 								{                                    
-									Console.WriteLine("Found MHDR Chunk, parsing...");
 
 									this.Header = new TerrainHeader(Data, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.Header.size;
@@ -165,7 +212,6 @@ namespace Warcraft.ADT
 								}
 							case "MCIN":
 								{
-									Console.WriteLine("Found MCIN Chunk, parsing...");
 
 									this.MapChunkOffsets = new TerrainMapChunkOffsets(Data, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.MapChunkOffsets.size;
@@ -173,7 +219,6 @@ namespace Warcraft.ADT
 								}
 							case "MTEX":
 								{
-									Console.WriteLine("Found MTEX Chunk, parsing...");
 
 									this.Textures = new TerrainTextures(Data, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.Textures.size;
@@ -181,7 +226,6 @@ namespace Warcraft.ADT
 								}
 							case "MMDX":
 								{
-									Console.WriteLine("Found MMDX Chunk, parsing...");
 
 									this.Models = new TerrainModels(Data, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.Models.size;
@@ -189,7 +233,6 @@ namespace Warcraft.ADT
 								}
 							case "MMID":
 								{
-									Console.WriteLine("Found MMID Chunk, parsing...");
 
 									this.ModelIndices = new TerrainModelIndices(Data, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ModelIndices.size;
@@ -197,7 +240,6 @@ namespace Warcraft.ADT
 								}
 							case "MWMO":
 								{
-									Console.WriteLine("Found MWMO Chunk, parsing...");
 
 									this.WorldModelObjects = new TerrainWorldModelObjects(Data, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.WorldModelObjects.size;
@@ -205,7 +247,6 @@ namespace Warcraft.ADT
 								}
 							case "MWID":
 								{
-									Console.WriteLine("Found MWID Chunk, parsing...");
 
 									this.WorldModelObjectIndices = new TerrainWorldObjectModelIndices(Data, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.WorldModelObjectIndices.size;
@@ -213,7 +254,6 @@ namespace Warcraft.ADT
 								}
 							case "MDDF":
 								{
-									Console.WriteLine("Found MDDF Chunk, parsing...");
 
 									this.ModelPlacementInfo = new TerrainModelPlacementInfo(Data, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.ModelPlacementInfo.size;
@@ -221,7 +261,6 @@ namespace Warcraft.ADT
 								}
 							case "MODF":
 								{
-									Console.WriteLine("Found MODF Chunk, parsing...");
 
 									this.WorldModelObjectPlacementInfo = new TerrainWorldModelObjectPlacementInfo(Data, (int)br.BaseStream.Position);
 									br.BaseStream.Position += this.WorldModelObjectPlacementInfo.size;
@@ -229,18 +268,14 @@ namespace Warcraft.ADT
 								}
 							case "MH2O":
 								{
-									Console.WriteLine("Found MH2O Chunk, parsing...");
 
 									//read the size of the MH2O chunk
 									int skip = br.ReadInt32();
 
-									Console.WriteLine("Forcibly skipping MH2O...");
 
-									Console.WriteLine(String.Format("Position before: {0}", br.BaseStream.Position.ToString()));
 
 									br.BaseStream.Position += skip;
 
-									Console.WriteLine(String.Format("Position after: {0}", br.BaseStream.Position.ToString()));
 
 									continue;
 								}
@@ -249,19 +284,16 @@ namespace Warcraft.ADT
 									TerrainMapChunk mcnk = new TerrainMapChunk(Data, (int)br.BaseStream.Position);
 									MapChunks.Add(mcnk);
 
-									Console.WriteLine("Found MCNK Chunk, parsing...");
 
 									br.BaseStream.Position += mcnk.Header.size;
 									continue;
 								}
 							case "MFBO":
 								{
-									Console.WriteLine("Found MFBO Chunk, parsing...");
 									continue;
 								}
 							case "MTXF":
 								{
-									Console.WriteLine("Found MTXF Chunk, parsing...");
 									continue;
 								}
 						}
@@ -272,33 +304,9 @@ namespace Warcraft.ADT
 					throw new FileLoadException("The provided file was not in an ADT format.", Data);
 				}
 				*/
-
-				Console.WriteLine(String.Format("Finished loading ADT with version {0}.", this.Version.Version.ToString()));
 			}
 
-			private void ReadChunk(BinaryReader br)
-			{
-				string Signature = new string(br.ReadChars(4));
-				uint ChunkSize = br.ReadUInt32();
-
-				switch (Signature)
-				{
-					case TerrainVersion.Signature:
-						{
-							this.Version = new TerrainVersion(br.ReadBytes((int)ChunkSize));
-							break;
-						}
-					case TerrainHeader.Signature:
-						{
-							break;
-						}
-					default:
-						{
-							throw new FileLoadException("An unknown chunk with the signature \"" + Signature + "\" was encountered in the terrain file.");
-						}
-				}
-			}
-
+			/*
 			public Bitmap[] GetAlphaMaps()
 			{
 				//initialize n alpha maps, one for each texture.
@@ -319,7 +327,7 @@ namespace Warcraft.ADT
 					for (int x = 0; x < 16; x++)
 					{                        
 						TerrainMapChunk currentChunk = GetMCNK(x, y);
-						MapChunkAlphaMapDefinitions.MCLYEntry[] currentLayers = currentChunk.GetTextureLayers();
+						MapChunkTextureLayers.TextureLayerEntry[] currentLayers = currentChunk.GetTextureLayers();
 						MapChunkAlphaMaps currentAlphaChunk = currentChunk.Chunks.AlphaChunk;
 
                         
@@ -327,14 +335,10 @@ namespace Warcraft.ADT
 						//then, write the data into the matching texture map.
 						for (int i = 0; i < currentLayers.Length; i++)
 						{
-							MapChunkAlphaMapDefinitions.MCLYEntry currentLayer = currentLayers[i];
+							MapChunkTextureLayers.TextureLayerEntry currentLayer = currentLayers[i];
 
-							if (currentAlphaChunk.size % 2048 != 0)
-							{
-								Console.WriteLine("MCAL was not divisible by 2048? Size was: " + currentAlphaChunk.size.ToString());
-							}
 							//does it use an alpha map?
-							if (!currentLayer.flags.HasFlag(MapChunkAlphaMapDefinitions.MCLYFlags.UseAlpha))
+							if (!currentLayer.flags.HasFlag(MapChunkTextureLayers.TextureLayerFlags.UseAlpha))
 							{
 
 								//first layer is always rendered with full opacity.
@@ -351,12 +355,7 @@ namespace Warcraft.ADT
 
 								//create a new alpha section
 								Bitmap alphaSection = new Bitmap(64, 64, PixelFormat.Format32bppArgb);
-
-								Console.WriteLine("DEBUG: Layer " + i.ToString()
-									+ " (" + GetTextureByID(currentLayer.textureID).ToString()
-									+ ") does not use alpha mapping, according to the flags.");
-
-                                
+							
 								//this is our texture ID.
 								int textureID = currentLayer.textureID;
 
@@ -371,7 +370,7 @@ namespace Warcraft.ADT
 											for (int l = 1; l < currentLayers.Length; l++)
 											{
 												//we're using a separate currentLayer variable here for more clarity. The principle is the same.
-												MapChunkAlphaMapDefinitions.MCLYEntry readingLayer = currentLayers[l];
+												MapChunkTextureLayers.TextureLayerEntry readingLayer = currentLayers[l];
 
 												//buffer to store the alpha map
 												byte[] buffer = new byte[2048];
@@ -419,9 +418,7 @@ namespace Warcraft.ADT
 											g2.Clear(Color.Black);
 										}
 									}
-								}                                
-                                        
-								Console.WriteLine("MCNK at " + x + "," + y + " :" + GetTextureByID(textureID));
+								} 
 							}
 							else
 							{
@@ -429,18 +426,15 @@ namespace Warcraft.ADT
 								Bitmap alphaSection = new Bitmap(64, 64, PixelFormat.Format32bppArgb);
 
 								//this is our ID.
-								int textureID = currentLayer.textureID;
-
-                                
+								int textureID = currentLayer.textureID;								                               
 
 								//read the map (2048 or 4096 bytes) if there is a map
 								if (currentAlphaChunk.size != 0)
 								{
-									if (currentAlphaChunk.size % 2048 != 0 && !currentLayer.flags.HasFlag(MapChunkAlphaMapDefinitions.MCLYFlags.CompressedAlpha))
+									if (currentAlphaChunk.size % 2048 != 0 && !currentLayer.flags.HasFlag(MapChunkTextureLayers.TextureLayerFlags.CompressedAlpha))
 									{
 										//buffer to store the alpha map
 										byte[] buffer = new byte[4096];
-										Console.WriteLine("Alpha was uncompressed 4096-map?");
 										for (int p = 0; p < 4096; p++)
 										{
 											buffer[p] = currentAlphaChunk.data[currentLayer.offsetMCAL + p];
@@ -481,11 +475,7 @@ namespace Warcraft.ADT
 										}
 									}
 								}
-
-								Console.WriteLine("MCNK at " + x.ToString() + "," + y.ToString() + " :" + GetTextureByID(textureID));
 							}
-                                                                    
-                            
 						}
                         
 					}
@@ -494,11 +484,10 @@ namespace Warcraft.ADT
 				//return the created maps
 				return maps;
 			}
+			*/
 
 			private Bitmap Read2048AlphaMap(byte[] buffer, bool repair)
 			{
-				Console.WriteLine("Reading 2048 uncompressed alphamap.");
-
 				Bitmap alphaSection = new Bitmap(64, 64, PixelFormat.Format32bppArgb);
 				
 				for (int y = 0; y < 64; y++)
@@ -629,7 +618,7 @@ namespace Warcraft.ADT
 
 			public int GetTextureCount()
 			{
-				return this.Textures.fileNames.Count;
+				return this.Textures.Filenames.Count;
 			}
 
 			/// <summary>
@@ -638,9 +627,9 @@ namespace Warcraft.ADT
 			public string GetTextureByID(int ID)
 			{
 				//is the ID valid (i.e, between 0 and the filename count)
-				if ((ID < this.Textures.fileNames.Count) && (ID > -1))
+				if ((ID < this.Textures.Filenames.Count) && (ID > -1))
 				{
-					return this.Textures.fileNames.ElementAt(ID);
+					return this.Textures.Filenames.ElementAt(ID);
 				}
 				else
 				{
@@ -650,7 +639,7 @@ namespace Warcraft.ADT
 
 			public string[] GetTextures()
 			{
-				return this.Textures.fileNames.ToArray();
+				return this.Textures.Filenames.ToArray();
 			}
 
 			public TerrainHeaderFlags GetFlags()

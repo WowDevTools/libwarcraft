@@ -28,38 +28,28 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MMID Chunk - Contains a list of M2 model indexes
 	/// </summary>
-	public class TerrainModelIndices
+	public class TerrainModelIndices : TerrainChunk
 	{
-		/// <summary>
-		/// Size of the MMID chunk.
-		/// </summary>
-		public int size;
+		public const string Signature = "MMID";
 
 		/// <summary>
 		/// List indexes for models in an MMID chunk
 		/// </summary>
-		public List<int> ModelIndex;
+		public List<uint> ModelFilenameOffsets = new List<uint>();
 
-		public TerrainModelIndices(string adtFile, int position)
+		public TerrainModelIndices(byte[] data)
 		{
-			Stream adtStream = File.OpenRead(adtFile);
-			BinaryReader br = new BinaryReader(adtStream);
-			br.BaseStream.Position = position;
-
-			//read size
-			this.size = br.ReadInt32();
-
-			//create new empty list
-			this.ModelIndex = new List<int>();
-
-			int i = 0;
-			while (i > this.size)
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				this.ModelIndex.Add(br.ReadInt32());
-				i += 4;
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					int offsetCount = data.Length / 4;
+					for (int i = 0; i < offsetCount; ++i)
+					{
+						ModelFilenameOffsets.Add(br.ReadUInt32());
+					}
+				}
 			}
-			br.Close();
-			adtStream.Close();
 		}
 	}
 }

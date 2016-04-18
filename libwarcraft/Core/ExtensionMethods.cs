@@ -23,6 +23,9 @@
 using System;
 using System.Drawing;
 using System.IO;
+using Warcraft.ADT.Chunks;
+using System.Text;
+using System.Collections.Generic;
 
 namespace Warcraft.Core
 {
@@ -90,6 +93,131 @@ namespace Warcraft.Core
 		*/
 
 		/// <summary>
+		/// Reads a standard null-terminated string from the data stream.
+		/// </summary>
+		/// <returns>The null terminated string.</returns>
+		/// <param name="Reader">Reader.</param>
+		public static string ReadNullTerminatedString(this BinaryReader Reader)
+		{
+			StringBuilder sb = new StringBuilder();
+
+			char c;
+			while ((c = Reader.ReadChar()) != 0)
+			{
+				sb.Append(c);
+			}
+
+			return sb.ToString();			
+		}
+
+		/// <summary>
+		/// Reads a standard RIFF-style chunk from the data stream, and advances the position of the stream
+		/// by the size of the chunk.
+		/// </summary>
+		/// <returns>The terrain chunk.</returns>
+		/// <param name="Reader">Reader.</param>
+		public static TerrainChunk ReadTerrainChunk(this BinaryReader Reader)
+		{
+			// The signatures are stored in reverse in the file, so we'll need to read them backwards into
+			// the buffer.
+			char[] signatureBuffer = new char[4];
+			for (int i = 0; i < 4; ++i)
+			{
+				signatureBuffer[3 - i] = Reader.ReadChar();
+			}
+
+			string Signature = new string(signatureBuffer);
+			uint ChunkSize = Reader.ReadUInt32();
+
+			byte[] chunkData = Reader.ReadBytes((int)ChunkSize);
+
+			switch (Signature)
+			{
+				case TerrainVersion.Signature:
+					{
+						return new TerrainVersion(chunkData);
+					}
+				case TerrainHeader.Signature:
+					{
+						return new TerrainHeader(chunkData);
+					}
+				case TerrainMapChunkOffsets.Signature:
+					{
+						return new TerrainMapChunkOffsets(chunkData);
+					}
+				case TerrainTextures.Signature:
+					{
+						return new TerrainTextures(chunkData);
+					}
+				case TerrainModels.Signature:
+					{
+						return new TerrainModels(chunkData);
+					}
+				case TerrainModelIndices.Signature:
+					{
+						return new TerrainModelIndices(chunkData);
+					}
+				case TerrainWorldModelObjects.Signature:
+					{
+						return new TerrainWorldModelObjects(chunkData);
+					}
+				case TerrainWorldObjectModelIndices.Signature:
+					{
+						return new TerrainWorldObjectModelIndices(chunkData);
+					}
+				case TerrainModelPlacementInfo.Signature:
+					{
+						return new TerrainModelPlacementInfo(chunkData);
+					}
+				case TerrainWorldModelObjectPlacementInfo.Signature:
+					{
+						return new TerrainWorldModelObjectPlacementInfo(chunkData);
+					}
+				case TerrainBoundingBox.Signature:
+					{
+						return new TerrainBoundingBox(chunkData);
+					}
+				case TerrainLiquid.Signature:
+					{
+						return new TerrainLiquid(chunkData);
+					}
+				case TerrainTextureFlags.Signature:
+					{
+						return new TerrainTextureFlags(chunkData);
+					}
+				case TerrainMapChunk.Signature:
+					{
+						return new TerrainMapChunk(chunkData);
+					}
+				default:
+					{
+						throw new FileLoadException("An unknown chunk with the signature \"" + Signature + "\" was encountered in the terrain file.");
+					}
+			}
+		}
+
+		/// <summary>
+		/// Reads a 18-byte, 3 by 3 coordinate matrix from the data stream.
+		/// </summary>
+		/// <returns>The plane.</returns>
+		/// <param name="Reader">Reader.</param>
+		public static Plane ReadPlane(this BinaryReader Reader)
+		{
+			Plane plane = new Plane();
+			for (int y = 0; y < 3; ++y)
+			{
+				List<short> CoordinateRow = new List<short>();
+				for (int x = 0; x < 3; ++x)
+				{
+					CoordinateRow.Add(Reader.ReadInt16());
+				}
+				plane.Coordinates.Add(CoordinateRow);
+			}
+
+			return plane;
+		}
+
+		/// <summary>
 		/// Reads a 16-byte 32-bit quaternion structure from the data stream, and advances the position of the stream by
 		/// 16 bytes.
 		/// </summary>
@@ -118,6 +246,17 @@ namespace Warcraft.Core
 		private static float ShortQuatValueToFloat(short InShort)
 		{
 			return (float)(InShort < 0 ? InShort + 32768 : InShort - 32768) / 32767.0f;
+		}
+
+		/// <summary>
+		/// Reads a 12-byte rotator from the data stream and advances the position of the stream by 
+		/// 12 bytes.
+		/// </summary>
+		/// <returns>The rotator.</returns>
+		/// <param name="Reader">Reader.</param>
+		public static Rotator ReadRotator(this BinaryReader Reader)
+		{
+			return new Rotator(Reader.ReadVector3f());
 		}
 
 		/// <summary>
