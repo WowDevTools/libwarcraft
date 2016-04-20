@@ -205,7 +205,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <EmbeddedResource Include="App.config" />
-    <EmbeddedResource Include="DBC\Definitions\AnimationData.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BLP\" />
