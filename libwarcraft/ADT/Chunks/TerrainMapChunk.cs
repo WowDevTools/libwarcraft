@@ -77,12 +77,12 @@ namespace Warcraft.ADT.Chunks
 		public MapChunkLiquids Liquid;
 
 		/// <summary>
-		/// The MCCV chunk.
+		/// The vertex shading chunk.
 		/// </summary>
 		public MapChunkVertexShading VertexShading;
 
 		/// <summary>
-		/// MCLV chunk
+		/// The vertex lighting chunk
 		/// </summary>
 		public MapChunkVertexLighting VertexLighting;
 

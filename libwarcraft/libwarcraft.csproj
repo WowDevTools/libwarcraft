@@ -36,7 +36,6 @@
     <Reference Include="System.Core" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\Everlook\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Package>monodevelop</Package>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\Everlook\packages\DotNetZip.1.9.8\lib\net20\Ionic.Zip.dll</HintPath>
@@ -106,14 +105,6 @@
     <Compile Include="Core\FileType.cs" />
     <Compile Include="DBC\DBC.cs" />
     <Compile Include="DBC\DBCHeader.cs" />
-    <Compile Include="DBC\Record\RecordParser.cs" />
-    <Compile Include="DBC\Record\DBCRecord.cs" />
-    <Compile Include="DBC\Record\Fields\DBCIntegerField.cs" />
-    <Compile Include="DBC\Record\Fields\DBCField.cs" />
-    <Compile Include="DBC\Record\Fields\DBCStringReferenceField.cs" />
-    <Compile Include="DBC\Record\Fields\DBCForeignKeyField.cs" />
-    <Compile Include="DBC\Record\Fields\DBCSingleField.cs" />
-    <Compile Include="DBC\Record\DBCRecordStructure.cs" />
     <Compile Include="DBC\Record\RecordFieldType.cs" />
     <Compile Include="Core\WarcraftVersion.cs" />
     <Compile Include="BLP\BLPFormat.cs" />
@@ -197,6 +188,8 @@
     <Compile Include="ADT\Chunks\TerrainBoundingBox.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkVertexLighting.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkHeader.cs" />
+    <Compile Include="DBC\Record\Fields\DBCField.cs" />
+    <Compile Include="DBC\Record\DBCRecordDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -232,7 +225,6 @@
     <Folder Include="Core\Interpolation\" />
     <Folder Include="DBC\" />
     <Folder Include="DBC\Record\" />
-    <Folder Include="DBC\Record\Fields\" />
     <Folder Include="DBC\Definitions\" />
     <Folder Include="MPQ\Tables\" />
     <Folder Include="MPQ\Tables\BET\" />
@@ -247,6 +239,7 @@
     <Folder Include="Core\Locale\" />
     <Folder Include="ADT\Chunks\" />
     <Folder Include="ADT\Chunks\Subchunks\" />
+    <Folder Include="DBC\Record\Fields\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

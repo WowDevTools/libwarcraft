@@ -167,143 +167,15 @@ namespace Warcraft.ADT
 							br.BaseStream.Position = this.Header.WaterOffset;
 							this.Water = (TerrainLiquid)br.ReadTerrainChunk();
 						}
-					}
-				}
 
-
-				/*
-				//Is the file an ADT file?
-				if (Data.EndsWith(".adt"))
-				{                    
-					Stream ADTStream = File.OpenRead(Data);
-					BinaryReader br = new BinaryReader(ADTStream);
-
-					//initialize the MCNK list
-					MapChunks = new List<TerrainMapChunk>();
-
-					//get the size of the entire binary ADT
-					int ADTSize = (int)br.BaseStream.Length;
-
-					//create a buffer for finding chunks inside the ADT
-					byte[] chunkRecognitionBuffer = new byte[4];
-
-					while (br.BaseStream.Position < ADTSize)
-					{
-						chunkRecognitionBuffer[3] = br.ReadByte();
-						chunkRecognitionBuffer[2] = br.ReadByte();
-						chunkRecognitionBuffer[1] = br.ReadByte();
-						chunkRecognitionBuffer[0] = br.ReadByte();
-
-						switch (Encoding.ASCII.GetString(chunkRecognitionBuffer))
+						// Read and fill the map chunks
+						foreach (MapChunkOffsetEntry Entry in this.MapChunkOffsets.Entries)
 						{
-							case "MVER":
-								{
-
-									this.Version = new TerrainVersion(Data, (int)br.BaseStream.Position);
-									br.BaseStream.Position += this.Version.size;
-									continue;
-								}
-							case "MHDR":
-								{                                    
-
-									this.Header = new TerrainHeader(Data, (int)br.BaseStream.Position);
-									br.BaseStream.Position += this.Header.size;
-									continue;
-								}
-							case "MCIN":
-								{
-
-									this.MapChunkOffsets = new TerrainMapChunkOffsets(Data, (int)br.BaseStream.Position);
-									br.BaseStream.Position += this.MapChunkOffsets.size;
-									continue;
-								}
-							case "MTEX":
-								{
-
-									this.Textures = new TerrainTextures(Data, (int)br.BaseStream.Position);
-									br.BaseStream.Position += this.Textures.size;
-									continue;
-								}
-							case "MMDX":
-								{
-
-									this.Models = new TerrainModels(Data, (int)br.BaseStream.Position);
-									br.BaseStream.Position += this.Models.size;
-									continue;
-								}
-							case "MMID":
-								{
-
-									this.ModelIndices = new TerrainModelIndices(Data, (int)br.BaseStream.Position);
-									br.BaseStream.Position += this.ModelIndices.size;
-									continue;
-								}
-							case "MWMO":
-								{
-
-									this.WorldModelObjects = new TerrainWorldModelObjects(Data, (int)br.BaseStream.Position);
-									br.BaseStream.Position += this.WorldModelObjects.size;
-									continue;
-								}
-							case "MWID":
-								{
-
-									this.WorldModelObjectIndices = new TerrainWorldObjectModelIndices(Data, (int)br.BaseStream.Position);
-									br.BaseStream.Position += this.WorldModelObjectIndices.size;
-									continue;
-								}
-							case "MDDF":
-								{
-
-									this.ModelPlacementInfo = new TerrainModelPlacementInfo(Data, (int)br.BaseStream.Position);
-									br.BaseStream.Position += this.ModelPlacementInfo.size;
-									continue;
-								}
-							case "MODF":
-								{
-
-									this.WorldModelObjectPlacementInfo = new TerrainWorldModelObjectPlacementInfo(Data, (int)br.BaseStream.Position);
-									br.BaseStream.Position += this.WorldModelObjectPlacementInfo.size;
-									continue;
-								}
-							case "MH2O":
-								{
-
-									//read the size of the MH2O chunk
-									int skip = br.ReadInt32();
-
-
-
-									br.BaseStream.Position += skip;
-
-
-									continue;
-								}
-							case "MCNK":
-								{
-									TerrainMapChunk mcnk = new TerrainMapChunk(Data, (int)br.BaseStream.Position);
-									MapChunks.Add(mcnk);
-
-
-									br.BaseStream.Position += mcnk.Header.size;
-									continue;
-								}
-							case "MFBO":
-								{
-									continue;
-								}
-							case "MTXF":
-								{
-									continue;
-								}
+							br.BaseStream.Position = Entry.MapChunkOffset;
+							this.MapChunks.Add((TerrainMapChunk)br.ReadTerrainChunk());
 						}
 					}
 				}
-				else
-				{
-					throw new FileLoadException("The provided file was not in an ADT format.", Data);
-				}
-				*/
 			}
 
 			/*
@@ -647,6 +519,7 @@ namespace Warcraft.ADT
 				return this.Header.Flags;
 			}
 
+			// TODO: Get rid of or move
 			private Bitmap InvertBitmap(Bitmap bitmapImage)
 			{
 				byte A, R, G, B;
@@ -667,6 +540,7 @@ namespace Warcraft.ADT
 				return bitmapImage;
 			}
 
+			// TODO: Get rid of or move
 			private int Map(int x, int in_min, int in_max, int out_min, int out_max)
 			{
 				return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;

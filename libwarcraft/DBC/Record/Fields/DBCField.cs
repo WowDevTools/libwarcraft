@@ -20,27 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
-using System.IO;
 
 namespace Warcraft.DBC.Record.Fields
 {
-	public class DBCField
+	public abstract class DBCField
 	{
-		protected DBCField()
+	}
+
+	public sealed class DBCField<T> : DBCField where T : struct, IComparable, IFormattable, IConvertible, IComparable<T>, IEquatable<T>
+	{
+		public T Value
 		{
+			get;
+			private set;
 		}
 
-		public virtual void Read(BinaryReader br)
+		public DBCField()
 		{
-
-		}
-
-		public static DBCField Create(BinaryReader br)
-		{
-			DBCField field = new DBCField();
-			field.Read(br);
-
-			return field;
 		}
 	}
 }

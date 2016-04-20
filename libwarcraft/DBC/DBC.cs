@@ -21,18 +21,25 @@
 //
 using System;
 using System.Collections.Generic;
-using Warcraft.DBC.Record;
+using System.IO;
 
 namespace Warcraft.DBC
 {
 	public class DBC
 	{
 		DBCHeader Header;
-		public List<DBCRecord> Records;
 		public List<string> Strings;
 
-		public DBC()
+		public DBC(byte[] data)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.Header = new DBCHeader(br.ReadBytes(DBCHeader.GetSize()));
+
+				}
+			}
 		}
 	}
 }

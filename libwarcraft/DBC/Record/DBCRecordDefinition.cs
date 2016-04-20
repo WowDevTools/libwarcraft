@@ -1,5 +1,5 @@
 ﻿//
-//  DBCIntegerField.cs
+//  DBCRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,21 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
-using System.IO;
+using Warcraft.Core;
+using System.Collections.Generic;
+using Warcraft.DBC.Record.Fields;
 
-namespace Warcraft.DBC.Record.Fields
+namespace Warcraft.DBC.Record
 {
-	public sealed class DBCIntegerField : DBCField
+	public class DBCRecordDefinition
 	{
-		public uint Value;
+		public WarcraftVersion Version;
+		public List<DBCField> Fields;
 
-		private DBCIntegerField()
+		public DBCRecordDefinition()
 		{
-		}
-
-		public override void Read(BinaryReader br)
-		{
-			this.Value = br.ReadUInt32();
 		}
 	}
 }
