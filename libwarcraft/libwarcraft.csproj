@@ -187,6 +187,12 @@
     <Compile Include="ADT\Chunks\TerrainBoundingBox.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkVertexLighting.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkHeader.cs" />
+    <Compile Include="DBC\Definitions\DBCRecord.cs" />
+    <Compile Include="DBC\Definitions\AnimationDataRecord.cs" />
+    <Compile Include="DBC\SpecialFields\StringReference.cs" />
+    <Compile Include="DBC\SpecialFields\ForeignKey.cs" />
+    <Compile Include="DBC\SpecialFields\Int32ForeignKey.cs" />
+    <Compile Include="DBC\SpecialFields\Int16ForeignKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -235,6 +241,7 @@
     <Folder Include="Core\Locale\" />
     <Folder Include="ADT\Chunks\" />
     <Folder Include="ADT\Chunks\Subchunks\" />
+    <Folder Include="DBC\SpecialFields\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
