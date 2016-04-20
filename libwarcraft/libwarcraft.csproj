@@ -105,7 +105,6 @@
     <Compile Include="Core\FileType.cs" />
     <Compile Include="DBC\DBC.cs" />
     <Compile Include="DBC\DBCHeader.cs" />
-    <Compile Include="DBC\Record\RecordFieldType.cs" />
     <Compile Include="Core\WarcraftVersion.cs" />
     <Compile Include="BLP\BLPFormat.cs" />
     <Compile Include="MDX\Visual\FX\MDXParticleEmitter.cs" />
@@ -188,8 +187,6 @@
     <Compile Include="ADT\Chunks\TerrainBoundingBox.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkVertexLighting.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkHeader.cs" />
-    <Compile Include="DBC\Record\Fields\DBCField.cs" />
-    <Compile Include="DBC\Record\DBCRecordDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -224,7 +221,6 @@
     <Folder Include="MDX\Visual\FX\" />
     <Folder Include="Core\Interpolation\" />
     <Folder Include="DBC\" />
-    <Folder Include="DBC\Record\" />
     <Folder Include="DBC\Definitions\" />
     <Folder Include="MPQ\Tables\" />
     <Folder Include="MPQ\Tables\BET\" />
@@ -239,7 +235,6 @@
     <Folder Include="Core\Locale\" />
     <Folder Include="ADT\Chunks\" />
     <Folder Include="ADT\Chunks\Subchunks\" />
-    <Folder Include="DBC\Record\Fields\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
