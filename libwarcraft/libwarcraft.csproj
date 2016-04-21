@@ -35,7 +35,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Ionic.Zip">
-      <HintPath>..\..\Everlook\packages\DotNetZip.1.9.8\lib\net20\Ionic.Zip.dll</HintPath>
+      <HintPath>..\packages\DotNetZip.1.9.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
   </ItemGroup>
