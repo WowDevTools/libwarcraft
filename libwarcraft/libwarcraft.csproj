@@ -34,9 +34,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\Everlook\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\Everlook\packages\DotNetZip.1.9.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
@@ -102,7 +99,6 @@
     <Compile Include="MDX\Visual\MDXRenderFlag.cs" />
     <Compile Include="MDX\Animation\MDXSubmeshColourAnimation.cs" />
     <Compile Include="MDX\Animation\MDXUVAnimation.cs" />
-    <Compile Include="Core\FileType.cs" />
     <Compile Include="DBC\DBC.cs" />
     <Compile Include="DBC\DBCHeader.cs" />
     <Compile Include="Core\WarcraftVersion.cs" />
@@ -193,6 +189,7 @@
     <Compile Include="DBC\SpecialFields\ForeignKey.cs" />
     <Compile Include="DBC\SpecialFields\Int32ForeignKey.cs" />
     <Compile Include="DBC\SpecialFields\Int16ForeignKey.cs" />
+    <Compile Include="Core\WarcraftFileType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />

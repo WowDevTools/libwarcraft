@@ -1,4 +1,26 @@
-﻿using System;
+﻿//
+//  ExtendedAttributes.cs
+//
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2016 Jarl Gullberg
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+using System;
 using System.IO;
 using System.Collections.Generic;
 
@@ -6,9 +28,22 @@ namespace Warcraft.MPQ.Attributes
 {
 	public class ExtendedAttributes
 	{
-		private uint Version;
-		private AttributeTypes AttributesPresent;
-		private List<FileAttributes> BlockFileAttributes;
+		public const string InternalFileName = "(attributes)";
+
+		/// <summary>
+		/// The version of the attribute file format.
+		/// </summary>
+		public uint Version;
+
+		/// <summary>
+		/// The attributes present in the attribute file.
+		/// </summary>
+		public AttributeTypes AttributesPresent;
+
+		/// <summary>
+		/// The list of file attributes.
+		/// </summary>
+		public List<FileAttributes> FileAttributes;
 
 		public ExtendedAttributes(byte[] data, uint FileBlockCount)
 		{			
@@ -26,7 +61,7 @@ namespace Warcraft.MPQ.Attributes
 			{
 				this.Version = 0;
 				this.AttributesPresent = 0;
-				this.BlockFileAttributes = null;
+				this.FileAttributes = null;
 			}
 			else
 			{
@@ -79,7 +114,7 @@ namespace Warcraft.MPQ.Attributes
 						if (data.Length >= expectedDataLength)
 						{
 							byte[] md5Data = br.ReadBytes(16);
-							string md5 = BitConverter.ToString(md5Data).Replace("-", "").ToLower();
+							string md5 = BitConverter.ToString(md5Data).Replace("-", "");
 							MD5s.Add(md5);
 						}
 						else
@@ -89,17 +124,17 @@ namespace Warcraft.MPQ.Attributes
 					}
 				}
 
-				this.BlockFileAttributes = new List<FileAttributes>();
+				this.FileAttributes = new List<FileAttributes>();
 				for (int i = 0; i < FileBlockCount; ++i)
 				{
-					BlockFileAttributes.Add(new FileAttributes(CRC32s[i], Timestamps[i], MD5s[i]));
+					FileAttributes.Add(new FileAttributes(CRC32s[i], Timestamps[i], MD5s[i]));
 				}
 			}
 		}
 
 		public bool AreAttributesValid()
 		{
-			return Version > 0 && AttributesPresent > 0;
+			return Version == 100 && AttributesPresent > 0;
 		}
 	}
 

@@ -23,6 +23,7 @@
 using Warcraft.MPQ.Tables.Hash;
 using Warcraft.MPQ.Tables.Block;
 using Warcraft.Core.Locale;
+using Warcraft.MPQ.Attributes;
 
 namespace Warcraft.MPQ.FileInfo
 {
@@ -56,6 +57,29 @@ namespace Warcraft.MPQ.FileInfo
 		{
 			get;
 			private set;
+		}
+
+		/// <summary>
+		/// Gets the file attributes.
+		/// </summary>
+		/// <value>The attributes.</value>
+		public FileAttributes Attributes
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.MPQ.FileInfo.MPQFileInfo"/> class.
+		/// </summary>
+		/// <param name="InPath">In path.</param>
+		/// <param name="InHashEntry">In hash entry.</param>
+		/// <param name="InBlockEntry">In block entry.</param>
+		/// <param name="InAttributes">In attributes.</param>
+		public MPQFileInfo(string InPath, HashTableEntry InHashEntry, BlockTableEntry InBlockEntry, FileAttributes InAttributes)
+			: this(InPath, InHashEntry, InBlockEntry)
+		{
+			this.Attributes = InAttributes;
 		}
 
 		/// <summary>

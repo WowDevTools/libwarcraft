@@ -34,11 +34,17 @@ using Warcraft.MPQ.Crypto;
 using Warcraft.MPQ.FileInfo;
 using Warcraft.MPQ.Tables.Block;
 using Warcraft.MPQ.Tables.Hash;
+using Warcraft.MPQ.Attributes;
 
 namespace Warcraft.MPQ
 {
-	public class MPQ : IDisposable
+	public sealed class MPQ : IDisposable
 	{
+		/// <summary>
+		/// Whether or not this instance has been disposed.
+		/// </summary>
+		bool bDisposed;
+
 		/// <summary>
 		/// The header of the MPQ archive. Contains information about sizes and offsets of relational structures
 		/// such as the hash and block table in the archive.
@@ -64,11 +70,23 @@ namespace Warcraft.MPQ
 		public List<ushort> ExtendedBlockTable = new List<ushort>();
 
 		/// <summary>
+		/// A set of extended file attributes. These attributes are not guaranteed to be present in all archives, 
+		/// and may be empty or zeroed for some archives.
+		/// </summary>
+		public ExtendedAttributes FileAttributes;
+
+		/// <summary>
 		/// The archive reader. A BinaryReader that exists for the lifetime of the MPQ object and handles all
 		/// the file reading inside it. As archives are far too big to be loaded into memory all at once, 
 		/// we seek to the desired parts and read them as we need them.
 		/// </summary>
 		private readonly BinaryReader ArchiveReader;
+
+		/// <summary>
+		/// The external listfile. Instead of extracting the listfile from the archive, the user can provide one
+		/// to be used instead. This file is prioritized over the one stored in the archive.
+		/// </summary>
+		private List<string> ExternalListfile = new List<string>();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQ"/> class.
@@ -102,6 +120,13 @@ namespace Warcraft.MPQ
 					ExtendedBlockTable.Add(ArchiveReader.ReadUInt16());
 				}
 			}
+
+			if (DoesFileExist(ExtendedAttributes.InternalFileName))
+			{
+				byte[] attributeData = ExtractFile(ExtendedAttributes.InternalFileName);
+
+				this.FileAttributes = new ExtendedAttributes(attributeData, this.Header.BlockTableEntryCount);
+			}
 		}
 
 		/// <summary>
@@ -121,20 +146,67 @@ namespace Warcraft.MPQ
 		}
 
 		/// <summary>
-		/// Determines whether this archive has a listfile.
+		/// Determines whether this archive has file attributes.
 		/// </summary>
-		/// <returns><c>true</c> if this instance has a listfile; otherwise, <c>false</c>.</returns>
-		public bool HasFileList()
+		/// <returns><c>true</c> if this archive has file attributes; otherwise, <c>false</c>.</returns>
+		public bool HasFileAttributes()
 		{
-			return DoesFileExist("(listfile)");
+			if (bDisposed)
+			{
+				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+			}
+
+			return DoesFileExist(ExtendedAttributes.InternalFileName);
 		}
 
 		/// <summary>
-		/// Extracts the listfile from the archive and returns it as an enumerable list.
+		/// Determines whether this archive has a listfile.
+		/// </summary>
+		/// <returns><c>true</c> if this archive has a listfile; otherwise, <c>false</c>.</returns>
+		public bool HasFileList()
+		{
+			if (bDisposed)
+			{
+				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+			}
+
+			return DoesFileExist("(listfile)") || ExternalListfile.Count > 0;
+		}
+
+		/// <summary>
+		/// Gets the best available listfile from the archive. If an external listfile has been provided, 
+		/// that one is prioritized over the one stored in the archive.
 		/// </summary>
 		/// <returns>The listfile.</returns>
 		public List<string> GetFileList()
 		{
+			if (bDisposed)
+			{
+				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+			}
+
+			if (ExternalListfile.Count > 0)
+			{
+				return GetExternalFileList();
+			}
+			else
+			{
+				return GetInternalFileList();
+			}
+		}
+
+		/// <summary>
+		/// Gets the internal file list. If no listfile is stored in the archive, this may 
+		/// return null.
+		/// </summary>
+		/// <returns>The internal file list.</returns>
+		public List<string> GetInternalFileList()
+		{
+			if (bDisposed)
+			{
+				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+			}
+
 			List<string> fileList = new List<string>();
 
 			byte[] listfileBytes = ExtractFile("(listfile)");
@@ -161,12 +233,60 @@ namespace Warcraft.MPQ
 		}
 
 		/// <summary>
+		/// Gets the external file list. If no list has been provided to the archive, this may 
+		/// return an empty list.
+		/// </summary>
+		/// <returns>The external file list.</returns>
+		public List<string> GetExternalFileList()
+		{
+			if (bDisposed)
+			{
+				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+			}
+
+			return ExternalListfile;
+		}
+
+		/// <summary>
+		/// Sets the file list to the provided listfile.
+		/// </summary>
+		/// <param name="InExternalListfile">In external listfile.</param>
+		public void SetFileList(List<string> InExternalListfile)
+		{
+			if (bDisposed)
+			{
+				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+			}
+
+			this.ExternalListfile = InExternalListfile;
+		}
+
+		/// <summary>
+		/// Resets the external file list, clearing it of any entries. The internal list file (if there is one)
+		/// will be used instead.
+		/// </summary>
+		public void ResetExternalFileList()
+		{
+			if (bDisposed)
+			{
+				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+			}
+
+			this.ExternalListfile.Clear();
+		}
+
+		/// <summary>
 		/// Checks if the specified file path exists in the archive.
 		/// </summary>
 		/// <returns><c>true</c>, if the file exists, <c>false</c> otherwise.</returns>
 		/// <param name="filePath">File path.</param>
 		public bool DoesFileExist(string filePath)
 		{
+			if (bDisposed)
+			{
+				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+			}
+
 			HashTableEntry fileHashEntry = ArchiveHashTable.FindEntry(filePath);
 			return fileHashEntry != null;
 		}
@@ -178,12 +298,25 @@ namespace Warcraft.MPQ
 		/// <param name="filePath">File path.</param>
 		public MPQFileInfo GetFileInfo(string filePath)
 		{
+			if (bDisposed)
+			{
+				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+			}
+
 			if (DoesFileExist(filePath))
 			{
 				HashTableEntry hashEntry = ArchiveHashTable.FindEntry(filePath);
 				BlockTableEntry blockEntry = ArchiveBlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
 
-				return new MPQFileInfo(filePath, hashEntry, blockEntry);
+				if (HasFileAttributes())
+				{
+					return new MPQFileInfo(filePath, hashEntry, blockEntry);				
+				}
+				else
+				{
+					return new MPQFileInfo(filePath, hashEntry, blockEntry, 
+						FileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]);				
+				}
 			}
 			else
 			{
@@ -199,6 +332,11 @@ namespace Warcraft.MPQ
 		/// <param name="filePath">Path to the file in the archive.</param>
 		public byte[] ExtractFile(string filePath)
 		{
+			if (bDisposed)
+			{
+				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+			}
+
 			// Reset all positions to be safe
 			ArchiveReader.BaseStream.Position = 0;
 
@@ -208,7 +346,7 @@ namespace Warcraft.MPQ
 				BlockTableEntry fileBlockEntry = ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
 
 				// Drop out if the file is not actually a file
-				if (!fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsFile))
+				if (!fileBlockEntry.Flags.HasFlag(BlockFlags.Exists))
 				{
 					return null;
 				}
@@ -228,9 +366,9 @@ namespace Warcraft.MPQ
 
 				// Calculate the decryption key if neccesary
 				uint fileKey = 0;
-				if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
-				{						
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasAdjustedEncryptionKey))
+				if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
+				{
+					if (fileBlockEntry.Flags.HasFlag(BlockFlags.HasAdjustedEncryptionKey))
 					{
 						fileKey = MPQCrypt.GetFileKey(Path.GetFileName(filePath), true, (uint)adjustedBlockOffset, fileBlockEntry.GetFileSize());
 					}
@@ -242,31 +380,31 @@ namespace Warcraft.MPQ
 
 
 				// Examine the file storage types and extract as neccesary
-				if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsSingleUnit))
+				if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsSingleUnit))
 				{
 					// This file does not use sectoring, but may still be encrypted or compressed.
 					byte[] fileData = ArchiveReader.ReadBytes((int)fileBlockEntry.GetBlockSize());
 
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
+					if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
 					{
 						// Decrypt the block
 						fileData = MPQCrypt.DecryptData(fileData, fileKey);
 					}
 
 					// Decompress the sector if neccesary
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsCompressed) || fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsImploded))
+					if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsCompressedMultiple) || fileBlockEntry.Flags.HasFlag(BlockFlags.IsImploded))
 					{
 						fileData = Compression.DecompressSector(fileData, fileBlockEntry.Flags);						
 					}
 
 					return fileData;
 				}
-				else if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsCompressed) || fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsImploded))
+				else if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsCompressedMultiple) || fileBlockEntry.Flags.HasFlag(BlockFlags.IsImploded))
 				{						
 					// This file uses sectoring, and is compressed. It may be encrypted.		
 					//Retrieve the offsets for each sector - these are relative to the beginning of the data.
 					List<uint> sectorOffsets = new List<uint>();
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
+					if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
 					{
 						MPQCrypt.DecryptSectorOffsetTable(ArchiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
 					}
@@ -293,17 +431,65 @@ namespace Warcraft.MPQ
 
 					// Begin decompressing and decrypting the sectors
 					// TODO: If Checksums are present (check the flags), treat the last sector as a checksum sector
-					// TODO: Check "backup.MPQ/realmlist.wtf" for a weird file with checksums that is not working correctly
+					// TODO: Check "backup.MPQ/realmlist.wtf" for a weird file with checksums that is not working correctly.
+					// It has a single sector with a single checksum after it, and none of the hashing functions seem to
+					// produce a valid hash. CRC32, Adler32, CRC32B, nothing.
+					// Some flags (listfiles mostly) are flagged as having checksums but don't have a checksum sector. 
+					// Perhaps related to attributes file?
 					List<byte[]> decompressedSectors = new List<byte[]>();
+
+					/*	List<uint> SectorChecksums = new List<uint>();
+					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
+					{
+						byte[] compressedChecksums = compressedSectors.Last();
+						byte[] decompressedChecksums = Compression.DecompressSector(compressedChecksums, fileBlockEntry.Flags);
+
+						// Lift out the last sector and treat it as a checksum sector
+						using (MemoryStream ms = new MemoryStream(decompressedChecksums))
+						{
+							using (BinaryReader br = new BinaryReader(ms))
+							{
+								// Drop the checksum sector from the file sectors
+								compressedSectors.RemoveAt(compressedSectors.Count - 1);
+
+								for (int i = 0; i < compressedSectors.Count; ++i)
+								{
+									SectorChecksums.Add(br.ReadUInt32());
+								}
+							}
+						}
+					}*/
+
 					uint sectorIndex = 0;
 					foreach (byte[] compressedSector in compressedSectors)
 					{						
 						byte[] pendingSector = compressedSector;
-						if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
+						if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
 						{
 							// Decrypt the block
 							pendingSector = MPQCrypt.DecryptData(compressedSector, fileKey + sectorIndex);
 						}
+
+						/*if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
+						{
+							// Verify the sector
+							bool isSectorIntact = MPQCrypt.VerifySectorChecksum(pendingSector, SectorChecksums[(int)sectorIndex]);
+							if (!isSectorIntact)
+							{
+								using (MemoryStream ms = new MemoryStream(pendingSector))
+								{
+									//DEBUG
+
+									uint sectorChecksum = (uint)Adler32.ComputeChecksum(ms);
+
+									string exceptionMessage = String.Format("The decrypted sector failed its integrity checking. \n" +
+										                          "The sector had a checksum of \"{0}\", and the expected one was \"{1}\".", 
+										                          sectorChecksum, SectorChecksums[(int)sectorIndex]);
+
+									throw new InvalidDataException(exceptionMessage);
+								}
+							}
+						}*/
 
 						// Decompress the sector if neccesary
 						if (pendingSector.Length < GetMaxSectorSize())
@@ -314,7 +500,6 @@ namespace Warcraft.MPQ
 							if (!canSectorCompleteFile && currentFileSize != fileBlockEntry.GetFileSize())
 							{
 								pendingSector = Compression.DecompressSector(pendingSector, fileBlockEntry.Flags);
-
 							}
 						}
 
@@ -350,7 +535,7 @@ namespace Warcraft.MPQ
 					foreach (byte[] rawSector in rawSectors)
 					{						
 						byte[] pendingSector = rawSector;
-						if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_IsEncrypted))
+						if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
 						{
 							// Decrypt the block
 							pendingSector = MPQCrypt.DecryptData(rawSector, fileKey + sectorIndex);
@@ -431,17 +616,28 @@ namespace Warcraft.MPQ
 		/// release all references to the <see cref="Warcraft.MPQ.MPQ"/> so the garbage collector can reclaim the memory that
 		/// the <see cref="Warcraft.MPQ.MPQ"/> was occupying.</remarks>
 		public void Dispose()
-		{
+		{			
 			Header = null;
 			ArchiveHashTable = null;
 			ArchiveBlockTable = null;
-			ExtendedBlockTable = null;
+
+			if (ExtendedBlockTable.Count > 0)
+			{
+				ExtendedBlockTable.Clear();
+			}
+
+			if (ExternalListfile.Count > 0)
+			{
+				ExternalListfile.Clear();
+			}
 
 			if (ArchiveReader != null)
 			{
 				ArchiveReader.Close();
 				ArchiveReader.Dispose();
-			}		
+			}
+
+			bDisposed = true;
 		}
 	}
 }

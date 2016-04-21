@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core.Hashing;
+using Ionic.Crc;
 
 namespace Warcraft.MPQ.Crypto
 {
@@ -235,21 +236,24 @@ namespace Warcraft.MPQ.Crypto
 		/// <param name="sector">Sector data.</param>
 		/// <param name="checksum">Sector checksum.</param>
 		public static bool VerifySectorChecksum(byte[] sector, uint checksum)
-		{
-			if (checksum == 0)
+		{			
+			using (MemoryStream ms = new MemoryStream(sector))
 			{
-				return true;
+				if (checksum == 0)
+				{
+					return true;
+				}
+
+				uint sectorChecksum = (uint)Adler32.ComputeChecksum(ms);
+
+				if (sectorChecksum == 0)
+				{
+					// We can't handle a 0 checksum.
+					sectorChecksum = uint.MaxValue;
+				}
+
+				return sectorChecksum == checksum;
 			}
-
-			uint sectorChecksum = (uint)Adler32.ComputeChecksum(new MemoryStream(sector));
-
-			if (sectorChecksum == 0)
-			{
-				// We can't handle a 0 checksum.
-				return false;
-			}
-
-			return sectorChecksum == checksum;
 		}
 	}
 

@@ -1,5 +1,5 @@
 ﻿//
-//  BlockFlags.cs
+//  FileType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,27 +19,30 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-
 using System;
+using System.IO;
 
-namespace Warcraft.MPQ.Tables.Block
+namespace Warcraft.Core
 {
-	/// <summary>
-	/// Possible flags for a block entry, designating different flags for a stored file.
-	/// </summary>
-	[Flags]
-	public enum BlockFlags : uint
+	public enum WarcraftFileType
 	{
-		IsImploded = 0x00000100,
-		IsCompressedMultiple = 0x00000200,
-		IsCompressed = 0x0000FF00,
-		IsEncrypted = 0x00010000,
-		HasAdjustedEncryptionKey = 0x00020000,
-		IsPatchFile = 0x00100000,
-		IsSingleUnit = 0x01000000,
-		IsDeletionMarker = 0x02000000,
-		Exists = 0x80000000,
-		HasCRCChecksums = 0x04000000,
+		Unknown,
+		Directory,
+		AddonManifest,
+		AddonManifestSignature,
+		MoPaQArchive,
+		ConfigurationFile,
+		DatabaseContainer,
+		Shader,
+		TerrainWater,
+		TerrainLiquid,
+		TerrainLevel,
+		TerrainTable,
+		TerrainData,
+		BinaryImage,
+		Hashmap,
+		GameObjectModel,
+		WorldObjectModel
 	}
 }
 

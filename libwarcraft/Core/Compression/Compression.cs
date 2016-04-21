@@ -32,7 +32,7 @@ namespace Warcraft.Core.Compression
 	{
 		public static byte[] DecompressSector(byte[] PendingSector, BlockFlags Flags)
 		{
-			if (Flags.HasFlag(BlockFlags.BLF_IsCompressed))
+			if (Flags.HasFlag(BlockFlags.IsCompressedMultiple))
 			{
 				// The sector is compressed using a combination of techniques.
 				// Examine the first byte to determine the compression algorithms used
@@ -86,7 +86,7 @@ namespace Warcraft.Core.Compression
 					PendingSector = Compression.DecompressSparse(PendingSector);
 				}
 			}
-			else if (Flags.HasFlag(BlockFlags.BLF_IsImploded))
+			else if (Flags.HasFlag(BlockFlags.IsImploded))
 			{
 				// This file or sector uses a single-pass PKWARE Implode algorithm.
 				// Decompress sector using PKWARE
