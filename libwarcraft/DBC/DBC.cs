@@ -81,14 +81,19 @@ namespace Warcraft.DBC
 						T record = Activator.CreateInstance<T>();
 						record.SetVersion(InVersion);
 
-						// Make sure the provided record type is valid for this database file
-						if (record.GetRecordSize() != this.Header.RecordSize)
+						// If the record is of the UnknownRecord type, 
+						// this DBC file will just load the data without sanity checking it.
+						if (!(record is UnknownRecord))
 						{
-							throw new ArgumentException("The provided record type is not valid for this database file.");
-						}
-						if (record.GetFieldCount() != this.Header.FieldCount)
-						{
-							throw new ArgumentException("The provided record type is not valid for this database file.");						
+							// Make sure the provided record type is valid for this database file
+							if (record.GetRecordSize() != this.Header.RecordSize)
+							{
+								throw new ArgumentException("The provided record type is not valid for this database file.");
+							}
+							if (record.GetFieldCount() != this.Header.FieldCount)
+							{
+								throw new ArgumentException("The provided record type is not valid for this database file.");						
+							}							
 						}
 
 						record.LoadData(rawRecord);

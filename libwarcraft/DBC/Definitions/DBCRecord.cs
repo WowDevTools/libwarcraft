@@ -69,7 +69,6 @@ namespace Warcraft.DBC.Definitions
 		/// Gets the size of the record.
 		/// </summary>
 		/// <returns>The record size.</returns>
-		/// <param name="Version">Version.</param>
 		public abstract int GetRecordSize();
 	}
 }

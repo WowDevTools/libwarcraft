@@ -190,6 +190,7 @@
     <Compile Include="DBC\SpecialFields\Int32ForeignKey.cs" />
     <Compile Include="DBC\SpecialFields\Int16ForeignKey.cs" />
     <Compile Include="Core\WarcraftFileType.cs" />
+    <Compile Include="DBC\Definitions\UnknownRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />

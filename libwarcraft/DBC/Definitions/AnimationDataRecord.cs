@@ -26,22 +26,58 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	/// <summary>
+	/// Animation data record. This database defines the different animations models can have, and
+	/// is referenced by M2 and MDX files.
+	/// </summary>
 	public class AnimationDataRecord : DBCRecord
 	{
 		public const string RecordName = "AnimationData";
 
+		/// <summary>
+		/// The name of the animation.
+		/// </summary>
 		public StringReference Name;
+
+		/// <summary>
+		/// The weapon flags. This affects how the model's weapons are held during the animation.
+		/// </summary>
 		public WeaponAnimationFlags WeaponFlags;
+
+		/// <summary>
+		/// The body flags.
+		/// </summary>
 		public uint BodyFlags;
+
+		/// <summary>
+		/// General animation flags.
+		/// </summary>
 		public uint Flags;
+
+		/// <summary>
+		/// The fallback animation that precedes this one.
+		/// </summary>
 		public Int32ForeignKey FallbackAnimation;
+
+		/// <summary>
+		/// The top-level behaviour animation that this animation is a child of.
+		/// </summary>
 		public Int32ForeignKey BehaviourAnimation;
+
+		/// <summary>
+		/// The behaviour tier of the animation. In most cases, this indicates whether or not the animation
+		/// is used for flying characters.
+		/// </summary>
 		public uint BehaviourTier;
 
 		public AnimationDataRecord()
 		{
 		}
 
+		/// <summary>
+		/// Loads and parses the provided data.
+		/// </summary>
+		/// <param name="data">Data.</param>
 		public override void LoadData(byte[] data)
 		{
 			if (this.Version == WarcraftVersion.Unknown)
@@ -75,6 +111,10 @@ namespace Warcraft.DBC.Definitions
 			}
 		}
 
+		/// <summary>
+		/// Gets the size of the record.
+		/// </summary>
+		/// <returns>The record size.</returns>
 		public override int GetRecordSize()
 		{
 			if (this.Version == WarcraftVersion.Unknown)
@@ -103,6 +143,10 @@ namespace Warcraft.DBC.Definitions
 			}
 		}
 
+		/// <summary>
+		/// Gets the field count for this record at.
+		/// </summary>
+		/// <returns>The field count.</returns>
 		public override int GetFieldCount()
 		{
 			if (this.Version == WarcraftVersion.Unknown)
@@ -132,11 +176,29 @@ namespace Warcraft.DBC.Definitions
 		}
 	}
 
+	/// <summary>
+	/// Weapon animation flags.
+	/// </summary>
 	public enum WeaponAnimationFlags : uint
 	{
+		/// <summary>
+		/// Ignores the current state of the character's weapons.
+		/// </summary>
 		None = 0,
+
+		/// <summary>
+		/// Sheathes the weapons for the duration of the animation.
+		/// </summary>
 		Sheathe = 4,
+
+		/// <summary>
+		/// Sheathes the weapons for the duration of the animation.
+		/// </summary>
 		Sheathe2 = 16,
+
+		/// <summary>
+		/// Unsheathes the weapons for the duration of the animation.
+		/// </summary>
 		Unsheathe = 32
 	}
 }
