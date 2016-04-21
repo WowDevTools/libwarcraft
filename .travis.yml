@@ -1,4 +1,2 @@
 language: csharp
 solution: libwarcraft.sln
-install:
-    - nuget restore libwarcraft.sln
