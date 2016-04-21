@@ -13,7 +13,7 @@ using System.Collections;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Warcraft.Core.ImageQuantization
+namespace Warcraft.Core.Quantization
 {
 	/// <summary>
 	/// Summary description for PaletteQuantizer.

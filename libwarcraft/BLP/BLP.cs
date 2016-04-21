@@ -29,7 +29,7 @@ using System.Collections.Generic;
 
 using Squish;
 using Warcraft.Core;
-using Warcraft.Core.ImageQuantization;
+using Warcraft.Core.Quantization;
 using System.Drawing.Drawing2D;
 
 namespace Warcraft.BLP

@@ -14,7 +14,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
-namespace Warcraft.Core.ImageQuantization
+namespace Warcraft.Core.Quantization
 {
 	/// <summary>
 	/// Summary description for Class1.
