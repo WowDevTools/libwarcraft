@@ -20,14 +20,77 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkLiquids
+	public class MapChunkLiquids : TerrainChunk
 	{
-		public MapChunkLiquids()
+		public const string Signature = "MCLQ";
+
+		public float MinimumLiquidLevel;
+		public float MaxiumLiquidLevel;
+
+		public List<LiquidVertex> LiquidVertices = new List<LiquidVertex>();
+		public List<LiquidFlags> LiquidTileFlags = new List<LiquidFlags>();
+
+		public MapChunkLiquids(byte[] data)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.MinimumLiquidLevel = br.ReadSingle();
+					this.MaxiumLiquidLevel = br.ReadSingle();
+
+					for (int y = 0; y < 9; ++y)
+					{
+						for (int x = 0; x < 9; ++x)
+						{
+							LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
+						}
+					}
+
+					for (int y = 0; y < 8; ++y)
+					{
+						for (int x = 0; x < 8; ++x)
+						{
+							LiquidTileFlags.Add(((LiquidFlags)br.ReadByte()));
+						}
+					}
+				}
+			}
 		}
+	}
+
+	public class LiquidVertex
+	{
+		public Tuple<ushort, ushort> TextureCoordinates;
+		public float Height;
+
+		public LiquidVertex(byte[] data)
+		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.TextureCoordinates = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
+					this.Height = br.ReadSingle();
+				}
+			}
+		}
+
+		public static int GetSize()
+		{
+			return 8;
+		}
+	}
+
+	[Flags]
+	public enum LiquidFlags : byte
+	{
+		Hidden = 8
 	}
 }
 

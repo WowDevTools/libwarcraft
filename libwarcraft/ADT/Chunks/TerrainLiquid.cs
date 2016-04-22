@@ -197,8 +197,10 @@ namespace Warcraft.ADT.Chunks
 					this.Width = br.ReadByte();
 					this.Height = br.ReadByte();
 
-					this.LiquidBooleanMapOffset = br.ReadUInt32();
+					this.LiquidBooleanMapOffset = br.ReadUInt32();				
 					this.VertexDataOffset = br.ReadUInt32();
+
+					// TODO: Read boolean map
 				}
 			}
 		}

@@ -22,132 +22,123 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
 	/// <summary>
 	/// MCLY Chunk - Contains definitions for the alpha map layers.
 	/// </summary>
-	public class MapChunkTextureLayers
+	public class MapChunkTextureLayers : TerrainChunk
 	{
-		public int size;
-
-		/// <summary>
-		/// Chunk flags
-		/// </summary>
-		[Flags]
-		public enum TextureLayerFlags
-		{
-			Anim45Rot = 0x001,
-
-			Anim90Rot = 0x002,
-
-			Anim180Rot = 0x004,
-
-			AnimSpeed1 = 0x008,
-
-			AnimSpeed2 = 0x010,
-
-			AnimSpeed3 = 0x020,
-
-			AnimDeferred = 0x040,
-
-			EmissiveLayer = 0x080,
-
-			UseAlpha = 0x100,
-
-			CompressedAlpha = 0x200,
-
-			SkyboxReflection = 0x400,
-		}
+		public const string Signature = "MCLY";
 
 		/// <summary>
 		/// An array of alpha map layers in this MCNK.
 		/// </summary>
-		public List<TextureLayerEntry> Layer;
+		public List<TextureLayerEntry> Layers = new List<TextureLayerEntry>();
 
-		/// <summary>
-		/// A struct defining a layer entry
-		/// </summary>
-		public struct TextureLayerEntry
+		public MapChunkTextureLayers(byte[] data)
 		{
-			/// <summary>
-			/// Index of the texture in the MTEX chunk
-			/// </summary>
-			public int textureID;
-			/// <summary>
-			/// Flags for the texture. Used for animation data.
-			/// </summary>
-			public TextureLayerFlags flags;
-			/// <summary>
-			/// Offset into MCAL where the alpha map begins.
-			/// </summary>
-			public int offsetMCAL;
-			/// <summary>
-			/// Ground effect ID. This is actually a padded Int16.
-			/// </summary>
-			public int effectID;
-		}
 
-		/// <summary>
-		/// Creates a new MCLY object from a file on disk and an offset into the file.
-		/// </summary>
-		/// <param name="adtFile">Path to the file on disk</param>                
-		/// <param name="position">Offset into the file where the MCLY chunk begins</param>
-		/// <returns>An MCLY object containing an array of layer entries</returns>
-		public MapChunkTextureLayers(string adtFile, int position)
-		{
-			Stream adtStream = File.OpenRead(adtFile);
-			BinaryReader br = new BinaryReader(adtStream);
-			br.BaseStream.Position = position;
-
-			this.size = br.ReadInt32();
-			int nLayers = this.size / 16;
-			Layer = new List<TextureLayerEntry>();
-
-			for (int i = 0; i < nLayers; i++)
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				TextureLayerEntry newEntry = new TextureLayerEntry();
-				newEntry.textureID = br.ReadInt32();
-				newEntry.flags = (TextureLayerFlags)br.ReadInt32();
-				newEntry.offsetMCAL = br.ReadInt32();
-				newEntry.effectID = br.ReadInt32();
-
-				Layer.Add(newEntry);
-			}
-		}
-
-		public TextureLayerEntry GetEntryForTextureID(int ID)
-		{
-			TextureLayerEntry matchingEntry = new TextureLayerEntry();
-			bool foundEntry = false;
-			//set the offset for the data that corresponds to texture i
-
-			for (int l = 0; l < Layer.Count; l++)
-			{
-				if (ID == Layer.ElementAt(l).textureID)
+				using (BinaryReader br = new BinaryReader(ms))
 				{
-					matchingEntry = Layer.ElementAt(l);
-					foundEntry = true;
+					long nLayers = br.BaseStream.Length / TextureLayerEntry.GetSize();
+					for (int i = 0; i < nLayers; i++)
+					{
+						Layers.Add(new TextureLayerEntry(br.ReadBytes(TextureLayerEntry.GetSize())));
+					}
 				}
 			}
-
-			if (foundEntry == false)
-			{
-				//set all values to -1 to denote a missing or disabled chunk
-				matchingEntry.effectID = -1;
-				matchingEntry.flags = (TextureLayerFlags)0;
-				matchingEntry.offsetMCAL = -1;
-				matchingEntry.textureID = -1;
-
-				return matchingEntry;
-			}
-			else
-			{
-				return matchingEntry;
-			}                    
 		}
+	}
+
+	/// <summary>
+	/// Texture layer entry, representing a ground texture in the chunk.
+	/// </summary>
+	public class TextureLayerEntry
+	{
+		/// <summary>
+		/// Index of the texture in the MTEX chunk
+		/// </summary>
+		public uint TextureID;
+
+		/// <summary>
+		/// Flags for the texture. Used for animation data.
+		/// </summary>
+		public TextureLayerFlags Flags;
+
+		/// <summary>
+		/// Offset into MCAL where the alpha map begins.
+		/// </summary>
+		public uint AlphaMapOffset;
+
+		/// <summary>
+		/// Ground effect ID. This is a foreign key entry into GroundEffectTexture::ID.
+		/// </summary>
+		public UInt16ForeignKey EffectID;
+
+		/// <summary>
+		/// A currently unused value.
+		/// </summary>
+		public ushort Unused;
+
+		public TextureLayerEntry(byte[] data)
+		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.TextureID = br.ReadUInt32();
+					this.Flags = (TextureLayerFlags)br.ReadUInt32();
+					this.AlphaMapOffset = br.ReadUInt32();
+
+					this.EffectID = new UInt16ForeignKey("GroundEffectTexture", "ID", br.ReadUInt16());
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the size of a texture layer entry.
+		/// </summary>
+		/// <returns>The size.</returns>
+		public static int GetSize()
+		{
+			return 16;
+		}
+	}
+
+	/// <summary>
+	/// Chunk flags
+	/// </summary>
+	[Flags]
+	public enum TextureLayerFlags : uint
+	{
+		Animated45RotationPerTick = 0x001,
+
+		Animated90RotationPerTick = 0x002,
+
+		Animated180RotationPerTick = 0x004,
+
+		AnimSpeed1 = 0x008,
+
+		AnimSpeed2 = 0x010,
+
+		AnimSpeed3 = 0x020,
+
+		AnimationEnabled = 0x040,
+
+		EmissiveLayer = 0x080,
+
+		UseAlpha = 0x100,
+
+		CompressedAlpha = 0x200,
+
+		UseCubeMappedReflection = 0x400,
+
+		// 19 unused bits
 	}
 }
 

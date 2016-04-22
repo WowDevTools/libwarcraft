@@ -27,31 +27,54 @@ namespace Warcraft.ADT.Chunks.Subchunks
 {
 	/// <summary>
 	/// MCVT Chunk - Contains heightmap information
+	///
+	/// The vertices are arranged as two distinct grids, one 
+	/// inside the other.
 	/// </summary>
-	public class MapChunkHeightmap
+	public class MapChunkHeightmap : TerrainChunk
 	{
+		public const string Signature = "MCVT";
 		/// <summary>
-		/// An array of vertices
+		/// The high res vertices, used when viewing a map tile up close. When these
+		/// are visible, the low res vertices are also used.
 		/// </summary>
-		public float[] vertices;
+		public List<float> HighResVertices = new List<float>();
 
 		/// <summary>
-		/// Creates a new MCVT object from a file on disk and an offset into the file.
+		/// The low res vertices, used when viewing a map tile from far away.
 		/// </summary>
-		/// <param name="adtFile">Path to the file on disk</param>                
-		/// <param name="position">Offset into the file where the MCVT chunk begins</param>
-		/// <returns>An MCVT object containing an array of vertices</returns>
-		public MapChunkHeightmap(string adtFile, int position)
+		public List<float> LowResVertices = new List<float>();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.Subchunks.MapChunkHeightmap"/> class.
+		/// </summary>
+		/// <param name="data">Data.</param>
+		public MapChunkHeightmap(byte[] data)
 		{
-			Stream adtStream = File.OpenRead(adtFile);
-			BinaryReader br = new BinaryReader(adtStream);
-			br.BaseStream.Position = position;
-
-			vertices = new float[144];
-
-			for (int i = 0; i < 144; i++)
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				vertices[i] = br.ReadSingle();
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					for (int y = 0; y < 16; ++y)
+					{
+						if (y % 2 == 0)
+						{
+							// Read a block of 9 high res vertices
+							for (int x = 0; x < 9; ++x)
+							{
+								this.HighResVertices.Add(br.ReadSingle());
+							}
+						}
+						else
+						{
+							// Read a block of 8 low res vertices
+							for (int x = 0; x < 8; ++x)
+							{
+								this.LowResVertices.Add(br.ReadSingle());
+							}
+						}
+					}
+				}
 			}
 		}
 	}

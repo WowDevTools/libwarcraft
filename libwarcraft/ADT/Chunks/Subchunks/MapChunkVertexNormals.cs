@@ -20,13 +20,54 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.IO;
+using System.Collections.Generic;
+using Warcraft.Core;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexNormals
+	public class MapChunkVertexNormals : TerrainChunk
 	{
-		public MapChunkVertexNormals()
+		public const string Signature = "MCNR";
+
+		public List<Vector3f> HighResVertexNormals = new List<Vector3f>();
+		public List<Vector3f> LowResVertexNormals = new List<Vector3f>();
+
+		public MapChunkVertexNormals(byte[] data)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					for (int y = 0; y < 16; ++y)
+					{
+						if (y % 2 == 0)
+						{
+							// Read a block of 9 high res normals
+							for (int x = 0; x < 9; ++x)
+							{
+								sbyte X = br.ReadSByte();
+								sbyte Z = br.ReadSByte();
+								sbyte Y = br.ReadSByte();
+
+								HighResVertexNormals.Add(new Vector3f(X, Y, Z));
+							}
+						}
+						else
+						{
+							// Read a block of 8 low res normals
+							for (int x = 0; x < 8; ++x)
+							{
+								sbyte X = br.ReadSByte();
+								sbyte Z = br.ReadSByte();
+								sbyte Y = br.ReadSByte();
+
+								LowResVertexNormals.Add(new Vector3f(X, Y, Z));
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

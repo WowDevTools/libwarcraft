@@ -28,14 +28,14 @@ namespace Warcraft.Core
 		}
 	}
 
-	public struct ARGB
+	public struct RGBA
 	{
 		public byte R;
 		public byte G;
 		public byte B;
 		public byte A;
 
-		public ARGB(byte InA, byte InR, byte InG, byte InB)
+		public RGBA(byte InA, byte InR, byte InG, byte InB)
 		{
 			this.A = InA;
 			this.R = InR;
@@ -126,6 +126,24 @@ namespace Warcraft.Core
 			this.Z = Z;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.Core.Vector3f"/> struct using
+		/// normalized signed bytes instead of straight floating-point values.
+		/// </summary>
+		/// <param name="X">X.</param>
+		/// <param name="Y">Y.</param>
+		/// <param name="Z">Z.</param>
+		public Vector3f(sbyte X, sbyte Y, sbyte Z)
+		{
+			this.X = 127 / X;
+			this.Y = 127 / Y;
+			this.Z = 127 / Z;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.Core.Vector3f"/> struct.
+		/// </summary>
+		/// <param name="all">All.</param>
 		public Vector3f(float all)
 		{
 			this.X = all;

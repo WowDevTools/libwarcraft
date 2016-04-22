@@ -155,7 +155,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		public uint LiquidSize;
 
 		/// <summary>
-		/// A Vector3f of the position.
+		/// The map tile position is a global offset that is applied to the entire heightmap to allow for
+		/// far greater height differences in the world.
 		/// </summary>
 		public Vector3f MapTilePosition;
 
@@ -268,14 +269,33 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		IsMagma = 16,
 
 		/// <summary>
+		/// Flags the MCNK as slime
+		/// </summary>
+		IsSlime = 32,
+
+		/// <summary>
 		/// Flags the MCNK as containing an MCCV chunk
 		/// </summary>
-		HasVertexShading = 32,
+		HasVertexShading = 64,
+
+		/// <summary>
+		/// Unknown flag, but occasionally set.
+		/// </summary>
+		Unknown = 128,
+
+		// 7 unused bits
+
+		/// <summary>
+		/// Disables repair of the alpha maps in this chunk.
+		/// </summary>
+		DoNotRepairAlphaMaps = 32768,
 
 		/// <summary>
 		/// Flags the MCNK for high-resolution holes. Introduced in WoW 5.3
 		/// </summary>
-		UsesHighResHoles = 64,
+		UsesHighResHoles = 65536,
+
+		// 15 unused bits
 	}
 }
 

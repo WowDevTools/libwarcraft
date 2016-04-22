@@ -20,13 +20,46 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.IO;
+using System.Collections.Generic;
+using Warcraft.Core;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexShading
+	public class MapChunkVertexShading : TerrainChunk
 	{
-		public MapChunkVertexShading()
+		public const string Signature = "MCCV";
+
+		public List<RGBA> HighResVertexShading = new List<RGBA>();
+		public List<RGBA> LowResVertexShading = new List<RGBA>();
+
+		public MapChunkVertexShading(byte[] data)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					for (int y = 0; y < 16; ++y)
+					{
+						if (y % 2 == 0)
+						{
+							// Read a block of 9 high res vertices
+							for (int x = 0; x < 9; ++x)
+							{
+								this.HighResVertexShading.Add(br.ReadRGBA());
+							}
+						}
+						else
+						{
+							// Read a block of 8 low res vertices
+							for (int x = 0; x < 8; ++x)
+							{
+								this.LowResVertexShading.Add(br.ReadRGBA());
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

@@ -20,13 +20,41 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Collections;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkBakedShadows
+	public class MapChunkBakedShadows : TerrainChunk
 	{
-		public MapChunkBakedShadows()
+		public const string Signature = "MCSH";
+
+		public List<List<bool>> ShadowMap = new List<List<bool>>();
+
+		public MapChunkBakedShadows(byte[] data)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					for (int y = 0; y < 64; ++y)
+					{						
+						List<bool> mapRow = new List<bool>();
+						for (int x = 0; x < 2; ++x)
+						{
+							BitArray valueBits = new BitArray(br.ReadInt32());
+
+							for (int i = 0; i < 32; ++i)
+							{
+								mapRow.Add(valueBits.Get(i));
+							}
+						}
+
+						ShadowMap.Add(mapRow);
+					}
+				}
+			}
 		}
 	}
 }

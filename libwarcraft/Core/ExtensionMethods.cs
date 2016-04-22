@@ -26,6 +26,7 @@ using System.IO;
 using Warcraft.ADT.Chunks;
 using System.Text;
 using System.Collections.Generic;
+using Warcraft.ADT.Chunks.Subchunks;
 
 namespace Warcraft.Core
 {
@@ -91,6 +92,23 @@ namespace Warcraft.Core
 		/*
 			Binary Reader Extensions for standard typess
 		*/
+
+		/// <summary>
+		/// Reads a 4-byte RGBA value from the data stream.
+		/// </summary>
+		/// <returns>The argument.</returns>
+		/// <param name="Reader">Reader.</param>
+		public static RGBA ReadRGBA(this BinaryReader Reader)
+		{
+			byte R = Reader.ReadByte();
+			byte G = Reader.ReadByte();
+			byte B = Reader.ReadByte();
+			byte A = Reader.ReadByte();
+
+			RGBA rgba = new RGBA(A, R, G, B);
+
+			return rgba;
+		}
 
 		/// <summary>
 		/// Reads a standard null-terminated string from the data stream.
@@ -188,6 +206,46 @@ namespace Warcraft.Core
 				case TerrainMapChunk.Signature:
 					{
 						return new TerrainMapChunk(chunkData);
+					}
+				case MapChunkHeightmap.Signature:
+					{
+						return new MapChunkHeightmap(chunkData);
+					}
+				case MapChunkVertexNormals.Signature:
+					{
+						return new MapChunkVertexNormals(chunkData);
+					}
+				case MapChunkTextureLayers.Signature:
+					{
+						return new MapChunkTextureLayers(chunkData);
+					}
+				case MapChunkModelReferences.Signature:
+					{
+						return new MapChunkModelReferences(chunkData);
+					}
+				case MapChunkAlphaMaps.Signature:
+					{
+						return new MapChunkAlphaMaps(chunkData);
+					}
+				case MapChunkBakedShadows.Signature:
+					{
+						return new MapChunkBakedShadows(chunkData);
+					}
+				case MapChunkVertexLighting.Signature:
+					{
+						return new MapChunkVertexLighting(chunkData);
+					}
+				case MapChunkVertexShading.Signature:
+					{
+						return new MapChunkVertexShading(chunkData);
+					}
+				case MapChunkLiquids.Signature:
+					{
+						return new MapChunkLiquids(chunkData);
+					}
+				case MapChunkSoundEmitters.Signature:
+					{
+						return new MapChunkSoundEmitters(chunkData);
 					}
 				default:
 					{

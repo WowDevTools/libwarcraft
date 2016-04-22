@@ -23,7 +23,7 @@ using System;
 
 namespace Warcraft.DBC.SpecialFields
 {
-	public class Int16ForeignKey : ForeignKey
+	public class UInt16ForeignKey : ForeignKey
 	{
 		public ushort Value
 		{
@@ -31,7 +31,7 @@ namespace Warcraft.DBC.SpecialFields
 			private set;
 		}
 
-		public Int16ForeignKey(string InRecord, string InField, ushort InValue)
+		public UInt16ForeignKey(string InRecord, string InField, ushort InValue)
 			: base(InRecord, InField)
 		{
 			this.Value = InValue;

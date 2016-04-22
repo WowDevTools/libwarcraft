@@ -22,6 +22,7 @@
 using System;
 using System.IO;
 using Warcraft.ADT.Chunks.Subchunks;
+using Warcraft.Core;
 
 namespace Warcraft.ADT.Chunks
 {
@@ -97,6 +98,68 @@ namespace Warcraft.ADT.Chunks
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					this.Header = new MapChunkHeader(br.ReadBytes(MapChunkHeader.GetSize()));
+
+					if (this.Header.HeightmapOffset > 0)
+					{
+						br.BaseStream.Position = this.Header.HeightmapOffset;
+						this.Heightmap = (MapChunkHeightmap)br.ReadTerrainChunk();
+					}
+
+					if (this.Header.VertexNormalOffset > 0)
+					{
+						br.BaseStream.Position = this.Header.VertexNormalOffset;
+						this.VertexNormals = (MapChunkVertexNormals)br.ReadTerrainChunk();
+					}
+
+					if (this.Header.TextureLayersOffset > 0)
+					{
+						br.BaseStream.Position = this.Header.TextureLayersOffset;
+						this.TextureLayers = (MapChunkTextureLayers)br.ReadTerrainChunk();
+					}
+
+					if (this.Header.ModelReferencesOffset > 0)
+					{
+						br.BaseStream.Position = this.Header.ModelReferencesOffset;
+						this.ModelReferences = (MapChunkModelReferences)br.ReadTerrainChunk();
+
+						this.ModelReferences.PostLoadReferences(this.Header.ModelReferenceCount, this.Header.WorldModelObjectReferenceCount);
+					}
+
+					if (this.Header.AlphaMapsOffset > 0)
+					{
+						br.BaseStream.Position = this.Header.AlphaMapsOffset;
+						this.AlphaMaps = (MapChunkAlphaMaps)br.ReadTerrainChunk();
+					}
+
+					if (this.Header.BakedShadowsOffset > 0 && this.Header.Flags.HasFlag(MapChunkFlags.HasBakedShadows))
+					{
+						br.BaseStream.Position = this.Header.BakedShadowsOffset;
+						this.BakedShadows = (MapChunkBakedShadows)br.ReadTerrainChunk();
+					}
+
+					if (this.Header.SoundEmittersOffset > 0 && this.Header.SoundEmitterCount > 0)
+					{
+						br.BaseStream.Position = this.Header.SoundEmittersOffset;
+						this.SoundEmitters = (MapChunkSoundEmitters)br.ReadTerrainChunk();
+					}
+
+					if (this.Header.LiquidOffset > 0 && this.Header.LiquidSize > 8)
+					{
+						br.BaseStream.Position = this.Header.LiquidOffset;
+						this.Liquid = (MapChunkLiquids)br.ReadTerrainChunk();
+					}
+
+					if (this.Header.VertexShadingOffset > 0 && this.Header.Flags.HasFlag(MapChunkFlags.HasVertexShading))
+					{
+						br.BaseStream.Position = this.Header.SoundEmittersOffset;
+						this.VertexShading = (MapChunkVertexShading)br.ReadTerrainChunk();
+					}
+
+					if (this.Header.VertexLightingOffset > 0)
+					{
+						br.BaseStream.Position = this.Header.VertexLightingOffset;
+						this.VertexLighting = (MapChunkVertexLighting)br.ReadTerrainChunk();
+					}
 				}
 			}
 		}

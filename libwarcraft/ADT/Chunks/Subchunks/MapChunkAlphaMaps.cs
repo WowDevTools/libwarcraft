@@ -21,29 +21,144 @@
 //
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
 	/// <summary>
 	/// MCAL Chunk - Contains alpha map data in one of three forms - uncompressed 2048, uncompressed 4096 and compressed.
 	/// </summary>
-	public class MapChunkAlphaMaps
+	public class MapChunkAlphaMaps : TerrainChunk
 	{
-		//chunk (and data) size
-		public int size;
+		public const string Signature = "MCAL";
 
 		//unformatted data contained in MCAL
-		public byte[] data;
+		private byte[] data;
 
-		public MapChunkAlphaMaps(string adtFile, int position)
+		// TODO: Implement WDT
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.Subchunks.MapChunkAlphaMaps"/> class.
+		/// </summary>
+		/// <param name="data">Data.</param>
+		public MapChunkAlphaMaps(byte[] data)
 		{
-			Stream adtStream = File.OpenRead(adtFile);
-			BinaryReader br = new BinaryReader(adtStream);
-			br.BaseStream.Position = position;
+			this.data = data;
+		}
 
-			this.size = br.ReadInt32();
 
-			this.data = br.ReadBytes(this.size);
+		public List<byte> GetAlphaMap(uint MapOffset, TextureLayerFlags LayerFlags, MapChunkFlags MapFlags/*, TerrainTileFlags TileFlags*/)
+		{
+			return null;
+		}
+
+		private List<byte> DecompressAlphaMap(uint MapOffset)
+		{
+			List<byte> DecompressedAlphaMap = new List<byte>();
+
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					br.BaseStream.Position = MapOffset;
+
+					while (DecompressedAlphaMap.Count > 4096)
+					{
+						sbyte headerByte = br.ReadSByte();
+						int compressionCount = Math.Abs(headerByte);
+
+						// The mode of the compression depends on the sign bit being true or false.
+						// Thus, we can simply switch depending on whether or not the "header byte" is
+						// negative or not.
+						if (headerByte > 0)
+						{
+							// Copy mode
+							byte[] copyBytes = br.ReadBytes(compressionCount);
+
+							for (int i = 0; i < copyBytes.Length; ++i)
+							{
+								DecompressedAlphaMap.Add(copyBytes[i]);
+							}
+						}
+						else
+						{
+							// Fill mode
+							byte fillByte = br.ReadByte();
+
+							for (int i = 0; i < compressionCount; ++i)
+							{
+								DecompressedAlphaMap.Add(fillByte);
+							}
+						}
+					}
+				}
+			}
+
+			return DecompressedAlphaMap;
+		}
+
+		private List<byte> Read4BitAlphaMap(byte[] CompressedAlphaMap, MapChunkFlags MapFlags)
+		{
+			List<byte> DecompressedAlphaMap = new List<byte>();
+			for (int y = 0; y < 64; y++)
+			{
+				for (int x = 0; x < 32; x++)
+				{
+					if (MapFlags.HasFlag(MapChunkFlags.DoNotRepairAlphaMaps))
+					{
+						//fill in normally
+						byte alpha1 = (byte)((CompressedAlphaMap[x + y * 32]) & 0xf0);
+						byte alpha2 = (byte)((CompressedAlphaMap[x + y * 32] << 4) & 0xf0);
+
+						byte normalizedAlpha1 = (byte)(alpha1 * 17);
+						byte normalizedAlpha2 = (byte)(alpha2 * 17);
+
+						DecompressedAlphaMap.Add(normalizedAlpha1);
+						DecompressedAlphaMap.Add(normalizedAlpha2);
+					}
+					else
+					{
+						// Bottom row
+						if (y == 63)
+						{
+							int yminus = y - 1;
+							//attempt to repair map on vertical axis
+
+							byte alpha1 = (byte)((CompressedAlphaMap[x + yminus * 32]) & 0xf0);
+							byte alpha2 = (byte)((CompressedAlphaMap[x + 1 + yminus * 32] << 4) & 0xf0);
+
+							byte normalizedAlpha1 = (byte)(alpha1 * 17);
+							byte normalizedAlpha2 = (byte)(alpha2 * 17);
+
+							DecompressedAlphaMap.Add(normalizedAlpha1);
+							DecompressedAlphaMap.Add(normalizedAlpha2);
+						}
+						else if (x == 31)
+						{
+							int xminus = x - 1;
+
+							//attempt to repair map on horizontal axis
+							byte alpha = (byte)(CompressedAlphaMap[xminus + y * 32] << 4 & 0xf0);
+							byte normalizedAlpha = (byte)(alpha * 17);
+
+							DecompressedAlphaMap.Add(normalizedAlpha);
+						}
+						else
+						{
+							//fill in normally
+							byte alpha1 = (byte)((CompressedAlphaMap[x + y * 32]) & 0xf0);
+							byte alpha2 = (byte)((CompressedAlphaMap[x + y * 32] << 4) & 0xf0);
+
+							byte normalizedAlpha1 = (byte)(alpha1 * 17);
+							byte normalizedAlpha2 = (byte)(alpha2 * 17);
+
+							DecompressedAlphaMap.Add(normalizedAlpha1);
+							DecompressedAlphaMap.Add(normalizedAlpha2);
+						}
+					}                        
+				}
+			}
+
+			return DecompressedAlphaMap;				
 		}
 		//4 layers of alpha maps. This is the magic right here.
 		//each layer is a 32x64 array of alpha values

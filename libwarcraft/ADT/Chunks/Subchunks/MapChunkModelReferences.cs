@@ -20,13 +20,42 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkModelReferences
+	public class MapChunkModelReferences : TerrainChunk
 	{
-		public MapChunkModelReferences()
+		public const string Signature = "MCRF";
+
+		private readonly byte[] data;
+
+		public List<uint> GameModelObjectReferences = new List<uint>();
+		public List<uint> WorldModelObjectReferences = new List<uint>();
+
+		public MapChunkModelReferences(byte[] data)
 		{
+			this.data = data;
+		}
+
+		public void PostLoadReferences(uint GameModelObjectCount, uint WorldModelObjectCount)
+		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					for (int i = 0; i < GameModelObjectCount; ++i)
+					{
+						GameModelObjectReferences.Add(br.ReadUInt32());
+					}
+
+					for (int i = 0; i < WorldModelObjectCount; ++i)
+					{
+						WorldModelObjectReferences.Add(br.ReadUInt32());					
+					}
+				}
+			}
 		}
 	}
 }

@@ -23,9 +23,11 @@ using System;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkSoundEmitters
+	public class MapChunkSoundEmitters : TerrainChunk
 	{
-		public MapChunkSoundEmitters()
+		public const string Signature = "MCSE";
+
+		public MapChunkSoundEmitters(byte[] data)
 		{
 		}
 	}
