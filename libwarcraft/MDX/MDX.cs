@@ -26,7 +26,6 @@ using Warcraft.MDX.Visual;
 using Warcraft.MDX.Geometry;
 using Warcraft.MDX.Animation;
 using Warcraft.Core;
-using Warcraft.Core.Interpolation;
 
 namespace Warcraft.MDX
 {

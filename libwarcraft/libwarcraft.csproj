@@ -188,6 +188,7 @@
     <Compile Include="DBC\SpecialFields\Int16ForeignKey.cs" />
     <Compile Include="Core\WarcraftFileType.cs" />
     <Compile Include="DBC\Definitions\UnknownRecord.cs" />
+    <Compile Include="TRS\TRS.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -236,6 +237,7 @@
     <Folder Include="ADT\Chunks\" />
     <Folder Include="ADT\Chunks\Subchunks\" />
     <Folder Include="DBC\SpecialFields\" />
+    <Folder Include="TRS\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
