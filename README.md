@@ -5,14 +5,15 @@ libwarcraft is a managed C# library for interacting with binary file formats cre
 The primary focus for the library at the moment is to provide a complete implementation of all formats used up to and including Wrath of the Lich King. Anyone is free to use this library to write their own applications for performing operations on the file formats, and is in fact encouraged. The library is not meant for specialized applications (adding water to terrain, repacking images, adding animations or editing geometry of models) but rather strives to expose all functionality needed for other applications to implement that functionality as is best for their use case.
 
 libwarcraft currently implements the following file formats:
-* BLP (Read/Write, versions 0, 1 and 2)
-* MPQ (Read, Basic to extended v1 format.)
-* DBC (Read, DB1 format.)
+* BLP (Blizzard Picture). Read/Write, versions 0, 1 and 2
+* MPQ (Mike O'Brien Package). Read, Basic to extended v1 format.
+* DBC (Database - Client). Read, DB1 format.
+* TRS (Hashmap Translation Table): Read support.
 
 The following formats are still in progress, and may not work as intended (or at all):
-* MDX (Partial Read, Wrath of the Lich King. No animation data exposed, but it's being read internally.)
-* WMO (Stubbed)
-* ADT (Partial Read, Wrath of the Lich King)
+* MDX (Model). Partial Read, Wrath of the Lich King. No animation data exposed, but it's being read internally.
+* WMO (World Model Object). Classes stubbed.
+* ADT (Areadata Tile). Near-full read support, up to and including Wrath of the Lich King.
 
 The following formats are not implemented yet:
 * WDT (World Data Tables)
@@ -28,7 +29,6 @@ The following formats are not implemented yet:
 * BLS (Blizzard Shader Container)
 * TEX (Streaming Textures)
 * BLOB (Model Bounding Boxes)
-* TRS (Hashmap Translation Table)
 * DNC.DB (Day/Night Cycle Database (now obsolete))
 
 If you want to help out, I'll gladly accept pull requests and patches for the code, as well as further implementations of current or future file formats. If you have a project that uses the library and you want to share it with other people, send me a link and I'll add it to the list below.
