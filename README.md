@@ -7,7 +7,7 @@ The primary focus for the library at the moment is to provide a complete impleme
 libwarcraft currently implements the following file formats:
 * BLP (Blizzard Picture). Read/Write, versions 0, 1 and 2
 * MPQ (Mike O'Brien Package). Read, Basic to extended v1 format.
-* DBC (Read, DB1 format.)
+* DBC (Database - Client). Read, DB1 format.
 * TRS (Hashmap Translation Table): Read support.
 
 The following formats are still in progress, and may not work as intended (or at all):
