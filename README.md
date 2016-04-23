@@ -11,8 +11,8 @@ libwarcraft currently implements the following file formats:
 * TRS (Hashmap Translation Table): Read support.
 
 The following formats are still in progress, and may not work as intended (or at all):
-* MDX (Partial Read, Wrath of the Lich King. No animation data exposed, but it's being read internally.)
-* WMO (Stubbed)
+* MDX (Model). Partial Read, Wrath of the Lich King. No animation data exposed, but it's being read internally.
+* WMO (World Model Object). Classes stubbed.
 * ADT (Areadata Tile). Near-full read support, up to and including Wrath of the Lich King.
 
 The following formats are not implemented yet:
