@@ -13,7 +13,7 @@ libwarcraft currently implements the following file formats:
 The following formats are still in progress, and may not work as intended (or at all):
 * MDX (Partial Read, Wrath of the Lich King. No animation data exposed, but it's being read internally.)
 * WMO (Stubbed)
-* ADT (Azeroth Terrain Data). Near-full read support, up to and including Wrath of the Lich King.
+* ADT (Areadata Tile). Near-full read support, up to and including Wrath of the Lich King.
 
 The following formats are not implemented yet:
 * WDT (World Data Tables)
