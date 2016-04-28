@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXView.cs
 //
 //  Author:

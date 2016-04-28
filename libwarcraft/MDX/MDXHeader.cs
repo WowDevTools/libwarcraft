@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXHeader.cs
 //
 //  Author:
@@ -32,7 +32,7 @@ namespace Warcraft.MDX
 		public uint Version;
 		public uint NameLength;
 		public uint NameOffset;
-		public EMDXFlags GlobalModelFlags;
+		public ModelObjectFlags GlobalModelFlags;
 		public uint GlobalSequenceCount;
 		public uint GlobalSequencesOffset;
 		public uint AnimationSequenceCount;
@@ -143,7 +143,7 @@ namespace Warcraft.MDX
 					this.Version = br.ReadUInt32();
 					this.NameLength = br.ReadUInt32();
 					this.NameOffset = br.ReadUInt32();
-					this.GlobalModelFlags = (EMDXFlags)br.ReadUInt32();
+					this.GlobalModelFlags = (ModelObjectFlags)br.ReadUInt32();
 					this.GlobalSequenceCount = br.ReadUInt32();
 					this.GlobalSequencesOffset = br.ReadUInt32();
 					this.AnimationSequenceCount = br.ReadUInt32();
@@ -234,7 +234,7 @@ namespace Warcraft.MDX
 					this.ParticleEmitterCount = br.ReadUInt32();
 					this.ParticleEmittersOffset = br.ReadUInt32();
 
-					if (GlobalModelFlags.HasFlag(EMDXFlags.HasBlendModeOverrides))
+					if (GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
 					{
 						this.BlendMapCount = br.ReadUInt32();
 						this.BlendMapsOffset = br.ReadUInt32();

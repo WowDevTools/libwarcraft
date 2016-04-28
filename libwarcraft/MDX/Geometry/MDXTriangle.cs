@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXTriangle.cs
 //
 //  Author:

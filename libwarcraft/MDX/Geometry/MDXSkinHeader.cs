@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXSkinHeader.cs
 //
 //  Author:

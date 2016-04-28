@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Warcraft.WMO.RootFile;
 using Warcraft.WMO.GroupFile;
 using System.Collections.Generic;

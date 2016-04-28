@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelPortals.cs
 //
 //  Author:

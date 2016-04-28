@@ -1,4 +1,4 @@
-﻿//
+//
 //  HETTableHeader.cs
 //
 //  Author:

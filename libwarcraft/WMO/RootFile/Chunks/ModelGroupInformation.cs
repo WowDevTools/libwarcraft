@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelGroupInformation.cs
 //
 //  Author:

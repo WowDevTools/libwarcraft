@@ -1,4 +1,4 @@
-﻿//
+//
 //  MapChunkHeightmap.cs
 //
 //  Author:
@@ -31,7 +31,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	/// The vertices are arranged as two distinct grids, one 
 	/// inside the other.
 	/// </summary>
-	public class MapChunkHeightmap : TerrainChunk
+	public class MapChunkHeightmap : IChunk
 	{
 		public const string Signature = "MCVT";
 		/// <summary>

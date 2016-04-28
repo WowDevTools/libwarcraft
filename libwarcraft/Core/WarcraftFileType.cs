@@ -1,4 +1,4 @@
-﻿//
+//
 //  FileType.cs
 //
 //  Author:

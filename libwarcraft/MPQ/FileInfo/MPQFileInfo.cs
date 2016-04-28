@@ -1,4 +1,4 @@
-﻿//
+//
 //  MPQFileInfo.cs
 //
 //  Author:

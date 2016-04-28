@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXTrack.cs
 //
 //  Author:

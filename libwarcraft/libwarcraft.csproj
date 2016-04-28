@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,8 +8,11 @@
     <RootNamespace>Warcraft</RootNamespace>
     <AssemblyName>libwarcraft</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\Documents\Keys &amp; Cryptography\libwarcraft\libwarcraft.key</AssemblyOriginatorKeyFile>
+    <ReleaseVersion>1.0</ReleaseVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,11 +36,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Ionic.Zip">
-      <HintPath>..\packages\DotNetZip.1.9.8\lib\net20\Ionic.Zip.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <Package>dotnetzip-cli-1.9</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,7 +80,6 @@
     <Compile Include="WMO\WMO.cs" />
     <Compile Include="MDX\MDX.cs" />
     <Compile Include="MDX\MDXHeader.cs" />
-    <Compile Include="MDX\MDXFlags.cs" />
     <Compile Include="MDX\Visual\MDXTexture.cs" />
     <Compile Include="MDX\Geometry\MDXVertex.cs" />
     <Compile Include="MDX\Geometry\MDXView.cs" />
@@ -174,7 +175,6 @@
     <Compile Include="ADT\Chunks\Subchunks\MapChunkLiquids.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkSoundEmitters.cs" />
     <Compile Include="ADT\Chunks\Subchunks\MapChunkTextureLayers.cs" />
-    <Compile Include="ADT\Chunks\TerrainChunk.cs" />
     <Compile Include="ADT\Chunks\TerrainLiquid.cs" />
     <Compile Include="ADT\Chunks\TerrainTextureFlags.cs" />
     <Compile Include="ADT\Chunks\TerrainBoundingBox.cs" />
@@ -189,6 +189,12 @@
     <Compile Include="Core\WarcraftFileType.cs" />
     <Compile Include="DBC\Definitions\UnknownRecord.cs" />
     <Compile Include="TRS\TRS.cs" />
+    <Compile Include="MDX\ModelObjectFlags.cs" />
+    <Compile Include="WDT\WDT.cs" />
+    <Compile Include="WDT\Chunks\WDTHeader.cs" />
+    <Compile Include="WDT\Chunks\MainChunk.cs" />
+    <Compile Include="WDT\Chunks\WorldModelObjectChunk.cs" />
+    <Compile Include="ADT\Chunks\IChunk.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -196,7 +202,6 @@
     <None Include="Core\Compression\Blast\reference-code\blast.c" />
     <None Include="Core\Compression\Blast\reference-code\blast.h" />
     <None Include="Core\Compression\Squish\README" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -238,6 +243,8 @@
     <Folder Include="ADT\Chunks\Subchunks\" />
     <Folder Include="DBC\SpecialFields\" />
     <Folder Include="TRS\" />
+    <Folder Include="WDT\" />
+    <Folder Include="WDT\Chunks\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

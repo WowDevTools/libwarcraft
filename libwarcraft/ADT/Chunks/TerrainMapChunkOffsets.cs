@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainMapChunkOffsets.cs
 //
 //  Author:
@@ -28,7 +28,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MCIN Chunk - Contains a list of all MCNKs with associated information in the ADT file.
 	/// </summary>
-	public class TerrainMapChunkOffsets : TerrainChunk
+	public class TerrainMapChunkOffsets : IChunk
 	{
 		public const string Signature = "MCIN";
 

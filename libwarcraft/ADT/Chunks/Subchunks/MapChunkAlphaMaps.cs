@@ -1,4 +1,4 @@
-﻿//
+//
 //  MapChunkAlphaMaps.cs
 //
 //  Author:
@@ -28,7 +28,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	/// <summary>
 	/// MCAL Chunk - Contains alpha map data in one of three forms - uncompressed 2048, uncompressed 4096 and compressed.
 	/// </summary>
-	public class MapChunkAlphaMaps : TerrainChunk
+	public class MapChunkAlphaMaps : IChunk
 	{
 		public const string Signature = "MCAL";
 

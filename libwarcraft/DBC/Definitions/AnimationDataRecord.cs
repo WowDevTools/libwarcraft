@@ -1,4 +1,4 @@
-﻿//
+//
 //  AnimationDataRecord.cs
 //
 //  Author:

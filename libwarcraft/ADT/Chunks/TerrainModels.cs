@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainModels.cs
 //
 //  Author:
@@ -29,7 +29,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MMDX Chunk - Contains a list of all referenced M2 models in this ADT.
 	/// </summary>
-	public class TerrainModels : TerrainChunk
+	public class TerrainModels : IChunk
 	{
 		public const string Signature = "MMDX";
 

@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainWorldModelObjectPlacementInfo.cs
 //
 //  Author:
@@ -29,7 +29,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MODF Chunk - Contains WMO model placement information
 	/// </summary>
-	public class TerrainWorldModelObjectPlacementInfo : TerrainChunk
+	public class TerrainWorldModelObjectPlacementInfo : IChunk
 	{
 		public const string Signature = "MODF";
 

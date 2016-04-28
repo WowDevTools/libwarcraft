@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelFog.cs
 //
 //  Author:

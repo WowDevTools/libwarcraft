@@ -1,4 +1,4 @@
-﻿//
+//
 //  MapChunkModelReferences.cs
 //
 //  Author:
@@ -25,7 +25,7 @@ using System.IO;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkModelReferences : TerrainChunk
+	public class MapChunkModelReferences : IChunk
 	{
 		public const string Signature = "MCRF";
 

@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelVisibleVertices.cs
 //
 //  Author:

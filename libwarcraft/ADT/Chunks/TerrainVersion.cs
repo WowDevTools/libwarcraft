@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainVersion.cs
 //
 //  Author:
@@ -26,7 +26,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MVER Chunk - Contains the ADT version
 	/// </summary>
-	public class TerrainVersion : TerrainChunk
+	public class TerrainVersion : IChunk
 	{
 		public const string Signature = "MVER";
 

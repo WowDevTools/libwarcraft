@@ -1,4 +1,4 @@
-﻿//
+//
 //  UnknownRecord.cs
 //
 //  Author:

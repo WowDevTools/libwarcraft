@@ -1,4 +1,4 @@
-﻿/*
+/*
 Translation to managed C# of blast.c/h, published by Mark Adler. The copyright notice
 for the C implementation is included below. This implementation varies from the C
 original. 

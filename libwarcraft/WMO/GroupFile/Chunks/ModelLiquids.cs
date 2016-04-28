@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelLiquids.cs
 //
 //  Author:

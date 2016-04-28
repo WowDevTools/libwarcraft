@@ -1,4 +1,4 @@
-﻿//
+//
 //  BLPVersion.cs
 //
 //  Author:

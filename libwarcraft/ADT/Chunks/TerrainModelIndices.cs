@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainModelIndices.cs
 //
 //  Author:
@@ -28,7 +28,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MMID Chunk - Contains a list of M2 model indexes
 	/// </summary>
-	public class TerrainModelIndices : TerrainChunk
+	public class TerrainModelIndices : IChunk
 	{
 		public const string Signature = "MMID";
 

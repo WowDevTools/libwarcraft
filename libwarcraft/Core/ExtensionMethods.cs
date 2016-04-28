@@ -1,4 +1,4 @@
-﻿//
+//
 //  ExtensionMethods.cs
 //
 //  Author:
@@ -134,7 +134,7 @@ namespace Warcraft.Core
 		/// </summary>
 		/// <returns>The terrain chunk.</returns>
 		/// <param name="Reader">Reader.</param>
-		public static TerrainChunk ReadTerrainChunk(this BinaryReader Reader)
+		public static IChunk ReadTerrainChunk(this BinaryReader Reader)
 		{
 			// The signatures are stored in reverse in the file, so we'll need to read them backwards into
 			// the buffer.
@@ -348,6 +348,43 @@ namespace Warcraft.Core
 		public static Box ReadBox(this BinaryReader Reader)
 		{
 			return new Box(Reader.ReadVector3f(), Reader.ReadVector3f());
+		}
+
+		/*
+			Binary Writer extensions for standard types
+		*/
+
+		/// <summary>
+		/// Writes an RIFF-style chunk signature to the data stream.
+		/// </summary>
+		/// <param name="Writer">Writer.</param>
+		/// <param name="Signature">Signature.</param>
+		public static void WriteChunkSignature(this BinaryWriter Writer, string Signature)
+		{
+			if (Signature.Length != 4)
+			{
+				throw new InvalidDataException("The signature must be an ASCII string of exactly four characters.");
+			}
+
+			for (int i = 3; i >= 0; --i)
+			{
+				Writer.Write(Signature[i]);
+			}
+		}
+
+		/// <summary>
+		/// Writes the provided string to the data stream as a C-style null-terminated string.
+		/// </summary>
+		/// <param name="Writer">Writer.</param>
+		/// <param name="InputString">Input string.</param>
+		public static void WriteNullTerminatedString(this BinaryWriter Writer, string InputString)
+		{
+			foreach (char c in InputString)
+			{
+				Writer.Write(c);
+			}
+
+			Writer.Write((char)0);
 		}
 	}
 }

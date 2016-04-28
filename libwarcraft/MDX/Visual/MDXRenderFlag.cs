@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXRenderFlag.cs
 //
 //  Author:

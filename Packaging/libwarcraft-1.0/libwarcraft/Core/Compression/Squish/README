@@ -1,0 +1,28 @@
+﻿
+DotSquish is part of a library for extracting game assets from Final Fantasy XIV, created by Sam Hocevar.
+DotSquish is used in WarLib under the DO WHAT THE FUCK YOU WANT TO PUBLIC LICENCE, Version 2 (December 2004).
+
+-----
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                    Version 2, December 2004
+
+ Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+ Everyone is permitted to copy and distribute verbatim or modified
+ copies of this license document, and changing it is allowed as long
+ as the name is changed.
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+  0. You just DO WHAT THE FUCK YOU WANT TO.
+
+-----
+
+The source for DotSquish (along with SaintConach, the FFXIV library), is available here under the original 
+licence.
+
+https://github.com/Rogueadyn/SaintCoinach
+
+A great thank you to Sam Hocevar for both the code and the licence!

@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelVertices.cs
 //
 //  Author:

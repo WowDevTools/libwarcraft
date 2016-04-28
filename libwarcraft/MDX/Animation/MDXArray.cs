@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXArray.cs
 //
 //  Author:

@@ -1,4 +1,4 @@
-﻿//
+//
 //  MPQHeader.cs
 //
 //  Author:

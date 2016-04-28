@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelDoodadInstances.cs
 //
 //  Author:

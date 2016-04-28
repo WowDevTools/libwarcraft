@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelTriangleStrips.cs
 //
 //  Author:

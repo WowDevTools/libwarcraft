@@ -1,4 +1,4 @@
-﻿//
+//
 //  StringReference.cs
 //
 //  Author:

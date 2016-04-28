@@ -1,4 +1,4 @@
-﻿//
+//
 //  Compression.cs
 //
 //  Author:

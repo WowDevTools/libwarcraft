@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelPolygons.cs
 //
 //  Author:

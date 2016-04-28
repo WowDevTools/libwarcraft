@@ -1,4 +1,4 @@
-﻿//
+//
 //  LocaleID.cs
 //
 //  Author:

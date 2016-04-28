@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDX.cs
 //
 //  Author:
@@ -67,8 +67,8 @@ namespace Warcraft.MDX
 				}
 				else
 				{
-					EMDXFlags Flags = PeekFlags(br);
-					if (Flags.HasFlag(EMDXFlags.HasBlendModeOverrides))
+					ModelObjectFlags Flags = PeekFlags(br);
+					if (Flags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
 					{
 						this.Header = new MDXHeader(br.ReadBytes(308));
 					}
@@ -464,14 +464,14 @@ namespace Warcraft.MDX
 			return MDXHeader.GetModelVersion(rawVersion);
 		}
 
-		private EMDXFlags PeekFlags(BinaryReader br)
+		private ModelObjectFlags PeekFlags(BinaryReader br)
 		{
 			long initialPosition = br.BaseStream.Position;
 
 			// Skip ahead to the flag block
 			br.BaseStream.Position += 16;
 
-			EMDXFlags flags = (EMDXFlags)br.ReadUInt32();
+			ModelObjectFlags flags = (ModelObjectFlags)br.ReadUInt32();
 
 			// Seek back to the initial position
 			br.BaseStream.Position = initialPosition;

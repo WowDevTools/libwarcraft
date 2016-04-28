@@ -1,4 +1,4 @@
-﻿//
+//
 //  HashTableEntry.cs
 //
 //  Author:

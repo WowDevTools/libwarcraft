@@ -1,4 +1,4 @@
-﻿//
+//
 // Credits/Copyright: Copyright © 2004-2008 Jon Skeet and Marc Gravell.
 // Source: http://www.yoda.arachsys.com/csharp/miscutil/
 //

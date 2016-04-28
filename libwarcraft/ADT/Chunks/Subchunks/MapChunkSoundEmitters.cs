@@ -1,4 +1,4 @@
-﻿//
+//
 //  MapChunkSoundEmitters.cs
 //
 //  Author:
@@ -23,7 +23,7 @@ using System;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkSoundEmitters : TerrainChunk
+	public class MapChunkSoundEmitters : IChunk
 	{
 		public const string Signature = "MCSE";
 

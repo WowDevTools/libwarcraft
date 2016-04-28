@@ -1,4 +1,4 @@
-﻿//
+//
 //  BETTableHeader.cs
 //
 //  Author:

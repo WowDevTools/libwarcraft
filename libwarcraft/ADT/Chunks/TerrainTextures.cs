@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainTextures.cs
 //
 //  Author:
@@ -29,7 +29,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MTEX Chunk - Contains a list of all referenced textures in this ADT.
 	/// </summary>
-	public class TerrainTextures : TerrainChunk
+	public class TerrainTextures : IChunk
 	{
 		public const string Signature = "MTEX";
 

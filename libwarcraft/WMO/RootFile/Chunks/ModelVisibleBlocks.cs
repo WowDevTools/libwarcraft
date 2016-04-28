@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelVisibleBlocks.cs
 //
 //  Author:

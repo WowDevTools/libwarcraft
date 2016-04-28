@@ -1,4 +1,4 @@
-﻿//
+//
 //  BlockTableEntry.cs
 //
 //  Author:

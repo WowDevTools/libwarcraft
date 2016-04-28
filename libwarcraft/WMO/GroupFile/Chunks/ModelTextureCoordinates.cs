@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelTextureCoordinates.cs
 //
 //  Author:

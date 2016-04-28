@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXTextureUnit.cs
 //
 //  Author:

@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXFormat.cs
 //
 //  Author:

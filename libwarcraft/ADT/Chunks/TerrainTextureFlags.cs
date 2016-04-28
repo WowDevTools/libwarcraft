@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainTextureFlags.cs
 //
 //  Author:
@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace Warcraft.ADT.Chunks
 {
-	public class TerrainTextureFlags : TerrainChunk
+	public class TerrainTextureFlags : IChunk
 	{
 		public const string Signature = "MTXF";
 

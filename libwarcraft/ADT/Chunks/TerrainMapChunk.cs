@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainMapChunk.cs
 //
 //  Author:
@@ -29,7 +29,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MCNK Chunk - Main map chunk which contains a number of smaller subchunks. 256 of these are present in an ADT file.
 	/// </summary>
-	public class TerrainMapChunk : TerrainChunk
+	public class TerrainMapChunk : IChunk
 	{
 		public const string Signature = "MCNK";
 		/// <summary>

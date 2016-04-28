@@ -1,4 +1,4 @@
-﻿//
+//
 //  MPQSign.cs
 //
 //  Author:

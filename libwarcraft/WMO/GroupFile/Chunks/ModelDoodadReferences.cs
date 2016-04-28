@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelDoodadReferences.cs
 //
 //  Author:

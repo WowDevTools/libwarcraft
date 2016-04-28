@@ -1,4 +1,4 @@
-﻿//
+//
 //  MapChunkHeader.cs
 //
 //  Author:

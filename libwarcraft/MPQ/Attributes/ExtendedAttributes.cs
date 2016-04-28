@@ -1,4 +1,4 @@
-﻿//
+//
 //  ExtendedAttributes.cs
 //
 //  Author:

@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXSubmeshColourAnimation.cs
 //
 //  Author:

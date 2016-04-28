@@ -1,4 +1,4 @@
-﻿//
+//
 //  Int32ForeignKey.cs
 //
 //  Author:

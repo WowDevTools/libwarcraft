@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXUVAnimation.cs
 //
 //  Author:

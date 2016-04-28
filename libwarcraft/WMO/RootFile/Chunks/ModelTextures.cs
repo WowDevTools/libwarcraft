@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelTextures.cs
 //
 //  Author:

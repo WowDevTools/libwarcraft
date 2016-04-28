@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelVertexColours.cs
 //
 //  Author:

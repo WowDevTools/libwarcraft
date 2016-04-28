@@ -1,4 +1,4 @@
-﻿//
+//
 //  CompressionAlgorithms.cs
 //
 //  Author:

@@ -1,4 +1,4 @@
-﻿//
+//
 //  MDXRibbonEmitter.cs
 //
 //  Author:

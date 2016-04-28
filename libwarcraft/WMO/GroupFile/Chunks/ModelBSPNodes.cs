@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelBSPNodes.cs
 //
 //  Author:

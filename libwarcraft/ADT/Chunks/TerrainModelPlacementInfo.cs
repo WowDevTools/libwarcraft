@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainModelPlacementInfo.cs
 //
 //  Author:
@@ -29,7 +29,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MMDF Chunk - Contains M2 model placement information
 	/// </summary>
-	public class TerrainModelPlacementInfo : TerrainChunk
+	public class TerrainModelPlacementInfo : IChunk
 	{
 		public const string Signature = "MMDF";
 

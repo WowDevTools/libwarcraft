@@ -1,4 +1,4 @@
-﻿//
+//
 //  ModelGameobjectFileID.cs
 //
 //  Author:

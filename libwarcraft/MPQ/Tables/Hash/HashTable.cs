@@ -1,4 +1,4 @@
-﻿//
+//
 //  MPQHashTable.cs
 //
 //  Author:

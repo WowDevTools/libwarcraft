@@ -1,4 +1,4 @@
-﻿//
+//
 //  MapChunkVertexLighting.cs
 //
 //  Author:
@@ -26,7 +26,7 @@ using Warcraft.Core;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexLighting : TerrainChunk
+	public class MapChunkVertexLighting : IChunk
 	{
 		public const string Signature = "MCLV";
 

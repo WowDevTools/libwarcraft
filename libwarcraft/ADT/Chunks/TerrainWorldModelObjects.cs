@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainWorldModelObjects.cs
 //
 //  Author:
@@ -29,7 +29,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MWMO Chunk - Contains a list of all referenced WMO models in this ADT.
 	/// </summary>
-	public class TerrainWorldModelObjects : TerrainChunk
+	public class TerrainWorldModelObjects : IChunk
 	{
 		public const string Signature = "MWMO";
 
@@ -50,6 +50,31 @@ namespace Warcraft.ADT.Chunks
 				{
 					Filenames.Add(br.ReadNullTerminatedString());
 				}
+			}
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream(8))
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					bw.WriteChunkSignature(TerrainWorldModelObjects.Signature);
+
+					int chunkSize = 0;
+					foreach (string filename in Filenames)
+					{
+						chunkSize += filename.Length + 1;
+					}
+					bw.Write(chunkSize);
+
+					foreach (string filename in Filenames)
+					{
+						bw.WriteNullTerminatedString(filename);
+					}
+				}
+
+				return ms.ToArray();
 			}
 		}
 	}

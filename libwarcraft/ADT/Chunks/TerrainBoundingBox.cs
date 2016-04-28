@@ -1,4 +1,4 @@
-﻿//
+//
 //  TerrainBoundingBox.cs
 //
 //  Author:
@@ -25,7 +25,7 @@ using System.IO;
 
 namespace Warcraft.ADT.Chunks
 {
-	public class TerrainBoundingBox : TerrainChunk
+	public class TerrainBoundingBox : IChunk
 	{
 		public const string Signature = "MFBO";
 

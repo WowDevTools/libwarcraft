@@ -1,4 +1,4 @@
-﻿//
+//
 //  MPQShunt.cs
 //
 //  Author:

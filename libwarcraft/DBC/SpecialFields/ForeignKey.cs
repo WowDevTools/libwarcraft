@@ -1,4 +1,4 @@
-﻿//
+//
 //  ForeignKey.cs
 //
 //  Author:
