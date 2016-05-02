@@ -90,6 +90,23 @@ namespace Warcraft.MPQ
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQ"/> class.
+		/// This constructor creates an empty archive.
+		/// </summary>
+		/// <param name="InFormat">In format.</param>
+		public MPQ(MPQFormat InFormat)
+		{
+			if (InFormat > MPQFormat.Extended_v1)
+			{
+				throw new NotImplementedException();
+			}
+
+			this.Header = new MPQHeader(InFormat);
+			this.ArchiveHashTable = new HashTable();
+			this.ArchiveBlockTable = new BlockTable();
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQ"/> class.
 		/// </summary>
 		/// <param name="mpqStream">An open stream to data containing an MPQ archive.</param>
 		public MPQ(Stream mpqStream)

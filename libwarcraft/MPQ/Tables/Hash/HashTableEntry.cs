@@ -71,15 +71,6 @@ namespace Warcraft.MPQ.Tables.Hash
 		}
 
 		/// <summary>
-		/// Gets the size of an entry.
-		/// </summary>
-		/// <returns>The size.</returns>
-		public static long GetSize()
-		{
-			return 16;
-		}
-
-		/// <summary>
 		/// Gets the primary hash of the file's name.
 		/// </summary>
 		/// <returns>The primary hash.</returns>
@@ -123,6 +114,33 @@ namespace Warcraft.MPQ.Tables.Hash
 		{
 			return this.FileBlockIndex;
 		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					bw.Write(this.FilePathHashA);
+					bw.Write(this.FilePathHashB);
+					bw.Write((ushort)this.Localization);
+					bw.Write(this.Platform);
+					bw.Write(this.FileBlockIndex);
+				}
+
+				return ms.ToArray();
+			}
+		}
+
+		/// <summary>
+		/// Gets the size of an entry.
+		/// </summary>
+		/// <returns>The size.</returns>
+		public static long GetSize()
+		{
+			return 16;
+		}
+
 	}
 }
 

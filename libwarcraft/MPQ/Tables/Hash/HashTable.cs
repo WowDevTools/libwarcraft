@@ -30,7 +30,12 @@ namespace Warcraft.MPQ.Tables.Hash
 	public class HashTable
 	{
 		public static readonly uint TableKey = MPQCrypt.Hash("(hash table)", HashType.FileKey);
-		private readonly List<HashTableEntry> Entries;
+		private readonly List<HashTableEntry> Entries = new List<HashTableEntry>();
+
+		public HashTable()
+		{
+			
+		}
 
 		public HashTable(byte[] data)
 		{
@@ -38,8 +43,6 @@ namespace Warcraft.MPQ.Tables.Hash
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Entries = new List<HashTableEntry>();
-
 					for (long i = 0; i < data.Length; i += HashTableEntry.GetSize())
 					{
 						byte[] entryBytes = br.ReadBytes((int)HashTableEntry.GetSize());
@@ -79,6 +82,23 @@ namespace Warcraft.MPQ.Tables.Hash
 			}
 
 			return null;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					foreach (HashTableEntry Entry in this.Entries)
+					{
+						bw.Write(Entry.Serialize());
+					}
+				}
+
+				byte[] encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), HashTable.TableKey);
+				return encryptedTable;
+			}
 		}
 
 		/// <summary>

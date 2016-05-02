@@ -30,7 +30,12 @@ namespace Warcraft.MPQ.Tables.Block
 	public class BlockTable
 	{
 		public static readonly uint TableKey = MPQCrypt.Hash("(block table)", HashType.FileKey);
-		private readonly List<BlockTableEntry> Entries;
+		private readonly List<BlockTableEntry> Entries = new List<BlockTableEntry>();
+
+		public BlockTable()
+		{
+
+		}
 
 		public BlockTable(byte[] data)
 		{
@@ -38,14 +43,29 @@ namespace Warcraft.MPQ.Tables.Block
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Entries = new List<BlockTableEntry>();
-
 					for (long i = 0; i < data.Length; i += BlockTableEntry.GetSize())
 					{
 						byte[] entryBytes = br.ReadBytes((int)BlockTableEntry.GetSize());
 						Entries.Add(new BlockTableEntry(entryBytes));
 					}
 				}
+			}
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					foreach (BlockTableEntry Entry in this.Entries)
+					{
+						bw.Write(Entry.Serialize());
+					}
+				}
+
+				byte[] encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), BlockTable.TableKey);
+				return encryptedTable;
 			}
 		}
 

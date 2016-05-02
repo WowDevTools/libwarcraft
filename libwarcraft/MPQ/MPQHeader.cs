@@ -24,6 +24,7 @@ using System;
 using System.IO;
 using Warcraft.MPQ.Tables.Hash;
 using Warcraft.MPQ.Tables.Block;
+using System.Text;
 
 namespace Warcraft.MPQ
 {
@@ -108,6 +109,36 @@ namespace Warcraft.MPQ
 		string MD5_Header;
 		// The MD5_Header is calculated from the start of the signature to the end of the MD5_HETTable
 
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQHeader"/> class.
+		/// This creates a default header for an empty archive.
+		/// </summary>
+		public MPQHeader(MPQFormat InFormat)
+		{
+			if (InFormat == MPQFormat.Basic)
+			{
+				this.HeaderSize = 32;
+			}
+			else if (InFormat == MPQFormat.Extended_v1)
+			{
+				this.HeaderSize = 44;
+			}
+			else
+			{
+				throw new NotImplementedException();
+			}
+
+			this.BasicArchiveSize = this.HeaderSize;
+			this.Format = InFormat;
+			this.SectorSizeExponent = 3;
+
+			if (this.Format > MPQFormat.Extended_v1)
+			{
+				this.LongArchiveSize = this.HeaderSize;
+			}
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQHeader"/> class.
 		/// </summary>
@@ -140,24 +171,12 @@ namespace Warcraft.MPQ
 						this.ExtendedFormatHashTableOffsetBits = br.ReadUInt16();
 						this.ExtendedFormatBlockTableOffsetBits = br.ReadUInt16();
 					}
-					else
-					{
-						this.ExtendedBlockTableOffset = 0;
-						this.ExtendedFormatHashTableOffsetBits = 0;
-						this.ExtendedFormatBlockTableOffsetBits = 0;
-					}
 
 					if (this.Format >= MPQFormat.Extended_v2)
 					{
 						this.LongArchiveSize = br.ReadUInt64();
 						this.BETTableOffset = br.ReadUInt64();
 						this.HETTableOffset = br.ReadUInt64();
-					}
-					else
-					{
-						this.LongArchiveSize = 0;
-						this.BETTableOffset = 0;
-						this.HETTableOffset = 0;
 					}
 
 					if (this.Format >= MPQFormat.Extended_v3)
@@ -176,23 +195,6 @@ namespace Warcraft.MPQ
 						this.MD5_BETTable = BitConverter.ToString(br.ReadBytes(16));
 						this.MD5_HETTable = BitConverter.ToString(br.ReadBytes(16));
 						this.MD5_Header = BitConverter.ToString(br.ReadBytes(16));
-					}
-					else
-					{
-						this.CompressedHashTableSize = 0;
-						this.CompressedBlockTableSize = 0;
-						this.CompressedExtendedBlockTableSize = 0;
-						this.CompressedHETTableSize = 0;
-						this.CompressedBETTableSize = 0;
-
-						this.ChunkSizeForHashing = 0;
-
-						this.MD5_BlockTable = "";
-						this.MD5_HashTable = "";
-						this.MD5_ExtendedBlockTable = "";
-						this.MD5_BETTable = "";
-						this.MD5_HETTable = "";
-						this.MD5_Header = "";
 					}
 				}
 			}
@@ -403,6 +405,64 @@ namespace Warcraft.MPQ
 
 			ulong mergedBits = (high16Bits + lower32Bits) & 0x0000FFFFFFFFFFFF;
 			return mergedBits;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					// Write the archive signature
+					foreach (char c in this.Signature)
+					{
+						bw.Write(c);
+					}
+
+					bw.Write(this.HeaderSize);
+					bw.Write(this.ArchiveSize);
+					bw.Write((ushort)this.Format);
+					bw.Write(this.SectorSizeExponent);
+					bw.Write(this.HashTableOffset);
+					bw.Write(this.BlockTableOffset);
+					bw.Write(this.HashTableEntryCount);
+					bw.Write(this.BlockTableEntryCount);
+
+					if (this.Format > MPQFormat.Basic)
+					{
+						bw.Write(this.ExtendedBlockTableOffset);
+						bw.Write(this.ExtendedFormatHashTableOffsetBits);
+						bw.Write(this.ExtendedFormatBlockTableOffsetBits);
+					}
+
+					if (this.Format > MPQFormat.Extended_v1)
+					{
+						bw.Write(this.LongArchiveSize);
+						bw.Write(this.BETTableOffset);
+						bw.Write(this.HETTableOffset);
+					}
+
+					if (this.Format > MPQFormat.Extended_v2)
+					{
+						bw.Write(this.CompressedHashTableSize);
+						bw.Write(this.CompressedBlockTableSize);
+						bw.Write(this.CompressedExtendedBlockTableSize);
+						bw.Write(this.CompressedHETTableSize);
+						bw.Write(this.CompressedBETTableSize);
+
+						bw.Write(this.ChunkSizeForHashing);
+
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5_BlockTable));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5_HashTable));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5_ExtendedBlockTable));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5_BETTable));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5_HETTable));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5_Header));
+					}
+				}
+
+				return ms.ToArray();
+			}
 		}
 	}
 }

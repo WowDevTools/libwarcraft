@@ -46,15 +46,6 @@ namespace Warcraft.MPQ.Tables.Block
 		}
 
 		/// <summary>
-		/// Gets the size of a block table entry.
-		/// </summary>
-		/// <returns>The size.</returns>
-		public static long GetSize()
-		{
-			return 16;
-		}
-
-		/// <summary>
 		/// Gets the offset of the block with file data.
 		/// </summary>
 		/// <returns>The block offset.</returns>
@@ -111,6 +102,31 @@ namespace Warcraft.MPQ.Tables.Block
 		public bool IsBlockUnused()
 		{
 			return (BlockOffset == 0) && (BlockSize == 0) && (FileSize == 0) && (Flags == 0);
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					bw.Write(this.BlockOffset);
+					bw.Write(this.BlockSize);
+					bw.Write(this.FileSize);
+					bw.Write((uint)this.Flags);
+				}
+
+				return ms.ToArray();
+			}
+		}
+
+		/// <summary>
+		/// Gets the size of a block table entry.
+		/// </summary>
+		/// <returns>The size.</returns>
+		public static long GetSize()
+		{
+			return 16;
 		}
 	}
 }
