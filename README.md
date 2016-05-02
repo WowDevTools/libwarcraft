@@ -9,6 +9,7 @@ libwarcraft currently implements the following file formats:
 * MPQ (Mike O'Brien Package). Read, Basic to extended v1 format.
 * DBC (Database - Client). Read, DB1 format.
 * TRS (Hashmap Translation Table): Read support.
+* WDT (World Data Tables): Fully compliant Read & Write.
 
 The following formats are still in progress, and may not work as intended (or at all):
 * MDX (Model). Partial Read, Wrath of the Lich King. No animation data exposed, but it's being read internally.
@@ -16,7 +17,6 @@ The following formats are still in progress, and may not work as intended (or at
 * ADT (Areadata Tile). Near-full read support, up to and including Wrath of the Lich King.
 
 The following formats are not implemented yet:
-* WDT (World Data Tables)
 * WDL (World Data Layers)
 * WLW (World Liquids - Water)
 * WLQ (World Liquids)
@@ -45,7 +45,7 @@ libwarcraft is Free Software, and is distributed under the GPLv3 license. This m
 The use of the GPLv3 license and not the LGPLv3 license is a conscious choice by me, the author. If you're unsure what this means, it means that any software that links to or makes use of this library must also be licensed under the GPLv3 license and carry the same rights and grants of rights as the library itself. I am of the firm opinion that closed source software stifles creativity and inhibits technological progress. This library is  not only a way to develop tools that can be used to interact with WoW and its ilk, but also a statement from me to the modding scene. Share, develop, and be wonderful to each other. Don't adhere to the old closed-source ways, and embrace the wonderful world of free software.
 
 ## Credits
-Most file documentation has been gathered from https://wowdev.wiki/ - a great big thanks to everyone who contributed and is contributing to that wiki! The implementation of the MPQ format was mainly taken from devklog.net and zezula.net. The latter has shut down, but is still available through the wayback machine, while the latter is nice as complementary information.
+Most file documentation has been gathered from https://wowdev.wiki/ - a great big thanks to everyone who contributed and is contributing to that wiki! The implementation of the MPQ format was mainly taken from devklog.net and zezula.net. The former has shut down, but is still available through the wayback machine, while the latter is nice as complementary information.
 
 Special thanks to:
 * Justin Olbrantz & Jean-Francois Roy for their thorough documentation of the MPQ format. Although their wiki page is down and has been for a while, the Wayback Machine has a cached copy which proved invaluable.
