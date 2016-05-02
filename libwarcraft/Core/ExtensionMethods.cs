@@ -252,9 +252,9 @@ namespace Warcraft.Core
 					{
 						return new WDTHeader(chunkData);
 					}
-				case WDTMainChunk.Signature:
+				case AreaInfoChunk.Signature:
 					{
-						return new WDTMainChunk(chunkData);
+						return new AreaInfoChunk(chunkData);
 					}
 				default:
 					{

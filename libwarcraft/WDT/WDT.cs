@@ -24,6 +24,7 @@ using Warcraft.ADT.Chunks;
 using Warcraft.WDT.Chunks;
 using System.IO;
 using Warcraft.Core;
+using System.Collections.Generic;
 
 namespace Warcraft.WDT
 {
@@ -31,7 +32,7 @@ namespace Warcraft.WDT
 	{
 		public TerrainVersion Version;
 		public WDTHeader Header;
-		public WDTMainChunk MainChunk;
+		public AreaInfoChunk AreaInfo;
 		public TerrainWorldModelObjects WorldModelObjects;
 		public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo;
 
@@ -43,7 +44,7 @@ namespace Warcraft.WDT
 				{
 					this.Version = (TerrainVersion)br.ReadTerrainChunk();
 					this.Header = (WDTHeader)br.ReadTerrainChunk();
-					this.MainChunk = (WDTMainChunk)br.ReadTerrainChunk();
+					this.AreaInfo = (AreaInfoChunk)br.ReadTerrainChunk();
 					this.WorldModelObjects = (TerrainWorldModelObjects)br.ReadTerrainChunk();
 
 					if (this.WorldModelObjects.Filenames.Count > 0)
@@ -54,6 +55,83 @@ namespace Warcraft.WDT
 			}
 		}
 
+		/// <summary>
+		/// Gets a list of loaded areas. When working with unloaded files (i.e, not in a game or application),
+		/// this method will never return any areas.
+		/// </summary>
+		/// <returns>The loaded areas.</returns>
+		public List<AreaInfoEntry> GetLoadedAreas()
+		{
+			List<AreaInfoEntry> LoadedAreas = new List<AreaInfoEntry>();
+			foreach (AreaInfoEntry Entry in AreaInfo.Entries)
+			{
+				if (Entry.Flags.HasFlag(AreaInfoFlags.IsLoaded))
+				{
+					LoadedAreas.Add(Entry);
+				}
+			}
+
+			return LoadedAreas;
+		}
+
+		/// <summary>
+		/// Gets a list of area information entries that have terrain tiles.
+		/// </summary>
+		/// <returns>The areas with terrain.</returns>
+		public List<AreaInfoEntry> GetAreasWithTerrain()
+		{
+			List<AreaInfoEntry> TerrainAreas = new List<AreaInfoEntry>();
+			foreach (AreaInfoEntry Entry in AreaInfo.Entries)
+			{
+				if (Entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
+				{
+					TerrainAreas.Add(Entry);
+				}
+			}
+
+			return TerrainAreas;
+		}
+
+		/// <summary>
+		/// Gets the area info for the specified coordinates.
+		/// </summary>
+		/// <returns>The area info.</returns>
+		/// <param name="InTileX">In tile x.</param>
+		/// <param name="InTileY">In tile y.</param>
+		public AreaInfoEntry GetAreaInfo(uint InTileX, uint InTileY)
+		{
+			return this.AreaInfo.GetAreaInfo(InTileX, InTileY);
+		}
+
+		/// <summary>
+		/// Determines whether this instance has any terrain.
+		/// </summary>
+		/// <returns><c>true</c> if this instance has any terrain; otherwise, <c>false</c>.</returns>
+		public bool HasAnyTerrain()
+		{
+			foreach (AreaInfoEntry Entry in AreaInfo.Entries)
+			{
+				if (Entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Determines whether the tile at the specified coordinates is populated with terrain data or not.
+		/// </summary>
+		/// <returns><c>true</c> if the tile is populated; otherwise, <c>false</c>.</returns>
+		/// <param name="InTileX">0-based x coordinate of the tile.</param>
+		/// <param name="InTileY">0-based y coordinate of the tile.</param>
+		public bool IsTilePopulated(uint InTileX, uint InTileY)
+		{			
+			AreaInfoEntry InfoEntry = AreaInfo.GetAreaInfo(InTileX, InTileY);
+			return InfoEntry.Flags.HasFlag(AreaInfoFlags.HasTerrainData);
+		}
+
 		public byte[] Serialize()
 		{
 			using (MemoryStream ms = new MemoryStream())
@@ -62,7 +140,7 @@ namespace Warcraft.WDT
 				{
 					bw.Write(this.Version.Serialize());
 					bw.Write(this.Header.Serialize());
-					bw.Write(this.MainChunk.Serialize());
+					bw.Write(this.AreaInfo.Serialize());
 					bw.Write(this.WorldModelObjects.Serialize());
 
 					if (WorldModelObjects.Filenames.Count > 0 && WorldModelObjectPlacementInfo != null)

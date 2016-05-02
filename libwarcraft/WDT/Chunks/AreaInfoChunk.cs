@@ -27,27 +27,43 @@ using Warcraft.ADT.Chunks;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class WDTMainChunk : IChunk
+	public class AreaInfoChunk : IChunk
 	{
 		public const string Signature = "MAIN";
 
-		public List<AreaInfoEntry> AreaInfoEntries = new List<AreaInfoEntry>();
+		public List<AreaInfoEntry> Entries = new List<AreaInfoEntry>();
 
-		public WDTMainChunk(byte[] data)
+		public AreaInfoChunk(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					for (int y = 0; y < 64; ++y)
+					for (uint y = 0; y < 64; ++y)
 					{
-						for (int x = 0; x < 64; ++x)
+						for (uint x = 0; x < 64; ++x)
 						{
-							AreaInfoEntries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize())));
+							Entries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize()), x, y));
 						}
 					}
 				}
 			}
+		}
+
+		public AreaInfoEntry GetAreaInfo(uint InTileX, uint InTileY)
+		{
+			if (InTileX > 63)
+			{
+				throw new ArgumentOutOfRangeException("InTileX", "The tile coordinate may not be more than 63 in either dimension.");
+			}
+
+			if (InTileY > 63)
+			{
+				throw new ArgumentOutOfRangeException("InTileY", "The tile coordinate may not be more than 63 in either dimension.");
+			}
+
+			int tileIndex = (int)((InTileY * 64) + InTileX);
+			return this.Entries[tileIndex];
 		}
 
 		public byte[] Serialize()
@@ -56,11 +72,11 @@ namespace Warcraft.WDT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					bw.WriteChunkSignature(WDTMainChunk.Signature);
-					uint chunkSize = (uint)(AreaInfoEntries.Count * AreaInfoEntry.GetSize());
+					bw.WriteChunkSignature(AreaInfoChunk.Signature);
+					uint chunkSize = (uint)(Entries.Count * AreaInfoEntry.GetSize());
 					bw.Write(chunkSize);
 
-					foreach (AreaInfoEntry Entry in AreaInfoEntries)
+					foreach (AreaInfoEntry Entry in Entries)
 					{
 						bw.Write(Entry.Serialize());
 					}
@@ -78,8 +94,18 @@ namespace Warcraft.WDT.Chunks
 		public AreaInfoFlags Flags;
 		public uint AreaID;
 
-		public AreaInfoEntry(byte[] data)
+		/*
+			The following fields are not serialized, and are provided as
+			helper fields for programmers.
+		*/
+
+		public readonly uint TileX;
+		public readonly uint TileY;
+
+		public AreaInfoEntry(byte[] data, uint InTileX, uint InTileY)
 		{
+			this.TileX = InTileX;
+			this.TileY = InTileY;
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
@@ -114,8 +140,8 @@ namespace Warcraft.WDT.Chunks
 
 	public enum AreaInfoFlags : uint
 	{
-		Exists = 1,
-		Loaded = 2,
+		HasTerrainData = 1,
+		IsLoaded = 2,
 	}
 }
 

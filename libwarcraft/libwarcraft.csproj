@@ -193,7 +193,7 @@
     <Compile Include="WDT\WDT.cs" />
     <Compile Include="WDT\Chunks\WDTHeader.cs" />
     <Compile Include="ADT\Chunks\IChunk.cs" />
-    <Compile Include="WDT\Chunks\WDTMainChunk.cs" />
+    <Compile Include="WDT\Chunks\AreaInfoChunk.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
