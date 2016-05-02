@@ -1,5 +1,7 @@
 language: csharp
 solution: libwarcraft.sln
+sudo: required
+dist: trusty
 before_install:
     - sudo add-apt-repository -y ppa:jarl-gullberg/blizzard-dev-tools
     - sudo apt-get update -q
