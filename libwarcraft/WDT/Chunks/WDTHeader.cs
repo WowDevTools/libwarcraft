@@ -21,10 +21,12 @@
 //
 using System;
 using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class WDTHeader
+	public class WDTHeader : IChunk
 	{
 		public const string Signature = "MPHD";
 
@@ -39,7 +41,42 @@ namespace Warcraft.WDT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
+					this.Flags = (WDTFlags)br.ReadUInt32();
+					this.Unknown = br.ReadUInt32();
 				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the size of the data contained in this chunk.
+		/// </summary>
+		/// <returns>The size.</returns>
+		public static uint GetSize()
+		{
+			return 32;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					bw.WriteChunkSignature(WDTHeader.Signature);
+					bw.Write(WDTHeader.GetSize());
+
+					// Write the flags and the unknown field
+					bw.Write((uint)this.Flags);
+					bw.Write(this.Unknown);
+
+					// Write the six unused fields
+					for (int i = 0; i < 6; ++i)
+					{
+						bw.Write((uint)0);
+					}
+				}
+
+				return ms.ToArray();
 			}
 		}
 	}

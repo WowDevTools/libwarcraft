@@ -27,6 +27,7 @@ using Warcraft.ADT.Chunks;
 using System.Text;
 using System.Collections.Generic;
 using Warcraft.ADT.Chunks.Subchunks;
+using Warcraft.WDT.Chunks;
 
 namespace Warcraft.Core
 {
@@ -247,6 +248,14 @@ namespace Warcraft.Core
 					{
 						return new MapChunkSoundEmitters(chunkData);
 					}
+				case WDTHeader.Signature:
+					{
+						return new WDTHeader(chunkData);
+					}
+				case WDTMainChunk.Signature:
+					{
+						return new WDTMainChunk(chunkData);
+					}
 				default:
 					{
 						throw new FileLoadException("An unknown chunk with the signature \"" + Signature + "\" was encountered in the terrain file.");
@@ -353,6 +362,41 @@ namespace Warcraft.Core
 		/*
 			Binary Writer extensions for standard types
 		*/
+
+		/// <summary>
+		/// Writes a 24-byte bounding box to the data stream.
+		/// </summary>
+		/// <param name="Writer">Writer.</param>
+		/// <param name="InBox">In box.</param>
+		public static void WriteBox(this BinaryWriter Writer, Box InBox)
+		{
+			Writer.WriteVector3f(InBox.BottomCorner);
+			Writer.WriteVector3f(InBox.TopCorner);
+		}
+
+		/// <summary>
+		/// Writes a 12-byte Vector3f value to the data stream in XYZ order.
+		/// </summary>
+		/// <param name="Writer">Writer.</param>
+		/// <param name="Vector">Vector.</param>
+		public static void WriteVector3f(this BinaryWriter Writer, Vector3f Vector)
+		{
+			Writer.Write(Vector.X);
+			Writer.Write(Vector.Y);
+			Writer.Write(Vector.Z);
+		}
+
+		/// <summary>
+		/// Writes a 12-byte Rotator value to the data stream in Pitch/Yaw/Roll order.
+		/// </summary>
+		/// <param name="Writer">Writer.</param>
+		/// <param name="InRotator">Rotator.</param>
+		public static void WriteRotator(this BinaryWriter Writer, Rotator InRotator)
+		{
+			Writer.Write(InRotator.Pitch);
+			Writer.Write(InRotator.Yaw);
+			Writer.Write(InRotator.Roll);
+		}
 
 		/// <summary>
 		/// Writes an RIFF-style chunk signature to the data stream.

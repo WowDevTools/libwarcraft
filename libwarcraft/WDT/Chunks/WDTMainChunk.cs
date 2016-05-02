@@ -23,16 +23,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
+using Warcraft.ADT.Chunks;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class MainChunk
+	public class WDTMainChunk : IChunk
 	{
 		public const string Signature = "MAIN";
 
 		public List<AreaInfoEntry> AreaInfoEntries = new List<AreaInfoEntry>();
 
-		public MainChunk(byte[] data)
+		public WDTMainChunk(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
@@ -42,7 +43,7 @@ namespace Warcraft.WDT.Chunks
 					{
 						for (int x = 0; x < 64; ++x)
 						{
-							AreaInfoEntries.Add(new AreaInfoEntry(br.ReadBytes(AreaInfoEntry.GetSize())));
+							AreaInfoEntries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize())));
 						}
 					}
 				}
@@ -51,11 +52,11 @@ namespace Warcraft.WDT.Chunks
 
 		public byte[] Serialize()
 		{
-			using (MemoryStream ms = new MemoryStream(8))
+			using (MemoryStream ms = new MemoryStream())
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					bw.WriteChunkSignature(MainChunk.Signature);
+					bw.WriteChunkSignature(WDTMainChunk.Signature);
 					uint chunkSize = (uint)(AreaInfoEntries.Count * AreaInfoEntry.GetSize());
 					bw.Write(chunkSize);
 
@@ -105,7 +106,7 @@ namespace Warcraft.WDT.Chunks
 			}
 		}
 
-		public static int GetSize()
+		public static uint GetSize()
 		{
 			return 8;
 		}

@@ -56,6 +56,27 @@ namespace Warcraft.ADT.Chunks
 				}
 			}
 		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					bw.WriteChunkSignature(TerrainWorldModelObjectPlacementInfo.Signature);
+
+					uint chunkSize = (uint)(this.Entries.Count * WorldModelObjectPlacementEntry.GetSize());
+					bw.Write(chunkSize);
+
+					foreach (WorldModelObjectPlacementEntry Entry in this.Entries)
+					{
+						bw.Write(Entry.Serialize());
+					}
+				}
+
+				return ms.ToArray();
+			}
+		}
 	}
 
 	/// <summary>
@@ -69,9 +90,10 @@ namespace Warcraft.ADT.Chunks
 		public uint WorldModelObjectEntryIndex;
 
 		/// <summary>
-		/// A unique actor ID for the model. Blizzard implements this as game global, but it's only checked in loaded tiles
+		/// A unique actor ID for the model. Blizzard implements this as game global, but it's only checked in loaded tiles.
+		/// When not in use, it's set to -1.
 		/// </summary>
-		public uint UniqueID;
+		public int UniqueID;
 
 		/// <summary>
 		/// Position of the WMO
@@ -118,11 +140,10 @@ namespace Warcraft.ADT.Chunks
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					this.WorldModelObjectEntryIndex = br.ReadUInt32();
-					this.UniqueID = br.ReadUInt32();
+					this.UniqueID = br.ReadInt32();
 
 					this.Position = br.ReadVector3f();
 					this.Rotation = br.ReadRotator();
-
 					this.BoundingBox = br.ReadBox();
 
 					this.Flags = (WorldModelObjectFlags)br.ReadUInt16();
@@ -140,6 +161,29 @@ namespace Warcraft.ADT.Chunks
 		public static int GetSize()
 		{
 			return 64;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					bw.Write(this.WorldModelObjectEntryIndex);
+					bw.Write(this.UniqueID);
+
+					bw.WriteVector3f(this.Position);
+					bw.WriteRotator(this.Rotation);
+					bw.WriteBox(this.BoundingBox);
+
+					bw.Write((ushort)this.Flags);
+					bw.Write(this.DoodadSet);
+					bw.Write(this.NameSet);
+					bw.Write(this.Unused);
+				}
+
+				return ms.ToArray();
+			}
 		}
 	}
 

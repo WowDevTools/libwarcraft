@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System.IO;
+using Warcraft.Core;
 
 namespace Warcraft.ADT.Chunks
 {
@@ -47,6 +48,35 @@ namespace Warcraft.ADT.Chunks
 				{
 					this.Version = br.ReadUInt32();
 				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the size of the data contained in this chunk.
+		/// </summary>
+		/// <returns>The size.</returns>
+		public static uint GetSize()
+		{
+			return 4;
+		}
+
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					bw.WriteChunkSignature(TerrainVersion.Signature);
+
+					// The size of this chunk is alwas 4; A single field.
+					bw.Write((uint)4);
+
+					// Write the version
+					bw.Write(this.Version);
+				}
+
+				return ms.ToArray();
 			}
 		}
 	}

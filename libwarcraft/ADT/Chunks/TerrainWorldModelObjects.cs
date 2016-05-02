@@ -36,7 +36,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		///A list of full paths to the M2 models referenced in this ADT.
 		/// </summary>
-		public List<string> Filenames;
+		public List<string> Filenames = new List<string>();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldModelObjects"/> class.
@@ -55,7 +55,7 @@ namespace Warcraft.ADT.Chunks
 
 		public byte[] Serialize()
 		{
-			using (MemoryStream ms = new MemoryStream(8))
+			using (MemoryStream ms = new MemoryStream())
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{

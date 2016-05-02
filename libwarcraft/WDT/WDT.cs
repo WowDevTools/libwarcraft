@@ -23,6 +23,7 @@ using System;
 using Warcraft.ADT.Chunks;
 using Warcraft.WDT.Chunks;
 using System.IO;
+using Warcraft.Core;
 
 namespace Warcraft.WDT
 {
@@ -30,8 +31,8 @@ namespace Warcraft.WDT
 	{
 		public TerrainVersion Version;
 		public WDTHeader Header;
-
-		public WorldModelObjectChunk WorldModelObject;
+		public WDTMainChunk MainChunk;
+		public TerrainWorldModelObjects WorldModelObjects;
 		public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo;
 
 		public WDT(byte[] data)
@@ -40,7 +41,37 @@ namespace Warcraft.WDT
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
+					this.Version = (TerrainVersion)br.ReadTerrainChunk();
+					this.Header = (WDTHeader)br.ReadTerrainChunk();
+					this.MainChunk = (WDTMainChunk)br.ReadTerrainChunk();
+					this.WorldModelObjects = (TerrainWorldModelObjects)br.ReadTerrainChunk();
+
+					if (this.WorldModelObjects.Filenames.Count > 0)
+					{
+						this.WorldModelObjectPlacementInfo = (TerrainWorldModelObjectPlacementInfo)br.ReadTerrainChunk();
+					}
 				}
+			}
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					bw.Write(this.Version.Serialize());
+					bw.Write(this.Header.Serialize());
+					bw.Write(this.MainChunk.Serialize());
+					bw.Write(this.WorldModelObjects.Serialize());
+
+					if (WorldModelObjects.Filenames.Count > 0 && WorldModelObjectPlacementInfo != null)
+					{
+						bw.Write(this.WorldModelObjectPlacementInfo.Serialize());
+					}
+				}
+
+				return ms.ToArray();
 			}
 		}
 	}

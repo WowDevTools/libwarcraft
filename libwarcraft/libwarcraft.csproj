@@ -11,8 +11,6 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\Documents\Keys &amp; Cryptography\libwarcraft\libwarcraft.key</AssemblyOriginatorKeyFile>
     <ReleaseVersion>1.0</ReleaseVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -192,9 +190,8 @@
     <Compile Include="MDX\ModelObjectFlags.cs" />
     <Compile Include="WDT\WDT.cs" />
     <Compile Include="WDT\Chunks\WDTHeader.cs" />
-    <Compile Include="WDT\Chunks\MainChunk.cs" />
-    <Compile Include="WDT\Chunks\WorldModelObjectChunk.cs" />
     <Compile Include="ADT\Chunks\IChunk.cs" />
+    <Compile Include="WDT\Chunks\WDTMainChunk.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
