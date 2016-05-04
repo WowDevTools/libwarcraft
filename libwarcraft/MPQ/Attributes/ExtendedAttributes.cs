@@ -52,82 +52,106 @@ namespace Warcraft.MPQ.Attributes
 				throw new ArgumentNullException("data");
 			}
 			
-			MemoryStream dataStream = new MemoryStream(data);
-			BinaryReader br = new BinaryReader(dataStream, System.Text.Encoding.UTF8);
-
-			// Initial length (without any attributes) should be at least 8 bytes
-			uint expectedDataLength = 8;
-			if (data.Length < expectedDataLength)
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				this.Version = 0;
-				this.AttributesPresent = 0;
-				this.FileAttributes = null;
-			}
-			else
-			{
-				this.Version = br.ReadUInt32();
-				this.AttributesPresent = (AttributeTypes)br.ReadUInt32();
-
-				List<uint> CRC32s = new List<uint>();
-				if (AttributesPresent.HasFlag(AttributeTypes.CRC32))
+				using (BinaryReader br = new BinaryReader(ms))
 				{
-					expectedDataLength += sizeof(uint) * FileBlockCount;
-
-					for (int i = 0; i < FileBlockCount; ++i)
+					// Initial length (without any attributes) should be at least 8 bytes
+					uint expectedDataLength = 8;
+					if (data.Length < expectedDataLength)
 					{
-						if (data.Length >= expectedDataLength)
+						this.Version = 0;
+						this.AttributesPresent = 0;
+						this.FileAttributes = null;
+					}
+					else
+					{
+						this.Version = br.ReadUInt32();
+						this.AttributesPresent = (AttributeTypes)br.ReadUInt32();
+
+						List<uint> CRC32s = new List<uint>();
+						if (AttributesPresent.HasFlag(AttributeTypes.CRC32))
 						{
-							CRC32s.Add(br.ReadUInt32());
+							expectedDataLength += sizeof(uint) * FileBlockCount;
+
+							for (int i = 0; i < FileBlockCount; ++i)
+							{
+								if (data.Length >= expectedDataLength)
+								{
+									CRC32s.Add(br.ReadUInt32());
+								}
+								else
+								{
+									CRC32s.Add(0);
+								}
+							}
 						}
 						else
 						{
-							CRC32s.Add(0);
+							for (int i = 0; i < FileBlockCount; ++i)
+							{
+								CRC32s.Add(0);
+							}
 						}
-					}
-				}
 
-				List<ulong> Timestamps = new List<ulong>();
-				if (AttributesPresent.HasFlag(AttributeTypes.Timestamp))
-				{
-					expectedDataLength += sizeof(ulong) * FileBlockCount;
-
-					for (int i = 0; i < FileBlockCount; ++i)
-					{
-						if (data.Length >= expectedDataLength)
+						List<ulong> Timestamps = new List<ulong>();
+						if (AttributesPresent.HasFlag(AttributeTypes.Timestamp))
 						{
-							Timestamps.Add(br.ReadUInt64());
+							expectedDataLength += sizeof(ulong) * FileBlockCount;
+
+							for (int i = 0; i < FileBlockCount; ++i)
+							{
+								if (data.Length >= expectedDataLength)
+								{
+									Timestamps.Add(br.ReadUInt64());
+								}
+								else
+								{
+									Timestamps.Add(0);
+								}
+							}
 						}
 						else
 						{
-							Timestamps.Add(0);
+							for (int i = 0; i < FileBlockCount; ++i)
+							{
+								Timestamps.Add(0);
+							}
 						}
-					}
-				}
 
-				List<string> MD5s = new List<string>();
-				if (AttributesPresent.HasFlag(AttributeTypes.MD5))
-				{
-					expectedDataLength += 16 * FileBlockCount;
-
-					for (int i = 0; i < FileBlockCount; ++i)
-					{
-						if (data.Length >= expectedDataLength)
+						List<string> MD5s = new List<string>();
+						if (AttributesPresent.HasFlag(AttributeTypes.MD5))
 						{
-							byte[] md5Data = br.ReadBytes(16);
-							string md5 = BitConverter.ToString(md5Data).Replace("-", "");
-							MD5s.Add(md5);
+							expectedDataLength += 16 * FileBlockCount;
+
+							for (int i = 0; i < FileBlockCount; ++i)
+							{
+								if (data.Length >= expectedDataLength)
+								{
+									byte[] md5Data = br.ReadBytes(16);
+									string md5 = BitConverter.ToString(md5Data).Replace("-", "");
+									MD5s.Add(md5);
+								}
+								else
+								{
+									MD5s.Add("");
+								}
+							}
 						}
 						else
 						{
-							MD5s.Add("");
+							for (int i = 0; i < FileBlockCount; ++i)
+							{
+								MD5s.Add("");
+							}
+						}
+
+						this.FileAttributes = new List<FileAttributes>();
+						for (int i = 0; i < FileBlockCount; ++i)
+						{
+							FileAttributes.Add(new FileAttributes(CRC32s[i], Timestamps[i], MD5s[i]));
 						}
 					}
-				}
-
-				this.FileAttributes = new List<FileAttributes>();
-				for (int i = 0; i < FileBlockCount; ++i)
-				{
-					FileAttributes.Add(new FileAttributes(CRC32s[i], Timestamps[i], MD5s[i]));
 				}
 			}
 		}

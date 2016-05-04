@@ -31,7 +31,7 @@ using Warcraft.WDT.Chunks;
 
 namespace Warcraft.Core
 {
-	static class ExtensionMethods
+	public static class ExtensionMethods
 	{
 		public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
 		{
