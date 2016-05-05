@@ -38,7 +38,7 @@ using Warcraft.MPQ.Attributes;
 
 namespace Warcraft.MPQ
 {
-	public sealed class MPQ : IDisposable
+	public sealed class MPQ : IDisposable, IPackage
 	{
 		/// <summary>
 		/// Whether or not this instance has been disposed.
@@ -138,7 +138,7 @@ namespace Warcraft.MPQ
 				}
 			}
 
-			if (DoesFileExist(ExtendedAttributes.InternalFileName))
+			if (ContainsFile(ExtendedAttributes.InternalFileName))
 			{
 				byte[] attributeData = ExtractFile(ExtendedAttributes.InternalFileName);
 
@@ -173,7 +173,7 @@ namespace Warcraft.MPQ
 				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
 			}
 
-			return DoesFileExist(ExtendedAttributes.InternalFileName);
+			return ContainsFile(ExtendedAttributes.InternalFileName);
 		}
 
 		/// <summary>
@@ -187,7 +187,7 @@ namespace Warcraft.MPQ
 				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
 			}
 
-			return DoesFileExist("(listfile)") || ExternalListfile.Count > 0;
+			return ContainsFile("(listfile)") || ExternalListfile.Count > 0;
 		}
 
 		/// <summary>
@@ -297,7 +297,7 @@ namespace Warcraft.MPQ
 		/// </summary>
 		/// <returns><c>true</c>, if the file exists, <c>false</c> otherwise.</returns>
 		/// <param name="filePath">File path.</param>
-		public bool DoesFileExist(string filePath)
+		public bool ContainsFile(string filePath)
 		{
 			if (bDisposed)
 			{
@@ -320,7 +320,7 @@ namespace Warcraft.MPQ
 				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
 			}
 
-			if (DoesFileExist(filePath))
+			if (ContainsFile(filePath))
 			{
 				HashTableEntry hashEntry = ArchiveHashTable.FindEntry(filePath);
 				BlockTableEntry blockEntry = ArchiveBlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
@@ -363,7 +363,7 @@ namespace Warcraft.MPQ
 				BlockTableEntry fileBlockEntry = ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
 
 				// Drop out if the file is not actually a file
-				if (!fileBlockEntry.Flags.HasFlag(BlockFlags.Exists))
+				if (!fileBlockEntry.Flags.HasFlag(BlockFlags.Exists) || fileBlockEntry.Flags.HasFlag(BlockFlags.IsDeletionMarker))
 				{
 					return null;
 				}

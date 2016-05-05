@@ -28,6 +28,7 @@ using System.Text;
 using System.Collections.Generic;
 using Warcraft.ADT.Chunks.Subchunks;
 using Warcraft.WDT.Chunks;
+using Warcraft.WDL.Chunks;
 
 namespace Warcraft.Core
 {
@@ -129,13 +130,7 @@ namespace Warcraft.Core
 			return sb.ToString();			
 		}
 
-		/// <summary>
-		/// Reads a standard RIFF-style chunk from the data stream, and advances the position of the stream
-		/// by the size of the chunk.
-		/// </summary>
-		/// <returns>The terrain chunk.</returns>
-		/// <param name="Reader">Reader.</param>
-		public static IChunk ReadTerrainChunk(this BinaryReader Reader)
+		public static string ReadChunkSignature(this BinaryReader Reader)
 		{
 			// The signatures are stored in reverse in the file, so we'll need to read them backwards into
 			// the buffer.
@@ -146,10 +141,22 @@ namespace Warcraft.Core
 			}
 
 			string Signature = new string(signatureBuffer);
+			return Signature;
+		}
+
+		/// <summary>
+		/// Reads a standard RIFF-style chunk from the data stream, and advances the position of the stream
+		/// by the size of the chunk.
+		/// </summary>
+		/// <returns>The terrain chunk.</returns>
+		/// <param name="Reader">Reader.</param>
+		public static IChunk ReadTerrainChunk(this BinaryReader Reader)
+		{			
 			uint ChunkSize = Reader.ReadUInt32();
 
 			byte[] chunkData = Reader.ReadBytes((int)ChunkSize);
 
+			string Signature = Reader.ReadChunkSignature();
 			switch (Signature)
 			{
 				case TerrainVersion.Signature:
@@ -255,6 +262,18 @@ namespace Warcraft.Core
 				case AreaInfoChunk.Signature:
 					{
 						return new AreaInfoChunk(chunkData);
+					}
+				case WorldLODMapAreaOffsets.Signature:
+					{
+						return new WorldLODMapAreaOffsets(chunkData);
+					}
+				case WorldLODMapArea.Signature:
+					{
+						return new WorldLODMapArea(chunkData);
+					}
+				case WorldLODMapAreaHoles.Signature:
+					{
+						return new WorldLODMapAreaHoles(chunkData);
 					}
 				default:
 					{

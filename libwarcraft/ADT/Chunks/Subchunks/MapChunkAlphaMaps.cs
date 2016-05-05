@@ -160,10 +160,6 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 			return DecompressedAlphaMap;				
 		}
-		//4 layers of alpha maps. This is the magic right here.
-		//each layer is a 32x64 array of alpha values
-		//can be formatted according to one of three types:
-
 		/* 
 	     * Uncompressed with a size of 4096 (post WOTLK)
 	     * Uncompressed with a size of 2048 (pre WOTLK)

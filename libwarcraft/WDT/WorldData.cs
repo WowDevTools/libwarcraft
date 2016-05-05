@@ -28,7 +28,7 @@ using System.Collections.Generic;
 
 namespace Warcraft.WDT
 {
-	public class WDT
+	public class WorldData
 	{
 		public TerrainVersion Version;
 		public WDTHeader Header;
@@ -36,7 +36,7 @@ namespace Warcraft.WDT
 		public TerrainWorldModelObjects WorldModelObjects;
 		public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo;
 
-		public WDT(byte[] data)
+		public WorldData(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{

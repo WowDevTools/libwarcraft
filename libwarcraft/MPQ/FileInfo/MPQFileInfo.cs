@@ -70,6 +70,18 @@ namespace Warcraft.MPQ.FileInfo
 		}
 
 		/// <summary>
+		/// Gets a value indicating whether this reference is deleted in the archive.
+		/// </summary>
+		/// <value><c>true</c> if this reference is deleted; otherwise, <c>false</c>.</value>
+		public bool IsDeleted
+		{
+			get
+			{
+				return this.GetFlags().HasFlag(BlockFlags.IsDeletionMarker);
+			}
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.MPQ.FileInfo.MPQFileInfo"/> class.
 		/// </summary>
 		/// <param name="InPath">In path.</param>

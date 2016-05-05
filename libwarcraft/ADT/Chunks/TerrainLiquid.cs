@@ -22,6 +22,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using Warcraft.WDT.Chunks;
 
 namespace Warcraft.ADT.Chunks
 {
@@ -175,7 +176,8 @@ namespace Warcraft.ADT.Chunks
 		/// oceans (<see cref="LiquidType"/> = 2) have a hardcoded check that the LiquidVertexFormat also equals 2.
 		///
 		/// Since the vertex data format is undetermined (and as such the length is also undetermined) without
-		/// a DBC entry, it's up to external programs to read the correct values.
+		/// a DBC entry, it's up to external programs to read the correct values. You can also use the GameWorld wrapper
+		/// class.
 		/// </summary>
 		public uint VertexDataOffset;
 		public LiquidVertexData VertexData;
@@ -201,6 +203,8 @@ namespace Warcraft.ADT.Chunks
 					this.VertexDataOffset = br.ReadUInt32();
 
 					// TODO: Read boolean map
+
+					// TODO: [#9] Accept DBC liquid type and read vertex data
 				}
 			}
 		}
@@ -243,6 +247,13 @@ namespace Warcraft.ADT.Chunks
 				}
 			}
 		}
+
+		public static int GetBlockSize(byte Width, byte Height)
+		{
+			int ArrayEntryCount = (Width + 1) * (Height + 1);
+
+			return (sizeof(float) + sizeof(byte)) * ArrayEntryCount;
+		}
 	}
 
 	public sealed class HeightUVVertexData : LiquidVertexData
@@ -270,6 +281,13 @@ namespace Warcraft.ADT.Chunks
 				}
 			}
 		}
+
+		public static int GetBlockSize(byte Width, byte Height)
+		{
+			int ArrayEntryCount = (Width + 1) * (Height + 1);
+
+			return (sizeof(float) + (sizeof(ushort) * 2)) * ArrayEntryCount;
+		}
 	}
 
 	public sealed class DepthOnlyVertexData : LiquidVertexData
@@ -290,6 +308,13 @@ namespace Warcraft.ADT.Chunks
 					}
 				}
 			}
+		}
+
+		public static int GetBlockSize(byte Width, byte Height)
+		{
+			int ArrayEntryCount = (Width + 1) * (Height + 1);
+
+			return sizeof(byte) * ArrayEntryCount;
 		}
 	}
 
@@ -323,6 +348,13 @@ namespace Warcraft.ADT.Chunks
 					}
 				}
 			}
+		}
+
+		public static int GetBlockSize(byte Width, byte Height)
+		{
+			int ArrayEntryCount = (Width + 1) * (Height + 1);
+
+			return (sizeof(float) + sizeof(byte) + (sizeof(ushort) * 2)) * ArrayEntryCount;
 		}
 	}
 }

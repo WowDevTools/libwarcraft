@@ -10,9 +10,6 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\libwarcraft.key</AssemblyOriginatorKeyFile>
-    <ReleaseVersion>1.0</ReleaseVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,7 +50,6 @@
     <Compile Include="MPQ\MPQHeader.cs" />
     <Compile Include="MPQ\MPQShunt.cs" />
     <Compile Include="MPQ\MPQFormat.cs" />
-    <Compile Include="ADT\ADT.cs" />
     <Compile Include="Core\Compression\Compression.cs" />
     <Compile Include="Core\Compression\CompressionAlgorithms.cs" />
     <Compile Include="Core\Compression\Huffman.cs" />
@@ -190,10 +186,17 @@
     <Compile Include="DBC\Definitions\UnknownRecord.cs" />
     <Compile Include="TRS\TRS.cs" />
     <Compile Include="MDX\ModelObjectFlags.cs" />
-    <Compile Include="WDT\WDT.cs" />
     <Compile Include="WDT\Chunks\WDTHeader.cs" />
     <Compile Include="ADT\Chunks\IChunk.cs" />
     <Compile Include="WDT\Chunks\AreaInfoChunk.cs" />
+    <Compile Include="MPQ\IPackage.cs" />
+    <Compile Include="Containers\Terrain\GameWorld.cs" />
+    <Compile Include="WDT\WorldData.cs" />
+    <Compile Include="WDL\WorldLOD.cs" />
+    <Compile Include="ADT\TerrainTile.cs" />
+    <Compile Include="WDL\Chunks\WorldLODMapArea.cs" />
+    <Compile Include="WDL\Chunks\WorldLODMapAreaOffsets.cs" />
+    <Compile Include="WDL\Chunks\WorldLODMapAreaHoles.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />
@@ -244,6 +247,10 @@
     <Folder Include="TRS\" />
     <Folder Include="WDT\" />
     <Folder Include="WDT\Chunks\" />
+    <Folder Include="Containers\" />
+    <Folder Include="Containers\Terrain\" />
+    <Folder Include="WDL\" />
+    <Folder Include="WDL\Chunks\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

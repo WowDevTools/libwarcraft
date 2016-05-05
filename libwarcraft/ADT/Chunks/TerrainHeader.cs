@@ -80,7 +80,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Offset into the file where the MH2O Chunk can be found. 
 		/// </summary>
-		public int WaterOffset;
+		public int LiquidOffset;
 		/// <summary>
 		/// Offset into the file where the MTXF Chunk can be found. 
 		/// </summary>
@@ -112,7 +112,7 @@ namespace Warcraft.ADT.Chunks
 					this.WorldModelObjectPlacementInformationOffset = br.ReadInt32();
 
 					this.BoundingBoxOffset = br.ReadInt32();
-					this.WaterOffset = br.ReadInt32();
+					this.LiquidOffset = br.ReadInt32();
 					this.TextureFlagsOffset = br.ReadInt32();
 				}
 			}
