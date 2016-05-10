@@ -158,7 +158,8 @@ namespace Warcraft.MPQ.Crypto
 		}
 
 		/// <summary>
-		/// Hashes an input string, given a hash type.
+		/// Hashes an input string, given a hash type. This function is case-insensitive, and
+		/// treats all input as being in ALL UPPER CASE.
 		/// </summary>
 		/// <returns>The hash.</returns>
 		/// <param name="inputString">Input string.</param>
