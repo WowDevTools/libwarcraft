@@ -31,7 +31,16 @@ The following formats are not implemented yet:
 * BLOB (Model Bounding Boxes)
 * DNC.DB (Day/Night Cycle Database (now obsolete))
 
-If you want to help out, I'll gladly accept pull requests and patches for the code, as well as further implementations of current or future file formats. If you have a project that uses the library and you want to share it with other people, send me a link and I'll add it to the list below.
+If you want to help out, I'll gladly accept pull requests and patches for the code, as well as further implementations of current or future file formats. If you have a project that uses the library and you want to share it with other people, send me a link and I'll add it to the project list below.
+
+## Getting libwarcraft
+There are a number of ways you could use libwarcraft. For Windows users, the current method is, unfortunately, limited to downloading and compiling from source. You get the latest version, but it's a bit more of a hassle.
+
+Ubuntu (and Ubuntu derivations) can simply add this PPA to get the library, a development package, and a number of other helper packages as well as the software I develop using the library. This is my main place where I release software that sits under the libwarcraft umbrella.
+
+* [[PPA] blizzard-development-tools](https://launchpad.net/~jarl-gullberg/+archive/ubuntu/blizzard-dev-tools)
+
+Debian users can manually download packages from the PPA.
 
 ## Projects
 libwarcraft is still in its infancy, but it is still in a quite usable state. The following is a list of projects that use libwarcraft to power their file format needs. A listing here is not an endorsement, but be sure to check them out! Some of my own projects are listed here as well.
@@ -39,11 +48,15 @@ libwarcraft is still in its infancy, but it is still in a quite usable state. Th
 * [Everlook](https://github.com/Nihlus/Everlook) - a cross-platform C# replacement for World of Warcraft Model Viewer.
 * [gnome-blp-thumbnailer](https://github.com/Nihlus/gnome-blp-thumbnailer) - A thumbnail generator for BLP images under the GNOME desktop environment.
 
+While not strictly a part of libwarcraft, having the correct mime types available is very useful. You can find a set of FreeDesktop MIME type definitions here:
+
+* [blizzard-mime-types](https://github.com/Nihlus/blizzard-mime-types)
+
 ## Licensing
 
 libwarcraft is Free Software, and is distributed under the GPLv3 license. This means, in simple terms, that you are free to do whatever you want with the source code and any binaries compiled or generated from it as long as you pass on those rights to anyone aquiring a copy of the source code or binaries. The full licence can be read in the file "LICENSE" at the root of the source tree, or at http://choosealicense.com/licenses/gpl-3.0/, where a more people-friendly summary is also available.
 
-The use of the GPLv3 license and not the LGPLv3 license is a conscious choice by me, the author. If you're unsure what this means, it means that any software that links to or makes use of this library must also be licensed under the GPLv3 license and carry the same rights and grants of rights as the library itself. I am of the firm opinion that closed source software stifles creativity and inhibits technological progress. This library is  not only a way to develop tools that can be used to interact with WoW and its ilk, but also a statement from me to the modding scene. Share, develop, and be wonderful to each other. Don't adhere to the old closed-source ways, and embrace the wonderful world of free software.
+The use of the GPLv3 license and not the LGPLv3 license is a conscious choice by me. If you're unsure what this means, it means that any software that links to or makes use of this library must also be licensed under the GPLv3 license or later, and carry the same rights and grants of rights as the library itself. I am of the firm opinion that closed source software (with certain exceptions) stifles creativity and inhibits technological progress. Share, develop, and be wonderful to each other. Don't adhere to the old closed-source ways, and embrace the wonderful world of free software.
 
 ## Credits
 Most file documentation has been gathered from https://wowdev.wiki/ - a great big thanks to everyone who contributed and is contributing to that wiki! The implementation of the MPQ format was mainly taken from devklog.net and zezula.net. The former has shut down, but is still available through the wayback machine, while the latter is nice as complementary information.
