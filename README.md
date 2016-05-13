@@ -37,6 +37,7 @@ If you want to help out, I'll gladly accept pull requests and patches for the co
 libwarcraft is still in its infancy, but it is still in a quite usable state. The following is a list of projects that use libwarcraft to power their file format needs. A listing here is not an endorsement, but be sure to check them out! Some of my own projects are listed here as well.
 
 * [Everlook](https://github.com/Nihlus/Everlook) - a cross-platform C# replacement for World of Warcraft Model Viewer.
+* [gnome-blp-thumbnailer](https://github.com/Nihlus/gnome-blp-thumbnailer) - A thumbnail generator for BLP images under the GNOME desktop environment.
 
 ## Licensing
 
