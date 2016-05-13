@@ -34,7 +34,7 @@ The following formats are not implemented yet:
 If you want to help out, I'll gladly accept pull requests and patches for the code, as well as further implementations of current or future file formats. If you have a project that uses the library and you want to share it with other people, send me a link and I'll add it to the project list below.
 
 ## Getting libwarcraft
-There are a number of ways you could use libwarcraft. For Windows users, the current method is, unfortunately, limited to downloading and compiling from source. You get the latest version, but it's a bit more of a hassle.
+There are a number of ways you could use libwarcraft. For Windows users, the current method is, unfortunately, limited to downloading and compiling from source. You get the latest version, but it's a bit more of a hassle. In the future, the libwarcraft base library will be available through NuGet.
 
 Ubuntu (and Ubuntu derivations) can simply add this PPA to get the library, a development package, and a number of other helper packages as well as the software I develop using the library. This is my main place where I release software that sits under the libwarcraft umbrella.
 
