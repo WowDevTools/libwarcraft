@@ -40,7 +40,9 @@ Ubuntu (and Ubuntu derivations) can simply add this PPA to get the library, a de
 
 * [[PPA] blizzard-development-tools](https://launchpad.net/~jarl-gullberg/+archive/ubuntu/blizzard-dev-tools)
 
-Debian users can manually download packages from the PPA.
+Debian users can manually download packages from the PPA, or add it manually to their sources.list file. Maybe someday it'll be in the main repo? We can hope!
+
+Other Linux users can get tarballs of the binaries from the PPA as well. I plan on figuring out some better format for you soon. If someone who uses Arch sees this, I'd love some help getting it onto the AUR.
 
 ## Projects
 libwarcraft is still in its infancy, but it is still in a quite usable state. The following is a list of projects that use libwarcraft to power their file format needs. A listing here is not an endorsement, but be sure to check them out! Some of my own projects are listed here as well.
