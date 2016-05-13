@@ -1,0 +1,27 @@
+libwarcraft1.0-cli (1.0.1.25862-1) trusty; urgency=medium
+
+  * Updated build-depends to depend on mono-mcs 4.0 and above
+  * Removed default property assignment in DBCRecord.cs
+  * Fixed some whitespace issues
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Fri, 13 May 2016 14:22:04 +0200
+
+libwarcraft1.0-cli (1.0.1.25532-1) trusty; urgency=medium
+
+ * Finished PPA pipeline.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Fri, 13 May 2016 14:11:04 +0200
+
+libwarcraft1.0-cli (1.0.1.25479-1) UNRELEASED; urgency=medium
+
+  * Implemented debian control files.
+  * Implemented WDT tables.
+  * Improved MPQ file searching.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Fri, 13 May 2016 14:09:19 +0200
+
+libwarcraft1.0-cli (1.0.1.21915-1) trusty; urgency=low
+
+  * Initial release
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Fri, 13 May 2016 12:17:02 +0200

@@ -23,9 +23,9 @@ using System;
 
 namespace Warcraft.Core
 {
-	public enum WarcraftVersion
+	public enum WarcraftVersion : uint
 	{
-		Unknown = -1,
+		Unknown = 0,
 		Classic = 1,
 		BurningCrusade = 2,
 		Wrath = 3,

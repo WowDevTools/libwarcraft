@@ -43,7 +43,7 @@ namespace Warcraft.DBC.Definitions
 		{
 			get;
 			protected set;
-		} = WarcraftVersion.Unknown;
+		}
 
 		/// <summary>
 		/// Sets the version this record is valid for.

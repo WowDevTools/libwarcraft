@@ -1,7 +1,7 @@
 prefix=/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
-pkglibdir=${libdir}/cli/libwarcraft-1.0
+pkglibdir=${libdir}/cli/libwarcraft1.0
 
 Name: libwarcraft
 Description: Open library for interacting with Blizzard file formats

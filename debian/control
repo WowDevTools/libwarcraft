@@ -1,0 +1,75 @@
+Source: libwarcraft1.0-cli
+Priority: optional
+Maintainer: Jarl Gullberg <jarl.gullberg@gmail.com>
+Build-Depends: debhelper (>= 8.0.0), 
+	cli-common-dev (>= 0.8),
+	libmono-cil-dev,
+	mono-mcs (>= 4.0),
+	mono-devel (>= 2.4.2.3),
+	mono-xbuild,
+	dotnetzip-cli (>= 1.9.1.8),
+	dotnetzip-cli-dev (>= 1.9.1.8)
+Standards-Version: 3.9.5
+Section: libs
+Homepage: https://github.com/Nihlus/libwarcraft
+
+Package: libwarcraft1.0-cli-dev
+Section: libdevel
+Architecture: any
+Depends: libwarcraft1.0-cli (= ${binary:Version}), ${misc:Depends}
+Description: Mono Package Control files for libwarcraft.
+ Contains .pc files needed for MonoDevelop to find the libwarcraft binaries.
+
+Package: libwarcraft1.0-cli
+Section: libs
+Architecture: any
+Depends: ${cli:Depends}, ${misc:Depends}
+Description: libwarcraft is a managed class library for binary Blizzard files.
+ libwarcraft is a managed C# library for interacting with binary file formats 
+ created by Blizzard Activision. 
+ The goal of the library is to be fully compatible with 
+ all proprietary file formats used in their games, 
+ and to serve as an all-in-one backend solution for applications 
+ wishing to read and modify these files. 
+ .
+ The primary focus for the library at the moment is to provide a complete 
+ implementation of all formats used up to and including Wrath of the Lich King. 
+ Anyone is free to use this library to write their own applications for 
+ performing operations on the file formats, and is in fact encouraged. 
+ The library is not meant for specialized applications (adding water to terrain, 
+ repacking images, adding animations or editing geometry of models),
+ but rather strives to expose all functionality needed for other applications to 
+ implement that functionality as is best for their use case.
+ .
+ libwarcraft currently implements the following file formats:
+  - BLP (Blizzard Picture): Read/Write, versions 0, 1, and 2
+  - MPQ (Mike O'Brien Package): Read, Basic to Extended v1 format.
+  - DBC (Database - Client): Read, DB1 format. Most definitions are missing.
+  - TRS (Hashmap Translation Table): Read support.
+  - WDT (World Map Table): Fully compliant read & write.
+  - WDL (World Map LOD): Read support.
+ .
+ The following formats are still in progress, and may not work as intended:
+  - MDX (Model): Partial read, Wrath of the Lich King. 
+    No animation data is exposed, but it's being read internally.
+  - WMO (World Model Object): Classes stubbed.
+  - ADT (Areadata Tile): Near-full read support, up to and including WotLK.
+ .
+ The following formats are not implemented yet:
+  - WLW (World Liquid Water)
+  - WLQ (World Liquid)
+  - WLM (World Liquid Mapping)
+  - LIT (Static Lighting (now obsolete))
+  - CHK.NOT (Unknown. Possibly godrays)
+  - DB2 (Cataclysm (and up) DBC files)
+  - WDB (Client Cache Database)
+  - TBL (Hotfix Identifier)
+  - BLS (Blizzard Shader Container)
+  - TEX (Streaming Textures)
+  - BLOB (Model Bounding Boxes)
+  - DNC.DB (Day/Night cycle (now obsolete))
+ .
+ If you want to help out, I'll gladly accept pull requests and patches for the 
+ code, as well as further implementations of current or future file formats. 
+ If you have a project that uses the library and you want to share it with other 
+ people, send me a link and I'll add it to the list on GitHub.
