@@ -4,6 +4,31 @@ using System.Collections.Generic;
 
 namespace Warcraft.Core
 {
+	public struct Range
+	{
+		public float Minimum
+		{
+			get;
+			private set;
+		}
+
+		public float Maximum
+		{
+			get;
+			private set;
+		}
+
+		public Range(float InMin, float InMax)
+		{
+			if (!(InMin <= InMax))
+			{
+				throw new ArgumentOutOfRangeException("InMin", "InMin must be less than or equal to InMax");
+			}
+
+			this.Minimum = InMin;
+			this.Maximum = InMax;
+		}
+	}
 	public struct Box
 	{
 		public Vector3f BottomCorner;

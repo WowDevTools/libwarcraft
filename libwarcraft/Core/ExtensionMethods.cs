@@ -96,6 +96,16 @@ namespace Warcraft.Core
 		*/
 
 		/// <summary>
+		/// Reads an 8-byte Range value from the data stream.
+		/// </summary>
+		/// <returns>The range.</returns>
+		/// <param name="Reader">Reader.</param>
+		public static Range ReadRange(this BinaryReader Reader)
+		{
+			return new Range(Reader.ReadSingle(), Reader.ReadSingle());
+		}
+
+		/// <summary>
 		/// Reads a 4-byte RGBA value from the data stream.
 		/// </summary>
 		/// <returns>The argument.</returns>
@@ -381,6 +391,17 @@ namespace Warcraft.Core
 		/*
 			Binary Writer extensions for standard types
 		*/
+
+		/// <summary>
+		/// Writes a 8-byte range to the data stream.
+		/// </summary>
+		/// <param name="Writer">Writer.</param>
+		/// <param name="InRange">In range.</param>
+		public static void WriteRange(this BinaryWriter Writer, Range InRange)
+		{
+			Writer.Write(InRange.Minimum);
+			Writer.Write(InRange.Maximum);
+		}
 
 		/// <summary>
 		/// Writes a 24-byte bounding box to the data stream.

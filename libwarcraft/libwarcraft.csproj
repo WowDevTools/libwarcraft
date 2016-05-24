@@ -9,6 +9,9 @@
     <AssemblyName>libwarcraft</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\libwarcraft.key</AssemblyOriginatorKeyFile>
+    <ReleaseVersion>1.0</ReleaseVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -179,8 +182,6 @@
     <Compile Include="DBC\Definitions\AnimationDataRecord.cs" />
     <Compile Include="DBC\SpecialFields\StringReference.cs" />
     <Compile Include="DBC\SpecialFields\ForeignKey.cs" />
-    <Compile Include="DBC\SpecialFields\Int32ForeignKey.cs" />
-    <Compile Include="DBC\SpecialFields\Int16ForeignKey.cs" />
     <Compile Include="Core\WarcraftFileType.cs" />
     <Compile Include="DBC\Definitions\UnknownRecord.cs" />
     <Compile Include="TRS\TRS.cs" />
@@ -196,6 +197,8 @@
     <Compile Include="WDL\Chunks\WorldLODMapArea.cs" />
     <Compile Include="WDL\Chunks\WorldLODMapAreaOffsets.cs" />
     <Compile Include="WDL\Chunks\WorldLODMapAreaHoles.cs" />
+    <Compile Include="DBC\SpecialFields\UInt16ForeignKey.cs" />
+    <Compile Include="DBC\SpecialFields\UInt32ForeignKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />

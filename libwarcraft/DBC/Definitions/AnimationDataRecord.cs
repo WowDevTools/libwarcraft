@@ -57,12 +57,12 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// The fallback animation that precedes this one.
 		/// </summary>
-		public Int32ForeignKey FallbackAnimation;
+		public UInt32ForeignKey FallbackAnimation;
 
 		/// <summary>
 		/// The top-level behaviour animation that this animation is a child of.
 		/// </summary>
-		public Int32ForeignKey BehaviourAnimation;
+		public UInt32ForeignKey BehaviourAnimation;
 
 		/// <summary>
 		/// The behaviour tier of the animation. In most cases, this indicates whether or not the animation
@@ -100,8 +100,8 @@ namespace Warcraft.DBC.Definitions
 
 					this.Flags = br.ReadUInt32();
 
-					this.FallbackAnimation = new Int32ForeignKey(AnimationDataRecord.RecordName, "ID", br.ReadUInt32());
-					this.BehaviourAnimation = new Int32ForeignKey(AnimationDataRecord.RecordName, "ID", br.ReadUInt32());
+					this.FallbackAnimation = new UInt32ForeignKey(AnimationDataRecord.RecordName, "ID", br.ReadUInt32());
+					this.BehaviourAnimation = new UInt32ForeignKey(AnimationDataRecord.RecordName, "ID", br.ReadUInt32());
 
 					if (Version >= WarcraftVersion.Wrath)
 					{
