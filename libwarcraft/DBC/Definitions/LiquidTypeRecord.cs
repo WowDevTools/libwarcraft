@@ -47,11 +47,7 @@ namespace Warcraft.DBC.Definitions
 			}
 		}
 
-		public Int32ForeignKey SpellEffect;
-
-		public LiquidTypeRecord()
-		{
-		}
+		public UInt32ForeignKey SpellEffect;
 
 		/// <summary>
 		/// Loads and parses the provided data.
@@ -63,7 +59,7 @@ namespace Warcraft.DBC.Definitions
 			{
 				throw new InvalidOperationException("The record data cannot be loaded before SetVersion has been called.");
 			}
-			
+
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
@@ -71,11 +67,9 @@ namespace Warcraft.DBC.Definitions
 					this.ID = br.ReadUInt32();
 					this.Name = new StringReference(br.ReadUInt32());
 
-					// Will have to translate this to the different versions. Seems like it's been shuffled around
 					this.Type = (LiquidType)br.ReadInt32();
 
-					this.SpellEffect = new Int32ForeignKey("Spell", "ID", br.ReadUInt32());
-					//this.SpellEffect = new Int32ForeignKey(SpellRecord.RecordName, "ID", br.ReadUInt32());
+					this.SpellEffect = new UInt32ForeignKey(SpellRecord.RecordName, "ID", br.ReadUInt32());
 				}
 			}
 		}
