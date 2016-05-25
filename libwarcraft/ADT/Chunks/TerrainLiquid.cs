@@ -23,6 +23,8 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Warcraft.WDT.Chunks;
+using Warcraft.DBC.SpecialFields;
+using Warcraft.Core;
 
 namespace Warcraft.ADT.Chunks
 {
@@ -148,15 +150,14 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// The type of the liquid. Foreign key reference to LiquidTypeRec::ID.
 		/// </summary>
-		public ushort LiquidType;
+		public UInt16ForeignKey LiquidType;
 
 		/// <summary>
 		/// The liquid object. Foreign key reference to LiquidObjectRec::ID.
 		/// </summary>
-		public ushort LiquidObject;
+		public UInt16ForeignKey LiquidObject;
 
-		public float MinHeightLevel;
-		public float MaxHeightLevel;
+		public Range HeightLevelRange;
 
 		public byte XLiquidOffset;
 		public byte YLiquidOffset;
@@ -188,11 +189,10 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.LiquidType = br.ReadUInt16();
-					this.LiquidObject = br.ReadUInt16();
+					this.LiquidType = new UInt16ForeignKey("LiquidType", "ID", br.ReadUInt16());
+					this.LiquidObject = new UInt16ForeignKey("LiquidObject", "ID", br.ReadUInt16());
 
-					this.MinHeightLevel = br.ReadSingle();
-					this.MaxHeightLevel = br.ReadSingle();
+					this.HeightLevelRange = new Range(br.ReadSingle(), br.ReadSingle());
 
 					this.XLiquidOffset = br.ReadByte();
 					this.YLiquidOffset = br.ReadByte();
