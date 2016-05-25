@@ -196,6 +196,9 @@
     <Compile Include="WDL\Chunks\WorldLODMapArea.cs" />
     <Compile Include="WDL\Chunks\WorldLODMapAreaOffsets.cs" />
     <Compile Include="WDL\Chunks\WorldLODMapAreaHoles.cs" />
+    <Compile Include="DBC\Definitions\LiquidTypeRecord.cs" />
+    <Compile Include="Core\FieldVersion.cs" />
+    <Compile Include="MPQ\Crypto\WeakPackageSignature.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Compression\Blast\LICENSE" />

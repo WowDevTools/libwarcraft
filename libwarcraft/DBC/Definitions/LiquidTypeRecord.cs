@@ -1,5 +1,5 @@
-//
-//  AnimationDataRecord.cs
+﻿//
+//  LiquidTypeRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,60 +20,36 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
-using Warcraft.Core;
 using System.IO;
 using Warcraft.DBC.SpecialFields;
+using Warcraft.Core;
 
 namespace Warcraft.DBC.Definitions
 {
-	/// <summary>
-	/// Animation data record. This database defines the different animations models can have, and
-	/// is referenced by M2 and MDX files.
-	/// </summary>
-	public class AnimationDataRecord : DBCRecord
+	public class LiquidTypeRecord : DBCRecord
 	{
-		public const string RecordName = "AnimationData";
+		public const string RecordName = "LiquidType";
 
 		/// <summary>
-		/// The name of the animation.
+		/// The name of the liquid.
 		/// </summary>
 		public StringReference Name;
 
-		/// <summary>
-		/// The weapon flags. This affects how the model's weapons are held during the animation.
-		/// </summary>
-		[FieldVersion(WarcraftVersion.Warlords)]
-		public WeaponAnimationFlags WeaponFlags;
+		public LiquidType Type
+		{
+			get
+			{
+				return TranslateLiquidType();
+			}
+			set
+			{
+				this.Type = value;
+			}
+		}
 
-		/// <summary>
-		/// The body flags.
-		/// </summary>
-		[FieldVersion(WarcraftVersion.Warlords)]
-		public uint BodyFlags;
+		public Int32ForeignKey SpellEffect;
 
-		/// <summary>
-		/// General animation flags.
-		/// </summary>
-		public uint Flags;
-
-		/// <summary>
-		/// The fallback animation that precedes this one.
-		/// </summary>
-		public Int32ForeignKey FallbackAnimation;
-
-		/// <summary>
-		/// The top-level behaviour animation that this animation is a child of.
-		/// </summary>
-		public Int32ForeignKey BehaviourAnimation;
-
-		/// <summary>
-		/// The behaviour tier of the animation. In most cases, this indicates whether or not the animation
-		/// is used for flying characters.
-		/// </summary>
-		[FieldVersion(WarcraftVersion.Wrath)]
-		public uint BehaviourTier;
-
-		public AnimationDataRecord()
+		public LiquidTypeRecord()
 		{
 		}
 
@@ -95,25 +71,47 @@ namespace Warcraft.DBC.Definitions
 					this.ID = br.ReadUInt32();
 					this.Name = new StringReference(br.ReadUInt32());
 
-					if (Version >= WarcraftVersion.Warlords)
-					{
-						this.WeaponFlags = (WeaponAnimationFlags)br.ReadUInt32();
-						this.BodyFlags = br.ReadUInt32();
-					}
+					// Will have to translate this to the different versions. Seems like it's been shuffled around
+					this.Type = (LiquidType)br.ReadInt32();
 
-					this.Flags = br.ReadUInt32();
-
-					this.FallbackAnimation = new Int32ForeignKey(AnimationDataRecord.RecordName, "ID", br.ReadUInt32());
-					this.BehaviourAnimation = new Int32ForeignKey(AnimationDataRecord.RecordName, "ID", br.ReadUInt32());
-
-					if (Version >= WarcraftVersion.Wrath)
-					{
-						this.BehaviourTier = br.ReadUInt32();
-					}
+					this.SpellEffect = new Int32ForeignKey("Spell", "ID", br.ReadUInt32());
+					//this.SpellEffect = new Int32ForeignKey(SpellRecord.RecordName, "ID", br.ReadUInt32());
 				}
 			}
 		}
 
+		public LiquidType TranslateLiquidType()
+		{
+			if (this.Version >= WarcraftVersion.Wrath)
+			{
+				return this.Type;
+			}
+			else
+			{
+				int baseValue = (int)this.Type;
+				switch (baseValue)
+				{
+					case 0:
+						{
+							return LiquidType.Magma;
+						}
+					case 2:
+						{
+							return LiquidType.Slime;
+						}
+					case 3:
+						{
+							return LiquidType.Water;
+						}
+					default:
+						{
+							return LiquidType.Water;
+						}
+				}
+			}
+		}
+
+		//TODO: Implement records after Classic
 		/// <summary>
 		/// Gets the size of the record.
 		/// </summary>
@@ -128,19 +126,19 @@ namespace Warcraft.DBC.Definitions
 			switch (Version)
 			{
 				case WarcraftVersion.Classic:
-					return 28;
+					return 16;
 				case WarcraftVersion.BurningCrusade:
-					return 28;
+					return 16;
 				case WarcraftVersion.Wrath:
-					return 32;
+					return 180;
 				case WarcraftVersion.Cataclysm:
-					return 32;
+					return 200;
 				case WarcraftVersion.Mists:
-					return 32;
+					return 200;
 				case WarcraftVersion.Warlords:
-					return 24;
+					return 200;
 				case WarcraftVersion.Legion:
-					return 24;
+					return 200;
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
@@ -160,49 +158,35 @@ namespace Warcraft.DBC.Definitions
 			switch (Version)
 			{
 				case WarcraftVersion.Classic:
-					return 7;
+					return 4;
 				case WarcraftVersion.BurningCrusade:
-					return 7;
+					return 4;
 				case WarcraftVersion.Wrath:
-					return 8;
+					return 45;
 				case WarcraftVersion.Cataclysm:
-					return 8;
+					return 50;
 				case WarcraftVersion.Mists:
-					return 8;
+					return 50;
 				case WarcraftVersion.Warlords:
-					return 6;
+					return 50;
 				case WarcraftVersion.Legion:
-					return 6;
+					return 50;
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
 		}
 	}
 
-	/// <summary>
-	/// Weapon animation flags.
-	/// </summary>
-	public enum WeaponAnimationFlags : uint
+	public enum LiquidType
 	{
-		/// <summary>
-		/// Ignores the current state of the character's weapons.
-		/// </summary>
-		None = 0,
-
-		/// <summary>
-		/// Sheathes the weapons for the duration of the animation.
-		/// </summary>
-		Sheathe = 4,
-
-		/// <summary>
-		/// Sheathes the weapons for the duration of the animation.
-		/// </summary>
-		Sheathe2 = 16,
-
-		/// <summary>
-		/// Unsheathes the weapons for the duration of the animation.
-		/// </summary>
-		Unsheathe = 32
+		// Originally 3, now 0
+		Water = 0,
+		// Originally 3 (same as water), now 1
+		Ocean = 1,
+		// Originally 0, now 2
+		Magma = 2,
+		// Originally 2, now 3
+		Slime = 3
 	}
 }
 

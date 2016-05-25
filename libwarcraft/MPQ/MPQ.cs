@@ -1,4 +1,4 @@
-//
+﻿//
 //  MPQ.cs
 //
 //  Author:
@@ -118,7 +118,7 @@ namespace Warcraft.MPQ
 			// Seek to the hash table and load it
 			ArchiveReader.BaseStream.Position = (long)this.Header.GetHashTableOffset();
 
-			byte[] encryptedHashTable = ArchiveReader.ReadBytes((int)this.Header.GetHashTableSize());			
+			byte[] encryptedHashTable = ArchiveReader.ReadBytes((int)this.Header.GetHashTableSize());
 			this.ArchiveHashTable = new HashTable(MPQCrypt.DecryptData(encryptedHashTable, HashTable.TableKey));
 
 			// Seek to the block table and load it
@@ -129,7 +129,7 @@ namespace Warcraft.MPQ
 
 			if (this.Header.GetFormat() >= MPQFormat.Extended_v1)
 			{
-				// Seek to the extended block table and load it, if neccesary	
+				// Seek to the extended block table and load it, if neccesary
 				ArchiveReader.BaseStream.Position = (long)this.Header.GetExtendedBlockTableOffset();
 
 				for (int i = 0; i < this.Header.GetBlockTableEntryCount(); ++i)
@@ -174,6 +174,22 @@ namespace Warcraft.MPQ
 			}
 
 			return ContainsFile(ExtendedAttributes.InternalFileName);
+		}
+
+		/// <summary>
+		/// Gets the weak signature stored in the archive.
+		/// </summary>
+		/// <returns>The weak signature.</returns>
+		public WeakPackageSignature GetWeakSignature()
+		{
+			if (ContainsFile(WeakPackageSignature.InternalFilename))
+			{
+				return new WeakPackageSignature(ExtractFile(WeakPackageSignature.InternalFilename));
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		/// <summary>
