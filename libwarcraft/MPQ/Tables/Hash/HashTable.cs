@@ -34,7 +34,6 @@ namespace Warcraft.MPQ.Tables.Hash
 
 		public HashTable()
 		{
-			
 		}
 
 		/// <summary>

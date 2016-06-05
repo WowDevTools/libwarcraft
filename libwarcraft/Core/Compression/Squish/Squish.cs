@@ -27,6 +27,37 @@ namespace Squish
 
 		public static byte[] CompressBlockMasked(byte[] rgba, int mask, SquishOptions flags)
 		{
+			flags = flags.FixFlags();
+
+			ColourSet colours = new ColourSet(rgba, mask, flags);
+
+			if (colours.Count == 1)
+			{
+				// Always do a single colour fit
+				//SingleColourFit fit = new SingleColourFit(ref colours, flags);
+			}
+			else if (flags.HasFlag(SquishOptions.ColourRangeFit) || colours.Count == 0)
+			{
+				// Do a range fit
+				//RangeFit fit = new RangeFit(ref colours, flags, metric);
+
+			}
+			else
+			{
+				// Default to a cluster fit (could be iterative or not)
+				//ClusterFit fit = new ClusterFit(ref colours, flags, metric);
+			}
+
+			// Compress alpha separately if needed
+			if (flags.HasFlag(SquishOptions.DXT3))
+			{
+				//Alpha.CompressAlphaDxt3(rgba, mask, alphaBlock);
+			}
+			else if (flags.HasFlag(SquishOptions.DXT5))
+			{
+				//Alpha.CompressAlphaDxt5(rgba, mask, alphaBlock);
+			}
+
 			throw new NotImplementedException();
 		}
 
@@ -64,7 +95,7 @@ namespace Squish
 		{
 			var argb = new byte[4 * width * height];
 			var bytesPerBlock = flags.HasFlag(SquishOptions.DXT1) ? 8 : 16;
-            
+
 			var blockOffset = offset;
 			// Loop over blocks.
 			for (int y = 0; y < height; y += 4)

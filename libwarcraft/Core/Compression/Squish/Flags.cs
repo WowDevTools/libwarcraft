@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Squish {
     [Flags]
-    public enum SquishOptions {
+    public enum SquishOptions
+    {
         /// <summary>
         /// Use DXT1 compression.
         /// </summary>
@@ -44,18 +46,49 @@ namespace Squish {
         /// </summary>
         WeightColourByAlpha = (1 << 8),
     }
-    public static class SquishOptionsExtensions {
-        public static SquishOptions GetMethod(this SquishOptions self) {
+
+    public static class SquishOptionsExtensions
+    {
+        public static SquishOptions GetMethod(this SquishOptions self)
+        {
             return (self & (SquishOptions.DXT1 | SquishOptions.DXT3 | SquishOptions.DXT5));
         }
-        public static SquishOptions GetFit(this SquishOptions self) {
+
+        public static SquishOptions GetFit(this SquishOptions self)
+        {
             return (self & (SquishOptions.ColourIterativeClusterFit | SquishOptions.ColourClusterFit | SquishOptions.ColourRangeFit));
         }
-        public static SquishOptions GetMetric(this SquishOptions self) {
+
+        public static SquishOptions GetMetric(this SquishOptions self)
+        {
             return (self & (SquishOptions.ColourMetricPerceptual | SquishOptions.ColourMetricUniform));
         }
-        public static SquishOptions GetExtra(this SquishOptions self) {
+
+        public static SquishOptions GetExtra(this SquishOptions self)
+        {
             return (self & (SquishOptions.WeightColourByAlpha));
         }
+
+	    public static SquishOptions FixFlags(this SquishOptions flags)
+	    {
+		    // grab the flag bits
+		    int method = (int)(flags & (SquishOptions.DXT1 | SquishOptions.DXT3 | SquishOptions.DXT5));
+		    int fit = (int) (flags & (SquishOptions.ColourIterativeClusterFit | SquishOptions.ColourClusterFit | SquishOptions.ColourRangeFit));
+		    int extra = (int) (flags & SquishOptions.WeightColourByAlpha);
+
+		    // set defaults
+		    if (method != (int)SquishOptions.DXT3 && method != (int)SquishOptions.DXT5)
+		    {
+			    method = (int) SquishOptions.DXT5;
+		    }
+
+		    if (fit != (int) SquishOptions.ColourRangeFit && fit != (int)SquishOptions.ColourIterativeClusterFit)
+		    {
+			    fit = (int) SquishOptions.ColourClusterFit;
+		    }
+
+		    // done
+		    return (SquishOptions) (method | fit | extra);
+	    }
     }
 }

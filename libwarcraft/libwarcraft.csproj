@@ -41,6 +41,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Compression\Squish\SingleColourFit.cs" />
+    <Compile Include="Core\Compression\Squish\SingleColourFitLookupTables.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

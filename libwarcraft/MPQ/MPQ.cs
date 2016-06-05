@@ -22,7 +22,7 @@
 // A massive thanks to Justin Olbrantz (Quantam) and Jean-Francois Roy
 // (BahamutZERO), whose [documentation of the MPQ
 // format](http://wiki.devklog.net/index.php?title=The_MoPaQ_Archive_Format) was
-// instrumental for this implementation. Although their wiki is no longer online, 
+// instrumental for this implementation. Although their wiki is no longer online,
 // a backup snapshot taken by the Wayback Machine saved the day. The documentation
 // is available upon request.
 
@@ -70,14 +70,14 @@ namespace Warcraft.MPQ
 		public List<ushort> ExtendedBlockTable = new List<ushort>();
 
 		/// <summary>
-		/// A set of extended file attributes. These attributes are not guaranteed to be present in all archives, 
+		/// A set of extended file attributes. These attributes are not guaranteed to be present in all archives,
 		/// and may be empty or zeroed for some archives.
 		/// </summary>
-		public ExtendedAttributes FileAttributes;
+		private ExtendedAttributes FileAttributes;
 
 		/// <summary>
 		/// The archive reader. A BinaryReader that exists for the lifetime of the MPQ object and handles all
-		/// the file reading inside it. As archives are far too big to be loaded into memory all at once, 
+		/// the file reading inside it. As archives are far too big to be loaded into memory all at once,
 		/// we seek to the desired parts and read them as we need them.
 		/// </summary>
 		private readonly BinaryReader ArchiveReader;
@@ -137,13 +137,6 @@ namespace Warcraft.MPQ
 					ExtendedBlockTable.Add(ArchiveReader.ReadUInt16());
 				}
 			}
-
-			if (ContainsFile(ExtendedAttributes.InternalFileName))
-			{
-				byte[] attributeData = ExtractFile(ExtendedAttributes.InternalFileName);
-
-				this.FileAttributes = new ExtendedAttributes(attributeData, this.Header.BlockTableEntryCount);
-			}
 		}
 
 		/// <summary>
@@ -177,6 +170,23 @@ namespace Warcraft.MPQ
 		}
 
 		/// <summary>
+		/// Gets the extended file attributes stored in the archive, if there are any.
+		/// </summary>
+		public ExtendedAttributes GetFileAttributes()
+		{
+			if (this.FileAttributes == null)
+			{
+				if (ContainsFile(ExtendedAttributes.InternalFileName))
+				{
+					byte[] attributeData = ExtractFile(ExtendedAttributes.InternalFileName);
+					this.FileAttributes = new ExtendedAttributes(attributeData, this.Header.BlockTableEntryCount);
+				}
+			}
+
+			return this.FileAttributes;
+		}
+
+		/// <summary>
 		/// Gets the weak signature stored in the archive.
 		/// </summary>
 		/// <returns>The weak signature.</returns>
@@ -207,7 +217,7 @@ namespace Warcraft.MPQ
 		}
 
 		/// <summary>
-		/// Gets the best available listfile from the archive. If an external listfile has been provided, 
+		/// Gets the best available listfile from the archive. If an external listfile has been provided,
 		/// that one is prioritized over the one stored in the archive.
 		/// </summary>
 		/// <returns>The listfile.</returns>
@@ -229,7 +239,7 @@ namespace Warcraft.MPQ
 		}
 
 		/// <summary>
-		/// Gets the internal file list. If no listfile is stored in the archive, this may 
+		/// Gets the internal file list. If no listfile is stored in the archive, this may
 		/// return null.
 		/// </summary>
 		/// <returns>The internal file list.</returns>
@@ -266,7 +276,7 @@ namespace Warcraft.MPQ
 		}
 
 		/// <summary>
-		/// Gets the external file list. If no list has been provided to the archive, this may 
+		/// Gets the external file list. If no list has been provided to the archive, this may
 		/// return an empty list.
 		/// </summary>
 		/// <returns>The external file list.</returns>
@@ -343,12 +353,12 @@ namespace Warcraft.MPQ
 
 				if (HasFileAttributes())
 				{
-					return new MPQFileInfo(filePath, hashEntry, blockEntry);				
+					return new MPQFileInfo(filePath, hashEntry, blockEntry);
 				}
 				else
 				{
-					return new MPQFileInfo(filePath, hashEntry, blockEntry, 
-						FileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]);				
+					return new MPQFileInfo(filePath, hashEntry, blockEntry,
+						FileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]);
 				}
 			}
 			else
@@ -394,7 +404,7 @@ namespace Warcraft.MPQ
 				else
 				{
 					adjustedBlockOffset = fileBlockEntry.GetBlockOffset();
-				}			
+				}
 				ArchiveReader.BaseStream.Position = adjustedBlockOffset;
 
 				// Calculate the decryption key if neccesary
@@ -427,14 +437,14 @@ namespace Warcraft.MPQ
 					// Decompress the sector if neccesary
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsCompressedMultiple) || fileBlockEntry.Flags.HasFlag(BlockFlags.IsImploded))
 					{
-						fileData = Compression.DecompressSector(fileData, fileBlockEntry.Flags);						
+						fileData = Compression.DecompressSector(fileData, fileBlockEntry.Flags);
 					}
 
 					return fileData;
 				}
 				else if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsCompressedMultiple) || fileBlockEntry.Flags.HasFlag(BlockFlags.IsImploded))
-				{						
-					// This file uses sectoring, and is compressed. It may be encrypted.		
+				{
+					// This file uses sectoring, and is compressed. It may be encrypted.
 					//Retrieve the offsets for each sector - these are relative to the beginning of the data.
 					List<uint> sectorOffsets = new List<uint>();
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
@@ -449,7 +459,7 @@ namespace Warcraft.MPQ
 							dataBlock = ArchiveReader.ReadUInt32();
 							sectorOffsets.Add(dataBlock);
 						}
-					}					
+					}
 
 					// Read all of the raw file sectors.
 					List<byte[]> compressedSectors = new List<byte[]>();
@@ -467,7 +477,7 @@ namespace Warcraft.MPQ
 					// TODO: Check "backup.MPQ/realmlist.wtf" for a weird file with checksums that is not working correctly.
 					// It has a single sector with a single checksum after it, and none of the hashing functions seem to
 					// produce a valid hash. CRC32, Adler32, CRC32B, nothing.
-					// Some flags (listfiles mostly) are flagged as having checksums but don't have a checksum sector. 
+					// Some flags (listfiles mostly) are flagged as having checksums but don't have a checksum sector.
 					// Perhaps related to attributes file?
 					List<byte[]> decompressedSectors = new List<byte[]>();
 
@@ -495,7 +505,7 @@ namespace Warcraft.MPQ
 
 					uint sectorIndex = 0;
 					foreach (byte[] compressedSector in compressedSectors)
-					{						
+					{
 						byte[] pendingSector = compressedSector;
 						if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
 						{
@@ -516,7 +526,7 @@ namespace Warcraft.MPQ
 									uint sectorChecksum = (uint)Adler32.ComputeChecksum(ms);
 
 									string exceptionMessage = String.Format("The decrypted sector failed its integrity checking. \n" +
-										                          "The sector had a checksum of \"{0}\", and the expected one was \"{1}\".", 
+										                          "The sector had a checksum of \"{0}\", and the expected one was \"{1}\".",
 										                          sectorChecksum, SectorChecksums[(int)sectorIndex]);
 
 									throw new InvalidDataException(exceptionMessage);
@@ -566,7 +576,7 @@ namespace Warcraft.MPQ
 					uint sectorIndex = 0;
 					List<byte[]> finalSectors = new List<byte[]>();
 					foreach (byte[] rawSector in rawSectors)
-					{						
+					{
 						byte[] pendingSector = rawSector;
 						if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
 						{
@@ -649,7 +659,7 @@ namespace Warcraft.MPQ
 		/// release all references to the <see cref="Warcraft.MPQ.MPQ"/> so the garbage collector can reclaim the memory that
 		/// the <see cref="Warcraft.MPQ.MPQ"/> was occupying.</remarks>
 		public void Dispose()
-		{			
+		{
 			Header = null;
 			ArchiveHashTable = null;
 			ArchiveBlockTable = null;

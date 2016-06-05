@@ -31,6 +31,7 @@ using Squish;
 using Warcraft.Core;
 using Warcraft.Core.Quantization;
 using System.Drawing.Drawing2D;
+using System.Linq;
 
 namespace Warcraft.BLP
 {
@@ -215,7 +216,7 @@ namespace Warcraft.BLP
 			{
 				Header.AlphaBitDepth = 8;
 
-				// Determine best DXTC type (1, 3 or 5)	
+				// Determine best DXTC type (1, 3 or 5)
 				if (Image.HasAlpha())
 				{
 					Header.PixelFormat = BLPPixelFormat.Pixel_DXT3;
@@ -299,6 +300,22 @@ namespace Warcraft.BLP
 		public Bitmap GetMipMap(uint Level)
 		{
 			return DecompressMipMap(RawMipMaps[(int)Level], Level);
+		}
+
+		/// <summary>
+		/// Gets the compressed data for the specified mipmap level.
+		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">Throws if the input level is greated than the maximum stored level.</exception>
+		/// <returns>A byte array containing the compressed data.</returns>
+		/// <param name="Level">The zero-based mipmap level.</param>
+		public byte[] GetRawMipMap(uint Level)
+		{
+			if (Level > this.RawMipMaps.Count - 1)
+			{
+				throw new ArgumentOutOfRangeException(nameof(Level), Level, "The requested mip level was greater than the maximum stored level.");
+			}
+
+			return this.RawMipMaps[(int)Level];
 		}
 
 		/// <summary>
@@ -445,7 +462,7 @@ namespace Warcraft.BLP
 
 		/// <summary>
 		/// Converts an R8G8B8A8 byte array to a Bitmap object of the specified width
-		/// and height. 
+		/// and height.
 		/// </summary>
 		/// <returns>The bitmap.</returns>
 		/// <param name="InRGBA">In RGBA array.</param>
@@ -478,9 +495,9 @@ namespace Warcraft.BLP
 		}
 
 		/// <summary>
-		/// Compresses an input bitmap into a list of mipmap using the file's compression settings. 
+		/// Compresses an input bitmap into a list of mipmap using the file's compression settings.
 		/// Mipmap levels which would produce an image with dimensions smaller than 1x1 will return null instead.
-		/// The number of mipmaps returned will be <see cref="Warcraft.BLP.BLP.GetNumReasonableMipMapLevels"/> + 1. 
+		/// The number of mipmaps returned will be <see cref="Warcraft.BLP.BLP.GetNumReasonableMipMapLevels"/> + 1.
 		/// </summary>
 		/// <returns>The compressed image data.</returns>
 		/// <param name="InImage">The image to be compressed.</param>
@@ -508,7 +525,7 @@ namespace Warcraft.BLP
 
 		/// <summary>
 		/// Compresses in input bitmap into a single mipmap at the specified mipmap level, where a mip level is a bisection of the resolution.
-		/// For instance, a mip level of 2 applied to a 64x64 image would produce an image with a resolution of 16x16.	
+		/// For instance, a mip level of 2 applied to a 64x64 image would produce an image with a resolution of 16x16.
 		/// This function expects the mipmap level to be reasonable (i.e, not a level which would produce a mip smaller than 1x1)
 		/// </summary>
 		/// <returns>The image.</returns>

@@ -154,28 +154,28 @@ namespace Warcraft.ADT.Chunks.Subchunks
 							DecompressedAlphaMap.Add(normalizedAlpha1);
 							DecompressedAlphaMap.Add(normalizedAlpha2);
 						}
-					}                        
+					}
 				}
 			}
 
-			return DecompressedAlphaMap;				
+			return DecompressedAlphaMap;
 		}
-		/* 
+		/*
 	     * Uncompressed with a size of 4096 (post WOTLK)
 	     * Uncompressed with a size of 2048 (pre WOTLK)
 	     * Compressed - this is only for WOTLK chunks. Size is not very important when dealing with compressed alpha maps,
 	     * considering you are constantly checking if you've extracted 4096 bytes of data. Here's how you do it, according to the wiki:
-	     * 
+	     *
 	     * Read a byte.
 	     * Check for a sign bit.
 	     * If it's set, we're in fill mode. If not, we're in copy mode.
-	     * 
+	     *
 	     * 1000000 = set sign bit, fill mode
 	     * 0000000 = unset sign bit, copy mode
-	     * 
+	     *
 	     * 0            1 0 1 0 1 0 1
 	     * sign bit,    7 lesser bits
-	     * 
+	     *
 	     * Take the 7 lesser bits of the first byte as a count indicator,
 	     * If we're in fill mode, read the next byte and fill it by count in your resulting alpha map
 	     * If we're in copy mode, read the next count bytes and copy them to your resulting alpha map
