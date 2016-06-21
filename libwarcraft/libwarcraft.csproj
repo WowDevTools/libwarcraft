@@ -44,7 +44,9 @@
     <Compile Include="Core\Compression\Squish\SingleColourFit.cs" />
     <Compile Include="Core\Compression\Squish\SingleColourFitLookupTables.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
+    <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
+    <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLP\BLP.cs" />
     <Compile Include="BLP\BLPHeader.cs" />

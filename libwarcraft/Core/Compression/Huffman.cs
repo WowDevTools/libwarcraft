@@ -1,4 +1,4 @@
-//
+﻿//
 // MpqHuffman.cs
 // https://code.google.com/p/mpqtool/source/browse/trunk/MpqTool/Foole.Mpq/MpqHuffman.cs
 //

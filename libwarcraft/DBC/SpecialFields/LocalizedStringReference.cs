@@ -1,5 +1,5 @@
 ﻿//
-//  WeakPackageSignature.cs
+//  MapRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,38 +19,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 using System;
-using System.IO;
 
-namespace Warcraft.MPQ.Crypto
+namespace Warcraft.DBC.SpecialFields
 {
-	public class WeakPackageSignature
+	public class LocalizedStringReference
 	{
-		public const string InternalFilename = "(signature)";
-		public readonly byte[] PackageSignature;
+		StringReference English;
+		StringReference Korean;
+		StringReference French;
+		StringReference German;
+		StringReference Chinese;
+		StringReference Taiwan;
+		StringReference Spanish;
+		StringReference SpanishMexican;
+		StringReference Russian;
 
-		public WeakPackageSignature(byte[] data)
-		{
-			if (data.Length != 72)
-			{
-				throw new InvalidDataException("The provided data had an invalid length.");
-			}
 
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					long identifier = br.ReadInt64();
-
-					if (identifier != 0)
-					{
-						throw new InvalidDataException("The signature did not begin with 0.");
-					}
-
-					this.PackageSignature = br.ReadBytes(64);
-				}
-			}
-		}
 	}
 }
-

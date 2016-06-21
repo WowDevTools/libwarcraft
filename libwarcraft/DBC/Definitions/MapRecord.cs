@@ -1,5 +1,5 @@
 ﻿//
-//  WeakPackageSignature.cs
+//  MapRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,38 +19,31 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 using System;
-using System.IO;
+using Warcraft.DBC.SpecialFields;
 
-namespace Warcraft.MPQ.Crypto
+namespace Warcraft.DBC.Definitions
 {
-	public class WeakPackageSignature
+	public class MapRecord : DBCRecord
 	{
-		public const string InternalFilename = "(signature)";
-		public readonly byte[] PackageSignature;
+		private StringReference Directory;
+		private uint PVP;
+		private uint IsInMap;
 
-		public WeakPackageSignature(byte[] data)
+		public override void LoadData(byte[] data)
 		{
-			if (data.Length != 72)
-			{
-				throw new InvalidDataException("The provided data had an invalid length.");
-			}
+			throw new NotImplementedException();
+		}
 
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					long identifier = br.ReadInt64();
+		public override int GetFieldCount()
+		{
+			throw new NotImplementedException();
+		}
 
-					if (identifier != 0)
-					{
-						throw new InvalidDataException("The signature did not begin with 0.");
-					}
-
-					this.PackageSignature = br.ReadBytes(64);
-				}
-			}
+		public override int GetRecordSize()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
-

@@ -96,7 +96,7 @@ namespace Warcraft.WDL
 			}
 		}
 
-		private string PeekChunkSignature(BinaryReader Reader)
+		private static string PeekChunkSignature(BinaryReader Reader)
 		{
 			long originalPosition = Reader.BaseStream.Position;
 

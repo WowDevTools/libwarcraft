@@ -1,4 +1,4 @@
-//
+﻿//
 //  MPQCrypt.cs
 //
 //  Author:
@@ -33,7 +33,7 @@ namespace Warcraft.MPQ.Crypto
 	static class MPQCrypt
 	{
 		/// <summary>
-		/// A table of int32s used as a lookup table for decryption of bytes. 
+		/// A table of int32s used as a lookup table for decryption of bytes.
 		/// It is statically initialized, and is always the same.
 		/// </summary>
 		private static readonly uint[] encryptionTable = new uint[0x500];
@@ -46,7 +46,7 @@ namespace Warcraft.MPQ.Crypto
 		/// <summary>
 		/// Initializes the encryption table.
 		/// </summary>
-		static void InitializeEncryptionTable()
+		private static void InitializeEncryptionTable()
 		{
 			uint seed = 0x00100001;
 
@@ -80,7 +80,7 @@ namespace Warcraft.MPQ.Crypto
 		}
 
 		/// <summary>
-		/// Decrypts the given input data. Bytes outside of an even 4-byte boundary are not decrypted, and 
+		/// Decrypts the given input data. Bytes outside of an even 4-byte boundary are not decrypted, and
 		/// are considered not encrypted.
 		/// </summary>
 		/// <returns>The decrypted data.</returns>
@@ -101,7 +101,7 @@ namespace Warcraft.MPQ.Crypto
 		{
 			if (data == null)
 			{
-				throw new ArgumentNullException("data", "Input data must be populated.");
+				throw new ArgumentNullException(nameof(data), "Input data must be populated.");
 			}
 
 			// If the input is not aligned to 4 bytes (even 32-bit numbers),
@@ -200,7 +200,7 @@ namespace Warcraft.MPQ.Crypto
 		}
 
 		/// <summary>
-		/// Decrypts the sector offset table using rolling decryption - it starts where the input BinaryReader is, reads 
+		/// Decrypts the sector offset table using rolling decryption - it starts where the input BinaryReader is, reads
 		/// and decrypts offsets until the decrypted offset equals the input block size.
 		/// </summary>
 		/// <param name="br">The archive's BinaryReader</param>
@@ -209,7 +209,7 @@ namespace Warcraft.MPQ.Crypto
 		/// <param name="key">The decryption key for the offset table.</param>
 		public static void DecryptSectorOffsetTable(BinaryReader br, ref List<uint> sectorOffsets, uint blockSize, uint key)
 		{
-			uint decryptionSeed = 0xEEEEEEEE;		
+			uint decryptionSeed = 0xEEEEEEEE;
 
 			uint decryptionTarget = 0;
 			while (decryptionTarget != blockSize)
@@ -237,7 +237,7 @@ namespace Warcraft.MPQ.Crypto
 		/// <param name="sector">Sector data.</param>
 		/// <param name="checksum">Sector checksum.</param>
 		public static bool VerifySectorChecksum(byte[] sector, uint checksum)
-		{			
+		{
 			using (MemoryStream ms = new MemoryStream(sector))
 			{
 				if (checksum == 0)

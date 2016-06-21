@@ -20,16 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+
 namespace Warcraft.BLP
 {
 	public enum BLPPixelFormat : uint
 	{
-		Pixel_DXT1 = 0,
-		Pixel_DXT3 = 1,
-		Pixel_A8R8G8B8 = 3,
-		Pixel_A8R8G8B8_2 = 4,
-		Pixel_R8G8B8A8_InvertedAlpha = 5,
-		Pixel_DXT5 = 7,
-		Pixel_Palettized = 8
+		Pixel_DXT1 = 							0,
+		Pixel_DXT3 = 							1,
+		Pixel_ARGB8888 = 						2,
+		Pixel_PalARGB1555DitherFloydSteinberg = 3,
+		Pixel_PalARGB4444DitherFloydSteinberg =	4,
+		Pixel_PalARGB565DitherFloydSteinberg =	5,
+		Pixel_DXT5 = 							7,
+		Pixel_Palettized = 						8,
+		Pixel_PalARGB2565DitherFloydSteinberg =	9
 	}
 }

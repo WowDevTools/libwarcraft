@@ -600,7 +600,7 @@ namespace Warcraft.MPQ
 		/// </summary>
 		/// <returns>The number of bytes.</returns>
 		/// <param name="sectors">The sectors.</param>
-		private int CountBytesInSectors(List<byte[]> sectors)
+		private static int CountBytesInSectors(IEnumerable<byte[]> sectors)
 		{
 			int bytes = 0;
 
@@ -617,7 +617,7 @@ namespace Warcraft.MPQ
 		/// </summary>
 		/// <returns>A byte array representing the final file.</returns>
 		/// <param name="sectors">Input file sectors.</param>
-		private byte[] StitchSectors(List<byte[]> sectors)
+		private static byte[] StitchSectors(IEnumerable<byte[]> sectors)
 		{
 			// Pull out your sowing kit, it's stitching time!
 			List<byte> stitchedSectors = new List<byte>();

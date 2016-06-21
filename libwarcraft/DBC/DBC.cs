@@ -39,7 +39,7 @@ namespace Warcraft.DBC
 		public DBCHeader Header;
 
 		/// <summary>
-		/// The game version this database is valid for. This affects how the records are parsed, and is vital for 
+		/// The game version this database is valid for. This affects how the records are parsed, and is vital for
 		/// getting correct data.
 		/// </summary>
 		public WarcraftVersion Version
@@ -49,7 +49,7 @@ namespace Warcraft.DBC
 		}
 
 		/// <summary>
-		/// The records contained in the database. The records are not guaranteed to be in order by ID. 
+		/// The records contained in the database. The records are not guaranteed to be in order by ID.
 		/// In order to access records by their primary key, use <see cref="GetRecordByID"/>.
 		/// </summary>
 		public List<T> Records = new List<T>();
@@ -81,7 +81,7 @@ namespace Warcraft.DBC
 						T record = Activator.CreateInstance<T>();
 						record.SetVersion(InVersion);
 
-						// If the record is of the UnknownRecord type, 
+						// If the record is of the UnknownRecord type,
 						// this DBC file will just load the data without sanity checking it.
 						if (!(record is UnknownRecord))
 						{
@@ -92,12 +92,12 @@ namespace Warcraft.DBC
 							}
 							if (record.GetFieldCount() != this.Header.FieldCount)
 							{
-								throw new ArgumentException("The provided record type is not valid for this database file.");						
-							}							
+								throw new ArgumentException("The provided record type is not valid for this database file.");
+							}
 						}
 
 						record.LoadData(rawRecord);
-					
+
 						this.Records.Add(record);
 					}
 

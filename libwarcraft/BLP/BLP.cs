@@ -31,7 +31,6 @@ using Squish;
 using Warcraft.Core;
 using Warcraft.Core.Quantization;
 using System.Drawing.Drawing2D;
-using System.Linq;
 
 namespace Warcraft.BLP
 {
@@ -137,7 +136,7 @@ namespace Warcraft.BLP
 		/// <returns>The format.</returns>
 		/// <param name="br">Br.</param>
 		/// <exception cref="FileLoadException">If no format was detected, a FileLoadException will be thrown.</exception>
-		private BLPFormat PeekFormat(BinaryReader br)
+		private static BLPFormat PeekFormat(BinaryReader br)
 		{
 			long startPosition = br.BaseStream.Position;
 			string Signature = new string(br.ReadChars(4));
@@ -231,7 +230,7 @@ namespace Warcraft.BLP
 			{
 				// The alpha will be stored as a straight ARGB texture, so set it to 8
 				Header.AlphaBitDepth = 8;
-				Header.PixelFormat = BLPPixelFormat.Pixel_A8R8G8B8;
+				Header.PixelFormat = BLPPixelFormat.Pixel_PalARGB1555DitherFloydSteinberg;
 			}
 
 			// What the mip type does is currently unknown, but it's usually set to 1.
@@ -273,7 +272,7 @@ namespace Warcraft.BLP
 			List<string> mipStrings = new List<string>();
 			for (int i = 0; i < GetMipMapCount(); ++i)
 			{
-				mipStrings.Add(String.Format("{0}: {1}", i, GetMipLevelResolution((uint)i)));
+				mipStrings.Add($"{i}: {GetMipLevelResolution((uint) i)}");
 			}
 
 			return mipStrings;
@@ -559,8 +558,6 @@ namespace Warcraft.BLP
 					{
 						if (this.GetAlphaBitDepth() == 1)
 						{
-							//int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 8));
-
 							// We're going to be attempting to map 8 pixels on each X iteration
 							for (int y = 0; y < targetYRes; ++y)
 							{
@@ -588,8 +585,6 @@ namespace Warcraft.BLP
 						}
 						else if (this.GetAlphaBitDepth() == 4)
 						{
-							//int alphaByteCount = (int)Math.Ceiling(((double)(targetXRes * targetYRes) / 2));
-
 							// We're going to be attempting to map 2 pixels on each X iteration
 							for (int y = 0; y < targetYRes; ++y)
 							{
@@ -750,7 +745,7 @@ namespace Warcraft.BLP
 			return destImage;
 		}
 
-		private List<byte> Decode1BitAlpha(byte[] InData)
+		private static List<byte> Decode1BitAlpha(byte[] InData)
 		{
 			List<byte> alphaValues = new List<byte>();
 
@@ -776,7 +771,7 @@ namespace Warcraft.BLP
 			return alphaValues;
 		}
 
-		private List<byte> Decode4BitAlpha(byte[] InData)
+		private static List<byte> Decode4BitAlpha(byte[] InData)
 		{
 			List<byte> alphaValues = new List<byte>();
 
@@ -982,6 +977,7 @@ namespace Warcraft.BLP
 		/// To write a "normal" image format to disk, retrieve a mipmap (<see cref="Warcraft.BLP.BLP.GetMipMap"/>) instead.
 		/// </summary>
 		/// <param name="OutputPath">Path.</param>
+		[Obsolete]
 		private void WriteImageToDisk(string OutputPath)
 		{
 			File.WriteAllBytes(OutputPath, GetBytes());

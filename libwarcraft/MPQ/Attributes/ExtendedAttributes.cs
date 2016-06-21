@@ -46,12 +46,12 @@ namespace Warcraft.MPQ.Attributes
 		public List<FileAttributes> FileAttributes;
 
 		public ExtendedAttributes(byte[] data, uint FileBlockCount)
-		{			
+		{
 			if (data == null)
 			{
-				throw new ArgumentNullException("data");
+				throw new ArgumentNullException(nameof(data));
 			}
-			
+
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
@@ -179,9 +179,9 @@ namespace Warcraft.MPQ.Attributes
 	[Flags]
 	public enum AttributeTypes : uint
 	{
-		CRC32 = 0x00000001,
+		CRC32 = 	0x00000001,
 		Timestamp = 0x00000002,
-		MD5 = 0x00000004
+		MD5 = 		0x00000004
 	}
 }
 

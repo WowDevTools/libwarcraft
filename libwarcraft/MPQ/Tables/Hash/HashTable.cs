@@ -139,12 +139,7 @@ namespace Warcraft.MPQ.Tables.Hash
 			}
 
 			// We found the file, but it's been deleted.
-			if (deletionEntry != null)
-			{
-				return deletionEntry;
-			}
-
-			return null;
+			return deletionEntry;
 		}
 
 		public byte[] Serialize()
