@@ -15,12 +15,12 @@ namespace Warcraft.Core.Hashing
 		/// <summary>
 		/// Base for modulo arithmetic
 		/// </summary>
-		const int Base = 65521;
+		private const int Base = 65521;
 
 		/// <summary>
 		/// Number of iterations we can safely do before applying the modulo.
 		/// </summary>
-		const int NMax = 5552;
+		private const int NMax = 5552;
 
 		/// <summary>
 		/// Computes the Adler32 checksum for the given data.
@@ -37,7 +37,7 @@ namespace Warcraft.Core.Hashing
 		{
 			if (data == null)
 			{
-				throw (new System.ArgumentNullException("data"));
+				throw new ArgumentNullException(nameof(data));
 			}
 			uint s1 = (uint)(initial & 0xffff);
 			uint s2 = (uint)((initial >> 16) & 0xffff);
@@ -45,10 +45,9 @@ namespace Warcraft.Core.Hashing
 			int index = start;
 			int len = length;
 
-			int k;
 			while (len > 0)
 			{
-				k = (len < NMax) ? len : NMax;
+				int k = (len < NMax) ? len : NMax;
 				len -= k;
 
 				for (int i = 0; i < k; i++)
@@ -76,8 +75,9 @@ namespace Warcraft.Core.Hashing
 		{
 			if (data == null)
 			{
-				throw (new System.ArgumentNullException("data"));
+				throw new ArgumentNullException(nameof(data));
 			}
+
 			return ComputeChecksum(initial, data, 0, data.Length);
 		}
 
@@ -91,8 +91,9 @@ namespace Warcraft.Core.Hashing
 		{
 			if (stream == null)
 			{
-				throw (new System.ArgumentNullException("stream"));
+				throw new ArgumentNullException(nameof(stream));
 			}
+
 			byte[] buffer = new byte[8172];
 			int size;
 			int checksum = 1;

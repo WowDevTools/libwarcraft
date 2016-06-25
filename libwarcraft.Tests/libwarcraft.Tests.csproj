@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BLPTests\ResolutionMipMapTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -105,7 +105,7 @@ namespace Warcraft.DBC.Definitions
 			}
 		}
 
-		//TODO: Implement records after Classic
+		// TODO: Implement records after Classic
 		/// <summary>
 		/// Gets the size of the record.
 		/// </summary>

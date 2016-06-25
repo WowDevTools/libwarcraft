@@ -72,10 +72,10 @@ namespace Warcraft.BLP
 		/// Initializes a new instance of the <see cref="Warcraft.BLP.BLP"/> class.
 		/// This constructor reads a binary BLP file from disk.
 		/// </summary>
-		/// <param name="InData">Data.</param>
-		public BLP(byte[] InData)
+		/// <param name="inData">Data.</param>
+		public BLP(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(InData))
+			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -104,8 +104,9 @@ namespace Warcraft.BLP
 							byte G = br.ReadByte();
 							byte R = br.ReadByte();
 
-							// Ignore the alpha. We'll be reading this later.
+							// The alpha in the palette is not used, but is stored for the sake of completion.
 							byte A = br.ReadByte();
+
 							Color paletteColor = Color.FromArgb(A, R, G, B);
 							Palette.Add(paletteColor);
 						}
@@ -140,6 +141,7 @@ namespace Warcraft.BLP
 		{
 			long startPosition = br.BaseStream.Position;
 			string Signature = new string(br.ReadChars(4));
+
 			BLPFormat Format;
 			if (Enum.TryParse(Signature, out Format))
 			{
@@ -270,9 +272,9 @@ namespace Warcraft.BLP
 		public List<string> GetMipMapLevelStrings()
 		{
 			List<string> mipStrings = new List<string>();
-			for (int i = 0; i < GetMipMapCount(); ++i)
+			for (uint i = 0; i < GetMipMapCount(); ++i)
 			{
-				mipStrings.Add($"{i}: {GetMipLevelResolution((uint) i)}");
+				mipStrings.Add($"{i}: {GetMipLevelResolution(i)}");
 			}
 
 			return mipStrings;
@@ -435,7 +437,7 @@ namespace Warcraft.BLP
 						squishOptions = SquishOptions.DXT5;
 					}
 
-					map = (Bitmap)Squish.Squish.DecompressToBitmap(InData, (int)targetXRes, (int)targetYRes, squishOptions);
+					map = (Bitmap)Squish.SquishCompression.DecompressToBitmap(InData, (int)targetXRes, (int)targetYRes, squishOptions);
 				}
 				else if (Header.CompressionType == TextureCompressionType.Uncompressed)
 				{
@@ -657,7 +659,7 @@ namespace Warcraft.BLP
 							}
 
 							// TODO: Implement squish compression
-							colourData = new List<byte>(Squish.Squish.CompressImage(rgbaBytes, (int)targetXRes, (int)targetYRes, squishOptions));
+							colourData = new List<byte>(SquishCompression.CompressImage(rgbaBytes, (int)targetXRes, (int)targetYRes, squishOptions));
 						}
 					}
 
