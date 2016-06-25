@@ -22,7 +22,7 @@ namespace Warcraft.Core
 		{
 			if (!(InMin <= InMax))
 			{
-				throw new ArgumentOutOfRangeException("InMin", "InMin must be less than or equal to InMax");
+				throw new ArgumentOutOfRangeException(nameof(InMin), "InMin must be less than or equal to InMax");
 			}
 
 			this.Minimum = InMin;
@@ -300,15 +300,15 @@ namespace Warcraft.Core
 		/// <summary>
 		/// Pitch of the rotator
 		/// </summary>
-		public float Pitch;
+		public float X;
 		/// <summary>
 		/// Yaw of the rotator
 		/// </summary>
-		public float Yaw;
+		public float Y;
 		/// <summary>
 		/// Roll of the rotator
 		/// </summary>
-		public float Roll;
+		public float Z;
 		/// <summary>
 		/// The scalar of the quaternion
 		/// </summary>
@@ -317,15 +317,15 @@ namespace Warcraft.Core
 		/// <summary>
 		/// Creates a new rotator object from three floats.
 		/// </summary>
-		/// <param name="Pitch">Pitch</param>
-		/// <param name="Yaw">Yaw</param>
-		/// <param name="Roll">Roll</param>
+		/// <param name="x">Pitch</param>
+		/// <param name="y">Yaw</param>
+		/// <param name="z">Roll</param>
 		/// <param name="Scalar">Scalar</param>
-		public Quaternion(float Pitch, float Yaw, float Roll, float Scalar)
+		public Quaternion(float x, float y, float z, float Scalar)
 		{
-			this.Pitch = Pitch;
-			this.Yaw = Yaw;
-			this.Roll = Roll;
+			this.X = x;
+			this.Y = y;
+			this.Z = z;
 			this.Scalar = Scalar;
 		}
 
