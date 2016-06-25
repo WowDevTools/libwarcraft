@@ -1,4 +1,4 @@
-//
+﻿//
 //  ExtensionMethods.cs
 //
 //  Author:
@@ -127,7 +127,7 @@ namespace Warcraft.Core
 			byte B = Reader.ReadByte();
 			byte A = Reader.ReadByte();
 
-			RGBA rgba = new RGBA(A, R, G, B);
+			RGBA rgba = new RGBA(R, G, B, A);
 
 			return rgba;
 		}
