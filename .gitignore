@@ -190,3 +190,6 @@ FakesAssemblies/
 # Mono Project Files
 *.resources
 test-results/
+
+# Github-todos (may contain OAuth tokens)
+.github-todos

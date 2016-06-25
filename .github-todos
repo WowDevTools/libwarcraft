@@ -1,7 +1,0 @@
-_version=3.1.0
-service=github
-repo=Nihlus/libwarcraft
-github.token=8eee18152b13a4c8ed3f3caa57be9eaabc997844
-inject-issue=true
-label.TODO=auto
-label.FIXME=auto
