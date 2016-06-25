@@ -28,19 +28,12 @@ namespace Warcraft.Core
 	{
 		public WarcraftVersion Version
 		{
-			get
-			{
-				return Version;
-			}
-			private set
-			{
-				this.Version = value;
-			}
+			get;
 		}
 
-		public FieldVersion(WarcraftVersion InVersion)
+		public FieldVersion(WarcraftVersion inVersion)
 		{
-			this.Version = InVersion;
+			this.Version = inVersion;
 		}
 	}
 }

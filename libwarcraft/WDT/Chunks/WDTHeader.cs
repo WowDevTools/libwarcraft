@@ -83,16 +83,16 @@ namespace Warcraft.WDT.Chunks
 
 	public enum WDTFlags : uint
 	{
-		UsesGlobalModels = 0x01,
-		UsesVertexShading = 0x02,
-		UsesEnvironmentMapping = 0x04,
-		DisableUnknownRenderingFlag = 0x08,
-		UsesVertexLighting = 0x10,
-		FlipGroundNormals = 0x20,
-		Unknown = 0x40,
-		UsesHardAlphaFalloff = 0x80,
-		UnknownHardAlphaRelated = 0x100,
-		UnknownContinentRelated = 0x8000
+		UsesGlobalModels 				= 0x01,
+		UsesVertexShading 				= 0x02,
+		UsesEnvironmentMapping 			= 0x04,
+		DisableUnknownRenderingFlag 	= 0x08,
+		UsesVertexLighting 				= 0x10,
+		FlipGroundNormals 				= 0x20,
+		Unknown 						= 0x40,
+		UsesHardAlphaFalloff 			= 0x80,
+		UnknownHardAlphaRelated 		= 0x100,
+		UnknownContinentRelated 		= 0x8000
 	}
 }
 

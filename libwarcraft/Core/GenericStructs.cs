@@ -217,11 +217,11 @@ namespace Warcraft.Core
 		}
 	}
 
-	public struct Plane
+	public struct ShortPlane
 	{
 		public List<List<short>> Coordinates;
 
-		public Plane(short InAllCoordinates)
+		public ShortPlane(short InAllCoordinates)
 		{
 			this.Coordinates = new List<List<short>>();
 
@@ -234,6 +234,18 @@ namespace Warcraft.Core
 				}
 				Coordinates.Add(CoordinateRow);
 			}
+		}
+	}
+
+	public struct Plane
+	{
+		public Vector3f Normal;
+		public float DistanceFromCenter;
+
+		public Plane(Vector3f inNormal, float inDistanceFromCenter)
+		{
+			this.Normal = inNormal;
+			this.DistanceFromCenter = inDistanceFromCenter;
 		}
 	}
 

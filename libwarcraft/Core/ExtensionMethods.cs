@@ -137,7 +137,7 @@ namespace Warcraft.Core
 				sb.Append(c);
 			}
 
-			return sb.ToString();			
+			return sb.ToString();
 		}
 
 		public static string ReadChunkSignature(this BinaryReader Reader)
@@ -161,7 +161,7 @@ namespace Warcraft.Core
 		/// <returns>The terrain chunk.</returns>
 		/// <param name="Reader">Reader.</param>
 		public static IChunk ReadTerrainChunk(this BinaryReader Reader)
-		{			
+		{
 			uint ChunkSize = Reader.ReadUInt32();
 
 			byte[] chunkData = Reader.ReadBytes((int)ChunkSize);
@@ -297,9 +297,9 @@ namespace Warcraft.Core
 		/// </summary>
 		/// <returns>The plane.</returns>
 		/// <param name="Reader">Reader.</param>
-		public static Plane ReadPlane(this BinaryReader Reader)
+		public static ShortPlane ReadShortPlane(this BinaryReader Reader)
 		{
-			Plane plane = new Plane();
+			ShortPlane shortPlane = new ShortPlane();
 			for (int y = 0; y < 3; ++y)
 			{
 				List<short> CoordinateRow = new List<short>();
@@ -307,10 +307,10 @@ namespace Warcraft.Core
 				{
 					CoordinateRow.Add(Reader.ReadInt16());
 				}
-				plane.Coordinates.Add(CoordinateRow);
+				shortPlane.Coordinates.Add(CoordinateRow);
 			}
 
-			return plane;
+			return shortPlane;
 		}
 
 		/// <summary>
@@ -345,7 +345,7 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Reads a 12-byte rotator from the data stream and advances the position of the stream by 
+		/// Reads a 12-byte rotator from the data stream and advances the position of the stream by
 		/// 12 bytes.
 		/// </summary>
 		/// <returns>The rotator.</returns>
@@ -393,43 +393,81 @@ namespace Warcraft.Core
 		*/
 
 		/// <summary>
+		/// Writes a 16-byte plane to the data stream.
+		/// </summary>
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+        /// <param name="plane">The plane to write.</param>
+		public static void WritePlane(this BinaryWriter Writer, Plane plane)
+		{
+			Writer.WriteVector3f(plane.Normal);
+			Writer.Write(plane.DistanceFromCenter);
+		}
+
+		/// <summary>
+		/// Writes an 18-byte short coordinate plane to the data stream.
+		/// </summary>
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="shortPlane">The plane to write.</param>
+		public static void WriteShortPlane(this BinaryWriter Writer, ShortPlane shortPlane)
+		{
+			for (int y = 0; y < 3; ++y)
+			{
+				for (int x = 0; x < 3; ++x)
+				{
+					Writer.Write(shortPlane.Coordinates[y][x]);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Writes a 8-byte range to the data stream.
 		/// </summary>
-		/// <param name="Writer">Writer.</param>
-		/// <param name="InRange">In range.</param>
-		public static void WriteRange(this BinaryWriter Writer, Range InRange)
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="range">In range.</param>
+		public static void WriteRange(this BinaryWriter Writer, Range range)
 		{
-			Writer.Write(InRange.Minimum);
-			Writer.Write(InRange.Maximum);
+			Writer.Write(range.Minimum);
+			Writer.Write(range.Maximum);
 		}
 
 		/// <summary>
 		/// Writes a 24-byte bounding box to the data stream.
 		/// </summary>
-		/// <param name="Writer">Writer.</param>
-		/// <param name="InBox">In box.</param>
-		public static void WriteBox(this BinaryWriter Writer, Box InBox)
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="box">In box.</param>
+		public static void WriteBox(this BinaryWriter Writer, Box box)
 		{
-			Writer.WriteVector3f(InBox.BottomCorner);
-			Writer.WriteVector3f(InBox.TopCorner);
+			Writer.WriteVector3f(box.BottomCorner);
+			Writer.WriteVector3f(box.TopCorner);
 		}
 
 		/// <summary>
 		/// Writes a 12-byte Vector3f value to the data stream in XYZ order.
 		/// </summary>
-		/// <param name="Writer">Writer.</param>
-		/// <param name="Vector">Vector.</param>
-		public static void WriteVector3f(this BinaryWriter Writer, Vector3f Vector)
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="vector">The Vector to write.</param>
+		public static void WriteVector3f(this BinaryWriter Writer, Vector3f vector)
 		{
-			Writer.Write(Vector.X);
-			Writer.Write(Vector.Y);
-			Writer.Write(Vector.Z);
+			Writer.Write(vector.X);
+			Writer.Write(vector.Y);
+			Writer.Write(vector.Z);
+		}
+
+		/// <summary>
+        /// Writes an 8-byte Vector2f value to the data stream in XY order.
+		/// </summary>
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="vector">The Vector to write.</param>
+		public static void WriteVector2f(this BinaryWriter Writer, Vector2f vector)
+		{
+			Writer.Write(vector.X);
+			Writer.Write(vector.Y);
 		}
 
 		/// <summary>
 		/// Writes a 12-byte Rotator value to the data stream in Pitch/Yaw/Roll order.
 		/// </summary>
-		/// <param name="Writer">Writer.</param>
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="InRotator">Rotator.</param>
 		public static void WriteRotator(this BinaryWriter Writer, Rotator InRotator)
 		{
@@ -441,7 +479,7 @@ namespace Warcraft.Core
 		/// <summary>
 		/// Writes an RIFF-style chunk signature to the data stream.
 		/// </summary>
-		/// <param name="Writer">Writer.</param>
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="Signature">Signature.</param>
 		public static void WriteChunkSignature(this BinaryWriter Writer, string Signature)
 		{
@@ -459,7 +497,7 @@ namespace Warcraft.Core
 		/// <summary>
 		/// Writes the provided string to the data stream as a C-style null-terminated string.
 		/// </summary>
-		/// <param name="Writer">Writer.</param>
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="InputString">Input string.</param>
 		public static void WriteNullTerminatedString(this BinaryWriter Writer, string InputString)
 		{

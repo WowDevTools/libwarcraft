@@ -50,19 +50,19 @@ namespace Warcraft.WDT.Chunks
 			}
 		}
 
-		public AreaInfoEntry GetAreaInfo(uint InTileX, uint InTileY)
+		public AreaInfoEntry GetAreaInfo(uint inTileX, uint inTileY)
 		{
-			if (InTileX > 63)
+			if (inTileX > 63)
 			{
-				throw new ArgumentOutOfRangeException("InTileX", "The tile coordinate may not be more than 63 in either dimension.");
+				throw new ArgumentOutOfRangeException(nameof(inTileX), "The tile coordinate may not be more than 63 in either dimension.");
 			}
 
-			if (InTileY > 63)
+			if (inTileY > 63)
 			{
-				throw new ArgumentOutOfRangeException("InTileY", "The tile coordinate may not be more than 63 in either dimension.");
+				throw new ArgumentOutOfRangeException(nameof(inTileY), "The tile coordinate may not be more than 63 in either dimension.");
 			}
 
-			int tileIndex = (int)((InTileY * 64) + InTileX);
+			int tileIndex = (int)((inTileY * 64) + inTileX);
 			return this.Entries[tileIndex];
 		}
 
@@ -102,10 +102,10 @@ namespace Warcraft.WDT.Chunks
 		public readonly uint TileX;
 		public readonly uint TileY;
 
-		public AreaInfoEntry(byte[] data, uint InTileX, uint InTileY)
+		public AreaInfoEntry(byte[] data, uint inTileX, uint inTileY)
 		{
-			this.TileX = InTileX;
-			this.TileY = InTileY;
+			this.TileX = inTileX;
+			this.TileY = inTileY;
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))

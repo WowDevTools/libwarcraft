@@ -285,8 +285,8 @@ namespace Warcraft.BLP
 		/// <param name="MipLevel">Mip level.</param>
 		public Resolution GetMipLevelResolution(uint MipLevel)
 		{
-			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().X);
-			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().Y);
+			uint targetXRes = GetLevelAdjustedResolutionValue(this.GetResolution().X, MipLevel);
+			uint targetYRes = GetLevelAdjustedResolutionValue(this.GetResolution().Y, MipLevel);
 
 			return new Resolution(targetXRes, targetYRes);
 		}
@@ -318,6 +318,25 @@ namespace Warcraft.BLP
 		}
 
 		/// <summary>
+		/// Gets a resolution value (height or width) adjusted by the specified mipmap level. In practice, this is
+		/// a division by the level as far as possible.
+		///
+		/// A greater mip returns a lower resolution value, to a maximum of 1.
+		/// </summary>
+		/// <param name="resolutionValue">The value to adjust. This must be a power-of-two value.</param>
+		/// <param name="mipLevel">The mipmap level to adjust by.</param>
+		/// <returns>The adjusted value.</returns>
+		private static uint GetLevelAdjustedResolutionValue(uint resolutionValue, uint mipLevel)
+		{
+			if ((resolutionValue != 0) && (resolutionValue & (resolutionValue - 1)) != 0)
+			{
+				throw new ArgumentException("The input resolution value must be a power-of-two value.", nameof(resolutionValue));
+			}
+
+			return resolutionValue / (uint)Math.Pow(2, mipLevel).Clamp(1, resolutionValue);
+		}
+
+		/// <summary>
 		/// Decompresses a mipmap in the file at the specified level from the specified data.
 		/// </summary>
 		/// <returns>The mipmap.</returns>
@@ -326,8 +345,8 @@ namespace Warcraft.BLP
 		private Bitmap DecompressMipMap(byte[] InData, uint MipLevel)
 		{
 			Bitmap map = null;
-			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().X);
-			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().Y);
+			uint targetXRes = GetLevelAdjustedResolutionValue(this.GetResolution().X, MipLevel);
+            uint targetYRes = GetLevelAdjustedResolutionValue(this.GetResolution().Y, MipLevel);
 
 			if (InData.Length > 0 && targetXRes > 0 && targetYRes > 0)
 			{
@@ -460,40 +479,6 @@ namespace Warcraft.BLP
 		}
 
 		/// <summary>
-		/// Converts an R8G8B8A8 byte array to a Bitmap object of the specified width
-		/// and height.
-		/// </summary>
-		/// <returns>The bitmap.</returns>
-		/// <param name="InRGBA">In RGBA array.</param>
-		/// <param name="Width">Width.</param>
-		/// <param name="Height">Height.</param>
-		private Bitmap RGBAToBitmap(byte[] InRGBA, int Width, int Height)
-		{
-			Bitmap map = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
-			using (MemoryStream ms = new MemoryStream(InRGBA))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					for (int y = 0; y < Width; ++y)
-					{
-						for (int x = 0; x < Height; ++x)
-						{
-							byte R = br.ReadByte();
-							byte G = br.ReadByte();
-							byte B = br.ReadByte();
-							byte A = br.ReadByte();
-
-							Color pixelColor = Color.FromArgb(A, R, G, B);
-							map.SetPixel(x, y, pixelColor);
-						}
-					}
-				}
-			}
-
-			return map;
-		}
-
-		/// <summary>
 		/// Compresses an input bitmap into a list of mipmap using the file's compression settings.
 		/// Mipmap levels which would produce an image with dimensions smaller than 1x1 will return null instead.
 		/// The number of mipmaps returned will be <see cref="Warcraft.BLP.BLP.GetNumReasonableMipMapLevels"/> + 1.
@@ -514,7 +499,7 @@ namespace Warcraft.BLP
 			mipMaps.Add(CompressImage(InImage, 0));
 
 			// Then, compress the image N amount of times into mipmaps
-			for (int i = 0; i < GetNumReasonableMipMapLevels(); ++i)
+			for (uint i = 0; i < GetNumReasonableMipMapLevels(); ++i)
 			{
 				mipMaps.Add(CompressImage(InImage, i));
 			}
@@ -530,10 +515,10 @@ namespace Warcraft.BLP
 		/// <returns>The image.</returns>
 		/// <param name="InImage">Image.</param>
 		/// <param name="MipLevel">Mip level.</param>
-		private byte[] CompressImage(Image InImage, int MipLevel)
+		private byte[] CompressImage(Image InImage, uint MipLevel)
 		{
-			uint targetXRes = this.GetResolution().X / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().X);
-			uint targetYRes = this.GetResolution().Y / (uint)Math.Pow(2, MipLevel).Clamp(1, this.GetResolution().Y);
+			uint targetXRes = GetLevelAdjustedResolutionValue(this.GetResolution().X, MipLevel);
+			uint targetYRes = GetLevelAdjustedResolutionValue(this.GetResolution().Y, MipLevel);
 
 			List<byte> colourData = new List<byte>();
 			List<byte> alphaData = new List<byte>();
@@ -720,7 +705,7 @@ namespace Warcraft.BLP
 		/// <param name="Width">The width to resize to.</param>
 		/// <param name="Height">The height to resize to.</param>
 		/// <returns>The resized image.</returns>
-		public static Bitmap ResizeImage(Image InImage, int Width, int Height)
+		private static Bitmap ResizeImage(Image InImage, int Width, int Height)
 		{
 			Rectangle destRect = new Rectangle(0, 0, Width, Height);
 			Bitmap destImage = new Bitmap(Width, Height);
@@ -929,7 +914,7 @@ namespace Warcraft.BLP
 		/// Gets the BLP image object as a byte array, which can be written to disk as a file.
 		/// </summary>
 		/// <returns>The bytes.</returns>
-		public byte[] GetBytes()
+		public byte[] Serialize()
 		{
 			byte[] headerBytes = this.Header.ToByteArray();
 			byte[] paletteBytes = GetPaletteBytes();
@@ -970,17 +955,6 @@ namespace Warcraft.BLP
 
 			// Doesn't matter which one, just grab the X Mip
 			return GetMipMap((uint)XMip);
-		}
-
-		/// <summary>
-		/// Writes the image to disk as a BLP file.
-		/// To write a "normal" image format to disk, retrieve a mipmap (<see cref="Warcraft.BLP.BLP.GetMipMap"/>) instead.
-		/// </summary>
-		/// <param name="OutputPath">Path.</param>
-		[Obsolete]
-		private void WriteImageToDisk(string OutputPath)
-		{
-			File.WriteAllBytes(OutputPath, GetBytes());
 		}
 
 		/// <summary>

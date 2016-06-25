@@ -127,7 +127,7 @@ namespace Warcraft.WDT
 		/// <param name="InTileX">0-based x coordinate of the tile.</param>
 		/// <param name="InTileY">0-based y coordinate of the tile.</param>
 		public bool IsTilePopulated(uint InTileX, uint InTileY)
-		{			
+		{
 			AreaInfoEntry InfoEntry = AreaInfo.GetAreaInfo(InTileX, InTileY);
 			return InfoEntry.Flags.HasFlag(AreaInfoFlags.HasTerrainData);
 		}

@@ -29,8 +29,8 @@ namespace Warcraft.ADT.Chunks
 	{
 		public const string Signature = "MFBO";
 
-		public Plane Maximum;
-		public Plane Minimum;
+		public ShortPlane Maximum;
+		public ShortPlane Minimum;
 
 		public TerrainBoundingBox(byte[] data)
 		{
@@ -38,8 +38,8 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Maximum = br.ReadPlane();
-					this.Minimum = br.ReadPlane();
+					this.Maximum = br.ReadShortPlane();
+					this.Minimum = br.ReadShortPlane();
 				}
 			}
 		}
