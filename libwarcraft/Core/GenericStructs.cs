@@ -525,7 +525,6 @@ namespace Warcraft.Core
 		// TODO: Implement quaternion interpolation.
 		public Quaternion Interpolate(Quaternion Target, float Alpha, InterpolationType Type)
 		{
-			//return new Quaternion(0, 0, 0, 0);
 			throw new NotImplementedException();
 		}
 	}
