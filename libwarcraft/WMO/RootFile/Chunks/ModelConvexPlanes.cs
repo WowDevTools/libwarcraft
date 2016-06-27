@@ -21,13 +21,32 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelConvexPlanes
+	public class ModelConvexPlanes : IChunk
 	{
-		public ModelConvexPlanes()
+		public const string Signature = "MCVP";
+
+		public readonly List<Plane> ConvexPlanes = new List<Plane>();
+
+		public ModelConvexPlanes(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					int planeCount = inData.Length / 16;
+					for (int i = 0; i < planeCount; ++i)
+					{
+						this.ConvexPlanes.Add(br.ReadPlane());
+					}
+				}
+			}
 		}
 	}
 }

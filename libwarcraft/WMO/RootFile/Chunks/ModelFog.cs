@@ -21,14 +21,103 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelFog
+	public class ModelFog : IChunk
 	{
-		public ModelFog()
+		public const string Signarture = "MFOG";
+
+		public readonly List<FogInstance> FogInstances = new List<FogInstance>();
+
+		public ModelFog(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					int fogInstanceCount = inData.Length / FogInstance.GetSize();
+					for (int i = 0; i < fogInstanceCount; ++i)
+					{
+						this.FogInstances.Add(new FogInstance(br.ReadBytes(FogInstance.GetSize())));
+					}
+				}
+			}
 		}
+	}
+
+	public class FogInstance
+	{
+		public FogFlags Flags;
+		public Vector3f Position;
+
+		public float GlobalStartRadius;
+		public float GlobalEndRadius;
+
+		public FogDefinition LandFog;
+		public FogDefinition UnderwaterFog;
+
+		public FogInstance(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.Flags = (FogFlags) br.ReadUInt32();
+					this.Position = br.ReadVector3f();
+
+					this.GlobalStartRadius = br.ReadSingle();
+					this.GlobalEndRadius = br.ReadSingle();
+
+					this.LandFog = new FogDefinition(br.ReadBytes(FogDefinition.GetSize()));
+					this.UnderwaterFog = new FogDefinition(br.ReadBytes(FogDefinition.GetSize()));
+				}
+			}
+		}
+
+		public static int GetSize()
+		{
+			return 48;
+		}
+	}
+
+	public class FogDefinition
+	{
+		public float EndRadius;
+		public float StartMultiplier;
+		public BGRA Colour;
+
+		public FogDefinition(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.EndRadius = br.ReadSingle();
+					this.StartMultiplier = br.ReadSingle();
+					this.Colour = br.ReadBGRA();
+				}
+			}
+		}
+
+		public static int GetSize()
+		{
+			return 12;
+		}
+	}
+
+	[Flags]
+	public enum FogFlags : uint
+	{
+		InfiniteRadius	= 0x01,
+		// Unused1		= 0x02,
+		// Unused2		= 0x04,
+		Unknown1		= 0x10,
+		// Followed by 27 unused values
 	}
 }
 

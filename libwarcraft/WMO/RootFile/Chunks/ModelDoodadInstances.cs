@@ -21,14 +21,76 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelDoodadInstances
+	public class ModelDoodadInstances : IChunk
 	{
-		public ModelDoodadInstances()
+		public const string Signature = "MODD";
+
+		public  readonly List<DoodadInstance> DoodadInstances = new List<DoodadInstance>();
+
+		public ModelDoodadInstances(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					int instanceCount = inData.Length / DoodadInstance.GetSize();
+					for (int i = 0; i < instanceCount; ++i)
+					{
+						this.DoodadInstances.Add(new DoodadInstance(br.ReadBytes(DoodadInstance.GetSize())));
+					}
+				}
+			}
 		}
+	}
+
+	public class DoodadInstance
+	{
+		public uint NameOffset;
+		public DoodadInstanceFlags Flags;
+		public Vector3f Position;
+		public Quaternion Orientation;
+		public float Scale;
+		public BGRA StaticLightingColour;
+
+		public DoodadInstance(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.NameOffset = br.ReadUInt32();
+					this.Flags = (DoodadInstanceFlags)br.ReadUInt32();
+					this.Position = br.ReadVector3f();
+
+					// TODO: Investigate whether or not this is a Quat16 in >= BC
+					this.Orientation = br.ReadQuaternion32();
+
+					this.Scale = br.ReadSingle();
+					this.StaticLightingColour = br.ReadBGRA();
+				}
+			}
+		}
+
+		public static int GetSize()
+		{
+			return 40;
+		}
+	}
+
+	[Flags]
+	public enum DoodadInstanceFlags : uint
+	{
+		AcceptProjectedTexture 		= 0x01,
+		Unknown1					= 0x02,
+		Unknown2					= 0x04,
+		Unknown3					= 0x08
 	}
 }
 

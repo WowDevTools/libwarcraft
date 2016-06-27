@@ -21,13 +21,27 @@
 //
 
 using System;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelSkybox
+	public class ModelSkybox : IChunk
 	{
-		public ModelSkybox()
+		public const string Signature = "MOSB";
+
+		public string SkyboxName;
+
+		public ModelSkybox(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.SkyboxName = br.ReadNullTerminatedString();
+				}
+			}
 		}
 	}
 }

@@ -1,5 +1,5 @@
 //
-//  ModelGameobjectFileID.cs
+//  ModelGameObjectFileID.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,13 +21,30 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelGameobjectFileID
+	public class ModelGameObjectFileID : IChunk
 	{
-		public ModelGameobjectFileID()
+		public const string Signature = "GFID";
+
+		public List<uint> IDFlags = new List<uint>();
+
+		public ModelGameObjectFileID(byte[] inData, uint groupCount)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					for (int i = 0; i < groupCount; ++i)
+					{
+						this.IDFlags.Add(br.ReadUInt32());
+					}
+				}
+			}
 		}
 	}
 }

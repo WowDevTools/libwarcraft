@@ -21,13 +21,63 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelGroupNames
+	// TODO: Rework to support offset-based seeking and adding of strings
+	public class ModelGroupNames : IChunk
 	{
-		public ModelGroupNames()
+		public const string Signature = "MOGN";
+
+		public readonly List<KeyValuePair<long, string>> GroupNames = new List<KeyValuePair<long, string>>();
+
+		public ModelGroupNames(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					while (ms.Position < ms.Length)
+					{
+						GroupNames.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
+					}
+				}
+			}
+
+			// Remove null entries from the texture list
+			GroupNames.RemoveAll(s => s.Value.Equals("\0"));
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					// Each block begins with two empty strings
+					bw.Write('\0');
+					bw.Write('\0');
+
+					// Then the actual data
+					for (int i = 0; i < GroupNames.Count; ++i)
+					{
+						bw.WriteNullTerminatedString(GroupNames[i].Value);
+					}
+
+					// Then zero padding to an even 4-byte boundary
+					long count = 4 - (ms.Position % 4);
+					for (long i = 0; i < count; ++i)
+					{
+						bw.Write('\0');
+					}
+				}
+
+				return ms.ToArray();
+			}
 		}
 	}
 }

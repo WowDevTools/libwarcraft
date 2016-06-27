@@ -1,5 +1,5 @@
 //
-//  ModelLighting.cs
+//  ModelDoodadNames.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,13 +21,34 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelLighting
+	public class ModelDoodadNames : IChunk
 	{
-		public ModelLighting()
+		public const string Signature = "MODN";
+
+		public readonly List<KeyValuePair<long, string>> DoodadNames = new List<KeyValuePair<long, string>>();
+
+		public ModelDoodadNames(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					while (ms.Position < ms.Length)
+					{
+						this.DoodadNames.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
+					}
+				}
+			}
+
+			// Remove null entries from the doodad list
+			this.DoodadNames.RemoveAll(s => s.Value.Equals("\0"));
 		}
 	}
 }

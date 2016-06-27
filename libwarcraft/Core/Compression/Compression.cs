@@ -43,54 +43,54 @@ namespace Warcraft.Core.Compression
 				Buffer.BlockCopy(PendingSector, 1, sectorData, 0, sectorData.Length);
 				PendingSector = sectorData;
 
-				// Walk through each compression algorithm in reverse order						
+				// Walk through each compression algorithm in reverse order
 				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.BZip2))
 				{
 					// Decompress sector using BZIP2
-					PendingSector = Compression.DecompressBZip2(PendingSector);
+					PendingSector = DecompressBZip2(PendingSector);
 				}
 
 				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Implode_PKWARE))
 				{
 					// Decompress sector using PKWARE Implode
-					PendingSector = Compression.DecompressPKWAREImplode(PendingSector);
+					PendingSector = DecompressPKWAREImplode(PendingSector);
 				}
 
 				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Deflate_ZLIB))
 				{
 					// Decompress sector using Deflate
-					PendingSector = Compression.DecompressDeflate(PendingSector);
+					PendingSector = DecompressDeflate(PendingSector);
 				}
 
 				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Huffman))
 				{
 					// Decompress sector using Huffman
-					PendingSector = Compression.DecompressHuffman(PendingSector);
+					PendingSector = DecompressHuffman(PendingSector);
 				}
 
 				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.IMA_ADPCM_Stereo))
 				{
 					// Decompress sector using ADPCM Stereo
-					PendingSector = Compression.DecompressADPCMStereo(PendingSector);
+					PendingSector = DecompressADPCMStereo(PendingSector);
 				}
 
 				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.IMA_ADPCM_Mono))
 				{
 					// Decompress sector using ADPCM Mono
-					PendingSector = Compression.DecompressADPCMMono(PendingSector);
+					PendingSector = DecompressADPCMMono(PendingSector);
 				}
 
 				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Sparse))
 				{
 					// Decompress sector using Sparse
-					PendingSector = Compression.DecompressSparse(PendingSector);
+					PendingSector = DecompressSparse(PendingSector);
 				}
 			}
 			else if (Flags.HasFlag(BlockFlags.IsImploded))
 			{
 				// This file or sector uses a single-pass PKWARE Implode algorithm.
 				// Decompress sector using PKWARE
-				PendingSector = Compression.DecompressPKWAREImplode(PendingSector);
+				PendingSector = DecompressPKWAREImplode(PendingSector);
 			}
 
 			return PendingSector;
@@ -106,7 +106,7 @@ namespace Warcraft.Core.Compression
 		{
 			using (MemoryStream ms = new MemoryStream(InData))
 			{
-				return MpqWavCompression.Decompress(ms, 1);			
+				return MpqWavCompression.Decompress(ms, 1);
 			}
 		}
 
@@ -114,7 +114,7 @@ namespace Warcraft.Core.Compression
 		{
 			using (MemoryStream ms = new MemoryStream(InData))
 			{
-				return MpqWavCompression.Decompress(ms, 2);			
+				return MpqWavCompression.Decompress(ms, 2);
 			}
 		}
 
@@ -163,7 +163,7 @@ namespace Warcraft.Core.Compression
 					{
 						input.CopyTo(decompressedData);
 						return decompressedData.ToArray();
-					}				
+					}
 				}
 			}
 		}

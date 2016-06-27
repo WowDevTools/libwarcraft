@@ -21,13 +21,37 @@
 //
 
 using System;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
+using Warcraft.WMO.GroupFile.Chunks;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelGroupInformation
+	public class ModelGroupInformation : IChunk
 	{
-		public ModelGroupInformation()
+		public const string Signature = "MOGI";
+
+		public GroupFlags Flags;
+		public Box BoundingBox;
+		public int GroupNameOffset;
+
+		public ModelGroupInformation(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.Flags = (GroupFlags)br.ReadUInt32();
+					this.BoundingBox = br.ReadBox();
+					this.GroupNameOffset = br.ReadInt32();
+				}
+			}
+		}
+
+		public bool HasGroupName()
+		{
+			return GroupNameOffset > -1;
 		}
 	}
 }

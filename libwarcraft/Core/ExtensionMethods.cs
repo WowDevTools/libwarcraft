@@ -133,6 +133,23 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
+		/// Reads a 4-byte RGBA value from the data stream.
+		/// </summary>
+		/// <returns>The argument.</returns>
+		/// <param name="Reader">Reader.</param>
+		public static BGRA ReadBGRA(this BinaryReader Reader)
+		{
+			byte B = Reader.ReadByte();
+			byte G = Reader.ReadByte();
+			byte R = Reader.ReadByte();
+			byte A = Reader.ReadByte();
+
+			BGRA bgra = new BGRA(B, G, R, A);
+
+			return bgra;
+		}
+
+		/// <summary>
 		/// Reads a standard null-terminated string from the data stream.
 		/// </summary>
 		/// <returns>The null terminated string.</returns>
@@ -307,7 +324,7 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Reads an 8-byte <see cref="Plane"/> from the data stream.
+		/// Reads an 16-byte <see cref="Plane"/> from the data stream.
 		/// </summary>
 		/// <returns>The plane.</returns>
 		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
@@ -433,6 +450,19 @@ namespace Warcraft.Core
 			Writer.Write(rgba.G);
 			Writer.Write(rgba.B);
 			Writer.Write(rgba.A);
+		}
+
+		/// <summary>
+		/// Writes a 4-byte <see cref="RGBA"/> value to the data stream.
+		/// </summary>
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="bgra">The RGBA value to write.</param>
+		public static void WriteBGRA(this BinaryWriter Writer, BGRA bgra)
+		{
+			Writer.Write(bgra.B);
+			Writer.Write(bgra.G);
+			Writer.Write(bgra.R);
+			Writer.Write(bgra.A);
 		}
 
 		/// <summary>

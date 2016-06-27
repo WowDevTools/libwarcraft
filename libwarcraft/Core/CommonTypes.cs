@@ -1,4 +1,4 @@
-//
+﻿//
 //  GenericStructs.cs
 //
 //  Author:
@@ -166,7 +166,7 @@ namespace Warcraft.Core
 		public byte A;
 
 		/// <summary>
-		/// Creates a new <seealso cref="RGBA"/> object from a set of byte component values.
+		/// Creates a new <see cref="RGBA"/> object from a set of byte component values.
 		/// </summary>
 		/// <param name="inR">The input red component.</param>
 		/// <param name="inG">The input blue component.</param>
@@ -178,6 +178,67 @@ namespace Warcraft.Core
 			this.G = inG;
 			this.B = inB;
 			this.A = inA;
+		}
+
+		/// <summary>
+		/// Creates a new <see cref="RGBA"/> object from a byte that fills all components.
+		/// </summary>
+		/// <param name="all">The input byte component.</param>
+		public RGBA(byte all)
+		:this(all, all, all, all)
+		{
+
+		}
+	}
+
+	/// <summary>
+	/// A structure representing an BGRA colour value.
+	/// </summary>
+	public struct BGRA
+	{
+		/// <summary>
+		/// The red component.
+		/// </summary>
+		public byte B;
+
+		/// <summary>
+		/// The green component.
+		/// </summary>
+		public byte G;
+
+		/// <summary>
+		/// The blue component.
+		/// </summary>
+		public byte R;
+
+		/// <summary>
+		/// The alpha component.
+		/// </summary>
+		public byte A;
+
+		/// <summary>
+		/// Creates a new <see cref="BGRA"/> object from a set of byte component values.
+		/// </summary>
+		/// <param name="inG">The input blue component.</param>
+		/// <param name="inB">The input green component.</param>
+		/// <param name="inR">The input red component.</param>
+		/// <param name="inA">The input alpha component.</param>
+		public BGRA(byte inB, byte inG, byte inR, byte inA)
+		{
+			this.B = inB;
+			this.G = inG;
+			this.R = inR;
+			this.A = inA;
+		}
+
+		/// <summary>
+		/// Creates a new <see cref="BGRA"/> object from a byte that fills all components.
+		/// </summary>
+		/// <param name="all">The input byte component.</param>
+		public BGRA(byte all)
+		:this(all, all, all, all)
+		{
+
 		}
 	}
 
@@ -310,10 +371,9 @@ namespace Warcraft.Core
 		/// </summary>
 		/// <param name="all">All.</param>
 		public Vector3f(float all)
+			:this(all, all, all)
 		{
-			this.X = all;
-			this.Y = all;
-			this.Z = all;
+
 		}
 
 		public static float Dot(Vector3f start, Vector3f end)
@@ -475,10 +535,9 @@ namespace Warcraft.Core
 		/// </summary>
 		/// <param name="inVector">In vector.</param>
 		public Rotator(Vector3f inVector)
+			:this(inVector.X, inVector.Y, inVector.Z)
 		{
-			this.Pitch = inVector.X;
-			this.Yaw = inVector.Y;
-			this.Roll = inVector.Z;
+
 		}
 	}
 

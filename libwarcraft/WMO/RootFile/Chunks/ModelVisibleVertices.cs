@@ -21,13 +21,32 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelVisibleVertices
+	public class ModelVisibleVertices : IChunk
 	{
-		public ModelVisibleVertices()
+		public const string Signature = "MOVV";
+
+		public readonly List<Vector3f> VisibleVertices = new List<Vector3f>();
+
+		public ModelVisibleVertices(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					int vertexCount = inData.Length / 12;
+					for (int i = 0; i < vertexCount; ++i)
+					{
+						VisibleVertices.Add(br.ReadVector3f());
+					}
+				}
+			}
 		}
 	}
 }

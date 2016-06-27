@@ -81,6 +81,7 @@
     <Compile Include="Core\Compression\Squish\Maths.cs" />
     <Compile Include="Core\Compression\Squish\SquishCompression.cs" />
     <Compile Include="Core\Shading\ShaderTypes.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelPortalVertices.cs" />
     <Compile Include="WMO\WMO.cs" />
     <Compile Include="MDX\MDX.cs" />
     <Compile Include="MDX\MDXHeader.cs" />

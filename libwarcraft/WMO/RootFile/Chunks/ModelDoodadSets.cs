@@ -21,13 +21,67 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Warcraft.ADT.Chunks;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelDoodadSets
+	public class ModelDoodadSets : IChunk
 	{
-		public ModelDoodadSets()
+		public const string Signature = "MODS";
+
+		public readonly List<DoodadSet> DoodadSets = new List<DoodadSet>();
+
+		public ModelDoodadSets(byte[] inData, uint setCount)
 		{
+			if (setCount > inData.Length / DoodadSet.GetSize())
+			{
+				throw new ArgumentOutOfRangeException(nameof(setCount), "The set count was greater than the amount of sets held in the input data.");
+			}
+
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					for (uint i = 0; i < setCount; ++i)
+					{
+						this.DoodadSets.Add(new DoodadSet(br.ReadBytes(DoodadSet.GetSize())));
+					}
+				}
+			}
+		}
+	}
+
+	public class DoodadSet
+	{
+		public string Name;
+		public uint FirstDoodadInstanceIndex;
+		public uint DoodadInstanceCount;
+		public uint Unknown;
+
+		public DoodadSet(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					// The name of the doodad set can be up to 20 bytes, and is always padded to this length.
+					// Therefore, we read 20 bytes, convert it to a string and trim the end of any null characters.
+					byte[] nameBytes = br.ReadBytes(20);
+					this.Name = Encoding.UTF8.GetString(nameBytes).TrimEnd('\0');
+
+					this.FirstDoodadInstanceIndex = br.ReadUInt32();
+					this.DoodadInstanceCount = br.ReadUInt32();
+					this.Unknown = br.ReadUInt32();
+				}
+			}
+		}
+
+		public static int GetSize()
+		{
+			return 32;
 		}
 	}
 }

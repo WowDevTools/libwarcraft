@@ -21,13 +21,66 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelTextures
+	// TODO: Rework to support offset-based seeking and adding of strings
+	public class ModelTextures : IChunk
 	{
-		public ModelTextures()
+		public const string Signature = "MOTX";
+
+		public readonly List<KeyValuePair<long, string>> MaterialTextures = new List<KeyValuePair<long, string>>();
+
+		public ModelTextures(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					while (ms.Position < ms.Length)
+					{
+						if (ms.Position % 4 == 0)
+						{
+							MaterialTextures.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
+						}
+						else
+						{
+							ms.Position += (4 - (ms.Position % 4));
+						}
+					}
+				}
+			}
+
+			// Remove null entries from the texture list
+			MaterialTextures.RemoveAll(s => s.Value.Equals("\0"));
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					for (int i = 0; i < MaterialTextures.Count; ++i)
+					{
+						if (ms.Position % 4 == 0)
+						{
+							bw.WriteNullTerminatedString(MaterialTextures[i].Value);
+						}
+						else
+						{
+							// Pad with nulls
+							bw.Write('\0');
+						}
+					}
+				}
+
+				return ms.ToArray();
+			}
 		}
 	}
 }

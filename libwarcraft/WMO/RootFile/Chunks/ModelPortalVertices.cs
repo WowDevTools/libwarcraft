@@ -1,5 +1,5 @@
-//
-//  ModelDoodadReferences.cs
+﻿//
+//  ModelPortalVertices.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelDoodadReferences
+	public class ModelPortalVertices : IChunk
 	{
-		public ModelDoodadReferences()
+		public const string Signature = "MOPV";
+
+		public readonly List<Vector3f> Vertices = new List<Vector3f>();
+
+		public ModelPortalVertices(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					while (ms.Position < ms.Length)
+					{
+						Vertices.Add(br.ReadVector3f());
+					}
+				}
+			}
 		}
 	}
 }
-

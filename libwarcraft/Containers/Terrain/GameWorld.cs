@@ -89,7 +89,7 @@ namespace Warcraft.Containers.Terrain
 
 		private string CreateTilePath(uint TileXPosition, uint TileYPosition)
 		{
-			return String.Format("{0}\\{1}_{2}_{3}.adt", WorldPath, WorldName, TileXPosition, TileYPosition);
+			return $"{WorldPath}\\{WorldName}_{TileXPosition}_{TileYPosition}.adt";
 		}
 	}
 }

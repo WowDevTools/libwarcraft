@@ -21,13 +21,55 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelVisibleBlocks
+	public class ModelVisibleBlocks : IChunk
 	{
-		public ModelVisibleBlocks()
+		public const string Signature = "MOVB";
+
+		public readonly List<VisibleBlock> VisibleBlocks = new List<VisibleBlock>();
+
+		public ModelVisibleBlocks(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					int visibleBlockCount = inData.Length / VisibleBlock.GetSize();
+					for (int i = 0; i < visibleBlockCount; ++i)
+					{
+						VisibleBlocks.Add(new VisibleBlock(br.ReadBytes(VisibleBlock.GetSize())));
+
+					}
+				}
+			}
+		}
+	}
+
+	public class VisibleBlock
+	{
+		public ushort FirstVertexIndex;
+		public ushort VertexCount;
+
+		public VisibleBlock(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.FirstVertexIndex = br.ReadUInt16();
+					this.VertexCount = br.ReadUInt16();
+				}
+			}
+		}
+
+		public static int GetSize()
+		{
+			return 4;
 		}
 	}
 }
