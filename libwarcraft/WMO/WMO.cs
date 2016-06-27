@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Warcraft.WMO.RootFile;
 using Warcraft.WMO.GroupFile;
 using System.Collections.Generic;
@@ -12,8 +12,8 @@ namespace Warcraft.WMO
 	/// </summary>
 	public class WMO : IDisposable
 	{
-		private Root WMORootObject;
-		private List<Group> WMOGroups;
+		public ModelRoot RootInformation;
+		public List<ModelGroup> Groups = new List<ModelGroup>();
 
 		public WMO()
 		{
@@ -24,7 +24,7 @@ namespace Warcraft.WMO
 		/// or it won't be accepted by the model.
 		/// </summary>
 		/// <param name="modelGroup">Model group.</param>
-		public void AddModelGroup(Group modelGroup)
+		public void AddModelGroup(ModelGroup modelGroup)
 		{
 
 		}

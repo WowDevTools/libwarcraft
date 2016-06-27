@@ -1,5 +1,5 @@
 //
-//  RootHeader.cs
+//  ModelRootHeader.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,7 +28,7 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile
 {
-	public class RootHeader : IChunk
+	public class ModelRootHeader : IChunk
 	{
 		public const string Signature = "MOHD";
 
@@ -44,7 +44,7 @@ namespace Warcraft.WMO.RootFile
 		public Box BoundingBox;
 		public RootFlags Flags;
 
-		public RootHeader(byte[] inData)
+		public ModelRootHeader(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{

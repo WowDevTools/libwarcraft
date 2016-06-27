@@ -1,5 +1,5 @@
 //
-//  Root.cs
+//  ModelGroup.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,13 +22,12 @@
 
 using System;
 
-namespace Warcraft.WMO.RootFile
+namespace Warcraft.WMO.GroupFile
 {
-	public class Root
+	public class ModelGroup
 	{
-		public Root()
+		public ModelGroup()
 		{
 		}
 	}
 }
-

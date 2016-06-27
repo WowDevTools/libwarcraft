@@ -2,34 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f641b55-5839-4f84-b03a-170e3343ce13" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadReferences.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadNames.cs" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelLighting.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelStaticLighting.cs" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelGroup.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelGroupHeader.cs" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Group.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroup.cs" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Root.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRoot.cs" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/RootHeader.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRootHeader.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/Containers/Terrain/GameWorld.cs" afterPath="$PROJECT_DIR$/../libwarcraft/Containers/Terrain/GameWorld.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/Core/CommonTypes.cs" afterPath="$PROJECT_DIR$/../libwarcraft/Core/CommonTypes.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/Core/Compression/Compression.cs" afterPath="$PROJECT_DIR$/../libwarcraft/Core/Compression/Compression.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/Core/ExtensionMethods.cs" afterPath="$PROJECT_DIR$/../libwarcraft/Core/ExtensionMethods.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/Core/WarcraftFileType.cs" afterPath="$PROJECT_DIR$/../libwarcraft/Core/WarcraftFileType.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/Core/WarcraftVersion.cs" afterPath="$PROJECT_DIR$/../libwarcraft/Core/WarcraftVersion.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelDoodadReferences.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelDoodadReferences.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelGroup.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelGroup.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelConvexPlanes.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelConvexPlanes.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadInstances.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadInstances.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadSets.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadSets.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelFog.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelFog.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGameobjectFileID.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGameobjectFileID.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGroupInformation.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGroupInformation.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGroupNames.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGroupNames.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelMaterials.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelMaterials.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortalReferences.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortalReferences.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortals.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortals.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelSkybox.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelSkybox.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelTextures.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelTextures.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelVisibleBlocks.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelVisibleBlocks.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelVisibleVertices.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelVisibleVertices.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/RootHeader.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/RootHeader.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/libwarcraft.csproj" afterPath="$PROJECT_DIR$/../libwarcraft/libwarcraft.csproj" />
     </list>
     <ignored path="libwarcraft.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,83 +27,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RootHeader.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/RootHeader.cs">
+      <file leaf-file-name="ModelRootHeader.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRootHeader.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
               <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="51" selection-end-column="17" />
               <folding>
-                <marker date="1466943286568" expanded="true" signature="0:786" ph="/* ... */" />
-                <marker date="1466943286568" expanded="true" signature="794:900" ph="..." />
-                <marker date="1466943286568" expanded="true" signature="933:2891" ph="{...}" />
-                <marker date="1466943286568" expanded="true" signature="969:2624" ph="{...}" />
-                <marker date="1466943286568" expanded="true" signature="1380:2037" ph="{...}" />
-                <marker date="1466943286568" expanded="true" signature="2066:2621" ph="{...}" />
-                <marker date="1466943286568" expanded="true" signature="2664:2889" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ModelPortals.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortals.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
-              <folding>
-                <marker date="1467033790716" expanded="true" signature="0:788" ph="/* ... */" />
-                <marker date="1467033790716" expanded="true" signature="796:881" ph="..." />
-                <marker date="1467033790716" expanded="true" signature="796:902" ph="..." />
-                <marker date="1467033790716" expanded="true" signature="942:2077" ph="{...}" />
-                <marker date="1467033790716" expanded="true" signature="980:1611" ph="{...}" />
-                <marker date="1467033790716" expanded="true" signature="1143:1608" ph="{...}" />
-                <marker date="1467033790716" expanded="true" signature="1633:2075" ph="{...}" />
-                <marker date="1467033790716" expanded="true" signature="1758:2019" ph="{...}" />
-                <marker date="1467033790716" expanded="true" signature="2050:2072" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ModelStaticLighting.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelStaticLighting.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="50" selection-end-column="21" />
-              <folding>
-                <marker date="1467036929312" expanded="true" signature="0:795" ph="/* ... */" />
-                <marker date="1467036929312" expanded="true" signature="803:861" ph="..." />
-                <marker date="1467036929312" expanded="true" signature="803:909" ph="..." />
-                <marker date="1467036929312" expanded="true" signature="949:3036" ph="{...}" />
-                <marker date="1467036929312" expanded="true" signature="994:1670" ph="{...}" />
-                <marker date="1467036929312" expanded="true" signature="1178:1667" ph="{...}" />
-                <marker date="1467036929312" expanded="true" signature="1697:2923" ph="{...}" />
-                <marker date="1467036929312" expanded="true" signature="2145:2867" ph="{...}" />
-                <marker date="1467036929312" expanded="true" signature="2898:2920" ph="{...}" />
-                <marker date="1467036929312" expanded="true" signature="2954:3034" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ModelDoodadSets.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadSets.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-              <folding>
-                <marker date="1467035828484" expanded="true" signature="0:791" ph="/* ... */" />
-                <marker date="1467035828484" expanded="true" signature="799:903" ph="..." />
-                <marker date="1467035828484" expanded="true" signature="943:2452" ph="{...}" />
-                <marker date="1467035828484" expanded="true" signature="984:1630" ph="{...}" />
-                <marker date="1467035828484" expanded="true" signature="1156:1627" ph="{...}" />
-                <marker date="1467035828484" expanded="true" signature="1655:2450" ph="{...}" />
-                <marker date="1467035828484" expanded="true" signature="1813:2394" ph="{...}" />
-                <marker date="1467035828484" expanded="true" signature="1939:2066" ph="/* ... */" />
-                <marker date="1467035828484" expanded="true" signature="1939:2070" ph="/* ... */" />
-                <marker date="1467035828484" expanded="true" signature="1939:2072" ph="/* ... */" />
-                <marker date="1467035828484" expanded="true" signature="1939:2129" ph="/* ... */" />
-                <marker date="1467035828484" expanded="true" signature="2425:2447" ph="{...}" />
+                <marker date="1467038457004" expanded="true" signature="0:791" ph="/* ... */" />
+                <marker date="1467038457004" expanded="true" signature="799:905" ph="..." />
+                <marker date="1467038457004" expanded="true" signature="938:2906" ph="{...}" />
+                <marker date="1467038457004" expanded="true" signature="979:2639" ph="{...}" />
+                <marker date="1467038457004" expanded="true" signature="1395:2052" ph="{...}" />
+                <marker date="1467038457004" expanded="true" signature="2081:2636" ph="{...}" />
+                <marker date="1467038457004" expanded="true" signature="2679:2904" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -206,7 +120,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ModelGameobjectFileID.cs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ModelGameobjectFileID.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGameobjectFileID.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="645">
@@ -222,18 +136,67 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ModelTextures.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelTextures.cs">
+      <file leaf-file-name="ModelRoot.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRoot.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="57" column="12" selection-start-line="57" selection-start-column="12" selection-end-line="58" selection-end-column="66" />
+            <state relative-caret-position="682">
+              <caret line="52" column="25" selection-start-line="52" selection-start-column="25" selection-end-line="52" selection-end-column="25" />
               <folding>
-                <marker date="1467024539096" expanded="true" signature="0:789" ph="/* ... */" />
-                <marker date="1467024539096" expanded="true" signature="797:903" ph="..." />
-                <marker date="1467024539096" expanded="true" signature="943:2212" ph="{...}" />
-                <marker date="1467024539096" expanded="true" signature="1053:2210" ph="{...}" />
-                <marker date="1467024539096" expanded="true" signature="1248:1768" ph="{...}" />
-                <marker date="1467024539096" expanded="true" signature="1797:2207" ph="{...}" />
+                <marker date="1467038457040" expanded="true" signature="0:785" ph="/* ... */" />
+                <marker date="1467038457040" expanded="true" signature="793:836" ph="..." />
+                <marker date="1467038457040" expanded="true" signature="869:1690" ph="{...}" />
+                <marker date="1467038457040" expanded="true" signature="895:1688" ph="{...}" />
+                <marker date="1467038457040" expanded="true" signature="1676:1685" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ModelGroup.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroup.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ModelGroupHeader.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelGroupHeader.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+              <folding>
+                <marker date="1467038457084" expanded="true" signature="0:792" ph="/* ... */" />
+                <marker date="1467038457084" expanded="true" signature="848:2078" ph="{...}" />
+                <marker date="1467038457084" expanded="true" signature="881:923" ph="{...}" />
+                <marker date="1467038457084" expanded="true" signature="912:920" ph="{...}" />
+                <marker date="1467038457084" expanded="true" signature="964:2076" ph="{...}" />
+                <marker date="1467038457084" expanded="true" signature="1110:1171" ph="/* ... */" />
+                <marker date="1467038457084" expanded="true" signature="1444:1505" ph="/* ... */" />
+                <marker date="1467038457084" expanded="true" signature="1654:1779" ph="/* ... */" />
+                <marker date="1467038457084" expanded="true" signature="1943:2006" ph="/* ... */" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WMO.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
+              <folding>
+                <marker date="1467038496184" expanded="true" signature="6:106" ph="..." />
+                <marker date="1467038496184" expanded="true" signature="130:1384" ph="{...}" />
+                <marker date="1467038496184" expanded="true" signature="134:351" ph="/// ..." />
+                <marker date="1467038496184" expanded="true" signature="383:1382" ph="{...}" />
+                <marker date="1467038496184" expanded="true" signature="497:505" ph="{...}" />
+                <marker date="1467038496184" expanded="true" signature="509:732" ph="/// ..." />
+                <marker date="1467038496184" expanded="true" signature="783:792" ph="{...}" />
+                <marker date="1467038496184" expanded="true" signature="796:1346" ph="/// ..." />
+                <marker date="1467038496184" expanded="true" signature="1370:1379" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -266,9 +229,7 @@
         <option value="$PROJECT_DIR$/../libwarcraft/Containers/Terrain/GameWorld.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/RootHeader.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelMaterials.cs" />
-        <option value="$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelTextures.cs" />
-        <option value="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelGroup.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelSkybox.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGroupInformation.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortalVertices.cs" />
@@ -288,6 +249,10 @@
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelFog.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelConvexPlanes.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGameobjectFileID.cs" />
+        <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Root.cs" />
+        <option value="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Group.cs" />
+        <option value="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelGroup.cs" />
+        <option value="$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs" />
       </list>
     </option>
   </component>
@@ -1066,24 +1031,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <marker date="1466975706185" expanded="true" signature="6:106" ph="..." />
-            <marker date="1466975706185" expanded="true" signature="130:1347" ph="{...}" />
-            <marker date="1466975706185" expanded="true" signature="134:351" ph="/// ..." />
-            <marker date="1466975706185" expanded="true" signature="383:1345" ph="{...}" />
-            <marker date="1466975706185" expanded="true" signature="465:473" ph="{...}" />
-            <marker date="1466975706185" expanded="true" signature="477:700" ph="/// ..." />
-            <marker date="1466975706185" expanded="true" signature="746:755" ph="{...}" />
-            <marker date="1466975706185" expanded="true" signature="759:1309" ph="/// ..." />
-            <marker date="1466975706185" expanded="true" signature="1333:1342" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../libwarcraft/TRS/TRS.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1094,32 +1041,6 @@
             <marker date="1461867711386" expanded="true" signature="868:1399" ph="{...}" />
             <marker date="1461867711386" expanded="true" signature="888:1397" ph="{...}" />
             <marker date="1461867711386" expanded="true" signature="1003:1394" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Group.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1461867711574" expanded="true" signature="0:781" ph="/* ... */" />
-            <marker date="1461867711574" expanded="true" signature="830:885" ph="{...}" />
-            <marker date="1461867711574" expanded="true" signature="852:883" ph="{...}" />
-            <marker date="1461867711574" expanded="true" signature="872:880" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Root.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
-          <folding>
-            <marker date="1461867711574" expanded="true" signature="0:780" ph="/* ... */" />
-            <marker date="1461867711574" expanded="true" signature="828:881" ph="{...}" />
-            <marker date="1461867711574" expanded="true" signature="849:879" ph="{...}" />
-            <marker date="1461867711574" expanded="true" signature="868:876" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1167,24 +1088,6 @@
             <marker date="1466969310825" expanded="true" signature="1433:2108" ph="{...}" />
             <marker date="1466969310825" expanded="true" signature="2155:2440" ph="{...}" />
             <marker date="1466969310825" expanded="true" signature="2474:2512" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelGroup.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
-          <folding>
-            <marker date="1467025564000" expanded="true" signature="0:786" ph="/* ... */" />
-            <marker date="1467025564000" expanded="true" signature="842:2060" ph="{...}" />
-            <marker date="1467025564000" expanded="true" signature="869:905" ph="{...}" />
-            <marker date="1467025564000" expanded="true" signature="894:902" ph="{...}" />
-            <marker date="1467025564000" expanded="true" signature="946:2058" ph="{...}" />
-            <marker date="1467025564000" expanded="true" signature="1092:1153" ph="/* ... */" />
-            <marker date="1467025564000" expanded="true" signature="1426:1487" ph="/* ... */" />
-            <marker date="1467025564000" expanded="true" signature="1636:1761" ph="/* ... */" />
-            <marker date="1467025564000" expanded="true" signature="1925:1988" ph="/* ... */" />
           </folding>
         </state>
       </provider>
@@ -1568,18 +1471,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/RootHeader.cs">
+    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRootHeader.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="51" selection-end-column="17" />
           <folding>
-            <marker date="1466943286568" expanded="true" signature="0:786" ph="/* ... */" />
-            <marker date="1466943286568" expanded="true" signature="794:900" ph="..." />
-            <marker date="1466943286568" expanded="true" signature="933:2891" ph="{...}" />
-            <marker date="1466943286568" expanded="true" signature="969:2624" ph="{...}" />
-            <marker date="1466943286568" expanded="true" signature="1380:2037" ph="{...}" />
-            <marker date="1466943286568" expanded="true" signature="2066:2621" ph="{...}" />
-            <marker date="1466943286568" expanded="true" signature="2664:2889" ph="{...}" />
+            <marker date="1467038457004" expanded="true" signature="0:791" ph="/* ... */" />
+            <marker date="1467038457004" expanded="true" signature="799:905" ph="..." />
+            <marker date="1467038457004" expanded="true" signature="938:2906" ph="{...}" />
+            <marker date="1467038457004" expanded="true" signature="979:2639" ph="{...}" />
+            <marker date="1467038457004" expanded="true" signature="1395:2052" ph="{...}" />
+            <marker date="1467038457004" expanded="true" signature="2081:2636" ph="{...}" />
+            <marker date="1467038457004" expanded="true" signature="2679:2904" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1646,6 +1549,64 @@
             <marker date="1467038064900" expanded="true" signature="930:1372" ph="{...}" />
             <marker date="1467038064900" expanded="true" signature="977:1370" ph="{...}" />
             <marker date="1467038064900" expanded="true" signature="1135:1367" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroup.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelGroupHeader.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+          <folding>
+            <marker date="1467038457084" expanded="true" signature="0:792" ph="/* ... */" />
+            <marker date="1467038457084" expanded="true" signature="848:2078" ph="{...}" />
+            <marker date="1467038457084" expanded="true" signature="881:923" ph="{...}" />
+            <marker date="1467038457084" expanded="true" signature="912:920" ph="{...}" />
+            <marker date="1467038457084" expanded="true" signature="964:2076" ph="{...}" />
+            <marker date="1467038457084" expanded="true" signature="1110:1171" ph="/* ... */" />
+            <marker date="1467038457084" expanded="true" signature="1444:1505" ph="/* ... */" />
+            <marker date="1467038457084" expanded="true" signature="1654:1779" ph="/* ... */" />
+            <marker date="1467038457084" expanded="true" signature="1943:2006" ph="/* ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
+          <folding>
+            <marker date="1467038496184" expanded="true" signature="6:106" ph="..." />
+            <marker date="1467038496184" expanded="true" signature="130:1384" ph="{...}" />
+            <marker date="1467038496184" expanded="true" signature="134:351" ph="/// ..." />
+            <marker date="1467038496184" expanded="true" signature="383:1382" ph="{...}" />
+            <marker date="1467038496184" expanded="true" signature="497:505" ph="{...}" />
+            <marker date="1467038496184" expanded="true" signature="509:732" ph="/// ..." />
+            <marker date="1467038496184" expanded="true" signature="783:792" ph="{...}" />
+            <marker date="1467038496184" expanded="true" signature="796:1346" ph="/// ..." />
+            <marker date="1467038496184" expanded="true" signature="1370:1379" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRoot.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="52" column="25" selection-start-line="52" selection-start-column="25" selection-end-line="52" selection-end-column="25" />
+          <folding>
+            <marker date="1467038457040" expanded="true" signature="0:785" ph="/* ... */" />
+            <marker date="1467038457040" expanded="true" signature="793:836" ph="..." />
+            <marker date="1467038457040" expanded="true" signature="869:1690" ph="{...}" />
+            <marker date="1467038457040" expanded="true" signature="895:1688" ph="{...}" />
+            <marker date="1467038457040" expanded="true" signature="1676:1685" ph="{...}" />
           </folding>
         </state>
       </provider>

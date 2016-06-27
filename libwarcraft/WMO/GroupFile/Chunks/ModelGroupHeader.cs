@@ -1,5 +1,5 @@
 //
-//  ModelGroup.cs
+//  ModelGroupHeader.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,9 +24,9 @@ using System;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelGroup
+	public class ModelGroupHeader
 	{
-		public ModelGroup()
+		public ModelGroupHeader()
 		{
 		}
 	}
