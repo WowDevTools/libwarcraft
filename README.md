@@ -14,7 +14,7 @@ libwarcraft currently implements the following file formats:
 
 The following formats are still in progress, and may not work as intended (or at all):
 * MDX (Model). Partial Read, Wrath of the Lich King. No animation data exposed, but it's being read internally.
-* WMO (World Model Object). Classes stubbed.
+* WMO (World Model Object). Root object has full read support. Groups are still only stubbed.
 * ADT (Areadata Tile). Near-full read support, up to and including Wrath of the Lich King.
 
 The following formats are not implemented yet:
