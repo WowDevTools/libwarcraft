@@ -41,10 +41,15 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainModelPlacementInfo"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public TerrainModelPlacementInfo(byte[] data)
+		/// <param name="inData">Data.</param>
+		public TerrainModelPlacementInfo(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -52,11 +57,16 @@ namespace Warcraft.ADT.Chunks
 
 					for (int i = 0; i < EntryCount; ++i)
 					{
-						this.Entries.Add(new ModelPlacementEntry(br.ReadBytes(ModelPlacementEntry.GetSize())));				
+						this.Entries.Add(new ModelPlacementEntry(br.ReadBytes(ModelPlacementEntry.GetSize())));
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	/// <summary>

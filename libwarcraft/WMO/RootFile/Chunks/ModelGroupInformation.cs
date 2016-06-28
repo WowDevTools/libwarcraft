@@ -36,9 +36,19 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public Box BoundingBox;
 		public int GroupNameOffset;
 
+		public ModelGroupInformation()
+		{
+
+		}
+
 		public ModelGroupInformation(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(inData))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -47,7 +57,12 @@ namespace Warcraft.WMO.RootFile.Chunks
 					this.GroupNameOffset = br.ReadInt32();
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 
 		public bool HasGroupName()
 		{

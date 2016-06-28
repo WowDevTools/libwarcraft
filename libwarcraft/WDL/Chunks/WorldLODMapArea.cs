@@ -29,13 +29,23 @@ namespace Warcraft.WDL.Chunks
 	public class WorldLODMapArea : IChunk
 	{
 		public const string Signature = "MARE";
-		
+
 		public readonly List<short> HighResVertices = new List<short>();
 		public readonly List<short> LowResVertices = new List<short>();
 
-		public WorldLODMapArea(byte[] data)
+		public WorldLODMapArea()
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+
+		}
+
+		public WorldLODMapArea(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -57,7 +67,12 @@ namespace Warcraft.WDL.Chunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

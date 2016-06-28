@@ -38,13 +38,23 @@ namespace Warcraft.ADT.Chunks
 		/// </summary>
 		public List<string> Filenames = new List<string>();
 
+		public TerrainTextures()
+		{
+
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainTextures"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public TerrainTextures(byte[] data)
+		/// <param name="inData">Data.</param>
+		public TerrainTextures(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -54,7 +64,12 @@ namespace Warcraft.ADT.Chunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

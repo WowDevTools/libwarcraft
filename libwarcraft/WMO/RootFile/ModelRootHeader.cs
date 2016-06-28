@@ -44,7 +44,17 @@ namespace Warcraft.WMO.RootFile
 		public Box BoundingBox;
 		public RootFlags Flags;
 
+		public ModelRootHeader()
+		{
+
+		}
+
 		public ModelRootHeader(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
@@ -64,6 +74,11 @@ namespace Warcraft.WMO.RootFile
 					this.Flags = (RootFlags) br.ReadUInt32();
 				}
 			}
+		}
+
+		public string GetSignature()
+		{
+			return Signature;
 		}
 
 		public byte[] Serialize()

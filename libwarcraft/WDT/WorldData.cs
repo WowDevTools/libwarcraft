@@ -1,4 +1,4 @@
-//
+﻿//
 //  WDT.cs
 //
 //  Author:
@@ -42,14 +42,14 @@ namespace Warcraft.WDT
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Version = (TerrainVersion)br.ReadTerrainChunk();
-					this.Header = (WDTHeader)br.ReadTerrainChunk();
-					this.AreaInfo = (AreaInfoChunk)br.ReadTerrainChunk();
-					this.WorldModelObjects = (TerrainWorldModelObjects)br.ReadTerrainChunk();
+					this.Version = br.ReadIFFChunk<TerrainVersion>();
+					this.Header = br.ReadIFFChunk<WDTHeader>();
+					this.AreaInfo = br.ReadIFFChunk<AreaInfoChunk>();
+					this.WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
 
 					if (this.WorldModelObjects.Filenames.Count > 0)
 					{
-						this.WorldModelObjectPlacementInfo = (TerrainWorldModelObjectPlacementInfo)br.ReadTerrainChunk();
+						this.WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
 					}
 				}
 			}

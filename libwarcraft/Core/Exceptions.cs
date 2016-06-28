@@ -1,5 +1,5 @@
-//
-//  TerrainBoundingBox.cs
+﻿//
+//  Exceptions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,40 +19,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 using System;
-using Warcraft.Core;
-using System.IO;
 
-namespace Warcraft.ADT.Chunks
+namespace Warcraft.Core
 {
-	public class TerrainBoundingBox : IChunk
+	public class InvalidChunkSignatureException : Exception
 	{
-		public const string Signature = "MFBO";
-
-		public ShortPlane Maximum;
-		public ShortPlane Minimum;
-
-		public TerrainBoundingBox(byte[] inData)
+		public InvalidChunkSignatureException(string message)
+			:base(message)
 		{
-			LoadBinaryData(inData);
 		}
 
-		public void LoadBinaryData(byte[] inData)
-        {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Maximum = br.ReadShortPlane();
-					this.Minimum = br.ReadShortPlane();
-				}
-			}
-        }
-
-        public string GetSignature()
-        {
-        	return Signature;
-        }
+		public InvalidChunkSignatureException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
 	}
 }
-

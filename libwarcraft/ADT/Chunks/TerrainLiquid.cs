@@ -40,13 +40,23 @@ namespace Warcraft.ADT.Chunks
 		/// </summary>
 		public List<TerrainLiquidChunk> LiquidChunks = new List<TerrainLiquidChunk>();
 
+		public TerrainLiquid()
+		{
+
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainLiquid"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public TerrainLiquid(byte[] data)
+		/// <param name="inData">Data.</param>
+		public TerrainLiquid(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -77,7 +87,12 @@ namespace Warcraft.ADT.Chunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	/// <summary>
@@ -165,7 +180,7 @@ namespace Warcraft.ADT.Chunks
 		public byte Height;
 
 		/// <summary>
-		/// Offset to an 8 by 8 map of bit boolean values that determine whether or not 
+		/// Offset to an 8 by 8 map of bit boolean values that determine whether or not
 		/// an instance is filled or not. If the offset is 0, all tiles are filled.
 		/// </summary>
 		public uint LiquidBooleanMapOffset;
@@ -199,7 +214,7 @@ namespace Warcraft.ADT.Chunks
 					this.Width = br.ReadByte();
 					this.Height = br.ReadByte();
 
-					this.LiquidBooleanMapOffset = br.ReadUInt32();				
+					this.LiquidBooleanMapOffset = br.ReadUInt32();
 					this.VertexDataOffset = br.ReadUInt32();
 
 					// TODO: Read boolean map

@@ -35,15 +35,30 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		//unformatted data contained in MCAL
 		private byte[] data;
 
+		public MapChunkAlphaMaps()
+		{
+
+		}
+
 		// TODO: Implement WDT
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.Subchunks.MapChunkAlphaMaps"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public MapChunkAlphaMaps(byte[] data)
+		/// <param name="inData">Data.</param>
+		public MapChunkAlphaMaps(byte[] inData)
 		{
-			this.data = data;
+			LoadBinaryData(inData);
 		}
+
+		public void LoadBinaryData(byte[] inData)
+		{
+			this.data = inData;
+		}
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 
 
 		public List<byte> GetAlphaMap(uint MapOffset, TextureLayerFlags LayerFlags, MapChunkFlags MapFlags/*, TerrainTileFlags TileFlags*/)

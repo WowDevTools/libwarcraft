@@ -32,9 +32,19 @@ namespace Warcraft.WDL.Chunks
 
 		public readonly List<short> HoleMasks = new List<short>();
 
-		public WorldLODMapAreaHoles(byte[] data)
+		public WorldLODMapAreaHoles()
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+
+		}
+
+		public WorldLODMapAreaHoles(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -44,7 +54,12 @@ namespace Warcraft.WDL.Chunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 
 		/// <summary>
 		/// Creates an empty hole chunk, where all values are set to 0.

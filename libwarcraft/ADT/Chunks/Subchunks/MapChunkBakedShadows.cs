@@ -32,14 +32,24 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 		public List<List<bool>> ShadowMap = new List<List<bool>>();
 
-		public MapChunkBakedShadows(byte[] data)
+		public MapChunkBakedShadows()
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+
+		}
+
+		public MapChunkBakedShadows(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					for (int y = 0; y < 64; ++y)
-					{						
+					{
 						List<bool> mapRow = new List<bool>();
 						for (int x = 0; x < 2; ++x)
 						{
@@ -55,7 +65,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

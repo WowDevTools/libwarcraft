@@ -32,9 +32,19 @@ namespace Warcraft.WDL.Chunks
 
 		public readonly List<uint> MapAreaOffsets = new List<uint>();
 
-		public WorldLODMapAreaOffsets(byte[] data)
+		public WorldLODMapAreaOffsets()
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+
+		}
+
+		public WorldLODMapAreaOffsets(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -47,7 +57,12 @@ namespace Warcraft.WDL.Chunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

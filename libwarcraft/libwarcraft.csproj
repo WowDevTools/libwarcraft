@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Core\Compression\Squish\SingleColourFit.cs" />
     <Compile Include="Core\Compression\Squish\SingleColourFitLookupTables.cs" />
+    <Compile Include="Core\Exceptions.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
@@ -116,8 +117,8 @@
     <Compile Include="MPQ\Tables\Block\BlockTableEntry.cs" />
     <Compile Include="MPQ\Tables\Hash\HashTableEntry.cs" />
     <Compile Include="MPQ\Tables\HET\HETTable.cs" />
-    <Compile Include="WMO\GroupFile\Group.cs" />
-    <Compile Include="WMO\GroupFile\Chunks\ModelGroup.cs" />
+    <Compile Include="WMO\GroupFile\ModelGroup.cs" />
+    <Compile Include="WMO\GroupFile\ModelGroupHeader.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelPolygons.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelVertexIndices.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelVertices.cs" />
@@ -136,8 +137,8 @@
     <Compile Include="WMO\GroupFile\Chunks\MOBS.cs" />
     <Compile Include="WMO\GroupFile\Chunks\MDAL.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelTerrainPlanes.cs" />
-    <Compile Include="WMO\RootFile\Root.cs" />
-    <Compile Include="WMO\RootFile\RootHeader.cs" />
+    <Compile Include="WMO\RootFile\ModelRoot.cs" />
+    <Compile Include="WMO\RootFile\ModelRootHeader.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelTextures.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelMaterials.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelGroupNames.cs" />
@@ -147,9 +148,9 @@
     <Compile Include="WMO\RootFile\Chunks\ModelPortalReferences.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelVisibleVertices.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelVisibleBlocks.cs" />
-    <Compile Include="WMO\RootFile\Chunks\ModelLighting.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelStaticLighting.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelDoodadSets.cs" />
-    <Compile Include="WMO\RootFile\Chunks\ModelDoodadReferences.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelDoodadNames.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelDoodadInstances.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelFog.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelConvexPlanes.cs" />

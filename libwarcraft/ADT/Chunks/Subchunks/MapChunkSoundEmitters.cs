@@ -27,9 +27,25 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	{
 		public const string Signature = "MCSE";
 
-		public MapChunkSoundEmitters(byte[] data)
+		public MapChunkSoundEmitters()
 		{
+
 		}
+
+		public MapChunkSoundEmitters(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

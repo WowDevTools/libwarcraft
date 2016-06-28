@@ -37,38 +37,38 @@ namespace Warcraft.ADT.Chunks
 		public TerrainHeaderFlags Flags;
 
 		/// <summary>
-		/// Offset into the file where the MCIN Chunk can be found. 
+		/// Offset into the file where the MCIN Chunk can be found.
 		/// </summary>
 		public int MapChunkOffsetsOffset;
 		/// <summary>
-		/// Offset into the file where the MTEX Chunk can be found. 
+		/// Offset into the file where the MTEX Chunk can be found.
 		/// </summary>
 		public int TexturesOffset;
 
 		/// <summary>
-		/// Offset into the file where the MMDX Chunk can be found. 
+		/// Offset into the file where the MMDX Chunk can be found.
 		/// </summary>
 		public int ModelsOffset;
 		/// <summary>
-		/// Offset into the file where the MMID Chunk can be found. 
+		/// Offset into the file where the MMID Chunk can be found.
 		/// </summary>
 		public int ModelIndicesOffset;
 
 		/// <summary>
-		/// Offset into the file where the MWMO Chunk can be found. 
+		/// Offset into the file where the MWMO Chunk can be found.
 		/// </summary>
 		public int WorldModelObjectsOffset;
 		/// <summary>
-		/// Offset into the file where the MWID Chunk can be found. 
+		/// Offset into the file where the MWID Chunk can be found.
 		/// </summary>
 		public int WorldModelObjectIndicesOffset;
 
 		/// <summary>
-		/// Offset into the file where the MMDF Chunk can be found. 
+		/// Offset into the file where the MMDF Chunk can be found.
 		/// </summary>
 		public int ModelPlacementInformationOffset;
 		/// <summary>
-		/// Offset into the file where the MODF Chunk can be found. 
+		/// Offset into the file where the MODF Chunk can be found.
 		/// </summary>
 		public int WorldModelObjectPlacementInformationOffset;
 
@@ -78,21 +78,31 @@ namespace Warcraft.ADT.Chunks
 		public int BoundingBoxOffset;
 
 		/// <summary>
-		/// Offset into the file where the MH2O Chunk can be found. 
+		/// Offset into the file where the MH2O Chunk can be found.
 		/// </summary>
 		public int LiquidOffset;
 		/// <summary>
-		/// Offset into the file where the MTXF Chunk can be found. 
+		/// Offset into the file where the MTXF Chunk can be found.
 		/// </summary>
 		public int TextureFlagsOffset;
+
+		public TerrainHeader()
+		{
+
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainHeader"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public TerrainHeader(byte[] data)
+		/// <param name="inData">Data.</param>
+		public TerrainHeader(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -116,7 +126,12 @@ namespace Warcraft.ADT.Chunks
 					this.TextureFlagsOffset = br.ReadInt32();
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	/// <summary>

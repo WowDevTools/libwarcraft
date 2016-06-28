@@ -35,9 +35,18 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		public List<LiquidVertex> LiquidVertices = new List<LiquidVertex>();
 		public List<LiquidFlags> LiquidTileFlags = new List<LiquidFlags>();
 
-		public MapChunkLiquids(byte[] data)
+		public MapChunkLiquids(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public MapChunkLiquids()
+		{
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -61,7 +70,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	public class LiquidVertex

@@ -28,7 +28,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	/// <summary>
 	/// MCVT Chunk - Contains heightmap information
 	///
-	/// The vertices are arranged as two distinct grids, one 
+	/// The vertices are arranged as two distinct grids, one
 	/// inside the other.
 	/// </summary>
 	public class MapChunkHeightmap : IChunk
@@ -45,13 +45,23 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// </summary>
 		public List<float> LowResVertices = new List<float>();
 
+		public MapChunkHeightmap()
+		{
+
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.Subchunks.MapChunkHeightmap"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public MapChunkHeightmap(byte[] data)
+		/// <param name="inData">Data.</param>
+		public MapChunkHeightmap(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -76,7 +86,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

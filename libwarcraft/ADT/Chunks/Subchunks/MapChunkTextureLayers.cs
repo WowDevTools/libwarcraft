@@ -38,10 +38,19 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// </summary>
 		public List<TextureLayerEntry> Layers = new List<TextureLayerEntry>();
 
-		public MapChunkTextureLayers(byte[] data)
+		public MapChunkTextureLayers()
 		{
 
-			using (MemoryStream ms = new MemoryStream(data))
+		}
+
+		public MapChunkTextureLayers(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -52,7 +61,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	/// <summary>

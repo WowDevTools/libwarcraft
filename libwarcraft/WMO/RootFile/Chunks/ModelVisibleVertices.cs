@@ -34,9 +34,19 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 		public readonly List<Vector3f> VisibleVertices = new List<Vector3f>();
 
+		public ModelVisibleVertices()
+		{
+
+		}
+
 		public ModelVisibleVertices(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(inData))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -47,7 +57,12 @@ namespace Warcraft.WMO.RootFile.Chunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

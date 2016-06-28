@@ -33,9 +33,19 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		public List<Vector3f> HighResVertexNormals = new List<Vector3f>();
 		public List<Vector3f> LowResVertexNormals = new List<Vector3f>();
 
-		public MapChunkVertexNormals(byte[] data)
+		public MapChunkVertexNormals()
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+
+		}
+
+		public MapChunkVertexNormals(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -68,7 +78,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

@@ -46,22 +46,22 @@ namespace Warcraft.WDL
 		public List<WorldLODMapArea> MapAreas = new List<WorldLODMapArea>(4096);
 		public List<WorldLODMapAreaHoles> MapAreaHoles = new List<WorldLODMapAreaHoles>(4096);
 
-		public WorldLOD(byte[] data, WarcraftVersion GameVersion)
+		public WorldLOD(byte[] inData, WarcraftVersion gameVersion)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Version = (TerrainVersion)br.ReadTerrainChunk();
+					this.Version = br.ReadIFFChunk<TerrainVersion>();
 
-					if (GameVersion > WarcraftVersion.BurningCrusade)
+					if (gameVersion > WarcraftVersion.BurningCrusade)
 					{
-						this.WorldModelObjects = (TerrainWorldModelObjects)br.ReadTerrainChunk();
-						this.WorldModelObjectIndices = (TerrainWorldObjectModelIndices)br.ReadTerrainChunk();
-						this.WorldModelObjectPlacementInfo = (TerrainWorldModelObjectPlacementInfo)br.ReadTerrainChunk();
+						this.WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
+						this.WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldObjectModelIndices>();
+						this.WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
 					}
 
-					this.MapAreaOffsets = (WorldLODMapAreaOffsets)br.ReadTerrainChunk();
+					this.MapAreaOffsets = br.ReadIFFChunk<WorldLODMapAreaOffsets>();
 
 					// Read the map areas and their holes
 					for (int y = 0; y < 64; ++y)
@@ -74,11 +74,11 @@ namespace Warcraft.WDL
 							if (mapAreaOffset > 0)
 							{
 								br.BaseStream.Position = mapAreaOffset;
-								this.MapAreas[mapAreaOffsetIndex] = (WorldLODMapArea)br.ReadTerrainChunk();
+								this.MapAreas[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapArea>();
 
 								if (PeekChunkSignature(br) == WorldLODMapAreaHoles.Signature)
 								{
-									this.MapAreaHoles[mapAreaOffsetIndex] = (WorldLODMapAreaHoles)br.ReadTerrainChunk();
+									this.MapAreaHoles[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapAreaHoles>();
 								}
 								else
 								{

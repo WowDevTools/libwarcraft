@@ -34,24 +34,35 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 		public readonly List<Portal> Portals = new List<Portal>();
 
-		public ModelPortals(byte[] inData, uint portalCount)
+		public ModelPortals()
 		{
-			if (portalCount > inData.Length / PortalReference.GetSize())
-			{
-				throw new ArgumentOutOfRangeException(nameof(portalCount), "The provided portal count was more than the input data could hold.");
-			}
 
+		}
+
+		public ModelPortals(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
+					int portalCount = inData.Length / PortalReference.GetSize();
 					for (uint i = 0; i < portalCount; ++i)
 					{
 						Portals.Add(new Portal(br.ReadBytes(Portal.GetSize())));
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	public class Portal

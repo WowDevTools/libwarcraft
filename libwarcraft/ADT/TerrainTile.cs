@@ -1,4 +1,4 @@
-//
+﻿//
 //  ADT.cs
 //
 //  Author:
@@ -121,57 +121,56 @@ namespace Warcraft.ADT
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					// In all ADT files, the version chunk and header chunk are at the beginning of the file, 
+					// In all ADT files, the version chunk and header chunk are at the beginning of the file,
 					// with the header following the version. From them, the rest of the chunks can be
 					// seeked to and read.
 
 					// Read Version Chunk
-					this.Version = (TerrainVersion)br.ReadTerrainChunk();
+					this.Version = br.ReadIFFChunk<TerrainVersion>();
 
 					// Read the header chunk
-					this.Header = (TerrainHeader)br.ReadTerrainChunk();
+					this.Header = br.ReadIFFChunk<TerrainHeader>();
 
 					if (this.Header.MapChunkOffsetsOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.MapChunkOffsetsOffset;
-						this.MapChunkOffsets = (TerrainMapChunkOffsets)br.ReadTerrainChunk();
+						this.MapChunkOffsets = br.ReadIFFChunk<TerrainMapChunkOffsets>();
 					}
 
 					if (this.Header.TexturesOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.TexturesOffset;
-						this.Textures = (TerrainTextures)br.ReadTerrainChunk();
+						this.Textures = br.ReadIFFChunk<TerrainTextures>();
 					}
 
 					if (this.Header.ModelsOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.ModelsOffset;
-						this.Models = (TerrainModels)br.ReadTerrainChunk();
+						this.Models = br.ReadIFFChunk<TerrainModels>();
 					}
 
 					if (this.Header.ModelIndicesOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.ModelIndicesOffset;
-						this.ModelIndices = (TerrainModelIndices)br.ReadTerrainChunk();
+						this.ModelIndices = br.ReadIFFChunk<TerrainModelIndices>();
 					}
 
 					if (this.Header.WorldModelObjectsOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.WorldModelObjectsOffset;
-						this.WorldModelObjects = (TerrainWorldModelObjects)br.ReadTerrainChunk();
+						this.WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
 					}
 
 					if (this.Header.WorldModelObjectIndicesOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.WorldModelObjectIndicesOffset;
-						this.WorldModelObjectIndices = (TerrainWorldObjectModelIndices)br.ReadTerrainChunk();
+						this.WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldObjectModelIndices>();
 					}
 
 					if (this.Header.LiquidOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.LiquidOffset;
-						this.Liquids = (TerrainLiquid)br.ReadTerrainChunk();
-
+						this.Liquids = br.ReadIFFChunk<TerrainLiquid>();
 						// TODO: [#9] Pass in DBC liquid type to load the vertex data
 					}
 
@@ -179,7 +178,7 @@ namespace Warcraft.ADT
 					foreach (MapChunkOffsetEntry Entry in this.MapChunkOffsets.Entries)
 					{
 						br.BaseStream.Position = Entry.MapChunkOffset;
-						this.MapChunks.Add((TerrainMapChunk)br.ReadTerrainChunk());
+						this.MapChunks.Add(br.ReadIFFChunk<TerrainMapChunk>());
 					}
 				}
 			}

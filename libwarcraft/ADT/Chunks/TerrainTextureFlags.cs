@@ -34,10 +34,15 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainTextureFlags"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public TerrainTextureFlags(byte[] data)
+		/// <param name="inData">Data.</param>
+		public TerrainTextureFlags(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -49,7 +54,12 @@ namespace Warcraft.ADT.Chunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	public enum TerrainTextureFlag : uint

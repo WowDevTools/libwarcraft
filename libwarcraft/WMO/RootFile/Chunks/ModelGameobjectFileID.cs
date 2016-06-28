@@ -33,19 +33,35 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 		public List<uint> IDFlags = new List<uint>();
 
-		public ModelGameObjectFileID(byte[] inData, uint groupCount)
+		public ModelGameObjectFileID()
 		{
-			using (MemoryStream ms = new MemoryStream(inData))
+
+		}
+
+		public ModelGameObjectFileID(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
+					int groupCount = inData.Length / sizeof(uint);
 					for (int i = 0; i < groupCount; ++i)
 					{
 						this.IDFlags.Add(br.ReadUInt32());
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

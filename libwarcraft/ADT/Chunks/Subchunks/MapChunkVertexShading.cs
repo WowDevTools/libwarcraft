@@ -33,9 +33,18 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		public List<RGBA> HighResVertexShading = new List<RGBA>();
 		public List<RGBA> LowResVertexShading = new List<RGBA>();
 
-		public MapChunkVertexShading(byte[] data)
+		public MapChunkVertexShading(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public MapChunkVertexShading()
+		{
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -60,7 +69,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

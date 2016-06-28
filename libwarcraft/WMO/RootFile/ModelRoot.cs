@@ -21,27 +21,40 @@
 //
 
 using System;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
 using Warcraft.WMO.RootFile.Chunks;
 
 namespace Warcraft.WMO.RootFile
 {
 	public class ModelRoot
 	{
+		public TerrainVersion Version;
+
 		public ModelRootHeader Header;
+
 		public ModelTextures Textures;
 		public ModelMaterials Materials;
+
 		public ModelGroupNames GroupNames;
 		public ModelGroupInformation GroupInformation;
+
 		public ModelSkybox Skybox;
+
 		public ModelPortalVertices PortalVertices;
 		public ModelPortals Portals;
 		public ModelPortalReferences PortalReferences;
+
 		public ModelVisibleVertices VisibleVertices;
 		public ModelVisibleBlocks VisibleBlocks;
+
 		public ModelStaticLighting StaticLighting;
+
 		public ModelDoodadSets DoodadSets;
 		public ModelDoodadNames DoodadNames;
 		public ModelDoodadInstances DoodadInstances;
+
 		public ModelFog Fog;
 
 		// Optional chunks
@@ -50,9 +63,50 @@ namespace Warcraft.WMO.RootFile
 		// Added in Legion
 		public ModelGameObjectFileID GameObjectFileID;
 
-		public ModelRoot()
+		public ModelRoot(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.Version = br.ReadIFFChunk<TerrainVersion>();
 
+					this.Header = br.ReadIFFChunk<ModelRootHeader>();
+
+					this.Textures = br.ReadIFFChunk<ModelTextures>();
+					this.Materials = br.ReadIFFChunk<ModelMaterials>();
+
+					this.GroupNames = br.ReadIFFChunk<ModelGroupNames>();
+					this.GroupInformation = br.ReadIFFChunk<ModelGroupInformation>();
+
+					this.Skybox = br.ReadIFFChunk<ModelSkybox>();
+
+					this.PortalVertices = br.ReadIFFChunk<ModelPortalVertices>();
+					this.Portals = br.ReadIFFChunk<ModelPortals>();
+					this.PortalReferences = br.ReadIFFChunk<ModelPortalReferences>();
+
+					this.VisibleVertices = br.ReadIFFChunk<ModelVisibleVertices>();
+					this.VisibleBlocks = br.ReadIFFChunk<ModelVisibleBlocks>();
+
+					this.DoodadSets = br.ReadIFFChunk<ModelDoodadSets>();
+					this.DoodadNames = br.ReadIFFChunk<ModelDoodadNames>();
+					this.DoodadInstances = br.ReadIFFChunk<ModelDoodadInstances>();
+
+					this.Fog = br.ReadIFFChunk<ModelFog>();
+
+					// Optional chunk
+					if (br.PeekChunkSignature() == ModelConvexPlanes.Signature)
+					{
+						this.ConvexPlanes = br.ReadIFFChunk<ModelConvexPlanes>();
+					}
+
+					// Version-dependent chunk
+					if (br.PeekChunkSignature() == ModelGameObjectFileID.Signature)
+					{
+						this.GameObjectFileID = br.ReadIFFChunk<ModelGameObjectFileID>();
+					}
+				}
+			}
 		}
 	}
 }

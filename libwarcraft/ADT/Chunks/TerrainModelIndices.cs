@@ -37,20 +37,35 @@ namespace Warcraft.ADT.Chunks
 		/// </summary>
 		public List<uint> ModelFilenameOffsets = new List<uint>();
 
-		public TerrainModelIndices(byte[] data)
+		public TerrainModelIndices()
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+
+		}
+
+		public TerrainModelIndices(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					int offsetCount = data.Length / 4;
+					int offsetCount = inData.Length / 4;
 					for (int i = 0; i < offsetCount; ++i)
 					{
 						ModelFilenameOffsets.Add(br.ReadUInt32());
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

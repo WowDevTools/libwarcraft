@@ -34,24 +34,35 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 		public readonly List<DoodadSet> DoodadSets = new List<DoodadSet>();
 
-		public ModelDoodadSets(byte[] inData, uint setCount)
+		public ModelDoodadSets()
 		{
-			if (setCount > inData.Length / DoodadSet.GetSize())
-			{
-				throw new ArgumentOutOfRangeException(nameof(setCount), "The set count was greater than the amount of sets held in the input data.");
-			}
 
+		}
+
+		public ModelDoodadSets(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
+					int setCount = inData.Length / DoodadSet.GetSize();
 					for (uint i = 0; i < setCount; ++i)
 					{
 						this.DoodadSets.Add(new DoodadSet(br.ReadBytes(DoodadSet.GetSize())));
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	public class DoodadSet

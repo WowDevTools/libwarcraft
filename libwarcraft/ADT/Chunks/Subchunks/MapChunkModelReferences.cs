@@ -29,15 +29,30 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	{
 		public const string Signature = "MCRF";
 
-		private readonly byte[] data;
+		private byte[] data;
 
 		public List<uint> GameModelObjectReferences = new List<uint>();
 		public List<uint> WorldModelObjectReferences = new List<uint>();
 
-		public MapChunkModelReferences(byte[] data)
+		public MapChunkModelReferences()
 		{
-			this.data = data;
+
 		}
+
+		public MapChunkModelReferences(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+		{
+			this.data = inData;
+		}
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 
 		public void PostLoadReferences(uint GameModelObjectCount, uint WorldModelObjectCount)
 		{
@@ -52,7 +67,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 					for (int i = 0; i < WorldModelObjectCount; ++i)
 					{
-						WorldModelObjectReferences.Add(br.ReadUInt32());					
+						WorldModelObjectReferences.Add(br.ReadUInt32());
 					}
 				}
 			}

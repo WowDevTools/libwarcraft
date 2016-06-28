@@ -181,146 +181,41 @@ namespace Warcraft.Core
 				signatureBuffer[3 - i] = Reader.ReadChar();
 			}
 
-			string Signature = new string(signatureBuffer);
-			return Signature;
+			string signature = new string(signatureBuffer);
+			return signature;
 		}
 
 		/// <summary>
-		/// Reads a standard RIFF-style terrain chunk from the data stream, and advances the position of the stream
-		/// by the size of the chunk. The valid chunks are those with a signature, and the
-		/// <see cref="IChunk"/> interface.
+		/// Peeks a 4-byte RIFF chunk signature from the data stream. This does not
+		/// advance the position of the stream.
 		/// </summary>
-		/// <returns>The terrain chunk.</returns>
-		/// <param name="Reader">Reader.</param>
-		public static IChunk ReadTerrainChunk(this BinaryReader Reader)
+		public static string PeekChunkSignature(this BinaryReader Reader)
+		{
+			string chunkSignature = Reader.ReadChunkSignature();
+			Reader.BaseStream.Position -= chunkSignature.Length;
+
+			return chunkSignature;
+		}
+
+		/// <summary>
+		/// Reads an RIFF-style chunk from the stream. The chunk must have the <see cref="IChunk"/>
+		/// interface, and implement a parameterless constructor.
+		/// </summary>
+		public static T ReadIFFChunk<T>(this BinaryReader Reader) where T : IChunk, new()
 		{
 			string chunkSignature = Reader.ReadChunkSignature();
 			uint chunkSize = Reader.ReadUInt32();
-            byte[] chunkData = Reader.ReadBytes((int)chunkSize);
+			byte[] chunkData = Reader.ReadBytes((int)chunkSize);
 
-			switch (chunkSignature)
+			T chunk = new T();
+			if (chunk.GetSignature() != chunkSignature)
 			{
-				case TerrainVersion.Signature:
-					{
-						return new TerrainVersion(chunkData);
-					}
-				case TerrainHeader.Signature:
-					{
-						return new TerrainHeader(chunkData);
-					}
-				case TerrainMapChunkOffsets.Signature:
-					{
-						return new TerrainMapChunkOffsets(chunkData);
-					}
-				case TerrainTextures.Signature:
-					{
-						return new TerrainTextures(chunkData);
-					}
-				case TerrainModels.Signature:
-					{
-						return new TerrainModels(chunkData);
-					}
-				case TerrainModelIndices.Signature:
-					{
-						return new TerrainModelIndices(chunkData);
-					}
-				case TerrainWorldModelObjects.Signature:
-					{
-						return new TerrainWorldModelObjects(chunkData);
-					}
-				case TerrainWorldObjectModelIndices.Signature:
-					{
-						return new TerrainWorldObjectModelIndices(chunkData);
-					}
-				case TerrainModelPlacementInfo.Signature:
-					{
-						return new TerrainModelPlacementInfo(chunkData);
-					}
-				case TerrainWorldModelObjectPlacementInfo.Signature:
-					{
-						return new TerrainWorldModelObjectPlacementInfo(chunkData);
-					}
-				case TerrainBoundingBox.Signature:
-					{
-						return new TerrainBoundingBox(chunkData);
-					}
-				case TerrainLiquid.Signature:
-					{
-						return new TerrainLiquid(chunkData);
-					}
-				case TerrainTextureFlags.Signature:
-					{
-						return new TerrainTextureFlags(chunkData);
-					}
-				case TerrainMapChunk.Signature:
-					{
-						return new TerrainMapChunk(chunkData);
-					}
-				case MapChunkHeightmap.Signature:
-					{
-						return new MapChunkHeightmap(chunkData);
-					}
-				case MapChunkVertexNormals.Signature:
-					{
-						return new MapChunkVertexNormals(chunkData);
-					}
-				case MapChunkTextureLayers.Signature:
-					{
-						return new MapChunkTextureLayers(chunkData);
-					}
-				case MapChunkModelReferences.Signature:
-					{
-						return new MapChunkModelReferences(chunkData);
-					}
-				case MapChunkAlphaMaps.Signature:
-					{
-						return new MapChunkAlphaMaps(chunkData);
-					}
-				case MapChunkBakedShadows.Signature:
-					{
-						return new MapChunkBakedShadows(chunkData);
-					}
-				case MapChunkVertexLighting.Signature:
-					{
-						return new MapChunkVertexLighting(chunkData);
-					}
-				case MapChunkVertexShading.Signature:
-					{
-						return new MapChunkVertexShading(chunkData);
-					}
-				case MapChunkLiquids.Signature:
-					{
-						return new MapChunkLiquids(chunkData);
-					}
-				case MapChunkSoundEmitters.Signature:
-					{
-						return new MapChunkSoundEmitters(chunkData);
-					}
-				case WDTHeader.Signature:
-					{
-						return new WDTHeader(chunkData);
-					}
-				case AreaInfoChunk.Signature:
-					{
-						return new AreaInfoChunk(chunkData);
-					}
-				case WorldLODMapAreaOffsets.Signature:
-					{
-						return new WorldLODMapAreaOffsets(chunkData);
-					}
-				case WorldLODMapArea.Signature:
-					{
-						return new WorldLODMapArea(chunkData);
-					}
-				case WorldLODMapAreaHoles.Signature:
-					{
-						return new WorldLODMapAreaHoles(chunkData);
-					}
-				default:
-					{
-						throw new FileLoadException("An unknown chunk with the signature \"" + chunkSignature + "\" was encountered in the terrain file.");
-					}
+				throw new InvalidChunkSignatureException($"An unknown chunk with the signature \"{chunkSignature}\" was read.");
 			}
+
+			chunk.LoadBinaryData(chunkData);
+
+			return chunk;
 		}
 
 		/// <summary>

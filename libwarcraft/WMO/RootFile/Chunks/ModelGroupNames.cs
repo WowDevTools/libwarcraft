@@ -35,9 +35,19 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 		public readonly List<KeyValuePair<long, string>> GroupNames = new List<KeyValuePair<long, string>>();
 
+		public ModelGroupNames()
+		{
+
+		}
+
 		public ModelGroupNames(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(inData))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -50,7 +60,12 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 			// Remove null entries from the texture list
 			GroupNames.RemoveAll(s => s.Value.Equals("\0"));
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 
 		public byte[] Serialize()
 		{

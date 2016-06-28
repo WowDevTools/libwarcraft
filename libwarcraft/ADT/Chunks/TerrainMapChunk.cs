@@ -1,4 +1,4 @@
-//
+﻿//
 //  TerrainMapChunk.cs
 //
 //  Author:
@@ -87,13 +87,23 @@ namespace Warcraft.ADT.Chunks
 		/// </summary>
 		public MapChunkVertexLighting VertexLighting;
 
+		public TerrainMapChunk()
+		{
+
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainMapChunk"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public TerrainMapChunk(byte[] data)
+		/// <param name="inData">Data.</param>
+		public TerrainMapChunk(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -102,25 +112,25 @@ namespace Warcraft.ADT.Chunks
 					if (this.Header.HeightmapOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.HeightmapOffset;
-						this.Heightmap = (MapChunkHeightmap)br.ReadTerrainChunk();
+						this.Heightmap = br.ReadIFFChunk<MapChunkHeightmap>();
 					}
 
 					if (this.Header.VertexNormalOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.VertexNormalOffset;
-						this.VertexNormals = (MapChunkVertexNormals)br.ReadTerrainChunk();
+						this.VertexNormals = br.ReadIFFChunk<MapChunkVertexNormals>();
 					}
 
 					if (this.Header.TextureLayersOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.TextureLayersOffset;
-						this.TextureLayers = (MapChunkTextureLayers)br.ReadTerrainChunk();
+						this.TextureLayers = br.ReadIFFChunk<MapChunkTextureLayers>();
 					}
 
 					if (this.Header.ModelReferencesOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.ModelReferencesOffset;
-						this.ModelReferences = (MapChunkModelReferences)br.ReadTerrainChunk();
+						this.ModelReferences = br.ReadIFFChunk<MapChunkModelReferences>();
 
 						this.ModelReferences.PostLoadReferences(this.Header.ModelReferenceCount, this.Header.WorldModelObjectReferenceCount);
 					}
@@ -128,41 +138,46 @@ namespace Warcraft.ADT.Chunks
 					if (this.Header.AlphaMapsOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.AlphaMapsOffset;
-						this.AlphaMaps = (MapChunkAlphaMaps)br.ReadTerrainChunk();
+						this.AlphaMaps = br.ReadIFFChunk<MapChunkAlphaMaps>();
 					}
 
 					if (this.Header.BakedShadowsOffset > 0 && this.Header.Flags.HasFlag(MapChunkFlags.HasBakedShadows))
 					{
 						br.BaseStream.Position = this.Header.BakedShadowsOffset;
-						this.BakedShadows = (MapChunkBakedShadows)br.ReadTerrainChunk();
+						this.BakedShadows = br.ReadIFFChunk<MapChunkBakedShadows>();
 					}
 
 					if (this.Header.SoundEmittersOffset > 0 && this.Header.SoundEmitterCount > 0)
 					{
 						br.BaseStream.Position = this.Header.SoundEmittersOffset;
-						this.SoundEmitters = (MapChunkSoundEmitters)br.ReadTerrainChunk();
+						this.SoundEmitters = br.ReadIFFChunk<MapChunkSoundEmitters>();
 					}
 
 					if (this.Header.LiquidOffset > 0 && this.Header.LiquidSize > 8)
 					{
 						br.BaseStream.Position = this.Header.LiquidOffset;
-						this.Liquid = (MapChunkLiquids)br.ReadTerrainChunk();
+						this.Liquid = br.ReadIFFChunk<MapChunkLiquids>();
 					}
 
 					if (this.Header.VertexShadingOffset > 0 && this.Header.Flags.HasFlag(MapChunkFlags.HasVertexShading))
 					{
 						br.BaseStream.Position = this.Header.SoundEmittersOffset;
-						this.VertexShading = (MapChunkVertexShading)br.ReadTerrainChunk();
+						this.VertexShading = br.ReadIFFChunk<MapChunkVertexShading>();
 					}
 
 					if (this.Header.VertexLightingOffset > 0)
 					{
 						br.BaseStream.Position = this.Header.VertexLightingOffset;
-						this.VertexLighting = (MapChunkVertexLighting)br.ReadTerrainChunk();
+						this.VertexLighting = br.ReadIFFChunk<MapChunkVertexLighting>();
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

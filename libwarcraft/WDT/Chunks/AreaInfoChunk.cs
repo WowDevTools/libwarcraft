@@ -33,9 +33,19 @@ namespace Warcraft.WDT.Chunks
 
 		public List<AreaInfoEntry> Entries = new List<AreaInfoEntry>();
 
-		public AreaInfoChunk(byte[] data)
+		public AreaInfoChunk()
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+
+		}
+
+		public AreaInfoChunk(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -48,7 +58,12 @@ namespace Warcraft.WDT.Chunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 
 		public AreaInfoEntry GetAreaInfo(uint inTileX, uint inTileY)
 		{

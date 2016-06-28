@@ -37,24 +37,39 @@ namespace Warcraft.ADT.Chunks
 		/// </summary>
 		public List<uint> WorldModelObjectFilenameOffsets = new List<uint>();
 
+		public TerrainWorldObjectModelIndices()
+		{
+
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldObjectModelIndices"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public TerrainWorldObjectModelIndices(byte[] data)
+		/// <param name="inData">Data.</param>
+		public TerrainWorldObjectModelIndices(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					int offsetCount = data.Length / 4;
+					int offsetCount = inData.Length / 4;
 					for (int i = 0; i < offsetCount; ++i)
 					{
 						WorldModelObjectFilenameOffsets.Add(br.ReadUInt32());
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

@@ -35,7 +35,17 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 		public readonly List<KeyValuePair<long, string>> MaterialTextures = new List<KeyValuePair<long, string>>();
 
+		public ModelTextures()
+		{
+
+		}
+
 		public ModelTextures(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
@@ -58,6 +68,12 @@ namespace Warcraft.WMO.RootFile.Chunks
 			// Remove null entries from the texture list
 			MaterialTextures.RemoveAll(s => s.Value.Equals("\0"));
 		}
+
+
+		public string GetSignature()
+        {
+        	return Signature;
+        }
 
 		public byte[] Serialize()
 		{

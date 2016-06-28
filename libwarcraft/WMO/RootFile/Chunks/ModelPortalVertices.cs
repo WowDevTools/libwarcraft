@@ -33,7 +33,17 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 		public readonly List<Vector3f> Vertices = new List<Vector3f>();
 
+		public ModelPortalVertices()
+		{
+
+		}
+
 		public ModelPortalVertices(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
@@ -45,6 +55,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 					}
 				}
 			}
+		}
+
+		public string GetSignature()
+		{
+			return Signature;
 		}
 	}
 }

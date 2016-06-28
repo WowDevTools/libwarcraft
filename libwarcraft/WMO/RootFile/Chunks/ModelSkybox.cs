@@ -33,16 +33,31 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 		public string SkyboxName;
 
+		public ModelSkybox()
+		{
+
+		}
+
 		public ModelSkybox(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(inData))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					this.SkyboxName = br.ReadNullTerminatedString();
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 }
 

@@ -38,20 +38,35 @@ namespace Warcraft.ADT.Chunks
 		/// </summary>
 		public List<string> Filenames = new List<string>();
 
+		public TerrainWorldModelObjects()
+		{
+
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldModelObjects"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public TerrainWorldModelObjects(byte[] data)
+		/// <param name="inData">Data.</param>
+		public TerrainWorldModelObjects(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					Filenames.Add(br.ReadNullTerminatedString());
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 
 		public byte[] Serialize()
 		{

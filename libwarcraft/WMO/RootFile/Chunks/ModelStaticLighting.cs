@@ -34,24 +34,35 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 		public readonly List<StaticLight> StaticLights = new List<StaticLight>();
 
-		public ModelStaticLighting(byte[] inData, uint lightCount)
+		public ModelStaticLighting()
 		{
-			if (lightCount > inData.Length / StaticLight.GetSize())
-			{
-				throw new ArgumentOutOfRangeException(nameof(lightCount), "The light count was greater than the amount of lights held in the input data.");
-			}
 
+		}
+
+		public ModelStaticLighting(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
+					int lightCount = inData.Length / StaticLight.GetSize();
 					for (uint i = 0; i < lightCount; ++i)
 					{
 						this.StaticLights.Add(new StaticLight(br.ReadBytes(StaticLight.GetSize())));
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	public class StaticLight

@@ -25,6 +25,8 @@ namespace Warcraft.ADT.Chunks
 {
 	public interface IChunk
 	{
+		void LoadBinaryData(byte[] inData);
+		string GetSignature();
 	}
 }
 

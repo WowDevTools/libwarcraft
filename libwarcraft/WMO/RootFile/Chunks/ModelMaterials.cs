@@ -48,9 +48,19 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public RGBA BaseDiffuseColour;
 		public MaterialFlags Flags2;
 
+		public ModelMaterials()
+		{
+
+		}
+
 		public ModelMaterials(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(inData))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -70,7 +80,12 @@ namespace Warcraft.WMO.RootFile.Chunks
 					this.Flags2 = (MaterialFlags)br.ReadUInt32();
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	[Flags]

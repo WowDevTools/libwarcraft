@@ -37,12 +37,22 @@ namespace Warcraft.ADT.Chunks
 		/// </summary>
 		public List<MapChunkOffsetEntry> Entries = new List<MapChunkOffsetEntry>();
 
+		public TerrainMapChunkOffsets()
+		{
+
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainMapChunkOffsets"/> class.
 		/// </summary>
-		public TerrainMapChunkOffsets(byte[] data)
+		public TerrainMapChunkOffsets(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -62,7 +72,12 @@ namespace Warcraft.ADT.Chunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	/// <summary>

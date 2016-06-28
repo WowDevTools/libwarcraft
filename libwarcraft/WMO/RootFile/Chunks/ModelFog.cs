@@ -30,13 +30,23 @@ namespace Warcraft.WMO.RootFile.Chunks
 {
 	public class ModelFog : IChunk
 	{
-		public const string Signarture = "MFOG";
+		public const string Signature = "MFOG";
 
 		public readonly List<FogInstance> FogInstances = new List<FogInstance>();
 
+		public ModelFog()
+		{
+
+		}
+
 		public ModelFog(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(inData))
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+        	using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -47,7 +57,12 @@ namespace Warcraft.WMO.RootFile.Chunks
 					}
 				}
 			}
-		}
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 	}
 
 	public class FogInstance
