@@ -21,13 +21,52 @@
 //
 
 using System;
+using System.Collections.Generic;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
+using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelGroupHeader
+	public class ModelGroupHeader : IChunk
 	{
-		public ModelGroupHeader()
+		public const string Signature = "MOGP";
+
+		public uint GroupNameOffset;
+		public uint DescriptiveGroupName;
+
+		public GroupFlags Flags;
+
+		public Box BoundingBox;
+
+		public ushort PortalReferenceStartingIndex;
+		public ushort PortalReferenceCount;
+
+		public ushort RenderBatchCountA;
+		public ushort RenderBatchCountInterior;
+		public ushort RenderBatchCountExterior;
+		public ushort Unknown;
+
+		public readonly List<byte> FogIndices = new List<byte>(4);
+		public uint LiquidType;
+		public UInt32ForeignKey GroupID;
+
+		public uint UnknownFlags;
+		public uint Unused;
+
+		public ModelGroupHeader(byte[] inData)
 		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+		{
+
+		}
+
+		public string GetSignature()
+		{
+			return Signature;
 		}
 	}
 

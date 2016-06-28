@@ -1,5 +1,5 @@
-//
-//  MOBR.cs
+﻿//
+//  ModelBSPFaceIndices.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,9 +24,9 @@ using System;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class MOBR
+	public class ModelBSPFaceIndices
 	{
-		public MOBR()
+		public ModelBSPFaceIndices()
 		{
 		}
 	}
