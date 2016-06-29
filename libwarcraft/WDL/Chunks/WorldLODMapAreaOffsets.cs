@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
-	public class WorldLODMapAreaOffsets : IRIFFChunk
+	public class WorldLODMapAreaOffsets : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MAOF";
 
@@ -59,10 +59,31 @@ namespace Warcraft.WDL.Chunks
 			}
         }
 
+		public static int GetSize()
+		{
+			return (64 * 64) * sizeof(uint);
+		}
+
         public string GetSignature()
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (uint mapAreaOffset in this.MapAreaOffsets)
+		            {
+			            bw.Write(mapAreaOffset);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 }
 

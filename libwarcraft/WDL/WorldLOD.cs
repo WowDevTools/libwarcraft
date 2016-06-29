@@ -25,39 +25,53 @@ using Warcraft.ADT.Chunks;
 using Warcraft.WDL.Chunks;
 using System.Collections.Generic;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL
 {
-	public class WorldLOD
+	public class WorldLOD : IBinarySerializable
 	{
 		public readonly TerrainVersion Version;
 
 		/*
-			WMO fields are only present in WDL files with a version > Wrath.
+			WMO fields are only present in WDL files with a version >= Wrath.
 		*/
-
 		public readonly TerrainWorldModelObjects WorldModelObjects;
 		public readonly TerrainWorldObjectModelIndices WorldModelObjectIndices;
 		public readonly TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo;
-
 		// End specific fields
 
 		public readonly WorldLODMapAreaOffsets MapAreaOffsets;
 		public List<WorldLODMapArea> MapAreas = new List<WorldLODMapArea>(4096);
 		public List<WorldLODMapAreaHoles> MapAreaHoles = new List<WorldLODMapAreaHoles>(4096);
 
-		public WorldLOD(byte[] inData, WarcraftVersion gameVersion)
+		public WorldLOD(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
+					// Set up the two area lists with default values
+					for (int i = 0; i < 4096; ++i)
+					{
+						this.MapAreas.Add(null);
+						this.MapAreaHoles.Add(null);
+					}
+
 					this.Version = br.ReadIFFChunk<TerrainVersion>();
 
-					if (gameVersion > WarcraftVersion.BurningCrusade)
+					if (br.PeekChunkSignature() == TerrainWorldModelObjects.Signature)
 					{
 						this.WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
+					}
+
+					if (br.PeekChunkSignature() == TerrainWorldObjectModelIndices.Signature)
+					{
 						this.WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldObjectModelIndices>();
+					}
+
+					if (br.PeekChunkSignature() == TerrainWorldModelObjectPlacementInfo.Signature)
+					{
 						this.WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
 					}
 
@@ -76,7 +90,7 @@ namespace Warcraft.WDL
 								br.BaseStream.Position = mapAreaOffset;
 								this.MapAreas[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapArea>();
 
-								if (PeekChunkSignature(br) == WorldLODMapAreaHoles.Signature)
+								if (br.PeekChunkSignature() == WorldLODMapAreaHoles.Signature)
 								{
 									this.MapAreaHoles[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapAreaHoles>();
 								}
@@ -96,14 +110,80 @@ namespace Warcraft.WDL
 			}
 		}
 
-		private static string PeekChunkSignature(BinaryReader Reader)
+		public byte[] Serialize()
 		{
-			long originalPosition = Reader.BaseStream.Position;
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.WriteIFFChunk(this.Version);
 
-			string Signature = Reader.ReadChunkSignature();
-			Reader.BaseStream.Position = originalPosition;
+		            // >= Wrath stores WMO data here as well
+		            if (this.WorldModelObjects != null)
+		            {
+			            bw.WriteIFFChunk(this.WorldModelObjects);
+		            }
 
-			return Signature;
+		            if (this.WorldModelObjectIndices != null)
+					{
+						bw.WriteIFFChunk(this.WorldModelObjectIndices);
+					}
+
+		            if (this.WorldModelObjectPlacementInfo != null)
+					{
+						bw.WriteIFFChunk(this.WorldModelObjectPlacementInfo);
+					}
+
+		            // Populate the offset table
+		            long writtenMapAreaSize = 0;
+		            for (int y = 0; y < 64; ++y)
+		            {
+			            for (int x = 0; x < 64; ++x)
+			            {
+				            int mapAreaOffsetIndex = (y * 64) + x;
+				            const uint offsetChunkHeaderSize = 8;
+
+				            if (this.MapAreas[mapAreaOffsetIndex] != null)
+				            {
+					            // This tile is populated, so we update the offset table
+					            uint newOffset = (uint) (ms.Position + offsetChunkHeaderSize + WorldLODMapAreaOffsets.GetSize() + writtenMapAreaSize);
+					            this.MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex] = newOffset;
+
+					            writtenMapAreaSize += WorldLODMapArea.GetSize() + offsetChunkHeaderSize;
+				            }
+
+				            if (this.MapAreaHoles[mapAreaOffsetIndex] != null)
+							{
+								writtenMapAreaSize += WorldLODMapAreaHoles.GetSize() + offsetChunkHeaderSize;
+							}
+			            }
+		            }
+
+		            // Write the offset table
+		            bw.WriteIFFChunk(this.MapAreaOffsets);
+
+		            // Write the valid entries
+		            for (int y = 0; y < 64; ++y)
+					{
+						for (int x = 0; x < 64; ++x)
+						{
+							int mapAreaOffsetIndex = (y * 64) + x;
+
+							if (this.MapAreas[mapAreaOffsetIndex] != null)
+							{
+								bw.WriteIFFChunk(this.MapAreas[mapAreaOffsetIndex]);
+							}
+
+							if (this.MapAreaHoles[mapAreaOffsetIndex] != null)
+							{
+								bw.WriteIFFChunk(this.MapAreaHoles[mapAreaOffsetIndex]);
+							}
+						}
+					}
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

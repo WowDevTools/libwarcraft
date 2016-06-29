@@ -26,11 +26,19 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
-	public class WorldLODMapAreaHoles : IRIFFChunk
+	public class WorldLODMapAreaHoles : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MAHO";
 
 		public readonly List<short> HoleMasks = new List<short>();
+
+		public bool IsEmpty
+		{
+			get
+			{
+				return HoleMasks.TrueForAll(sh => sh == 0);
+			}
+		}
 
 		public WorldLODMapAreaHoles()
 		{
@@ -56,6 +64,11 @@ namespace Warcraft.WDL.Chunks
 			}
         }
 
+		public static int GetSize()
+		{
+			return 16 * sizeof(short);
+		}
+
         public string GetSignature()
         {
         	return Signature;
@@ -68,6 +81,22 @@ namespace Warcraft.WDL.Chunks
 		public static WorldLODMapAreaHoles CreateEmpty()
 		{
 			return new WorldLODMapAreaHoles(new byte[32]);
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (short holeMask in this.HoleMasks)
+		            {
+			            bw.Write(holeMask);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

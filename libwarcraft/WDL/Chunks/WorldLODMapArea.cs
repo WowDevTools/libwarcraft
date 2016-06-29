@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
-	public class WorldLODMapArea : IRIFFChunk
+	public class WorldLODMapArea : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MARE";
 
@@ -69,10 +69,36 @@ namespace Warcraft.WDL.Chunks
 			}
         }
 
+		public static int GetSize()
+		{
+			return (17 * 17) * sizeof(short) + (16 * 16) * sizeof(short);
+		}
+
         public string GetSignature()
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (short lodVertex in HighResVertices)
+		            {
+						bw.Write(lodVertex);
+		            }
+
+		            foreach (short lodVertex in LowResVertices)
+					{
+						bw.Write(lodVertex);
+					}
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 }
 

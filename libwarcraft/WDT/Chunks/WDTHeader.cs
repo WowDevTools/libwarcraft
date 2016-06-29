@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class WDTHeader : IRIFFChunk
+	public class WDTHeader : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MPHD";
 
@@ -77,10 +77,6 @@ namespace Warcraft.WDT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					bw.WriteChunkSignature(WDTHeader.Signature);
-					bw.Write(WDTHeader.GetSize());
-
-					// Write the flags and the unknown field
 					bw.Write((uint)this.Flags);
 					bw.Write(this.Unknown);
 

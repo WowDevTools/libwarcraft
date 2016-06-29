@@ -29,7 +29,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MMID Chunk - Contains a list of WMO model indexes
 	/// </summary>
-	public class TerrainWorldObjectModelIndices : IRIFFChunk
+	public class TerrainWorldObjectModelIndices : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MWID";
 
@@ -71,6 +71,22 @@ namespace Warcraft.ADT.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (uint filenameOffset in this.WorldModelObjectFilenameOffsets)
+		            {
+			            bw.Write(filenameOffset);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 }
 

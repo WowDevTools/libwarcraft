@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MODF Chunk - Contains WMO model placement information
 	/// </summary>
-	public class TerrainWorldModelObjectPlacementInfo : IRIFFChunk
+	public class TerrainWorldModelObjectPlacementInfo : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MODF";
 
@@ -79,11 +79,6 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					bw.WriteChunkSignature(TerrainWorldModelObjectPlacementInfo.Signature);
-
-					uint chunkSize = (uint)(this.Entries.Count * WorldModelObjectPlacementEntry.GetSize());
-					bw.Write(chunkSize);
-
 					foreach (WorldModelObjectPlacementEntry Entry in this.Entries)
 					{
 						bw.Write(Entry.Serialize());
@@ -98,7 +93,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// An entry struct containing information about the WMO
 	/// </summary>
-	public class WorldModelObjectPlacementEntry
+	public class WorldModelObjectPlacementEntry : IBinarySerializable
 	{
 		/// <summary>
 		/// Specifies which WHO to use via the MMID chunk

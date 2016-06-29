@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MWMO Chunk - Contains a list of all referenced WMO models in this ADT.
 	/// </summary>
-	public class TerrainWorldModelObjects : IRIFFChunk
+	public class TerrainWorldModelObjects : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MWMO";
 
@@ -59,7 +59,10 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					Filenames.Add(br.ReadNullTerminatedString());
+					while (ms.Position < ms.Length)
+					{
+						Filenames.Add(br.ReadNullTerminatedString());
+					}
 				}
 			}
         }
@@ -75,15 +78,6 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					bw.WriteChunkSignature(TerrainWorldModelObjects.Signature);
-
-					int chunkSize = 0;
-					foreach (string filename in Filenames)
-					{
-						chunkSize += filename.Length + 1;
-					}
-					bw.Write(chunkSize);
-
 					foreach (string filename in Filenames)
 					{
 						bw.WriteNullTerminatedString(filename);

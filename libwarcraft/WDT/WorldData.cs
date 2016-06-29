@@ -138,14 +138,14 @@ namespace Warcraft.WDT
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					bw.Write(this.Version.Serialize());
-					bw.Write(this.Header.Serialize());
-					bw.Write(this.AreaInfo.Serialize());
-					bw.Write(this.WorldModelObjects.Serialize());
+					bw.WriteIFFChunk(this.Version);
+					bw.WriteIFFChunk(this.Header);
+					bw.WriteIFFChunk(this.AreaInfo);
+					bw.WriteIFFChunk(this.WorldModelObjects);
 
 					if (WorldModelObjects.Filenames.Count > 0 && WorldModelObjectPlacementInfo != null)
 					{
-						bw.Write(this.WorldModelObjectPlacementInfo.Serialize());
+						bw.WriteIFFChunk(this.WorldModelObjectPlacementInfo);
 					}
 				}
 

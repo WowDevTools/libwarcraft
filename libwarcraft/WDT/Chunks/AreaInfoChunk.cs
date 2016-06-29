@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class AreaInfoChunk : IRIFFChunk
+	public class AreaInfoChunk : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MAIN";
 
@@ -87,10 +87,6 @@ namespace Warcraft.WDT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					bw.WriteChunkSignature(AreaInfoChunk.Signature);
-					uint chunkSize = (uint)(Entries.Count * AreaInfoEntry.GetSize());
-					bw.Write(chunkSize);
-
 					foreach (AreaInfoEntry Entry in Entries)
 					{
 						bw.Write(Entry.Serialize());
@@ -104,7 +100,7 @@ namespace Warcraft.WDT.Chunks
 		}
 	}
 
-	public class AreaInfoEntry
+	public class AreaInfoEntry : IBinarySerializable
 	{
 		public AreaInfoFlags Flags;
 		public uint AreaID;
