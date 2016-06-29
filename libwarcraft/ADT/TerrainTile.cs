@@ -100,9 +100,9 @@ namespace Warcraft.ADT
 		public List<TerrainMapChunk> MapChunks = new List<TerrainMapChunk>();
 
 		private readonly bool HasWorldFlags;
-		private readonly WDTFlags WorldFlags;
+		private readonly WorldTableFlags WorldFlags;
 
-		public TerrainTile(byte[] data, WDTFlags InWorldFlags)
+		public TerrainTile(byte[] data, WorldTableFlags InWorldFlags)
 			: this(data)
 		{
 			this.HasWorldFlags = true;

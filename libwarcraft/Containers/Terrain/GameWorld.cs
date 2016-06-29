@@ -50,7 +50,7 @@ namespace Warcraft.Containers.Terrain
 
 		private readonly IPackage Package;
 
-		public readonly WorldData WorldDataTable;
+		public readonly WorldTable WorldDataTable;
 
 		public readonly List<TerrainTile> LoadedTerrainTiles = new List<TerrainTile>();
 
@@ -62,7 +62,7 @@ namespace Warcraft.Containers.Terrain
 			this.Package = InPackage;
 
 			// Load the world metadata
-			this.WorldDataTable = new WorldData(InWorldData);
+			this.WorldDataTable = new WorldTable(InWorldData);
 
 			// Load all ADTs here? Bad for memory, perhaps better to leave it to the user to lazy load as needed
 		}

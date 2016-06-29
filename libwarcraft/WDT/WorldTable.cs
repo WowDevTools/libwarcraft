@@ -28,23 +28,23 @@ using System.Collections.Generic;
 
 namespace Warcraft.WDT
 {
-	public class WorldData
+	public class WorldTable
 	{
 		public TerrainVersion Version;
-		public WDTHeader Header;
-		public AreaInfoChunk AreaInfo;
+		public WorldTableHeader Header;
+		public WorldTableAreaInfo AreaInfo;
 		public TerrainWorldModelObjects WorldModelObjects;
 		public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo;
 
-		public WorldData(byte[] data)
+		public WorldTable(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					this.Version = br.ReadIFFChunk<TerrainVersion>();
-					this.Header = br.ReadIFFChunk<WDTHeader>();
-					this.AreaInfo = br.ReadIFFChunk<AreaInfoChunk>();
+					this.Header = br.ReadIFFChunk<WorldTableHeader>();
+					this.AreaInfo = br.ReadIFFChunk<WorldTableAreaInfo>();
 					this.WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
 
 					if (this.WorldModelObjects.Filenames.Count > 0)

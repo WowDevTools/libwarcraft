@@ -196,11 +196,11 @@
     <Compile Include="DBC\Definitions\UnknownRecord.cs" />
     <Compile Include="TRS\TRS.cs" />
     <Compile Include="MDX\ModelObjectFlags.cs" />
-    <Compile Include="WDT\Chunks\WDTHeader.cs" />
-    <Compile Include="WDT\Chunks\AreaInfoChunk.cs" />
+    <Compile Include="WDT\Chunks\WorldTableHeader.cs" />
+    <Compile Include="WDT\Chunks\WorldTableAreaInfo.cs" />
     <Compile Include="MPQ\IPackage.cs" />
     <Compile Include="Containers\Terrain\GameWorld.cs" />
-    <Compile Include="WDT\WorldData.cs" />
+    <Compile Include="WDT\WorldTable.cs" />
     <Compile Include="WDL\WorldLOD.cs" />
     <Compile Include="ADT\TerrainTile.cs" />
     <Compile Include="WDL\Chunks\WorldLODMapArea.cs" />

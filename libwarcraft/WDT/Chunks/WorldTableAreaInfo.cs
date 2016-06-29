@@ -27,18 +27,18 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class AreaInfoChunk : IRIFFChunk, IBinarySerializable
+	public class WorldTableAreaInfo : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MAIN";
 
 		public List<AreaInfoEntry> Entries = new List<AreaInfoEntry>();
 
-		public AreaInfoChunk()
+		public WorldTableAreaInfo()
 		{
 
 		}
 
-		public AreaInfoChunk(byte[] inData)
+		public WorldTableAreaInfo(byte[] inData)
 		{
 			LoadBinaryData(inData);
 		}

@@ -1,5 +1,5 @@
 ﻿//
-//  WDTHeader.cs
+//  WorldTableHeader.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,26 +21,25 @@
 //
 using System;
 using System.IO;
-using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class WDTHeader : IRIFFChunk, IBinarySerializable
+	public class WorldTableHeader : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MPHD";
 
-		public WDTFlags Flags;
+		public WorldTableFlags Flags;
 		public uint Unknown;
 
 		// Six unused fields
 
-		public WDTHeader()
+		public WorldTableHeader()
 		{
 
 		}
 
-		public WDTHeader(byte[] inData)
+		public WorldTableHeader(byte[] inData)
 		{
 			LoadBinaryData(inData);
 		}
@@ -51,7 +50,7 @@ namespace Warcraft.WDT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Flags = (WDTFlags)br.ReadUInt32();
+					this.Flags = (WorldTableFlags)br.ReadUInt32();
 					this.Unknown = br.ReadUInt32();
 				}
 			}
@@ -92,7 +91,7 @@ namespace Warcraft.WDT.Chunks
 		}
 	}
 
-	public enum WDTFlags : uint
+	public enum WorldTableFlags : uint
 	{
 		UsesGlobalModels 				= 0x01,
 		UsesVertexShading 				= 0x02,
