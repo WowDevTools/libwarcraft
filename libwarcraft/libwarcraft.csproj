@@ -10,8 +10,6 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\libwarcraft.key</AssemblyOriginatorKeyFile>
     <ReleaseVersion>1.0</ReleaseVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,6 +80,8 @@
     <Compile Include="Core\Compression\Squish\Maths.cs" />
     <Compile Include="Core\Compression\Squish\SquishCompression.cs" />
     <Compile Include="Core\Shading\ShaderTypes.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelBSPFaceIndices.cs" />
+    <Compile Include="WMO\GroupFile\ModelGroupData.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelPortalVertices.cs" />
     <Compile Include="WMO\WMO.cs" />
     <Compile Include="MDX\MDX.cs" />
@@ -118,7 +118,6 @@
     <Compile Include="MPQ\Tables\Hash\HashTableEntry.cs" />
     <Compile Include="MPQ\Tables\HET\HETTable.cs" />
     <Compile Include="WMO\GroupFile\ModelGroup.cs" />
-    <Compile Include="WMO\GroupFile\ModelGroupHeader.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelPolygons.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelVertexIndices.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelVertices.cs" />
@@ -128,7 +127,6 @@
     <Compile Include="WMO\GroupFile\Chunks\ModelLightReferences.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelDoodadReferences.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelBSPNodes.cs" />
-    <Compile Include="WMO\GroupFile\Chunks\MOBR.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelLiquids.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelVertexColours.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelTriangleStrips.cs" />

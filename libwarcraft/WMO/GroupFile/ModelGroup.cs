@@ -1,5 +1,5 @@
 //
-//  ModelGroupContainer.cs
+//  ModelGroup.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,9 +24,9 @@ using System;
 
 namespace Warcraft.WMO.GroupFile
 {
-	public class ModelGroupContainer
+	public class ModelGroup
 	{
-		public ModelGroupContainer(byte[] inData)
+		public ModelGroup(byte[] inData)
 		{
 		}
 	}

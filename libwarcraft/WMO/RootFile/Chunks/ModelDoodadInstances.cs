@@ -67,8 +67,18 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 	public class DoodadInstance
 	{
+		public string Name
+		{
+			get;
+			set;
+		}
+
+		// The nameoffset and flags are actually stored as an uint24 and an uint8,
+		// that is, three bytes for the offset and one byte for the flags. It's weird.
 		public uint NameOffset;
 		public DoodadInstanceFlags Flags;
+
+
 		public Vector3f Position;
 		public Quaternion Orientation;
 		public float Scale;
@@ -80,8 +90,14 @@ namespace Warcraft.WMO.RootFile.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.NameOffset = br.ReadUInt32();
-					this.Flags = (DoodadInstanceFlags)br.ReadUInt32();
+					byte[] finalNameBytes = new byte[4];
+					byte[] nameOffsetBytes = br.ReadBytes(3);
+					Buffer.BlockCopy(nameOffsetBytes, 0, finalNameBytes, 0, 3);
+
+					this.NameOffset= BitConverter.ToUInt32(finalNameBytes, 0);
+
+					this.Flags = (DoodadInstanceFlags) br.ReadByte();
+
 					this.Position = br.ReadVector3f();
 
 					// TODO: Investigate whether or not this is a Quat16 in >= BC
@@ -100,12 +116,12 @@ namespace Warcraft.WMO.RootFile.Chunks
 	}
 
 	[Flags]
-	public enum DoodadInstanceFlags : uint
+	public enum DoodadInstanceFlags : byte
 	{
-		AcceptProjectedTexture 		= 0x01,
-		Unknown1					= 0x02,
-		Unknown2					= 0x04,
-		Unknown3					= 0x08
+		AcceptProjectedTexture 		= 0x1,
+		Unknown1					= 0x2,
+		Unknown2					= 0x4,
+		Unknown3					= 0x8
 	}
 }
 

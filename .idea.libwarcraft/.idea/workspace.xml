@@ -2,61 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f641b55-5839-4f84-b03a-170e3343ce13" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/Chunks/ModelGroupHeader.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroupHeader.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/IChunk.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/IChunk.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkAlphaMaps.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkAlphaMaps.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkBakedShadows.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkBakedShadows.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkHeightmap.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkHeightmap.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkLiquids.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkLiquids.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkModelReferences.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkModelReferences.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkSoundEmitters.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkSoundEmitters.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkTextureLayers.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkTextureLayers.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkVertexLighting.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkVertexLighting.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkVertexNormals.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkVertexNormals.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkVertexShading.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkVertexShading.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainBoundingBox.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainBoundingBox.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainHeader.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainHeader.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainLiquid.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainLiquid.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainMapChunk.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainMapChunk.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainMapChunkOffsets.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainMapChunkOffsets.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainModelIndices.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainModelIndices.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainModelPlacementInfo.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainModelPlacementInfo.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainModels.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainModels.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainTextureFlags.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainTextureFlags.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainTextures.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainTextures.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainVersion.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainVersion.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainWorldModelObjectIndices.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainWorldModelObjectIndices.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainWorldModelObjectPlacementInfo.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainWorldModelObjectPlacementInfo.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainWorldModelObjects.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainWorldModelObjects.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/ADT/TerrainTile.cs" afterPath="$PROJECT_DIR$/../libwarcraft/ADT/TerrainTile.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/Core/ExtensionMethods.cs" afterPath="$PROJECT_DIR$/../libwarcraft/Core/ExtensionMethods.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WDL/Chunks/WorldLODMapArea.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WDL/Chunks/WorldLODMapArea.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WDL/Chunks/WorldLODMapAreaHoles.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WDL/Chunks/WorldLODMapAreaHoles.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WDL/Chunks/WorldLODMapAreaOffsets.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WDL/Chunks/WorldLODMapAreaOffsets.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WDL/WorldLOD.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WDL/WorldLOD.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WDT/Chunks/AreaInfoChunk.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WDT/Chunks/AreaInfoChunk.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WDT/Chunks/WDTHeader.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WDT/Chunks/WDTHeader.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WDT/WorldData.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WDT/WorldData.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelConvexPlanes.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelConvexPlanes.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadInstances.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadInstances.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadNames.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadNames.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadSets.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadSets.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelFog.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelFog.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGameobjectFileID.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGameobjectFileID.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGroupInformation.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGroupInformation.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGroupNames.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelGroupNames.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelMaterials.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelMaterials.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortalReferences.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortalReferences.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortalVertices.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortalVertices.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortals.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelPortals.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelSkybox.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelSkybox.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelStaticLighting.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelStaticLighting.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelTextures.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelTextures.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelVisibleBlocks.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelVisibleBlocks.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelVisibleVertices.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelVisibleVertices.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroup.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroup.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroupData.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroupData.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRoot.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRoot.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRootHeader.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRootHeader.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs" afterPath="$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../libwarcraft/libwarcraft.csproj" afterPath="$PROJECT_DIR$/../libwarcraft/libwarcraft.csproj" />
     </list>
     <ignored path="libwarcraft.iws" />
@@ -81,17 +31,102 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ModelRoot.cs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ModelRoot.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRoot.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="85" column="73" selection-start-line="85" selection-start-column="73" selection-end-line="85" selection-end-column="73" />
+            <state relative-caret-position="787">
+              <caret line="114" column="81" selection-start-line="114" selection-start-column="81" selection-end-line="114" selection-end-column="81" />
               <folding>
-                <marker date="1467141898681" expanded="true" signature="0:785" ph="/* ... */" />
-                <marker date="1467141898681" expanded="true" signature="793:901" ph="..." />
-                <marker date="1467141898681" expanded="true" signature="934:3261" ph="{...}" />
-                <marker date="1467141898681" expanded="true" signature="960:3259" ph="{...}" />
-                <marker date="1467141898681" expanded="true" signature="1796:3256" ph="{...}" />
+                <marker date="1467143113845" expanded="true" signature="0:785" ph="/* ... */" />
+                <marker date="1467143113845" expanded="true" signature="793:931" ph="..." />
+                <marker date="1467143113845" expanded="true" signature="964:3433" ph="{...}" />
+                <marker date="1467143113845" expanded="true" signature="990:3431" ph="{...}" />
+                <marker date="1467143113845" expanded="true" signature="1826:3286" ph="{...}" />
+                <marker date="1467143113845" expanded="true" signature="3338:3428" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ModelGroupData.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroupData.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="555">
+              <caret line="75" column="28" selection-start-line="75" selection-start-column="28" selection-end-line="75" selection-end-column="28" />
+              <folding>
+                <marker date="1467143599557" expanded="true" signature="0:790" ph="/* ... */" />
+                <marker date="1467143599557" expanded="true" signature="798:921" ph="..." />
+                <marker date="1467143599557" expanded="true" signature="962:3978" ph="{...}" />
+                <marker date="1467143599557" expanded="true" signature="1002:2823" ph="{...}" />
+                <marker date="1467143599557" expanded="true" signature="1578:1718" ph="/* ... */" />
+                <marker date="1467143599557" expanded="true" signature="1578:1724" ph="/* ... */" />
+                <marker date="1467143599557" expanded="true" signature="1578:1749" ph="/* ... */" />
+                <marker date="1467143599557" expanded="true" signature="1578:1770" ph="/* ... */" />
+                <marker date="1467143599557" expanded="true" signature="2289:2378" ph="/* ... */" />
+                <marker date="1467143599557" expanded="true" signature="2670:2705" ph="{...}" />
+                <marker date="1467143599557" expanded="true" signature="2750:2759" ph="{...}" />
+                <marker date="1467143599557" expanded="true" signature="2791:2820" ph="{...}" />
+                <marker date="1467143599557" expanded="true" signature="2864:3976" ph="{...}" />
+                <marker date="1467143599557" expanded="true" signature="3010:3071" ph="/* ... */" />
+                <marker date="1467143599557" expanded="true" signature="3344:3405" ph="/* ... */" />
+                <marker date="1467143599557" expanded="true" signature="3554:3679" ph="/* ... */" />
+                <marker date="1467143599557" expanded="true" signature="3843:3906" ph="/* ... */" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Exceptions.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../libwarcraft/Core/Exceptions.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1467136525125" expanded="true" signature="0:786" ph="/* ... */" />
+                <marker date="1467136525125" expanded="true" signature="826:1101" ph="{...}" />
+                <marker date="1467136525125" expanded="true" signature="885:1099" ph="{...}" />
+                <marker date="1467136525125" expanded="true" signature="962:970" ph="{...}" />
+                <marker date="1467136525125" expanded="true" signature="1088:1096" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WMO.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+              <folding>
+                <marker date="1467143113937" expanded="true" signature="6:106" ph="..." />
+                <marker date="1467143113937" expanded="true" signature="6:123" ph="..." />
+                <marker date="1467143113937" expanded="true" signature="147:2195" ph="{...}" />
+                <marker date="1467143113937" expanded="true" signature="151:368" ph="/// ..." />
+                <marker date="1467143113937" expanded="true" signature="400:2193" ph="{...}" />
+                <marker date="1467143113937" expanded="true" signature="527:584" ph="{...}" />
+                <marker date="1467143113937" expanded="true" signature="588:839" ph="/// ..." />
+                <marker date="1467143113937" expanded="true" signature="892:901" ph="{...}" />
+                <marker date="1467143113937" expanded="true" signature="905:1128" ph="/// ..." />
+                <marker date="1467143113937" expanded="true" signature="1179:1188" ph="{...}" />
+                <marker date="1467143113937" expanded="true" signature="1192:1437" ph="/// ..." />
+                <marker date="1467143113937" expanded="true" signature="1480:1603" ph="{...}" />
+                <marker date="1467143113937" expanded="true" signature="1607:2157" ph="/// ..." />
+                <marker date="1467143113937" expanded="true" signature="2181:2190" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ModelGroup.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroup.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+              <folding>
+                <marker date="1467143113885" expanded="true" signature="0:786" ph="/* ... */" />
+                <marker date="1467143113885" expanded="true" signature="835:913" ph="{...}" />
+                <marker date="1467143113885" expanded="true" signature="862:911" ph="{...}" />
+                <marker date="1467143113885" expanded="true" signature="900:908" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -184,11 +219,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainTextureFlags.cs" />
-        <option value="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainBoundingBox.cs" />
-        <option value="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkHeightmap.cs" />
-        <option value="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkVertexNormals.cs" />
-        <option value="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkTextureLayers.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkModelReferences.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkAlphaMaps.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkBakedShadows.cs" />
@@ -234,7 +264,12 @@
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/Chunks/ModelDoodadNames.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRootHeader.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/Core/ExtensionMethods.cs" />
+        <option value="$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs" />
         <option value="$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRoot.cs" />
+        <option value="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroupHeader.cs" />
+        <option value="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroup.cs" />
+        <option value="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroupContainer.cs" />
+        <option value="$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroupData.cs" />
       </list>
     </option>
   </component>
@@ -308,285 +343,7 @@
               <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="WMO" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WMO" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RootFile" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WMO" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RootFile" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Chunks" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WMO" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GroupFile" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WMO" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GroupFile" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Chunks" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WDT" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WDT" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Chunks" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WDL" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WDL" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Chunks" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TRS" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TRS.cs" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Properties" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AssemblyInfo.cs" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="Core" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ADT" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libwarcraft" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ADT" />
-              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Chunks" />
               <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
             </PATH_ELEMENT>
           </PATH>
@@ -694,201 +451,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../libwarcraft/ADT/Chunks/TerrainTextureFlags.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
-          <folding>
-            <marker date="1467137946581" expanded="true" signature="0:795" ph="/* ... */" />
-            <marker date="1467137946581" expanded="true" signature="802:860" ph="..." />
-            <marker date="1467137946581" expanded="true" signature="891:1883" ph="{...}" />
-            <marker date="1467137946581" expanded="true" signature="936:1764" ph="{...}" />
-            <marker date="1467137946581" expanded="true" signature="1060:1232" ph="/// ..." />
-            <marker date="1467137946581" expanded="true" signature="1276:1311" ph="{...}" />
-            <marker date="1467137946581" expanded="true" signature="1356:1676" ph="{...}" />
-            <marker date="1467137946581" expanded="true" signature="1714:1761" ph="{...}" />
-            <marker date="1467137946581" expanded="true" signature="1804:1881" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../libwarcraft/Core/CommonTypes.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-720">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1467134718581" expanded="true" signature="0:790" ph="/* ... */" />
-            <marker date="1467134718581" expanded="true" signature="798:874" ph="..." />
-            <marker date="1467134718581" expanded="true" signature="899:17824" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="903:1010" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="1031:2448" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="1037:1114" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="1173:1250" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="1309:1498" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="1560:1950" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="1560:2142" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="2210:2445" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="2451:2641" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="2660:3327" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="2666:2741" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="2777:2849" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="2882:3184" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="3244:3324" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="3330:3499" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="3521:4092" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="3527:3606" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="3640:3702" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="3727:3970" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="4023:4089" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="4095:4176" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="4196:5228" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="4202:4257" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="4278:4335" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="4356:4412" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="4433:4490" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="4511:4857" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="4911:4987" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="4991:5164" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="5216:5225" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="5231:5312" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="5332:6364" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="5338:5393" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="5414:5471" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="5492:5548" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="5569:5626" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="5647:5993" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="6047:6123" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="6127:6300" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="6352:6361" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="6367:6447" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="6466:7719" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="6472:6537" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="6568:6623" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="6729:6786" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="6892:6948" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="7054:7363" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="7409:7463" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="7467:7649" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="7681:7716" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="7719:7801" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="7828:10167" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="7831:7895" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="7917:7981" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="8003:8067" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="8089:8313" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="8367:8426" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="8427:8725" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="8779:8856" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="8857:9009" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="9065:9074" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="9131:9208" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="9270:9493" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="9561:9650" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="9718:9807" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="9859:9921" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="9989:10078" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="10129:10164" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="10170:10276" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="10302:11804" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="10308:10386" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="10430:10782" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="10835:11256" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="11260:11487" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="11531:11801" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="11807:11890" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="11911:12444" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="11917:11997" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="12027:12125" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="12164:12293" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="12355:12441" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="12444:12551" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="12577:13425" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="12580:12637" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="12663:12718" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="12742:12798" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="12823:13027" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="13089:13166" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="13167:13329" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="13413:13422" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="13425:13560" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="13619:14532" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="13622:13679" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="13701:13756" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="13778:13834" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="13856:13921" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="13948:14187" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="14259:14345" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="14481:14529" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="14535:14635" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="14687:15624" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="14693:14760" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="14782:14849" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="14871:15084" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="15124:15166" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="15170:15354" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="15402:15411" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="15541:15621" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="15627:15728" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="15752:16846" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="15758:15825" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="15847:15914" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="15936:16003" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="16025:16104" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="16126:16450" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="16512:16588" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="16592:16776" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="16834:16843" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="16849:16963" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="16989:17822" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="16995:17075" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="17096:17174" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="17195:17423" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="17463:17505" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="17509:17694" ph="/// ..." />
-            <marker date="1467134718581" expanded="true" signature="17743:17752" ph="{...}" />
-            <marker date="1467134718581" expanded="true" signature="17789:17819" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkHeightmap.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-          <folding>
-            <marker date="1467139487505" expanded="true" signature="0:793" ph="/* ... */" />
-            <marker date="1467139487505" expanded="true" signature="800:858" ph="..." />
-            <marker date="1467139487505" expanded="true" signature="899:2542" ph="{...}" />
-            <marker date="1467139487505" expanded="true" signature="903:1067" ph="/// ..." />
-            <marker date="1467139487505" expanded="true" signature="1108:2540" ph="{...}" />
-            <marker date="1467139487505" expanded="true" signature="1156:1320" ph="/// ..." />
-            <marker date="1467139487505" expanded="true" signature="1382:1484" ph="/// ..." />
-            <marker date="1467139487505" expanded="true" signature="1571:1580" ph="{...}" />
-            <marker date="1467139487505" expanded="true" signature="1586:1766" ph="/// ..." />
-            <marker date="1467139487505" expanded="true" signature="1808:1843" ph="{...}" />
-            <marker date="1467139487505" expanded="true" signature="1888:2452" ph="{...}" />
-            <marker date="1467139487505" expanded="true" signature="2490:2537" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkVertexNormals.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding>
-            <marker date="1467139528121" expanded="true" signature="0:797" ph="/* ... */" />
-            <marker date="1467139528121" expanded="true" signature="804:883" ph="..." />
-            <marker date="1467139528121" expanded="true" signature="924:2194" ph="{...}" />
-            <marker date="1467139528121" expanded="true" signature="971:2192" ph="{...}" />
-            <marker date="1467139528121" expanded="true" signature="1188:1197" ph="{...}" />
-            <marker date="1467139528121" expanded="true" signature="1244:1279" ph="{...}" />
-            <marker date="1467139528121" expanded="true" signature="1324:2104" ph="{...}" />
-            <marker date="1467139528121" expanded="true" signature="2142:2189" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../libwarcraft/ADT/Chunks/Subchunks/MapChunkTextureLayers.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="358">
@@ -1853,6 +1415,57 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRoot.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="787">
+          <caret line="114" column="81" selection-start-line="114" selection-start-column="81" selection-end-line="114" selection-end-column="81" />
+          <folding>
+            <marker date="1467143113845" expanded="true" signature="0:785" ph="/* ... */" />
+            <marker date="1467143113845" expanded="true" signature="793:931" ph="..." />
+            <marker date="1467143113845" expanded="true" signature="964:3433" ph="{...}" />
+            <marker date="1467143113845" expanded="true" signature="990:3431" ph="{...}" />
+            <marker date="1467143113845" expanded="true" signature="1826:3286" ph="{...}" />
+            <marker date="1467143113845" expanded="true" signature="3338:3428" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/WMO.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+          <folding>
+            <marker date="1467143113937" expanded="true" signature="6:106" ph="..." />
+            <marker date="1467143113937" expanded="true" signature="6:123" ph="..." />
+            <marker date="1467143113937" expanded="true" signature="147:2195" ph="{...}" />
+            <marker date="1467143113937" expanded="true" signature="151:368" ph="/// ..." />
+            <marker date="1467143113937" expanded="true" signature="400:2193" ph="{...}" />
+            <marker date="1467143113937" expanded="true" signature="527:584" ph="{...}" />
+            <marker date="1467143113937" expanded="true" signature="588:839" ph="/// ..." />
+            <marker date="1467143113937" expanded="true" signature="892:901" ph="{...}" />
+            <marker date="1467143113937" expanded="true" signature="905:1128" ph="/// ..." />
+            <marker date="1467143113937" expanded="true" signature="1179:1188" ph="{...}" />
+            <marker date="1467143113937" expanded="true" signature="1192:1437" ph="/// ..." />
+            <marker date="1467143113937" expanded="true" signature="1480:1603" ph="{...}" />
+            <marker date="1467143113937" expanded="true" signature="1607:2157" ph="/// ..." />
+            <marker date="1467143113937" expanded="true" signature="2181:2190" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroup.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+          <folding>
+            <marker date="1467143113885" expanded="true" signature="0:786" ph="/* ... */" />
+            <marker date="1467143113885" expanded="true" signature="835:913" ph="{...}" />
+            <marker date="1467143113885" expanded="true" signature="862:911" ph="{...}" />
+            <marker date="1467143113885" expanded="true" signature="900:908" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../libwarcraft/Core/ExtensionMethods.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -1930,16 +1543,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/RootFile/ModelRoot.cs">
+    <entry file="file://$PROJECT_DIR$/../libwarcraft/WMO/GroupFile/ModelGroupData.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="85" column="73" selection-start-line="85" selection-start-column="73" selection-end-line="85" selection-end-column="73" />
+        <state relative-caret-position="555">
+          <caret line="75" column="28" selection-start-line="75" selection-start-column="28" selection-end-line="75" selection-end-column="28" />
           <folding>
-            <marker date="1467141898681" expanded="true" signature="0:785" ph="/* ... */" />
-            <marker date="1467141898681" expanded="true" signature="793:901" ph="..." />
-            <marker date="1467141898681" expanded="true" signature="934:3261" ph="{...}" />
-            <marker date="1467141898681" expanded="true" signature="960:3259" ph="{...}" />
-            <marker date="1467141898681" expanded="true" signature="1796:3256" ph="{...}" />
+            <marker date="1467143599557" expanded="true" signature="0:790" ph="/* ... */" />
+            <marker date="1467143599557" expanded="true" signature="798:921" ph="..." />
+            <marker date="1467143599557" expanded="true" signature="962:3978" ph="{...}" />
+            <marker date="1467143599557" expanded="true" signature="1002:2823" ph="{...}" />
+            <marker date="1467143599557" expanded="true" signature="1578:1718" ph="/* ... */" />
+            <marker date="1467143599557" expanded="true" signature="1578:1724" ph="/* ... */" />
+            <marker date="1467143599557" expanded="true" signature="1578:1749" ph="/* ... */" />
+            <marker date="1467143599557" expanded="true" signature="1578:1770" ph="/* ... */" />
+            <marker date="1467143599557" expanded="true" signature="2289:2378" ph="/* ... */" />
+            <marker date="1467143599557" expanded="true" signature="2670:2705" ph="{...}" />
+            <marker date="1467143599557" expanded="true" signature="2750:2759" ph="{...}" />
+            <marker date="1467143599557" expanded="true" signature="2791:2820" ph="{...}" />
+            <marker date="1467143599557" expanded="true" signature="2864:3976" ph="{...}" />
+            <marker date="1467143599557" expanded="true" signature="3010:3071" ph="/* ... */" />
+            <marker date="1467143599557" expanded="true" signature="3344:3405" ph="/* ... */" />
+            <marker date="1467143599557" expanded="true" signature="3554:3679" ph="/* ... */" />
+            <marker date="1467143599557" expanded="true" signature="3843:3906" ph="/* ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../libwarcraft/Core/Exceptions.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1467136525125" expanded="true" signature="0:786" ph="/* ... */" />
+            <marker date="1467136525125" expanded="true" signature="826:1101" ph="{...}" />
+            <marker date="1467136525125" expanded="true" signature="885:1099" ph="{...}" />
+            <marker date="1467136525125" expanded="true" signature="962:970" ph="{...}" />
+            <marker date="1467136525125" expanded="true" signature="1088:1096" ph="{...}" />
           </folding>
         </state>
       </provider>

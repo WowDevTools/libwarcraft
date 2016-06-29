@@ -1,5 +1,5 @@
-//
-//  ModelGroupHeader.cs
+﻿//
+//  ModelGroupData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,7 +28,7 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelGroupHeader : IChunk
+	public class ModelGroupData : IChunk
 	{
 		public const string Signature = "MOGP";
 
@@ -54,7 +54,42 @@ namespace Warcraft.WMO.GroupFile.Chunks
 		public uint UnknownFlags;
 		public uint Unused;
 
-		public ModelGroupHeader(byte[] inData)
+		// The chunks in a model group file are actually subchunks of this one. They are listed here
+		// for the sake of correctness, and are then given abstraction accessors in the ModelGroup class.
+		public MOBS mobs;
+
+		public ModelPolygons Polygons;
+		public ModelVertexIndices VertexIndices;
+		public ModelVertices Vertices;
+		public ModelNormals Normals;
+		public ModelTextureCoordinates TextureCoordinates;
+		public ModelRenderBatches RenderBatches;
+
+		// The following chunks are optional, and are read based on flags in the header.
+		public ModelLightReferences LightReferences;
+		public ModelDoodadReferences DoodadReferences;
+		public ModelBSPNodes BSPNodes;
+		public ModelBSPFaceIndices BSPFaceIndices;
+
+		// public MPBV mpbv;
+		// public MPBP mpbp;
+		// public MPBI mpbi;
+		// public MPBG mpbg;
+
+		public ModelVertexColours VertexColours;
+		public ModelLiquids Liquids;
+
+		// public MORI mori;
+
+		public ModelTextureCoordinates AdditionalTextureCoordinates;
+		public ModelVertexColours AdditionalVertexColours;
+
+		public ModelGroupData()
+		{
+
+		}
+
+		public ModelGroupData(byte[] inData)
 		{
 			LoadBinaryData(inData);
 		}

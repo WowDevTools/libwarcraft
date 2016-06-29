@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Warcraft.ADT.Chunks;
 using Warcraft.Core;
@@ -33,6 +34,41 @@ namespace Warcraft.WMO.RootFile.Chunks
 	{
 		public const string Signature = "MOMT";
 
+		public readonly List<ModelMaterial> Materials = new List<ModelMaterial>();
+
+		public ModelMaterials()
+		{
+
+		}
+
+		public ModelMaterials(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+        {
+	        using (MemoryStream ms = new MemoryStream(inData))
+	        {
+		        using (BinaryReader br = new BinaryReader(ms))
+		        {
+			        int materialCount = inData.Length / ModelMaterial.GetSize();
+			        for (int i = 0; i < materialCount; ++i)
+			        {
+				        this.Materials.Add(new ModelMaterial(br.ReadBytes(ModelMaterial.GetSize())));
+			        }
+		        }
+	        }
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
+	}
+
+	public class ModelMaterial
+	{
 		public ShaderTypes Shader;
 		public BlendingMode BlendMode;
 
@@ -48,19 +84,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public RGBA BaseDiffuseColour;
 		public MaterialFlags Flags2;
 
-		public ModelMaterials()
+		public ModelMaterial(byte[] inData)
 		{
-
-		}
-
-		public ModelMaterials(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
-        {
-        	using (MemoryStream ms = new MemoryStream(inData))
+			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -80,12 +106,12 @@ namespace Warcraft.WMO.RootFile.Chunks
 					this.Flags2 = (MaterialFlags)br.ReadUInt32();
 				}
 			}
-        }
+		}
 
-        public string GetSignature()
-        {
-        	return Signature;
-        }
+		public static int GetSize()
+		{
+			return 64;
+		}
 	}
 
 	[Flags]

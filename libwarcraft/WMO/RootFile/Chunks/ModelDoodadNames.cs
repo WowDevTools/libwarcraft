@@ -65,6 +65,19 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public string GetNameByOffset(uint nameOffset)
+		{
+			foreach (KeyValuePair<long, string> doodadName in this.DoodadNames)
+			{
+				if (doodadName.Key == nameOffset)
+				{
+					return doodadName.Value;
+				}
+			}
+
+			return string.Empty;
+		}
 	}
 }
 

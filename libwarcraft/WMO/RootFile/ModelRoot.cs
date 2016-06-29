@@ -24,6 +24,7 @@ using System;
 using System.IO;
 using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.WMO.GroupFile;
 using Warcraft.WMO.RootFile.Chunks;
 
 namespace Warcraft.WMO.RootFile
@@ -88,6 +89,8 @@ namespace Warcraft.WMO.RootFile
 					this.VisibleVertices = br.ReadIFFChunk<ModelVisibleVertices>();
 					this.VisibleBlocks = br.ReadIFFChunk<ModelVisibleBlocks>();
 
+					this.StaticLighting = br.ReadIFFChunk<ModelStaticLighting>();
+
 					this.DoodadSets = br.ReadIFFChunk<ModelDoodadSets>();
 					this.DoodadNames = br.ReadIFFChunk<ModelDoodadNames>();
 					this.DoodadInstances = br.ReadIFFChunk<ModelDoodadInstances>();
@@ -95,18 +98,24 @@ namespace Warcraft.WMO.RootFile
 					this.Fog = br.ReadIFFChunk<ModelFog>();
 
 					// Optional chunk
-					if (br.PeekChunkSignature() == ModelConvexPlanes.Signature)
+					if ((br.BaseStream.Position != br.BaseStream.Length) && br.PeekChunkSignature() == ModelConvexPlanes.Signature)
 					{
 						this.ConvexPlanes = br.ReadIFFChunk<ModelConvexPlanes>();
 					}
 
 					// Version-dependent chunk
-					if (br.PeekChunkSignature() == ModelGameObjectFileID.Signature)
+					if ((br.BaseStream.Position != br.BaseStream.Length) && br.PeekChunkSignature() == ModelGameObjectFileID.Signature)
 					{
 						this.GameObjectFileID = br.ReadIFFChunk<ModelGameObjectFileID>();
 					}
 				}
 			}
+		}
+
+		public bool ContainsGroup(ModelGroup modelGroup)
+		{
+			//return this.GroupNames.GroupNames.Contains(modelGroup.Header.GroupNameOffset);
+			return false;
 		}
 	}
 }
