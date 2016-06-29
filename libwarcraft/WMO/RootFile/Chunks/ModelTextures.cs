@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModelTextures.cs
 //
 //  Author:
@@ -23,17 +23,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
 	// TODO: Rework to support offset-based seeking and adding of strings
-	public class ModelTextures : IChunk
+	public class ModelTextures : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOTX";
 
-		public readonly List<KeyValuePair<long, string>> MaterialTextures = new List<KeyValuePair<long, string>>();
+		public readonly List<KeyValuePair<long, string>> Textures = new List<KeyValuePair<long, string>>();
 
 		public ModelTextures()
 		{
@@ -55,7 +55,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					{
 						if (ms.Position % 4 == 0)
 						{
-							MaterialTextures.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
+							Textures.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
 						}
 						else
 						{
@@ -66,7 +66,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 			}
 
 			// Remove null entries from the texture list
-			MaterialTextures.RemoveAll(s => s.Value.Equals("\0"));
+			Textures.RemoveAll(s => s.Value.Equals("\0"));
 		}
 
 
@@ -81,17 +81,30 @@ namespace Warcraft.WMO.RootFile.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					for (int i = 0; i < MaterialTextures.Count; ++i)
+					foreach (KeyValuePair<long, string> texture in Textures)
 					{
 						if (ms.Position % 4 == 0)
 						{
-							bw.WriteNullTerminatedString(MaterialTextures[i].Value);
+							bw.WriteNullTerminatedString(texture.Value);
 						}
 						else
 						{
-							// Pad with nulls
-							bw.Write('\0');
+							// Pad with nulls, then write
+							long stringPadCount = 4 - (ms.Position % 4);
+							for (int i = 0; i < stringPadCount; ++i)
+							{
+								bw.Write('\0');
+							}
+
+							bw.WriteNullTerminatedString(texture.Value);
 						}
+					}
+
+					// Finally, pad until the next alignment
+					long padCount = 4 - (ms.Position % 4);
+					for (int i = 0; i < padCount; ++i)
+					{
+						bw.Write('\0');
 					}
 				}
 

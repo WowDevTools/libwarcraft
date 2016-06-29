@@ -23,12 +23,9 @@
 using System;
 using System.Drawing;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using System.Text;
 using System.Collections.Generic;
-using Warcraft.ADT.Chunks.Subchunks;
-using Warcraft.WDT.Chunks;
-using Warcraft.WDL.Chunks;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.Core
 {
@@ -198,10 +195,10 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Reads an RIFF-style chunk from the stream. The chunk must have the <see cref="IChunk"/>
+		/// Reads an RIFF-style chunk from the stream. The chunk must have the <see cref="IRIFFChunk"/>
 		/// interface, and implement a parameterless constructor.
 		/// </summary>
-		public static T ReadIFFChunk<T>(this BinaryReader Reader) where T : IChunk, new()
+		public static T ReadIFFChunk<T>(this BinaryReader Reader) where T : IRIFFChunk, new()
 		{
 			string chunkSignature = Reader.ReadChunkSignature();
 			uint chunkSize = Reader.ReadUInt32();
@@ -391,6 +388,19 @@ namespace Warcraft.Core
 			{
 				Writer.Write(Signature[i]);
 			}
+		}
+
+
+		/// <summary>
+		/// Writes an RIFF-style chunk to the data stream.
+		/// </summary>
+		public static void WriteIFFChunk<T>(this BinaryWriter Writer, T chunk) where T : IRIFFChunk, IBinarySerializable
+		{
+			byte[] serializedChunk = chunk.Serialize();
+
+			Writer.WriteChunkSignature(chunk.GetSignature());
+			Writer.Write((uint)serializedChunk.Length);
+			Writer.Write(serializedChunk);
 		}
 
 		/// <summary>

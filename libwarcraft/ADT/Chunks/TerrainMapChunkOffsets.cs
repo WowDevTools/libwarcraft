@@ -1,4 +1,4 @@
-//
+﻿//
 //  TerrainMapChunkOffsets.cs
 //
 //  Author:
@@ -22,13 +22,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MCIN Chunk - Contains a list of all MCNKs with associated information in the ADT file.
 	/// </summary>
-	public class TerrainMapChunkOffsets : IChunk
+	public class TerrainMapChunkOffsets : IRIFFChunk
 	{
 		public const string Signature = "MCIN";
 

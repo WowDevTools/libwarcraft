@@ -22,13 +22,13 @@
 
 using System;
 using System.Collections.Generic;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelGroupData : IChunk
+	public class ModelGroupData : IRIFFChunk
 	{
 		public const string Signature = "MOGP";
 

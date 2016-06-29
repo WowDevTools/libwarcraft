@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModelVisibleVertices.cs
 //
 //  Author:
@@ -23,12 +23,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelVisibleVertices : IChunk
+	public class ModelVisibleVertices : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOVV";
 
@@ -63,6 +63,22 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					foreach (Vector3f visibleVertex in this.VisibleVertices)
+					{
+						bw.WriteVector3f(visibleVertex);
+					}
+				}
+
+				return ms.ToArray();
+			}
+		}
 	}
 }
 

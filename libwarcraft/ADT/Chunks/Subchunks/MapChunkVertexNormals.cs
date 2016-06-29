@@ -1,4 +1,4 @@
-//
+﻿//
 //  MapChunkVertexNormals.cs
 //
 //  Author:
@@ -23,10 +23,11 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexNormals : IChunk
+	public class MapChunkVertexNormals : IRIFFChunk
 	{
 		public const string Signature = "MCNR";
 

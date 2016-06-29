@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModelVisibleBlocks.cs
 //
 //  Author:
@@ -23,11 +23,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelVisibleBlocks : IChunk
+	public class ModelVisibleBlocks : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOVB";
 
@@ -53,7 +53,6 @@ namespace Warcraft.WMO.RootFile.Chunks
 					for (int i = 0; i < visibleBlockCount; ++i)
 					{
 						VisibleBlocks.Add(new VisibleBlock(br.ReadBytes(VisibleBlock.GetSize())));
-
 					}
 				}
 			}
@@ -63,9 +62,25 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (VisibleBlock visibleBlock in this.VisibleBlocks)
+		            {
+						bw.Write(visibleBlock.Serialize());
+		            }
+            	}
+
+	            return ms.ToArray();
+            }
+		}
 	}
 
-	public class VisibleBlock
+	public class VisibleBlock : IBinarySerializable
 	{
 		public ushort FirstVertexIndex;
 		public ushort VertexCount;
@@ -85,6 +100,20 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public static int GetSize()
 		{
 			return 4;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+	            {
+		            bw.Write(this.FirstVertexIndex);
+		            bw.Write(this.VertexCount);
+	            }
+
+	            return ms.ToArray();
+            }
 		}
 	}
 }

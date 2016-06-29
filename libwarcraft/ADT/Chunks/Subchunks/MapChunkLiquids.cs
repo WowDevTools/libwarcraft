@@ -1,4 +1,4 @@
-//
+﻿//
 //  MapChunkLiquids.cs
 //
 //  Author:
@@ -22,10 +22,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkLiquids : IChunk
+	public class MapChunkLiquids : IRIFFChunk
 	{
 		public const string Signature = "MCLQ";
 

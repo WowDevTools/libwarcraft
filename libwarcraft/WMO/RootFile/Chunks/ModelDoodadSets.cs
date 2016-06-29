@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModelDoodadSets.cs
 //
 //  Author:
@@ -23,12 +23,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Warcraft.ADT.Chunks;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelDoodadSets : IChunk
+	public class ModelDoodadSets : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MODS";
 
@@ -63,14 +65,43 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (DoodadSet doodadSet in this.DoodadSets)
+		            {
+			            bw.Write(doodadSet.Serialize());
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 
-	public class DoodadSet
+	public class DoodadSet : IBinarySerializable
 	{
-		public string Name;
+		private string name;
+		public string Name
+		{
+			get { return name; }
+			set
+			{
+				if (value.Length > 20)
+				{
+					throw new ArgumentException("Doodad set names may not be longer than 20 characters.", nameof(value));
+				}
+
+				name = value;
+			}
+		}
 		public uint FirstDoodadInstanceIndex;
 		public uint DoodadInstanceCount;
-		public uint Unknown;
+		public uint Unused;
 
 		public DoodadSet(byte[] inData)
 		{
@@ -85,7 +116,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 					this.FirstDoodadInstanceIndex = br.ReadUInt32();
 					this.DoodadInstanceCount = br.ReadUInt32();
-					this.Unknown = br.ReadUInt32();
+					this.Unused = br.ReadUInt32();
 				}
 			}
 		}
@@ -93,6 +124,22 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public static int GetSize()
 		{
 			return 32;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+	            {
+		            bw.Write(this.Name.PadRight(20, '\0').ToCharArray());
+		            bw.Write(this.FirstDoodadInstanceIndex);
+		            bw.Write(this.DoodadInstanceCount);
+		            bw.Write(this.Unused);
+	            }
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

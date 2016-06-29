@@ -1,4 +1,4 @@
-//
+﻿//
 //  TerrainVersion.cs
 //
 //  Author:
@@ -21,13 +21,14 @@
 //
 using System.IO;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MVER Chunk - Contains the ADT version
 	/// </summary>
-	public class TerrainVersion : IChunk
+	public class TerrainVersion : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MVER";
 
@@ -82,12 +83,6 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					bw.WriteChunkSignature(TerrainVersion.Signature);
-
-					// The size of this chunk is alwas 4; A single field.
-					bw.Write((uint)4);
-
-					// Write the version
 					bw.Write(this.Version);
 				}
 

@@ -23,12 +23,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelDoodadInstances : IChunk
+	public class ModelDoodadInstances : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MODD";
 
@@ -63,9 +63,25 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (DoodadInstance doodadInstance in this.DoodadInstances)
+		            {
+			            bw.Write(doodadInstance.Serialize());
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 
-	public class DoodadInstance
+	public class DoodadInstance : IBinarySerializable
 	{
 		public string Name
 		{
@@ -112,6 +128,31 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public static int GetSize()
 		{
 			return 40;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+	            {
+		            byte[] nameOffsetBytes = BitConverter.GetBytes(this.NameOffset);
+		            byte[] finalNameOffsetBytes = new byte[3];
+		            Buffer.BlockCopy(nameOffsetBytes, 0, finalNameOffsetBytes, 0, 3);
+
+		            bw.Write(finalNameOffsetBytes);
+		            bw.Write((byte)this.Flags);
+
+		            bw.WriteVector3f(this.Position);
+
+		            // TODO: Investigate whether or not this is a Quat16 in >= BC
+		            bw.WriteQuaternion32(this.Orientation);
+		            bw.Write(this.Scale);
+		            bw.WriteBGRA(this.StaticLightingColour);
+	            }
+
+            	return ms.ToArray();
+            }
 		}
 	}
 

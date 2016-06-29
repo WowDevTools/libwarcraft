@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModelPortalReferences.cs
 //
 //  Author:
@@ -23,11 +23,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelPortalReferences : IChunk
+	public class ModelPortalReferences : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOPR";
 
@@ -62,9 +62,25 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (PortalReference portalReference in this.PortalReferences)
+		            {
+			            bw.Write(portalReference.Serialize());
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 
-	public class PortalReference
+	public class PortalReference : IBinarySerializable
 	{
 		public ushort PortalIndex;
 		public ushort GroupIndex;
@@ -88,6 +104,22 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public static int GetSize()
 		{
 			return 8;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.Write(this.PortalIndex);
+		            bw.Write(this.GroupIndex);
+		            bw.Write(this.Side);
+		            bw.Write(this.Unknown);
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

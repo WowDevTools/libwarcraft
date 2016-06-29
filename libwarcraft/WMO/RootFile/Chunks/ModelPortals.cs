@@ -23,12 +23,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelPortals : IChunk
+	public class ModelPortals : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOPT";
 
@@ -63,9 +63,25 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (Portal portal in this.Portals)
+		            {
+			            bw.Write(portal.Serialize());
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 
-	public class Portal
+	public class Portal : IBinarySerializable
 	{
 		public ushort BaseVertexIndex;
 		public ushort VertexCount;
@@ -87,6 +103,21 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public static int GetSize()
 		{
 			return 20;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.Write(this.BaseVertexIndex);
+		            bw.Write(this.VertexCount);
+		            bw.WritePlane(this.PortalPlane);
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

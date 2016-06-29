@@ -1,4 +1,4 @@
-//
+﻿//
 //  MapChunkAlphaMaps.cs
 //
 //  Author:
@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core.Interfaces;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.ADT.Chunks.Subchunks
@@ -29,7 +30,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	/// <summary>
 	/// MCLY Chunk - Contains definitions for the alpha map layers.
 	/// </summary>
-	public class MapChunkTextureLayers : IChunk
+	public class MapChunkTextureLayers : IRIFFChunk
 	{
 		public const string Signature = "MCLY";
 

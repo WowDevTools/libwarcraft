@@ -42,6 +42,8 @@
     <Compile Include="Core\Compression\Squish\SingleColourFit.cs" />
     <Compile Include="Core\Compression\Squish\SingleColourFitLookupTables.cs" />
     <Compile Include="Core\Exceptions.cs" />
+    <Compile Include="Core\Interfaces\IBinarySerializable.cs" />
+    <Compile Include="Core\Interfaces\IRIFFChunk.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
@@ -195,7 +197,6 @@
     <Compile Include="TRS\TRS.cs" />
     <Compile Include="MDX\ModelObjectFlags.cs" />
     <Compile Include="WDT\Chunks\WDTHeader.cs" />
-    <Compile Include="ADT\Chunks\IChunk.cs" />
     <Compile Include="WDT\Chunks\AreaInfoChunk.cs" />
     <Compile Include="MPQ\IPackage.cs" />
     <Compile Include="Containers\Terrain\GameWorld.cs" />
@@ -223,6 +224,7 @@
   <ItemGroup>
     <Folder Include="BLP\" />
     <Folder Include="Core\" />
+    <Folder Include="Core\Interfaces" />
     <Folder Include="MPQ\" />
     <Folder Include="ADT\" />
     <Folder Include="Core\Compression\" />

@@ -1,3 +1,4 @@
+﻿
 //
 //  TerrainBoundingBox.cs
 //
@@ -22,10 +23,11 @@
 using System;
 using Warcraft.Core;
 using System.IO;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	public class TerrainBoundingBox : IChunk
+	public class TerrainBoundingBox : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MFBO";
 
@@ -53,6 +55,20 @@ namespace Warcraft.ADT.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.WriteShortPlane(this.Maximum);
+            		bw.WriteShortPlane(this.Minimum);
+            	}
+
+	            return ms.ToArray();
+            }
+		}
 	}
 }
 

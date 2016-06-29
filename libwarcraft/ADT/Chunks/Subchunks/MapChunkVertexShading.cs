@@ -1,4 +1,4 @@
-//
+﻿//
 //  MapChunkVertexShading.cs
 //
 //  Author:
@@ -23,10 +23,11 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexShading : IChunk
+	public class MapChunkVertexShading : IRIFFChunk
 	{
 		public const string Signature = "MCCV";
 

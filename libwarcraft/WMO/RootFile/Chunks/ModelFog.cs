@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModelFog.cs
 //
 //  Author:
@@ -23,12 +23,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelFog : IChunk
+	public class ModelFog : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MFOG";
 
@@ -63,9 +63,25 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (FogInstance fogInstance in this.FogInstances)
+		            {
+			            bw.Write(fogInstance.Serialize());
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 
-	public class FogInstance
+	public class FogInstance : IBinarySerializable
 	{
 		public FogFlags Flags;
 		public Vector3f Position;
@@ -98,9 +114,29 @@ namespace Warcraft.WMO.RootFile.Chunks
 		{
 			return 48;
 		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.Write((uint)this.Flags);
+		            bw.WriteVector3f(this.Position);
+
+		            bw.Write(this.GlobalStartRadius);
+		            bw.Write(this.GlobalEndRadius);
+
+		            bw.Write(this.LandFog.Serialize());
+		            bw.Write(this.UnderwaterFog.Serialize());
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 
-	public class FogDefinition
+	public class FogDefinition : IBinarySerializable
 	{
 		public float EndRadius;
 		public float StartMultiplier;
@@ -122,6 +158,21 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public static int GetSize()
 		{
 			return 12;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.Write(this.EndRadius);
+		            bw.Write(this.StartMultiplier);
+		            bw.WriteBGRA(this.Colour);
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 

@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModelGroupNames.cs
 //
 //  Author:
@@ -25,11 +25,12 @@ using System.Collections.Generic;
 using System.IO;
 using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
 	// TODO: Rework to support offset-based seeking and adding of strings
-	public class ModelGroupNames : IChunk
+	public class ModelGroupNames : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOGN";
 
@@ -51,6 +52,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
+					// Skip the first two bytes, since they're always zero
+					ms.Position += 2;
+
 					while (ms.Position < ms.Length)
 					{
 						GroupNames.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
@@ -83,11 +87,14 @@ namespace Warcraft.WMO.RootFile.Chunks
 						bw.WriteNullTerminatedString(GroupNames[i].Value);
 					}
 
-					// Then zero padding to an even 4-byte boundary
+					// Then zero padding to an even 4-byte boundary at the end
 					long count = 4 - (ms.Position % 4);
-					for (long i = 0; i < count; ++i)
+					if (count < 4)
 					{
-						bw.Write('\0');
+						for (long i = 0; i < count; ++i)
+						{
+							bw.Write('\0');
+						}
 					}
 				}
 

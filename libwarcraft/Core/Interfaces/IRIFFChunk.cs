@@ -1,5 +1,5 @@
-//
-//  TerrainChunk.cs
+﻿//
+//  IRIFFChunk.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,9 +21,9 @@
 //
 using System;
 
-namespace Warcraft.ADT.Chunks
+namespace Warcraft.Core.Interfaces
 {
-	public interface IChunk
+	public interface IRIFFChunk
 	{
 		void LoadBinaryData(byte[] inData);
 		string GetSignature();

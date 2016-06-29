@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModelSkybox.cs
 //
 //  Author:
@@ -22,12 +22,12 @@
 
 using System;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelSkybox : IChunk
+	public class ModelSkybox : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOSB";
 
@@ -58,6 +58,26 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            if (string.IsNullOrEmpty(this.SkyboxName))
+		            {
+			            bw.Write(new byte[4]);
+		            }
+		            else
+		            {
+			            bw.WriteNullTerminatedString(this.SkyboxName);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 }
 

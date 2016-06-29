@@ -22,11 +22,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
-	public class WorldLODMapAreaHoles : IChunk
+	public class WorldLODMapAreaHoles : IRIFFChunk
 	{
 		public const string Signature = "MAHO";
 

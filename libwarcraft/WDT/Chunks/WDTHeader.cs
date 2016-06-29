@@ -1,4 +1,4 @@
-//
+﻿//
 //  WDTHeader.cs
 //
 //  Author:
@@ -21,12 +21,12 @@
 //
 using System;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class WDTHeader : IChunk
+	public class WDTHeader : IRIFFChunk
 	{
 		public const string Signature = "MPHD";
 

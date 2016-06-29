@@ -1,4 +1,4 @@
-//
+﻿//
 //  MainChunk.cs
 //
 //  Author:
@@ -23,11 +23,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
-using Warcraft.ADT.Chunks;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class AreaInfoChunk : IChunk
+	public class AreaInfoChunk : IRIFFChunk
 	{
 		public const string Signature = "MAIN";
 

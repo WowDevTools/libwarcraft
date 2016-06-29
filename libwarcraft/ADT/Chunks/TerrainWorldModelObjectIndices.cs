@@ -1,4 +1,4 @@
-//
+﻿//
 //  TerrainWorldModelObjectIndices.cs
 //
 //  Author:
@@ -22,13 +22,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MMID Chunk - Contains a list of WMO model indexes
 	/// </summary>
-	public class TerrainWorldObjectModelIndices : IChunk
+	public class TerrainWorldObjectModelIndices : IRIFFChunk
 	{
 		public const string Signature = "MWID";
 

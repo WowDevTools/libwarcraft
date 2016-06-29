@@ -22,12 +22,12 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelPortalVertices : IChunk
+	public class ModelPortalVertices : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOPV";
 
@@ -60,6 +60,22 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public string GetSignature()
 		{
 			return Signature;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (Vector3f portalVertex in this.Vertices)
+		            {
+			            bw.WriteVector3f(portalVertex);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

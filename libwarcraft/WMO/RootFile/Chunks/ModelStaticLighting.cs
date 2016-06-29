@@ -23,12 +23,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelStaticLighting : IChunk
+	public class ModelStaticLighting : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOLT";
 
@@ -63,11 +63,28 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (StaticLight staticLight in this.StaticLights)
+		            {
+			            bw.Write(staticLight.Serialize());
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 
-	public class StaticLight
+	public class StaticLight : IBinarySerializable
 	{
 		public LightType Type;
+
 		public bool bUseAttenuation;
 		public bool bUseUnknown1;
 		public bool bUseUnknown2;
@@ -115,6 +132,36 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public static int GetSize()
 		{
 			return 48;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.Write((byte)this.Type);
+
+		            bw.Write(this.bUseAttenuation);
+		            bw.Write(this.bUseUnknown1);
+		            bw.Write(this.bUseUnknown2);
+
+		            bw.WriteBGRA(this.Colour);
+		            bw.WriteVector3f(this.Position);
+		            bw.Write(this.Intensity);
+
+		            bw.Write(this.AttenuationStartRadius);
+		            bw.Write(this.AttenuationEndRadius);
+
+		            bw.Write(this.Unknown1StartRadius);
+		            bw.Write(this.Unknown1EndRadius);
+
+		            bw.Write(this.Unknown2StartRadius);
+		            bw.Write(this.Unknown2EndRadius);
+	            }
+
+            	return ms.ToArray();
+            }
 		}
 	}
 

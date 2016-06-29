@@ -1,4 +1,4 @@
-//
+﻿//
 //  MapChunkModelReferences.cs
 //
 //  Author:
@@ -22,10 +22,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkModelReferences : IChunk
+	public class MapChunkModelReferences : IRIFFChunk
 	{
 		public const string Signature = "MCRF";
 

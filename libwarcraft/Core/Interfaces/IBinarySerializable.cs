@@ -1,5 +1,5 @@
 ﻿//
-//  MapChunkSoundEmitters.cs
+//  IBinarySerializable.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,33 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
-using Warcraft.Core.Interfaces;
 
-namespace Warcraft.ADT.Chunks.Subchunks
+namespace Warcraft.Core.Interfaces
 {
-	public class MapChunkSoundEmitters : IRIFFChunk
+	public interface IBinarySerializable
 	{
-		public const string Signature = "MCSE";
-
-		public MapChunkSoundEmitters()
-		{
-
-		}
-
-		public MapChunkSoundEmitters(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
-        {
-
-        }
-
-        public string GetSignature()
-        {
-        	return Signature;
-        }
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
+		byte[] Serialize();
 	}
 }
-

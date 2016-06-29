@@ -1,4 +1,4 @@
-//
+﻿//
 //  TerrainWorldModelObjects.cs
 //
 //  Author:
@@ -23,13 +23,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MWMO Chunk - Contains a list of all referenced WMO models in this ADT.
 	/// </summary>
-	public class TerrainWorldModelObjects : IChunk
+	public class TerrainWorldModelObjects : IRIFFChunk
 	{
 		public const string Signature = "MWMO";
 

@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModelGroupInformation.cs
 //
 //  Author:
@@ -21,20 +21,19 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 using Warcraft.WMO.GroupFile.Chunks;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelGroupInformation : IChunk
+	public class ModelGroupInformation : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOGI";
 
-		public GroupFlags Flags;
-		public Box BoundingBox;
-		public int GroupNameOffset;
+		public readonly List<GroupInformation> GroupInformations = new List<GroupInformation>();
 
 		public ModelGroupInformation()
 		{
@@ -52,9 +51,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Flags = (GroupFlags)br.ReadUInt32();
-					this.BoundingBox = br.ReadBox();
-					this.GroupNameOffset = br.ReadInt32();
+					long groupInfoCount = ms.Length / GroupInformation.GetSize();
+					for (int i = 0; i < groupInfoCount; ++i)
+					{
+						this.GroupInformations.Add(new GroupInformation(br.ReadBytes(GroupInformation.GetSize())));
+					}
 				}
 			}
         }
@@ -64,9 +65,67 @@ namespace Warcraft.WMO.RootFile.Chunks
         	return Signature;
         }
 
+
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (GroupInformation groupInformation in this.GroupInformations)
+		            {
+			            bw.Write(groupInformation.Serialize());
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
+	}
+
+	public class GroupInformation : IBinarySerializable
+	{
+		public GroupFlags Flags;
+		public Box BoundingBox;
+		public int GroupNameOffset;
+
+		public GroupInformation(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.Flags = (GroupFlags)br.ReadUInt32();
+					this.BoundingBox = br.ReadBox();
+					this.GroupNameOffset = br.ReadInt32();
+				}
+			}
+		}
+
 		public bool HasGroupName()
 		{
 			return GroupNameOffset > -1;
+		}
+
+		public static int GetSize()
+		{
+			return 32;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (BinaryWriter bw = new BinaryWriter(ms))
+				{
+					bw.Write((uint)this.Flags);
+					bw.WriteBox(this.BoundingBox);
+					bw.Write(this.GroupNameOffset);
+				}
+
+				return ms.ToArray();
+			}
 		}
 	}
 }

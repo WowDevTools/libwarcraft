@@ -1,4 +1,4 @@
-//
+﻿//
 //  MapChunkBakedShadows.cs
 //
 //  Author:
@@ -23,10 +23,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Collections;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkBakedShadows : IChunk
+	public class MapChunkBakedShadows : IRIFFChunk
 	{
 		public const string Signature = "MCSH";
 

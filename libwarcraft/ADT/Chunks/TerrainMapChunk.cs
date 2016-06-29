@@ -23,13 +23,14 @@ using System;
 using System.IO;
 using Warcraft.ADT.Chunks.Subchunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MCNK Chunk - Main map chunk which contains a number of smaller subchunks. 256 of these are present in an ADT file.
 	/// </summary>
-	public class TerrainMapChunk : IChunk
+	public class TerrainMapChunk : IRIFFChunk
 	{
 		public const string Signature = "MCNK";
 		/// <summary>

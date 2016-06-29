@@ -1,4 +1,4 @@
-//
+﻿//
 //  TerrainWater.cs
 //
 //  Author:
@@ -22,16 +22,16 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using Warcraft.WDT.Chunks;
 using Warcraft.DBC.SpecialFields;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MH2O Chunk - Contains liquid information about the ADT file, superseding the older MCLQ chunk.
 	/// </summary>
-	public class TerrainLiquid : IChunk
+	public class TerrainLiquid : IRIFFChunk
 	{
 		public const string Signature = "MH2O";
 

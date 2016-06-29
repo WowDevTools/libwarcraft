@@ -1,4 +1,4 @@
-//
+﻿//
 //  TerrainHeader.cs
 //
 //  Author:
@@ -21,13 +21,14 @@
 //
 using System;
 using System.IO;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MHDR Chunk - Contains offset for all major chunks in the ADT. All offsets are from the start of the MHDR + 4 bytes to compensate for the size field.
 	/// </summary>
-	public class TerrainHeader : IChunk
+	public class TerrainHeader : IRIFFChunk
 	{
 		public const string Signature = "MHDR";
 

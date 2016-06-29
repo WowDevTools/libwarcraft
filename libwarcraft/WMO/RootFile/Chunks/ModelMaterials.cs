@@ -23,14 +23,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 using Warcraft.Core.Shading;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelMaterials : IChunk
+	public class ModelMaterials : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOMT";
 
@@ -65,24 +65,46 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (ModelMaterial modelMaterial in this.Materials)
+		            {
+			            bw.Write(modelMaterial.Serialize());
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 
-	public class ModelMaterial
+	public class ModelMaterial : IBinarySerializable
 	{
+		public MaterialFlags Flags;
 		public ShaderTypes Shader;
 		public BlendingMode BlendMode;
 
-		public uint Texture0Offset;
-		public RGBA Colour0;
-		public MaterialFlags Flags0;
+		public uint FirstTextureOffset;
+		public RGBA FirstColour;
+		public MaterialFlags FirstFlags;
 
-		public uint Texture1Offset;
-		public RGBA Colour1;
+		public uint SecondTextureOffset;
+		public RGBA SecondColour;
 
 		public UInt32ForeignKey GroundType;
-		public uint Texture2Offset;
+		public uint ThirdTextureOffset;
 		public RGBA BaseDiffuseColour;
-		public MaterialFlags Flags2;
+		public MaterialFlags ThirdFlags;
+
+		public uint RuntimeData1;
+		public uint RuntimeData2;
+		public uint RuntimeData3;
+		public uint RuntimeData4;
 
 		public ModelMaterial(byte[] inData)
 		{
@@ -90,20 +112,26 @@ namespace Warcraft.WMO.RootFile.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
+					this.Flags = (MaterialFlags) br.ReadUInt32();
 					this.Shader = (ShaderTypes) br.ReadUInt32();
 					this.BlendMode = (BlendingMode) br.ReadUInt32();
 
-					this.Texture0Offset = br.ReadUInt32();
-					this.Colour0 = br.ReadRGBA();
-					this.Flags0  = (MaterialFlags)br.ReadUInt32();
+					this.FirstTextureOffset = br.ReadUInt32();
+					this.FirstColour = br.ReadRGBA();
+					this.FirstFlags  = (MaterialFlags)br.ReadUInt32();
 
-					this.Texture1Offset = br.ReadUInt32();
-					this.Colour1 = br.ReadRGBA();
+					this.SecondTextureOffset = br.ReadUInt32();
+					this.SecondColour = br.ReadRGBA();
 
 					this.GroundType = new UInt32ForeignKey("TerrainType", "ID", br.ReadUInt32());
-					this.Texture2Offset = br.ReadUInt32();
+					this.ThirdTextureOffset = br.ReadUInt32();
 					this.BaseDiffuseColour = br.ReadRGBA();
-					this.Flags2 = (MaterialFlags)br.ReadUInt32();
+					this.ThirdFlags = (MaterialFlags)br.ReadUInt32();
+
+					this.RuntimeData1 = br.ReadUInt32();
+					this.RuntimeData2 = br.ReadUInt32();
+					this.RuntimeData3 = br.ReadUInt32();
+					this.RuntimeData4 = br.ReadUInt32();
 				}
 			}
 		}
@@ -111,6 +139,38 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public static int GetSize()
 		{
 			return 64;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.Write((uint)this.Flags);
+		            bw.Write((uint)this.Shader);
+		            bw.Write((uint)this.BlendMode);
+
+		            bw.Write(this.FirstTextureOffset);
+		            bw.WriteRGBA(this.FirstColour);
+		            bw.Write((uint)this.FirstFlags);
+
+		            bw.Write(this.SecondTextureOffset);
+		            bw.WriteRGBA(this.SecondColour);
+
+		            bw.Write((uint)this.GroundType.Value);
+		            bw.Write(this.ThirdTextureOffset);
+		            bw.WriteRGBA(this.BaseDiffuseColour);
+		            bw.Write((uint)this.ThirdFlags);
+
+		            bw.Write(this.RuntimeData1);
+		            bw.Write(this.RuntimeData2);
+		            bw.Write(this.RuntimeData3);
+		            bw.Write(this.RuntimeData4);
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 

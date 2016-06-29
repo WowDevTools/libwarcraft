@@ -24,12 +24,13 @@ using System;
 using System.IO;
 using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 using Warcraft.WMO.GroupFile;
 using Warcraft.WMO.RootFile.Chunks;
 
 namespace Warcraft.WMO.RootFile
 {
-	public class ModelRoot
+	public class ModelRoot : IBinarySerializable
 	{
 		public TerrainVersion Version;
 
@@ -116,6 +117,53 @@ namespace Warcraft.WMO.RootFile
 		{
 			//return this.GroupNames.GroupNames.Contains(modelGroup.Header.GroupNameOffset);
 			return false;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.WriteIFFChunk(this.Version);
+		            bw.WriteIFFChunk(this.Header);
+
+		            bw.WriteIFFChunk(this.Textures);
+		            bw.WriteIFFChunk(this.Materials);
+
+		            bw.WriteIFFChunk(this.GroupNames);
+		            bw.WriteIFFChunk(this.GroupInformation);
+
+		            bw.WriteIFFChunk(this.Skybox);
+
+		            bw.WriteIFFChunk(this.PortalVertices);
+		            bw.WriteIFFChunk(this.Portals);
+		            bw.WriteIFFChunk(this.PortalReferences);
+
+		            bw.WriteIFFChunk(this.VisibleVertices);
+		            bw.WriteIFFChunk(this.VisibleBlocks);
+
+		            bw.WriteIFFChunk(this.StaticLighting);
+
+		            bw.WriteIFFChunk(this.DoodadSets);
+		            bw.WriteIFFChunk(this.DoodadNames);
+		            bw.WriteIFFChunk(this.DoodadInstances);
+
+		            bw.WriteIFFChunk(this.Fog);
+
+		            if (this.ConvexPlanes != null)
+		            {
+			            bw.WriteIFFChunk(this.ConvexPlanes);
+		            }
+
+		            if (this.GameObjectFileID != null)
+		            {
+			            bw.WriteIFFChunk(this.GameObjectFileID);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

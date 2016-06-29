@@ -23,12 +23,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelDoodadNames : IChunk
+	public class ModelDoodadNames : IRIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MODN";
 
@@ -77,6 +77,22 @@ namespace Warcraft.WMO.RootFile.Chunks
 			}
 
 			return string.Empty;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (KeyValuePair<long, string> doodadName in this.DoodadNames)
+		            {
+			            bw.WriteNullTerminatedString(doodadName.Value);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }
