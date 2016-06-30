@@ -1,5 +1,5 @@
-//
-//  ModelTerrainPlanes.cs
+﻿//
+//  MPBP.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,14 +21,38 @@
 //
 
 using System;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTerrainPlanes
+	public class MPBP : IRIFFChunk, IBinarySerializable
 	{
-		public ModelTerrainPlanes()
-		{
-		}
+		public const string Signature = "MPBP";
+
+        public byte[] Data;
+
+        public MPBP()
+        {
+        }
+
+        public MPBP(byte[] inData)
+        {
+        	LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+        	this.Data = inData;
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
+
+		public byte[] Serialize()
+        {
+        	return this.Data;
+        }
 	}
 }
-

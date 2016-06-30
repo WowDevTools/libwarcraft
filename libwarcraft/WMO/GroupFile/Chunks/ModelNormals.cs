@@ -21,13 +21,61 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelNormals
+	public class ModelNormals : IRIFFChunk, IBinarySerializable
 	{
+		public const string Signature = "MONR";
+
+		public readonly List<Vector3f> Normals = new List<Vector3f>();
+
 		public ModelNormals()
 		{
+		}
+
+		public ModelNormals(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+            {
+            	using (BinaryReader br = new BinaryReader(ms))
+            	{
+		            while (ms.Position < ms.Length)
+		            {
+			            this.Normals.Add(br.ReadVector3f());
+		            }
+            	}
+            }
+		}
+
+		public string GetSignature()
+		{
+			return Signature;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (Vector3f normal in this.Normals)
+		            {
+			            bw.WriteVector3f(normal);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

@@ -21,13 +21,60 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelDoodadReferences
+	public class ModelDoodadReferences : IRIFFChunk, IBinarySerializable
 	{
+		public const string Signature = "MODR";
+
+		public readonly List<ushort> DoodadReferences = new List<ushort>();
+
 		public ModelDoodadReferences()
 		{
+		}
+
+		public ModelDoodadReferences(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+            {
+            	using (BinaryReader br = new BinaryReader(ms))
+            	{
+					while (ms.Position < ms.Length)
+					{
+						this.DoodadReferences.Add(br.ReadUInt16());
+					}
+            	}
+            }
+		}
+
+		public string GetSignature()
+		{
+			return Signature;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+					foreach (ushort doodadReference in this.DoodadReferences)
+		            {
+			            bw.Write(doodadReference);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

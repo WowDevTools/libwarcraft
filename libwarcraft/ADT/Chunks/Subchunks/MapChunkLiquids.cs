@@ -79,7 +79,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         }
 	}
 
-	public class LiquidVertex
+	public class LiquidVertex : IBinarySerializable
 	{
 		public Tuple<ushort, ushort> TextureCoordinates;
 		public float Height;
@@ -100,12 +100,32 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		{
 			return 8;
 		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.Write(this.TextureCoordinates.Item1);
+            		bw.Write(this.TextureCoordinates.Item2);
+
+		            bw.Write(this.Height);
+            	}
+
+            	return ms.ToArray();
+            }
+		}
 	}
 
 	[Flags]
 	public enum LiquidFlags : byte
 	{
-		Hidden = 8
+		Hidden 		= 0x08,
+		// Unknown1 = 0x10,
+		// Unknown2 = 0x20,
+		Fishable 	= 0x40,
+		Shared 		= 0x80
 	}
 }
 

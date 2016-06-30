@@ -1,5 +1,5 @@
-//
-//  ModelTextureCoordinates.cs
+﻿//
+//  ModelTriangleStripIndices.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,60 +23,58 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTextureCoordinates : IRIFFChunk, IBinarySerializable
+	public class ModelTriangleStripIndices : IRIFFChunk, IBinarySerializable
 	{
-		public const string Signature = "MOTV";
+		public const string Signature = "ModelTriangleStripIndices";
 
-		public readonly List<Vector2f> TextureCoordinates = new List<Vector2f>();
+        public List<ushort> TriangleStripIndices = new List<ushort>();
 
-		public ModelTextureCoordinates()
-		{
-		}
+        public ModelTriangleStripIndices()
+        {
+        }
 
-		public ModelTextureCoordinates(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelTriangleStripIndices(byte[] inData)
+        {
+        	LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
+        public void LoadBinaryData(byte[] inData)
+        {
 			using (MemoryStream ms = new MemoryStream(inData))
             {
             	using (BinaryReader br = new BinaryReader(ms))
             	{
 		            while (ms.Position < ms.Length)
 		            {
-			            this.TextureCoordinates.Add(br.ReadVector2f());
+			            this.TriangleStripIndices.Add(br.ReadUInt16());
 		            }
             	}
             }
-		}
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 
 		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        {
+        	using (MemoryStream ms = new MemoryStream())
             {
             	using (BinaryWriter bw = new BinaryWriter(ms))
             	{
-		            foreach (Vector2f textureCoordinate in this.TextureCoordinates)
+		            foreach (ushort triangleStripIndex in this.TriangleStripIndices)
 		            {
-			            bw.WriteVector2f(textureCoordinate);
+			            bw.Write(triangleStripIndex);
 		            }
             	}
 
             	return ms.ToArray();
             }
-		}
+        }
 	}
 }
-

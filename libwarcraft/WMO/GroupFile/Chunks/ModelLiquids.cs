@@ -21,13 +21,101 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.ADT.Chunks.Subchunks;
+using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelLiquids
+	public class ModelLiquids : IRIFFChunk, IBinarySerializable
 	{
+		public const string Signature = "MLIQ";
+
+		public uint WidthVertices;
+		public uint HeightVertices;
+		public uint WidthTileFlags;
+		public uint HeightTileFlags;
+
+		public Vector3f Location;
+		public ushort MaterialIndex;
+
+		public List<LiquidVertex> LiquidVertices = new List<LiquidVertex>();
+		public List<LiquidFlags> LiquidTileFlags = new List<LiquidFlags>();
+
 		public ModelLiquids()
 		{
+		}
+
+		public ModelLiquids(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+            {
+            	using (BinaryReader br = new BinaryReader(ms))
+	            {
+		            this.WidthVertices = br.ReadUInt32();
+		            this.HeightVertices = br.ReadUInt32();
+
+		            this.WidthTileFlags = br.ReadUInt32();
+		            this.HeightTileFlags = br.ReadUInt32();
+
+		            this.Location = br.ReadVector3f();
+		            this.MaterialIndex = br.ReadUInt16();
+
+		            uint vertexCount = this.WidthVertices * this.HeightVertices;
+		            for (int i = 0; i < vertexCount; ++i)
+		            {
+						this.LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
+		            }
+
+		            uint tileFlagCount = this.WidthTileFlags * this.HeightTileFlags;
+					for (int i = 0; i < tileFlagCount; ++i)
+					{
+						this.LiquidTileFlags.Add((LiquidFlags)br.ReadByte());
+					}
+	            }
+            }
+		}
+
+		public string GetSignature()
+		{
+			return Signature;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+					bw.Write(this.WidthVertices);
+		            bw.Write(this.HeightVertices);
+
+		            bw.Write(this.WidthTileFlags);
+		            bw.Write(this.HeightTileFlags);
+
+		            bw.WriteVector3f(this.Location);
+		            bw.Write(this.MaterialIndex);
+
+		            foreach (LiquidVertex liquidVertex in this.LiquidVertices)
+		            {
+						bw.Write(liquidVertex.Serialize());
+		            }
+
+		            foreach (LiquidFlags liquidFlag in this.LiquidTileFlags)
+		            {
+						bw.Write((byte)liquidFlag);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

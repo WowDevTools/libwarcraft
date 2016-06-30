@@ -21,13 +21,65 @@
 //
 
 using System;
+using System.IO;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTriangleStrips
+	public class ModelTriangleStrips : IRIFFChunk, IBinarySerializable
 	{
 		public ModelTriangleStrips()
 		{
+		}
+
+		public void LoadBinaryData(byte[] inData)
+		{
+			throw new NotImplementedException();
+		}
+
+		public string GetSignature()
+		{
+			throw new NotImplementedException();
+		}
+
+		public byte[] Serialize()
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class TriangleStrip : IBinarySerializable
+	{
+		public uint StartTriangleIndex;
+		public ushort TriangleIndexCount;
+
+		public TriangleStrip(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+            {
+            	using (BinaryReader br = new BinaryReader(ms))
+	            {
+		            this.StartTriangleIndex = br.ReadUInt32();
+		            this.TriangleIndexCount = br.ReadUInt16();
+	            }
+            }
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+					bw.Write(this.StartTriangleIndex);
+		            bw.Write(this.TriangleIndexCount);
+
+		            // Then a bit of padding
+		            bw.Write((ushort)0);
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

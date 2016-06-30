@@ -21,13 +21,50 @@
 //
 
 using System;
+using System.IO;
+using Warcraft.ADT.Chunks;
+using Warcraft.Core;
+using Warcraft.Core.Interfaces;
+using Warcraft.WMO.GroupFile.Chunks;
 
 namespace Warcraft.WMO.GroupFile
 {
-	public class ModelGroup
+	public class ModelGroup : IBinarySerializable
 	{
+		public TerrainVersion Version;
+		public ModelGroupData GroupData;
+
+		public string Name
+		{
+			get;
+			set;
+		}
+
 		public ModelGroup(byte[] inData)
 		{
+			using (MemoryStream ms = new MemoryStream(inData))
+            {
+            	using (BinaryReader br = new BinaryReader(ms))
+	            {
+		            this.Version = br.ReadIFFChunk<TerrainVersion>();
+		            this.GroupData = br.ReadIFFChunk<ModelGroupData>();
+	            }
+            }
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+            		bw.WriteIFFChunk(this.Version);
+		            bw.WriteIFFChunk(this.GroupData
+		            );
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

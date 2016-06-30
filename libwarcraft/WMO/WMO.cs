@@ -3,6 +3,7 @@ using Warcraft.WMO.RootFile;
 using Warcraft.WMO.GroupFile;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Warcraft.WMO.RootFile.Chunks;
 
 namespace Warcraft.WMO
@@ -33,6 +34,11 @@ namespace Warcraft.WMO
 			}
 		}
 
+		public bool ContainsGroupNameOffset(uint groupNameOffset)
+		{
+			return this.RootInformation.GroupNames.GroupNames.Count(kvp => kvp.Key == groupNameOffset) > 0;
+		}
+
 		/// <summary>
 		/// Adds a model group to the model object. The model group must be listed in the root object,
 		/// or it won't be accepted by the model.
@@ -50,7 +56,11 @@ namespace Warcraft.WMO
 		/// <param name="modelGroup">Model group.</param>
 		public void AddModelGroup(ModelGroup modelGroup)
 		{
-
+			if (ContainsGroupNameOffset(modelGroup.GroupData.GroupNameOffset))
+			{
+				modelGroup.Name = this.RootInformation.GroupNames.GroupNames[(int)modelGroup.GroupData.GroupNameOffset].Value;
+				this.Groups.Add(modelGroup);
+			}
 		}
 
 		/// <summary>

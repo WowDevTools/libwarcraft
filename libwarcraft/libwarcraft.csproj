@@ -10,6 +10,8 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\libwarcraft.key</AssemblyOriginatorKeyFile>
     <ReleaseVersion>1.0</ReleaseVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +45,8 @@
     <Compile Include="Core\Compression\Squish\SingleColourFitLookupTables.cs" />
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Interfaces\IBinarySerializable.cs" />
+    <Compile Include="Core\Interfaces\IPostLoad.cs" />
+    <Compile Include="Core\Interfaces\IPostLoadParameter.cs" />
     <Compile Include="Core\Interfaces\IRIFFChunk.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
     <Compile Include="DBC\Definitions\MapRecord.cs" />
@@ -83,6 +87,11 @@
     <Compile Include="Core\Compression\Squish\SquishCompression.cs" />
     <Compile Include="Core\Shading\ShaderTypes.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelBSPFaceIndices.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelTriangleStripIndices.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\MPBG.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\MPBI.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\MPBP.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\MPBV.cs" />
     <Compile Include="WMO\GroupFile\ModelGroupData.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelPortalVertices.cs" />
     <Compile Include="WMO\WMO.cs" />
@@ -120,7 +129,7 @@
     <Compile Include="MPQ\Tables\Hash\HashTableEntry.cs" />
     <Compile Include="MPQ\Tables\HET\HETTable.cs" />
     <Compile Include="WMO\GroupFile\ModelGroup.cs" />
-    <Compile Include="WMO\GroupFile\Chunks\ModelPolygons.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelPolygonMaterials.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelVertexIndices.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelVertices.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelNormals.cs" />
@@ -132,11 +141,10 @@
     <Compile Include="WMO\GroupFile\Chunks\ModelLiquids.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelVertexColours.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelTriangleStrips.cs" />
-    <Compile Include="WMO\GroupFile\Chunks\MORB.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelTangentArray.cs" />
     <Compile Include="WMO\GroupFile\Chunks\MOBS.cs" />
     <Compile Include="WMO\GroupFile\Chunks\MDAL.cs" />
-    <Compile Include="WMO\GroupFile\Chunks\ModelTerrainPlanes.cs" />
+    <Compile Include="WMO\GroupFile\Chunks\ModelTerrainCuttingPlanes.cs" />
     <Compile Include="WMO\RootFile\ModelRoot.cs" />
     <Compile Include="WMO\RootFile\ModelRootHeader.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelTextures.cs" />
@@ -224,7 +232,6 @@
   <ItemGroup>
     <Folder Include="BLP\" />
     <Folder Include="Core\" />
-    <Folder Include="Core\Interfaces" />
     <Folder Include="MPQ\" />
     <Folder Include="ADT\" />
     <Folder Include="Core\Compression\" />

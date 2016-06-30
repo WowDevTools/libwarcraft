@@ -1,5 +1,5 @@
-//
-//  MORB.cs
+﻿//
+//  MPBI.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,14 +21,38 @@
 //
 
 using System;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class MORB
+	public class MPBI : IRIFFChunk, IBinarySerializable
 	{
-		public MORB()
-		{
-		}
+		public const string Signature = "MPBI";
+
+        public byte[] Data;
+
+        public MPBI()
+        {
+        }
+
+        public MPBI(byte[] inData)
+        {
+        	LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+        	this.Data = inData;
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
+
+		public byte[] Serialize()
+        {
+        	return this.Data;
+        }
 	}
 }
-

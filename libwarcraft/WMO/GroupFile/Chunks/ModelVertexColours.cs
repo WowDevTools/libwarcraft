@@ -21,13 +21,61 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelVertexColours
+	public class ModelVertexColours : IRIFFChunk, IBinarySerializable
 	{
+		public const string Signature = "MOCV";
+
+		public List<BGRA> VertexColours = new List<BGRA>();
+
 		public ModelVertexColours()
 		{
+		}
+
+		public ModelVertexColours(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+            {
+            	using (BinaryReader br = new BinaryReader(ms))
+            	{
+		            while (ms.Position < ms.Length)
+		            {
+			            this.VertexColours.Add(br.ReadBGRA());
+		            }
+            	}
+            }
+		}
+
+		public string GetSignature()
+		{
+			return Signature;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (BGRA vertexColour in this.VertexColours)
+		            {
+			            bw.WriteBGRA(vertexColour);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
 		}
 	}
 }

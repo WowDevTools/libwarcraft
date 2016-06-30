@@ -1,5 +1,5 @@
 //
-//  ModelTextureCoordinates.cs
+//  ModelTerrainCuttingPlanes.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,17 +28,17 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTextureCoordinates : IRIFFChunk, IBinarySerializable
+	public class ModelTerrainCuttingPlanes : IRIFFChunk, IBinarySerializable
 	{
-		public const string Signature = "MOTV";
+		public const string Signature = "MOPL";
 
-		public readonly List<Vector2f> TextureCoordinates = new List<Vector2f>();
+		public List<Plane> CuttingPlanes = new List<Plane>();
 
-		public ModelTextureCoordinates()
+		public ModelTerrainCuttingPlanes()
 		{
 		}
 
-		public ModelTextureCoordinates(byte[] inData)
+		public ModelTerrainCuttingPlanes(byte[] inData)
 		{
 			LoadBinaryData(inData);
 		}
@@ -51,7 +51,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             	{
 		            while (ms.Position < ms.Length)
 		            {
-			            this.TextureCoordinates.Add(br.ReadVector2f());
+			            this.CuttingPlanes.Add(br.ReadPlane());
 		            }
             	}
             }
@@ -68,9 +68,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
             	using (BinaryWriter bw = new BinaryWriter(ms))
             	{
-		            foreach (Vector2f textureCoordinate in this.TextureCoordinates)
+		            foreach (Plane cuttingPlane in this.CuttingPlanes)
 		            {
-			            bw.WriteVector2f(textureCoordinate);
+			            bw.WritePlane(cuttingPlane);
 		            }
             	}
 

@@ -21,13 +21,103 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTangentArray
+	public class ModelTangentArray : IRIFFChunk, IBinarySerializable, IPostLoad<ModelTangentArrayPostLoadParameters>
 	{
+		public const string Signature = "MOTA";
+
+		private bool hasFinishedLoading;
+		private byte[] data;
+
+		public List<short> FirstIndices = new List<short>();
+		public List<Vector4f> Tangents = new List<Vector4f>();
+
 		public ModelTangentArray()
 		{
+			hasFinishedLoading = true;
+		}
+
+		public ModelTangentArray(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+		{
+			this.data = inData;
+			hasFinishedLoading = false;
+		}
+
+		public string GetSignature()
+		{
+			return Signature;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (short firstIndex in this.FirstIndices)
+		            {
+			            bw.Write(firstIndex);
+		            }
+
+		            foreach (Vector4f tangent in this.Tangents)
+		            {
+			            bw.WriteVector4f(tangent);
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
+
+		public bool HasFinishedLoading()
+		{
+			return hasFinishedLoading;
+		}
+
+		public void PostLoad(ModelTangentArrayPostLoadParameters loadingParameters)
+		{
+			using (MemoryStream ms = new MemoryStream(this.data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					for (int i = 0; i < loadingParameters.RenderBatchCount; ++i)
+					{
+						this.FirstIndices.Add(br.ReadInt16());
+					}
+
+					for (int i = 0; i < loadingParameters.AccumulatedIndexCount; ++i)
+					{
+						this.Tangents.Add(br.ReadVector4f());
+					}
+				}
+			}
+		}
+	}
+
+	public class ModelTangentArrayPostLoadParameters : IPostLoadParameter
+	{
+		public uint RenderBatchCount;
+		public uint AccumulatedIndexCount;
+
+		public ModelTangentArrayPostLoadParameters()
+		{
+		}
+
+		public ModelTangentArrayPostLoadParameters(uint inRenderBatchCount, uint inAccumulatedIndexCount)
+		{
+			this.RenderBatchCount = inRenderBatchCount;
+			this.AccumulatedIndexCount = inAccumulatedIndexCount;
 		}
 	}
 }

@@ -1,5 +1,5 @@
-//
-//  MOBS.cs
+﻿//
+//  MPBV.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,35 +25,34 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class MOBS : IRIFFChunk, IBinarySerializable
+	public class MPBV : IRIFFChunk, IBinarySerializable
 	{
-		public const string Signature = "MOBS";
+		public const string Signature = "MPBV";
 
-		public byte[] Data;
+        public byte[] Data;
 
-		public MOBS()
-		{
-		}
+        public MPBV()
+        {
+        }
 
-		public MOBS(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public MPBV(byte[] inData)
+        {
+        	LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			this.Data = inData;
-		}
+        public void LoadBinaryData(byte[] inData)
+        {
+        	this.Data = inData;
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+        	return Signature;
+        }
 
 		public byte[] Serialize()
-        {
-        	return this.Data;
-        }
+		{
+			return this.Data;
+		}
 	}
 }
-

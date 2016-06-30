@@ -113,6 +113,35 @@ namespace Warcraft.Core
 	}
 
 	/// <summary>
+	/// A structure representing an axis-aligned bounding box, comprised of two <see cref="Vector3s"/> objects
+	/// defining the bottom and top corners of the box.
+	/// </summary>
+	public struct ShortBox
+	{
+		/// <summary>
+		/// The bottom corner of the bounding box.
+		/// </summary>
+		public Vector3s BottomCorner;
+
+		/// <summary>
+		/// The top corner of the bounding box.
+		/// </summary>
+		public Vector3s TopCorner;
+
+		/// <summary>
+		/// Creates a new <see cref="Box"/> object from a top and bottom corner.
+		/// </summary>
+		/// <param name="inBottomCorner">The bottom corner of the box.</param>
+		/// <param name="inTopCorner">The top corner of the box.</param>
+		/// <returns>A new <see cref="Box"/> object.</returns>
+		public ShortBox(Vector3s inBottomCorner, Vector3s inTopCorner)
+		{
+			this.BottomCorner = inBottomCorner;
+			this.TopCorner = inTopCorner;
+		}
+	}
+
+	/// <summary>
 	/// A structure representing an axis-aligned sphere, comprised of a <see cref="Vector3f"/> position and a
 	/// <see cref="float"/> radius.
 	/// </summary>
@@ -415,6 +444,111 @@ namespace Warcraft.Core
 		{
 			return new Vector3f(i);
 		}
+	}
+
+	/// <summary>
+	/// A structure representing a 3D vector of shorts.
+	/// </summary>
+	public struct Vector3s
+	{
+		/// <summary>
+		/// X coordinate of this vector
+		/// </summary>
+		public short X;
+
+		/// <summary>
+		/// Y coordinate of this vector
+		/// </summary>
+		public short Y;
+
+		/// <summary>
+		/// Z coordinate of this vector
+		/// </summary>
+		public short Z;
+
+		/// <summary>
+		/// Creates a new 3D vector object from three short.
+		/// </summary>
+		/// <param name="inX">X coordinate.</param>
+		/// <param name="inY">Y coordinate.</param>
+		/// <param name="inZ">Z coordinate.</param>
+		public Vector3s(short inX, short inY, short inZ)
+		{
+			this.X = inX;
+			this.Y = inY;
+			this.Z = inZ;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.Core.Vector3s"/> struct using
+		/// normalized signed bytes instead of straight short values.
+		/// </summary>
+		/// <param name="inX">X.</param>
+		/// <param name="inY">Y.</param>
+		/// <param name="inZ">Z.</param>
+		public Vector3s(sbyte inX, sbyte inY, sbyte inZ)
+		{
+			this.X = (short)(127 / inX);
+			this.Y = (short)(127 / inY);
+			this.Z = (short)(127 / inZ);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Warcraft.Core.Vector3s"/> struct.
+		/// </summary>
+		/// <param name="all">All.</param>
+		public Vector3s(short all)
+			:this(all, all, all)
+		{
+
+		}
+
+		public static short Dot(Vector3s start, Vector3s end)
+		{
+			return (short)((start.X * end.X) + (start.Y * end.Y) + (start.Z * end.Z));
+		}
+
+		public static Vector3s Cross(Vector3s start, Vector3s end)
+		{
+			short x = (short)(start.Y * end.Z - end.Y * start.Z);
+			short y = (short)((start.X * end.Z - end.X * start.Z) * -1);
+			short z = (short)(start.X * end.Y - end.X * start.Y);
+
+			var rtnvector = new Vector3s(x, y, z);
+			return rtnvector;
+		}
+
+		public static Vector3s operator+(Vector3s vect1, Vector3s vect2)
+		{
+			return new Vector3s((short)(vect1.X + vect2.X), (short)(vect1.Y + vect2.Y), (short)(vect1.Z + vect2.Z));
+		}
+
+		public static Vector3s operator-(Vector3s vect1, Vector3s vect2)
+		{
+			return new Vector3s((short)(vect1.X - vect2.X), (short)(vect1.Y - vect2.Y), (short)(vect1.Z - vect2.Z));
+		}
+
+		public static Vector3s operator-(Vector3s vect1)
+		{
+			return new Vector3s((short)-vect1.X, (short)-vect1.Y, (short)-vect1.Z);
+		}
+
+		public static Vector3s operator/(Vector3s vect1, Vector3s vect2)
+		{
+			return new Vector3s((short)(vect1.X / vect2.X), (short)(vect1.Y / vect2.Y), (short)(vect1.Z / vect2.Z));
+		}
+
+		public static implicit operator Vector3s(short i)
+		{
+			return new Vector3s(i);
+		}
+	}
+
+	public enum AxisConfiguration
+	{
+		Native,
+		YUp,
+		ZUp
 	}
 
 	/// <summary>

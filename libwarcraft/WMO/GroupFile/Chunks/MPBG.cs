@@ -1,5 +1,5 @@
-//
-//  ModelPolygons.cs
+﻿//
+//  MPBG.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,14 +21,38 @@
 //
 
 using System;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelPolygons
+	public class MPBG : IRIFFChunk, IBinarySerializable
 	{
-		public ModelPolygons()
+		public const string Signature = "MPBG";
+
+        public byte[] Data;
+
+        public MPBG()
+        {
+        }
+
+        public MPBG(byte[] inData)
+        {
+        	LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+        	this.Data = inData;
+        }
+
+        public string GetSignature()
+        {
+        	return Signature;
+        }
+
+		public byte[] Serialize()
 		{
+			return this.Data;
 		}
 	}
 }
-

@@ -284,14 +284,118 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Reads a 12-byte <see cref="Vector3f"/> structure from the data stream	and advances the position of the stream by
+		/// Reads a 12-byte <see cref="Vector3f"/> structure from the data stream and advances the position of the stream by
 		/// 12 bytes.
 		/// </summary>
 		/// <returns>The vector3f.</returns>
 		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static Vector3f ReadVector3f(this BinaryReader Reader)
+		public static Vector3f ReadVector3f(this BinaryReader Reader, AxisConfiguration convertTo = AxisConfiguration.YUp)
 		{
-			return new Vector3f(Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle());
+			switch (convertTo)
+			{
+				case AxisConfiguration.Native:
+				{
+					return new Vector3f(Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle());
+				}
+				case AxisConfiguration.YUp:
+				{
+					float X = Reader.ReadSingle();
+					float Z = Reader.ReadSingle();
+					float Y = Reader.ReadSingle() * -1.0f;
+
+					return new Vector3f(X, Y, Z);
+				}
+				case AxisConfiguration.ZUp:
+				{
+					float X = Reader.ReadSingle();
+					float Z = Reader.ReadSingle() * -1.0f;
+					float Y = Reader.ReadSingle();
+
+					return new Vector3f(X, Y, Z);
+				}
+				default:
+				{
+					throw new ArgumentOutOfRangeException(nameof(convertTo), convertTo, null);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Reads a 16-byte <see cref="Vector4f"/> structure from the data stream and advances the position of the stream by
+		/// 16 bytes.
+		/// </summary>
+		/// <returns>The vector3f.</returns>
+		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
+		public static Vector4f ReadVector4f(this BinaryReader Reader, AxisConfiguration convertTo = AxisConfiguration.YUp)
+		{
+			switch (convertTo)
+			{
+				case AxisConfiguration.Native:
+				{
+					return new Vector4f(Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle());
+				}
+				case AxisConfiguration.YUp:
+				{
+					float X = Reader.ReadSingle();
+					float Z = Reader.ReadSingle();
+					float Y = Reader.ReadSingle() * -1.0f;
+
+					float W = Reader.ReadSingle();
+
+					return new Vector4f(X, Y, Z, W);
+				}
+				case AxisConfiguration.ZUp:
+				{
+					float X = Reader.ReadSingle();
+					float Z = Reader.ReadSingle() * -1.0f;
+					float Y = Reader.ReadSingle();
+
+					float W = Reader.ReadSingle();
+
+					return new Vector4f(X, Y, Z, W);
+				}
+				default:
+				{
+					throw new ArgumentOutOfRangeException(nameof(convertTo), convertTo, null);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Reads a 6-byte <see cref="Vector3s"/> structure from the data stream and advances the position of the stream by
+		/// 6 bytes.
+		/// </summary>
+		/// <returns>The vector3s.</returns>
+		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
+		public static Vector3s ReadVector3s(this BinaryReader Reader, AxisConfiguration convertTo = AxisConfiguration.YUp)
+		{
+			switch (convertTo)
+			{
+				case AxisConfiguration.Native:
+				{
+					return new Vector3s(Reader.ReadInt16(), Reader.ReadInt16(), Reader.ReadInt16());
+				}
+				case AxisConfiguration.YUp:
+				{
+					short X = Reader.ReadInt16();
+					short Z = Reader.ReadInt16();
+					short Y = (short)(Reader.ReadInt16() * -1);
+
+					return new Vector3s(X, Y, Z);
+				}
+				case AxisConfiguration.ZUp:
+				{
+					short X = Reader.ReadInt16();
+					short Z = (short)(Reader.ReadInt16() * -1);
+					short Y = Reader.ReadInt16();
+
+					return new Vector3s(X, Y, Z);
+				}
+				default:
+				{
+					throw new ArgumentOutOfRangeException(nameof(convertTo), convertTo, null);
+				}
+			}
 		}
 
 		/// <summary>
@@ -314,6 +418,17 @@ namespace Warcraft.Core
 		public static Box ReadBox(this BinaryReader Reader)
 		{
 			return new Box(Reader.ReadVector3f(), Reader.ReadVector3f());
+		}
+
+		/// <summary>
+		/// Reads a 12-byte <see cref="Box"/> structure from the data stream and advances the position of the stream by
+		// 12 bytes.
+		/// </summary>
+		/// <returns>The box.</returns>
+		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
+		public static ShortBox ReadShortBox(this BinaryReader Reader)
+		{
+			return new ShortBox(Reader.ReadVector3s(), Reader.ReadVector3s());
 		}
 
 		/*
@@ -470,15 +585,114 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Writes a 12-byte <see cref="Vector3f"/> value to the data stream in XYZ order.
+		/// Writes a 12-byte <see cref="Vector3f"/> value to the data stream in XYZ order. This function
+		/// expects a Y-up vector.
 		/// </summary>
 		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="vector">The Vector to write.</param>
-		public static void WriteVector3f(this BinaryWriter Writer, Vector3f vector)
+		public static void WriteVector3f(this BinaryWriter Writer, Vector3f vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
 		{
-			Writer.Write(vector.X);
-			Writer.Write(vector.Y);
-			Writer.Write(vector.Z);
+			switch (storeAs)
+			{
+				case AxisConfiguration.Native:
+				{
+					Writer.Write(vector.X);
+					Writer.Write(vector.Y);
+					Writer.Write(vector.Z);
+					break;
+				}
+				case AxisConfiguration.YUp:
+				{
+					Writer.Write(vector.X);
+					Writer.Write(vector.Y);
+					Writer.Write(vector.Z);
+					break;
+				}
+				case AxisConfiguration.ZUp:
+				{
+					Writer.Write(vector.X);
+					Writer.Write(vector.Z);
+					Writer.Write(vector.Y * -1.0f);
+					break;
+				}
+				default:
+					throw new ArgumentOutOfRangeException(nameof(storeAs), storeAs, null);
+			}
+		}
+
+		/// <summary>
+		/// Writes a 16-byte <see cref="Vector4f"/> value to the data stream in XYZW order. This function
+		/// expects a Y-up vector.
+		/// </summary>
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="vector">The Vector to write.</param>
+		public static void WriteVector4f(this BinaryWriter Writer, Vector4f vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
+		{
+			switch (storeAs)
+			{
+				case AxisConfiguration.Native:
+				{
+					Writer.Write(vector.X);
+					Writer.Write(vector.Y);
+					Writer.Write(vector.Z);
+					Writer.Write(vector.W);
+					break;
+				}
+				case AxisConfiguration.YUp:
+				{
+					Writer.Write(vector.X);
+					Writer.Write(vector.Y);
+					Writer.Write(vector.Z);
+					Writer.Write(vector.W);
+					break;
+				}
+				case AxisConfiguration.ZUp:
+				{
+					Writer.Write(vector.X);
+					Writer.Write(vector.Z);
+					Writer.Write(vector.Y * -1.0f);
+					Writer.Write(vector.W);
+					break;
+				}
+				default:
+					throw new ArgumentOutOfRangeException(nameof(storeAs), storeAs, null);
+			}
+		}
+
+		/// <summary>
+		/// Writes a 6-byte <see cref="Vector3s"/> value to the data stream in XYZ order. This function
+		/// expects a Y-up vector.
+		/// </summary>
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="vector">The Vector to write.</param>
+		public static void WriteVector3s(this BinaryWriter Writer, Vector3s vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
+		{
+			switch (storeAs)
+			{
+				case AxisConfiguration.Native:
+				{
+					Writer.Write(vector.X);
+					Writer.Write(vector.Y);
+					Writer.Write(vector.Z);
+					break;
+				}
+				case AxisConfiguration.YUp:
+				{
+					Writer.Write(vector.X);
+					Writer.Write(vector.Y);
+					Writer.Write(vector.Z);
+					break;
+				}
+				case AxisConfiguration.ZUp:
+				{
+					Writer.Write(vector.X);
+					Writer.Write(vector.Z);
+					Writer.Write((short)(vector.Y * -1));
+					break;
+				}
+				default:
+					throw new ArgumentOutOfRangeException(nameof(storeAs), storeAs, null);
+			}
 		}
 
 		/// <summary>
@@ -502,6 +716,17 @@ namespace Warcraft.Core
 		{
 			Writer.WriteVector3f(box.BottomCorner);
 			Writer.WriteVector3f(box.TopCorner);
+		}
+
+		/// <summary>
+		/// Writes a 12-byte <see cref="ShortBox"/> to the data stream.
+		/// </summary>
+		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="box">In box.</param>
+		public static void WriteShortBox(this BinaryWriter Writer, ShortBox box)
+		{
+			Writer.WriteVector3s(box.BottomCorner);
+			Writer.WriteVector3s(box.TopCorner);
 		}
 	}
 }

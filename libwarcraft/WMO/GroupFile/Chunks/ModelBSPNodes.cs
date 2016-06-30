@@ -21,14 +21,118 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelBSPNodes
+	public class ModelBSPNodes : IRIFFChunk, IBinarySerializable
 	{
+		public const string Signature = "MOBN";
+
+		public readonly List<BSPNode> BSPNodes = new List<BSPNode>();
+
 		public ModelBSPNodes()
 		{
 		}
+
+		public ModelBSPNodes(byte[] inData)
+		{
+			LoadBinaryData(inData);
+		}
+
+		public void LoadBinaryData(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+            {
+            	using (BinaryReader br = new BinaryReader(ms))
+            	{
+		            while (ms.Position < ms.Length)
+		            {
+			            this.BSPNodes.Add(new BSPNode(br.ReadBytes(BSPNode.GetSize())));
+		            }
+            	}
+            }
+		}
+
+		public string GetSignature()
+		{
+			return Signature;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+		            foreach (BSPNode bspNode in this.BSPNodes)
+		            {
+			            bw.Write(bspNode.Serialize());
+		            }
+            	}
+
+            	return ms.ToArray();
+            }
+		}
+	}
+
+	public class BSPNode : IBinarySerializable
+	{
+		public PlaneType Type;
+		public short FirstChildIndex;
+		public short SecondChildIndex;
+		public ushort FaceCount;
+		public uint FirstFaceIndex;
+		public float DistanceFromCenter;
+
+		public BSPNode(byte[] inData)
+		{
+			using (MemoryStream ms = new MemoryStream(inData))
+            {
+            	using (BinaryReader br = new BinaryReader(ms))
+	            {
+		            this.Type = (PlaneType) br.ReadUInt16();
+		            this.FirstChildIndex = br.ReadInt16();
+		            this.SecondChildIndex = br.ReadInt16();
+		            this.FaceCount = br.ReadUInt16();
+		            this.FirstFaceIndex = br.ReadUInt32();
+		            this.DistanceFromCenter = br.ReadSingle();
+	            }
+            }
+		}
+
+		public static int GetSize()
+		{
+			return 16;
+		}
+
+		public byte[] Serialize()
+		{
+			using (MemoryStream ms = new MemoryStream())
+            {
+            	using (BinaryWriter bw = new BinaryWriter(ms))
+            	{
+					bw.Write((ushort)this.Type);
+		            bw.Write(this.FirstChildIndex);
+		            bw.Write(this.SecondChildIndex);
+		            bw.Write(this.FaceCount);
+		            bw.Write(this.FirstFaceIndex);
+		            bw.Write(this.DistanceFromCenter);
+            	}
+
+            	return ms.ToArray();
+            }
+		}
+	}
+
+	public enum PlaneType : ushort
+	{
+		YZ 		= 0,
+		XZ 		= 1,
+		XY 		= 2,
+		Leaf 	= 4
 	}
 }
 

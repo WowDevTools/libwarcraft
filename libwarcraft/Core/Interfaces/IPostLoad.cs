@@ -1,5 +1,5 @@
-//
-//  MOBS.cs
+﻿//
+//  IPostLoad.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,40 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using Warcraft.Core.Interfaces;
-
-namespace Warcraft.WMO.GroupFile.Chunks
+namespace Warcraft.Core.Interfaces
 {
-	public class MOBS : IRIFFChunk, IBinarySerializable
+	public interface IPostLoad<in T> where T : IPostLoadParameter
 	{
-		public const string Signature = "MOBS";
-
-		public byte[] Data;
-
-		public MOBS()
-		{
-		}
-
-		public MOBS(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
-		{
-			this.Data = inData;
-		}
-
-		public string GetSignature()
-		{
-			return Signature;
-		}
-
-		public byte[] Serialize()
-        {
-        	return this.Data;
-        }
+		bool HasFinishedLoading();
+		void PostLoad(T loadingParameters);
 	}
 }
-
