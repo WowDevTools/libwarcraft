@@ -11,7 +11,7 @@ libwarcraft currently implements the following file formats:
 * TRS (Hashmap Translation Table): Read support.
 * WDT (World Tables): Fully compliant Read & Write.
 * WDL (World LOD): Fully compliant Read & Write.
-* WMO (World Model Object). Fully compliant Read & Write.
+* WMO (World Model). Fully compliant Read & Write.
 
 The following formats are still in progress, and may not work as intended (or at all):
 * MDX (Model). Partial Read, Wrath of the Lich King. No animation data exposed, but it's being read internally.
