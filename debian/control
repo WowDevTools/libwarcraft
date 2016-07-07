@@ -4,9 +4,9 @@ Maintainer: Jarl Gullberg <jarl.gullberg@gmail.com>
 Build-Depends: debhelper (>= 8.0.0), 
 	cli-common-dev (>= 0.8),
 	libmono-cil-dev,
-	mono-mcs (>= 3.0),
-	mono-devel (>= 2.4.2.3),
-	mono-xbuild,
+	mono-mcs (>= 4.0),
+	mono-devel (>= 4.0),
+	mono-xbuild (>= 4.0),
 	dotnetzip-cli (>= 1.9.1.8),
 	dotnetzip-cli-dev (>= 1.9.1.8)
 Standards-Version: 3.9.5
@@ -48,13 +48,13 @@ Description: libwarcraft is a managed class library for binary Blizzard files.
   - MPQ (Mike O'Brien Package): Read, Basic to Extended v1 format.
   - DBC (Database - Client): Read, DB1 format. Most definitions are missing.
   - TRS (Hashmap Translation Table): Read support.
-  - WDT (World Map Table): Fully compliant read & write.
-  - WDL (World Map LOD): Read support.
+  - WDT (World Table): Fully compliant read & write.
+  - WDL (World LOD): Fully compliant read & write.
+  - WMO (World Model): Fully compliant read & write.
  .
  The following formats are still in progress, and may not work as intended:
   - MDX (Model): Partial read, Wrath of the Lich King. 
     No animation data is exposed, but it's being read internally.
-  - WMO (World Model Object): Classes stubbed.
   - ADT (Areadata Tile): Near-full read support, up to and including WotLK.
  .
  The following formats are not implemented yet:

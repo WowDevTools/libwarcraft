@@ -102,10 +102,12 @@ namespace Warcraft.WMO.GroupFile.Chunks
 					}
 				}
 			}
+
+			this.data = null;
 		}
 	}
 
-	public class ModelTangentArrayPostLoadParameters : IPostLoadParameter
+	public class ModelTangentArrayPostLoadParameters
 	{
 		public uint RenderBatchCount;
 		public uint AccumulatedIndexCount;

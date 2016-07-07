@@ -20,13 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using Warcraft.Core;
 using Warcraft.Core.Interfaces;
+using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkSoundEmitters : IRIFFChunk
+	public class MapChunkSoundEmitters : IRIFFChunk, IBinarySerializable, IPostLoad<uint>
 	{
 		public const string Signature = "MCSE";
+		private bool hasFinishedLoading;
+		private byte[] data;
+
 
 		public MapChunkSoundEmitters()
 		{
@@ -39,14 +44,71 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		}
 
 		public void LoadBinaryData(byte[] inData)
-        {
-
-        }
+		{
+			this.data = inData;
+		}
 
         public string GetSignature()
         {
         	return Signature;
         }
+
+		public byte[] Serialize()
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool HasFinishedLoading()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void PostLoad(uint loadingParameters)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public abstract class SoundEmitter
+	{
+
+	}
+
+	public class DatabaseSoundEmitter : SoundEmitter, IBinarySerializable
+	{
+		public UInt32ForeignKey SoundEntryID;
+		public Vector3f Position;
+		public Vector3f Size;
+
+		public byte[] Serialize()
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class PlainSoundEmitter : SoundEmitter, IBinarySerializable
+	{
+		public uint SoundID;
+		public uint SoundNameID;
+		public Vector3f Position;
+		public float AttenuationRadiusStart;
+		public float AttenuationRadiusEnd;
+		public float CutoffDistance;
+		public ushort StartTime;
+		public ushort EndTime;
+		public ushort GroupSilenceMin;
+		public ushort GroupSilenceMax;
+		public ushort PlayInstancesMin;
+		public ushort PlayInstancesMax;
+		public ushort LoopCountMin;
+		public ushort LoopCountMax;
+		public ushort InterSoundGapMin;
+		public ushort InterSoundMapMax;
+
+		public byte[] Serialize()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
 

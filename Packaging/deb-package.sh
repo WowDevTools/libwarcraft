@@ -43,6 +43,7 @@ if [[ ! -z $BUILDSUCCESS ]]; then
 		cp -r "$LIBWARCRAFT_ROOT/debian/" $LIBWARCRAFT_DEBUILD_ROOT
 		cp -r "$LIBWARCRAFT_ROOT/libwarcraft/" $LIBWARCRAFT_DEBUILD_ROOT
 		cp -r "$LIBWARCRAFT_ROOT/mono/" $LIBWARCRAFT_DEBUILD_ROOT
+		cp -r "$LIBWARCRAFT_ROOT/libwarcraft.Tests/" $LIBWARCRAFT_DEBUILD_ROOT
 		cp "$LIBWARCRAFT_ROOT/"* "$LIBWARCRAFT_DEBUILD_ROOT"
 
 		# Create an *.orig.tar.xz archive if one doesn't exist already

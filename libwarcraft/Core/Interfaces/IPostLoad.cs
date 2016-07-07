@@ -22,7 +22,7 @@
 
 namespace Warcraft.Core.Interfaces
 {
-	public interface IPostLoad<in T> where T : IPostLoadParameter
+	public interface IPostLoad<in T>
 	{
 		bool HasFinishedLoading();
 		void PostLoad(T loadingParameters);

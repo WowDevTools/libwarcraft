@@ -9,9 +9,6 @@
     <AssemblyName>libwarcraft</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\libwarcraft.key</AssemblyOriginatorKeyFile>
-    <ReleaseVersion>1.0</ReleaseVersion>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,12 +38,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLS\BLS.cs" />
+    <Compile Include="BLS\BLSHeader.cs" />
+    <Compile Include="BLS\ShaderBlock.cs" />
     <Compile Include="Core\Compression\Squish\SingleColourFit.cs" />
     <Compile Include="Core\Compression\Squish\SingleColourFitLookupTables.cs" />
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Interfaces\IBinarySerializable.cs" />
     <Compile Include="Core\Interfaces\IPostLoad.cs" />
-    <Compile Include="Core\Interfaces\IPostLoadParameter.cs" />
     <Compile Include="Core\Interfaces\IRIFFChunk.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
     <Compile Include="DBC\Definitions\MapRecord.cs" />
@@ -272,6 +271,7 @@
     <Folder Include="WDL\" />
     <Folder Include="WDL\Chunks\" />
   </ItemGroup>
+  <ItemGroup />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

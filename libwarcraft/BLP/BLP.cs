@@ -775,7 +775,6 @@ namespace Warcraft.BLP
 			return alphaValues;
 		}
 
-		// TODO: Implement
 		/// <summary>
 		/// Encodes the alpha data of the provided image as a packed byte array of alpha values.
 		/// 8 alpha values are stored in each byte as a 1 (fully opaque) or a 0 (fully transparent).
@@ -784,10 +783,50 @@ namespace Warcraft.BLP
 		/// <param name="InMap">In map.</param>
 		private List<byte> Encode1BitAlpha(Bitmap InMap)
 		{
-			return null;
+			List<byte> alphaValues = new List<byte>();
+			for (int y = 0; y < InMap.Height; ++y)
+			{
+				for (int x = 0; x < InMap.Width; ++x)
+				{
+					alphaValues.Add(InMap.GetPixel(x, y).A);
+				}
+			}
+
+			List<byte> packedAlphaValues = new List<byte>();
+			for (int i = 0; i < alphaValues.Count; i += 8)
+			{
+				byte packedAlphaValue = new byte();
+				for (int j = 0; j < 8; ++j)
+				{
+					byte alphaValue;
+					if ((i + j) < alphaValues.Count)
+					{
+						alphaValue = alphaValues[i + j];
+					}
+					else
+					{
+						alphaValue = 0;
+					}
+
+					byte alphaMask = (byte) (1 << j);
+					if (alphaValue > 0)
+					{
+						// Set the bit to 1 (fully opaque)
+						packedAlphaValue |= alphaMask;
+					}
+					else
+					{
+						// Set the bit to 0 (fully transparent)
+						packedAlphaValue &= (byte)~alphaMask;
+					}
+
+					packedAlphaValues.Add(packedAlphaValue);
+				}
+			}
+
+			return packedAlphaValues;
 		}
 
-		// TODO: Implement
 		/// <summary>
 		/// Encodes the alpha data of the provided image as a packed byte array of alpha values.
 		/// 2 alpha values are stored in each byte as a uint4_t integer value.
@@ -796,7 +835,48 @@ namespace Warcraft.BLP
 		/// <param name="InMap">In map.</param>
 		private List<byte> Encode4BitAlpha(Bitmap InMap)
 		{
-			return null;
+			List<byte> alphaValues = new List<byte>();
+			for (int y = 0; y < InMap.Height; ++y)
+			{
+				for (int x = 0; x < InMap.Width; ++x)
+				{
+					alphaValues.Add(InMap.GetPixel(x, y).A);
+				}
+			}
+
+			List<byte> packedAlphaValues = new List<byte>();
+			for (int i = 0; i < alphaValues.Count; i += 2)
+			{
+				byte packedAlphaValue = new byte();
+				for (int j = 0; j < 2; ++j)
+				{
+					byte alphaValue;
+					if ((i + j) < alphaValues.Count)
+					{
+						alphaValue = alphaValues[i + j];
+					}
+					else
+					{
+						alphaValue = 0;
+					}
+
+					// Pack the alpha value into the byte
+					if (j == 0)
+					{
+						// Pack into the first four bits
+						packedAlphaValue |= (byte)(ExtensionMethods.Map((alphaValue), 0, 255, 0, 15) << 4);
+					}
+					else
+					{
+						// Pack into the last four bits
+						packedAlphaValue |= (byte)(ExtensionMethods.Map((alphaValue & 0x0F), 0, 255, 0, 15));
+					}
+				}
+
+				packedAlphaValues.Add(packedAlphaValue);
+			}
+
+			return packedAlphaValues;
 		}
 
 		/// <summary>

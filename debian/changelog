@@ -1,3 +1,33 @@
+libwarcraft1.0-cli (1.0.2.32949-1) xenial; urgency=medium
+
+  * Changed main distro to xenial (16.04). C# 6.0 features are required.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Thu, 30 Jun 2016 18:18:18 +0200
+
+libwarcraft1.0-cli (1.0.2.32344-1) trusty; urgency=medium
+
+  * Added NUnit tests to the source package.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Thu, 30 Jun 2016 17:58:09 +0200
+
+libwarcraft1.0-cli (1.0.2.32113-1) trusty; urgency=medium
+
+  * Bumped version.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Thu, 30 Jun 2016 17:46:11 +0200
+
+libwarcraft1.0-cli (1.0.1.31901-1) trusty; urgency=medium
+
+  * Implemented compliant WMO read and write support.
+  * Implemented some more of the standard types.
+  * Implemented compliant WDL read and write support.
+  * Implemented compliant WDT read and write support.
+  * Added IPostLoad and IBinarySerializable to aid in generating
+    proper data for reading and writing.
+  * Renamed IChunk to IRIFFChunk to better reflect its purpose.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Thu, 30 Jun 2016 17:43:23 +0200
+
 libwarcraft1.0-cli (1.0.1.27687-1) trusty; urgency=medium
 
   * Added dependency on dotnetzip for main library package.

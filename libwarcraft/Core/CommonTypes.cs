@@ -81,6 +81,11 @@ namespace Warcraft.Core
 			this.Maximum = inMax;
 			this.IsInclusive = inIsInclusive;
 		}
+
+		public override string ToString()
+		{
+			return $"Range: {Minimum} to {Maximum}";
+		}
 	}
 
 	/// <summary>
@@ -218,6 +223,11 @@ namespace Warcraft.Core
 		{
 
 		}
+
+		public override string ToString()
+		{
+			return $"rgba({R}, {G}, {B}, {A})";
+		}
 	}
 
 	/// <summary>
@@ -268,6 +278,11 @@ namespace Warcraft.Core
 		:this(all, all, all, all)
 		{
 
+		}
+
+		public override string ToString()
+		{
+			return $"bgra({B}, {G}, {R}, {A})";
 		}
 	}
 
@@ -345,6 +360,11 @@ namespace Warcraft.Core
 		public RGB(Vector3f inVector)
 		{
 			this.Values = inVector;
+		}
+
+		public override string ToString()
+		{
+			return $"rgb({R}, {G}, {B})";
 		}
 	}
 
@@ -444,6 +464,11 @@ namespace Warcraft.Core
 		{
 			return new Vector3f(i);
 		}
+
+		public override string ToString()
+		{
+			return $"{X}, {Y}, {Z}";
+		}
 	}
 
 	/// <summary>
@@ -541,6 +566,11 @@ namespace Warcraft.Core
 		public static implicit operator Vector3s(short i)
 		{
 			return new Vector3s(i);
+		}
+
+		public override string ToString()
+		{
+			return $"{X}, {Y}, {Z}";
 		}
 	}
 
@@ -673,6 +703,11 @@ namespace Warcraft.Core
 		{
 
 		}
+
+		public override string ToString()
+		{
+			return $"Pitch: {Pitch}, Yaw: {Yaw}, Roll: {Roll}";
+		}
 	}
 
 	/// <summary>
@@ -763,6 +798,11 @@ namespace Warcraft.Core
 		{
 			//return new Vector2f(0, 0);
 			throw new NotImplementedException();
+		}
+
+		public override string ToString()
+		{
+			return $"{X}, {Y}";
 		}
 	}
 
