@@ -22,6 +22,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using Warcraft.ADT.Chunks;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
@@ -115,8 +116,26 @@ namespace Warcraft.WMO.RootFile
 
 		public bool ContainsGroup(ModelGroup modelGroup)
 		{
-			//return this.GroupNames.GroupNames.Contains(modelGroup.Header.GroupNameOffset);
-			return false;
+			bool containsGroupName = this.GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalNameOffset()) > 0;
+			bool containsDescriptiveGroupName = this.GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalDescriptiveNameOffset()) > 0;
+
+			// sometimes, model groups don't contain a descriptive name.
+			if (modelGroup.GetInternalDescriptiveNameOffset() > 0)
+			{
+				return containsGroupName && containsDescriptiveGroupName;
+			}
+
+			return containsGroupName;
+		}
+
+		public string GetInternalGroupName(ModelGroup modelGroup)
+		{
+			return this.GroupNames.GetInternalGroupName(modelGroup);
+		}
+
+		public string GetInternalDescriptiveGroupName(ModelGroup modelGroup)
+		{
+			return this.GroupNames.GetInternalDescriptiveGroupName(modelGroup);
 		}
 
 		public byte[] Serialize()

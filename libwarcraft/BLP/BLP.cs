@@ -294,7 +294,8 @@ namespace Warcraft.BLP
 		}
 
 		/// <summary>
-		/// Gets a bitmap representing the given zero-based mipmap level.
+		/// Gets a bitmap representing the given zero-based mipmap level. This creates a new <see cref="Bitmap"/> object
+		/// from one of the raw mipmaps stored in the image.
 		/// </summary>
 		/// <returns>A bitmap.</returns>
 		/// <param name="Level">Mipmap level.</param>

@@ -40,7 +40,8 @@ namespace Warcraft.Core
 		BinaryImage,
 		Hashmap,
 		GameObjectModel,
-		WorldObjectModel
+		WorldObjectModel,
+		WorldObjectModelGroup
 	}
 }
 

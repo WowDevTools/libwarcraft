@@ -33,7 +33,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 	{
 		public const string Signature = "MOTX";
 
-		public readonly List<KeyValuePair<long, string>> Textures = new List<KeyValuePair<long, string>>();
+		public readonly Dictionary<long, string> Textures = new Dictionary<long, string>();
 
 		public ModelTextures()
 		{
@@ -55,7 +55,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					{
 						if (ms.Position % 4 == 0)
 						{
-							Textures.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
+							Textures.Add(ms.Position, br.ReadNullTerminatedString());
 						}
 						else
 						{
@@ -64,9 +64,6 @@ namespace Warcraft.WMO.RootFile.Chunks
 					}
 				}
 			}
-
-			// Remove null entries from the texture list
-			Textures.RemoveAll(s => s.Value.Equals("\0"));
 		}
 
 

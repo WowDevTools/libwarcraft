@@ -23,9 +23,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Warcraft.ADT.Chunks;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
+using Warcraft.WMO.GroupFile;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
@@ -34,7 +36,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 	{
 		public const string Signature = "MOGN";
 
-		public readonly List<KeyValuePair<long, string>> GroupNames = new List<KeyValuePair<long, string>>();
+		public readonly Dictionary<long, string> GroupNames = new Dictionary<long, string>();
 
 		public ModelGroupNames()
 		{
@@ -57,19 +59,38 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 					while (ms.Position < ms.Length)
 					{
-						GroupNames.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
+						GroupNames.Add(ms.Position, br.ReadNullTerminatedString());
 					}
 				}
 			}
-
-			// Remove null entries from the texture list
-			GroupNames.RemoveAll(s => s.Value.Equals("\0"));
         }
 
         public string GetSignature()
         {
         	return Signature;
         }
+
+		public string GetInternalGroupName(ModelGroup modelGroup)
+		{
+			int internalNameOffset = (int) modelGroup.GetInternalNameOffset();
+			if (this.GroupNames.ContainsKey(internalNameOffset))
+			{
+				return this.GroupNames[internalNameOffset];
+			}
+
+			return null;
+		}
+
+		public string GetInternalDescriptiveGroupName(ModelGroup modelGroup)
+		{
+			int internalDescriptiveNameOffset = (int) modelGroup.GetInternalDescriptiveNameOffset();
+			if (this.GroupNames.ContainsKey(internalDescriptiveNameOffset))
+			{
+				return this.GroupNames[internalDescriptiveNameOffset];
+			}
+
+			return null;
+		}
 
 		public byte[] Serialize()
 		{
@@ -84,7 +105,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					// Then the actual data
 					for (int i = 0; i < GroupNames.Count; ++i)
 					{
-						bw.WriteNullTerminatedString(GroupNames[i].Value);
+						bw.WriteNullTerminatedString(GroupNames.ElementAt(i).Value);
 					}
 
 					// Then zero padding to an even 4-byte boundary at the end

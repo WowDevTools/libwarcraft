@@ -18,6 +18,14 @@ namespace Warcraft.WMO
 		public ModelRoot RootInformation;
 		public List<ModelGroup> Groups = new List<ModelGroup>();
 
+		public int GroupCount
+		{
+			get
+			{
+				return (int)this.RootInformation.Header.GroupCount;
+			}
+		}
+
 		public WMO(byte[] inData)
 		{
 			this.RootInformation = new ModelRoot(inData);
@@ -34,9 +42,9 @@ namespace Warcraft.WMO
 			}
 		}
 
-		public bool ContainsGroupNameOffset(uint groupNameOffset)
+		public bool ContainsGroup(ModelGroup modelGroup)
 		{
-			return this.RootInformation.GroupNames.GroupNames.Count(kvp => kvp.Key == groupNameOffset) > 0;
+			return this.RootInformation.ContainsGroup(modelGroup);
 		}
 
 		/// <summary>
@@ -56,9 +64,10 @@ namespace Warcraft.WMO
 		/// <param name="modelGroup">Model group.</param>
 		public void AddModelGroup(ModelGroup modelGroup)
 		{
-			if (ContainsGroupNameOffset(modelGroup.GroupData.GroupNameOffset))
+			if (ContainsGroup(modelGroup))
 			{
-				modelGroup.Name = this.RootInformation.GroupNames.GroupNames[(int)modelGroup.GroupData.GroupNameOffset].Value;
+				modelGroup.Name = ResolveInternalGroupName(modelGroup);
+				modelGroup.DescriptiveName = ResolveInternalDescriptiveGroupName(modelGroup);
 				this.Groups.Add(modelGroup);
 			}
 		}
@@ -71,8 +80,21 @@ namespace Warcraft.WMO
 		public void AddModelGroup(byte[] inData)
 		{
 			ModelGroup group = new ModelGroup(inData);
+		}
 
-			//if (this.RootInformation.GroupNames.GroupNames.Contains(group))
+		public string ResolveInternalGroupName(ModelGroup modelGroup)
+		{
+			return this.RootInformation.GetInternalGroupName(modelGroup);
+		}
+
+		private string ResolveInternalDescriptiveGroupName(ModelGroup modelGroup)
+		{
+			return this.RootInformation.GetInternalDescriptiveGroupName(modelGroup);
+		}
+
+		public List<string> GetUsedTextures()
+		{
+			return this.RootInformation.Textures.Textures.Select(kvp => kvp.Value).Where(s => !string.IsNullOrEmpty(s)).ToList();
 		}
 
 		/// <summary>

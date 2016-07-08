@@ -40,6 +40,12 @@ namespace Warcraft.WMO.GroupFile
 			set;
 		}
 
+		public string DescriptiveName
+		{
+			get;
+			set;
+		}
+
 		public ModelGroup(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
@@ -50,6 +56,16 @@ namespace Warcraft.WMO.GroupFile
 		            this.GroupData = br.ReadIFFChunk<ModelGroupData>();
 	            }
             }
+		}
+
+		public uint GetInternalNameOffset()
+		{
+			return this.GroupData.GroupNameOffset;
+		}
+
+		public uint GetInternalDescriptiveNameOffset()
+		{
+			return this.GroupData.DescriptiveGroupNameOffset;
 		}
 
 		public byte[] Serialize()
