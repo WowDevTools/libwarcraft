@@ -106,6 +106,28 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public uint RuntimeData3;
 		public uint RuntimeData4;
 
+		/*
+			Nonserialized utility fields
+		*/
+
+		public string Texture0
+		{
+			get;
+			set;
+		}
+
+		public string Texture1
+		{
+			get;
+			set;
+		}
+
+		public string Texture2
+		{
+			get;
+			set;
+		}
+
 		public ModelMaterial(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))

@@ -40,6 +40,22 @@ namespace Warcraft.WMO
 				string doodadPath = this.RootInformation.DoodadNames.GetNameByOffset(doodadInstance.NameOffset);
 				doodadInstance.Name = doodadPath;
 			}
+
+			foreach (ModelMaterial modelMaterial in this.RootInformation.Materials.Materials)
+			{
+				string texturePath0 = this.RootInformation.Textures.GetTexturePathByOffset(modelMaterial.FirstTextureOffset);
+				string texturePath1 = this.RootInformation.Textures.GetTexturePathByOffset(modelMaterial.SecondTextureOffset);
+				string texturePath2 = this.RootInformation.Textures.GetTexturePathByOffset(modelMaterial.ThirdTextureOffset);
+
+				if (string.IsNullOrEmpty(texturePath0))
+				{
+					texturePath0 = "createcrappygreentexture.blp";
+				}
+
+				modelMaterial.Texture0 = texturePath0;
+				modelMaterial.Texture1 = texturePath1;
+				modelMaterial.Texture2 = texturePath2;
+			}
 		}
 
 		public bool ContainsGroup(ModelGroup modelGroup)
@@ -95,6 +111,11 @@ namespace Warcraft.WMO
 		public List<string> GetUsedTextures()
 		{
 			return this.RootInformation.Textures.Textures.Select(kvp => kvp.Value).Where(s => !string.IsNullOrEmpty(s)).ToList();
+		}
+
+		public ModelMaterial GetMaterial(byte materialID)
+		{
+			return this.RootInformation.Materials.Materials[materialID];
 		}
 
 		/// <summary>

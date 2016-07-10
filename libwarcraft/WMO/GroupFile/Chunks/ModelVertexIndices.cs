@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModelVertexIndices.cs
 //
 //  Author:

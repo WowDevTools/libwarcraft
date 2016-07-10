@@ -66,6 +66,18 @@ namespace Warcraft.WMO.RootFile.Chunks
 			}
 		}
 
+		public string GetTexturePathByOffset(uint nameOffset)
+		{
+			foreach (KeyValuePair<long, string> textureName in this.Textures)
+			{
+				if (textureName.Key == nameOffset)
+				{
+					return textureName.Value;
+				}
+			}
+
+			return string.Empty;
+		}
 
 		public string GetSignature()
         {

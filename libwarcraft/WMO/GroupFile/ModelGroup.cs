@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Warcraft.ADT.Chunks;
 using Warcraft.Core;
@@ -66,6 +67,31 @@ namespace Warcraft.WMO.GroupFile
 		public uint GetInternalDescriptiveNameOffset()
 		{
 			return this.GroupData.DescriptiveGroupNameOffset;
+		}
+
+		public List<Vector3f> GetVertices()
+		{
+			return this.GroupData.Vertices.Vertices;
+		}
+
+		public List<Vector3f> GetNormals()
+		{
+			return this.GroupData.Normals.Normals;
+		}
+
+		public List<Vector2f> GetTextureCoordinates()
+		{
+			return this.GroupData.TextureCoordinates.TextureCoordinates;
+		}
+
+		public List<ushort> GetVertexIndices()
+		{
+			return this.GroupData.VertexIndices.VertexIndices;
+		}
+
+		public List<RenderBatch> GetRenderBatches()
+		{
+			return this.GroupData.RenderBatches.RenderBatches;
 		}
 
 		public byte[] Serialize()
