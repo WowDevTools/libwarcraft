@@ -1,0 +1,1305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="da70d6d2-0a6b-464c-8d65-d2ce938c56aa" name="Default" comment="" />
+    <ignored path="libwarcraft.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="libwarcraft" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="WMO.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../libwarcraft/WMO/WMO.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1469805165700" expanded="true" signature="6:178" ph="..." />
+                <marker date="1469805165700" expanded="true" signature="202:4232" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="206:423" ph="/// ..." />
+                <marker date="1469805165700" expanded="true" signature="455:4230" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="688:780" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="826:1760" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="1812:1878" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="1882:2133" ph="/// ..." />
+                <marker date="1469805165700" expanded="true" signature="2186:2195" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="2199:2422" ph="/// ..." />
+                <marker date="1469805165700" expanded="true" signature="2473:2700" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="2704:2949" ph="/// ..." />
+                <marker date="1469805165700" expanded="true" signature="2992:3046" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="3111:3184" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="3261:3345" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="3386:3515" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="3568:3640" ph="{...}" />
+                <marker date="1469805165700" expanded="true" signature="3644:4194" ph="/// ..." />
+                <marker date="1469805165700" expanded="true" signature="4218:4227" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BLP.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../libwarcraft/BLP/BLP.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+              <folding>
+                <marker date="1469805165664" expanded="true" signature="0:779" ph="/* ... */" />
+                <marker date="1469805165664" expanded="true" signature="787:1025" ph="..." />
+                <marker date="1469805165664" expanded="true" signature="1049:33432" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="1053:1152" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="1170:33430" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="1176:1344" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="1375:1510" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="1574:1706" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="1750:1870" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="1912:2005" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="2074:2281" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="2309:3822" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="3826:4089" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="4144:4493" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="4497:4933" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="5000:7391" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="7395:7502" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="7533:7571" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="7575:7726" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="7772:7965" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="7969:8151" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="8208:8443" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="8447:8730" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="8768:8835" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="8839:9197" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="9238:9473" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="9477:9958" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="10049:10350" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="10354:10644" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="10708:14852" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="14856:15314" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="15366:15891" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="15895:16426" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="16487:22027" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="18401:18566" ph="/* ... */" />
+                <marker date="1469805165664" expanded="true" signature="18910:19026" ph="/* ... */" />
+                <marker date="1469805165664" expanded="true" signature="22031:22434" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="22508:23351" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="23411:23949" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="24009:24538" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="24107:24267" ph="/* ... */" />
+                <marker date="1469805165664" expanded="true" signature="24542:24840" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="24891:25801" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="25805:26081" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="26132:27128" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="27132:27341" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="27387:27827" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="27831:28071" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="28117:28438" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="28442:28655" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="28711:29532" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="29536:29703" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="29738:29956" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="29960:30111" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="30145:30364" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="30368:30523" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="30551:31079" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="31083:31367" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="31417:31916" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="31920:32048" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="32078:32114" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="32118:32238" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="32265:32299" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="32303:32479" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="32520:32558" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="32562:32673" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="32709:32746" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="32750:32881" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="32934:32976" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="32980:33158" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="33191:33231" ph="{...}" />
+                <marker date="1469805165664" expanded="true" signature="33235:33361" ph="/// ..." />
+                <marker date="1469805165664" expanded="true" signature="33391:33427" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AnimationDataRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/AnimationDataRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1110">
+              <caret line="74" column="34" selection-start-line="74" selection-start-column="34" selection-end-line="74" selection-end-column="34" />
+              <folding>
+                <marker date="1472895888511" expanded="true" signature="0:795" ph="/* ... */" />
+                <marker date="1472895888511" expanded="true" signature="803:882" ph="..." />
+                <marker date="1472895888511" expanded="true" signature="918:5431" ph="{...}" />
+                <marker date="1472895888511" expanded="true" signature="922:1087" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="1133:4877" ph="{...}" />
+                <marker date="1472895888511" expanded="true" signature="1192:1255" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="1290:1412" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="1502:1554" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="1626:1687" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="1712:1795" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="1844:1949" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="1999:2168" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="2241:2352" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="2397:3307" ph="{...}" />
+                <marker date="1472895888511" expanded="true" signature="3311:3418" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="3456:4088" ph="{...}" />
+                <marker date="1472895888511" expanded="true" signature="4092:4211" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="4249:4874" ph="{...}" />
+                <marker date="1472895888511" expanded="true" signature="4880:4938" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="4979:5429" ph="{...}" />
+                <marker date="1472895888511" expanded="true" signature="4985:5075" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="5091:5183" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="5202:5294" ph="/// ..." />
+                <marker date="1472895888511" expanded="true" signature="5315:5409" ph="/// ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LiquidObjectRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/LiquidObjectRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1469805165684" expanded="true" signature="0:795" ph="/* ... */" />
+                <marker date="1469805165684" expanded="true" signature="803:844" ph="..." />
+                <marker date="1469805165684" expanded="true" signature="927:1345" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="1120:1168" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="1207:1255" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="1294:1342" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LiquidTypeRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/LiquidTypeRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1440">
+              <caret line="96" column="44" selection-start-line="96" selection-start-column="44" selection-end-line="96" selection-end-column="44" />
+              <folding>
+                <marker date="1472895990643" expanded="true" signature="0:792" ph="/* ... */" />
+                <marker date="1472895990643" expanded="true" signature="799:878" ph="..." />
+                <marker date="1472895990643" expanded="true" signature="914:4199" ph="{...}" />
+                <marker date="1472895990643" expanded="true" signature="959:3999" ph="{...}" />
+                <marker date="1472895990643" expanded="true" signature="1015:1075" ph="/// ..." />
+                <marker date="1472895990643" expanded="true" signature="1275:1386" ph="/// ..." />
+                <marker date="1472895990643" expanded="true" signature="1431:1962" ph="{...}" />
+                <marker date="1472895990643" expanded="true" signature="2005:2376" ph="{...}" />
+                <marker date="1472895990643" expanded="true" signature="2423:2530" ph="/// ..." />
+                <marker date="1472895990643" expanded="true" signature="2568:3205" ph="{...}" />
+                <marker date="1472895990643" expanded="true" signature="3209:3328" ph="/// ..." />
+                <marker date="1472895990643" expanded="true" signature="3366:3996" ph="{...}" />
+                <marker date="1472895990643" expanded="true" signature="4024:4197" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MapRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/MapRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="690">
+              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <folding>
+                <marker date="1472897056064" expanded="true" signature="0:785" ph="/* ... */" />
+                <marker date="1472897056064" expanded="true" signature="793:834" ph="..." />
+                <marker date="1472897056064" expanded="true" signature="908:1712" ph="{...}" />
+                <marker date="1472897056064" expanded="true" signature="1487:1535" ph="{...}" />
+                <marker date="1472897056064" expanded="true" signature="1574:1622" ph="{...}" />
+                <marker date="1472897056064" expanded="true" signature="1661:1709" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UnknownRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/UnknownRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1469805165684" expanded="true" signature="0:789" ph="/* ... */" />
+                <marker date="1469805165684" expanded="true" signature="796:841" ph="..." />
+                <marker date="1469805165684" expanded="true" signature="877:2742" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="881:1056" ph="/// ..." />
+                <marker date="1469805165684" expanded="true" signature="1096:2740" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="1124:1132" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="1136:1210" ph="/// ..." />
+                <marker date="1469805165684" expanded="true" signature="1242:1353" ph="/// ..." />
+                <marker date="1469805165684" expanded="true" signature="1398:2008" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="2012:2119" ph="/// ..." />
+                <marker date="1469805165684" expanded="true" signature="2157:2374" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="2378:2497" ph="/// ..." />
+                <marker date="1469805165684" expanded="true" signature="2535:2737" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpellRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/SpellRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2820">
+              <caret line="188" column="32" selection-start-line="188" selection-start-column="32" selection-end-line="188" selection-end-column="32" />
+              <folding>
+                <marker date="1469805165684" expanded="true" signature="0:795" ph="/* ... */" />
+                <marker date="1469805165684" expanded="true" signature="803:844" ph="..." />
+                <marker date="1469805165684" expanded="true" signature="920:1693" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="1447:1502" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="1541:1596" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="1635:1690" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="1739:2914" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="2960:4054" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="4101:5168" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="5214:6339" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="6385:7438" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="7484:8543" ph="{...}" />
+                <marker date="1469805165684" expanded="true" signature="8589:9593" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LocalizedStringReference.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/SpecialFields/LocalizedStringReference.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1469805165688" expanded="true" signature="0:785" ph="/* ... */" />
+                <marker date="1469805165688" expanded="true" signature="879:1133" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/AnimationDataRecord.cs" />
+        <option value="$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/LiquidTypeRecord.cs" />
+        <option value="$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/MapRecord.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="-1" />
+    <option name="width" value="1920" />
+    <option name="height" value="1050" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="SolutionExplorer">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft.Tests" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="References" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <option name="show-file-system" value="false" />
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Everlook/Everlook.sln" />
+  </component>
+  <component name="RunManager" selected=".NET Project.Default">
+    <configuration default="true" type="DotNetProject" factoryName=".NET Project">
+      <option name="PROJECT_PATH" value="" />
+      <option name="PROJECT_KIND" value="None" />
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Default" type="DotNetProject" factoryName=".NET Project">
+      <option name="PROJECT_PATH" value="" />
+      <option name="PROJECT_KIND" value="None" />
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue=".NET Project.Default" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="da70d6d2-0a6b-464c-8d65-d2ce938c56aa" name="Default" comment="" />
+      <created>1472573027847</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1472573027847</updated>
+      <workItem from="1472573029207" duration="32000" />
+      <workItem from="1472895855844" duration="1389000" />
+      <workItem from="1472945599019" duration="24000" />
+      <workItem from="1472977233916" duration="57000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1502000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="-1" width="1920" height="1050" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17342582" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors in solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="UnitTesting" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/WMO/WMO.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165700" expanded="true" signature="6:178" ph="..." />
+            <marker date="1469805165700" expanded="true" signature="202:4232" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="206:423" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="455:4230" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="688:780" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="826:1760" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="1812:1878" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="1882:2133" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2186:2195" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="2199:2422" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2473:2700" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="2704:2949" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2992:3046" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3111:3184" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3261:3345" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3386:3515" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3568:3640" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3644:4194" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="4218:4227" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/BLP/BLP.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+          <folding>
+            <marker date="1469805165664" expanded="true" signature="0:779" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="787:1025" ph="..." />
+            <marker date="1469805165664" expanded="true" signature="1049:33432" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="1053:1152" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1170:33430" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="1176:1344" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1375:1510" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1574:1706" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1750:1870" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1912:2005" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="2074:2281" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="2309:3822" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="3826:4089" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="4144:4493" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="4497:4933" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="5000:7391" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7395:7502" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="7533:7571" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7575:7726" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="7772:7965" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7969:8151" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="8208:8443" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="8447:8730" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="8768:8835" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="8839:9197" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="9238:9473" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="9477:9958" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="10049:10350" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="10354:10644" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="10708:14852" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="14856:15314" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="15366:15891" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="15895:16426" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="16487:22027" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="18401:18566" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="18910:19026" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="22031:22434" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="22508:23351" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="23411:23949" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="24009:24538" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="24107:24267" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="24542:24840" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="24891:25801" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="25805:26081" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="26132:27128" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="27132:27341" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="27387:27827" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="27831:28071" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="28117:28438" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="28442:28655" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="28711:29532" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="29536:29703" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="29738:29956" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="29960:30111" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="30145:30364" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="30368:30523" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="30551:31079" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="31083:31367" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="31417:31916" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="31920:32048" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32078:32114" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32118:32238" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32265:32299" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32303:32479" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32520:32558" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32562:32673" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32709:32746" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32750:32881" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32934:32976" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32980:33158" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="33191:33231" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="33235:33361" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="33391:33427" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/AnimationDataRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1110">
+          <caret line="74" column="34" selection-start-line="74" selection-start-column="34" selection-end-line="74" selection-end-column="34" />
+          <folding>
+            <marker date="1472895888511" expanded="true" signature="0:795" ph="/* ... */" />
+            <marker date="1472895888511" expanded="true" signature="803:882" ph="..." />
+            <marker date="1472895888511" expanded="true" signature="918:5431" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="922:1087" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1133:4877" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="1192:1255" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1290:1412" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1502:1554" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1626:1687" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1712:1795" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1844:1949" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1999:2168" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="2241:2352" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="2397:3307" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="3311:3418" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="3456:4088" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="4092:4211" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="4249:4874" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="4880:4938" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="4979:5429" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="4985:5075" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="5091:5183" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="5202:5294" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="5315:5409" ph="/// ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/LiquidObjectRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165684" expanded="true" signature="0:795" ph="/* ... */" />
+            <marker date="1469805165684" expanded="true" signature="803:844" ph="..." />
+            <marker date="1469805165684" expanded="true" signature="927:1345" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1120:1168" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1207:1255" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1294:1342" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/LiquidTypeRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1440">
+          <caret line="96" column="44" selection-start-line="96" selection-start-column="44" selection-end-line="96" selection-end-column="44" />
+          <folding>
+            <marker date="1472895990643" expanded="true" signature="0:792" ph="/* ... */" />
+            <marker date="1472895990643" expanded="true" signature="799:878" ph="..." />
+            <marker date="1472895990643" expanded="true" signature="914:4199" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="959:3999" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="1015:1075" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="1275:1386" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="1431:1962" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="2005:2376" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="2423:2530" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="2568:3205" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="3209:3328" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="3366:3996" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="4024:4197" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/MapRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding>
+            <marker date="1472897056064" expanded="true" signature="0:785" ph="/* ... */" />
+            <marker date="1472897056064" expanded="true" signature="793:834" ph="..." />
+            <marker date="1472897056064" expanded="true" signature="908:1712" ph="{...}" />
+            <marker date="1472897056064" expanded="true" signature="1487:1535" ph="{...}" />
+            <marker date="1472897056064" expanded="true" signature="1574:1622" ph="{...}" />
+            <marker date="1472897056064" expanded="true" signature="1661:1709" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/UnknownRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165684" expanded="true" signature="0:789" ph="/* ... */" />
+            <marker date="1469805165684" expanded="true" signature="796:841" ph="..." />
+            <marker date="1469805165684" expanded="true" signature="877:2742" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="881:1056" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="1096:2740" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1124:1132" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1136:1210" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="1242:1353" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="1398:2008" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="2012:2119" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="2157:2374" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="2378:2497" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="2535:2737" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/SpellRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2820">
+          <caret line="188" column="32" selection-start-line="188" selection-start-column="32" selection-end-line="188" selection-end-column="32" />
+          <folding>
+            <marker date="1469805165684" expanded="true" signature="0:795" ph="/* ... */" />
+            <marker date="1469805165684" expanded="true" signature="803:844" ph="..." />
+            <marker date="1469805165684" expanded="true" signature="920:1693" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1447:1502" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1541:1596" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1635:1690" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1739:2914" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="2960:4054" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="4101:5168" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="5214:6339" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="6385:7438" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="7484:8543" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="8589:9593" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/SpecialFields/LocalizedStringReference.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165688" expanded="true" signature="0:785" ph="/* ... */" />
+            <marker date="1469805165688" expanded="true" signature="879:1133" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/WMO/WMO.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165700" expanded="true" signature="6:178" ph="..." />
+            <marker date="1469805165700" expanded="true" signature="202:4232" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="206:423" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="455:4230" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="688:780" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="826:1760" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="1812:1878" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="1882:2133" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2186:2195" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="2199:2422" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2473:2700" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="2704:2949" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2992:3046" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3111:3184" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3261:3345" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3386:3515" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3568:3640" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3644:4194" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="4218:4227" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/BLP/BLP.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+          <folding>
+            <marker date="1469805165664" expanded="true" signature="0:779" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="787:1025" ph="..." />
+            <marker date="1469805165664" expanded="true" signature="1049:33432" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="1053:1152" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1170:33430" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="1176:1344" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1375:1510" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1574:1706" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1750:1870" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1912:2005" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="2074:2281" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="2309:3822" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="3826:4089" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="4144:4493" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="4497:4933" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="5000:7391" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7395:7502" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="7533:7571" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7575:7726" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="7772:7965" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7969:8151" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="8208:8443" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="8447:8730" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="8768:8835" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="8839:9197" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="9238:9473" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="9477:9958" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="10049:10350" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="10354:10644" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="10708:14852" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="14856:15314" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="15366:15891" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="15895:16426" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="16487:22027" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="18401:18566" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="18910:19026" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="22031:22434" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="22508:23351" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="23411:23949" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="24009:24538" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="24107:24267" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="24542:24840" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="24891:25801" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="25805:26081" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="26132:27128" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="27132:27341" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="27387:27827" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="27831:28071" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="28117:28438" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="28442:28655" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="28711:29532" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="29536:29703" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="29738:29956" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="29960:30111" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="30145:30364" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="30368:30523" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="30551:31079" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="31083:31367" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="31417:31916" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="31920:32048" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32078:32114" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32118:32238" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32265:32299" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32303:32479" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32520:32558" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32562:32673" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32709:32746" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32750:32881" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32934:32976" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32980:33158" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="33191:33231" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="33235:33361" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="33391:33427" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/AnimationDataRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1110">
+          <caret line="74" column="34" selection-start-line="74" selection-start-column="34" selection-end-line="74" selection-end-column="34" />
+          <folding>
+            <marker date="1472895888511" expanded="true" signature="0:795" ph="/* ... */" />
+            <marker date="1472895888511" expanded="true" signature="803:882" ph="..." />
+            <marker date="1472895888511" expanded="true" signature="918:5431" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="922:1087" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1133:4877" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="1192:1255" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1290:1412" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1502:1554" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1626:1687" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1712:1795" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1844:1949" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1999:2168" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="2241:2352" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="2397:3307" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="3311:3418" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="3456:4088" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="4092:4211" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="4249:4874" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="4880:4938" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="4979:5429" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="4985:5075" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="5091:5183" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="5202:5294" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="5315:5409" ph="/// ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/LiquidObjectRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165684" expanded="true" signature="0:795" ph="/* ... */" />
+            <marker date="1469805165684" expanded="true" signature="803:844" ph="..." />
+            <marker date="1469805165684" expanded="true" signature="927:1345" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1120:1168" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1207:1255" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1294:1342" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/LiquidTypeRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1440">
+          <caret line="96" column="44" selection-start-line="96" selection-start-column="44" selection-end-line="96" selection-end-column="44" />
+          <folding>
+            <marker date="1472895990643" expanded="true" signature="0:792" ph="/* ... */" />
+            <marker date="1472895990643" expanded="true" signature="799:878" ph="..." />
+            <marker date="1472895990643" expanded="true" signature="914:4199" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="959:3999" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="1015:1075" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="1275:1386" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="1431:1962" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="2005:2376" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="2423:2530" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="2568:3205" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="3209:3328" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="3366:3996" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="4024:4197" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/MapRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding>
+            <marker date="1472897056064" expanded="true" signature="0:785" ph="/* ... */" />
+            <marker date="1472897056064" expanded="true" signature="793:834" ph="..." />
+            <marker date="1472897056064" expanded="true" signature="908:1712" ph="{...}" />
+            <marker date="1472897056064" expanded="true" signature="1487:1535" ph="{...}" />
+            <marker date="1472897056064" expanded="true" signature="1574:1622" ph="{...}" />
+            <marker date="1472897056064" expanded="true" signature="1661:1709" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/UnknownRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165684" expanded="true" signature="0:789" ph="/* ... */" />
+            <marker date="1469805165684" expanded="true" signature="796:841" ph="..." />
+            <marker date="1469805165684" expanded="true" signature="877:2742" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="881:1056" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="1096:2740" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1124:1132" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1136:1210" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="1242:1353" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="1398:2008" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="2012:2119" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="2157:2374" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="2378:2497" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="2535:2737" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/WMO/WMO.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165700" expanded="true" signature="6:178" ph="..." />
+            <marker date="1469805165700" expanded="true" signature="202:4232" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="206:423" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="455:4230" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="688:780" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="826:1760" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="1812:1878" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="1882:2133" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2186:2195" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="2199:2422" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2473:2700" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="2704:2949" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2992:3046" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3111:3184" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3261:3345" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3386:3515" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3568:3640" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3644:4194" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="4218:4227" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/BLP/BLP.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165664" expanded="true" signature="0:779" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="787:1025" ph="..." />
+            <marker date="1469805165664" expanded="true" signature="1049:33432" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="1053:1152" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1170:33430" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="1176:1344" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1375:1510" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1574:1706" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1750:1870" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1912:2005" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="2074:2281" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="2309:3822" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="3826:4089" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="4144:4493" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="4497:4933" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="5000:7391" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7395:7502" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="7533:7571" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7575:7726" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="7772:7965" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7969:8151" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="8208:8443" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="8447:8730" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="8768:8835" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="8839:9197" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="9238:9473" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="9477:9958" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="10049:10350" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="10354:10644" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="10708:14852" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="14856:15314" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="15366:15891" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="15895:16426" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="16487:22027" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="18401:18566" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="18910:19026" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="22031:22434" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="22508:23351" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="23411:23949" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="24009:24538" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="24107:24267" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="24542:24840" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="24891:25801" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="25805:26081" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="26132:27128" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="27132:27341" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="27387:27827" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="27831:28071" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="28117:28438" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="28442:28655" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="28711:29532" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="29536:29703" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="29738:29956" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="29960:30111" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="30145:30364" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="30368:30523" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="30551:31079" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="31083:31367" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="31417:31916" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="31920:32048" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32078:32114" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32118:32238" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32265:32299" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32303:32479" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32520:32558" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32562:32673" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32709:32746" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32750:32881" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32934:32976" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32980:33158" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="33191:33231" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="33235:33361" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="33391:33427" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/BLP/BLP.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+          <folding>
+            <marker date="1469805165664" expanded="true" signature="0:779" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="787:1025" ph="..." />
+            <marker date="1469805165664" expanded="true" signature="1049:33432" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="1053:1152" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1170:33430" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="1176:1344" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1375:1510" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1574:1706" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1750:1870" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="1912:2005" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="2074:2281" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="2309:3822" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="3826:4089" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="4144:4493" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="4497:4933" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="5000:7391" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7395:7502" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="7533:7571" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7575:7726" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="7772:7965" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="7969:8151" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="8208:8443" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="8447:8730" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="8768:8835" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="8839:9197" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="9238:9473" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="9477:9958" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="10049:10350" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="10354:10644" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="10708:14852" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="14856:15314" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="15366:15891" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="15895:16426" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="16487:22027" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="18401:18566" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="18910:19026" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="22031:22434" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="22508:23351" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="23411:23949" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="24009:24538" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="24107:24267" ph="/* ... */" />
+            <marker date="1469805165664" expanded="true" signature="24542:24840" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="24891:25801" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="25805:26081" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="26132:27128" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="27132:27341" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="27387:27827" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="27831:28071" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="28117:28438" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="28442:28655" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="28711:29532" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="29536:29703" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="29738:29956" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="29960:30111" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="30145:30364" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="30368:30523" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="30551:31079" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="31083:31367" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="31417:31916" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="31920:32048" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32078:32114" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32118:32238" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32265:32299" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32303:32479" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32520:32558" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32562:32673" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32709:32746" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32750:32881" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="32934:32976" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="32980:33158" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="33191:33231" ph="{...}" />
+            <marker date="1469805165664" expanded="true" signature="33235:33361" ph="/// ..." />
+            <marker date="1469805165664" expanded="true" signature="33391:33427" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/LiquidObjectRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165684" expanded="true" signature="0:795" ph="/* ... */" />
+            <marker date="1469805165684" expanded="true" signature="803:844" ph="..." />
+            <marker date="1469805165684" expanded="true" signature="927:1345" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1120:1168" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1207:1255" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1294:1342" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/LiquidTypeRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1440">
+          <caret line="96" column="44" selection-start-line="96" selection-start-column="44" selection-end-line="96" selection-end-column="44" />
+          <folding>
+            <marker date="1472895990643" expanded="true" signature="0:792" ph="/* ... */" />
+            <marker date="1472895990643" expanded="true" signature="799:878" ph="..." />
+            <marker date="1472895990643" expanded="true" signature="914:4199" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="959:3999" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="1015:1075" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="1275:1386" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="1431:1962" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="2005:2376" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="2423:2530" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="2568:3205" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="3209:3328" ph="/// ..." />
+            <marker date="1472895990643" expanded="true" signature="3366:3996" ph="{...}" />
+            <marker date="1472895990643" expanded="true" signature="4024:4197" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/WMO/WMO.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165700" expanded="true" signature="6:178" ph="..." />
+            <marker date="1469805165700" expanded="true" signature="202:4232" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="206:423" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="455:4230" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="688:780" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="826:1760" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="1812:1878" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="1882:2133" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2186:2195" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="2199:2422" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2473:2700" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="2704:2949" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="2992:3046" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3111:3184" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3261:3345" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3386:3515" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3568:3640" ph="{...}" />
+            <marker date="1469805165700" expanded="true" signature="3644:4194" ph="/// ..." />
+            <marker date="1469805165700" expanded="true" signature="4218:4227" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/AnimationDataRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1110">
+          <caret line="74" column="34" selection-start-line="74" selection-start-column="34" selection-end-line="74" selection-end-column="34" />
+          <folding>
+            <marker date="1472895888511" expanded="true" signature="0:795" ph="/* ... */" />
+            <marker date="1472895888511" expanded="true" signature="803:882" ph="..." />
+            <marker date="1472895888511" expanded="true" signature="918:5431" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="922:1087" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1133:4877" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="1192:1255" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1290:1412" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1502:1554" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1626:1687" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1712:1795" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1844:1949" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="1999:2168" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="2241:2352" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="2397:3307" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="3311:3418" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="3456:4088" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="4092:4211" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="4249:4874" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="4880:4938" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="4979:5429" ph="{...}" />
+            <marker date="1472895888511" expanded="true" signature="4985:5075" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="5091:5183" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="5202:5294" ph="/// ..." />
+            <marker date="1472895888511" expanded="true" signature="5315:5409" ph="/// ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/MapRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding>
+            <marker date="1472897056064" expanded="true" signature="0:785" ph="/* ... */" />
+            <marker date="1472897056064" expanded="true" signature="793:834" ph="..." />
+            <marker date="1472897056064" expanded="true" signature="908:1712" ph="{...}" />
+            <marker date="1472897056064" expanded="true" signature="1487:1535" ph="{...}" />
+            <marker date="1472897056064" expanded="true" signature="1574:1622" ph="{...}" />
+            <marker date="1472897056064" expanded="true" signature="1661:1709" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/UnknownRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165684" expanded="true" signature="0:789" ph="/* ... */" />
+            <marker date="1469805165684" expanded="true" signature="796:841" ph="..." />
+            <marker date="1469805165684" expanded="true" signature="877:2742" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="881:1056" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="1096:2740" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1124:1132" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1136:1210" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="1242:1353" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="1398:2008" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="2012:2119" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="2157:2374" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="2378:2497" ph="/// ..." />
+            <marker date="1469805165684" expanded="true" signature="2535:2737" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/Definitions/SpellRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2820">
+          <caret line="188" column="32" selection-start-line="188" selection-start-column="32" selection-end-line="188" selection-end-column="32" />
+          <folding>
+            <marker date="1469805165684" expanded="true" signature="0:795" ph="/* ... */" />
+            <marker date="1469805165684" expanded="true" signature="803:844" ph="..." />
+            <marker date="1469805165684" expanded="true" signature="920:1693" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1447:1502" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1541:1596" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1635:1690" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="1739:2914" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="2960:4054" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="4101:5168" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="5214:6339" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="6385:7438" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="7484:8543" ph="{...}" />
+            <marker date="1469805165684" expanded="true" signature="8589:9593" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../libwarcraft/DBC/SpecialFields/LocalizedStringReference.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1469805165688" expanded="true" signature="0:785" ph="/* ... */" />
+            <marker date="1469805165688" expanded="true" signature="879:1133" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

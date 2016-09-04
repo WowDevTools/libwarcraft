@@ -27,9 +27,23 @@ namespace Warcraft.DBC.Definitions
 {
 	public class MapRecord : DBCRecord
 	{
-		private StringReference Directory;
-		private uint PVP;
-		private uint IsInMap;
+		public StringReference Directory;
+		public uint InstanceType;
+		public uint PVP;
+		public LocalizedStringReference MapName;
+		public uint MinLevel;
+		public uint MaxLevel;
+		public uint MaxPlayers;
+		public uint Unknown1;
+		public uint Unknown2;
+		public uint Unknown3;
+		public UInt32ForeignKey AreaTableID;
+		public LocalizedStringReference MapDescription1;
+		public LocalizedStringReference MapDescription2;
+		public UInt32ForeignKey LoadingScreenID;
+		public uint RaidOffset;
+		public uint Unknown4;
+		public uint Unknown5;
 
 		public override void LoadData(byte[] data)
 		{

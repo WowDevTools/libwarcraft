@@ -80,27 +80,25 @@ namespace Warcraft.DBC.Definitions
 			{
 				return this.Type;
 			}
-			else
+
+			int baseValue = (int)this.Type;
+			switch (baseValue)
 			{
-				int baseValue = (int)this.Type;
-				switch (baseValue)
+				case 0:
 				{
-					case 0:
-						{
-							return LiquidType.Magma;
-						}
-					case 2:
-						{
-							return LiquidType.Slime;
-						}
-					case 3:
-						{
-							return LiquidType.Water;
-						}
-					default:
-						{
-							return LiquidType.Water;
-						}
+					return LiquidType.Magma;
+				}
+				case 2:
+				{
+					return LiquidType.Slime;
+				}
+				case 3:
+				{
+					return LiquidType.Water;
+				}
+				default:
+				{
+					return LiquidType.Water;
 				}
 			}
 		}

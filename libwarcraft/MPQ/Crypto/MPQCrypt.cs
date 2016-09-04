@@ -26,17 +26,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core.Hashing;
-using Ionic.Crc;
 
 namespace Warcraft.MPQ.Crypto
 {
-	static class MPQCrypt
+	internal static class MPQCrypt
 	{
 		/// <summary>
 		/// A table of int32s used as a lookup table for decryption of bytes.
 		/// It is statically initialized, and is always the same.
 		/// </summary>
-		private static readonly uint[] encryptionTable = new uint[0x500];
+		private static readonly uint[] EncryptionTable = new uint[0x500];
 
 		static MPQCrypt()
 		{
@@ -62,7 +61,7 @@ namespace Warcraft.MPQ.Crypto
 					uint temp2 = (seed & 0xFFFF);
 
 					// Add to Encryption table
-					encryptionTable[tableIndex] = (temp1 | temp2);
+					EncryptionTable[tableIndex] = (temp1 | temp2);
 				}
 			}
 		}
@@ -109,21 +108,21 @@ namespace Warcraft.MPQ.Crypto
 
 			// Find out how many dangling bytes we have
 			uint danglingBytes = (uint)data.Length % 4;
-			byte[] dataToBeXORed = new byte[data.Length - danglingBytes];
+			byte[] dataToBeModified = new byte[data.Length - danglingBytes];
 
 			// Copy the aligned bytes to the new array
-			Buffer.BlockCopy(data, 0, dataToBeXORed, 0, (int)(data.Length - danglingBytes));
+			Buffer.BlockCopy(data, 0, dataToBeModified, 0, (int)(data.Length - danglingBytes));
 
 
 			uint encryptionSeed = 0xEEEEEEEE;
 			List<byte> finalizedData = new List<byte>();
 
-			for (int i = 0; i < dataToBeXORed.Length; i += sizeof(uint))
+			for (int i = 0; i < dataToBeModified.Length; i += sizeof(uint))
 			{
-				uint encryptionTarget = BitConverter.ToUInt32(dataToBeXORed, i);
+				uint encryptionTarget = BitConverter.ToUInt32(dataToBeModified, i);
 
 				// Retrieve the decryption seed from the generated table
-				encryptionSeed += encryptionTable[0x400 + (key & 0xFF)];
+				encryptionSeed += EncryptionTable[0x400 + (key & 0xFF)];
 
 				// Encrypt or decrypt the data by XORing it with the seed and key
 				encryptionTarget = encryptionTarget ^ (key + encryptionSeed);
@@ -172,7 +171,7 @@ namespace Warcraft.MPQ.Crypto
 			foreach (var c in inputString.ToUpperInvariant())
 			{
 				uint ch = (byte)c;
-				seed1 = encryptionTable[((uint)hashType * 0x100) + ch] ^ (seed1 + seed2);
+				seed1 = EncryptionTable[((uint)hashType * 0x100) + ch] ^ (seed1 + seed2);
 				seed2 = ch + seed1 + seed2 + (seed2 << 5) + 3;
 			}
 
@@ -217,7 +216,7 @@ namespace Warcraft.MPQ.Crypto
 				decryptionTarget = br.ReadUInt32();
 
 				// Retrieve the decryption seed from the generated table
-				decryptionSeed += encryptionTable[0x400 + (key & 0xFF)];
+				decryptionSeed += EncryptionTable[0x400 + (key & 0xFF)];
 
 				// Decrypt the data by XORing it with the seed and key
 				decryptionTarget = decryptionTarget ^ (key + decryptionSeed);
@@ -266,7 +265,7 @@ namespace Warcraft.MPQ.Crypto
 		FileHashTableOffset = 0,
 		FilePathA = 1,
 		FilePathB = 2,
-		FileKey = 3,
+		FileKey = 3
 	}
 }
 

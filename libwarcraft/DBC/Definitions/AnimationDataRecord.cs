@@ -74,10 +74,6 @@ namespace Warcraft.DBC.Definitions
 		[FieldVersion(WarcraftVersion.Wrath)]
 		public uint BehaviourTier;
 
-		public AnimationDataRecord()
-		{
-		}
-
 		/// <summary>
 		/// Loads and parses the provided data.
 		/// </summary>
