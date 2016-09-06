@@ -4,9 +4,10 @@
 
 ## Build Status
 
-Build | Defects
-:------------: | :------------:
-[![Build Status](https://travis-ci.org/WowDevTools/libwarcraft.svg?branch=master)](https://travis-ci.org/WowDevTools/libwarcraft) | CodeCov Badge Soon
+CI | Build | Defects
+:------------: | :------------: | :------------:
+AppVeyor | [![Build Status](https://travis-ci.org/WowDevTools/libwarcraft.svg?branch=master)](https://travis-ci.org/WowDevTools/libwarcraft) | CodeCov Badge Soon
+Travis | [![Build Status](https://travis-ci.org/WowDevTools/Everlook.svg?branch=master)](https://travis-ci.org/WowDevTools/Everlook) | 
 
 # About #
 libwarcraft is a managed C# library for interacting with binary file formats created by Blizzard Activision. The goal of the library is to be fully compatible with all proprietary file formats used in their games, and to serve as an all-in-one backend solution for applications wishing to read and modify these files.
