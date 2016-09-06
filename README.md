@@ -1,5 +1,14 @@
 # libwarcraft
+[![DoxygenDoc](https://img.shields.io/badge/Docs-Doxygen-red.svg)](http://libwarcraftdocs.wowdev.info/)
+[![Bountysource](https://www.bountysource.com/badge/tracker?tracker_id=28623364)](https://www.bountysource.com/trackers/28623364-wowdevtools-libwarcraft?utm_source=44433103&utm_medium=shield&utm_campaign=TRACKER_BADGE)
 
+## Build Status
+
+Build | Defects
+:------------: | :------------:
+[![Build Status](https://travis-ci.org/Nihlus/libwarcraft.svg)](https://travis-ci.org/Nihlus/libwarcraft) | Badge Soon
+
+# About #
 libwarcraft is a managed C# library for interacting with binary file formats created by Blizzard Activision. The goal of the library is to be fully compatible with all proprietary file formats used in their games, and to serve as an all-in-one backend solution for applications wishing to read and modify these files.
 
 The primary focus for the library at the moment is to provide a complete implementation of all formats used up to and including Wrath of the Lich King. Anyone is free to use this library to write their own applications for performing operations on the file formats, and is in fact encouraged. The library is not meant for specialized applications (adding water to terrain, repacking images, adding animations or editing geometry of models) but rather strives to expose all functionality needed for other applications to implement that functionality as is best for their use case.
