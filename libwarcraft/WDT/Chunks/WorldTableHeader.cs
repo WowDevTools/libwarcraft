@@ -91,6 +91,7 @@ namespace Warcraft.WDT.Chunks
 		}
 	}
 
+	[Flags]
 	public enum WorldTableFlags : uint
 	{
 		UsesGlobalModels 				= 0x01,
