@@ -130,11 +130,14 @@ namespace Warcraft.MPQ
 			if (this.Header.GetFormat() >= MPQFormat.Extended_v1)
 			{
 				// Seek to the extended block table and load it, if neccesary
-				ArchiveReader.BaseStream.Position = (long)this.Header.GetExtendedBlockTableOffset();
-
-				for (int i = 0; i < this.Header.GetBlockTableEntryCount(); ++i)
+				if (this.Header.GetExtendedBlockTableOffset() > 0)
 				{
-					ExtendedBlockTable.Add(ArchiveReader.ReadUInt16());
+					ArchiveReader.BaseStream.Position = (long)this.Header.GetExtendedBlockTableOffset();
+
+					for (int i = 0; i < this.Header.GetBlockTableEntryCount(); ++i)
+					{
+						ExtendedBlockTable.Add(ArchiveReader.ReadUInt16());
+					}
 				}
 			}
 		}
@@ -330,7 +333,7 @@ namespace Warcraft.MPQ
 				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
 			}
 
-			HashTableEntry fileHashEntry = ArchiveHashTable.FindEntry(filePath);
+			HashTableEntry fileHashEntry = ArchiveHashTable.FindEntry(filePath.ToUpperInvariant());
 			return fileHashEntry != null;
 		}
 
