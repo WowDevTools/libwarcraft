@@ -115,6 +115,11 @@ namespace Warcraft.Core
 			this.BottomCorner = inBottomCorner;
 			this.TopCorner = inTopCorner;
 		}
+
+		public Vector3f GetCenterCoordinates()
+		{
+			return (BottomCorner + TopCorner) / 2;
+		}
 	}
 
 	/// <summary>

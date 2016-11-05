@@ -59,6 +59,16 @@ namespace Warcraft.WMO.GroupFile
             }
 		}
 
+		public Vector3f GetPosition()
+		{
+			return this.GetBoundingBox().GetCenterCoordinates();
+		}
+
+		public Box GetBoundingBox()
+		{
+			return this.GroupData.BoundingBox;
+		}
+
 		public uint GetInternalNameOffset()
 		{
 			return this.GroupData.GroupNameOffset;
