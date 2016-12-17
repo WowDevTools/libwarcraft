@@ -34,13 +34,7 @@ namespace Warcraft.MPQ
 			Fields present in Basic Format (v0)
 		*/
 
-		public string Signature
-		{
-			get
-			{
-				return "MPQ\x1a";
-			}
-		}
+		public const string ArchiveSignature = "MPQ\x1a";
 
 		public uint HeaderSize
 		{
@@ -151,7 +145,8 @@ namespace Warcraft.MPQ
 			{
 				using (BinaryReader br = new BinaryReader(dataStream))
 				{
-					if (this.Signature != new string(br.ReadChars(4)))
+					string dataSignature = new string(br.ReadChars(4));
+					if (dataSignature != ArchiveSignature)
 					{
 						throw new FileLoadException("The provided file was not an MPQ file.");
 					}
@@ -336,14 +331,14 @@ namespace Warcraft.MPQ
 		/// </summary>
 		/// <returns>The archive size.</returns>
 		public ulong GetArchiveSize()
-		{			
+		{
 			if (this.Format == MPQFormat.Basic)
 			{
 				return (ulong)this.BasicArchiveSize;
 			}
 			else if (this.Format == MPQFormat.Extended_v1)
 			{
-				// Calculate the size from the start of the header to the end of the 
+				// Calculate the size from the start of the header to the end of the
 				// hash table, block table or extended block table (whichever is furthest away)
 
 				ulong hashTableOffset = this.GetHashTableOffset();
@@ -414,7 +409,7 @@ namespace Warcraft.MPQ
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
 					// Write the archive signature
-					foreach (char c in this.Signature)
+					foreach (char c in ArchiveSignature)
 					{
 						bw.Write(c);
 					}
