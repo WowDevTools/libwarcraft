@@ -26,17 +26,34 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+	/// <summary>
+	/// Represents a list of doodad sets present in this model. Each set is stored separately in this block, and
+	/// defines a list of doodad instances to render when the set is selected.
+	/// </summary>
 	public class ModelDoodadSets : IRIFFChunk, IBinarySerializable
 	{
+		/// <summary>
+		/// The static block signature of this chunk.
+		/// </summary>
 		public const string Signature = "MODS";
 
+		/// <summary>
+		/// A list of the doodad sets contained in this chunk.
+		/// </summary>
 		public readonly List<DoodadSet> DoodadSets = new List<DoodadSet>();
 
+		/// <summary>
+		/// Creates a new, empty doodad set block.
+		/// </summary>
 		public ModelDoodadSets()
 		{
 
 		}
 
+		/// <summary>
+		/// Deserializes a doodad set block from binary data.
+		/// </summary>
+		/// <param name="inData">The binary data containing the doodad set object.</param>
 		public ModelDoodadSets(byte[] inData)
 		{
 			LoadBinaryData(inData);
