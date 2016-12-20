@@ -41,10 +41,7 @@ freely, subject to the following restrictions:
 Mark Adler    madler@alumni.caltech.edu
  */
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Blast
 {

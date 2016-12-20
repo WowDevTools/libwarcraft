@@ -29,7 +29,6 @@
 //
 using System;
 using System.IO;
-using System.Collections;
 
 namespace Warcraft.Core.Compression
 {

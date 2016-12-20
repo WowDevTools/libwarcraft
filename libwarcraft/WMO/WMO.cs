@@ -96,6 +96,7 @@ namespace Warcraft.WMO
 		public void AddModelGroup(byte[] inData)
 		{
 			ModelGroup group = new ModelGroup(inData);
+			AddModelGroup(group);
 		}
 
 		public string ResolveInternalGroupName(ModelGroup modelGroup)

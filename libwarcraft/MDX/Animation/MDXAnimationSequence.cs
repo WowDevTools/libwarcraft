@@ -22,7 +22,6 @@
 using System;
 using Warcraft.Core;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace Warcraft.MDX.Animation
 {

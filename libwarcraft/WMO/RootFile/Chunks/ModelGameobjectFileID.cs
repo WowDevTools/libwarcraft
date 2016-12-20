@@ -20,10 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks

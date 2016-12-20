@@ -23,9 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using Warcraft.ADT.Chunks;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks

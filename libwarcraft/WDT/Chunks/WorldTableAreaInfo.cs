@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
