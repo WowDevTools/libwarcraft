@@ -1,5 +1,5 @@
 ﻿//
-//  ModelDoodadNames.cs
+//  ModelDoodadPaths.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>

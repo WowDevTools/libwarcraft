@@ -27,22 +27,49 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+	/// <summary>
+	/// Contains a set of planes defining the actual volume which should be considered "inside" a model. If a point is
+	/// behind all planes (that is, the point-plane distance is less than zero for all planes), the point is considered
+	/// inside the model.
+	///
+	/// This is used, for example, in transport models where it is important to know if the player should stick to the
+	/// model or not.
+	/// </summary>
 	public class ModelConvexPlanes : IRIFFChunk, IBinarySerializable
 	{
+		/// <summary>
+		/// The static block signature of the convex plane block.
+		/// </summary>
 		public const string Signature = "MCVP";
 
+		/// <summary>
+		/// The convex planes contained in this object. These planes are used to define regions in the model
+		/// object.
+		/// </summary>
 		public readonly List<Plane> ConvexPlanes = new List<Plane>();
 
+		/// <summary>
+		/// Creates a new empty convex plane block object.
+		/// </summary>
 		public ModelConvexPlanes()
 		{
 
 		}
 
+		/// <summary>
+		/// Creates a new convex plane block object from binary data.
+		/// </summary>
+		/// <param name="inData"></param>
 		public ModelConvexPlanes(byte[] inData)
 		{
 			LoadBinaryData(inData);
 		}
 
+		/// <summary>
+		/// Deserialzes the provided binary data of the object. This is the full data block which follows the data
+		/// signature and data block length.
+		/// </summary>
+		/// <param name="inData">The binary data containing the object.</param>
 		public void LoadBinaryData(byte[] inData)
         {
         	using (MemoryStream ms = new MemoryStream(inData))
@@ -58,11 +85,18 @@ namespace Warcraft.WMO.RootFile.Chunks
 			}
         }
 
-        public string GetSignature()
+		/// <summary>
+		/// Gets the static data signature of this data block type.
+		/// </summary>
+		/// <returns>A string representing the block signature.</returns>
+		public string GetSignature()
         {
         	return Signature;
         }
 
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
 		public byte[] Serialize()
 		{
 			using (MemoryStream ms = new MemoryStream())

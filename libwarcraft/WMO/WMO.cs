@@ -37,7 +37,7 @@ namespace Warcraft.WMO
 		{
 			foreach (DoodadInstance doodadInstance in this.RootInformation.DoodadInstances.DoodadInstances)
 			{
-				string doodadPath = this.RootInformation.DoodadNames.GetNameByOffset(doodadInstance.NameOffset);
+				string doodadPath = this.RootInformation.DoodadPaths.GetNameByOffset(doodadInstance.NameOffset);
 				doodadInstance.Name = doodadPath;
 			}
 

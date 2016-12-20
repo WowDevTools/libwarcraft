@@ -104,6 +104,7 @@
     <Compile Include="WMO\GroupFile\Chunks\MPBP.cs" />
     <Compile Include="WMO\GroupFile\Chunks\MPBV.cs" />
     <Compile Include="WMO\GroupFile\ModelGroupData.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelDoodadSet.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelPortalVertices.cs" />
     <Compile Include="WMO\WMO.cs" />
     <Compile Include="MDX\MDX.cs" />
@@ -169,7 +170,7 @@
     <Compile Include="WMO\RootFile\Chunks\ModelVisibleBlocks.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelStaticLighting.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelDoodadSets.cs" />
-    <Compile Include="WMO\RootFile\Chunks\ModelDoodadNames.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelDoodadPaths.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelDoodadInstances.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelFog.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelConvexPlanes.cs" />

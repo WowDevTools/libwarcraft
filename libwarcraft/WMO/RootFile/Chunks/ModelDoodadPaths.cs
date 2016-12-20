@@ -27,22 +27,47 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelDoodadNames : IRIFFChunk, IBinarySerializable
+	/// <summary>
+	/// Represents a block of paths of doodads used by a WMO object. Each path is referenced by other chunks
+	/// as an offset into this block - most likely a leftover from C/C++ style code. Paths can be retrieved from
+	/// this class either by indexing the path in <see cref="DoodadNames"/>, or by using the string offset and calling
+	/// <see cref="GetNameByOffset"/>.
+	/// </summary>
+	public class ModelDoodadPaths : IRIFFChunk, IBinarySerializable
 	{
+		/// <summary>
+		/// The RIFF signature for this block.
+		/// </summary>
 		public const string Signature = "MODN";
 
+		/// <summary>
+		/// The paths of all the doodads referenced by this WMO. Each is stored as an offset into the string block,
+		/// and the actual string stored there.
+		/// </summary>
 		public readonly List<KeyValuePair<long, string>> DoodadNames = new List<KeyValuePair<long, string>>();
 
-		public ModelDoodadNames()
+		/// <summary>
+		/// Creates a new empty doodad path block object.
+		/// </summary>
+		public ModelDoodadPaths()
 		{
 
 		}
 
-		public ModelDoodadNames(byte[] inData)
+		/// <summary>
+		/// Creates a new doodad path block object by deserializing it from binary data.
+		/// </summary>
+		/// <param name="inData">The binary data containing the doodad paths.</param>
+		public ModelDoodadPaths(byte[] inData)
 		{
 			LoadBinaryData(inData);
 		}
 
+		/// <summary>
+		/// Deserialzes the provided binary data of the object. This is the full data block which follows the data
+		/// signature and data block length.
+		/// </summary>
+		/// <param name="inData">The binary data containing the object.</param>
 		public void LoadBinaryData(byte[] inData)
         {
         	using (MemoryStream ms = new MemoryStream(inData))
@@ -60,11 +85,20 @@ namespace Warcraft.WMO.RootFile.Chunks
 			this.DoodadNames.RemoveAll(s => s.Value.Equals("\0"));
         }
 
-        public string GetSignature()
+		/// <summary>
+		/// Gets the static data signature of this data block type.
+		/// </summary>
+		/// <returns>A string representing the block signature.</returns>
+		public string GetSignature()
         {
         	return Signature;
         }
 
+		/// <summary>
+		/// Gets a doodad path by its original offset into the block of paths.
+		/// </summary>
+		/// <param name="nameOffset">The original byte offset of the name.</param>
+		/// <returns>The doodad path.</returns>
 		public string GetNameByOffset(uint nameOffset)
 		{
 			foreach (KeyValuePair<long, string> doodadName in this.DoodadNames)
@@ -78,6 +112,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 			return string.Empty;
 		}
 
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
 		public byte[] Serialize()
 		{
 			using (MemoryStream ms = new MemoryStream())

@@ -54,7 +54,7 @@ namespace Warcraft.WMO.RootFile
 		public ModelStaticLighting StaticLighting;
 
 		public ModelDoodadSets DoodadSets;
-		public ModelDoodadNames DoodadNames;
+		public ModelDoodadPaths DoodadPaths;
 		public ModelDoodadInstances DoodadInstances;
 
 		public ModelFog Fog;
@@ -93,7 +93,7 @@ namespace Warcraft.WMO.RootFile
 					this.StaticLighting = br.ReadIFFChunk<ModelStaticLighting>();
 
 					this.DoodadSets = br.ReadIFFChunk<ModelDoodadSets>();
-					this.DoodadNames = br.ReadIFFChunk<ModelDoodadNames>();
+					this.DoodadPaths = br.ReadIFFChunk<ModelDoodadPaths>();
 					this.DoodadInstances = br.ReadIFFChunk<ModelDoodadInstances>();
 
 					this.Fog = br.ReadIFFChunk<ModelFog>();
@@ -164,7 +164,7 @@ namespace Warcraft.WMO.RootFile
 		            bw.WriteIFFChunk(this.StaticLighting);
 
 		            bw.WriteIFFChunk(this.DoodadSets);
-		            bw.WriteIFFChunk(this.DoodadNames);
+		            bw.WriteIFFChunk(this.DoodadPaths);
 		            bw.WriteIFFChunk(this.DoodadInstances);
 
 		            bw.WriteIFFChunk(this.Fog);

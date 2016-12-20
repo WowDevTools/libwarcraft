@@ -20,10 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
@@ -44,6 +42,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 			LoadBinaryData(inData);
 		}
 
+		/// <summary>
+		/// Deserialzes the provided binary data of the object. This is the full data block which follows the data
+		/// signature and data block length.
+		/// </summary>
+		/// <param name="inData">The binary data containing the object.</param>
 		public void LoadBinaryData(byte[] inData)
         {
 			using (MemoryStream ms = new MemoryStream(inData))
@@ -59,11 +62,18 @@ namespace Warcraft.WMO.RootFile.Chunks
 			}
         }
 
-        public string GetSignature()
+		/// <summary>
+		/// Gets the static data signature of this data block type.
+		/// </summary>
+		/// <returns>A string representing the block signature.</returns>
+		public string GetSignature()
         {
         	return Signature;
         }
 
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
 		public byte[] Serialize()
 		{
 			using (MemoryStream ms = new MemoryStream())
@@ -75,66 +85,6 @@ namespace Warcraft.WMO.RootFile.Chunks
 			            bw.Write(doodadSet.Serialize());
 		            }
             	}
-
-            	return ms.ToArray();
-            }
-		}
-	}
-
-	public class DoodadSet : IBinarySerializable
-	{
-		private string name;
-		public string Name
-		{
-			get { return this.name; }
-			set
-			{
-				if (value.Length > 20)
-				{
-					throw new ArgumentException("Doodad set names may not be longer than 20 characters.", nameof(value));
-				}
-
-				this.name = value;
-			}
-		}
-		public uint FirstDoodadInstanceIndex;
-		public uint DoodadInstanceCount;
-		public uint Unused;
-
-		public DoodadSet(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					// The name of the doodad set can be up to 20 bytes, and is always padded to this length.
-					// Therefore, we read 20 bytes, convert it to a string and trim the end of any null characters.
-					byte[] nameBytes = br.ReadBytes(20);
-					this.Name = Encoding.UTF8.GetString(nameBytes).TrimEnd('\0');
-
-					this.FirstDoodadInstanceIndex = br.ReadUInt32();
-					this.DoodadInstanceCount = br.ReadUInt32();
-					this.Unused = br.ReadUInt32();
-				}
-			}
-		}
-
-		public static int GetSize()
-		{
-			return 32;
-		}
-
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-            {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-	            {
-		            bw.Write(this.Name.PadRight(20, '\0').ToCharArray());
-		            bw.Write(this.FirstDoodadInstanceIndex);
-		            bw.Write(this.DoodadInstanceCount);
-		            bw.Write(this.Unused);
-	            }
 
             	return ms.ToArray();
             }
