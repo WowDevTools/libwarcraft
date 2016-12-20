@@ -39,8 +39,8 @@ namespace Warcraft.Core.Quantization
 				throw new ArgumentOutOfRangeException("maxColorBits", maxColorBits, "This should be between 1 and 8");
 
 			// Construct the octree
-			_octree = new Octree(maxColorBits);
-			_maxColors = maxColors;
+			this._octree = new Octree(maxColorBits);
+			this._maxColors = maxColors;
 		}
 
 		/// <summary>
@@ -54,7 +54,7 @@ namespace Warcraft.Core.Quantization
 		protected override void InitialQuantizePixel(Color32 pixel)
 		{
 			// Add the color to the octree
-			_octree.AddColor(pixel);
+			this._octree.AddColor(pixel);
 		}
 
 		/// <summary>
@@ -64,13 +64,13 @@ namespace Warcraft.Core.Quantization
 		/// <returns>The quantized value</returns>
 		protected override byte QuantizePixel(Color32 pixel)
 		{
-			byte	paletteIndex = (byte)_maxColors;	// The color at [_maxColors] is set to transparent
+			byte	paletteIndex = (byte) this._maxColors;	// The color at [_maxColors] is set to transparent
 
             
 
 			// Get the palette index if this non-transparent
 			if (pixel.Alpha > 0)
-				paletteIndex = (byte)_octree.GetPaletteIndex(pixel);
+				paletteIndex = (byte) this._octree.GetPaletteIndex(pixel);
 
 			return paletteIndex;
 		}
@@ -83,14 +83,14 @@ namespace Warcraft.Core.Quantization
 		protected override ColorPalette GetPalette(ColorPalette original)
 		{
 			// First off convert the octree to _maxColors colors
-			ArrayList	palette = _octree.Palletize(_maxColors - 1);
+			ArrayList	palette = this._octree.Palletize(this._maxColors - 1);
 
 			// Then convert the palette based on those colors
 			for (int index = 0; index < palette.Count; index++)
 				original.Entries[index] = (Color)palette[index];
 
 			// Add the transparent color
-			original.Entries[_maxColors] = Color.FromArgb(0, 0, 0, 0);
+			original.Entries[this._maxColors] = Color.FromArgb(0, 0, 0, 0);
 
 			return original;
 		}
@@ -116,12 +116,12 @@ namespace Warcraft.Core.Quantization
 			/// <param name="maxColorBits">The maximum number of significant bits in the image</param>
 			public Octree(int maxColorBits)
 			{
-				_maxColorBits = maxColorBits;
-				_leafCount = 0;
-				_reducibleNodes = new OctreeNode[9];
-				_root = new OctreeNode(0, _maxColorBits, this); 
-				_previousColor = 0;
-				_previousNode = null;
+				this._maxColorBits = maxColorBits;
+				this._leafCount = 0;
+				this._reducibleNodes = new OctreeNode[9];
+				this._root = new OctreeNode(0, this._maxColorBits, this);
+				this._previousColor = 0;
+				this._previousNode = null;
 			}
 
 			/// <summary>
@@ -131,23 +131,23 @@ namespace Warcraft.Core.Quantization
 			public void AddColor(Color32 pixel)
 			{
 				// Check if this request is for the same color as the last
-				if (_previousColor == pixel.ARGB)
+				if (this._previousColor == pixel.ARGB)
 				{
 					// If so, check if I have a previous node setup. This will only ocurr if the first color in the image
 					// happens to be black, with an alpha component of zero.
-					if (null == _previousNode)
+					if (null == this._previousNode)
 					{
-						_previousColor = pixel.ARGB;
-						_root.AddColor(pixel, _maxColorBits, 0, this);
+						this._previousColor = pixel.ARGB;
+						this._root.AddColor(pixel, this._maxColorBits, 0, this);
 					}
 					else
 						// Just update the previous node
-						_previousNode.Increment(pixel);
+						this._previousNode.Increment(pixel);
 				}
 				else
 				{
-					_previousColor = pixel.ARGB;
-					_root.AddColor(pixel, _maxColorBits, 0, this);
+					this._previousColor = pixel.ARGB;
+					this._root.AddColor(pixel, this._maxColorBits, 0, this);
 				}
 			}
 
@@ -159,20 +159,20 @@ namespace Warcraft.Core.Quantization
 				int index;
 
 				// Find the deepest level containing at least one reducible node
-				for (index = _maxColorBits - 1; (index > 0) && (null == _reducibleNodes[index]); index--)
+				for (index = this._maxColorBits - 1; (index > 0) && (null == this._reducibleNodes[index]); index--)
 					;
                 
 				// Reduce the node most recently added to the list at level 'index'
-				OctreeNode node = _reducibleNodes[index];
-				_reducibleNodes[index] = node.NextReducible;
+				OctreeNode node = this._reducibleNodes[index];
+				this._reducibleNodes[index] = node.NextReducible;
 
 				// Decrement the leaf count after reducing the node
-				_leafCount -= node.Reduce();
+				this._leafCount -= node.Reduce();
                 
 
 				// And just in case I've reduced the last color to be added, and the next color to
 				// be added is the same, invalidate the previousNode...
-				_previousNode = null;
+				this._previousNode = null;
 			}
 
 			/// <summary>
@@ -180,8 +180,8 @@ namespace Warcraft.Core.Quantization
 			/// </summary>
 			public int Leaves
 			{
-				get { return _leafCount; }
-				set { _leafCount = value; }
+				get { return this._leafCount; }
+				set { this._leafCount = value; }
 			}
 
 			/// <summary>
@@ -189,7 +189,7 @@ namespace Warcraft.Core.Quantization
 			/// </summary>
 			protected OctreeNode[] ReducibleNodes
 			{
-				get { return _reducibleNodes; }
+				get { return this._reducibleNodes; }
 			}
 
 			/// <summary>
@@ -198,7 +198,7 @@ namespace Warcraft.Core.Quantization
 			/// <param name="node">The node last quantized</param>
 			protected void TrackPrevious(OctreeNode node)
 			{
-				_previousNode = node;
+				this._previousNode = node;
 			}
 
 			/// <summary>
@@ -208,13 +208,13 @@ namespace Warcraft.Core.Quantization
 			/// <returns>An arraylist with the palettized colors</returns>
 			public ArrayList Palletize(int colorCount)
 			{
-				while (Leaves > colorCount)
+				while (this.Leaves > colorCount)
 					Reduce();
 
 				// Now palettize the nodes
-				ArrayList	palette = new ArrayList(Leaves);
+				ArrayList	palette = new ArrayList(this.Leaves);
 				int paletteIndex = 0;
-				_root.ConstructPalette(palette, ref paletteIndex);
+				this._root.ConstructPalette(palette, ref paletteIndex);
 
 				// And return the palette
 				return palette;
@@ -227,7 +227,7 @@ namespace Warcraft.Core.Quantization
 			/// <returns></returns>
 			public int GetPaletteIndex(Color32 pixel)
 			{
-				return _root.GetPaletteIndex(pixel, 0);
+				return this._root.GetPaletteIndex(pixel, 0);
 			}
 
 			/// <summary>
@@ -279,24 +279,24 @@ namespace Warcraft.Core.Quantization
 				public OctreeNode(int level, int colorBits, Octree octree)
 				{
 					// Construct the new node
-					_leaf = (level == colorBits);
+					this._leaf = (level == colorBits);
 
-					_red = _green = _blue = 0;
-					_pixelCount = 0;
+					this._red = this._green = this._blue = 0;
+					this._pixelCount = 0;
 
 					// If a leaf, increment the leaf count
-					if (_leaf)
+					if (this._leaf)
 					{
 						octree.Leaves++;
-						_nextReducible = null;
-						_children = null; 
+						this._nextReducible = null;
+						this._children = null; 
 					}
 					else
 					{
 						// Otherwise add this to the reducible nodes
-						_nextReducible = octree.ReducibleNodes[level];
+						this._nextReducible = octree.ReducibleNodes[level];
 						octree.ReducibleNodes[level] = this;
-						_children = new OctreeNode[8];
+						this._children = new OctreeNode[8];
 					}
 				}
 
@@ -310,7 +310,7 @@ namespace Warcraft.Core.Quantization
 				public void AddColor(Color32 pixel, int colorBits, int level, Octree octree)
 				{
 					// Update the color information if this is a leaf
-					if (_leaf)
+					if (this._leaf)
 					{
 						Increment(pixel);
 						// Setup the previous node
@@ -324,13 +324,13 @@ namespace Warcraft.Core.Quantization
 						            ((pixel.Green & mask[level]) >> (shift - 1)) |
 						            ((pixel.Blue & mask[level]) >> (shift));
 
-						OctreeNode	child = _children[index];
+						OctreeNode	child = this._children[index];
 
 						if (null == child)
 						{
 							// Create a new child node & store in the array
-							child = new OctreeNode(level + 1, colorBits, octree); 
-							_children[index] = child;
+							child = new OctreeNode(level + 1, colorBits, octree);
+							this._children[index] = child;
 						}
 
 						// Add the color to the child node
@@ -344,8 +344,8 @@ namespace Warcraft.Core.Quantization
 				/// </summary>
 				public OctreeNode NextReducible
 				{
-					get { return _nextReducible; }
-					set { _nextReducible = value; }
+					get { return this._nextReducible; }
+					set { this._nextReducible = value; }
 				}
 
 				/// <summary>
@@ -353,7 +353,7 @@ namespace Warcraft.Core.Quantization
 				/// </summary>
 				public OctreeNode[] Children
 				{
-					get { return _children; }
+					get { return this._children; }
 				}
 
 				/// <summary>
@@ -362,25 +362,25 @@ namespace Warcraft.Core.Quantization
 				/// <returns>The number of leaves removed</returns>
 				public int Reduce()
 				{
-					_red = _green = _blue = 0;
+					this._red = this._green = this._blue = 0;
 					int	children = 0;
 
 					// Loop through all children and add their information to this node
 					for (int index = 0; index < 8; index++)
 					{
-						if (null != _children[index])
+						if (null != this._children[index])
 						{
-							_red += _children[index]._red;
-							_green += _children[index]._green;
-							_blue += _children[index]._blue;
-							_pixelCount += _children[index]._pixelCount;
+							this._red += this._children[index]._red;
+							this._green += this._children[index]._green;
+							this._blue += this._children[index]._blue;
+							this._pixelCount += this._children[index]._pixelCount;
 							++children;
-							_children[index] = null;
+							this._children[index] = null;
 						}
 					}
 
 					// Now change this to a leaf node
-					_leaf = true;
+					this._leaf = true;
 
 					// Return the number of nodes to decrement the leaf count by
 					return (children - 1);
@@ -393,21 +393,21 @@ namespace Warcraft.Core.Quantization
 				/// <param name="paletteIndex">The current palette index</param>
 				public void ConstructPalette(ArrayList palette, ref int paletteIndex)
 				{
-					if (_leaf)
+					if (this._leaf)
 					{
 						// Consume the next palette index
-						_paletteIndex = paletteIndex++;
+						this._paletteIndex = paletteIndex++;
 
 						// And set the color of the palette entry
-						palette.Add(Color.FromArgb(_red / _pixelCount, _green / _pixelCount, _blue / _pixelCount));
+						palette.Add(Color.FromArgb(this._red / this._pixelCount, this._green / this._pixelCount, this._blue / this._pixelCount));
 					}
 					else
 					{
 						// Loop through children looking for leaves
 						for (int index = 0; index < 8; index++)
 						{
-							if (null != _children[index])
-								_children[index].ConstructPalette(palette, ref paletteIndex);
+							if (null != this._children[index])
+								this._children[index].ConstructPalette(palette, ref paletteIndex);
 						}
 					}
 				}
@@ -417,17 +417,17 @@ namespace Warcraft.Core.Quantization
 				/// </summary>
 				public int GetPaletteIndex(Color32 pixel, int level)
 				{
-					int	paletteIndex = _paletteIndex;
+					int	paletteIndex = this._paletteIndex;
 
-					if (!_leaf)
+					if (!this._leaf)
 					{
 						int	shift = 7 - level;
 						int index = ((pixel.Red & mask[level]) >> (shift - 2)) |
 						            ((pixel.Green & mask[level]) >> (shift - 1)) |
 						            ((pixel.Blue & mask[level]) >> (shift));
 
-						if (null != _children[index])
-							paletteIndex = _children[index].GetPaletteIndex(pixel, level + 1);
+						if (null != this._children[index])
+							paletteIndex = this._children[index].GetPaletteIndex(pixel, level + 1);
 						else
 							throw new Exception("Didn't expect this!");
 					}
@@ -440,10 +440,10 @@ namespace Warcraft.Core.Quantization
 				/// </summary>
 				public void Increment(Color32 pixel)
 				{
-					_pixelCount++;
-					_red += pixel.Red;
-					_green += pixel.Green;
-					_blue += pixel.Blue;
+					this._pixelCount++;
+					this._red += pixel.Red;
+					this._green += pixel.Green;
+					this._blue += pixel.Blue;
 				}
 
 				/// <summary>

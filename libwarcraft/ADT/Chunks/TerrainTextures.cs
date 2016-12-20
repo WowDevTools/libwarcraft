@@ -61,7 +61,7 @@ namespace Warcraft.ADT.Chunks
 				{
 					while (br.BaseStream.Position != br.BaseStream.Length)
 					{
-						Filenames.Add(br.ReadNullTerminatedString());
+						this.Filenames.Add(br.ReadNullTerminatedString());
 					}
 				}
 			}

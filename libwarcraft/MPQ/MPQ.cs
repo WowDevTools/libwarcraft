@@ -111,20 +111,20 @@ namespace Warcraft.MPQ
 		/// <param name="mpqStream">An open stream to data containing an MPQ archive.</param>
 		public MPQ(Stream mpqStream)
 		{
-			ArchiveReader = new BinaryReader(mpqStream);
+			this.ArchiveReader = new BinaryReader(mpqStream);
 
-			this.Header = new MPQHeader(ArchiveReader.ReadBytes((int)PeekHeaderSize()));
+			this.Header = new MPQHeader(this.ArchiveReader.ReadBytes((int)PeekHeaderSize()));
 
 			// Seek to the hash table and load it
-			ArchiveReader.BaseStream.Position = (long)this.Header.GetHashTableOffset();
+			this.ArchiveReader.BaseStream.Position = (long)this.Header.GetHashTableOffset();
 
-			byte[] encryptedHashTable = ArchiveReader.ReadBytes((int)this.Header.GetHashTableSize());
+			byte[] encryptedHashTable = this.ArchiveReader.ReadBytes((int)this.Header.GetHashTableSize());
 			this.ArchiveHashTable = new HashTable(MPQCrypt.DecryptData(encryptedHashTable, HashTable.TableKey));
 
 			// Seek to the block table and load it
-			ArchiveReader.BaseStream.Position = (long)this.Header.GetBlockTableOffset();
+			this.ArchiveReader.BaseStream.Position = (long)this.Header.GetBlockTableOffset();
 
-			byte[] encryptedBlockTable = ArchiveReader.ReadBytes((int)this.Header.GetBlockTableSize());
+			byte[] encryptedBlockTable = this.ArchiveReader.ReadBytes((int)this.Header.GetBlockTableSize());
 			this.ArchiveBlockTable = new BlockTable(MPQCrypt.DecryptData(encryptedBlockTable, BlockTable.TableKey));
 
 			if (this.Header.GetFormat() >= MPQFormat.Extended_v1)
@@ -132,11 +132,11 @@ namespace Warcraft.MPQ
 				// Seek to the extended block table and load it, if neccesary
 				if (this.Header.GetExtendedBlockTableOffset() > 0)
 				{
-					ArchiveReader.BaseStream.Position = (long)this.Header.GetExtendedBlockTableOffset();
+					this.ArchiveReader.BaseStream.Position = (long)this.Header.GetExtendedBlockTableOffset();
 
 					for (int i = 0; i < this.Header.GetBlockTableEntryCount(); ++i)
 					{
-						ExtendedBlockTable.Add(ArchiveReader.ReadUInt16());
+						this.ExtendedBlockTable.Add(this.ArchiveReader.ReadUInt16());
 					}
 				}
 			}
@@ -149,11 +149,11 @@ namespace Warcraft.MPQ
 		/// <returns>The header size.</returns>
 		private uint PeekHeaderSize()
 		{
-			long originalPosition = ArchiveReader.BaseStream.Position;
+			long originalPosition = this.ArchiveReader.BaseStream.Position;
 
-			ArchiveReader.BaseStream.Position = 4;
-			uint headerSize = ArchiveReader.ReadUInt32();
-			ArchiveReader.BaseStream.Position = originalPosition;
+			this.ArchiveReader.BaseStream.Position = 4;
+			uint headerSize = this.ArchiveReader.ReadUInt32();
+			this.ArchiveReader.BaseStream.Position = originalPosition;
 
 			return headerSize;
 		}
@@ -164,9 +164,9 @@ namespace Warcraft.MPQ
 		/// <returns><c>true</c> if this archive has file attributes; otherwise, <c>false</c>.</returns>
 		public bool HasFileAttributes()
 		{
-			if (bDisposed)
+			if (this.bDisposed)
 			{
-				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
 			return ContainsFile(ExtendedAttributes.InternalFileName);
@@ -211,12 +211,12 @@ namespace Warcraft.MPQ
 		/// <returns><c>true</c> if this archive has a listfile; otherwise, <c>false</c>.</returns>
 		public bool HasFileList()
 		{
-			if (bDisposed)
+			if (this.bDisposed)
 			{
-				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
-			return ContainsFile("(listfile)") || ExternalListfile.Count > 0;
+			return ContainsFile("(listfile)") || this.ExternalListfile.Count > 0;
 		}
 
 		/// <summary>
@@ -226,12 +226,12 @@ namespace Warcraft.MPQ
 		/// <returns>The listfile.</returns>
 		public List<string> GetFileList()
 		{
-			if (bDisposed)
+			if (this.bDisposed)
 			{
-				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
-			if (ExternalListfile.Count > 0)
+			if (this.ExternalListfile.Count > 0)
 			{
 				return GetExternalFileList();
 			}
@@ -248,9 +248,9 @@ namespace Warcraft.MPQ
 		/// <returns>The internal file list.</returns>
 		public List<string> GetInternalFileList()
 		{
-			if (bDisposed)
+			if (this.bDisposed)
 			{
-				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
 			List<string> fileList = new List<string>();
@@ -285,12 +285,12 @@ namespace Warcraft.MPQ
 		/// <returns>The external file list.</returns>
 		public List<string> GetExternalFileList()
 		{
-			if (bDisposed)
+			if (this.bDisposed)
 			{
-				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
-			return ExternalListfile;
+			return this.ExternalListfile;
 		}
 
 		/// <summary>
@@ -299,9 +299,9 @@ namespace Warcraft.MPQ
 		/// <param name="InExternalListfile">In external listfile.</param>
 		public void SetFileList(List<string> InExternalListfile)
 		{
-			if (bDisposed)
+			if (this.bDisposed)
 			{
-				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
 			this.ExternalListfile = InExternalListfile;
@@ -313,9 +313,9 @@ namespace Warcraft.MPQ
 		/// </summary>
 		public void ResetExternalFileList()
 		{
-			if (bDisposed)
+			if (this.bDisposed)
 			{
-				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
 			this.ExternalListfile.Clear();
@@ -328,12 +328,12 @@ namespace Warcraft.MPQ
 		/// <param name="filePath">File path.</param>
 		public bool ContainsFile(string filePath)
 		{
-			if (bDisposed)
+			if (this.bDisposed)
 			{
-				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
-			HashTableEntry fileHashEntry = ArchiveHashTable.FindEntry(filePath.ToUpperInvariant());
+			HashTableEntry fileHashEntry = this.ArchiveHashTable.FindEntry(filePath.ToUpperInvariant());
 			return fileHashEntry != null;
 		}
 
@@ -344,15 +344,15 @@ namespace Warcraft.MPQ
 		/// <param name="filePath">File path.</param>
 		public MPQFileInfo GetFileInfo(string filePath)
 		{
-			if (bDisposed)
+			if (this.bDisposed)
 			{
-				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
 			if (ContainsFile(filePath))
 			{
-				HashTableEntry hashEntry = ArchiveHashTable.FindEntry(filePath);
-				BlockTableEntry blockEntry = ArchiveBlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
+				HashTableEntry hashEntry = this.ArchiveHashTable.FindEntry(filePath);
+				BlockTableEntry blockEntry = this.ArchiveBlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
 
 				if (HasFileAttributes())
 				{
@@ -360,8 +360,7 @@ namespace Warcraft.MPQ
 				}
 				else
 				{
-					return new MPQFileInfo(filePath, hashEntry, blockEntry,
-						FileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]);
+					return new MPQFileInfo(filePath, hashEntry, blockEntry, this.FileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]);
 				}
 			}
 			else
@@ -378,18 +377,18 @@ namespace Warcraft.MPQ
 		/// <param name="filePath">Path to the file in the archive.</param>
 		public byte[] ExtractFile(string filePath)
 		{
-			if (bDisposed)
+			if (this.bDisposed)
 			{
-				throw new ObjectDisposedException(this.ToString(), "Cannot use a disposed archive.");
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
 			// Reset all positions to be safe
-			ArchiveReader.BaseStream.Position = 0;
+			this.ArchiveReader.BaseStream.Position = 0;
 
-			HashTableEntry fileHashEntry = ArchiveHashTable.FindEntry(filePath);
+			HashTableEntry fileHashEntry = this.ArchiveHashTable.FindEntry(filePath);
 			if (fileHashEntry != null)
 			{
-				BlockTableEntry fileBlockEntry = ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
+				BlockTableEntry fileBlockEntry = this.ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
 
 				// Drop out if the file is not actually a file
 				if (!fileBlockEntry.Flags.HasFlag(BlockFlags.Exists) || fileBlockEntry.Flags.HasFlag(BlockFlags.IsDeletionMarker))
@@ -408,7 +407,7 @@ namespace Warcraft.MPQ
 				{
 					adjustedBlockOffset = fileBlockEntry.GetBlockOffset();
 				}
-				ArchiveReader.BaseStream.Position = adjustedBlockOffset;
+				this.ArchiveReader.BaseStream.Position = adjustedBlockOffset;
 
 				// Calculate the decryption key if neccesary
 				uint fileKey = 0;
@@ -429,7 +428,7 @@ namespace Warcraft.MPQ
 				if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsSingleUnit))
 				{
 					// This file does not use sectoring, but may still be encrypted or compressed.
-					byte[] fileData = ArchiveReader.ReadBytes((int)fileBlockEntry.GetBlockSize());
+					byte[] fileData = this.ArchiveReader.ReadBytes((int)fileBlockEntry.GetBlockSize());
 
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
 					{
@@ -452,14 +451,14 @@ namespace Warcraft.MPQ
 					List<uint> sectorOffsets = new List<uint>();
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
 					{
-						MPQCrypt.DecryptSectorOffsetTable(ArchiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
+						MPQCrypt.DecryptSectorOffsetTable(this.ArchiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
 					}
 					else
 					{
 						uint dataBlock = 0;
 						while (dataBlock != fileBlockEntry.GetBlockSize())
 						{
-							dataBlock = ArchiveReader.ReadUInt32();
+							dataBlock = this.ArchiveReader.ReadUInt32();
 							sectorOffsets.Add(dataBlock);
 						}
 					}
@@ -469,10 +468,10 @@ namespace Warcraft.MPQ
 					for (int i = 0; i < sectorOffsets.Count - 1; ++i)
 					{
 						long sectorStartPosition = adjustedBlockOffset + sectorOffsets[i];
-						ArchiveReader.BaseStream.Position = sectorStartPosition;
+						this.ArchiveReader.BaseStream.Position = sectorStartPosition;
 
 						uint sectorLength = sectorOffsets[i + 1] - sectorOffsets[i];
-						compressedSectors.Add(ArchiveReader.ReadBytes((int)sectorLength));
+						compressedSectors.Add(this.ArchiveReader.ReadBytes((int)sectorLength));
 					}
 
 					// Begin decompressing and decrypting the sectors
@@ -567,13 +566,13 @@ namespace Warcraft.MPQ
 					for (int i = 0; i < sectorCount; ++i)
 					{
 						// Read a normal sector (usually 4096 bytes)
-						rawSectors.Add(ArchiveReader.ReadBytes((int)GetMaxSectorSize()));
+						rawSectors.Add(this.ArchiveReader.ReadBytes((int)GetMaxSectorSize()));
 					}
 
 					// And finally, if there's an uneven sector at the end, read that one too
 					if (finalSectorSize > 0)
 					{
-						rawSectors.Add(ArchiveReader.ReadBytes((int)finalSectorSize));
+						rawSectors.Add(this.ArchiveReader.ReadBytes((int)finalSectorSize));
 					}
 
 					uint sectorIndex = 0;
@@ -663,27 +662,27 @@ namespace Warcraft.MPQ
 		/// the <see cref="Warcraft.MPQ.MPQ"/> was occupying.</remarks>
 		public void Dispose()
 		{
-			Header = null;
-			ArchiveHashTable = null;
-			ArchiveBlockTable = null;
+			this.Header = null;
+			this.ArchiveHashTable = null;
+			this.ArchiveBlockTable = null;
 
-			if (ExtendedBlockTable.Count > 0)
+			if (this.ExtendedBlockTable.Count > 0)
 			{
-				ExtendedBlockTable.Clear();
+				this.ExtendedBlockTable.Clear();
 			}
 
-			if (ExternalListfile.Count > 0)
+			if (this.ExternalListfile.Count > 0)
 			{
-				ExternalListfile.Clear();
+				this.ExternalListfile.Clear();
 			}
 
-			if (ArchiveReader != null)
+			if (this.ArchiveReader != null)
 			{
-				ArchiveReader.Close();
-				ArchiveReader.Dispose();
+				this.ArchiveReader.Close();
+				this.ArchiveReader.Dispose();
 			}
 
-			bDisposed = true;
+			this.bDisposed = true;
 		}
 	}
 }

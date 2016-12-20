@@ -151,7 +151,7 @@ namespace Warcraft.MDX
 					this.AnimationLookupTableEntryCount = br.ReadUInt32();
 					this.AnimationLookupTableOffset = br.ReadUInt32();
 
-					if (GetModelVersion(Version) < WarcraftVersion.Wrath)
+					if (GetModelVersion(this.Version) < WarcraftVersion.Wrath)
 					{
 						this.PlayableAnimationLookupTableEntryCount = br.ReadUInt32();
 						this.PlayableAnimationLookupTableOffset = br.ReadUInt32();
@@ -166,7 +166,7 @@ namespace Warcraft.MDX
 					this.VerticesOffset = br.ReadUInt32();
 					this.LODViewsCount = br.ReadUInt32();
 
-					if (GetModelVersion(Version) < WarcraftVersion.Wrath)
+					if (GetModelVersion(this.Version) < WarcraftVersion.Wrath)
 					{
 						this.LODViewsOffset = br.ReadUInt32();
 					}
@@ -178,7 +178,7 @@ namespace Warcraft.MDX
 					this.TransparencyAnimationCount = br.ReadUInt32();
 					this.TransparencyAnimationsOffset = br.ReadUInt32();
 
-					if (GetModelVersion(Version) < WarcraftVersion.Wrath)
+					if (GetModelVersion(this.Version) < WarcraftVersion.Wrath)
 					{
 						this.UnknownCount = br.ReadUInt32();
 						this.UnknownOffset = br.ReadUInt32();
@@ -234,7 +234,7 @@ namespace Warcraft.MDX
 					this.ParticleEmitterCount = br.ReadUInt32();
 					this.ParticleEmittersOffset = br.ReadUInt32();
 
-					if (GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
+					if (this.GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
 					{
 						this.BlendMapCount = br.ReadUInt32();
 						this.BlendMapsOffset = br.ReadUInt32();

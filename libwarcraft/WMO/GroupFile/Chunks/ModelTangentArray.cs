@@ -39,7 +39,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
 		public ModelTangentArray()
 		{
-			hasFinishedLoading = true;
+			this.hasFinishedLoading = true;
 		}
 
 		public ModelTangentArray(byte[] inData)
@@ -50,7 +50,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 		public void LoadBinaryData(byte[] inData)
 		{
 			this.data = inData;
-			hasFinishedLoading = false;
+			this.hasFinishedLoading = false;
 		}
 
 		public string GetSignature()
@@ -81,7 +81,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
 		public bool HasFinishedLoading()
 		{
-			return hasFinishedLoading;
+			return this.hasFinishedLoading;
 		}
 
 		public void PostLoad(ModelTangentArrayPostLoadParameters loadingParameters)

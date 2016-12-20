@@ -69,7 +69,7 @@ namespace Warcraft.ADT.Chunks
 						entry.Flags = br.ReadInt32();
 						entry.AsynchronousLoadingID = br.ReadInt32();
 
-						Entries.Add(entry);
+						this.Entries.Add(entry);
 					}
 				}
 			}

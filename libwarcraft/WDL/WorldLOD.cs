@@ -116,7 +116,7 @@ namespace Warcraft.WDL
 				return false;
 
 			var index = x + y * 64;
-			return MapAreas[index] != null;
+			return this.MapAreas[index] != null;
 		}
 
 		public WorldLODMapArea GetEntry(int x, int y)
@@ -127,7 +127,7 @@ namespace Warcraft.WDL
 			}
 
 			var index = x + y * 64;
-			return MapAreas[index];
+			return this.MapAreas[index];
 		}
 
 		public byte[] Serialize()

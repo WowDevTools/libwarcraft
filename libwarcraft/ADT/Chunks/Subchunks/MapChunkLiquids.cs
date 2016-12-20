@@ -58,7 +58,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					{
 						for (int x = 0; x < 9; ++x)
 						{
-							LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
+							this.LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
 						}
 					}
 
@@ -66,7 +66,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					{
 						for (int x = 0; x < 8; ++x)
 						{
-							LiquidTileFlags.Add(((LiquidFlags)br.ReadByte()));
+							this.LiquidTileFlags.Add(((LiquidFlags)br.ReadByte()));
 						}
 					}
 				}

@@ -58,7 +58,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					long nLayers = br.BaseStream.Length / TextureLayerEntry.GetSize();
 					for (int i = 0; i < nLayers; i++)
 					{
-						Layers.Add(new TextureLayerEntry(br.ReadBytes(TextureLayerEntry.GetSize())));
+						this.Layers.Add(new TextureLayerEntry(br.ReadBytes(TextureLayerEntry.GetSize())));
 					}
 				}
 			}

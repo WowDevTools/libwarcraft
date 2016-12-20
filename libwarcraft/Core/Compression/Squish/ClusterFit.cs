@@ -52,24 +52,24 @@ namespace Squish
 			// Build the list of dot products.
 			var dps = new float[16];
 			var ordOff = 16 * iteration;
-			for (int i = 0; i < _Colours.Count; ++i)
+			for (int i = 0; i < this._Colours.Count; ++i)
 			{
-				dps[i] = Vector3.Dot(_Colours.Points[i], axis);
+				dps[i] = Vector3.Dot(this._Colours.Points[i], axis);
 				this._Order[ordOff + i] = (byte)i;
 			}
 
 			// Stable sort using them.
-			for (int i = 0; i < _Colours.Count; ++i)
+			for (int i = 0; i < this._Colours.Count; ++i)
 			{
 				for (int j = i; j > 0 && dps[j] < dps[j - 1]; --j)
 				{
 					var _dps = dps[j];
-					var _order = _Order[ordOff + j];
+					var _order = this._Order[ordOff + j];
 
 					dps[j] = dps[j - 1];
 					dps[j - 1] = _dps;
-					_Order[ordOff + j] = _Order[ordOff + j - 1];
-					_Order[ordOff + j - 1] = _order;
+					this._Order[ordOff + j] = this._Order[ordOff + j - 1];
+					this._Order[ordOff + j - 1] = _order;
 				}
 			}
 
@@ -78,9 +78,9 @@ namespace Squish
 			{
 				var prevOff = 16 * it;
 				var same = true;
-				for (int i = 0; i < _Colours.Count; ++i)
+				for (int i = 0; i < this._Colours.Count; ++i)
 				{
-					if (_Order[ordOff + i] != _Order[prevOff + i])
+					if (this._Order[ordOff + i] != this._Order[prevOff + i])
 					{
 						same = false;
 						break;
@@ -92,11 +92,11 @@ namespace Squish
 
 			// Copy the ordering and weight all the points
 			this._XSumWSum = new Vector4(0f);
-			for (int i = 0; i < _Colours.Count; ++i)
+			for (int i = 0; i < this._Colours.Count; ++i)
 			{
-				var j = _Order[ordOff + i];
-				var p = new Vector4(_Colours.Points[j].X, _Colours.Points[j].Y, _Colours.Points[j].Z, 1f);
-				var w = new Vector4(_Colours.Weights[j]);
+				var j = this._Order[ordOff + i];
+				var p = new Vector4(this._Colours.Points[j].X, this._Colours.Points[j].Y, this._Colours.Points[j].Z, 1f);
+				var w = new Vector4(this._Colours.Weights[j]);
 				var x = p * w;
 				this._PointsWeight[i] = x;
 				this._XSumWSum += x;

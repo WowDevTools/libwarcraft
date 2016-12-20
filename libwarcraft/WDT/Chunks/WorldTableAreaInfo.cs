@@ -52,7 +52,7 @@ namespace Warcraft.WDT.Chunks
 					{
 						for (uint x = 0; x < 64; ++x)
 						{
-							Entries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize()), x, y));
+							this.Entries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize()), x, y));
 						}
 					}
 				}
@@ -86,7 +86,7 @@ namespace Warcraft.WDT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					foreach (AreaInfoEntry Entry in Entries)
+					foreach (AreaInfoEntry Entry in this.Entries)
 					{
 						bw.Write(Entry.Serialize());
 					}

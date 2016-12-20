@@ -79,44 +79,44 @@ namespace Warcraft.MDX
 				}
 
 				// Seek and read model name
-				br.BaseStream.Position = Header.NameOffset;
-				Name = new string(br.ReadChars((int)Header.NameLength));
+				br.BaseStream.Position = this.Header.NameOffset;
+				this.Name = new string(br.ReadChars((int) this.Header.NameLength));
 
 				// Seek to Global Sequences
-				br.BaseStream.Position = Header.GlobalSequencesOffset;
-				for (int i = 0; i < Header.GlobalSequenceCount; ++i)
+				br.BaseStream.Position = this.Header.GlobalSequencesOffset;
+				for (int i = 0; i < this.Header.GlobalSequenceCount; ++i)
 				{
-					GlobalSequenceTimestamps.Add(br.ReadUInt32());
+					this.GlobalSequenceTimestamps.Add(br.ReadUInt32());
 				}
 
 				// Seek to Animation Sequences
-				br.BaseStream.Position = Header.AnimationSequencesOffset;
+				br.BaseStream.Position = this.Header.AnimationSequencesOffset;
 				int sequenceSize = MDXAnimationSequence.GetSize();
-				for (int i = 0; i < Header.AnimationSequenceCount; ++i)
+				for (int i = 0; i < this.Header.AnimationSequenceCount; ++i)
 				{
-					AnimationSequences.Add(new MDXAnimationSequence(br.ReadBytes(sequenceSize)));
+					this.AnimationSequences.Add(new MDXAnimationSequence(br.ReadBytes(sequenceSize)));
 				}
 
 				// Seek to Animation Sequence Lookup Table
-				br.BaseStream.Position = Header.AnimationLookupTableOffset;
-				for (int i = 0; i < Header.AnimationLookupTableEntryCount; ++i)
+				br.BaseStream.Position = this.Header.AnimationLookupTableOffset;
+				for (int i = 0; i < this.Header.AnimationLookupTableEntryCount; ++i)
 				{
-					AnimationSequenceLookupTable.Add(br.ReadInt16());
+					this.AnimationSequenceLookupTable.Add(br.ReadInt16());
 				}
 
-				if (MDXHeader.GetModelVersion(Header.Version) < WarcraftVersion.Wrath)
+				if (MDXHeader.GetModelVersion(this.Header.Version) < WarcraftVersion.Wrath)
 				{
 					// Seek to Playable Animations Lookup Table
-					br.BaseStream.Position = Header.PlayableAnimationLookupTableOffset;
-					for (int i = 0; i < Header.PlayableAnimationLookupTableEntryCount; ++i)
+					br.BaseStream.Position = this.Header.PlayableAnimationLookupTableOffset;
+					for (int i = 0; i < this.Header.PlayableAnimationLookupTableEntryCount; ++i)
 					{
-						PlayableAnimationLookupTable.Add(new MDXPlayableAnimationLookupTableEntry(br.ReadBytes(4)));
+						this.PlayableAnimationLookupTable.Add(new MDXPlayableAnimationLookupTableEntry(br.ReadBytes(4)));
 					}					
 				}
 
 				// Seek to bone block
-				br.BaseStream.Position = Header.BonesOffset;
-				for (int i = 0; i < Header.BoneCount; ++i)
+				br.BaseStream.Position = this.Header.BonesOffset;
+				for (int i = 0; i < this.Header.BoneCount; ++i)
 				{
 					// TODO: properly skip to the next bone record, data is not aligned
 					MDXBone Bone = new MDXBone();
@@ -126,7 +126,7 @@ namespace Warcraft.MDX
 					Bone.ParentBone = br.ReadInt16();
 					Bone.SubmeshID = br.ReadUInt16();
 
-					if (MDXHeader.GetModelVersion(Header.Version) >= WarcraftVersion.BurningCrusade)
+					if (MDXHeader.GetModelVersion(this.Header.Version) >= WarcraftVersion.BurningCrusade)
 					{
 						Bone.Unknown1 = br.ReadUInt16();
 						Bone.Unknown1 = br.ReadUInt16();
@@ -140,7 +140,7 @@ namespace Warcraft.MDX
 
 					Bone.PivotPoint = br.ReadVector3f();
 
-					Bones.Add(Bone);
+					this.Bones.Add(Bone);
 				}
 
 				/*
@@ -178,37 +178,37 @@ namespace Warcraft.MDX
 				*/
 
 				// Seek to Skeletal Bone Lookup Table
-				br.BaseStream.Position = Header.KeyedBoneLookupTablesOffset;
-				for (int i = 0; i < Header.KeyedBoneLookupTableCount; ++i)
+				br.BaseStream.Position = this.Header.KeyedBoneLookupTablesOffset;
+				for (int i = 0; i < this.Header.KeyedBoneLookupTableCount; ++i)
 				{
-					KeyedBoneLookupTable.Add(br.ReadInt16());
+					this.KeyedBoneLookupTable.Add(br.ReadInt16());
 				}
 
 				// Seek to vertex block
-				br.BaseStream.Position = Header.VerticesOffset;
-				for (int i = 0; i < Header.VertexCount; ++i)
+				br.BaseStream.Position = this.Header.VerticesOffset;
+				for (int i = 0; i < this.Header.VertexCount; ++i)
 				{
-					Vertices.Add(new MDXVertex(br.ReadBytes(48)));
+					this.Vertices.Add(new MDXVertex(br.ReadBytes(48)));
 				}
 
 				// Seek to view block
-				if (MDXHeader.GetModelVersion(Header.Version) < WarcraftVersion.Wrath)
+				if (MDXHeader.GetModelVersion(this.Header.Version) < WarcraftVersion.Wrath)
 				{
-					br.BaseStream.Position = Header.LODViewsOffset;
+					br.BaseStream.Position = this.Header.LODViewsOffset;
 
 					// Read the view headers
-					for (int i = 0; i < Header.LODViewsCount; ++i)
+					for (int i = 0; i < this.Header.LODViewsCount; ++i)
 					{
 						MDXViewHeader ViewHeader = new MDXViewHeader(br.ReadBytes(44));
 
 						MDXView View = new MDXView();
 						View.Header = ViewHeader;
 
-						LODViews.Add(View);
+						this.LODViews.Add(View);
 					}
 
 					// Read view data
-					foreach (MDXView View in LODViews)
+					foreach (MDXView View in this.LODViews)
 					{
 						// Read view vertex indices
 						View.VertexIndices = new List<ushort>();
@@ -242,7 +242,7 @@ namespace Warcraft.MDX
 						for (int j = 0; j < View.Header.SubmeshCount; ++j)
 						{
 							byte[] submeshData;
-							if (MDXHeader.GetModelVersion(Header.Version) >= WarcraftVersion.BurningCrusade)
+							if (MDXHeader.GetModelVersion(this.Header.Version) >= WarcraftVersion.BurningCrusade)
 							{
 								submeshData = br.ReadBytes(48);
 							}
@@ -304,15 +304,15 @@ namespace Warcraft.MDX
 				// TODO: Use this pattern for the tracks as well, where values are outreferenced 
 				// from the block
 				// Seek to Texture definition block
-				br.BaseStream.Position = Header.TexturesOffset;
-				for (int i = 0; i < Header.TextureCount; ++i)
+				br.BaseStream.Position = this.Header.TexturesOffset;
+				for (int i = 0; i < this.Header.TextureCount; ++i)
 				{
 					MDXTexture Texture = new MDXTexture(br.ReadBytes(16));
-					Textures.Add(Texture);
+					this.Textures.Add(Texture);
 				}
 
 				// Read the texture definition strings
-				foreach (MDXTexture Texture in Textures)
+				foreach (MDXTexture Texture in this.Textures)
 				{
 					br.BaseStream.Position = Texture.FilenameOffset;
 					Texture.Filename = new string(br.ReadChars((int)Texture.FilenameLength));
@@ -387,10 +387,10 @@ namespace Warcraft.MDX
 
 				// Render flags			
 				// Seek to render flag block
-				br.BaseStream.Position = Header.RenderFlagsOffset;
-				for (int i = 0; i < Header.RenderFlagCount; ++i)
+				br.BaseStream.Position = this.Header.RenderFlagsOffset;
+				for (int i = 0; i < this.Header.RenderFlagCount; ++i)
 				{
-					RenderFlags.Add(new MDXRenderFlagPair(br.ReadBytes(4)));
+					this.RenderFlags.Add(new MDXRenderFlagPair(br.ReadBytes(4)));
 				}
 
 				// Bone lookup
@@ -399,18 +399,18 @@ namespace Warcraft.MDX
 
 				// Texture unit lookup
 				// Seek to texture unit lookup block
-				br.BaseStream.Position = Header.TextureUnitsOffset;
-				for (int i = 0; i < Header.TextureUnitCount; ++i)
+				br.BaseStream.Position = this.Header.TextureUnitsOffset;
+				for (int i = 0; i < this.Header.TextureUnitCount; ++i)
 				{
-					TextureUnitLookupTable.Add(br.ReadInt16());
+					this.TextureUnitLookupTable.Add(br.ReadInt16());
 				}
 
 				// Transparency lookup
 				// Seek to transparency lookup table
-				br.BaseStream.Position = Header.TransparencyLookupTablesOffset;
-				for (int i = 0; i < Header.TransparencyLookupTableCount; ++i)
+				br.BaseStream.Position = this.Header.TransparencyLookupTablesOffset;
+				for (int i = 0; i < this.Header.TransparencyLookupTableCount; ++i)
 				{
-					TransparencyLookupTable.Add(br.ReadInt16());
+					this.TransparencyLookupTable.Add(br.ReadInt16());
 				}
 
 				// UV animation lookup

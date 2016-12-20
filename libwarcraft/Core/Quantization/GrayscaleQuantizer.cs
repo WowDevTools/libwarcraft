@@ -29,7 +29,7 @@ namespace Warcraft.Core.Quantization
 		public GrayscaleQuantizer()
 			: base(new ArrayList())
 		{
-			_colors = new Color[256];
+			this._colors = new Color[256];
 
 			int nColors = 256;
 
@@ -49,7 +49,7 @@ namespace Warcraft.Core.Quantization
 				// Otherwise, use your favorite color reduction algorithm
 				// and an optimum palette for that algorithm generated here.
 				// For example, a color histogram, or a median cut palette.
-				_colors[i] = Color.FromArgb((int)Alpha, 
+				this._colors[i] = Color.FromArgb((int)Alpha, 
 					(int)Intensity, 
 					(int)Intensity, 
 					(int)Intensity);

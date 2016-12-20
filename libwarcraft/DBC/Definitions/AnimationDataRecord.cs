@@ -92,7 +92,7 @@ namespace Warcraft.DBC.Definitions
 					this.ID = br.ReadUInt32();
 					this.Name = new StringReference(br.ReadUInt32());
 
-					if (Version >= WarcraftVersion.Warlords)
+					if (this.Version >= WarcraftVersion.Warlords)
 					{
 						this.WeaponFlags = (WeaponAnimationFlags)br.ReadUInt32();
 						this.BodyFlags = br.ReadUInt32();
@@ -100,10 +100,10 @@ namespace Warcraft.DBC.Definitions
 
 					this.Flags = br.ReadUInt32();
 
-					this.FallbackAnimation = new UInt32ForeignKey(AnimationDataRecord.RecordName, "ID", br.ReadUInt32());
-					this.BehaviourAnimation = new UInt32ForeignKey(AnimationDataRecord.RecordName, "ID", br.ReadUInt32());
+					this.FallbackAnimation = new UInt32ForeignKey(RecordName, "ID", br.ReadUInt32());
+					this.BehaviourAnimation = new UInt32ForeignKey(RecordName, "ID", br.ReadUInt32());
 
-					if (Version >= WarcraftVersion.Wrath)
+					if (this.Version >= WarcraftVersion.Wrath)
 					{
 						this.BehaviourTier = br.ReadUInt32();
 					}
@@ -122,7 +122,7 @@ namespace Warcraft.DBC.Definitions
 				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
 			}
 
-			switch (Version)
+			switch (this.Version)
 			{
 				case WarcraftVersion.Classic:
 					return 28;
@@ -154,7 +154,7 @@ namespace Warcraft.DBC.Definitions
 				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
 			}
 
-			switch (Version)
+			switch (this.Version)
 			{
 				case WarcraftVersion.Classic:
 					return 7;

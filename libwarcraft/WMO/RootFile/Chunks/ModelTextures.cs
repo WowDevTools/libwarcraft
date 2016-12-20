@@ -54,7 +54,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					{
 						if (ms.Position % 4 == 0)
 						{
-							Textures.Add(ms.Position, br.ReadNullTerminatedString());
+							this.Textures.Add(ms.Position, br.ReadNullTerminatedString());
 						}
 						else
 						{
@@ -89,7 +89,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					foreach (KeyValuePair<long, string> texture in Textures)
+					foreach (KeyValuePair<long, string> texture in this.Textures)
 					{
 						if (ms.Position % 4 == 0)
 						{

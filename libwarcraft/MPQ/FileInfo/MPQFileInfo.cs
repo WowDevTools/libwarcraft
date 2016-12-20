@@ -77,7 +77,7 @@ namespace Warcraft.MPQ.FileInfo
 		{
 			get
 			{
-				return this.GetFlags().HasFlag(BlockFlags.IsDeletionMarker);
+				return GetFlags().HasFlag(BlockFlags.IsDeletionMarker);
 			}
 		}
 
@@ -114,7 +114,7 @@ namespace Warcraft.MPQ.FileInfo
 		/// <returns>The locale.</returns>
 		public LocaleID GetLocale()
 		{
-			return HashEntry.GetLocalizationID();
+			return this.HashEntry.GetLocalizationID();
 		}
 
 		/// <summary>
@@ -123,7 +123,7 @@ namespace Warcraft.MPQ.FileInfo
 		/// <returns>The platform.</returns>
 		public ushort GetPlatform()
 		{
-			return HashEntry.GetPlatformID();
+			return this.HashEntry.GetPlatformID();
 		}
 
 		/// <summary>
@@ -133,7 +133,7 @@ namespace Warcraft.MPQ.FileInfo
 		/// <returns>The stored size.</returns>
 		public long GetStoredSize()
 		{
-			return BlockEntry.GetBlockSize();
+			return this.BlockEntry.GetBlockSize();
 		}
 
 		/// <summary>
@@ -142,7 +142,7 @@ namespace Warcraft.MPQ.FileInfo
 		/// <returns>The actual size.</returns>
 		public long GetActualSize()
 		{
-			return BlockEntry.GetFileSize();
+			return this.BlockEntry.GetFileSize();
 		}
 
 		/// <summary>
@@ -151,7 +151,7 @@ namespace Warcraft.MPQ.FileInfo
 		/// <returns>The flags.</returns>
 		public BlockFlags GetFlags()
 		{
-			return BlockEntry.GetFlags();
+			return this.BlockEntry.GetFlags();
 		}
 	}
 }

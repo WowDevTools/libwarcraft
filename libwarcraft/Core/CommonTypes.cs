@@ -84,7 +84,7 @@ namespace Warcraft.Core
 
 		public override string ToString()
 		{
-			return $"Range: {Minimum} to {Maximum}";
+			return $"Range: {this.Minimum} to {this.Maximum}";
 		}
 	}
 
@@ -118,7 +118,7 @@ namespace Warcraft.Core
 
 		public Vector3f GetCenterCoordinates()
 		{
-			return (BottomCorner + TopCorner) / 2;
+			return (this.BottomCorner + this.TopCorner) / 2;
 		}
 	}
 
@@ -231,7 +231,7 @@ namespace Warcraft.Core
 
 		public override string ToString()
 		{
-			return $"rgba({R}, {G}, {B}, {A})";
+			return $"rgba({this.R}, {this.G}, {this.B}, {this.A})";
 		}
 	}
 
@@ -287,7 +287,7 @@ namespace Warcraft.Core
 
 		public override string ToString()
 		{
-			return $"bgra({B}, {G}, {R}, {A})";
+			return $"bgra({this.B}, {this.G}, {this.R}, {this.A})";
 		}
 	}
 
@@ -308,11 +308,11 @@ namespace Warcraft.Core
 		{
 			get
 			{
-				return Values.X;
+				return this.Values.X;
 			}
 			set
 			{
-				Values.X = value;
+				this.Values.X = value;
 			}
 		}
 
@@ -323,11 +323,11 @@ namespace Warcraft.Core
 		{
 			get
 			{
-				return Values.Y;
+				return this.Values.Y;
 			}
 			set
 			{
-				Values.Y = value;
+				this.Values.Y = value;
 			}
 		}
 
@@ -338,11 +338,11 @@ namespace Warcraft.Core
 		{
 			get
 			{
-				return Values.Z;
+				return this.Values.Z;
 			}
 			set
 			{
-				Values.Z = value;
+				this.Values.Z = value;
 			}
 		}
 
@@ -369,7 +369,7 @@ namespace Warcraft.Core
 
 		public override string ToString()
 		{
-			return $"rgb({R}, {G}, {B})";
+			return $"rgb({this.R}, {this.G}, {this.B})";
 		}
 	}
 
@@ -472,7 +472,7 @@ namespace Warcraft.Core
 
 		public override string ToString()
 		{
-			return $"{X}, {Y}, {Z}";
+			return $"{this.X}, {this.Y}, {this.Z}";
 		}
 	}
 
@@ -575,7 +575,7 @@ namespace Warcraft.Core
 
 		public override string ToString()
 		{
-			return $"{X}, {Y}, {Z}";
+			return $"{this.X}, {this.Y}, {this.Z}";
 		}
 	}
 
@@ -636,7 +636,7 @@ namespace Warcraft.Core
 				{
 					CoordinateRow.Add(inAllCoordinates);
 				}
-				Coordinates.Add(CoordinateRow);
+				this.Coordinates.Add(CoordinateRow);
 			}
 		}
 	}
@@ -711,7 +711,7 @@ namespace Warcraft.Core
 
 		public override string ToString()
 		{
-			return $"Pitch: {Pitch}, Yaw: {Yaw}, Roll: {Roll}";
+			return $"Pitch: {this.Pitch}, Yaw: {this.Yaw}, Roll: {this.Roll}";
 		}
 	}
 
@@ -807,7 +807,7 @@ namespace Warcraft.Core
 
 		public override string ToString()
 		{
-			return $"{X}, {Y}";
+			return $"{this.X}, {this.Y}";
 		}
 	}
 
@@ -900,7 +900,7 @@ namespace Warcraft.Core
 
 		public override string ToString()
 		{
-			return $"{X}x{Y}";
+			return $"{this.X}x{this.Y}";
 		}
 	}
 }

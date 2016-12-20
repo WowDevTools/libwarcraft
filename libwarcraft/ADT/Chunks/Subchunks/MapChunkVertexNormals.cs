@@ -61,7 +61,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 								sbyte Z = br.ReadSByte();
 								sbyte Y = br.ReadSByte();
 
-								HighResVertexNormals.Add(new Vector3f(X, Y, Z));
+								this.HighResVertexNormals.Add(new Vector3f(X, Y, Z));
 							}
 						}
 						else
@@ -73,7 +73,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 								sbyte Z = br.ReadSByte();
 								sbyte Y = br.ReadSByte();
 
-								LowResVertexNormals.Add(new Vector3f(X, Y, Z));
+								this.LowResVertexNormals.Add(new Vector3f(X, Y, Z));
 							}
 						}
 					}

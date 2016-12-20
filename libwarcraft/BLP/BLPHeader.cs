@@ -194,7 +194,7 @@ namespace Warcraft.BLP
 		/// <returns>The number of mipmaps.</returns>
 		public int GetNumMipMaps()
 		{
-			return MipMapOffsets.Count;
+			return this.MipMapOffsets.Count;
 		}
 
 		/// <summary>

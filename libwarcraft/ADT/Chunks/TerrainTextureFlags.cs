@@ -51,7 +51,7 @@ namespace Warcraft.ADT.Chunks
 
 					for (int i = 0; i < EntryCount; ++i)
 					{
-						TextureFlags.Add((TerrainTextureFlag)br.ReadUInt32());
+						this.TextureFlags.Add((TerrainTextureFlag)br.ReadUInt32());
 					}
 				}
 			}

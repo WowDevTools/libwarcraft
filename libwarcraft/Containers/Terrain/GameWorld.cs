@@ -71,9 +71,9 @@ namespace Warcraft.Containers.Terrain
 		{
 			string TilePath = CreateTilePath(TileXPosition, TileYPosition);
 
-			if (Package.ContainsFile(TilePath))
+			if (this.Package.ContainsFile(TilePath))
 			{
-				byte[] terrainTileData = Package.ExtractFile(TilePath);
+				byte[] terrainTileData = this.Package.ExtractFile(TilePath);
 				if (terrainTileData != null)
 				{
 					// TODO: [#9] Pass in DBC entry to allow loading of liquid vertex data
@@ -89,7 +89,7 @@ namespace Warcraft.Containers.Terrain
 
 		private string CreateTilePath(uint TileXPosition, uint TileYPosition)
 		{
-			return $"{WorldPath}\\{WorldName}_{TileXPosition}_{TileYPosition}.adt";
+			return $"{this.WorldPath}\\{this.WorldName}_{TileXPosition}_{TileYPosition}.adt";
 		}
 	}
 }

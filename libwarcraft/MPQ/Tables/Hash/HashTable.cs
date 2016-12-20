@@ -49,7 +49,7 @@ namespace Warcraft.MPQ.Tables.Hash
 					for (long i = 0; i < data.Length; i += HashTableEntry.GetSize())
 					{
 						byte[] entryBytes = br.ReadBytes((int)HashTableEntry.GetSize());
-						Entries.Add(new HashTableEntry(entryBytes));
+						this.Entries.Add(new HashTableEntry(entryBytes));
 					}
 				}
 			}
@@ -62,7 +62,7 @@ namespace Warcraft.MPQ.Tables.Hash
 		/// <param name="fileName">File name.</param>
 		public HashTableEntry FindEntry(string fileName)
 		{
-			uint EntryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint)Entries.Count - 1;
+			uint EntryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint) this.Entries.Count - 1;
 			uint HashA = MPQCrypt.Hash(fileName, HashType.FilePathA);
 			uint HashB = MPQCrypt.Hash(fileName, HashType.FilePathB);
 
@@ -79,11 +79,11 @@ namespace Warcraft.MPQ.Tables.Hash
 		public HashTableEntry FindEntry(uint HashA, uint HashB, uint EntryHomeIndex)
 		{
 			// First, see if the file has ever existed. If it has and matches, return it.
-			if (Entries[(int)EntryHomeIndex].HasFileEverExisted())
+			if (this.Entries[(int)EntryHomeIndex].HasFileEverExisted())
 			{
-				if (Entries[(int)EntryHomeIndex].GetPrimaryHash() == HashA && Entries[(int)EntryHomeIndex].GetSecondaryHash() == HashB)
+				if (this.Entries[(int)EntryHomeIndex].GetPrimaryHash() == HashA && this.Entries[(int)EntryHomeIndex].GetSecondaryHash() == HashB)
 				{
-					return Entries[(int)EntryHomeIndex];
+					return this.Entries[(int)EntryHomeIndex];
 				}
 			}
 			else
@@ -96,7 +96,7 @@ namespace Warcraft.MPQ.Tables.Hash
 			HashTableEntry deletionEntry = null;
 			for (int i = (int)EntryHomeIndex + 1; i < this.Entries.Count - 1; ++i)
 			{
-				currentEntry = Entries[i];
+				currentEntry = this.Entries[i];
 				if (currentEntry.HasFileEverExisted())
 				{
 					if (currentEntry.GetPrimaryHash() == HashA && currentEntry.GetSecondaryHash() == HashB)
@@ -118,7 +118,7 @@ namespace Warcraft.MPQ.Tables.Hash
 			// Still nothing? Loop around and scan the start of the table as well
 			for (int i = 0; i < EntryHomeIndex; ++i)
 			{
-				currentEntry = Entries[i];
+				currentEntry = this.Entries[i];
 				if (currentEntry.HasFileEverExisted())
 				{
 					if (currentEntry.GetPrimaryHash() == HashA && currentEntry.GetSecondaryHash() == HashB)
@@ -153,7 +153,7 @@ namespace Warcraft.MPQ.Tables.Hash
 					}
 				}
 
-				byte[] encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), HashTable.TableKey);
+				byte[] encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), TableKey);
 				return encryptedTable;
 			}
 		}
@@ -164,7 +164,7 @@ namespace Warcraft.MPQ.Tables.Hash
 		/// <returns>The size.</returns>
 		public ulong GetSize()
 		{
-			return (ulong)(Entries.Count * HashTableEntry.GetSize());
+			return (ulong)(this.Entries.Count * HashTableEntry.GetSize());
 		}
 	}
 }

@@ -30,10 +30,10 @@ namespace Warcraft.Core.Quantization
 		public PaletteQuantizer(ArrayList palette)
 			: base(true)
 		{
-			_colorMap = new Hashtable();
+			this._colorMap = new Hashtable();
 
-			_colors = new Color[palette.Count];
-			palette.CopyTo(_colors);
+			this._colors = new Color[palette.Count];
+			palette.CopyTo(this._colors);
 		}
 
 		/// <summary>
@@ -47,8 +47,8 @@ namespace Warcraft.Core.Quantization
 			int colorHash = pixel.ARGB;	
 
 			// Check if the color is in the lookup table
-			if (_colorMap.ContainsKey(colorHash))
-				colorIndex = (byte)_colorMap[colorHash];
+			if (this._colorMap.ContainsKey(colorHash))
+				colorIndex = (byte) this._colorMap[colorHash];
 			else
 			{
 				// Not found - loop through the palette and find the nearest match.
@@ -56,9 +56,9 @@ namespace Warcraft.Core.Quantization
 				if (0 == pixel.Alpha)
 				{
 					// Transparent. Lookup the first color with an alpha value of 0
-					for (int index = 0; index < _colors.Length; index++)
+					for (int index = 0; index < this._colors.Length; index++)
 					{
-						if (0 == _colors[index].A)
+						if (0 == this._colors[index].A)
 						{
 							colorIndex = (byte)index;
 							break;
@@ -74,9 +74,9 @@ namespace Warcraft.Core.Quantization
 					int blue = pixel.Blue;
 
 					// Loop through the entire palette, looking for the closest color match
-					for (int index = 0; index < _colors.Length; index++)
+					for (int index = 0; index < this._colors.Length; index++)
 					{
-						Color	paletteColor = _colors[index];
+						Color	paletteColor = this._colors[index];
 						
 						int	redDistance = paletteColor.R - red;
 						int	greenDistance = paletteColor.G - green;
@@ -99,7 +99,7 @@ namespace Warcraft.Core.Quantization
 				}
 
 				// Now I have the color, pop it into the hashtable for next time
-				_colorMap.Add(colorHash, colorIndex);
+				this._colorMap.Add(colorHash, colorIndex);
 			}
 
 			return colorIndex;
@@ -112,8 +112,8 @@ namespace Warcraft.Core.Quantization
 		/// <returns>The new color palette</returns>
 		protected override ColorPalette GetPalette(ColorPalette palette)
 		{
-			for (int index = 0; index < _colors.Length; index++)
-				palette.Entries[index] = _colors[index];
+			for (int index = 0; index < this._colors.Length; index++)
+				palette.Entries[index] = this._colors[index];
 
 			return palette;
 		}

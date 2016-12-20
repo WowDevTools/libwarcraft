@@ -341,9 +341,9 @@ namespace Warcraft.MPQ
 				// Calculate the size from the start of the header to the end of the
 				// hash table, block table or extended block table (whichever is furthest away)
 
-				ulong hashTableOffset = this.GetHashTableOffset();
-				ulong blockTableOffset = this.GetBlockTableOffset();
-				ulong extendedBlockTableOffset = this.GetExtendedBlockTableOffset();
+				ulong hashTableOffset = GetHashTableOffset();
+				ulong blockTableOffset = GetBlockTableOffset();
+				ulong extendedBlockTableOffset = GetExtendedBlockTableOffset();
 
 				ulong furthestOffset = 0;
 				ulong archiveSize = 0;

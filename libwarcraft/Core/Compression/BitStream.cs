@@ -43,7 +43,7 @@ namespace Warcraft.Core.Compression
 
 		public BitStream(Stream sourceStream)
 		{
-			_baseStream = sourceStream;
+			this._baseStream = sourceStream;
 		}
 
 		public int ReadBits(int bitCount)
@@ -52,7 +52,7 @@ namespace Warcraft.Core.Compression
 				throw new ArgumentOutOfRangeException("BitCount", "Maximum BitCount is 16");
 			if (EnsureBits(bitCount) == false)
 				return -1;
-			int result = _current & (0xffff >> (16 - bitCount));
+			int result = this._current & (0xffff >> (16 - bitCount));
 			WasteBits(bitCount);
 			return result;
 		}
@@ -61,26 +61,26 @@ namespace Warcraft.Core.Compression
 		{
 			if (EnsureBits(8) == false)
 				return -1;
-			return _current & 0xff;
+			return this._current & 0xff;
 		}
 
 		public bool EnsureBits(int bitCount)
 		{
-			if (bitCount <= _bitCount)
+			if (bitCount <= this._bitCount)
 				return true;
 
-			if (_baseStream.Position >= _baseStream.Length)
+			if (this._baseStream.Position >= this._baseStream.Length)
 				return false;
-			int nextvalue = _baseStream.ReadByte();
-			_current |= nextvalue << _bitCount;
-			_bitCount += 8;
+			int nextvalue = this._baseStream.ReadByte();
+			this._current |= nextvalue << this._bitCount;
+			this._bitCount += 8;
 			return true;
 		}
 
 		private bool WasteBits(int bitCount)
 		{
-			_current >>= bitCount;
-			_bitCount -= bitCount;
+			this._current >>= bitCount;
+			this._bitCount -= bitCount;
 			return true;
 		}
 	}

@@ -78,7 +78,7 @@ namespace Warcraft.DBC.Definitions
 				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
 			}
 
-			return RecordData.Length;
+			return this.RecordData.Length;
 		}
 
 		/// <summary>

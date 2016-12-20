@@ -33,8 +33,8 @@ namespace Warcraft.Core.Quantization
 		/// </remarks>
 		public Quantizer(bool singlePass)
 		{
-			_singlePass = singlePass;
-			_pixelSize = Marshal.SizeOf(typeof(Color32));
+			this._singlePass = singlePass;
+			this._pixelSize = Marshal.SizeOf(typeof(Color32));
 		}
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace Warcraft.Core.Quantization
 				// Call the FirstPass function if not a single pass algorithm.
 				// For something like an octree quantizer, this will run through
 				// all image pixels, build a data structure, and create a palette.
-				if (!_singlePass)
+				if (!this._singlePass)
 					FirstPass(sourceData, width, height);
 
 				// Then set the color palette on the output bitmap. I'm passing in the current palette 
@@ -124,7 +124,7 @@ namespace Warcraft.Core.Quantization
 				for (int col = 0; col < width; col++)
 				{            
 					InitialQuantizePixel(new Color32(pSourcePixel)); 
-					pSourcePixel = (IntPtr)((Int32)pSourcePixel + _pixelSize);
+					pSourcePixel = (IntPtr)((Int32)pSourcePixel + this._pixelSize);
 				}	// Now I have the pixel, call the FirstPassQuantize function...
 
 				// Add the stride to the source row
@@ -192,7 +192,7 @@ namespace Warcraft.Core.Quantization
 						// And set the pixel in the output
 						Marshal.WriteByte(pDestinationPixel, pixelValue);
 
-						pSourcePixel = (IntPtr)((long)pSourcePixel + _pixelSize);
+						pSourcePixel = (IntPtr)((long)pSourcePixel + this._pixelSize);
 						pDestinationPixel = (IntPtr)((long)pDestinationPixel + 1);
 
 					}
@@ -295,7 +295,7 @@ namespace Warcraft.Core.Quantization
 			/// </summary>
 			public Color Color
 			{
-				get { return Color.FromArgb(Alpha, Red, Green, Blue); }
+				get { return Color.FromArgb(this.Alpha, this.Red, this.Green, this.Blue); }
 			}
 		}
 	}

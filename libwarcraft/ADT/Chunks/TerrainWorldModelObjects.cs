@@ -61,7 +61,7 @@ namespace Warcraft.ADT.Chunks
 				{
 					while (ms.Position < ms.Length)
 					{
-						Filenames.Add(br.ReadNullTerminatedString());
+						this.Filenames.Add(br.ReadNullTerminatedString());
 					}
 				}
 			}
@@ -78,7 +78,7 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					foreach (string filename in Filenames)
+					foreach (string filename in this.Filenames)
 					{
 						bw.WriteNullTerminatedString(filename);
 					}

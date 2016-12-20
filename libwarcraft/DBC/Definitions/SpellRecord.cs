@@ -45,17 +45,17 @@ namespace Warcraft.DBC.Definitions
 
 		public override void LoadData(byte[] data)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public override int GetFieldCount()
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public override int GetRecordSize()
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 	}
 

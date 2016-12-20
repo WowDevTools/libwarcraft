@@ -115,7 +115,7 @@ namespace Warcraft.DBC.Definitions
 				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
 			}
 
-			switch (Version)
+			switch (this.Version)
 			{
 				case WarcraftVersion.Classic:
 					return 16;
@@ -147,7 +147,7 @@ namespace Warcraft.DBC.Definitions
 				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
 			}
 
-			switch (Version)
+			switch (this.Version)
 			{
 				case WarcraftVersion.Classic:
 					return 4;

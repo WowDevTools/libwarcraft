@@ -51,7 +51,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					int portalReferenceCount = inData.Length / PortalReference.GetSize();
 					for (int i = 0; i < portalReferenceCount; ++i)
 					{
-						PortalReferences.Add(new PortalReference(br.ReadBytes(PortalReference.GetSize())));
+						this.PortalReferences.Add(new PortalReference(br.ReadBytes(PortalReference.GetSize())));
 					}
 				}
 			}

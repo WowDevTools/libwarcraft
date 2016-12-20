@@ -42,7 +42,7 @@ namespace Warcraft.TRS
 						{
 							string[] lineParts = mappingLine.Split('\t');
 
-							HashMappings.Add(lineParts[0], lineParts[1]);
+							this.HashMappings.Add(lineParts[0], lineParts[1]);
 						}
 					}
 				}

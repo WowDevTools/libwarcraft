@@ -104,7 +104,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 		public bool HasGroupName()
 		{
-			return GroupNameOffset > -1;
+			return this.GroupNameOffset > -1;
 		}
 
 		public static int GetSize()

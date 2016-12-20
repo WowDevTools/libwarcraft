@@ -57,18 +57,18 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 		public void PostLoadReferences(uint GameModelObjectCount, uint WorldModelObjectCount)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			using (MemoryStream ms = new MemoryStream(this.data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					for (int i = 0; i < GameModelObjectCount; ++i)
 					{
-						GameModelObjectReferences.Add(br.ReadUInt32());
+						this.GameModelObjectReferences.Add(br.ReadUInt32());
 					}
 
 					for (int i = 0; i < WorldModelObjectCount; ++i)
 					{
-						WorldModelObjectReferences.Add(br.ReadUInt32());
+						this.WorldModelObjectReferences.Add(br.ReadUInt32());
 					}
 				}
 			}

@@ -70,7 +70,7 @@ namespace Warcraft.MPQ.Attributes
 						this.AttributesPresent = (AttributeTypes)br.ReadUInt32();
 
 						List<uint> CRC32s = new List<uint>();
-						if (AttributesPresent.HasFlag(AttributeTypes.CRC32))
+						if (this.AttributesPresent.HasFlag(AttributeTypes.CRC32))
 						{
 							expectedDataLength += sizeof(uint) * FileBlockCount;
 
@@ -95,7 +95,7 @@ namespace Warcraft.MPQ.Attributes
 						}
 
 						List<ulong> Timestamps = new List<ulong>();
-						if (AttributesPresent.HasFlag(AttributeTypes.Timestamp))
+						if (this.AttributesPresent.HasFlag(AttributeTypes.Timestamp))
 						{
 							expectedDataLength += sizeof(ulong) * FileBlockCount;
 
@@ -120,7 +120,7 @@ namespace Warcraft.MPQ.Attributes
 						}
 
 						List<string> MD5s = new List<string>();
-						if (AttributesPresent.HasFlag(AttributeTypes.MD5))
+						if (this.AttributesPresent.HasFlag(AttributeTypes.MD5))
 						{
 							expectedDataLength += 16 * FileBlockCount;
 
@@ -149,7 +149,7 @@ namespace Warcraft.MPQ.Attributes
 						this.FileAttributes = new List<FileAttributes>();
 						for (int i = 0; i < FileBlockCount; ++i)
 						{
-							FileAttributes.Add(new FileAttributes(CRC32s[i], Timestamps[i], MD5s[i]));
+							this.FileAttributes.Add(new FileAttributes(CRC32s[i], Timestamps[i], MD5s[i]));
 						}
 					}
 				}
@@ -158,7 +158,7 @@ namespace Warcraft.MPQ.Attributes
 
 		public bool AreAttributesValid()
 		{
-			return Version == 100 && AttributesPresent > 0;
+			return this.Version == 100 && this.AttributesPresent > 0;
 		}
 	}
 

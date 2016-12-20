@@ -52,7 +52,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					int vertexCount = inData.Length / 12;
 					for (int i = 0; i < vertexCount; ++i)
 					{
-						VisibleVertices.Add(br.ReadVector3f());
+						this.VisibleVertices.Add(br.ReadVector3f());
 					}
 				}
 			}

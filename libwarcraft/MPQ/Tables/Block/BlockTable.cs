@@ -45,7 +45,7 @@ namespace Warcraft.MPQ.Tables.Block
 					for (long i = 0; i < data.Length; i += BlockTableEntry.GetSize())
 					{
 						byte[] entryBytes = br.ReadBytes((int)BlockTableEntry.GetSize());
-						Entries.Add(new BlockTableEntry(entryBytes));
+						this.Entries.Add(new BlockTableEntry(entryBytes));
 					}
 				}
 			}
@@ -63,19 +63,19 @@ namespace Warcraft.MPQ.Tables.Block
 					}
 				}
 
-				byte[] encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), BlockTable.TableKey);
+				byte[] encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), TableKey);
 				return encryptedTable;
 			}
 		}
 
 		public BlockTableEntry GetEntry(int index)
 		{
-			return Entries[index];
+			return this.Entries[index];
 		}
 
 		public ulong GetSize()
 		{
-			return (ulong)(Entries.Count * BlockTableEntry.GetSize());
+			return (ulong)(this.Entries.Count * BlockTableEntry.GetSize());
 		}
 	}
 }

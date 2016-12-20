@@ -52,7 +52,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					int portalCount = inData.Length / Portal.GetSize();
 					for (uint i = 0; i < portalCount; ++i)
 					{
-						Portals.Add(new Portal(br.ReadBytes(Portal.GetSize())));
+						this.Portals.Add(new Portal(br.ReadBytes(Portal.GetSize())));
 					}
 				}
 			}

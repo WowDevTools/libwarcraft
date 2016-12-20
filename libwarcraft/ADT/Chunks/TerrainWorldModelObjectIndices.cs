@@ -61,7 +61,7 @@ namespace Warcraft.ADT.Chunks
 					int offsetCount = inData.Length / 4;
 					for (int i = 0; i < offsetCount; ++i)
 					{
-						WorldModelObjectFilenameOffsets.Add(br.ReadUInt32());
+						this.WorldModelObjectFilenameOffsets.Add(br.ReadUInt32());
 					}
 				}
 			}

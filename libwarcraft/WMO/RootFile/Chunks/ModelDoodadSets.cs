@@ -86,7 +86,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 		private string name;
 		public string Name
 		{
-			get { return name; }
+			get { return this.name; }
 			set
 			{
 				if (value.Length > 20)
@@ -94,7 +94,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					throw new ArgumentException("Doodad set names may not be longer than 20 characters.", nameof(value));
 				}
 
-				name = value;
+				this.name = value;
 			}
 		}
 		public uint FirstDoodadInstanceIndex;

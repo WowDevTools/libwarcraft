@@ -71,7 +71,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		{
 			List<byte> DecompressedAlphaMap = new List<byte>();
 
-			using (MemoryStream ms = new MemoryStream(data))
+			using (MemoryStream ms = new MemoryStream(this.data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{

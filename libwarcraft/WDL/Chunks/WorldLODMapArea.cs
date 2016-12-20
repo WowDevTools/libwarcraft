@@ -85,12 +85,12 @@ namespace Warcraft.WDL.Chunks
             {
             	using (BinaryWriter bw = new BinaryWriter(ms))
             	{
-		            foreach (short lodVertex in HighResVertices)
+		            foreach (short lodVertex in this.HighResVertices)
 		            {
 						bw.Write(lodVertex);
 		            }
 
-		            foreach (short lodVertex in LowResVertices)
+		            foreach (short lodVertex in this.LowResVertices)
 					{
 						bw.Write(lodVertex);
 					}

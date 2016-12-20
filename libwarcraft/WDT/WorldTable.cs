@@ -63,7 +63,7 @@ namespace Warcraft.WDT
 		public List<AreaInfoEntry> GetLoadedAreas()
 		{
 			List<AreaInfoEntry> LoadedAreas = new List<AreaInfoEntry>();
-			foreach (AreaInfoEntry Entry in AreaInfo.Entries)
+			foreach (AreaInfoEntry Entry in this.AreaInfo.Entries)
 			{
 				if (Entry.Flags.HasFlag(AreaInfoFlags.IsLoaded))
 				{
@@ -81,7 +81,7 @@ namespace Warcraft.WDT
 		public List<AreaInfoEntry> GetAreasWithTerrain()
 		{
 			List<AreaInfoEntry> TerrainAreas = new List<AreaInfoEntry>();
-			foreach (AreaInfoEntry Entry in AreaInfo.Entries)
+			foreach (AreaInfoEntry Entry in this.AreaInfo.Entries)
 			{
 				if (Entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
 				{
@@ -109,7 +109,7 @@ namespace Warcraft.WDT
 		/// <returns><c>true</c> if this instance has any terrain; otherwise, <c>false</c>.</returns>
 		public bool HasAnyTerrain()
 		{
-			foreach (AreaInfoEntry Entry in AreaInfo.Entries)
+			foreach (AreaInfoEntry Entry in this.AreaInfo.Entries)
 			{
 				if (Entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
 				{
@@ -128,7 +128,7 @@ namespace Warcraft.WDT
 		/// <param name="InTileY">0-based y coordinate of the tile.</param>
 		public bool IsTilePopulated(uint InTileX, uint InTileY)
 		{
-			AreaInfoEntry InfoEntry = AreaInfo.GetAreaInfo(InTileX, InTileY);
+			AreaInfoEntry InfoEntry = this.AreaInfo.GetAreaInfo(InTileX, InTileY);
 			return InfoEntry.Flags.HasFlag(AreaInfoFlags.HasTerrainData);
 		}
 
@@ -143,7 +143,7 @@ namespace Warcraft.WDT
 					bw.WriteIFFChunk(this.AreaInfo);
 					bw.WriteIFFChunk(this.WorldModelObjects);
 
-					if (WorldModelObjects.Filenames.Count > 0 && WorldModelObjectPlacementInfo != null)
+					if (this.WorldModelObjects.Filenames.Count > 0 && this.WorldModelObjectPlacementInfo != null)
 					{
 						bw.WriteIFFChunk(this.WorldModelObjectPlacementInfo);
 					}

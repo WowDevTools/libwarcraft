@@ -60,7 +60,7 @@ namespace Warcraft.WMO.GroupFile
 
 		public Vector3f GetPosition()
 		{
-			return this.GetBoundingBox().GetCenterCoordinates();
+			return GetBoundingBox().GetCenterCoordinates();
 		}
 
 		public Box GetBoundingBox()

@@ -57,7 +57,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 					while (ms.Position < ms.Length)
 					{
-						GroupNames.Add(ms.Position, br.ReadNullTerminatedString());
+						this.GroupNames.Add(ms.Position, br.ReadNullTerminatedString());
 					}
 				}
 			}
@@ -101,9 +101,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 					bw.Write('\0');
 
 					// Then the actual data
-					for (int i = 0; i < GroupNames.Count; ++i)
+					for (int i = 0; i < this.GroupNames.Count; ++i)
 					{
-						bw.WriteNullTerminatedString(GroupNames.ElementAt(i).Value);
+						bw.WriteNullTerminatedString(this.GroupNames.ElementAt(i).Value);
 					}
 
 					// Then zero padding to an even 4-byte boundary at the end

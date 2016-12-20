@@ -30,10 +30,10 @@ namespace Warcraft.MDX.Geometry
 
 		public MDXVertexProperty(byte InBoneA, byte InBoneB, byte InBoneC, byte InBoneD)
 		{
-			BoneIndices.Add(InBoneA);
-			BoneIndices.Add(InBoneB);
-			BoneIndices.Add(InBoneC);
-			BoneIndices.Add(InBoneD);
+			this.BoneIndices.Add(InBoneA);
+			this.BoneIndices.Add(InBoneB);
+			this.BoneIndices.Add(InBoneC);
+			this.BoneIndices.Add(InBoneD);
 		}
 	}
 }

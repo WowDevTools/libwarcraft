@@ -57,7 +57,7 @@ namespace Warcraft.MPQ.Tables.Hash
 		/// <returns><c>true</c> if this file ever existed; otherwise, <c>false</c>.</returns>
 		public bool HasFileEverExisted()
 		{
-			return FileBlockIndex != 0xFFFFFFFF;
+			return this.FileBlockIndex != 0xFFFFFFFF;
 		}
 
 		/// <summary>
@@ -67,7 +67,7 @@ namespace Warcraft.MPQ.Tables.Hash
 		/// <returns><c>true</c>, if the file exists, <c>false</c> otherwise.</returns>
 		public bool DoesFileExist()
 		{
-			return FileBlockIndex != 0xFFFFFFFE || FileBlockIndex != 0xFFFFFFFF;
+			return this.FileBlockIndex != 0xFFFFFFFE || this.FileBlockIndex != 0xFFFFFFFF;
 		}
 
 		/// <summary>

@@ -103,7 +103,7 @@ namespace Warcraft.DBC
 
 					while (br.BaseStream.Position != br.BaseStream.Length)
 					{
-						Strings.Add(br.ReadNullTerminatedString());
+						this.Strings.Add(br.ReadNullTerminatedString());
 					}
 				}
 			}
@@ -116,7 +116,7 @@ namespace Warcraft.DBC
 		/// <param name="ID">Primary key ID.</param>
 		public T GetRecordByID(uint ID)
 		{
-			foreach (T Record in Records)
+			foreach (T Record in this.Records)
 			{
 				if (Record.ID == ID)
 				{
@@ -137,7 +137,7 @@ namespace Warcraft.DBC
 		public string ResolveStringReference(StringReference reference)
 		{
 			int blockOffset = 0;
-			foreach (string blockString in Strings)
+			foreach (string blockString in this.Strings)
 			{
 				if (blockOffset == reference.StringOffset)
 				{

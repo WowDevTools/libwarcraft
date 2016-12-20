@@ -330,7 +330,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 				this.Flags |= GroupFlags.HasBSP;
 			}
 
-			if (this.mpbv != null && this.mpbp != null && mpbi != null && mpbg != null)
+			if (this.mpbv != null && this.mpbp != null && this.mpbi != null && this.mpbg != null)
 			{
 				this.Flags |= GroupFlags.UnknownLODRelated;
 			}

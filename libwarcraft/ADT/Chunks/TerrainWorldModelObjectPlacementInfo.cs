@@ -62,7 +62,7 @@ namespace Warcraft.ADT.Chunks
 					long EntryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
 					for (int i = 0; i < EntryCount; ++i)
 					{
-						Entries.Add(new WorldModelObjectPlacementEntry(br.ReadBytes(WorldModelObjectPlacementEntry.GetSize())));
+						this.Entries.Add(new WorldModelObjectPlacementEntry(br.ReadBytes(WorldModelObjectPlacementEntry.GetSize())));
 					}
 				}
 			}

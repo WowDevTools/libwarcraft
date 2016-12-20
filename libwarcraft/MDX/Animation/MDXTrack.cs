@@ -62,14 +62,14 @@ namespace Warcraft.MDX.Animation
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					Interpolationtype = (InterpolationType)br.ReadInt16();
-					GlobalSequenceID = br.ReadInt16();
+					this.Interpolationtype = (InterpolationType)br.ReadInt16();
+					this.GlobalSequenceID = br.ReadInt16();
 
 					if (Format < WarcraftVersion.Wrath)
 					{
-						InterpolationRanges = new MDXArray<KeyValuePair<int, int>>(br.ReadBytes(8));
-						Timestamps = new MDXArray<MDXArray<int>>(br.ReadBytes(8));
-						Values = new MDXArray<MDXArray<T>>(br.ReadBytes(8));
+						this.InterpolationRanges = new MDXArray<KeyValuePair<int, int>>(br.ReadBytes(8));
+						this.Timestamps = new MDXArray<MDXArray<int>>(br.ReadBytes(8));
+						this.Values = new MDXArray<MDXArray<T>>(br.ReadBytes(8));
 					}
 					else
 					{

@@ -52,7 +52,7 @@ namespace Warcraft.WDL.Chunks
 					{
 						for (int x = 0; x < 64; ++x)
 						{
-							MapAreaOffsets.Add(br.ReadUInt32());
+							this.MapAreaOffsets.Add(br.ReadUInt32());
 						}
 					}
 				}

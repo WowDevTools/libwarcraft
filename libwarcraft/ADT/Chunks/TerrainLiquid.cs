@@ -62,10 +62,10 @@ namespace Warcraft.ADT.Chunks
 				{
 					for (int i = 0; i < 256; ++i)
 					{
-						LiquidChunks.Add(new TerrainLiquidChunk(br.ReadBytes(TerrainLiquidChunk.GetSize())));
+						this.LiquidChunks.Add(new TerrainLiquidChunk(br.ReadBytes(TerrainLiquidChunk.GetSize())));
 					}
 
-					foreach (TerrainLiquidChunk LiquidChunk in LiquidChunks)
+					foreach (TerrainLiquidChunk LiquidChunk in this.LiquidChunks)
 					{
 						br.BaseStream.Position = LiquidChunk.WaterInstanceOffset;
 						for (int i = 0; i < LiquidChunk.LayerCount; ++i)
@@ -252,12 +252,12 @@ namespace Warcraft.ADT.Chunks
 					int ArrayEntryCount = (Width + 1) * (Height + 1);
 					for (int i = 0; i < ArrayEntryCount; ++i)
 					{
-						Heightmap.Add(br.ReadSingle());
+						this.Heightmap.Add(br.ReadSingle());
 					}
 
 					for (int i = 0; i < ArrayEntryCount; ++i)
 					{
-						Depthmap.Add(br.ReadByte());
+						this.Depthmap.Add(br.ReadByte());
 					}
 				}
 			}
@@ -285,13 +285,13 @@ namespace Warcraft.ADT.Chunks
 					int ArrayEntryCount = (Width + 1) * (Height + 1);
 					for (int i = 0; i < ArrayEntryCount; ++i)
 					{
-						Heightmap.Add(br.ReadSingle());
+						this.Heightmap.Add(br.ReadSingle());
 					}
 
 					for (int i = 0; i < ArrayEntryCount; ++i)
 					{
 						Tuple<ushort, ushort> UVEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-						UVMap.Add(UVEntry);
+						this.UVMap.Add(UVEntry);
 					}
 				}
 			}
@@ -319,7 +319,7 @@ namespace Warcraft.ADT.Chunks
 
 					for (int i = 0; i < ArrayEntryCount; ++i)
 					{
-						Depthmap.Add(br.ReadByte());
+						this.Depthmap.Add(br.ReadByte());
 					}
 				}
 			}
@@ -348,18 +348,18 @@ namespace Warcraft.ADT.Chunks
 					int ArrayEntryCount = (Width + 1) * (Height + 1);
 					for (int i = 0; i < ArrayEntryCount; ++i)
 					{
-						Heightmap.Add(br.ReadSingle());
+						this.Heightmap.Add(br.ReadSingle());
 					}
 
 					for (int i = 0; i < ArrayEntryCount; ++i)
 					{
 						Tuple<ushort, ushort> UVEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-						UVMap.Add(UVEntry);
+						this.UVMap.Add(UVEntry);
 					}
 
 					for (int i = 0; i < ArrayEntryCount; ++i)
 					{
-						Depthmap.Add(br.ReadByte());
+						this.Depthmap.Add(br.ReadByte());
 					}
 				}
 			}

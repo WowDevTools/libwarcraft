@@ -56,7 +56,7 @@ namespace Warcraft.MPQ.Tables.Block
 
 		public ulong GetExtendedBlockOffset(ushort highBits)
 		{
-			return MPQHeader.MergeHighBits(BlockOffset, highBits);
+			return MPQHeader.MergeHighBits(this.BlockOffset, highBits);
 		}
 
 		/// <summary>
@@ -92,7 +92,7 @@ namespace Warcraft.MPQ.Tables.Block
 		/// <returns><c>true</c> if this instance is block empty; otherwise, <c>false</c>.</returns>
 		public bool IsBlockEmpty()
 		{
-			return (BlockOffset != 0) && (BlockSize != 0) && (FileSize == 0) && (Flags == 0);
+			return (this.BlockOffset != 0) && (this.BlockSize != 0) && (this.FileSize == 0) && (this.Flags == 0);
 		}
 
 		/// <summary>
@@ -101,7 +101,7 @@ namespace Warcraft.MPQ.Tables.Block
 		/// <returns><c>true</c> if this instance is block unused; otherwise, <c>false</c>.</returns>
 		public bool IsBlockUnused()
 		{
-			return (BlockOffset == 0) && (BlockSize == 0) && (FileSize == 0) && (Flags == 0);
+			return (this.BlockOffset == 0) && (this.BlockSize == 0) && (this.FileSize == 0) && (this.Flags == 0);
 		}
 
 		public byte[] Serialize()

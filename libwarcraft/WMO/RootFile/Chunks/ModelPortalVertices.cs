@@ -51,7 +51,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 				{
 					while (ms.Position < ms.Length)
 					{
-						Vertices.Add(br.ReadVector3f());
+						this.Vertices.Add(br.ReadVector3f());
 					}
 				}
 			}
