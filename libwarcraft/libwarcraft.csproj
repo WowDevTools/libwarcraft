@@ -104,7 +104,9 @@
     <Compile Include="WMO\GroupFile\Chunks\MPBP.cs" />
     <Compile Include="WMO\GroupFile\Chunks\MPBV.cs" />
     <Compile Include="WMO\GroupFile\ModelGroupData.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelDoodadInstance.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelDoodadSet.cs" />
+    <Compile Include="WMO\RootFile\Chunks\ModelFogInstance.cs" />
     <Compile Include="WMO\RootFile\Chunks\ModelPortalVertices.cs" />
     <Compile Include="WMO\WMO.cs" />
     <Compile Include="MDX\MDX.cs" />
