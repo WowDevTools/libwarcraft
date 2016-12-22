@@ -193,3 +193,7 @@ test-results/
 
 # Github-todos (may contain OAuth tokens)
 .github-todos
+
+# IntelliJ
+.idea/
+.idea.*/
