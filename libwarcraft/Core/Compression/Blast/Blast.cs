@@ -349,11 +349,15 @@ namespace Blast
 				left = (MAX_BITS + 1) - len;
 
 				if (left == 0)
+				{
 					break;
+				}
 
 				bitbuf = ConsumeByte();
 				if (left > 8)
+				{
 					left = 8;
+				}
 			}
 
 			return -9;
@@ -569,13 +573,19 @@ namespace Blast
 				// count number of codes of each length 
 				n = symbol;
 				for (len = 0; len <= MAX_BITS; len++)
+				{
 					this.count[len] = 0;
+				}
 
 				for (symbol = 0; symbol < n; symbol++)
+				{
 					(this.count[length[symbol]])++;// assumes lengths are within bounds 
+				}
 
 				if (this.count[0] == n)// no codes! 
+				{
 					return 0;   // complete, but decode() will fail 
+				}
 
 				// check for an over-subscribed or incomplete set of lengths 
 				left = 1; // one possible code of zero length 
@@ -584,7 +594,9 @@ namespace Blast
 					left <<= 1; // one more bit, double codes left 
 					left -= this.count[len]; // deduct count from possible codes 
 					if (left < 0)
+					{
 						return left; // over-subscribed--return negative 
+					}
 				} // left > 0 means incomplete 
 
 				// generate offsets into symbol table for each length for sorting 

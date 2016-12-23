@@ -62,16 +62,22 @@ namespace Squish
 			var colOff = blockOffset;
 			var alphaOff = blockOffset;
 			if ((flags & (SquishOptions.DXT3 | SquishOptions.DXT5)) != 0)
+			{
 				colOff += 8;
+			}
 
 			// Decompress colour.
 			var rgba = ColourBlock.DecompressColour(block, colOff, flags.HasFlag(SquishOptions.DXT1));
 
 			// Decompress alpha seperately if necessary.
 			if (flags.HasFlag(SquishOptions.DXT3))
+			{
 				Alpha.DecompressAlphaDxt3(block, alphaOff, rgba, 0);
+			}
 			else if (flags.HasFlag(SquishOptions.DXT5))
+			{
 				Alpha.DecompressAlphaDxt5(block, alphaOff, rgba, 0);
+			}
 
 			return rgba;
 		}

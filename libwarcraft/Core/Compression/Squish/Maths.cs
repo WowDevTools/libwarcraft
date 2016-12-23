@@ -158,7 +158,9 @@ namespace Squish {
         public Sym3x3() { }
         public Sym3x3(float s) {
             for (int i = 0; i < 6; ++i)
-                this._X[i] = s;
+            {
+	            this._X[i] = s;
+            }
         }
 
         public static Sym3x3 ComputeWeightedCovariance(int n, Vector3[] points, float[] weights) {
@@ -292,7 +294,9 @@ namespace Squish {
 
             // Test the multiplicity.
             if (float.Epsilon < Q)
-                return new Vector3(1f); // Only one root, which implies we have a multiple of the identity.
+            {
+	            return new Vector3(1f); // Only one root, which implies we have a multiple of the identity.
+            }
             else if (Q < -float.Epsilon) {
                 // Three distinct roots
                 var theta = Math.Atan2(Math.Sqrt(Q), -.5f * b);
@@ -308,28 +312,40 @@ namespace Squish {
 
                 // Pick the larger.
                 if (Math.Abs(l2) > Math.Abs(l1))
-                    l1 = l2;
-                if (Math.Abs(l3) > Math.Abs(l1))
-                    l1 = l3;
+                {
+	                l1 = l2;
+                }
+	            if (Math.Abs(l3) > Math.Abs(l1))
+	            {
+		            l1 = l3;
+	            }
 
-                // Get the eigenvector
+	            // Get the eigenvector
                 return GetMultiplicity1Evector(matrix, (float)l1);
             } else {    // Q very close to 0
                 // Two roots
                 double rt;
                 if (b < 0.0f)
-                    rt = -Math.Pow(-.5f * b, 1f / 3f);
+                {
+	                rt = -Math.Pow(-.5f * b, 1f / 3f);
+                }
                 else
-                    rt = Math.Pow(.5f * b, 1f / 3f);
+                {
+	                rt = Math.Pow(.5f * b, 1f / 3f);
+                }
 
-                var l1 = ((1f / 3f) * c2) + rt;
+	            var l1 = ((1f / 3f) * c2) + rt;
                 var l2 = ((1f / 3f) * c2) - (2f * rt);
 
                 // Get the eigenvector
                 if (Math.Abs(l1) > Math.Abs(l2))
-                    return GetMultiplicity2Evector(matrix, (float)l1);
+                {
+	                return GetMultiplicity2Evector(matrix, (float)l1);
+                }
                 else
-                    return GetMultiplicity1Evector(matrix, (float)l2);
+                {
+	                return GetMultiplicity1Evector(matrix, (float)l2);
+                }
             }
         }
     }

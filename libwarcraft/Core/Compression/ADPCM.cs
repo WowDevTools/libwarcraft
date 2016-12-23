@@ -1,7 +1,7 @@
 //
 // MpqWavCompression.cs
 // https://code.google.com/p/mpqtool/source/browse/trunk/MpqTool/Foole.Mpq/MpqWavCompression.cs
-// 
+//
 // Authors:
 //              Foole (fooleau@gmail.com)
 //
@@ -15,10 +15,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -52,7 +52,7 @@ namespace Warcraft.Core.Compression
 				0x3BB9, 0x41B2, 0x4844, 0x4F7E, 0x5771, 0x602F, 0x69CE, 0x7462,
 				0x7FFF
 			};
-                
+
 		private static readonly int[] sLookup2 =
 			{
 				-1, 0, -1, 4, -1, 2, -1, 6,
@@ -69,10 +69,10 @@ namespace Warcraft.Core.Compression
 			BinaryReader input = new BinaryReader(data);
 			MemoryStream outputstream = new MemoryStream();
 			BinaryWriter output = new BinaryWriter(outputstream);
-                        
+
 			input.ReadByte();
 			byte shift = input.ReadByte();
-                        
+
 			for (int i = 0; i < channelCount; i++)
 			{
 				short temp = input.ReadInt16();
@@ -86,32 +86,44 @@ namespace Warcraft.Core.Compression
 				byte value = input.ReadByte();
 
 				if (channelCount == 2)
+				{
 					channel = 1 - channel;
-                                
+				}
+
 				if ((value & 0x80) != 0)
 				{
 					switch (value & 0x7f)
 					{
 						case 0:
 							if (Array1[channel] != 0)
+							{
 								Array1[channel]--;
+							}
 							output.Write((short)Array2[channel]);
 							break;
 						case 1:
 							Array1[channel] += 8;
 							if (Array1[channel] > 0x58)
+							{
 								Array1[channel] = 0x58;
+							}
 							if (channelCount == 2)
+							{
 								channel = 1 - channel;
+							}
 							break;
 						case 2:
 							break;
 						default:
 							Array1[channel] -= 8;
 							if (Array1[channel] < 0)
+							{
 								Array1[channel] = 0;
+							}
 							if (channelCount == 2)
+							{
 								channel = 1 - channel;
+							}
 							break;
 					}
 				}
@@ -121,40 +133,60 @@ namespace Warcraft.Core.Compression
 					int temp2 = temp1 >> shift;
 
 					if ((value & 1) != 0)
+					{
 						temp2 += (temp1 >> 0);
+					}
 					if ((value & 2) != 0)
+					{
 						temp2 += (temp1 >> 1);
+					}
 					if ((value & 4) != 0)
+					{
 						temp2 += (temp1 >> 2);
+					}
 					if ((value & 8) != 0)
+					{
 						temp2 += (temp1 >> 3);
+					}
 					if ((value & 0x10) != 0)
+					{
 						temp2 += (temp1 >> 4);
+					}
 					if ((value & 0x20) != 0)
+					{
 						temp2 += (temp1 >> 5);
+					}
 
 					int temp3 = Array2[channel];
 					if ((value & 0x40) != 0)
 					{
 						temp3 -= temp2;
 						if (temp3 <= short.MinValue)
+						{
 							temp3 = short.MinValue;
+						}
 					}
 					else
 					{
 						temp3 += temp2;
 						if (temp3 >= short.MaxValue)
+						{
 							temp3 = short.MaxValue;
+						}
 					}
 					Array2[channel] = temp3;
 					output.Write((short)temp3);
-                                        
+
 					Array1[channel] += sLookup2[value & 0x1f];
 
 					if (Array1[channel] < 0)
+					{
 						Array1[channel] = 0;
+					}
 					else if (Array1[channel] > 0x58)
+					{
 						Array1[channel] = 0x58;
+					}
 				}
 			}
 			return outputstream.ToArray();
