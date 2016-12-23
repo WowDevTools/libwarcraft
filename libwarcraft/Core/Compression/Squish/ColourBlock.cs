@@ -68,7 +68,9 @@ namespace Squish
 			{
 				var offset = 4 * indices[i];
 				for (int j = 0; j < 4; ++j)
+				{
 					rgba[4 * i + j] = codes[offset + j];
+				}
 			}
 			return rgba;
 		}

@@ -32,9 +32,13 @@ namespace Squish
 			// Initialize the metric
 			var perceptual = flags.HasFlag(SquishOptions.ColourMetricPerceptual);
 			if (perceptual)
+			{
 				this._Metric = new Vector4(0.2126f, 0.7152f, 0.0722f, 0.0f);
+			}
 			else
+			{
 				this._Metric = new Vector4(1.0f);
+			}
 
 			// Get the covariance matrix.
 			var covariance = Sym3x3.ComputeWeightedCovariance(colours.Count, colours.Points, colours.Weights);
@@ -87,7 +91,9 @@ namespace Squish
 					}
 				}
 				if (same)
+				{
 					return false;
+				}
 			}
 
 			// Copy the ordering and weight all the points

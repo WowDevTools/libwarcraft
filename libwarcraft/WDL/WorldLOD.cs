@@ -113,7 +113,9 @@ namespace Warcraft.WDL
 		public bool HasEntry(int x, int y)
 		{
 			if (x < 0 || y < 0 || x > 63 || y > 63)
+			{
 				return false;
+			}
 
 			var index = x + y * 64;
 			return this.MapAreas[index] != null;

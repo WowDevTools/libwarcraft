@@ -48,7 +48,9 @@ namespace Warcraft.Core.Quantization
 
 			// Check if the color is in the lookup table
 			if (this._colorMap.ContainsKey(colorHash))
+			{
 				colorIndex = (byte) this._colorMap[colorHash];
+			}
 			else
 			{
 				// Not found - loop through the palette and find the nearest match.
@@ -93,7 +95,9 @@ namespace Warcraft.Core.Quantization
 
 							// And if it's an exact match, exit the loop
 							if (0 == distance)
+							{
 								break;
+							}
 						}
 					}
 				}
@@ -113,7 +117,9 @@ namespace Warcraft.Core.Quantization
 		protected override ColorPalette GetPalette(ColorPalette palette)
 		{
 			for (int index = 0; index < this._colors.Length; index++)
+			{
 				palette.Entries[index] = this._colors[index];
+			}
 
 			return palette;
 		}

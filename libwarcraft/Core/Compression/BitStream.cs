@@ -49,9 +49,13 @@ namespace Warcraft.Core.Compression
 		public int ReadBits(int bitCount)
 		{
 			if (bitCount > 16)
+			{
 				throw new ArgumentOutOfRangeException("BitCount", "Maximum BitCount is 16");
+			}
 			if (EnsureBits(bitCount) == false)
+			{
 				return -1;
+			}
 			int result = this._current & (0xffff >> (16 - bitCount));
 			WasteBits(bitCount);
 			return result;
@@ -60,17 +64,23 @@ namespace Warcraft.Core.Compression
 		public int PeekByte()
 		{
 			if (EnsureBits(8) == false)
+			{
 				return -1;
+			}
 			return this._current & 0xff;
 		}
 
 		public bool EnsureBits(int bitCount)
 		{
 			if (bitCount <= this._bitCount)
+			{
 				return true;
+			}
 
 			if (this._baseStream.Position >= this._baseStream.Length)
+			{
 				return false;
+			}
 			int nextvalue = this._baseStream.ReadByte();
 			this._current |= nextvalue << this._bitCount;
 			this._bitCount += 8;

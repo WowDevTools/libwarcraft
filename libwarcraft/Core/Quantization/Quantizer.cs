@@ -82,7 +82,9 @@ namespace Warcraft.Core.Quantization
 				// For something like an octree quantizer, this will run through
 				// all image pixels, build a data structure, and create a palette.
 				if (!this._singlePass)
+				{
 					FirstPass(sourceData, width, height);
+				}
 
 				// Then set the color palette on the output bitmap. I'm passing in the current palette 
 				// as there's no way to construct a new, empty palette.

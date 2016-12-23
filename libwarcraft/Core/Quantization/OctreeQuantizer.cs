@@ -33,10 +33,14 @@ namespace Warcraft.Core.Quantization
 			: base(false)
 		{
 			if (maxColors > 255)
+			{
 				throw new ArgumentOutOfRangeException("maxColors", maxColors, "The number of colors should be less than 256");
+			}
 
 			if ((maxColorBits < 1) | (maxColorBits > 8))
+			{
 				throw new ArgumentOutOfRangeException("maxColorBits", maxColorBits, "This should be between 1 and 8");
+			}
 
 			// Construct the octree
 			this._octree = new Octree(maxColorBits);
@@ -70,7 +74,9 @@ namespace Warcraft.Core.Quantization
 
 			// Get the palette index if this non-transparent
 			if (pixel.Alpha > 0)
+			{
 				paletteIndex = (byte) this._octree.GetPaletteIndex(pixel);
+			}
 
 			return paletteIndex;
 		}
@@ -87,7 +93,9 @@ namespace Warcraft.Core.Quantization
 
 			// Then convert the palette based on those colors
 			for (int index = 0; index < palette.Count; index++)
+			{
 				original.Entries[index] = (Color)palette[index];
+			}
 
 			// Add the transparent color
 			original.Entries[this._maxColors] = Color.FromArgb(0, 0, 0, 0);
@@ -142,7 +150,9 @@ namespace Warcraft.Core.Quantization
 					}
 					else
 						// Just update the previous node
+					{
 						this._previousNode.Increment(pixel);
+					}
 				}
 				else
 				{
@@ -160,8 +170,10 @@ namespace Warcraft.Core.Quantization
 
 				// Find the deepest level containing at least one reducible node
 				for (index = this._maxColorBits - 1; (index > 0) && (null == this._reducibleNodes[index]); index--)
+				{
 					;
-                
+				}
+
 				// Reduce the node most recently added to the list at level 'index'
 				OctreeNode node = this._reducibleNodes[index];
 				this._reducibleNodes[index] = node.NextReducible;
@@ -209,7 +221,9 @@ namespace Warcraft.Core.Quantization
 			public ArrayList Palletize(int colorCount)
 			{
 				while (this.Leaves > colorCount)
+				{
 					Reduce();
+				}
 
 				// Now palettize the nodes
 				ArrayList	palette = new ArrayList(this.Leaves);
@@ -407,7 +421,9 @@ namespace Warcraft.Core.Quantization
 						for (int index = 0; index < 8; index++)
 						{
 							if (null != this._children[index])
+							{
 								this._children[index].ConstructPalette(palette, ref paletteIndex);
+							}
 						}
 					}
 				}
@@ -427,9 +443,13 @@ namespace Warcraft.Core.Quantization
 						            ((pixel.Blue & mask[level]) >> (shift));
 
 						if (null != this._children[index])
+						{
 							paletteIndex = this._children[index].GetPaletteIndex(pixel, level + 1);
+						}
 						else
+						{
 							throw new Exception("Didn't expect this!");
+						}
 					}
 
 					return paletteIndex;
