@@ -411,7 +411,7 @@ namespace Warcraft.Core
 
 		/// <summary>
 		/// Reads a 24-byte <see cref="Box"/> structure from the data stream and advances the position of the stream by
-		// 24 bytes.
+		/// 24 bytes.
 		/// </summary>
 		/// <returns>The box.</returns>
 		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
@@ -422,7 +422,7 @@ namespace Warcraft.Core
 
 		/// <summary>
 		/// Reads a 12-byte <see cref="Box"/> structure from the data stream and advances the position of the stream by
-		// 12 bytes.
+		/// 12 bytes.
 		/// </summary>
 		/// <returns>The box.</returns>
 		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
