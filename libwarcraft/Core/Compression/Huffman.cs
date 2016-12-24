@@ -226,7 +226,9 @@ namespace Warcraft.Core.Compression
 			int comptype = data.ReadByte();
 
 			if (comptype == 0)
+			{
 				throw new NotImplementedException("Compression type 0 is not currently supported");
+			}
 
 			LinkedNode tail = BuildList(sPrime[comptype]);
 			LinkedNode head = BuildTree(tail);
@@ -265,7 +267,9 @@ namespace Warcraft.Core.Compression
 			{
 				int bit = input.ReadBits(1);
 				if (bit == -1)
+				{
 					throw new Exception("Unexpected end of file");
+				}
 
 				node = bit == 0 ? node.Child0 : node.Child1;
 			}
@@ -282,7 +286,9 @@ namespace Warcraft.Core.Compression
 			for (int i = 0; i < primeData.Length; i++)
 			{
 				if (primeData[i] != 0)
+				{
 					root = root.Insert(new LinkedNode(i, primeData[i]));
+				}
 			}
 			return root;
 		}
@@ -296,7 +302,9 @@ namespace Warcraft.Core.Compression
 				LinkedNode child0 = current;
 				LinkedNode child1 = current.Prev;
 				if (child1 == null)
+				{
 					break;
+				}
 
 				LinkedNode parent = new LinkedNode(0, child0.Weight + child1.Weight);
 				parent.Child0 = child0;
@@ -351,9 +359,13 @@ namespace Warcraft.Core.Compression
 				{
 					prev = insertpoint.Prev;
 					if (prev == null)
+					{
 						break;
+					}
 					if (prev.Weight >= current.Weight)
+					{
 						break;
+					}
 					insertpoint = prev;
 				}
                                 
@@ -368,14 +380,18 @@ namespace Warcraft.Core.Compression
                         
 				// remove insert point
 				if (insertpoint.Prev != null)
+				{
 					insertpoint.Prev.Next = insertpoint.Next;
+				}
 				insertpoint.Next.Prev = insertpoint.Prev;
                                 
 				// Insert insertpoint after current
 				insertpoint.Next = current.Next;
 				insertpoint.Prev = current;
 				if (current.Next != null)
+				{
 					current.Next.Prev = insertpoint;
+				}
 				current.Next = insertpoint;
 
 				// remove current
@@ -394,10 +410,14 @@ namespace Warcraft.Core.Compression
 				LinkedNode insertparent = insertpoint.Parent;
                                 
 				if (currentparent.Child0 == current)
+				{
 					currentparent.Child0 = insertpoint;
+				}
 
 				if (currentparent != insertparent && insertparent.Child0 == insertpoint)
+				{
 					insertparent.Child0 = current;
+				}
 
 				current.Parent = insertparent;
 				insertpoint.Parent = currentparent;

@@ -27,10 +27,14 @@ namespace Squish
 			{
 				Compress3(block);
 				if (!this._Colours.IsTransparent)
+				{
 					Compress4(block);
+				}
 			}
 			else
+			{
 				Compress4(block);
+			}
 		}
 
 		#endregion

@@ -34,11 +34,17 @@ namespace Warcraft.Core
 		public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
 		{
 			if (val.CompareTo(min) < 0)
+			{
 				return min;
+			}
 			else if (val.CompareTo(max) > 0)
+			{
 				return max;
+			}
 			else
+			{
 				return val;
+			}
 		}
 
 		// Taken from the Arduino reference (https://www.arduino.cc/en/Reference/Map)
@@ -411,7 +417,7 @@ namespace Warcraft.Core
 
 		/// <summary>
 		/// Reads a 24-byte <see cref="Box"/> structure from the data stream and advances the position of the stream by
-		// 24 bytes.
+		/// 24 bytes.
 		/// </summary>
 		/// <returns>The box.</returns>
 		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
@@ -422,7 +428,7 @@ namespace Warcraft.Core
 
 		/// <summary>
 		/// Reads a 12-byte <see cref="Box"/> structure from the data stream and advances the position of the stream by
-		// 12 bytes.
+		/// 12 bytes.
 		/// </summary>
 		/// <returns>The box.</returns>
 		/// <param name="Reader">The current <see cref="BinaryReader"/></param>

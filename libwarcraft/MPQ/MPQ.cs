@@ -95,7 +95,7 @@ namespace Warcraft.MPQ
 		/// <param name="InFormat">In format.</param>
 		public MPQ(MPQFormat InFormat)
 		{
-			if (InFormat > MPQFormat.Extended_v1)
+			if (InFormat > MPQFormat.ExtendedV1)
 			{
 				throw new NotImplementedException();
 			}
@@ -127,7 +127,7 @@ namespace Warcraft.MPQ
 			byte[] encryptedBlockTable = this.ArchiveReader.ReadBytes((int)this.Header.GetBlockTableSize());
 			this.ArchiveBlockTable = new BlockTable(MPQCrypt.DecryptData(encryptedBlockTable, BlockTable.TableKey));
 
-			if (this.Header.GetFormat() >= MPQFormat.Extended_v1)
+			if (this.Header.GetFormat() >= MPQFormat.ExtendedV1)
 			{
 				// Seek to the extended block table and load it, if neccesary
 				if (this.Header.GetExtendedBlockTableOffset() > 0)
@@ -398,7 +398,7 @@ namespace Warcraft.MPQ
 
 				// Seek to the beginning of the file's sectors
 				long adjustedBlockOffset;
-				if (this.Header.GetFormat() == MPQFormat.Extended_v1 && RequiresExtendedFormat())
+				if (this.Header.GetFormat() == MPQFormat.ExtendedV1 && RequiresExtendedFormat())
 				{
 					ushort upperOffsetBits = this.ExtendedBlockTable[(int)fileHashEntry.GetBlockEntryIndex()];
 					adjustedBlockOffset = (long)fileBlockEntry.GetExtendedBlockOffset(upperOffsetBits);
@@ -636,7 +636,7 @@ namespace Warcraft.MPQ
 
 		/// <summary>
 		/// Determines whether or not the archive requires the format to be extended.
-		/// Extended formats are at least <see cref="Warcraft.MPQ.MPQFormat.Extended_v1"/> and up.
+		/// Extended formats are at least <see cref="MPQFormat.ExtendedV1"/> and up.
 		/// </summary>
 		/// <returns><c>true</c>, if extended format is required, <c>false</c> otherwise.</returns>
 		private bool RequiresExtendedFormat()

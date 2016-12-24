@@ -114,7 +114,7 @@ namespace Warcraft.MPQ
 			{
 				this.HeaderSize = 32;
 			}
-			else if (InFormat == MPQFormat.Extended_v1)
+			else if (InFormat == MPQFormat.ExtendedV1)
 			{
 				this.HeaderSize = 44;
 			}
@@ -127,7 +127,7 @@ namespace Warcraft.MPQ
 			this.Format = InFormat;
 			this.SectorSizeExponent = 3;
 
-			if (this.Format > MPQFormat.Extended_v1)
+			if (this.Format > MPQFormat.ExtendedV1)
 			{
 				this.LongArchiveSize = this.HeaderSize;
 			}
@@ -160,21 +160,21 @@ namespace Warcraft.MPQ
 					this.HashTableEntryCount = br.ReadUInt32();
 					this.BlockTableEntryCount = br.ReadUInt32();
 
-					if (this.Format >= MPQFormat.Extended_v1)
+					if (this.Format >= MPQFormat.ExtendedV1)
 					{
 						this.ExtendedBlockTableOffset = br.ReadUInt64();
 						this.ExtendedFormatHashTableOffsetBits = br.ReadUInt16();
 						this.ExtendedFormatBlockTableOffsetBits = br.ReadUInt16();
 					}
 
-					if (this.Format >= MPQFormat.Extended_v2)
+					if (this.Format >= MPQFormat.ExtendedV2)
 					{
 						this.LongArchiveSize = br.ReadUInt64();
 						this.BETTableOffset = br.ReadUInt64();
 						this.HETTableOffset = br.ReadUInt64();
 					}
 
-					if (this.Format >= MPQFormat.Extended_v3)
+					if (this.Format >= MPQFormat.ExtendedV3)
 					{
 						this.CompressedHashTableSize = br.ReadUInt64();
 						this.CompressedBlockTableSize = br.ReadUInt64();
@@ -336,7 +336,7 @@ namespace Warcraft.MPQ
 			{
 				return (ulong)this.BasicArchiveSize;
 			}
-			else if (this.Format == MPQFormat.Extended_v1)
+			else if (this.Format == MPQFormat.ExtendedV1)
 			{
 				// Calculate the size from the start of the header to the end of the
 				// hash table, block table or extended block table (whichever is furthest away)
@@ -430,14 +430,14 @@ namespace Warcraft.MPQ
 						bw.Write(this.ExtendedFormatBlockTableOffsetBits);
 					}
 
-					if (this.Format > MPQFormat.Extended_v1)
+					if (this.Format > MPQFormat.ExtendedV1)
 					{
 						bw.Write(this.LongArchiveSize);
 						bw.Write(this.BETTableOffset);
 						bw.Write(this.HETTableOffset);
 					}
 
-					if (this.Format > MPQFormat.Extended_v2)
+					if (this.Format > MPQFormat.ExtendedV2)
 					{
 						bw.Write(this.CompressedHashTableSize);
 						bw.Write(this.CompressedBlockTableSize);

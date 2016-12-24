@@ -101,7 +101,9 @@ namespace Squish
 
 			// Square root the weights.
 			for (int i = 0; i < this._Count; ++i)
+			{
 				this._Weights[i] = (float)Math.Sqrt(this._Weights[i]);
+			}
 		}
 
 		#endregion
@@ -114,9 +116,13 @@ namespace Squish
 			{
 				var j = this._Remap[i];
 				if (j == -1)
+				{
 					target[i + targetOffset] = 3;
+				}
 				else
+				{
 					target[i + targetOffset] = source[j];
+				}
 			}
 		}
 
