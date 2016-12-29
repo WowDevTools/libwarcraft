@@ -63,6 +63,10 @@
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
     <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
+    <Compile Include="MPQ\Tables\Extended\Block\ExtendedBlockTable.cs" />
+    <Compile Include="MPQ\Tables\Extended\Block\ExtendedBlockTableHeader.cs" />
+    <Compile Include="MPQ\Tables\Extended\Hash\ExtendedHashTable.cs" />
+    <Compile Include="MPQ\Tables\Extended\Hash\ExtendedHashTableHeader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLP\BLP.cs" />
     <Compile Include="BLP\BLPHeader.cs" />
@@ -137,11 +141,9 @@
     <Compile Include="BLP\BLPFormat.cs" />
     <Compile Include="MDX\Visual\FX\MDXParticleEmitter.cs" />
     <Compile Include="MDX\Visual\FX\MDXRibbonEmitter.cs" />
-    <Compile Include="MPQ\Tables\BET\BETTable.cs" />
     <Compile Include="MPQ\Tables\Block\BlockFlags.cs" />
     <Compile Include="MPQ\Tables\Block\BlockTableEntry.cs" />
     <Compile Include="MPQ\Tables\Hash\HashTableEntry.cs" />
-    <Compile Include="MPQ\Tables\HET\HETTable.cs" />
     <Compile Include="WMO\GroupFile\ModelGroup.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelPolygonMaterials.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelVertexIndices.cs" />
@@ -179,8 +181,6 @@
     <Compile Include="WMO\RootFile\Chunks\ModelGameobjectFileID.cs" />
     <Compile Include="MPQ\FileInfo\MPQFileInfo.cs" />
     <Compile Include="Core\Locale\LocaleID.cs" />
-    <Compile Include="MPQ\Tables\HET\HETTableHeader.cs" />
-    <Compile Include="MPQ\Tables\BET\BETTableHeader.cs" />
     <Compile Include="MPQ\Tables\Hash\HashTable.cs" />
     <Compile Include="MPQ\Tables\Block\BlockTable.cs" />
     <Compile Include="ADT\Chunks\TerrainVersion.cs" />
@@ -254,6 +254,7 @@
     <Folder Include="Core\Compression\Blast\" />
     <Folder Include="Core\Hashing\" />
     <Folder Include="Core\Quantization\" />
+    <Folder Include="MPQ\Tables\Extended" />
     <Folder Include="WMO\" />
     <Folder Include="Core\Shading\" />
     <Folder Include="MDX\" />
@@ -265,10 +266,8 @@
     <Folder Include="DBC\" />
     <Folder Include="DBC\Definitions\" />
     <Folder Include="MPQ\Tables\" />
-    <Folder Include="MPQ\Tables\BET\" />
     <Folder Include="MPQ\Tables\Block\" />
     <Folder Include="MPQ\Tables\Hash\" />
-    <Folder Include="MPQ\Tables\HET\" />
     <Folder Include="WMO\GroupFile\" />
     <Folder Include="WMO\GroupFile\Chunks\" />
     <Folder Include="WMO\RootFile\" />

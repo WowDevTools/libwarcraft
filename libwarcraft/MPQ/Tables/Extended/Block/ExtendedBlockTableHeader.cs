@@ -1,5 +1,5 @@
 //
-//  HETTableHeader.cs
+//  ExtendedBlockTableHeader.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,16 +21,17 @@
 //
 
 using System.Collections.Generic;
+using Warcraft.MPQ.Tables.Block;
 
-namespace Warcraft.MPQ.Tables.HET
+namespace Warcraft.MPQ.Tables.Extended.Block
 {
-	public class HETTableHeader
+	public class ExtendedBlockTableHeader
 	{
 		public string Signature
 		{
 			get
 			{
-				return "HET\x1A";
+				return "BET\x1A";
 			}
 		}
 
@@ -38,16 +39,30 @@ namespace Warcraft.MPQ.Tables.HET
 		public uint DataSize;
 
 		public uint TableSize;
-		public uint MaxFileCount;
-		public uint HashTableSize;
-		public uint HashEntrySize;
-		public uint IndexSizeExtra;
-		public uint IndexSize;
-		public uint BlockTableSize;
+		public uint FileCount;
+		public uint UnknownFlag;
+		public uint TableEntrySize;
+		public uint BitIndexFilePosition;
+		public uint BitIndexFileSize;
+		public uint BitIndexCompressedSize;
+		public uint BitIndexFlagIndex;
+		public uint BitIndexUnknown;
+		public uint BitCountFilePosition;
+		public uint BitCountFileSize;
+		public uint BitCountCompressedSize;
+		public uint BitCountFlagIndex;
+		public uint BitCountUnknown;
 
-		List<byte> HETHashTable = new List<byte>();
+		public uint BETHashSizeTotal;
+		public uint BETHashSizeExtra;
+		public uint BETHashSize;
+		public uint BETHashArraySize;
+		public uint FlagCount;
 
-		public HETTableHeader()
+		List<BlockFlags> FlagArray = new List<BlockFlags>();
+
+
+		public ExtendedBlockTableHeader()
 		{
 		}
 	}
