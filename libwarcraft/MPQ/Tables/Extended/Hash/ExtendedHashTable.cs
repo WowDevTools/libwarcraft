@@ -26,10 +26,6 @@ namespace Warcraft.MPQ.Tables.Extended.Hash
 {
 	public class ExtendedHashTable
 	{
-		private uint Signature;
-		private uint Version;
-		private uint DataSize;
-
 		private uint TableSize;
 		private uint HashTableSize;
 		private uint HashEntrySize;

@@ -65,6 +65,7 @@
     <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
     <Compile Include="MPQ\Tables\Extended\Block\ExtendedBlockTable.cs" />
     <Compile Include="MPQ\Tables\Extended\Block\ExtendedBlockTableHeader.cs" />
+    <Compile Include="MPQ\Tables\Extended\Common\ExtendedTableHeader.cs" />
     <Compile Include="MPQ\Tables\Extended\Hash\ExtendedHashTable.cs" />
     <Compile Include="MPQ\Tables\Extended\Hash\ExtendedHashTableHeader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -254,7 +255,6 @@
     <Folder Include="Core\Compression\Blast\" />
     <Folder Include="Core\Hashing\" />
     <Folder Include="Core\Quantization\" />
-    <Folder Include="MPQ\Tables\Extended" />
     <Folder Include="WMO\" />
     <Folder Include="Core\Shading\" />
     <Folder Include="MDX\" />

@@ -38,12 +38,24 @@ using Warcraft.MPQ.Attributes;
 
 namespace Warcraft.MPQ
 {
+	/// <summary>
+	/// The MPQ class is the superclass for all known versions of the MPQ file format, which is used to store
+	/// game data for the majority of produced Blizzard Entertainment games. It acts as a loader and extraction
+	/// class for reading this data, and examining the data structures inside it.
+	///
+	/// It should be noted that this is not a speed-oriented or lightweight implementation of the format. This
+	/// implementation is designed for verbosity, clarity and ease of use at the expense of memory usage. As
+	/// a side effect, file lookups may be faster than other implementations, depending on your setup.
+	///
+	/// Currently, the class does not support creating new archives, nor any format versions above
+	/// <see cref="MPQFormat.ExtendedV1"/>. Work is ongoing to implement this.
+	/// </summary>
 	public sealed class MPQ : IDisposable, IPackage
 	{
 		/// <summary>
 		/// Whether or not this instance has been disposed.
 		/// </summary>
-		bool bDisposed;
+		private bool bDisposed;
 
 		/// <summary>
 		/// The header of the MPQ archive. Contains information about sizes and offsets of relational structures
@@ -92,15 +104,15 @@ namespace Warcraft.MPQ
 		/// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQ"/> class.
 		/// This constructor creates an empty archive.
 		/// </summary>
-		/// <param name="InFormat">In format.</param>
-		public MPQ(MPQFormat InFormat)
+		/// <param name="inFormat">In format.</param>
+		public MPQ(MPQFormat inFormat)
 		{
-			if (InFormat > MPQFormat.ExtendedV1)
+			if (inFormat > MPQFormat.ExtendedV1)
 			{
 				throw new NotImplementedException();
 			}
 
-			this.Header = new MPQHeader(InFormat);
+			this.Header = new MPQHeader(inFormat);
 			this.ArchiveHashTable = new HashTable();
 			this.ArchiveBlockTable = new BlockTable();
 		}
@@ -296,15 +308,15 @@ namespace Warcraft.MPQ
 		/// <summary>
 		/// Sets the file list to the provided listfile.
 		/// </summary>
-		/// <param name="InExternalListfile">In external listfile.</param>
-		public void SetFileList(List<string> InExternalListfile)
+		/// <param name="inExternalListfile">In external listfile.</param>
+		public void SetFileList(List<string> inExternalListfile)
 		{
 			if (this.bDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
-			this.ExternalListfile = InExternalListfile;
+			this.ExternalListfile = inExternalListfile;
 		}
 
 		/// <summary>

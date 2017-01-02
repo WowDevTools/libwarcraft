@@ -26,10 +26,6 @@ namespace Warcraft.MPQ.Tables.Extended.Block
 {
 	public class ExtendedBlockTable
 	{
-		private uint Signature;
-		private uint Version;
-		private uint DataSize;
-
 		private uint TableSize;
 		private uint FileCount;
 		private uint Unknown;
