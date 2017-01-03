@@ -79,6 +79,8 @@ namespace Warcraft.MPQ.Tables.Extended.Common
 					bw.Write(this.Version);
 					bw.Write(this.DataSize);
 				}
+
+				return ms.ToArray();
 			}
 		}
 	}
