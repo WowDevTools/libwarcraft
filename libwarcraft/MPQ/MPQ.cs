@@ -127,6 +127,11 @@ namespace Warcraft.MPQ
 
 			this.Header = new MPQHeader(this.ArchiveReader.ReadBytes((int)PeekHeaderSize()));
 
+			if (this.Header.GetFormat() > MPQFormat.ExtendedV1)
+			{
+				throw new NotImplementedException();
+			}
+
 			// Seek to the hash table and load it
 			this.ArchiveReader.BaseStream.Position = (long)this.Header.GetHashTableOffset();
 

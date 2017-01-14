@@ -70,7 +70,6 @@ namespace Warcraft.BLP
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.BLP.BLP"/> class.
-		/// This constructor reads a binary BLP file from disk.
 		/// </summary>
 		/// <param name="inData">Data.</param>
 		public BLP(byte[] inData)
