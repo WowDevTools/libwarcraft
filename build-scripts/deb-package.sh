@@ -97,8 +97,9 @@ if [[ ! -z $BUILDSUCCESS ]]; then
 		# Copy the sources to the build directory
 		mkdir -p "$PROGRAM_DEBUILD_ROOT"
 		cp -r "$PROGRAM_ROOT/debian/" $PROGRAM_DEBUILD_ROOT
-		cp -r "$PROGRAM_ROOT/lib/" $PROGRAM_DEBUILD_ROOT
+		cp -r "$PROGRAM_ROOT/mono/" $PROGRAM_DEBUILD_ROOT
 		cp -r "$PROGRAM_ROOT/$PROGRAM_NAME/" $PROGRAM_DEBUILD_ROOT
+		cp -r "$PROGRAM_ROOT/$PROGRAM_NAME.Tests/" $PROGRAM_DEBUILD_ROOT
 		cp "$PROGRAM_ROOT/"* "$PROGRAM_DEBUILD_ROOT"
 
 		# Pull in the NuGet dependencies
