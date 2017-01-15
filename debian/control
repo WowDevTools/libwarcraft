@@ -7,8 +7,6 @@ Build-Depends: debhelper (>= 8.0.0),
 	mono-mcs (>= 4.0),
 	mono-devel (>= 4.0),
 	mono-xbuild (>= 4.0),
-	dotnetzip-cli (>= 1.9.1.8),
-	dotnetzip-cli-dev (>= 1.9.1.8)
 Standards-Version: 3.9.5
 Section: libs
 Homepage: https://github.com/Nihlus/libwarcraft
@@ -24,8 +22,7 @@ Package: libwarcraft1.0-cli
 Section: libs
 Architecture: any
 Depends: ${cli:Depends}, 
-	${misc:Depends}, 
-	dotnetzip-cli (>= 1.9.1.8)
+	${misc:Depends}
 Description: libwarcraft is a managed class library for binary Blizzard files.
  libwarcraft is a managed C# library for interacting with binary file formats 
  created by Blizzard Activision. 
