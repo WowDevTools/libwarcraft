@@ -22,9 +22,27 @@
 
 namespace Warcraft.Core.Interfaces
 {
+	/// <summary>
+	/// This interface holds that the implementing class can load all of its serialized data after it has been
+	/// constructed through the <see cref="PostLoad"/> method.
+	/// </summary>
+	/// <typeparam name="T">
+	/// The loading parameters that the class takes. This is a class or structure which contains all required data
+	/// to load the object.
+	/// </typeparam>
 	public interface IPostLoad<in T>
 	{
+		/// <summary>
+		/// Determines whether or not this object has finished loading.
+		/// </summary>
+		/// <returns><value>true</value> if the object has finished loading; otherwise, <value>false</value>.</returns>
 		bool HasFinishedLoading();
+
+		/// <summary>
+		/// Loads the object's data after construction, using the provided parameters. Typically, this is a byte
+		/// array with serialized data.
+		/// </summary>
+		/// <param name="loadingParameters">The parameters required to fully load the object.</param>
 		void PostLoad(T loadingParameters);
 	}
 }

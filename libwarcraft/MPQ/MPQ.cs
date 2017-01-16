@@ -443,7 +443,7 @@ namespace Warcraft.MPQ
 
 				// Seek to the beginning of the file's sectors
 				long adjustedBlockOffset;
-				if (this.Header.GetFormat() == MPQFormat.ExtendedV1 && RequiresExtendedFormat())
+				if (this.Header.GetFormat() >= MPQFormat.ExtendedV1 && RequiresExtendedFormat())
 				{
 					ushort upperOffsetBits = this.ExtendedBlockTable[(int)fileHashEntry.GetBlockEntryIndex()];
 					adjustedBlockOffset = (long)fileBlockEntry.GetExtendedBlockOffset(upperOffsetBits);
@@ -455,81 +455,78 @@ namespace Warcraft.MPQ
 				this.ArchiveReader.BaseStream.Position = adjustedBlockOffset;
 
 				// Calculate the decryption key if neccesary
-				uint fileKey = 0;
-				if (fileBlockEntry.IsEncrypted())
-				{
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.HasAdjustedEncryptionKey))
-					{
-						fileKey = MPQCrypt.GetFileKey(Path.GetFileName(filePath), true, (uint)adjustedBlockOffset, fileBlockEntry.GetFileSize());
-					}
-					else
-					{
-						fileKey = MPQCrypt.GetFileKey(Path.GetFileName(filePath));
-					}
-				}
-
+				uint fileKey = MPQCrypt.CreateFileEncryptionKey
+				(
+					filePath,
+					fileBlockEntry.ShouldEncryptionKeyBeAdjusted(),
+					adjustedBlockOffset,
+					fileBlockEntry.GetFileSize()
+				);
 
 				// Examine the file storage types and extract as neccesary
 				if (fileBlockEntry.IsSingleUnit())
 				{
-					// This file does not use sectoring, but may still be encrypted or compressed.
-					byte[] fileData = this.ArchiveReader.ReadBytes((int)fileBlockEntry.GetBlockSize());
-
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
-					{
-						// Decrypt the block
-						fileData = MPQCrypt.DecryptData(fileData, fileKey);
-					}
-
-					// Decompress the sector if neccesary
-					if (fileBlockEntry.IsCompressed())
-					{
-						fileData = Compression.DecompressSector(fileData, fileBlockEntry.Flags);
-					}
-
-					return fileData;
+					return ExtractSingleUnitFile(fileBlockEntry, fileKey);
 				}
 
 				if (fileBlockEntry.IsCompressed())
 				{
-					// This file uses sectoring, and is compressed. It may be encrypted.
-					//Retrieve the offsets for each sector - these are relative to the beginning of the data.
-					List<uint> sectorOffsets = new List<uint>();
-					if (fileBlockEntry.IsEncrypted())
-					{
-						MPQCrypt.DecryptSectorOffsetTable(this.ArchiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
-					}
-					else
-					{
-						uint dataBlock = 0;
-						while (dataBlock != fileBlockEntry.GetBlockSize())
-						{
-							dataBlock = this.ArchiveReader.ReadUInt32();
-							sectorOffsets.Add(dataBlock);
-						}
-					}
+					return ExtractCompressedSectoredFile(fileBlockEntry, fileKey, adjustedBlockOffset);
+				}
 
-					// Read all of the raw file sectors.
-					List<byte[]> compressedSectors = new List<byte[]>();
-					for (int i = 0; i < sectorOffsets.Count - 1; ++i)
-					{
-						long sectorStartPosition = adjustedBlockOffset + sectorOffsets[i];
-						this.ArchiveReader.BaseStream.Position = sectorStartPosition;
+				return ExtractUncompressedSectoredFile(fileBlockEntry, fileKey);
+			}
 
-						uint sectorLength = sectorOffsets[i + 1] - sectorOffsets[i];
-						compressedSectors.Add(this.ArchiveReader.ReadBytes((int)sectorLength));
-					}
+			return null;
+		}
 
-					// Begin decompressing and decrypting the sectors
-					// TODO: If Checksums are present (check the flags), treat the last sector as a checksum sector
-					// TODO: Check "backup.MPQ/realmlist.wtf" for a weird file with checksums that is not working correctly.
-					// It has a single sector with a single checksum after it, and none of the hashing functions seem to
-					// produce a valid hash. CRC32, Adler32, CRC32B, nothing.
-					// Some flags (listfiles mostly) are flagged as having checksums but don't have a checksum sector.
-					// Perhaps related to attributes file?
-					List<byte[]> decompressedSectors = new List<byte[]>();
+		/// <summary>
+		/// Extracts a file which is divided into a set of compressed sectors.
+		/// </summary>
+		/// <param name="fileBlockEntry">The block entry of the file.</param>
+		/// <param name="fileKey">The encryption key of the file.</param>
+		/// <param name="adjustedBlockOffset">The offset to where the file sectors begin.</param>
+		/// <returns>The complete file data.</returns>
+		private byte[] ExtractCompressedSectoredFile(BlockTableEntry fileBlockEntry, uint fileKey, long adjustedBlockOffset)
+		{
+			// This file uses sectoring, and is compressed. It may be encrypted.
+			//Retrieve the offsets for each sector - these are relative to the beginning of the data.
+			List<uint> sectorOffsets = new List<uint>();
+			if (fileBlockEntry.IsEncrypted())
+			{
+				MPQCrypt.DecryptSectorOffsetTable(this.ArchiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
+			}
+			else
+			{
+				uint dataBlock = 0;
+				while (dataBlock != fileBlockEntry.GetBlockSize())
+				{
+					dataBlock = this.ArchiveReader.ReadUInt32();
+					sectorOffsets.Add(dataBlock);
+				}
+			}
 
-					/*	List<uint> SectorChecksums = new List<uint>();
+			// Read all of the raw file sectors.
+			List<byte[]> compressedSectors = new List<byte[]>();
+			for (int i = 0; i < sectorOffsets.Count - 1; ++i)
+			{
+				long sectorStartPosition = adjustedBlockOffset + sectorOffsets[i];
+				this.ArchiveReader.BaseStream.Position = sectorStartPosition;
+
+				uint sectorLength = sectorOffsets[i + 1] - sectorOffsets[i];
+				compressedSectors.Add(this.ArchiveReader.ReadBytes((int) sectorLength));
+			}
+
+			// Begin decompressing and decrypting the sectors
+			// TODO: If Checksums are present (check the flags), treat the last sector as a checksum sector
+			// TODO: Check "backup.MPQ/realmlist.wtf" for a weird file with checksums that is not working correctly.
+			// It has a single sector with a single checksum after it, and none of the hashing functions seem to
+			// produce a valid hash. CRC32, Adler32, CRC32B, nothing.
+			// Some flags (listfiles mostly) are flagged as having checksums but don't have a checksum sector.
+			// Perhaps related to attributes file?
+			List<byte[]> decompressedSectors = new List<byte[]>();
+
+			/*	List<uint> SectorChecksums = new List<uint>();
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
 					{
 						byte[] compressedChecksums = compressedSectors.Last();
@@ -551,17 +548,17 @@ namespace Warcraft.MPQ
 						}
 					}*/
 
-					uint sectorIndex = 0;
-					foreach (byte[] compressedSector in compressedSectors)
-					{
-						byte[] pendingSector = compressedSector;
-						if (fileBlockEntry.IsEncrypted())
-						{
-							// Decrypt the block
-							pendingSector = MPQCrypt.DecryptData(compressedSector, fileKey + sectorIndex);
-						}
+			uint sectorIndex = 0;
+			foreach (byte[] compressedSector in compressedSectors)
+			{
+				byte[] pendingSector = compressedSector;
+				if (fileBlockEntry.IsEncrypted())
+				{
+					// Decrypt the block
+					pendingSector = MPQCrypt.DecryptData(compressedSector, fileKey + sectorIndex);
+				}
 
-						/*if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
+				/*if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
 						{
 							// Verify the sector
 							bool isSectorIntact = MPQCrypt.VerifySectorChecksum(pendingSector, SectorChecksums[(int)sectorIndex]);
@@ -582,65 +579,94 @@ namespace Warcraft.MPQ
 							}
 						}*/
 
-						// Decompress the sector if neccesary
-						if (pendingSector.Length < GetMaxSectorSize())
-						{
-							int currentFileSize = CountBytesInSectors(decompressedSectors);
-							bool canSectorCompleteFile = currentFileSize + pendingSector.Length == fileBlockEntry.GetFileSize();
-
-							if (!canSectorCompleteFile && currentFileSize != fileBlockEntry.GetFileSize())
-							{
-								pendingSector = Compression.DecompressSector(pendingSector, fileBlockEntry.Flags);
-							}
-						}
-
-						decompressedSectors.Add(pendingSector);
-						++sectorIndex;
-					}
-
-					return StitchSectors(decompressedSectors);
-				}
-				else
+				// Decompress the sector if neccesary
+				if (pendingSector.Length < GetMaxSectorSize())
 				{
-					// This file uses sectoring, but is not compressed. It may be encrypted.
-					uint finalSectorSize = fileBlockEntry.GetFileSize() % GetMaxSectorSize();
+					int currentFileSize = CountBytesInSectors(decompressedSectors);
+					bool canSectorCompleteFile = currentFileSize + pendingSector.Length == fileBlockEntry.GetFileSize();
 
-					// All the even sectors you can fit into the file size
-					uint sectorCount = ((fileBlockEntry.GetFileSize() - finalSectorSize) / GetMaxSectorSize());
-
-					List<byte[]> rawSectors = new List<byte[]>();
-					for (int i = 0; i < sectorCount; ++i)
+					if (!canSectorCompleteFile && currentFileSize != fileBlockEntry.GetFileSize())
 					{
-						// Read a normal sector (usually 4096 bytes)
-						rawSectors.Add(this.ArchiveReader.ReadBytes((int)GetMaxSectorSize()));
+						pendingSector = Compression.DecompressSector(pendingSector, fileBlockEntry.Flags);
 					}
-
-					// And finally, if there's an uneven sector at the end, read that one too
-					if (finalSectorSize > 0)
-					{
-						rawSectors.Add(this.ArchiveReader.ReadBytes((int)finalSectorSize));
-					}
-
-					uint sectorIndex = 0;
-					List<byte[]> finalSectors = new List<byte[]>();
-					foreach (byte[] rawSector in rawSectors)
-					{
-						byte[] pendingSector = rawSector;
-						if (fileBlockEntry.IsEncrypted())
-						{
-							// Decrypt the block
-							pendingSector = MPQCrypt.DecryptData(rawSector, fileKey + sectorIndex);
-						}
-
-						finalSectors.Add(pendingSector);
-						++sectorIndex;
-					}
-
-					return StitchSectors(finalSectors);
 				}
+
+				decompressedSectors.Add(pendingSector);
+				++sectorIndex;
 			}
 
-			return null;
+			return StitchSectors(decompressedSectors);
+		}
+
+		/// <summary>
+		/// Extracts a file which is divided into a set ofsectors.
+		/// </summary>
+		/// <param name="fileBlockEntry">The block entry of the file.</param>
+		/// <param name="fileKey">The encryption key of the file.</param>
+		/// <returns>The complete file data.</returns>
+		private byte[] ExtractUncompressedSectoredFile(BlockTableEntry fileBlockEntry, uint fileKey)
+		{
+			// This file uses sectoring, but is not compressed. It may be encrypted.
+			uint finalSectorSize = fileBlockEntry.GetFileSize() % GetMaxSectorSize();
+
+			// All the even sectors you can fit into the file size
+			uint sectorCount = ((fileBlockEntry.GetFileSize() - finalSectorSize) / GetMaxSectorSize());
+
+			List<byte[]> rawSectors = new List<byte[]>();
+			for (int i = 0; i < sectorCount; ++i)
+			{
+				// Read a normal sector (usually 4096 bytes)
+				rawSectors.Add(this.ArchiveReader.ReadBytes((int) GetMaxSectorSize()));
+			}
+
+			// And finally, if there's an uneven sector at the end, read that one too
+			if (finalSectorSize > 0)
+			{
+				rawSectors.Add(this.ArchiveReader.ReadBytes((int) finalSectorSize));
+			}
+
+			uint sectorIndex = 0;
+			List<byte[]> finalSectors = new List<byte[]>();
+			foreach (byte[] rawSector in rawSectors)
+			{
+				byte[] pendingSector = rawSector;
+				if (fileBlockEntry.IsEncrypted())
+				{
+					// Decrypt the block
+					pendingSector = MPQCrypt.DecryptData(rawSector, fileKey + sectorIndex);
+				}
+
+				finalSectors.Add(pendingSector);
+				++sectorIndex;
+			}
+
+			return StitchSectors(finalSectors);
+		}
+
+		/// <summary>
+		/// Extracts a file which is stored as a single unit in the archive.
+		/// </summary>
+		/// <param name="fileBlockEntry">The block entry of the file.</param>
+		/// <param name="fileKey">The encryption key of the file.</param>
+		/// <returns>The complete file data.</returns>
+		private byte[] ExtractSingleUnitFile(BlockTableEntry fileBlockEntry, uint fileKey)
+		{
+			// This file does not use sectoring, but may still be encrypted or compressed.
+			byte[] fileData = this.ArchiveReader.ReadBytes((int) fileBlockEntry.GetBlockSize());
+
+			if (fileBlockEntry.IsEncrypted())
+			{
+				// Decrypt the block
+				fileData = MPQCrypt.DecryptData(fileData, fileKey);
+			}
+
+			// Decompress the sector if neccesary
+			if (fileBlockEntry.IsCompressed())
+			{
+				fileData = Compression.DecompressSector(fileData, fileBlockEntry.Flags);
+			}
+
+			return fileData;
 		}
 
 		/// <summary>
@@ -687,7 +713,7 @@ namespace Warcraft.MPQ
 		/// <returns><c>true</c>, if extended format is required, <c>false</c> otherwise.</returns>
 		private bool RequiresExtendedFormat()
 		{
-			return this.ArchiveReader.BaseStream.Length > UInt32.MaxValue;
+			return this.ArchiveReader.BaseStream.Length > uint.MaxValue;
 		}
 
 		/// <summary>

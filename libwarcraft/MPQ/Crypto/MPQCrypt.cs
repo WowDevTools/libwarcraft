@@ -249,11 +249,34 @@ namespace Warcraft.MPQ.Crypto
 				if (sectorChecksum == 0)
 				{
 					// We can't handle a 0 checksum.
-					sectorChecksum = uint.MaxValue;
+					sectorChecksum = UInt32.MaxValue;
 				}
 
 				return sectorChecksum == checksum;
 			}
+		}
+
+		/// <summary>
+		/// Creates an encryption key for the specified file path.
+		/// </summary>
+		/// <param name="filePath">The path of the file for which the encryption key is to be created.</param>
+		/// <param name="adjustKeyByOffset">Whether or not the key should be adjusted by the file offset.</param>
+		/// <param name="adjustedBlockOffset">The offset into the archive where the file data begins.</param>
+		/// <param name="fileSize">The absolute size of the file.</param>
+		/// <returns>An encryption key for the provied file path.</returns>
+		public static uint CreateFileEncryptionKey(string filePath, bool adjustKeyByOffset, long adjustedBlockOffset = 0, uint fileSize = 0)
+		{
+			uint fileKey;
+			if (adjustKeyByOffset)
+			{
+				fileKey = GetFileKey(Path.GetFileName(filePath), true, (uint) adjustedBlockOffset, fileSize);
+			}
+			else
+			{
+				fileKey = GetFileKey(Path.GetFileName(filePath));
+			}
+
+			return fileKey;
 		}
 	}
 
@@ -262,9 +285,24 @@ namespace Warcraft.MPQ.Crypto
 	/// </summary>
 	public enum HashType : uint
 	{
+		/// <summary>
+		/// The hash algorithm used for determining the home entry of a file in the hash table.
+		/// </summary>
 		FileHashTableOffset = 0,
+
+		/// <summary>
+		/// One of the two algorithms used to generate hashes for filenames.
+		/// </summary>
 		FilePathA = 1,
+
+		/// <summary>
+		/// One of the two algorithms used to generate hashes for filenames.
+		/// </summary>
 		FilePathB = 2,
+
+		/// <summary>
+		/// The hash algorithm used for generating encryption keys.
+		/// </summary>
 		FileKey = 3
 	}
 }

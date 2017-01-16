@@ -189,6 +189,15 @@ namespace Warcraft.MPQ.Tables.Block
 		}
 
 		/// <summary>
+		/// Determined whether or not the encryption key should be adjusted by the block offset.
+		/// </summary>
+		/// <returns><value>true</value> if the key should be adjusted; otherwise, <value>false</value>.</returns>
+		public bool ShouldEncryptionKeyBeAdjusted()
+		{
+			return this.Flags.HasFlag(BlockFlags.HasAdjustedEncryptionKey);
+		}
+
+		/// <summary>
 		/// Serializes the current object into a byte array.
 		/// </summary>
 		public byte[] Serialize()
