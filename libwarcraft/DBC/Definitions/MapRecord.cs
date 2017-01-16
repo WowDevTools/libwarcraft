@@ -117,16 +117,28 @@ namespace Warcraft.DBC.Definitions
 		/// </summary>
 		public uint Unknown5;
 
+		/// <summary>
+		/// Loads and parses the provided data.
+		/// </summary>
+		/// <param name="data">Data.</param>
 		public override void PostLoad(byte[] data)
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Gets the field count for this record at.
+		/// </summary>
+		/// <returns>The field count.</returns>
 		public override int GetFieldCount()
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Gets the size of the record.
+		/// </summary>
+		/// <returns>The record size.</returns>
 		public override int GetRecordSize()
 		{
 			throw new NotImplementedException();

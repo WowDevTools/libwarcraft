@@ -1008,7 +1008,7 @@ namespace Warcraft.BLP
 		/// <returns>The bytes.</returns>
 		public byte[] Serialize()
 		{
-			byte[] headerBytes = this.Header.ToByteArray();
+			byte[] headerBytes = this.Header.Serialize();
 			byte[] paletteBytes = GetPaletteBytes();
 			byte[] mipBytes = GetMipMapBytes();
 

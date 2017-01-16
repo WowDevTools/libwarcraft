@@ -82,6 +82,10 @@ namespace Warcraft.Core
 			this.IsInclusive = inIsInclusive;
 		}
 
+		/// <summary>
+		/// Creates a string representation of the current instance.
+		/// </summary>
+		/// <returns>A string representation of the current instance.</returns>
 		public override string ToString()
 		{
 			return $"Range: {this.Minimum} to {this.Maximum}";
@@ -116,6 +120,10 @@ namespace Warcraft.Core
 			this.TopCorner = inTopCorner;
 		}
 
+		/// <summary>
+		/// Gets the coordinates of the center of the box.
+		/// </summary>
+		/// <returns>A vector with the coordinates of the center of the box.</returns>
 		public Vector3f GetCenterCoordinates()
 		{
 			return (this.BottomCorner + this.TopCorner) / 2;
@@ -229,6 +237,10 @@ namespace Warcraft.Core
 
 		}
 
+		/// <summary>
+		/// Creates a string representation of the current instance.
+		/// </summary>
+		/// <returns>A string representation of the current instance.</returns>
 		public override string ToString()
 		{
 			return $"rgba({this.R}, {this.G}, {this.B}, {this.A})";
@@ -285,6 +297,10 @@ namespace Warcraft.Core
 
 		}
 
+		/// <summary>
+		/// Creates a string representation of the current instance.
+		/// </summary>
+		/// <returns>A string representation of the current instance.</returns>
 		public override string ToString()
 		{
 			return $"bgra({this.B}, {this.G}, {this.R}, {this.A})";
@@ -367,6 +383,10 @@ namespace Warcraft.Core
 			this.Values = inVector;
 		}
 
+		/// <summary>
+		/// Creates a string representation of the current instance.
+		/// </summary>
+		/// <returns>A string representation of the current instance.</returns>
 		public override string ToString()
 		{
 			return $"rgb({this.R}, {this.G}, {this.B})";
@@ -470,6 +490,10 @@ namespace Warcraft.Core
 			return new Vector3f(i);
 		}
 
+		/// <summary>
+		/// Creates a string representation of the current instance.
+		/// </summary>
+		/// <returns>A string representation of the current instance.</returns>
 		public override string ToString()
 		{
 			return $"{this.X}, {this.Y}, {this.Z}";
@@ -573,16 +597,34 @@ namespace Warcraft.Core
 			return new Vector3s(i);
 		}
 
+		/// <summary>
+		/// Creates a string representation of the current instance.
+		/// </summary>
+		/// <returns>A string representation of the current instance.</returns>
 		public override string ToString()
 		{
 			return $"{this.X}, {this.Y}, {this.Z}";
 		}
 	}
 
+	/// <summary>
+	/// An axis configuration, that is, how vector data should be interpreted.
+	/// </summary>
 	public enum AxisConfiguration
 	{
+		/// <summary>
+		/// No assumptions should be made about the vector storage format, and should be read as XYZ.
+		/// </summary>
 		Native,
+
+		/// <summary>
+		/// Assume that the data is stored as Y-up.
+		/// </summary>
 		YUp,
+
+		/// <summary>
+		/// Assume that the data is stored as Z-up.
+		/// </summary>
 		ZUp
 	}
 
@@ -709,6 +751,10 @@ namespace Warcraft.Core
 
 		}
 
+		/// <summary>
+		/// Creates a string representation of the current instance.
+		/// </summary>
+		/// <returns>A string representation of the current instance.</returns>
 		public override string ToString()
 		{
 			return $"Pitch: {this.Pitch}, Yaw: {this.Yaw}, Roll: {this.Roll}";

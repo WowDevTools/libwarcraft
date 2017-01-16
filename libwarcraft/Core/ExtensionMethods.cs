@@ -29,8 +29,19 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.Core
 {
+	/// <summary>
+	/// Extension methods used internally in the library to read, write and otherwise manipulate data.
+	/// </summary>
 	public static class ExtensionMethods
 	{
+		/// <summary>
+		/// Clamps a value between a minimum and maximum point.
+		/// </summary>
+		/// <param name="val">The value to compare.</param>
+		/// <param name="min">The minimum allowed value.</param>
+		/// <param name="max">The maximum allowed value.</param>
+		/// <typeparam name="T">The type of value to compare.</typeparam>
+		/// <returns>The value, if it falls into the range, otherwise the upper or lower bound, whichever was closest. </returns>
 		public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
 		{
 			if (val.CompareTo(min) < 0)
@@ -47,23 +58,38 @@ namespace Warcraft.Core
 			}
 		}
 
-		// Taken from the Arduino reference (https://www.arduino.cc/en/Reference/Map)
-		public static int Map(int val, int in_min, int in_max, int out_min, int out_max)
+		/// <summary>
+		/// Maps a value in a specified range to a new value in a new range.
+		/// Taken from the Arduino reference (https://www.arduino.cc/en/Reference/Map)
+		/// </summary>
+		/// <param name="val">The input value.</param>
+		/// <param name="inMin">The original mininum value.</param>
+		/// <param name="inMax">The original maximum value.</param>
+		/// <param name="outMin">The new minimum value.</param>
+		/// <param name="outMax">The new maxiumum value.</param>
+		/// <returns>The value, mapped to the new range.</returns>
+		public static int Map(int val, int inMin, int inMax, int outMin, int outMax)
 		{
-			return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+			return (val - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 		}
 
 		private static float ShortQuatValueToFloat(short inShort)
 		{
-			return (float) (inShort / (float) short.MaxValue);
+			return inShort / (float) short.MaxValue;
 		}
 
 		private static short FloatQuatValueToShort(float inFloat)
 		{
-			return (short)((inFloat + 1.0f) * (float)short.MaxValue);
+			return (short)((inFloat + 1.0f) * short.MaxValue);
 		}
 
-		public static Bitmap Invert(this Bitmap map, bool KeepAlpha = true)
+		/// <summary>
+		/// Inverts colours of the specified bitmap.
+		/// </summary>
+		/// <param name="map">The bitmap to invert.</param>
+		/// <param name="keepAlpha">Whether or not the keep the alpha values, or invert them as well.</param>
+		/// <returns>The inverted bitmap.</returns>
+		public static Bitmap Invert(this Bitmap map, bool keepAlpha = true)
 		{
 			Bitmap outMap = new Bitmap(map);
 
@@ -73,7 +99,7 @@ namespace Warcraft.Core
 				{
 					Color pixel = map.GetPixel(x, y);
 					byte pixelAlpha = pixel.A;
-					if (!KeepAlpha)
+					if (!keepAlpha)
 					{
 						pixelAlpha = (byte)(255 - pixel.A);
 					}
@@ -88,6 +114,12 @@ namespace Warcraft.Core
 			return outMap;
 		}
 
+		/// <summary>
+		/// Determines whether or not a given bitmap has any alpha values, and thus if it requires an alpha channel in
+		/// other formats.
+		/// </summary>
+		/// <param name="map">The map to inspect.</param>
+		/// <returns><value>true</value> if the bitmap has any alpha values; otherwise, <value>false</value>.</returns>
 		public static bool HasAlpha(this Bitmap map)
 		{
 			for (int y = 0; y < map.Height; ++y)
@@ -105,30 +137,30 @@ namespace Warcraft.Core
 		}
 
 		/*
-			Binary Reader Extensions for standard typess
+			BinaryReader Extensions for standard typess
 		*/
 
 		/// <summary>
 		/// Reads an 8-byte Range value from the data stream.
 		/// </summary>
 		/// <returns>The range.</returns>
-		/// <param name="Reader">Reader.</param>
-		public static Range ReadRange(this BinaryReader Reader)
+		/// <param name="binaryReader">binaryReader.</param>
+		public static Range ReadRange(this BinaryReader binaryReader)
 		{
-			return new Range(Reader.ReadSingle(), Reader.ReadSingle());
+			return new Range(binaryReader.ReadSingle(), binaryReader.ReadSingle());
 		}
 
 		/// <summary>
 		/// Reads a 4-byte RGBA value from the data stream.
 		/// </summary>
 		/// <returns>The argument.</returns>
-		/// <param name="Reader">Reader.</param>
-		public static RGBA ReadRGBA(this BinaryReader Reader)
+		/// <param name="binaryReader">binaryReader.</param>
+		public static RGBA ReadRGBA(this BinaryReader binaryReader)
 		{
-			byte R = Reader.ReadByte();
-			byte G = Reader.ReadByte();
-			byte B = Reader.ReadByte();
-			byte A = Reader.ReadByte();
+			byte R = binaryReader.ReadByte();
+			byte G = binaryReader.ReadByte();
+			byte B = binaryReader.ReadByte();
+			byte A = binaryReader.ReadByte();
 
 			RGBA rgba = new RGBA(R, G, B, A);
 
@@ -139,13 +171,13 @@ namespace Warcraft.Core
 		/// Reads a 4-byte RGBA value from the data stream.
 		/// </summary>
 		/// <returns>The argument.</returns>
-		/// <param name="Reader">Reader.</param>
-		public static BGRA ReadBGRA(this BinaryReader Reader)
+		/// <param name="binaryReader">binaryReader.</param>
+		public static BGRA ReadBGRA(this BinaryReader binaryReader)
 		{
-			byte B = Reader.ReadByte();
-			byte G = Reader.ReadByte();
-			byte R = Reader.ReadByte();
-			byte A = Reader.ReadByte();
+			byte B = binaryReader.ReadByte();
+			byte G = binaryReader.ReadByte();
+			byte R = binaryReader.ReadByte();
+			byte A = binaryReader.ReadByte();
 
 			BGRA bgra = new BGRA(B, G, R, A);
 
@@ -156,13 +188,13 @@ namespace Warcraft.Core
 		/// Reads a standard null-terminated string from the data stream.
 		/// </summary>
 		/// <returns>The null terminated string.</returns>
-		/// <param name="Reader">Reader.</param>
-		public static string ReadNullTerminatedString(this BinaryReader Reader)
+		/// <param name="binaryReader">binaryReader.</param>
+		public static string ReadNullTerminatedString(this BinaryReader binaryReader)
 		{
 			StringBuilder sb = new StringBuilder();
 
 			char c;
-			while ((c = Reader.ReadChar()) != 0)
+			while ((c = binaryReader.ReadChar()) != 0)
 			{
 				sb.Append(c);
 			}
@@ -174,14 +206,14 @@ namespace Warcraft.Core
 		/// Reads a 4-byte RIFF chunk signature from the data stream.
 		/// </summary>
 		/// <returns>The signature as a string.</returns>
-		public static string ReadChunkSignature(this BinaryReader Reader)
+		public static string ReadChunkSignature(this BinaryReader binaryReader)
 		{
 			// The signatures are stored in reverse in the file, so we'll need to read them backwards into
 			// the buffer.
 			char[] signatureBuffer = new char[4];
 			for (int i = 0; i < 4; ++i)
 			{
-				signatureBuffer[3 - i] = Reader.ReadChar();
+				signatureBuffer[3 - i] = binaryReader.ReadChar();
 			}
 
 			string signature = new string(signatureBuffer);
@@ -192,10 +224,10 @@ namespace Warcraft.Core
 		/// Peeks a 4-byte RIFF chunk signature from the data stream. This does not
 		/// advance the position of the stream.
 		/// </summary>
-		public static string PeekChunkSignature(this BinaryReader Reader)
+		public static string PeekChunkSignature(this BinaryReader binaryReader)
 		{
-			string chunkSignature = Reader.ReadChunkSignature();
-			Reader.BaseStream.Position -= chunkSignature.Length;
+			string chunkSignature = binaryReader.ReadChunkSignature();
+			binaryReader.BaseStream.Position -= chunkSignature.Length;
 
 			return chunkSignature;
 		}
@@ -204,11 +236,12 @@ namespace Warcraft.Core
 		/// Reads an RIFF-style chunk from the stream. The chunk must have the <see cref="IRIFFChunk"/>
 		/// interface, and implement a parameterless constructor.
 		/// </summary>
-		public static T ReadIFFChunk<T>(this BinaryReader Reader) where T : IRIFFChunk, new()
+		/// <param name="reader">The current <see cref="BinaryReader"/></param>
+		public static T ReadIFFChunk<T>(this BinaryReader reader) where T : IRIFFChunk, new()
 		{
-			string chunkSignature = Reader.ReadChunkSignature();
-			uint chunkSize = Reader.ReadUInt32();
-			byte[] chunkData = Reader.ReadBytes((int)chunkSize);
+			string chunkSignature = reader.ReadChunkSignature();
+			uint chunkSize = reader.ReadUInt32();
+			byte[] chunkData = reader.ReadBytes((int)chunkSize);
 
 			T chunk = new T();
 			if (chunk.GetSignature() != chunkSignature)
@@ -225,28 +258,28 @@ namespace Warcraft.Core
 		/// Reads an 16-byte <see cref="Plane"/> from the data stream.
 		/// </summary>
 		/// <returns>The plane.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static Plane ReadPlane(this BinaryReader Reader)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		public static Plane ReadPlane(this BinaryReader binaryReader)
 		{
-			return new Plane(Reader.ReadVector3f(), Reader.ReadSingle());
+			return new Plane(binaryReader.ReadVector3f(), binaryReader.ReadSingle());
 		}
 
 		/// <summary>
 		/// Reads an 18-byte <see cref="ShortPlane"/> from the data stream.
 		/// </summary>
 		/// <returns>The plane.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static ShortPlane ReadShortPlane(this BinaryReader Reader)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		public static ShortPlane ReadShortPlane(this BinaryReader binaryReader)
 		{
 			ShortPlane shortPlane = new ShortPlane();
 			for (int y = 0; y < 3; ++y)
 			{
-				List<short> CoordinateRow = new List<short>();
+				List<short> coordinateRow = new List<short>();
 				for (int x = 0; x < 3; ++x)
 				{
-					CoordinateRow.Add(Reader.ReadInt16());
+					coordinateRow.Add(binaryReader.ReadInt16());
 				}
-				shortPlane.Coordinates.Add(CoordinateRow);
+				shortPlane.Coordinates.Add(coordinateRow);
 			}
 
 			return shortPlane;
@@ -257,10 +290,10 @@ namespace Warcraft.Core
 		/// 16 bytes.
 		/// </summary>
 		/// <returns>The quaternion.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static Quaternion ReadQuaternion32(this BinaryReader Reader)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		public static Quaternion ReadQuaternion32(this BinaryReader binaryReader)
 		{
-			return new Quaternion(Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle());
+			return new Quaternion(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
 		}
 
 		/// <summary>
@@ -268,13 +301,13 @@ namespace Warcraft.Core
 		/// 8 bytes.
 		/// </summary>
 		/// <returns>The quaternion.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static Quaternion ReadQuaternion16(this BinaryReader Reader)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		public static Quaternion ReadQuaternion16(this BinaryReader binaryReader)
 		{
-			short x = Reader.ReadInt16();
-			short y = Reader.ReadInt16();
-			short z = Reader.ReadInt16();
-			short w = Reader.ReadInt16();
+			short x = binaryReader.ReadInt16();
+			short y = binaryReader.ReadInt16();
+			short z = binaryReader.ReadInt16();
+			short w = binaryReader.ReadInt16();
 			return new Quaternion(ShortQuatValueToFloat(x), ShortQuatValueToFloat(y), ShortQuatValueToFloat(z), ShortQuatValueToFloat(w));
 		}
 
@@ -283,10 +316,10 @@ namespace Warcraft.Core
 		/// 12 bytes.
 		/// </summary>
 		/// <returns>The rotator.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static Rotator ReadRotator(this BinaryReader Reader)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		public static Rotator ReadRotator(this BinaryReader binaryReader)
 		{
-			return new Rotator(Reader.ReadVector3f());
+			return new Rotator(binaryReader.ReadVector3f());
 		}
 
 		/// <summary>
@@ -294,28 +327,29 @@ namespace Warcraft.Core
 		/// 12 bytes.
 		/// </summary>
 		/// <returns>The vector3f.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static Vector3f ReadVector3f(this BinaryReader Reader, AxisConfiguration convertTo = AxisConfiguration.YUp)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		/// <param name="convertTo">Which axis configuration the read vector should be converted to.</param>
+		public static Vector3f ReadVector3f(this BinaryReader binaryReader, AxisConfiguration convertTo = AxisConfiguration.YUp)
 		{
 			switch (convertTo)
 			{
 				case AxisConfiguration.Native:
 				{
-					return new Vector3f(Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle());
+					return new Vector3f(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
 				}
 				case AxisConfiguration.YUp:
 				{
-					float X = Reader.ReadSingle();
-					float Z = Reader.ReadSingle();
-					float Y = Reader.ReadSingle() * -1.0f;
+					float X = binaryReader.ReadSingle();
+					float Z = binaryReader.ReadSingle();
+					float Y = binaryReader.ReadSingle() * -1.0f;
 
 					return new Vector3f(X, Y, Z);
 				}
 				case AxisConfiguration.ZUp:
 				{
-					float X = Reader.ReadSingle();
-					float Z = Reader.ReadSingle() * -1.0f;
-					float Y = Reader.ReadSingle();
+					float X = binaryReader.ReadSingle();
+					float Z = binaryReader.ReadSingle() * -1.0f;
+					float Y = binaryReader.ReadSingle();
 
 					return new Vector3f(X, Y, Z);
 				}
@@ -331,32 +365,33 @@ namespace Warcraft.Core
 		/// 16 bytes.
 		/// </summary>
 		/// <returns>The vector3f.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static Vector4f ReadVector4f(this BinaryReader Reader, AxisConfiguration convertTo = AxisConfiguration.YUp)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		/// <param name="convertTo">Which axis configuration the read vector should be converted to.</param>
+		public static Vector4f ReadVector4f(this BinaryReader binaryReader, AxisConfiguration convertTo = AxisConfiguration.YUp)
 		{
 			switch (convertTo)
 			{
 				case AxisConfiguration.Native:
 				{
-					return new Vector4f(Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle());
+					return new Vector4f(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
 				}
 				case AxisConfiguration.YUp:
 				{
-					float X = Reader.ReadSingle();
-					float Z = Reader.ReadSingle();
-					float Y = Reader.ReadSingle() * -1.0f;
+					float X = binaryReader.ReadSingle();
+					float Z = binaryReader.ReadSingle();
+					float Y = binaryReader.ReadSingle() * -1.0f;
 
-					float W = Reader.ReadSingle();
+					float W = binaryReader.ReadSingle();
 
 					return new Vector4f(X, Y, Z, W);
 				}
 				case AxisConfiguration.ZUp:
 				{
-					float X = Reader.ReadSingle();
-					float Z = Reader.ReadSingle() * -1.0f;
-					float Y = Reader.ReadSingle();
+					float X = binaryReader.ReadSingle();
+					float Z = binaryReader.ReadSingle() * -1.0f;
+					float Y = binaryReader.ReadSingle();
 
-					float W = Reader.ReadSingle();
+					float W = binaryReader.ReadSingle();
 
 					return new Vector4f(X, Y, Z, W);
 				}
@@ -372,28 +407,29 @@ namespace Warcraft.Core
 		/// 6 bytes.
 		/// </summary>
 		/// <returns>The vector3s.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static Vector3s ReadVector3s(this BinaryReader Reader, AxisConfiguration convertTo = AxisConfiguration.YUp)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		/// <param name="convertTo">Which axis configuration the read vector should be converted to.</param>
+		public static Vector3s ReadVector3s(this BinaryReader binaryReader, AxisConfiguration convertTo = AxisConfiguration.YUp)
 		{
 			switch (convertTo)
 			{
 				case AxisConfiguration.Native:
 				{
-					return new Vector3s(Reader.ReadInt16(), Reader.ReadInt16(), Reader.ReadInt16());
+					return new Vector3s(binaryReader.ReadInt16(), binaryReader.ReadInt16(), binaryReader.ReadInt16());
 				}
 				case AxisConfiguration.YUp:
 				{
-					short X = Reader.ReadInt16();
-					short Z = Reader.ReadInt16();
-					short Y = (short)(Reader.ReadInt16() * -1);
+					short X = binaryReader.ReadInt16();
+					short Z = binaryReader.ReadInt16();
+					short Y = (short)(binaryReader.ReadInt16() * -1);
 
 					return new Vector3s(X, Y, Z);
 				}
 				case AxisConfiguration.ZUp:
 				{
-					short X = Reader.ReadInt16();
-					short Z = (short)(Reader.ReadInt16() * -1);
-					short Y = Reader.ReadInt16();
+					short X = binaryReader.ReadInt16();
+					short Z = (short)(binaryReader.ReadInt16() * -1);
+					short Y = binaryReader.ReadInt16();
 
 					return new Vector3s(X, Y, Z);
 				}
@@ -409,10 +445,10 @@ namespace Warcraft.Core
 		/// 8 bytes.
 		/// </summary>
 		/// <returns>The vector2f.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static Vector2f ReadVector2f(this BinaryReader Reader)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		public static Vector2f ReadVector2f(this BinaryReader binaryReader)
 		{
-			return new Vector2f(Reader.ReadSingle(), Reader.ReadSingle());
+			return new Vector2f(binaryReader.ReadSingle(), binaryReader.ReadSingle());
 		}
 
 		/// <summary>
@@ -420,10 +456,10 @@ namespace Warcraft.Core
 		/// 24 bytes.
 		/// </summary>
 		/// <returns>The box.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static Box ReadBox(this BinaryReader Reader)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		public static Box ReadBox(this BinaryReader binaryReader)
 		{
-			return new Box(Reader.ReadVector3f(), Reader.ReadVector3f());
+			return new Box(binaryReader.ReadVector3f(), binaryReader.ReadVector3f());
 		}
 
 		/// <summary>
@@ -431,74 +467,74 @@ namespace Warcraft.Core
 		/// 12 bytes.
 		/// </summary>
 		/// <returns>The box.</returns>
-		/// <param name="Reader">The current <see cref="BinaryReader"/></param>
-		public static ShortBox ReadShortBox(this BinaryReader Reader)
+		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+		public static ShortBox ReadShortBox(this BinaryReader binaryReader)
 		{
-			return new ShortBox(Reader.ReadVector3s(), Reader.ReadVector3s());
+			return new ShortBox(binaryReader.ReadVector3s(), binaryReader.ReadVector3s());
 		}
 
 		/*
-			Binary Writer extensions for standard types
+			BinaryWriter extensions for standard types
 		*/
 
 		/// <summary>
 		/// Writes a 8-byte <see cref="Range"/> to the data stream.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="range">In range.</param>
-		public static void WriteRange(this BinaryWriter Writer, Range range)
+		public static void WriteRange(this BinaryWriter binaryWriter, Range range)
 		{
-			Writer.Write(range.Minimum);
-			Writer.Write(range.Maximum);
+			binaryWriter.Write(range.Minimum);
+			binaryWriter.Write(range.Maximum);
 		}
 
 		/// <summary>
 		/// Writes a 4-byte <see cref="RGBA"/> value to the data stream.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="rgba">The RGBA value to write.</param>
-		public static void WriteRGBA(this BinaryWriter Writer, RGBA rgba)
+		public static void WriteRGBA(this BinaryWriter binaryWriter, RGBA rgba)
 		{
-			Writer.Write(rgba.R);
-			Writer.Write(rgba.G);
-			Writer.Write(rgba.B);
-			Writer.Write(rgba.A);
+			binaryWriter.Write(rgba.R);
+			binaryWriter.Write(rgba.G);
+			binaryWriter.Write(rgba.B);
+			binaryWriter.Write(rgba.A);
 		}
 
 		/// <summary>
 		/// Writes a 4-byte <see cref="RGBA"/> value to the data stream.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="bgra">The RGBA value to write.</param>
-		public static void WriteBGRA(this BinaryWriter Writer, BGRA bgra)
+		public static void WriteBGRA(this BinaryWriter binaryWriter, BGRA bgra)
 		{
-			Writer.Write(bgra.B);
-			Writer.Write(bgra.G);
-			Writer.Write(bgra.R);
-			Writer.Write(bgra.A);
+			binaryWriter.Write(bgra.B);
+			binaryWriter.Write(bgra.G);
+			binaryWriter.Write(bgra.R);
+			binaryWriter.Write(bgra.A);
 		}
 
 		/// <summary>
 		/// Writes the provided string to the data stream as a C-style null-terminated string.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="InputString">Input string.</param>
-		public static void WriteNullTerminatedString(this BinaryWriter Writer, string InputString)
+		public static void WriteNullTerminatedString(this BinaryWriter binaryWriter, string InputString)
 		{
 			foreach (char c in InputString)
 			{
-				Writer.Write(c);
+				binaryWriter.Write(c);
 			}
 
-			Writer.Write((char)0);
+			binaryWriter.Write((char)0);
 		}
 
 		/// <summary>
 		/// Writes an RIFF-style chunk signature to the data stream.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="Signature">Signature.</param>
-		public static void WriteChunkSignature(this BinaryWriter Writer, string Signature)
+		public static void WriteChunkSignature(this BinaryWriter binaryWriter, string Signature)
 		{
 			if (Signature.Length != 4)
 			{
@@ -507,7 +543,7 @@ namespace Warcraft.Core
 
 			for (int i = 3; i >= 0; --i)
 			{
-				Writer.Write(Signature[i]);
+				binaryWriter.Write(Signature[i]);
 			}
 		}
 
@@ -515,38 +551,38 @@ namespace Warcraft.Core
 		/// <summary>
 		/// Writes an RIFF-style chunk to the data stream.
 		/// </summary>
-		public static void WriteIFFChunk<T>(this BinaryWriter Writer, T chunk) where T : IRIFFChunk, IBinarySerializable
+		public static void WriteIFFChunk<T>(this BinaryWriter binaryWriter, T chunk) where T : IRIFFChunk, IBinarySerializable
 		{
 			byte[] serializedChunk = chunk.Serialize();
 
-			Writer.WriteChunkSignature(chunk.GetSignature());
-			Writer.Write((uint)serializedChunk.Length);
-			Writer.Write(serializedChunk);
+			binaryWriter.WriteChunkSignature(chunk.GetSignature());
+			binaryWriter.Write((uint)serializedChunk.Length);
+			binaryWriter.Write(serializedChunk);
 		}
 
 		/// <summary>
 		/// Writes a 16-byte <see cref="Plane"/> to the data stream.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
         /// <param name="plane">The plane to write.</param>
-		public static void WritePlane(this BinaryWriter Writer, Plane plane)
+		public static void WritePlane(this BinaryWriter binaryWriter, Plane plane)
 		{
-			Writer.WriteVector3f(plane.Normal);
-			Writer.Write(plane.DistanceFromCenter);
+			binaryWriter.WriteVector3f(plane.Normal);
+			binaryWriter.Write(plane.DistanceFromCenter);
 		}
 
 		/// <summary>
 		/// Writes an 18-byte <see cref="ShortPlane"/> to the data stream.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="shortPlane">The plane to write.</param>
-		public static void WriteShortPlane(this BinaryWriter Writer, ShortPlane shortPlane)
+		public static void WriteShortPlane(this BinaryWriter binaryWriter, ShortPlane shortPlane)
 		{
 			for (int y = 0; y < 3; ++y)
 			{
 				for (int x = 0; x < 3; ++x)
 				{
-					Writer.Write(shortPlane.Coordinates[y][x]);
+					binaryWriter.Write(shortPlane.Coordinates[y][x]);
 				}
 			}
 		}
@@ -554,71 +590,72 @@ namespace Warcraft.Core
 		/// <summary>
 		/// Writes a 16-byte <see cref="Quaternion"/> to the data stream.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="quaternion">The quaternion to write.</param>
-		public static void WriteQuaternion32(this BinaryWriter Writer, Quaternion quaternion)
+		public static void WriteQuaternion32(this BinaryWriter binaryWriter, Quaternion quaternion)
 		{
-			Writer.Write(quaternion.X);
-			Writer.Write(quaternion.Y);
-			Writer.Write(quaternion.Z);
-			Writer.Write(quaternion.Scalar);
+			binaryWriter.Write(quaternion.X);
+			binaryWriter.Write(quaternion.Y);
+			binaryWriter.Write(quaternion.Z);
+			binaryWriter.Write(quaternion.Scalar);
 		}
 
 		/// <summary>
 		/// Writes a 8-byte <see cref="Quaternion"/> to the data stream. This is a packed format of a normal 32-bit quaternion with
 		/// some data loss.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="quaternion">The quaternion to write.</param>
-		public static void WriteQuaternion16(this BinaryWriter Writer, Quaternion quaternion)
+		public static void WriteQuaternion16(this BinaryWriter binaryWriter, Quaternion quaternion)
 		{
-			Writer.Write(FloatQuatValueToShort(quaternion.X));
-			Writer.Write(FloatQuatValueToShort(quaternion.Y));
-			Writer.Write(FloatQuatValueToShort(quaternion.Z));
-			Writer.Write(FloatQuatValueToShort(quaternion.Scalar));
+			binaryWriter.Write(FloatQuatValueToShort(quaternion.X));
+			binaryWriter.Write(FloatQuatValueToShort(quaternion.Y));
+			binaryWriter.Write(FloatQuatValueToShort(quaternion.Z));
+			binaryWriter.Write(FloatQuatValueToShort(quaternion.Scalar));
 		}
 
 		/// <summary>
 		/// Writes a 12-byte <see cref="Rotator"/> value to the data stream in Pitch/Yaw/Roll order.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="InRotator">Rotator.</param>
-		public static void WriteRotator(this BinaryWriter Writer, Rotator InRotator)
+		public static void WriteRotator(this BinaryWriter binaryWriter, Rotator InRotator)
 		{
-			Writer.Write(InRotator.Pitch);
-			Writer.Write(InRotator.Yaw);
-			Writer.Write(InRotator.Roll);
+			binaryWriter.Write(InRotator.Pitch);
+			binaryWriter.Write(InRotator.Yaw);
+			binaryWriter.Write(InRotator.Roll);
 		}
 
 		/// <summary>
 		/// Writes a 12-byte <see cref="Vector3f"/> value to the data stream in XYZ order. This function
 		/// expects a Y-up vector.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="vector">The Vector to write.</param>
-		public static void WriteVector3f(this BinaryWriter Writer, Vector3f vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
+		/// <param name="storeAs">Which axis configuration the read vector should be stored as.</param>
+		public static void WriteVector3f(this BinaryWriter binaryWriter, Vector3f vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
 		{
 			switch (storeAs)
 			{
 				case AxisConfiguration.Native:
 				{
-					Writer.Write(vector.X);
-					Writer.Write(vector.Y);
-					Writer.Write(vector.Z);
+					binaryWriter.Write(vector.X);
+					binaryWriter.Write(vector.Y);
+					binaryWriter.Write(vector.Z);
 					break;
 				}
 				case AxisConfiguration.YUp:
 				{
-					Writer.Write(vector.X);
-					Writer.Write(vector.Y);
-					Writer.Write(vector.Z);
+					binaryWriter.Write(vector.X);
+					binaryWriter.Write(vector.Y);
+					binaryWriter.Write(vector.Z);
 					break;
 				}
 				case AxisConfiguration.ZUp:
 				{
-					Writer.Write(vector.X);
-					Writer.Write(vector.Z);
-					Writer.Write(vector.Y * -1.0f);
+					binaryWriter.Write(vector.X);
+					binaryWriter.Write(vector.Z);
+					binaryWriter.Write(vector.Y * -1.0f);
 					break;
 				}
 				default:
@@ -630,34 +667,35 @@ namespace Warcraft.Core
 		/// Writes a 16-byte <see cref="Vector4f"/> value to the data stream in XYZW order. This function
 		/// expects a Y-up vector.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="vector">The Vector to write.</param>
-		public static void WriteVector4f(this BinaryWriter Writer, Vector4f vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
+		/// <param name="storeAs">Which axis configuration the read vector should be stored as.</param>
+		public static void WriteVector4f(this BinaryWriter binaryWriter, Vector4f vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
 		{
 			switch (storeAs)
 			{
 				case AxisConfiguration.Native:
 				{
-					Writer.Write(vector.X);
-					Writer.Write(vector.Y);
-					Writer.Write(vector.Z);
-					Writer.Write(vector.W);
+					binaryWriter.Write(vector.X);
+					binaryWriter.Write(vector.Y);
+					binaryWriter.Write(vector.Z);
+					binaryWriter.Write(vector.W);
 					break;
 				}
 				case AxisConfiguration.YUp:
 				{
-					Writer.Write(vector.X);
-					Writer.Write(vector.Y);
-					Writer.Write(vector.Z);
-					Writer.Write(vector.W);
+					binaryWriter.Write(vector.X);
+					binaryWriter.Write(vector.Y);
+					binaryWriter.Write(vector.Z);
+					binaryWriter.Write(vector.W);
 					break;
 				}
 				case AxisConfiguration.ZUp:
 				{
-					Writer.Write(vector.X);
-					Writer.Write(vector.Z);
-					Writer.Write(vector.Y * -1.0f);
-					Writer.Write(vector.W);
+					binaryWriter.Write(vector.X);
+					binaryWriter.Write(vector.Z);
+					binaryWriter.Write(vector.Y * -1.0f);
+					binaryWriter.Write(vector.W);
 					break;
 				}
 				default:
@@ -669,31 +707,32 @@ namespace Warcraft.Core
 		/// Writes a 6-byte <see cref="Vector3s"/> value to the data stream in XYZ order. This function
 		/// expects a Y-up vector.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="vector">The Vector to write.</param>
-		public static void WriteVector3s(this BinaryWriter Writer, Vector3s vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
+		/// <param name="storeAs">Which axis configuration the read vector should be stored as.</param>
+		public static void WriteVector3s(this BinaryWriter binaryWriter, Vector3s vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
 		{
 			switch (storeAs)
 			{
 				case AxisConfiguration.Native:
 				{
-					Writer.Write(vector.X);
-					Writer.Write(vector.Y);
-					Writer.Write(vector.Z);
+					binaryWriter.Write(vector.X);
+					binaryWriter.Write(vector.Y);
+					binaryWriter.Write(vector.Z);
 					break;
 				}
 				case AxisConfiguration.YUp:
 				{
-					Writer.Write(vector.X);
-					Writer.Write(vector.Y);
-					Writer.Write(vector.Z);
+					binaryWriter.Write(vector.X);
+					binaryWriter.Write(vector.Y);
+					binaryWriter.Write(vector.Z);
 					break;
 				}
 				case AxisConfiguration.ZUp:
 				{
-					Writer.Write(vector.X);
-					Writer.Write(vector.Z);
-					Writer.Write((short)(vector.Y * -1));
+					binaryWriter.Write(vector.X);
+					binaryWriter.Write(vector.Z);
+					binaryWriter.Write((short)(vector.Y * -1));
 					break;
 				}
 				default:
@@ -704,35 +743,35 @@ namespace Warcraft.Core
 		/// <summary>
         /// Writes an 8-byte <see cref="Vector2f"/> value to the data stream in XY order.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="vector">The Vector to write.</param>
-		public static void WriteVector2f(this BinaryWriter Writer, Vector2f vector)
+		public static void WriteVector2f(this BinaryWriter binaryWriter, Vector2f vector)
 		{
-			Writer.Write(vector.X);
-			Writer.Write(vector.Y);
+			binaryWriter.Write(vector.X);
+			binaryWriter.Write(vector.Y);
 		}
 
 
 		/// <summary>
 		/// Writes a 24-byte <see cref="Box"/> to the data stream.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="box">In box.</param>
-		public static void WriteBox(this BinaryWriter Writer, Box box)
+		public static void WriteBox(this BinaryWriter binaryWriter, Box box)
 		{
-			Writer.WriteVector3f(box.BottomCorner);
-			Writer.WriteVector3f(box.TopCorner);
+			binaryWriter.WriteVector3f(box.BottomCorner);
+			binaryWriter.WriteVector3f(box.TopCorner);
 		}
 
 		/// <summary>
 		/// Writes a 12-byte <see cref="ShortBox"/> to the data stream.
 		/// </summary>
-		/// <param name="Writer">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="box">In box.</param>
-		public static void WriteShortBox(this BinaryWriter Writer, ShortBox box)
+		public static void WriteShortBox(this BinaryWriter binaryWriter, ShortBox box)
 		{
-			Writer.WriteVector3s(box.BottomCorner);
-			Writer.WriteVector3s(box.TopCorner);
+			binaryWriter.WriteVector3s(box.BottomCorner);
+			binaryWriter.WriteVector3s(box.TopCorner);
 		}
 	}
 }

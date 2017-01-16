@@ -1,5 +1,5 @@
 ﻿//
-//  AnimationDataRecord.cs
+//  SpellRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
