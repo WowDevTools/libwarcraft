@@ -25,17 +25,31 @@ using System.IO;
 using Warcraft.MPQ.Tables.Hash;
 using Warcraft.MPQ.Tables.Block;
 using System.Text;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MPQ
 {
-	public class MPQHeader
+	/// <summary>
+	/// This class represents the header of an MPQ archive. It contains information about
+	/// the data contained in the archive, such as offsets to tables, file count, and the
+	/// format of the archive.
+	/// </summary>
+	public class MPQHeader : IBinarySerializable
 	{
 		/*
 			Fields present in Basic Format (v0)
 		*/
 
+		/// <summary>
+		/// The binary signature of an MPQ file. This is the four first bytes of all
+		/// valid MPQ archives.
+		/// </summary>
 		public const string ArchiveSignature = "MPQ\x1a";
 
+		/// <summary>
+		/// The size of this header in bytes. Stored in the archive, and varies between
+		/// format versions.
+		/// </summary>
 		public uint HeaderSize
 		{
 			get;
@@ -44,6 +58,9 @@ namespace Warcraft.MPQ
 
 		private uint BasicArchiveSize;
 
+		/// <summary>
+		/// The size of the full archive in bytes.
+		/// </summary>
 		public ulong ArchiveSize
 		{
 			get
@@ -58,12 +75,18 @@ namespace Warcraft.MPQ
 		private uint HashTableOffset;
 		private uint BlockTableOffset;
 
+		/// <summary>
+		/// The number of hash table entries stored in this archive.
+		/// </summary>
 		public uint HashTableEntryCount
 		{
 			get;
 			private set;
 		}
 
+		/// <summary>
+		/// The number of block table entries stored in this archive.
+		/// </summary>
 		public uint BlockTableEntryCount
 		{
 			get;
@@ -95,12 +118,12 @@ namespace Warcraft.MPQ
 
 		private uint ChunkSizeForHashing;
 
-		string MD5_BlockTable;
-		string MD5_HashTable;
-		string MD5_ExtendedBlockTable;
-		string MD5_BETTable;
-		string MD5_HETTable;
-		string MD5_Header;
+		private string MD5_BlockTable;
+		private string MD5_HashTable;
+		private string MD5_ExtendedBlockTable;
+		private string MD5_BETTable;
+		private string MD5_HETTable;
+		private string MD5_Header;
 		// The MD5_Header is calculated from the start of the signature to the end of the MD5_HETTable
 
 
@@ -108,13 +131,13 @@ namespace Warcraft.MPQ
 		/// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQHeader"/> class.
 		/// This creates a default header for an empty archive.
 		/// </summary>
-		public MPQHeader(MPQFormat InFormat)
+		public MPQHeader(MPQFormat inFormat)
 		{
-			if (InFormat == MPQFormat.Basic)
+			if (inFormat == MPQFormat.Basic)
 			{
 				this.HeaderSize = 32;
 			}
-			else if (InFormat == MPQFormat.ExtendedV1)
+			else if (inFormat == MPQFormat.ExtendedV1)
 			{
 				this.HeaderSize = 44;
 			}
@@ -124,7 +147,7 @@ namespace Warcraft.MPQ
 			}
 
 			this.BasicArchiveSize = this.HeaderSize;
-			this.Format = InFormat;
+			this.Format = inFormat;
 			this.SectorSizeExponent = 3;
 
 			if (this.Format > MPQFormat.ExtendedV1)
@@ -196,12 +219,30 @@ namespace Warcraft.MPQ
 		}
 
 		/// <summary>
-		/// Gets the size of the hash table.
+		/// Gets the size of the full hash table.
 		/// </summary>
 		/// <returns>The hash table size.</returns>
 		public ulong GetHashTableSize()
 		{
 			return (ulong)(this.HashTableEntryCount * HashTableEntry.GetSize());
+		}
+
+		/// <summary>
+		/// Gets the size of the hash table in compressed form (if it is compressed).
+		/// </summary>
+		/// <returns>The size of the compressed table.</returns>
+		public ulong GetCompressedHashTableSize()
+		{
+			return this.CompressedHashTableSize;
+		}
+
+		/// <summary>
+		/// Determinest whether or not the hash table is compressed.
+		/// </summary>
+		/// <returns><value>true</value> if the hash table is compressed; otherwise, <value>false</value>.</returns>
+		public bool IsHashTableCompressed()
+		{
+			return this.CompressedHashTableSize > GetHashTableSize();
 		}
 
 		/// <summary>
@@ -211,6 +252,24 @@ namespace Warcraft.MPQ
 		public ulong GetBlockTableSize()
 		{
 			return (ulong)(this.BlockTableEntryCount * BlockTableEntry.GetSize());
+		}
+
+		/// <summary>
+		/// Gets the size of the block table in compressed form (if it is compressed).
+		/// </summary>
+		/// <returns>The size of the compressed table.</returns>
+		public ulong GetCompressedBlockTableSize()
+		{
+			return this.CompressedBlockTableSize;
+		}
+
+		/// <summary>
+		/// Determinest whether or not the block table is compressed.
+		/// </summary>
+		/// <returns><value>true</value> if the block table is compressed; otherwise, <value>false</value>.</returns>
+		public bool IsBlockTableCompressed()
+		{
+			return this.CompressedBlockTableSize > GetBlockTableSize();
 		}
 
 		/// <summary>
@@ -402,6 +461,9 @@ namespace Warcraft.MPQ
 			return mergedBits;
 		}
 
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
 		public byte[] Serialize()
 		{
 			using (MemoryStream ms = new MemoryStream())

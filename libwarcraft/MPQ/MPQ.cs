@@ -79,7 +79,7 @@ namespace Warcraft.MPQ
 		/// of the archive format merged with the offset listed in the block table. This format extension allows
 		/// archives to grow larger than 4GB in size.
 		/// </summary>
-		public List<ushort> ExtendedBlockTable = new List<ushort>();
+		public readonly List<ushort> ExtendedBlockTable = new List<ushort>();
 
 		/// <summary>
 		/// A set of extended file attributes. These attributes are not guaranteed to be present in all archives,
@@ -129,20 +129,48 @@ namespace Warcraft.MPQ
 
 			if (this.Header.GetFormat() > MPQFormat.ExtendedV1)
 			{
-				throw new NotImplementedException();
+				//throw new NotImplementedException();
 			}
 
 			// Seek to the hash table and load it
 			this.ArchiveReader.BaseStream.Position = (long)this.Header.GetHashTableOffset();
 
-			byte[] encryptedHashTable = this.ArchiveReader.ReadBytes((int)this.Header.GetHashTableSize());
-			this.ArchiveHashTable = new HashTable(MPQCrypt.DecryptData(encryptedHashTable, HashTable.TableKey));
+			byte[] hashTableData;
+			if (this.Header.IsHashTableCompressed())
+			{
+				byte[] encryptedData = this.ArchiveReader.ReadBytes((int)this.Header.GetCompressedHashTableSize());
+				byte[] decryptedData = MPQCrypt.DecryptData(encryptedData, HashTable.TableKey);
+
+				BlockFlags tableFlags = BlockFlags.IsCompressedMultiple;
+				hashTableData = Compression.DecompressSector(decryptedData, tableFlags);
+			}
+			else
+			{
+				byte[] encryptedData = this.ArchiveReader.ReadBytes((int)this.Header.GetHashTableSize());
+				hashTableData = MPQCrypt.DecryptData(encryptedData, HashTable.TableKey);
+			}
+
+			this.ArchiveHashTable = new HashTable(hashTableData);
 
 			// Seek to the block table and load it
 			this.ArchiveReader.BaseStream.Position = (long)this.Header.GetBlockTableOffset();
 
-			byte[] encryptedBlockTable = this.ArchiveReader.ReadBytes((int)this.Header.GetBlockTableSize());
-			this.ArchiveBlockTable = new BlockTable(MPQCrypt.DecryptData(encryptedBlockTable, BlockTable.TableKey));
+			byte[] blockTableData;
+			if (this.Header.IsBlockTableCompressed())
+			{
+				byte[] encryptedData = this.ArchiveReader.ReadBytes((int)this.Header.GetCompressedBlockTableSize());
+				byte[] decryptedData = MPQCrypt.DecryptData(encryptedData, BlockTable.TableKey);
+
+				BlockFlags tableFlags = BlockFlags.IsCompressedMultiple;
+				blockTableData = Compression.DecompressSector(decryptedData, tableFlags);
+			}
+			else
+			{
+				byte[] encryptedData = this.ArchiveReader.ReadBytes((int)this.Header.GetBlockTableSize());
+				blockTableData = MPQCrypt.DecryptData(encryptedData, BlockTable.TableKey);
+			}
+
+			this.ArchiveBlockTable = new BlockTable(blockTableData);
 
 			if (this.Header.GetFormat() >= MPQFormat.ExtendedV1)
 			{
@@ -408,7 +436,7 @@ namespace Warcraft.MPQ
 				BlockTableEntry fileBlockEntry = this.ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
 
 				// Drop out if the file is not actually a file
-				if (!fileBlockEntry.Flags.HasFlag(BlockFlags.Exists) || fileBlockEntry.Flags.HasFlag(BlockFlags.IsDeletionMarker))
+				if (!fileBlockEntry.HasData())
 				{
 					return null;
 				}
@@ -428,7 +456,7 @@ namespace Warcraft.MPQ
 
 				// Calculate the decryption key if neccesary
 				uint fileKey = 0;
-				if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
+				if (fileBlockEntry.IsEncrypted())
 				{
 					if (fileBlockEntry.Flags.HasFlag(BlockFlags.HasAdjustedEncryptionKey))
 					{
@@ -442,7 +470,7 @@ namespace Warcraft.MPQ
 
 
 				// Examine the file storage types and extract as neccesary
-				if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsSingleUnit))
+				if (fileBlockEntry.IsSingleUnit())
 				{
 					// This file does not use sectoring, but may still be encrypted or compressed.
 					byte[] fileData = this.ArchiveReader.ReadBytes((int)fileBlockEntry.GetBlockSize());
@@ -454,19 +482,20 @@ namespace Warcraft.MPQ
 					}
 
 					// Decompress the sector if neccesary
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsCompressedMultiple) || fileBlockEntry.Flags.HasFlag(BlockFlags.IsImploded))
+					if (fileBlockEntry.IsCompressed())
 					{
 						fileData = Compression.DecompressSector(fileData, fileBlockEntry.Flags);
 					}
 
 					return fileData;
 				}
-				else if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsCompressedMultiple) || fileBlockEntry.Flags.HasFlag(BlockFlags.IsImploded))
+
+				if (fileBlockEntry.IsCompressed())
 				{
 					// This file uses sectoring, and is compressed. It may be encrypted.
 					//Retrieve the offsets for each sector - these are relative to the beginning of the data.
 					List<uint> sectorOffsets = new List<uint>();
-					if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
+					if (fileBlockEntry.IsEncrypted())
 					{
 						MPQCrypt.DecryptSectorOffsetTable(this.ArchiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
 					}
@@ -526,7 +555,7 @@ namespace Warcraft.MPQ
 					foreach (byte[] compressedSector in compressedSectors)
 					{
 						byte[] pendingSector = compressedSector;
-						if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
+						if (fileBlockEntry.IsEncrypted())
 						{
 							// Decrypt the block
 							pendingSector = MPQCrypt.DecryptData(compressedSector, fileKey + sectorIndex);
@@ -597,7 +626,7 @@ namespace Warcraft.MPQ
 					foreach (byte[] rawSector in rawSectors)
 					{
 						byte[] pendingSector = rawSector;
-						if (fileBlockEntry.Flags.HasFlag(BlockFlags.IsEncrypted))
+						if (fileBlockEntry.IsEncrypted())
 						{
 							// Decrypt the block
 							pendingSector = MPQCrypt.DecryptData(rawSector, fileKey + sectorIndex);

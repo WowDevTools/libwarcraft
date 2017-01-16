@@ -28,107 +28,157 @@ using Warcraft.MPQ.Tables.Block;
 
 namespace Warcraft.Core.Compression
 {
+	/// <summary>
+	/// Compression handling for all compression algorithms used in MPQ archives.
+	/// Data can be decompressed manually or by using one of the helper methods
+	/// for when multiple algorithms have been used.
+	/// </summary>
 	public static class Compression
 	{
-		public static byte[] DecompressSector(byte[] PendingSector, BlockFlags Flags)
+		/// <summary>
+		/// Decompresses a sector of a file stored in an MPQ archive.
+		/// </summary>
+		/// <param name="pendingSector">The compressed sector data.</param>
+		/// <param name="blockFlags">The flags of the file block, taken from the block table.</param>
+		/// <returns>The decompressed sector data.</returns>
+		public static byte[] DecompressSector(byte[] pendingSector, BlockFlags blockFlags)
 		{
-			if (Flags.HasFlag(BlockFlags.IsCompressedMultiple))
+			if (blockFlags.HasFlag(BlockFlags.IsCompressedMultiple))
 			{
-				// The sector is compressed using a combination of techniques.
-				// Examine the first byte to determine the compression algorithms used
-				CompressionAlgorithms compressionAlgorithms = (CompressionAlgorithms)PendingSector[0];
-
-				// Drop the first byte
-				byte[] sectorData = new byte[PendingSector.Length - 1];
-				Buffer.BlockCopy(PendingSector, 1, sectorData, 0, sectorData.Length);
-				PendingSector = sectorData;
-
-				// Walk through each compression algorithm in reverse order
-				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.BZip2))
-				{
-					// Decompress sector using BZIP2
-					PendingSector = DecompressBZip2(PendingSector);
-				}
-
-				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Implode_PKWARE))
-				{
-					// Decompress sector using PKWARE Implode
-					PendingSector = DecompressPKWAREImplode(PendingSector);
-				}
-
-				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Deflate_ZLIB))
-				{
-					// Decompress sector using Deflate
-					PendingSector = DecompressDeflate(PendingSector);
-				}
-
-				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Huffman))
-				{
-					// Decompress sector using Huffman
-					PendingSector = DecompressHuffman(PendingSector);
-				}
-
-				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.IMA_ADPCM_Stereo))
-				{
-					// Decompress sector using ADPCM Stereo
-					PendingSector = DecompressADPCMStereo(PendingSector);
-				}
-
-				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.IMA_ADPCM_Mono))
-				{
-					// Decompress sector using ADPCM Mono
-					PendingSector = DecompressADPCMMono(PendingSector);
-				}
-
-				if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Sparse))
-				{
-					// Decompress sector using Sparse
-					PendingSector = DecompressSparse(PendingSector);
-				}
+				return DecompressData(pendingSector);
 			}
-			else if (Flags.HasFlag(BlockFlags.IsImploded))
+			else if (blockFlags.HasFlag(BlockFlags.IsImploded))
 			{
 				// This file or sector uses a single-pass PKWARE Implode algorithm.
 				// Decompress sector using PKWARE
-				PendingSector = DecompressPKWAREImplode(PendingSector);
+				pendingSector = DecompressPKWAREImplode(pendingSector);
 			}
 
-			return PendingSector;
+			return pendingSector;
 		}
 
-		// TODO: Implement
-		public static byte[] DecompressSparse(byte[] InData)
+		/// <summary>
+		/// Decompressed a block of data. It is assumed that this data is compressed with one
+		/// or more algorithms, and that it is prepended by a single byte describing the algorithms
+		/// used. See <see cref="CompressionAlgorithms"/> for valid algorithms.
+		/// </summary>
+		/// <param name="pendingSector">The compressed data.</param>
+		/// <returns>The decompressed data.</returns>
+		public static byte[] DecompressData(byte[] pendingSector)
+		{
+			// The sector is compressed using a combination of techniques.
+			// Examine the first byte to determine the compression algorithms used
+			CompressionAlgorithms compressionAlgorithms = (CompressionAlgorithms)pendingSector[0];
+
+			// Drop the first byte
+			byte[] sectorData = new byte[pendingSector.Length - 1];
+			Buffer.BlockCopy(pendingSector, 1, sectorData, 0, sectorData.Length);
+			pendingSector = sectorData;
+
+			// Walk through each compression algorithm in reverse order
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.BZip2))
+			{
+				// Decompress sector using BZIP2
+				pendingSector = DecompressBZip2(pendingSector);
+			}
+
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Implode_PKWARE))
+			{
+				// Decompress sector using PKWARE Implode
+				pendingSector = DecompressPKWAREImplode(pendingSector);
+			}
+
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Deflate_ZLIB))
+			{
+				// Decompress sector using Deflate
+				pendingSector = DecompressDeflate(pendingSector);
+			}
+
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Huffman))
+			{
+				// Decompress sector using Huffman
+				pendingSector = DecompressHuffman(pendingSector);
+			}
+
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.IMA_ADPCM_Stereo))
+			{
+				// Decompress sector using ADPCM Stereo
+				pendingSector = DecompressADPCMStereo(pendingSector);
+			}
+
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.IMA_ADPCM_Mono))
+			{
+				// Decompress sector using ADPCM Mono
+				pendingSector = DecompressADPCMMono(pendingSector);
+			}
+
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Sparse))
+			{
+				// Decompress sector using Sparse
+				pendingSector = DecompressSparse(pendingSector);
+			}
+
+			return pendingSector;
+		}
+
+		/// <summary>
+		/// TODO: Implement
+		/// Decompresssed a block of data using the Sparse algorithm.
+		/// </summary>
+		/// <param name="inData">The compressed data block.</param>
+		/// <returns>The decompressed data.</returns>
+		public static byte[] DecompressSparse(byte[] inData)
 		{
 			throw new NotImplementedException("Sparse decompression has not yet been implemented.");
 		}
 
-		public static byte[] DecompressADPCMMono(byte[] InData)
+		/// <summary>
+		/// Decompresssed a block of data using the ADPCM-Mono algorithm.
+		/// </summary>
+		/// <param name="inData">The compressed data block.</param>
+		/// <returns>The decompressed data.</returns>
+		public static byte[] DecompressADPCMMono(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(InData))
+			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				return MpqWavCompression.Decompress(ms, 1);
 			}
 		}
 
-		public static byte[] DecompressADPCMStereo(byte[] InData)
+		/// <summary>
+		/// Decompresssed a block of data using the ADPCM-Stereo algorithm.
+		/// </summary>
+		/// <param name="inData">The compressed data block.</param>
+		/// <returns>The decompressed data.</returns>
+		public static byte[] DecompressADPCMStereo(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(InData))
+			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				return MpqWavCompression.Decompress(ms, 2);
 			}
 		}
 
-		public static byte[] DecompressHuffman(byte[] InData)
+		/// <summary>
+		/// Decompresssed a block of data using the Huffman algorithm.
+		/// </summary>
+		/// <param name="inData">The compressed data block.</param>
+		/// <returns>The decompressed data.</returns>
+		public static byte[] DecompressHuffman(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(InData))
+			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				return MpqHuffman.Decompress(ms).ToArray();
 			}
 		}
 
-		public static byte[] DecompressDeflate(byte[] InData)
+		/// <summary>
+		/// Decompresssed a block of data using the Deflate algorithm.
+		/// </summary>
+		/// <param name="inData">The compressed data block.</param>
+		/// <returns>The decompressed data.</returns>
+		public static byte[] DecompressDeflate(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(InData))
+			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (ZlibStream zs = new ZlibStream(ms, CompressionMode.Decompress))
 				{
@@ -141,11 +191,16 @@ namespace Warcraft.Core.Compression
 			}
 		}
 
-		public static byte[] DecompressPKWAREImplode(byte[] InData)
+		/// <summary>
+		/// Decompresssed a block of data using the IMPLODE algorithm.
+		/// </summary>
+		/// <param name="inData">The compressed data block.</param>
+		/// <returns>The decompressed data.</returns>
+		public static byte[] DecompressPKWAREImplode(byte[] inData)
 		{
 			using (MemoryStream decompressedStream = new MemoryStream())
 			{
-				using (MemoryStream compressedStream = new MemoryStream(InData))
+				using (MemoryStream compressedStream = new MemoryStream(inData))
 				{
 					new Blast.Blast(compressedStream, decompressedStream).Decompress();
 					return decompressedStream.ToArray();
@@ -153,9 +208,14 @@ namespace Warcraft.Core.Compression
 			}
 		}
 
-		public static byte[] DecompressBZip2(byte[] InData)
+		/// <summary>
+		/// Decompresssed a block of data using the BZip2 algorithm.
+		/// </summary>
+		/// <param name="inData">The compressed data block.</param>
+		/// <returns>The decompressed data.</returns>
+		public static byte[] DecompressBZip2(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(InData))
+			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BZip2InputStream input = new BZip2InputStream(ms, false))
 				{
@@ -168,7 +228,12 @@ namespace Warcraft.Core.Compression
 			}
 		}
 
-		public static byte[] DecompressLZMA(byte[] InData)
+		/// <summary>
+		/// Decompresssed a block of data using the LZMA algorithm.
+		/// </summary>
+		/// <param name="inData">The compressed data block.</param>
+		/// <returns>The decompressed data.</returns>
+		public static byte[] DecompressLZMA(byte[] inData)
 		{
 			throw new NotImplementedException("LZMA decompression has not yet been implemented.");
 		}

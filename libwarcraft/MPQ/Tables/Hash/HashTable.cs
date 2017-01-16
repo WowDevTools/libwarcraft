@@ -49,7 +49,8 @@ namespace Warcraft.MPQ.Tables.Hash
 					for (long i = 0; i < data.Length; i += HashTableEntry.GetSize())
 					{
 						byte[] entryBytes = br.ReadBytes((int)HashTableEntry.GetSize());
-						this.Entries.Add(new HashTableEntry(entryBytes));
+						HashTableEntry newEntry = new HashTableEntry(entryBytes);
+						this.Entries.Add(newEntry);
 					}
 				}
 			}
