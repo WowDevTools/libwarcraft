@@ -21,28 +21,64 @@
 //
 
 using System;
+using Warcraft.Core.Interfaces;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	public class LiquidObjectRecord : DBCRecord
+	/// <summary>
+	/// A database record defining how an in-world liquid behaves.
+	/// </summary>
+	public class LiquidObjectRecord : DBCRecord, IPostLoad<byte[]>
 	{
+		/// <summary>
+		/// The direction in which the liquid flows.
+		/// </summary>
 		public float FlowDirection;
+
+		/// <summary>
+		/// The speed with which the liquid flows.
+		/// </summary>
 		public float FlowSpeed;
+
+		/// <summary>
+		/// The type of liquid. This is a foreign reference to another table.
+		/// </summary>
 		public UInt32ForeignKey LiquidType;
+
+		/// <summary>
+		/// Whether or not this liquid is fishable.
+		/// </summary>
 		public uint Fishable;
+
+		/// <summary>
+		/// TODO: Unconfirmed behaviour
+		/// The amount light this liquid reflects.
+		/// </summary>
 		public uint Reflection;
 
-		public override void LoadData(byte[] data)
+		/// <summary>
+		/// Loads and parses the provided data.
+		/// </summary>
+		/// <param name="data">Data.</param>
+		public override void PostLoad(byte[] data)
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Gets the field count for this record.
+		/// </summary>
+		/// <returns>The field count.</returns>
 		public override int GetFieldCount()
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Gets the size of the record.
+		/// </summary>
+		/// <returns>The record size.</returns>
 		public override int GetRecordSize()
 		{
 			throw new NotImplementedException();

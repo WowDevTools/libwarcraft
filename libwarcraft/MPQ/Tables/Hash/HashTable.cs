@@ -22,21 +22,36 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core.Interfaces;
 using Warcraft.MPQ.Crypto;
 
 namespace Warcraft.MPQ.Tables.Hash
 {
-	public class HashTable
+	/// <summary>
+	/// The hash table is a table containing hashed file paths for quick lookup in the archive. When stored
+	/// in binary format, it can be both compressed and encrypted.
+	/// </summary>
+	public class HashTable : IBinarySerializable
 	{
+		/// <summary>
+		/// The encryption key for the hash table data.
+		/// </summary>
 		public static readonly uint TableKey = MPQCrypt.Hash("(hash table)", HashType.FileKey);
+
+		/// <summary>
+		/// The entries contained in the hash table.
+		/// </summary>
 		private readonly List<HashTableEntry> Entries = new List<HashTableEntry>(65536);
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="HashTable"/> class.
+		/// </summary>
 		public HashTable()
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.MPQ.Tables.Hash.HashTable"/> class from
+		/// Initializes a new instance of the <see cref="HashTable"/> class from
 		/// a block of data containing hash table entries.
 		/// </summary>
 		/// <param name="data">Data.</param>
@@ -63,28 +78,28 @@ namespace Warcraft.MPQ.Tables.Hash
 		/// <param name="fileName">File name.</param>
 		public HashTableEntry FindEntry(string fileName)
 		{
-			uint EntryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint) this.Entries.Count - 1;
-			uint HashA = MPQCrypt.Hash(fileName, HashType.FilePathA);
-			uint HashB = MPQCrypt.Hash(fileName, HashType.FilePathB);
+			uint entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint) this.Entries.Count - 1;
+			uint hashA = MPQCrypt.Hash(fileName, HashType.FilePathA);
+			uint hashB = MPQCrypt.Hash(fileName, HashType.FilePathB);
 
-			return FindEntry(HashA, HashB, EntryHomeIndex);
+			return FindEntry(hashA, hashB, entryHomeIndex);
 		}
 
 		/// <summary>
 		/// Finds a valid entry for a given hash pair, starting at the specified offset.
 		/// </summary>
 		/// <returns>The entry.</returns>
-		/// <param name="HashA">A hash of the filename (Algorithm A).</param>
-		/// <param name="HashB">A hash of the filename (Algorithm B)</param>
-		/// <param name="EntryHomeIndex">The home index for the file we're searching for. Reduces lookup times.</param>
-		public HashTableEntry FindEntry(uint HashA, uint HashB, uint EntryHomeIndex)
+		/// <param name="hashA">A hash of the filename (Algorithm A).</param>
+		/// <param name="hashB">A hash of the filename (Algorithm B)</param>
+		/// <param name="entryHomeIndex">The home index for the file we're searching for. Reduces lookup times.</param>
+		public HashTableEntry FindEntry(uint hashA, uint hashB, uint entryHomeIndex)
 		{
 			// First, see if the file has ever existed. If it has and matches, return it.
-			if (this.Entries[(int)EntryHomeIndex].HasFileEverExisted())
+			if (this.Entries[(int)entryHomeIndex].HasFileEverExisted())
 			{
-				if (this.Entries[(int)EntryHomeIndex].GetPrimaryHash() == HashA && this.Entries[(int)EntryHomeIndex].GetSecondaryHash() == HashB)
+				if (this.Entries[(int)entryHomeIndex].GetPrimaryHash() == hashA && this.Entries[(int)entryHomeIndex].GetSecondaryHash() == hashB)
 				{
-					return this.Entries[(int)EntryHomeIndex];
+					return this.Entries[(int)entryHomeIndex];
 				}
 			}
 			else
@@ -95,12 +110,12 @@ namespace Warcraft.MPQ.Tables.Hash
 			// If that file doesn't match (but has existed, or is occupied, let's keep looking down the table.
 			HashTableEntry currentEntry = null;
 			HashTableEntry deletionEntry = null;
-			for (int i = (int)EntryHomeIndex + 1; i < this.Entries.Count - 1; ++i)
+			for (int i = (int)entryHomeIndex + 1; i < this.Entries.Count - 1; ++i)
 			{
 				currentEntry = this.Entries[i];
 				if (currentEntry.HasFileEverExisted())
 				{
-					if (currentEntry.GetPrimaryHash() == HashA && currentEntry.GetSecondaryHash() == HashB)
+					if (currentEntry.GetPrimaryHash() == hashA && currentEntry.GetSecondaryHash() == hashB)
 					{
 						if (currentEntry.DoesFileExist())
 						{
@@ -117,12 +132,12 @@ namespace Warcraft.MPQ.Tables.Hash
 			}
 
 			// Still nothing? Loop around and scan the start of the table as well
-			for (int i = 0; i < EntryHomeIndex; ++i)
+			for (int i = 0; i < entryHomeIndex; ++i)
 			{
 				currentEntry = this.Entries[i];
 				if (currentEntry.HasFileEverExisted())
 				{
-					if (currentEntry.GetPrimaryHash() == HashA && currentEntry.GetSecondaryHash() == HashB)
+					if (currentEntry.GetPrimaryHash() == hashA && currentEntry.GetSecondaryHash() == hashB)
 					{
 						if (currentEntry.DoesFileExist())
 						{
@@ -142,6 +157,9 @@ namespace Warcraft.MPQ.Tables.Hash
 			return deletionEntry;
 		}
 
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
 		public byte[] Serialize()
 		{
 			using (MemoryStream ms = new MemoryStream())

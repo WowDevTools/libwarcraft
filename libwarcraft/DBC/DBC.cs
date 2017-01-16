@@ -96,7 +96,7 @@ namespace Warcraft.DBC
 							}
 						}
 
-						record.LoadData(rawRecord);
+						record.PostLoad(rawRecord);
 
 						this.Records.Add(record);
 					}
