@@ -96,6 +96,13 @@
     <Compile Include="Core\Compression\Squish\Maths.cs" />
     <Compile Include="Core\Compression\Squish\SquishCompression.cs" />
     <Compile Include="Core\Shading\ShaderTypes.cs" />
+    <Compile Include="TEX\TextureBlob.cs" />
+    <Compile Include="TEX\TextureBlobCompressionType.cs" />
+    <Compile Include="TEX\TextureBlobData.cs" />
+    <Compile Include="TEX\TextureBlobFilenames.cs" />
+    <Compile Include="TEX\TextureBlobFlags.cs" />
+    <Compile Include="TEX\TextureBlobHeader.cs" />
+    <Compile Include="TEX\TextureBlobVersion.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelBSPFaceIndices.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelTriangleStripIndices.cs" />
     <Compile Include="WMO\GroupFile\Chunks\MPBG.cs" />

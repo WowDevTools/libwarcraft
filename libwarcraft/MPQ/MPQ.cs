@@ -127,20 +127,15 @@ namespace Warcraft.MPQ
 		{
 			this.ArchiveReader = new BinaryReader(mpqStream);
 
-			this.Header = new MPQHeader(this.ArchiveReader.ReadBytes((int)PeekHeaderSize()));
-
-			if (this.Header.GetFormat() > MPQFormat.ExtendedV1)
-			{
-				//throw new NotImplementedException();
-			}
+			this.Header = new MPQHeader(this.ArchiveReader.ReadBytes((int) PeekHeaderSize()));
 
 			// Seek to the hash table and load it
-			this.ArchiveReader.BaseStream.Position = (long)this.Header.GetHashTableOffset();
+			this.ArchiveReader.BaseStream.Position = (long) this.Header.GetHashTableOffset();
 
 			byte[] hashTableData;
 			if (this.Header.IsHashTableCompressed())
 			{
-				byte[] encryptedData = this.ArchiveReader.ReadBytes((int)this.Header.GetCompressedHashTableSize());
+				byte[] encryptedData = this.ArchiveReader.ReadBytes((int) this.Header.GetCompressedHashTableSize());
 				byte[] decryptedData = MPQCrypt.DecryptData(encryptedData, HashTable.TableKey);
 
 				BlockFlags tableFlags = BlockFlags.IsCompressedMultiple;
@@ -148,19 +143,19 @@ namespace Warcraft.MPQ
 			}
 			else
 			{
-				byte[] encryptedData = this.ArchiveReader.ReadBytes((int)this.Header.GetHashTableSize());
+				byte[] encryptedData = this.ArchiveReader.ReadBytes((int) this.Header.GetHashTableSize());
 				hashTableData = MPQCrypt.DecryptData(encryptedData, HashTable.TableKey);
 			}
 
 			this.ArchiveHashTable = new HashTable(hashTableData);
 
 			// Seek to the block table and load it
-			this.ArchiveReader.BaseStream.Position = (long)this.Header.GetBlockTableOffset();
+			this.ArchiveReader.BaseStream.Position = (long) this.Header.GetBlockTableOffset();
 
 			byte[] blockTableData;
 			if (this.Header.IsBlockTableCompressed())
 			{
-				byte[] encryptedData = this.ArchiveReader.ReadBytes((int)this.Header.GetCompressedBlockTableSize());
+				byte[] encryptedData = this.ArchiveReader.ReadBytes((int) this.Header.GetCompressedBlockTableSize());
 				byte[] decryptedData = MPQCrypt.DecryptData(encryptedData, BlockTable.TableKey);
 
 				BlockFlags tableFlags = BlockFlags.IsCompressedMultiple;
@@ -168,18 +163,21 @@ namespace Warcraft.MPQ
 			}
 			else
 			{
-				byte[] encryptedData = this.ArchiveReader.ReadBytes((int)this.Header.GetBlockTableSize());
+				byte[] encryptedData = this.ArchiveReader.ReadBytes((int) this.Header.GetBlockTableSize());
 				blockTableData = MPQCrypt.DecryptData(encryptedData, BlockTable.TableKey);
 			}
 
 			this.ArchiveBlockTable = new BlockTable(blockTableData);
+
+			// TODO: Seek to the extended hash table and load it
+			// TODO: Seek to the extended block table and load it
 
 			if (this.Header.GetFormat() >= MPQFormat.ExtendedV1)
 			{
 				// Seek to the extended block table and load it, if neccesary
 				if (this.Header.GetExtendedBlockTableOffset() > 0)
 				{
-					this.ArchiveReader.BaseStream.Position = (long)this.Header.GetExtendedBlockTableOffset();
+					this.ArchiveReader.BaseStream.Position = (long) this.Header.GetExtendedBlockTableOffset();
 
 					for (int i = 0; i < this.Header.GetBlockTableEntryCount(); ++i)
 					{
@@ -433,53 +431,53 @@ namespace Warcraft.MPQ
 			this.ArchiveReader.BaseStream.Position = 0;
 
 			HashTableEntry fileHashEntry = this.ArchiveHashTable.FindEntry(filePath);
-			if (fileHashEntry != null)
+			if (fileHashEntry == null)
 			{
-				BlockTableEntry fileBlockEntry = this.ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
-
-				// Drop out if the file is not actually a file
-				if (!fileBlockEntry.HasData())
-				{
-					return null;
-				}
-
-				// Seek to the beginning of the file's sectors
-				long adjustedBlockOffset;
-				if (this.Header.GetFormat() >= MPQFormat.ExtendedV1 && RequiresExtendedFormat())
-				{
-					ushort upperOffsetBits = this.ExtendedBlockTable[(int)fileHashEntry.GetBlockEntryIndex()];
-					adjustedBlockOffset = (long)fileBlockEntry.GetExtendedBlockOffset(upperOffsetBits);
-				}
-				else
-				{
-					adjustedBlockOffset = fileBlockEntry.GetBlockOffset();
-				}
-				this.ArchiveReader.BaseStream.Position = adjustedBlockOffset;
-
-				// Calculate the decryption key if neccesary
-				uint fileKey = MPQCrypt.CreateFileEncryptionKey
-				(
-					filePath,
-					fileBlockEntry.ShouldEncryptionKeyBeAdjusted(),
-					adjustedBlockOffset,
-					fileBlockEntry.GetFileSize()
-				);
-
-				// Examine the file storage types and extract as neccesary
-				if (fileBlockEntry.IsSingleUnit())
-				{
-					return ExtractSingleUnitFile(fileBlockEntry, fileKey);
-				}
-
-				if (fileBlockEntry.IsCompressed())
-				{
-					return ExtractCompressedSectoredFile(fileBlockEntry, fileKey, adjustedBlockOffset);
-				}
-
-				return ExtractUncompressedSectoredFile(fileBlockEntry, fileKey);
+				return null;
 			}
 
-			return null;
+			BlockTableEntry fileBlockEntry = this.ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
+
+			// Drop out if the file is not actually a file
+			if (!fileBlockEntry.HasData())
+			{
+				return null;
+			}
+
+			// Seek to the beginning of the file's sectors
+			long adjustedBlockOffset;
+			if (this.Header.GetFormat() >= MPQFormat.ExtendedV1 && RequiresExtendedFormat())
+			{
+				ushort upperOffsetBits = this.ExtendedBlockTable[(int)fileHashEntry.GetBlockEntryIndex()];
+				adjustedBlockOffset = (long)fileBlockEntry.GetExtendedBlockOffset(upperOffsetBits);
+			}
+			else
+			{
+				adjustedBlockOffset = fileBlockEntry.GetBlockOffset();
+			}
+			this.ArchiveReader.BaseStream.Position = adjustedBlockOffset;
+
+			// Calculate the decryption key if neccesary
+			uint fileKey = MPQCrypt.CreateFileEncryptionKey
+			(
+				filePath,
+				fileBlockEntry.ShouldEncryptionKeyBeAdjusted(),
+				adjustedBlockOffset,
+				fileBlockEntry.GetFileSize()
+			);
+
+			// Examine the file storage types and extract as neccesary
+			if (fileBlockEntry.IsSingleUnit())
+			{
+				return ExtractSingleUnitFile(fileBlockEntry, fileKey);
+			}
+
+			if (fileBlockEntry.IsCompressed())
+			{
+				return ExtractCompressedSectoredFile(fileBlockEntry, fileKey, adjustedBlockOffset);
+			}
+
+			return ExtractUncompressedSectoredFile(fileBlockEntry, fileKey);
 		}
 
 		/// <summary>
@@ -722,14 +720,7 @@ namespace Warcraft.MPQ
 		/// <param name="sectors">The sectors.</param>
 		private static int CountBytesInSectors(IEnumerable<byte[]> sectors)
 		{
-			int bytes = 0;
-
-			foreach (byte[] sector in sectors)
-			{
-				bytes += sector.Length;
-			}
-
-			return bytes;
+			return sectors.Sum(sector => sector.Length);
 		}
 
 		/// <summary>
