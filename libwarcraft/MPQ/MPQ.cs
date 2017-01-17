@@ -740,13 +740,10 @@ namespace Warcraft.MPQ
 		private static byte[] StitchSectors(IEnumerable<byte[]> sectors)
 		{
 			// Pull out your sowing kit, it's stitching time!
-			List<byte> stitchedSectors = new List<byte>();
+			IEnumerable<byte> stitchedSectors = new List<byte>();
 			foreach (byte[] finalSector in sectors)
 			{
-				foreach (byte sectorByte in finalSector)
-				{
-					stitchedSectors.Add(sectorByte);
-				}
+				stitchedSectors = stitchedSectors.Concat(finalSector);
 			}
 
 			return stitchedSectors.ToArray();
