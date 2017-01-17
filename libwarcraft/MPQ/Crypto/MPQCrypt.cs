@@ -201,10 +201,10 @@ namespace Warcraft.MPQ.Crypto
 		}
 
 		/// <summary>
-		/// Decrypts the sector offset table using rolling decryption - it starts where the input BinaryReader is, reads
-		/// and decrypts offsets until the decrypted offset equals the input block size. If the table is found to be
-		/// inconsistent during the decryption (offsets are not unique, offset is less than preceding offset), then
-		/// the table is nulled and nothing is returned. This should be checked after the function has been used.
+		/// Decrypts the sector offset table using rolling decryption - it starts where the input BinaryReader is, then
+		/// reads and decrypts offsets until the decrypted offset equals the input block size. If the table is found to
+		/// be inconsistent during the decryption (offsets are not unique, offset is less than preceding offset), then
+		/// an exception will be thrown.
 		/// </summary>
 		/// <exception cref="InvalidFileSectorTableException">Thrown if the sector table is found to be inconsistent in any way.</exception>
 		/// <param name="br">The archive's BinaryReader</param>
@@ -234,21 +234,27 @@ namespace Warcraft.MPQ.Crypto
 				// and no table should be returned.
 				if (sectorOffsets.LastOrDefault() > decryptionTarget)
 				{
-					throw new InvalidFileSectorTableException("The read offset in the sector table was less than the previous offset.");
+					throw new InvalidFileSectorTableException(
+						"The read offset in the sector table was less than the previous offset.");
 				}
 
 				// Should the resulting sector offset be greater than the total block size, then the data is
 				// inconsistent and no file should be returned.
 				if (decryptionTarget > blockSize)
 				{
-					throw new InvalidFileSectorTableException("The read offset in the sector table was greater than the total size of the data block.");
+					throw new InvalidFileSectorTableException(
+						"The read offset in the sector table was greater than the total size of the data block.");
 				}
 
 				// Should the resulting sector not be unique, something is wrong and no table should be returned.
 				if (sectorOffsets.Contains(decryptionTarget))
 				{
-					throw new InvalidFileSectorTableException("The read offset in the sector table was not unique to the whole table.");
+					throw new InvalidFileSectorTableException(
+						"The read offset in the sector table was not unique to the whole table.");
 				}
+
+				// The offset should be valid, so add it to the table.
+				sectorOffsets.Add(decryptionTarget);
 			}
 		}
 

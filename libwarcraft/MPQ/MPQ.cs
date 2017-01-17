@@ -485,53 +485,16 @@ namespace Warcraft.MPQ
 		/// <summary>
 		/// Extracts a file which is divided into a set of compressed sectors.
 		/// </summary>
-		/// <exception cref="InvalidFileSectorTableException">Thrown if the sector table is found to be inconsistent in any way.</exception>
 		/// <param name="fileBlockEntry">The block entry of the file.</param>
 		/// <param name="fileKey">The encryption key of the file.</param>
 		/// <param name="adjustedBlockOffset">The offset to where the file sectors begin.</param>
 		/// <returns>The complete file data.</returns>
+		/// <exception cref="InvalidFileSectorTableException">Thrown if the sector table is found to be inconsistent in any way.</exception>
 		private byte[] ExtractCompressedSectoredFile(BlockTableEntry fileBlockEntry, uint fileKey, long adjustedBlockOffset)
 		{
 			// This file uses sectoring, and is compressed. It may be encrypted.
 			//Retrieve the offsets for each sector - these are relative to the beginning of the data.
-			List<uint> sectorOffsets = new List<uint>();
-			if (fileBlockEntry.IsEncrypted())
-			{
-				MPQCrypt.DecryptSectorOffsetTable(this.ArchiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
-			}
-			else
-			{
-				// As protection against corrupt or maliciously zeroed blocks or corrupt blocks,
-				// reading will be escaped early if the sector offset table is not consistent.
-				// Should the total size as predicted by the sector offset table go beyond the total
-				// block size, or if an offset is not unique, no file will be read and the function will
-				// escape early.
-				uint sectorOffset = 0;
-				while (sectorOffset != fileBlockEntry.GetBlockSize())
-				{
-					sectorOffset = this.ArchiveReader.ReadUInt32();
-
-					// Should the resulting sector offset be less than the previous data, then the data is inconsistent
-					// and no table should be returned.
-					if (sectorOffsets.LastOrDefault() > sectorOffset)
-					{
-						throw new InvalidFileSectorTableException("The read offset in the sector table was less than the previous offset.");
-					}
-
-					// Should the resulting sector offset be greater than the total block size, then the data is
-					// inconsistent and no file should be returned.
-					if (sectorOffset > fileBlockEntry.GetBlockSize())
-					{
-						throw new InvalidFileSectorTableException("The read offset in the sector table was greater than the total size of the data block.");
-					}
-
-					// Should the resulting sector not be unique, something is wrong and no table should be returned.
-					if (sectorOffsets.Contains(sectorOffset))
-					{
-						throw new InvalidFileSectorTableException("The read offset in the sector table was not unique to the whole table.");
-					}
-				}
-			}
+			List<uint> sectorOffsets = ReadFileSectorOffsetTable(fileBlockEntry, fileKey);
 
 			// Read all of the raw file sectors.
 			List<byte[]> compressedSectors = new List<byte[]>();
@@ -585,7 +548,7 @@ namespace Warcraft.MPQ
 					pendingSector = MPQCrypt.DecryptData(compressedSector, fileKey + sectorIndex);
 				}
 
-				/*if (fileBlockEntry.Flags.HasFlag(BlockFlags.BLF_HasChecksums))
+				/*if (fileBlockEntry.Flags.HasFlag(BlockFlags.HasCRCChecksums))
 						{
 							// Verify the sector
 							bool isSectorIntact = MPQCrypt.VerifySectorChecksum(pendingSector, SectorChecksums[(int)sectorIndex]);
@@ -623,6 +586,62 @@ namespace Warcraft.MPQ
 			}
 
 			return StitchSectors(decompressedSectors);
+		}
+
+		/// <summary>
+		/// Reads the sector offset table of a file.
+		/// </summary>
+		/// <param name="fileBlockEntry">The block table entry of the file.</param>
+		/// <param name="fileKey">The encryption key of the file. Optional, in the case that the file is not encrypted.</param>
+		/// <returns>A list of sector offsets.</returns>
+		/// <exception cref="InvalidFileSectorTableException">Thrown if the sector table is found to be inconsistent in any way.</exception>
+		private List<uint> ReadFileSectorOffsetTable(BlockTableEntry fileBlockEntry, uint fileKey = 0)
+		{
+			List<uint> sectorOffsets = new List<uint>();
+			if (fileBlockEntry.IsEncrypted())
+			{
+				MPQCrypt.DecryptSectorOffsetTable(this.ArchiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
+			}
+			else
+			{
+				// As protection against corrupt or maliciously zeroed blocks or corrupt blocks,
+				// reading will be escaped early if the sector offset table is not consistent.
+				// Should the total size as predicted by the sector offset table go beyond the total
+				// block size, or if an offset is not unique, no file will be read and the function will
+				// escape early.
+				uint sectorOffset = 0;
+				while (sectorOffset != fileBlockEntry.GetBlockSize())
+				{
+					sectorOffset = this.ArchiveReader.ReadUInt32();
+
+					// Should the resulting sector offset be less than the previous data, then the data is inconsistent
+					// and no table should be returned.
+					if (sectorOffsets.LastOrDefault() > sectorOffset)
+					{
+						throw new InvalidFileSectorTableException(
+							"The read offset in the sector table was less than the previous offset.");
+					}
+
+					// Should the resulting sector offset be greater than the total block size, then the data is
+					// inconsistent and no file should be returned.
+					if (sectorOffset > fileBlockEntry.GetBlockSize())
+					{
+						throw new InvalidFileSectorTableException(
+							"The read offset in the sector table was greater than the total size of the data block.");
+					}
+
+					// Should the resulting sector not be unique, something is wrong and no table should be returned.
+					if (sectorOffsets.Contains(sectorOffset))
+					{
+						throw new InvalidFileSectorTableException(
+							"The read offset in the sector table was not unique to the whole table.");
+					}
+
+					// The offset should be valid, so add it to the table.
+					sectorOffsets.Add(sectorOffset);
+				}
+			}
+			return sectorOffsets;
 		}
 
 		/// <summary>
