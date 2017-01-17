@@ -1,5 +1,5 @@
 ﻿//
-//  TextureBlobHeader.cs
+//  TextureBlobDataEntry.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -29,20 +29,17 @@ namespace Warcraft.TEX
 	/// <summary>
 	/// Header class for a texture blob object.
 	/// </summary>
-	public class TextureBlobHeader : IRIFFChunk, IBinarySerializable
+	public class TextureBlobDataEntry : IBinarySerializable
 	{
 		/// <summary>
-		/// The RIFF chunk signature of this data chunk.
-		/// </summary>
-		public const string Signature = "TXBT";
-
-		/// <summary>
-		/// The absolute offset of the filename chunk in the texture blob.
+		/// The relative offset into the filename chunk in the texture blob where the filename for this
+		/// texture is stored.
 		/// </summary>
 		public uint FilenameOffset;
 
 		/// <summary>
-		/// The absolute offset of the start of the texture data array in the texture blob.
+		/// The relative offset from the end of the filename block of the start of the texture data array in the
+		/// texture blob.
 		/// </summary>
 		public uint TextureDataOffset;
 
@@ -98,7 +95,7 @@ namespace Warcraft.TEX
 		/// signature and data block length.
 		/// </summary>
 		/// <param name="inData">The binary data containing the object.</param>
-		public void LoadBinaryData(byte[] inData)
+		public TextureBlobDataEntry(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
@@ -123,12 +120,12 @@ namespace Warcraft.TEX
 		}
 
 		/// <summary>
-		/// Gets the static data signature of this data block type.
+		/// Gets the absolute size in bytes of a serialized object.
 		/// </summary>
-		/// <returns>A string representing the block signature.</returns>
-		public string GetSignature()
+		/// <returns></returns>
+		public static int GetSize()
 		{
-			return Signature;
+			return 12;
 		}
 
 		/// <summary>

@@ -99,9 +99,10 @@
     <Compile Include="TEX\TextureBlob.cs" />
     <Compile Include="TEX\TextureBlobCompressionType.cs" />
     <Compile Include="TEX\TextureBlobData.cs" />
+    <Compile Include="TEX\TextureBlobDataEntries.cs" />
     <Compile Include="TEX\TextureBlobFilenames.cs" />
     <Compile Include="TEX\TextureBlobFlags.cs" />
-    <Compile Include="TEX\TextureBlobHeader.cs" />
+    <Compile Include="TEX\TextureBlobDataEntry.cs" />
     <Compile Include="TEX\TextureBlobVersion.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelBSPFaceIndices.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelTriangleStripIndices.cs" />

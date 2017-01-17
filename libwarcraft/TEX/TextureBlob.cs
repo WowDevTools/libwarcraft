@@ -1,5 +1,5 @@
 ﻿//
-//  TextureBlobV.cs
+//  TextureBlob.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -39,10 +39,10 @@ namespace Warcraft.TEX
 		public TextureBlobVersion Version;
 
 		/// <summary>
-		/// The header chunk of the texture blob. This header contains all the information neccesary to
+		/// A list of all the header chunks of the texture data chunks. These headers contain all the information neccesary to
 		/// read the rest of the data contained in the file.
 		/// </summary>
-		public TextureBlobHeader Header;
+		public TextureBlobDataEntries BlobDataEntries;
 
 		/// <summary>
 		/// The filename chunk of the texture blob. Contains all of the filenames for which this blob provides
@@ -71,14 +71,13 @@ namespace Warcraft.TEX
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					this.Version = br.ReadIFFChunk<TextureBlobVersion>();
-					this.Header = br.ReadIFFChunk<TextureBlobHeader>();
-
-					br.BaseStream.Position = this.Header.FilenameOffset;
+					this.BlobDataEntries = br.ReadIFFChunk<TextureBlobDataEntries>();
 					this.Filenames = br.ReadIFFChunk<TextureBlobFilenames>();
 
-					br.BaseStream.Position += this.Header.TextureDataOffset;
-					while (br.BaseStream.Position < br.BaseStream.Length)
+					long dataBlockStartingPosition = br.BaseStream.Position;
+					foreach (TextureBlobDataEntry blobDataEntry in this.BlobDataEntries.BlobDataEntries)
 					{
+						br.BaseStream.Position = dataBlockStartingPosition + blobDataEntry.TextureDataOffset;
 						this.TextureData.Add(br.ReadIFFChunk<TextureBlobData>());
 					}
 				}
@@ -95,7 +94,7 @@ namespace Warcraft.TEX
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
 					bw.WriteIFFChunk(this.Version);
-					bw.WriteIFFChunk(this.Header);
+					bw.WriteIFFChunk(this.BlobDataEntries);
 					bw.WriteIFFChunk(this.Filenames);
 
 					foreach (TextureBlobData textureData in this.TextureData)

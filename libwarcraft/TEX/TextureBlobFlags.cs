@@ -32,7 +32,7 @@ namespace Warcraft.TEX
 	{
 		/// <summary>
 		/// Tells the compression algorithm to prefer ARGB1555 textures, if DXT1 compression
-		/// is not available. This flag is only valid if <see cref="TextureBlobHeader.CompressionType"/> is
+		/// is not available. This flag is only valid if <see cref="TextureBlobDataEntryTextureBlobDataEntrypressionType"/> is
 		///
 		/// </summary>
 		PreferARGB1555IfDXT1IsNotAvailable = 1 << 0
