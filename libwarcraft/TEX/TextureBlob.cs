@@ -102,6 +102,8 @@ namespace Warcraft.TEX
 						bw.WriteIFFChunk(textureData);
 					}
 				}
+
+				return ms.ToArray();
 			}
 		}
 	}

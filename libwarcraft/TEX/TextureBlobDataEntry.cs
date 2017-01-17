@@ -108,13 +108,13 @@ namespace Warcraft.TEX
 
 					// Explode the first packed byte into mip levels and whether or not the blob is loaded
 					byte mipsAndIsLoadedCombined = br.ReadByte();
-					this.MipMapCount = (byte)(mipsAndIsLoadedCombined & 0b1111_1110);
-					this.IsLoaded = (mipsAndIsLoadedCombined & 0b0000_0001) > 0;
+					this.MipMapCount = (byte)(mipsAndIsLoadedCombined & 0xFE);
+					this.IsLoaded = (mipsAndIsLoadedCombined & 0x01) > 0;
 
 					// Exploede the next packed byte into the compression type and the flags.
 					byte compressionAndFlagsCombined = br.ReadByte();
-					this.CompressionType = (TextureBlobCompressionType) (compressionAndFlagsCombined & 0b1111_0000);
-					this.Flags = (TextureBlobFlags) (compressionAndFlagsCombined & 0b0000_1111);
+					this.CompressionType = (TextureBlobCompressionType) (compressionAndFlagsCombined & 0xF0);
+					this.Flags = (TextureBlobFlags) (compressionAndFlagsCombined & 0x0F);
 				}
 			}
 		}
