@@ -51,4 +51,33 @@ namespace Warcraft.Core
 		{
 		}
 	}
+
+	/// <summary>
+	/// This exception thrown when an invalid sector offset table is encountered during file extraction. Usually,
+	/// it means the archive that the user is trying to extract the file from is invalid, corrupted, or has been
+	/// maliciously zeroed at critical points.
+	/// </summary>
+	public class InvalidFileSectorTableException : Exception
+	{
+		/// <summary>
+		/// Creates a new instance of the <see cref="InvalidFileSectorTableException"/> class, along with a specified
+		/// message.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		public InvalidFileSectorTableException(string message)
+			:base(message)
+		{
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="InvalidFileSectorTableException"/> class, along with a specified
+		/// message and inner exception which caused this exception.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		/// <param name="innerException">The exception which caused this exception.</param>
+		public InvalidFileSectorTableException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
+	}
 }

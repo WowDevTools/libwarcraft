@@ -29,6 +29,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Warcraft.Core;
 using Warcraft.Core.Compression;
 using Warcraft.MPQ.Crypto;
 using Warcraft.MPQ.FileInfo;
@@ -483,6 +485,7 @@ namespace Warcraft.MPQ
 		/// <summary>
 		/// Extracts a file which is divided into a set of compressed sectors.
 		/// </summary>
+		/// <exception cref="InvalidFileSectorTableException">Thrown if the sector table is found to be inconsistent in any way.</exception>
 		/// <param name="fileBlockEntry">The block entry of the file.</param>
 		/// <param name="fileKey">The encryption key of the file.</param>
 		/// <param name="adjustedBlockOffset">The offset to where the file sectors begin.</param>
@@ -498,11 +501,35 @@ namespace Warcraft.MPQ
 			}
 			else
 			{
-				uint dataBlock = 0;
-				while (dataBlock != fileBlockEntry.GetBlockSize())
+				// As protection against corrupt or maliciously zeroed blocks or corrupt blocks,
+				// reading will be escaped early if the sector offset table is not consistent.
+				// Should the total size as predicted by the sector offset table go beyond the total
+				// block size, or if an offset is not unique, no file will be read and the function will
+				// escape early.
+				uint sectorOffset = 0;
+				while (sectorOffset != fileBlockEntry.GetBlockSize())
 				{
-					dataBlock = this.ArchiveReader.ReadUInt32();
-					sectorOffsets.Add(dataBlock);
+					sectorOffset = this.ArchiveReader.ReadUInt32();
+
+					// Should the resulting sector offset be less than the previous data, then the data is inconsistent
+					// and no table should be returned.
+					if (sectorOffsets.LastOrDefault() > sectorOffset)
+					{
+						throw new InvalidFileSectorTableException("The read offset in the sector table was less than the previous offset.");
+					}
+
+					// Should the resulting sector offset be greater than the total block size, then the data is
+					// inconsistent and no file should be returned.
+					if (sectorOffset > fileBlockEntry.GetBlockSize())
+					{
+						throw new InvalidFileSectorTableException("The read offset in the sector table was greater than the total size of the data block.");
+					}
+
+					// Should the resulting sector not be unique, something is wrong and no table should be returned.
+					if (sectorOffsets.Contains(sectorOffset))
+					{
+						throw new InvalidFileSectorTableException("The read offset in the sector table was not unique to the whole table.");
+					}
 				}
 			}
 
