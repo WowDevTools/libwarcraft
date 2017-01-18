@@ -126,7 +126,7 @@ namespace Warcraft.Core.Quantization
 				for (int col = 0; col < width; col++)
 				{            
 					InitialQuantizePixel(new Color32(pSourcePixel)); 
-					pSourcePixel = (IntPtr)((Int32)pSourcePixel + this._pixelSize);
+					pSourcePixel = (IntPtr)((int)pSourcePixel + this._pixelSize);
 				}	// Now I have the pixel, call the FirstPassQuantize function...
 
 				// Add the stride to the source row
