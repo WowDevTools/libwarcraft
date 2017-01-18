@@ -450,11 +450,24 @@ namespace Warcraft.Core
 
 		}
 
+		/// <summary>
+		/// Computes the dot product of two vectors.
+		/// </summary>
+		/// <param name="start">The start vector.</param>
+		/// <param name="end">The end vector.</param>
+		/// <returns>The dot product of the two vectors.</returns>
 		public static float Dot(Vector3f start, Vector3f end)
 		{
 			return (start.X * end.X) + (start.Y * end.Y) + (start.Z * end.Z);
 		}
 
+		/// <summary>
+		/// Computes the cross product of two vectors, producing a new vector which
+		/// is orthogonal to the two original vectors.
+		/// </summary>
+		/// <param name="start">The start vector.</param>
+		/// <param name="end">The end vector.</param>
+		/// <returns>The cross product of the two vectors.</returns>
 		public static Vector3f Cross(Vector3f start, Vector3f end)
 		{
 			float x = start.Y * end.Z - end.Y * start.Z;
@@ -465,26 +478,54 @@ namespace Warcraft.Core
 			return rtnvector;
 		}
 
+		/// <summary>
+		/// Adds two vectors together.
+		/// </summary>
+		/// <param name="vect1">The initial vector.</param>
+		/// <param name="vect2">The argument vector.</param>
+		/// <returns>The two vectors added together.</returns>
 		public static Vector3f operator+(Vector3f vect1, Vector3f vect2)
 		{
 			return new Vector3f(vect1.X + vect2.X, vect1.Y + vect2.Y, vect1.Z + vect2.Z);
 		}
 
+		/// <summary>
+		/// Subtracts two vectors.
+		/// </summary>
+		/// <param name="vect1">The initial vector.</param>
+		/// <param name="vect2">The argument vector.</param>
+		/// <returns>The two vectors subtracted from each other.</returns>
 		public static Vector3f operator-(Vector3f vect1, Vector3f vect2)
 		{
 			return new Vector3f(vect1.X - vect2.X, vect1.Y - vect2.Y, vect1.Z - vect2.Z);
 		}
 
+		/// <summary>
+		/// Inverts a vector.
+		/// </summary>
+		/// <param name="vect1">The initial vector.</param>
+		/// <returns>The initial vector in inverted form..</returns>
 		public static Vector3f operator-(Vector3f vect1)
 		{
 			return new Vector3f(-vect1.X, -vect1.Y, -vect1.Z);
 		}
 
+		/// <summary>
+		/// Divides one vector with another on a per-component basis.
+		/// </summary>
+		/// <param name="vect1">The initial vector.</param>
+		/// <param name="vect2">The argument vector.</param>
+		/// <returns>The initial vector, divided by the argument vector.</returns>
 		public static Vector3f operator/(Vector3f vect1, Vector3f vect2)
 		{
 			return new Vector3f(vect1.X / vect2.X, vect1.Y / vect2.Y, vect1.Z / vect2.Z);
 		}
 
+		/// <summary>
+		/// Creates a new vector from an integer, placing it in every component.
+		/// </summary>
+		/// <param name="i">The component integer.</param>
+		/// <returns>A new vector with the integer as all components.</returns>
 		public static implicit operator Vector3f(int i)
 		{
 			return new Vector3f(i);
@@ -557,11 +598,24 @@ namespace Warcraft.Core
 
 		}
 
+		/// <summary>
+		/// Computes the dot product of two vectors.
+		/// </summary>
+		/// <param name="start">The start vector.</param>
+		/// <param name="end">The end vector.</param>
+		/// <returns>The dot product of the two vectors.</returns>
 		public static short Dot(Vector3s start, Vector3s end)
 		{
 			return (short)((start.X * end.X) + (start.Y * end.Y) + (start.Z * end.Z));
 		}
 
+		/// <summary>
+		/// Computes the cross product of two vectors, producing a new vector which
+		/// is orthogonal to the two original vectors.
+		/// </summary>
+		/// <param name="start">The start vector.</param>
+		/// <param name="end">The end vector.</param>
+		/// <returns>The cross product of the two vectors.</returns>
 		public static Vector3s Cross(Vector3s start, Vector3s end)
 		{
 			short x = (short)(start.Y * end.Z - end.Y * start.Z);
@@ -572,26 +626,54 @@ namespace Warcraft.Core
 			return rtnvector;
 		}
 
+		/// <summary>
+		/// Adds two vectors together.
+		/// </summary>
+		/// <param name="vect1">The initial vector.</param>
+		/// <param name="vect2">The argument vector.</param>
+		/// <returns>The two vectors added together.</returns>
 		public static Vector3s operator+(Vector3s vect1, Vector3s vect2)
 		{
 			return new Vector3s((short)(vect1.X + vect2.X), (short)(vect1.Y + vect2.Y), (short)(vect1.Z + vect2.Z));
 		}
 
+		/// <summary>
+		/// Subtracts two vectors.
+		/// </summary>
+		/// <param name="vect1">The initial vector.</param>
+		/// <param name="vect2">The argument vector.</param>
+		/// <returns>The two vectors subtracted from each other.</returns>
 		public static Vector3s operator-(Vector3s vect1, Vector3s vect2)
 		{
 			return new Vector3s((short)(vect1.X - vect2.X), (short)(vect1.Y - vect2.Y), (short)(vect1.Z - vect2.Z));
 		}
 
+		/// <summary>
+		/// Inverts a vector.
+		/// </summary>
+		/// <param name="vect1">The initial vector.</param>
+		/// <returns>The initial vector in inverted form..</returns>
 		public static Vector3s operator-(Vector3s vect1)
 		{
 			return new Vector3s((short)-vect1.X, (short)-vect1.Y, (short)-vect1.Z);
 		}
 
+		/// <summary>
+		/// Divides one vector with another on a per-component basis.
+		/// </summary>
+		/// <param name="vect1">The initial vector.</param>
+		/// <param name="vect2">The argument vector.</param>
+		/// <returns>The initial vector, divided by the argument vector.</returns>
 		public static Vector3s operator/(Vector3s vect1, Vector3s vect2)
 		{
 			return new Vector3s((short)(vect1.X / vect2.X), (short)(vect1.Y / vect2.Y), (short)(vect1.Z / vect2.Z));
 		}
 
+		/// <summary>
+		/// Creates a new vector from a short, placing it in every component.
+		/// </summary>
+		/// <param name="i">The component short.</param>
+		/// <returns>A new vector with the short as all components.</returns>
 		public static implicit operator Vector3s(short i)
 		{
 			return new Vector3s(i);
@@ -673,12 +755,12 @@ namespace Warcraft.Core
 
 			for (int y = 0; y < 3; ++y)
 			{
-				List<short> CoordinateRow = new List<short>();
+				List<short> coordinateRow = new List<short>();
 				for (int x = 0; x < 3; ++x)
 				{
-					CoordinateRow.Add(inAllCoordinates);
+					coordinateRow.Add(inAllCoordinates);
 				}
-				this.Coordinates.Add(CoordinateRow);
+				this.Coordinates.Add(coordinateRow);
 			}
 		}
 	}
@@ -802,7 +884,15 @@ namespace Warcraft.Core
 		}
 
 		// TODO: Implement quaternion interpolation.
-		public Quaternion Interpolate(Quaternion Target, float Alpha, InterpolationType Type)
+		/// <summary>
+		/// Interpolates the instance between itself and the <paramref name="target"/> object by an alpha factor,
+		/// using the interpolation algorithm specified in <paramref name="interpolationType"/>.
+		/// </summary>
+		/// <param name="target">The target point.</param>
+		/// <param name="alpha">The alpha factor.</param>
+		/// <param name="interpolationType">The interpolation algorithm to use.</param>
+		/// <returns>An interpolated object.</returns>
+		public Quaternion Interpolate(Quaternion target, float alpha, InterpolationType interpolationType)
 		{
 			throw new NotImplementedException();
 		}
@@ -845,12 +935,24 @@ namespace Warcraft.Core
 		}
 
 		// TODO: Implement vector2f interpolation.
-		public Vector2f Interpolate(Vector2f Target, float Alpha, InterpolationType Type)
+		/// <summary>
+		/// Interpolates the instance between itself and the <paramref name="target"/> object by an alpha factor,
+		/// using the interpolation algorithm specified in <paramref name="interpolationType"/>.
+		/// </summary>
+		/// <param name="target">The target point.</param>
+		/// <param name="alpha">The alpha factor.</param>
+		/// <param name="interpolationType">The interpolation algorithm to use.</param>
+		/// <returns>An interpolated object.</returns>
+		public Vector2f Interpolate(Vector2f target, float alpha, InterpolationType interpolationType)
 		{
 			//return new Vector2f(0, 0);
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Creates a string representation of the current object.
+		/// </summary>
+		/// <returns>A string representation of the current object.</returns>
 		public override string ToString()
 		{
 			return $"{this.X}, {this.Y}";
@@ -944,6 +1046,10 @@ namespace Warcraft.Core
 
 		}
 
+		/// <summary>
+		/// Creates a string representation of the current object.
+		/// </summary>
+		/// <returns>A string representation of the current object.</returns>
 		public override string ToString()
 		{
 			return $"{this.X}x{this.Y}";

@@ -168,7 +168,7 @@ namespace Warcraft.BLP
 
 			if (compressionType == TextureCompressionType.Palettized)
 			{
-				this.Header.PixelFormat = BLPPixelFormat.Pixel_Palettized;
+				this.Header.PixelFormat = BLPPixelFormat.Palettized;
 				// Determine best alpha bit depth
 				if (image.HasAlpha())
 				{
@@ -219,19 +219,19 @@ namespace Warcraft.BLP
 				// Determine best DXTC type (1, 3 or 5)
 				if (image.HasAlpha())
 				{
-					this.Header.PixelFormat = BLPPixelFormat.Pixel_DXT3;
+					this.Header.PixelFormat = BLPPixelFormat.DXT2;
 				}
 				else
 				{
 					// DXT1 for no alpha
-					this.Header.PixelFormat = BLPPixelFormat.Pixel_DXT1;
+					this.Header.PixelFormat = BLPPixelFormat.DXT1;
 				}
 			}
 			else if (compressionType == TextureCompressionType.Uncompressed)
 			{
 				// The alpha will be stored as a straight ARGB texture, so set it to 8
 				this.Header.AlphaBitDepth = 8;
-				this.Header.PixelFormat = BLPPixelFormat.Pixel_PalARGB1555DitherFloydSteinberg;
+				this.Header.PixelFormat = BLPPixelFormat.PalARGB1555DitherFloydSteinberg;
 			}
 
 			// What the mip type does is currently unknown, but it's usually set to 1.
@@ -428,11 +428,11 @@ namespace Warcraft.BLP
 				else if (this.Header.CompressionType == TextureCompressionType.DXTC)
 				{
 					SquishOptions squishOptions = SquishOptions.DXT1;
-					if (this.Header.PixelFormat == BLPPixelFormat.Pixel_DXT3)
+					if (this.Header.PixelFormat == BLPPixelFormat.DXT2)
 					{
 						squishOptions = SquishOptions.DXT3;
 					}
-					else if (this.Header.PixelFormat == BLPPixelFormat.Pixel_DXT5)
+					else if (this.Header.PixelFormat == BLPPixelFormat.DXT5)
 					{
 						squishOptions = SquishOptions.DXT5;
 					}
@@ -649,11 +649,11 @@ namespace Warcraft.BLP
 							byte[] rgbaBytes = rgbaStream.ToArray();
 
 							SquishOptions squishOptions = SquishOptions.DXT1;
-							if (this.Header.PixelFormat == BLPPixelFormat.Pixel_DXT3)
+							if (this.Header.PixelFormat == BLPPixelFormat.DXT2)
 							{
 								squishOptions = SquishOptions.DXT3;
 							}
-							else if (this.Header.PixelFormat == BLPPixelFormat.Pixel_DXT5)
+							else if (this.Header.PixelFormat == BLPPixelFormat.DXT5)
 							{
 								squishOptions = SquishOptions.DXT5;
 							}

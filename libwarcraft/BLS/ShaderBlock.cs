@@ -25,6 +25,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.BLS
 {
+	/// <summary>
+	/// A data block containing shader data in compiled or source form.
+	/// </summary>
 	public class ShaderBlock : IBinarySerializable
 	{
 		public ShaderFlags1 Flags1;

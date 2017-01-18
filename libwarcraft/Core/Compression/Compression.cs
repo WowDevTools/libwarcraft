@@ -82,13 +82,13 @@ namespace Warcraft.Core.Compression
 				pendingSector = DecompressBZip2(pendingSector);
 			}
 
-			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Implode_PKWARE))
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Implode))
 			{
 				// Decompress sector using PKWARE Implode
 				pendingSector = DecompressPKWAREImplode(pendingSector);
 			}
 
-			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Deflate_ZLIB))
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Deflate))
 			{
 				// Decompress sector using Deflate
 				pendingSector = DecompressDeflate(pendingSector);
@@ -100,13 +100,13 @@ namespace Warcraft.Core.Compression
 				pendingSector = DecompressHuffman(pendingSector);
 			}
 
-			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.IMA_ADPCM_Stereo))
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.ADPCMStereo))
 			{
 				// Decompress sector using ADPCM Stereo
 				pendingSector = DecompressADPCMStereo(pendingSector);
 			}
 
-			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.IMA_ADPCM_Mono))
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.ADPCMMono))
 			{
 				// Decompress sector using ADPCM Mono
 				pendingSector = DecompressADPCMMono(pendingSector);

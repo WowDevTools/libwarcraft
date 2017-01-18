@@ -26,8 +26,9 @@ using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.DBC.SpecialFields;
+using Warcraft.WMO.GroupFile.Chunks;
 
-namespace Warcraft.WMO.GroupFile.Chunks
+namespace Warcraft.WMO.GroupFile
 {
 	public class ModelGroupData : IRIFFChunk, IBinarySerializable
 	{
@@ -96,6 +97,11 @@ namespace Warcraft.WMO.GroupFile.Chunks
 			LoadBinaryData(inData);
 		}
 
+		/// <summary>
+		/// Deserialzes the provided binary data of the object. This is the full data block which follows the data
+		/// signature and data block length.
+		/// </summary>
+		/// <param name="inData">The binary data containing the object.</param>
 		public void LoadBinaryData(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
@@ -200,11 +206,18 @@ namespace Warcraft.WMO.GroupFile.Chunks
             }
 		}
 
+		/// <summary>
+		/// Gets the static data signature of this data block type.
+		/// </summary>
+		/// <returns>A string representing the block signature.</returns>
 		public string GetSignature()
 		{
 			return Signature;
 		}
 
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
 		public byte[] Serialize()
 		{
 			using (MemoryStream ms = new MemoryStream())

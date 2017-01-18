@@ -57,6 +57,8 @@
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
     <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
+    <Compile Include="MPQ\Attributes\AttributeTypes.cs" />
+    <Compile Include="MPQ\Attributes\FileAttributes.cs" />
     <Compile Include="MPQ\Tables\Extended\Block\ExtendedBlockTable.cs" />
     <Compile Include="MPQ\Tables\Extended\Block\ExtendedBlockTableHeader.cs" />
     <Compile Include="MPQ\Tables\Extended\Common\ExtendedTableHeader.cs" />

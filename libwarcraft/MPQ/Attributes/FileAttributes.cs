@@ -1,5 +1,5 @@
-//
-//  BLPPixelFormat.cs
+﻿//
+//  AttributeTypes.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,56 +20,39 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Warcraft.BLP
+namespace Warcraft.MPQ.Attributes
 {
 	/// <summary>
-	/// The format of the pixels stored in a <see cref="BLP"/> file.
+	/// A set of file attributes for a file in an MPQ archive.
 	/// </summary>
-	public enum BLPPixelFormat : uint
+	public class FileAttributes
 	{
 		/// <summary>
-		/// DXT1 compressed pixels.
+		/// A CRC32 hash of the file.
 		/// </summary>
-		DXT1 							= 0,
+		public uint CRC32;
 
 		/// <summary>
-		/// DXT3 compressed pixels.
+		/// A last modified timestamp of the file.
 		/// </summary>
-		DXT2 							= 1,
+		public ulong Timestamp;
 
 		/// <summary>
-		/// ARGB8888 formatted pixels.
+		/// An MD5 hash of the file.
 		/// </summary>
-		ARGB8888 						= 2,
+		public string MD5;
 
 		/// <summary>
-		/// PAL ARGB1555 formatted pixels.
+		/// Creates a new <see cref="FileAttributes"/> object from two given hashes and a timestamp.
 		/// </summary>
-		PalARGB1555DitherFloydSteinberg = 3,
-
-		/// <summary>
-		/// PAL ARGB4444 formatted pixels.
-		/// </summary>
-		PalARGB4444DitherFloydSteinberg = 4,
-
-		/// <summary>
-		/// PAL ARGB565 formatted pixels.
-		/// </summary>
-		PalARGB565DitherFloydSteinberg 	= 5,
-
-		/// <summary>
-		/// DXT5 compressed pixels.
-		/// </summary>
-		DXT5 							= 7,
-
-		/// <summary>
-		/// Palettized pixels, that is, the pixels are indices into the stored colour palette.
-		/// </summary>
-		Palettized 						= 8,
-
-		/// <summary>
-		/// PAL ARGB2565 formatted pixels.
-		/// </summary>
-		PalARGB2565DitherFloydSteinberg = 9
+		/// <param name="CRC32">The CRC32 hash of the file.</param>
+		/// <param name="timestamp">The last modified timestamp of the file.</param>
+		/// <param name="MD5">The MD5 hash of the file. </param>
+		public FileAttributes(uint CRC32, ulong timestamp, string MD5)
+		{
+			this.CRC32 = CRC32;
+			this.Timestamp = timestamp;
+			this.MD5 = MD5;
+		}
 	}
 }

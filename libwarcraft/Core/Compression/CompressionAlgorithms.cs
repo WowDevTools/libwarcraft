@@ -24,19 +24,49 @@ using System;
 
 namespace Warcraft.Core.Compression
 {
-	// It is important that these algorithms are not reordered.
-	// If multiple algorithms are used, the order of algorithms are from top to bottom
-	// when compressing, and the inverse when decompressing.
+	/// <summary>
+	/// This enum contains all of the compression algorithms used in MPQ archives. They are sorted according to
+	/// compression order, and must not be reordered.
+	///
+	/// When compressing, the algorithms are applied from top to bottom. When decompressing, the inverse is true.
+	/// </summary>
 	[Flags]
 	public enum CompressionAlgorithms : byte
 	{
-		Sparse = 0x20,
-		IMA_ADPCM_Mono = 0x40,
-		IMA_ADPCM_Stereo = 0x80,
-		Huffman = 0x01,
-		Deflate_ZLIB = 0x02,
-		Implode_PKWARE = 0x08,
-		BZip2 = 0x10
+		/// <summary>
+		/// Sparse compression.
+		/// </summary>
+		Sparse 			= 0x20,
+
+		/// <summary>
+		/// IMA ADPCM Mono Audio compression.
+		/// </summary>
+		ADPCMMono 		= 0x40,
+
+		/// <summary>
+		/// IMA ADPCM Stereo Audio compression.
+		/// </summary>
+		ADPCMStereo		= 0x80,
+
+		/// <summary>
+		/// Huffman tree compression.
+		/// </summary>
+		Huffman 		= 0x01,
+
+		/// <summary>
+		/// ZLIB Deflate compression.
+		/// </summary>
+		Deflate 		= 0x02,
+
+		/// <summary>
+		/// PKWARE Implde compression.
+		/// </summary>
+		Implode 		= 0x08,
+
+		/// <summary>
+		/// BZip2 compression.
+		/// </summary>
+		BZip2 			= 0x10
 	}
 }
 

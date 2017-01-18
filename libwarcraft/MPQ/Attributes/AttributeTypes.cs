@@ -1,5 +1,5 @@
-//
-//  MDXFormat.cs
+﻿//
+//  AttributeTypes.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,52 +20,29 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Warcraft.Core
+using System;
+
+namespace Warcraft.MPQ.Attributes
 {
 	/// <summary>
-	/// World of Warcraft versions by expansion.
+	/// The types of attributes which a file might have.
 	/// </summary>
-	public enum WarcraftVersion : uint
+	[Flags]
+	public enum AttributeTypes : uint
 	{
 		/// <summary>
-		/// It's not known what version this is.
+		/// The file has a CRC32 hash.
 		/// </summary>
-		Unknown 		= 0,
+		CRC32 		= 0x00000001,
 
 		/// <summary>
-		/// Classic World of Warcraft, also referred to as "Vanilla".
+		/// The file has a timestamp.
 		/// </summary>
-		Classic 		= 1,
+		Timestamp 	= 0x00000002,
 
 		/// <summary>
-		/// World of Warcraft: The Burning Crusade
+		/// This file has an MD5 hash.
 		/// </summary>
-		BurningCrusade 	= 2,
-
-		/// <summary>
-		/// World of Warcraft: Wrath of the Lich King
-		/// </summary>
-		Wrath			= 3,
-
-		/// <summary>
-		/// World of Warcraft: Cataclysm
-		/// </summary>
-		Cataclysm 		= 4,
-
-		/// <summary>
-		/// World of Warcraft: Mists of Pandaria
-		/// </summary>
-		Mists 			= 5,
-
-		/// <summary>
-		/// World of Warcraft: Warlords of Draenor
-		/// </summary>
-		Warlords 		= 6,
-
-		/// <summary>
-		/// World of Warcraft: Legion
-		/// </summary>
-		Legion 			= 7
+		MD5 		= 0x00000004
 	}
 }
-
