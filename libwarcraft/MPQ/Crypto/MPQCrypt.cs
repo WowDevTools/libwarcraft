@@ -278,7 +278,7 @@ namespace Warcraft.MPQ.Crypto
 				if (sectorChecksum == 0)
 				{
 					// We can't handle a 0 checksum.
-					sectorChecksum = UInt32.MaxValue;
+					sectorChecksum = uint.MaxValue;
 				}
 
 				return sectorChecksum == checksum;
