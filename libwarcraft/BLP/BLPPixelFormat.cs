@@ -35,7 +35,7 @@ namespace Warcraft.BLP
 		/// <summary>
 		/// DXT3 compressed pixels.
 		/// </summary>
-		DXT2 							= 1,
+		DXT3 							= 1,
 
 		/// <summary>
 		/// ARGB8888 formatted pixels.
