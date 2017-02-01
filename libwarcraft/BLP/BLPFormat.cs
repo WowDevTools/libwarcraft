@@ -38,7 +38,7 @@ namespace Warcraft.BLP
 		BLP1,
 
 		/// <summary>
-		/// BLP version 2. Usually stores DXT compressed data.
+		/// BLP version 2. Usually stores DXT compressed data.calls
 		/// </summary>
 		BLP2
 	}
