@@ -219,7 +219,7 @@ namespace Warcraft.BLP
 				// Determine best DXTC type (1, 3 or 5)
 				if (image.HasAlpha())
 				{
-					this.Header.PixelFormat = BLPPixelFormat.DXT2;
+					this.Header.PixelFormat = BLPPixelFormat.DXT3;
 				}
 				else
 				{
@@ -428,7 +428,7 @@ namespace Warcraft.BLP
 				else if (this.Header.CompressionType == TextureCompressionType.DXTC)
 				{
 					SquishOptions squishOptions = SquishOptions.DXT1;
-					if (this.Header.PixelFormat == BLPPixelFormat.DXT2)
+					if (this.Header.PixelFormat == BLPPixelFormat.DXT3)
 					{
 						squishOptions = SquishOptions.DXT3;
 					}
@@ -649,7 +649,7 @@ namespace Warcraft.BLP
 							byte[] rgbaBytes = rgbaStream.ToArray();
 
 							SquishOptions squishOptions = SquishOptions.DXT1;
-							if (this.Header.PixelFormat == BLPPixelFormat.DXT2)
+							if (this.Header.PixelFormat == BLPPixelFormat.DXT3)
 							{
 								squishOptions = SquishOptions.DXT3;
 							}
