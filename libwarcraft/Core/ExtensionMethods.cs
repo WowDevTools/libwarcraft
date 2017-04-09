@@ -26,6 +26,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using Warcraft.Core.Interfaces;
+using Warcraft.MDX.Geometry;
 
 namespace Warcraft.Core
 {
@@ -34,6 +35,28 @@ namespace Warcraft.Core
 	/// </summary>
 	public static class ExtensionMethods
 	{
+		/// <summary>
+		/// Packs an <see cref="MDXVertex"/> for use with an OpenGL buffer.
+		/// In effect, it transforms it from Z-up to Y-up.
+		/// </summary>
+		/// <param name="vertex">The vertex to repack.</param>
+		/// <returns>A repacked vertex.</returns>
+		public static byte[] PackForOpenGL(this MDXVertex vertex)
+		{
+			using (MemoryStream ms = new MemoryStream())
+			using (BinaryWriter bw = new BinaryWriter(ms))
+			{
+				bw.WriteVector3f(vertex.Position, AxisConfiguration.YUp);
+				bw.Write(vertex.BoneWeights.ToArray());
+				bw.Write(vertex.BoneIndices.ToArray());
+				bw.WriteVector3f(vertex.Normal, AxisConfiguration.YUp);
+				bw.WriteVector2f(vertex.UVCoordinates_Channel1);
+				bw.WriteVector2f(vertex.UVCoordinates_Channel2);
+
+				return ms.ToArray();
+			}
+		}
+
 		/// <summary>
 		/// Clamps a value between a minimum and maximum point.
 		/// </summary>
@@ -638,12 +661,6 @@ namespace Warcraft.Core
 			switch (storeAs)
 			{
 				case AxisConfiguration.Native:
-				{
-					binaryWriter.Write(vector.X);
-					binaryWriter.Write(vector.Y);
-					binaryWriter.Write(vector.Z);
-					break;
-				}
 				case AxisConfiguration.YUp:
 				{
 					binaryWriter.Write(vector.X);
