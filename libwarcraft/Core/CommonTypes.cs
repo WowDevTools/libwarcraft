@@ -23,6 +23,7 @@
 using System;
 using Warcraft.Core.Interpolation;
 using System.Collections.Generic;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.Core
 {
@@ -96,7 +97,7 @@ namespace Warcraft.Core
 	/// A structure representing an axis-aligned bounding box, comprised of two <see cref="Vector3f"/> objects
 	/// defining the bottom and top corners of the box.
 	/// </summary>
-	public struct Box
+	public struct Box : IFlattenableData<float>
 	{
 		/// <summary>
 		/// The bottom corner of the bounding box.
@@ -134,7 +135,7 @@ namespace Warcraft.Core
 	/// A structure representing an axis-aligned bounding box, comprised of two <see cref="Vector3s"/> objects
 	/// defining the bottom and top corners of the box.
 	/// </summary>
-	public struct ShortBox
+	public struct ShortBox : IFlattenableData<short>
 	{
 		/// <summary>
 		/// The bottom corner of the bounding box.
@@ -394,9 +395,65 @@ namespace Warcraft.Core
 	}
 
 	/// <summary>
+	/// A structure representing a four-dimensional floating point vector.
+	/// </summary>
+	public struct Vector4f : IFlattenableData<float>
+	{
+		/// <summary>
+		/// The X component of the vector.
+		/// </summary>
+		public float X;
+
+		/// <summary>
+		/// The Y component of the vector.
+		/// </summary>
+		public float Y;
+
+		/// <summary>
+		/// The Z component of the vector.
+		/// </summary>
+		public float Z;
+
+		/// <summary>
+		/// The W (or scalar) component of the vector.
+		/// </summary>
+		public float W;
+
+		/// <summary>
+		/// Creates a new <see cref="Vector4f"/> object from four input floats.
+		/// </summary>
+		/// <param name="inX">The input X component.</param>
+		/// <param name="inY">The input Y component.</param>
+		/// <param name="inZ">The input Z component.</param>
+		/// <param name="inW">The input W component.</param>
+		public Vector4f(float inX, float inY, float inZ, float inW)
+		{
+			this.X = inX;
+			this.Y = inY;
+			this.Z = inZ;
+			this.W = inW;
+		}
+
+		/// <summary>
+		/// Creates a new <see cref="Vector4f"/> object from a single input float, filling all components.
+		/// </summary>
+		/// <param name="all">The input component.</param>
+		public Vector4f(float all)
+			:this(all, all, all, all)
+		{
+
+		}
+
+		public IReadOnlyCollection<float> Flatten()
+		{
+			return new[] {this.X, this.Y, this.Z, this.W};
+		}
+	}
+
+	/// <summary>
 	/// A structure representing a 3D vector of floats.
 	/// </summary>
-	public struct Vector3f
+	public struct Vector3f : IFlattenableData<float>
 	{
 		/// <summary>
 		/// X coordinate of this vector
@@ -539,12 +596,83 @@ namespace Warcraft.Core
 		{
 			return $"{this.X}, {this.Y}, {this.Z}";
 		}
+
+		public IReadOnlyCollection<float> Flatten()
+		{
+			return new[] {this.X, this.Y, this.Z};
+		}
+	}
+
+	/// <summary>
+	/// A structure representing a two-dimensional floating point vector.
+	/// </summary>
+	public struct Vector2f : IInterpolatable<Vector2f>, IFlattenableData<float>
+	{
+		/// <summary>
+		/// The X component of the vector.
+		/// </summary>
+		public float X;
+
+		/// <summary>
+		/// The Y component of the vector.
+		/// </summary>
+		public float Y;
+
+		/// <summary>
+		/// Creates a new <see cref="Vector2f"/> object from two input floats.
+		/// </summary>
+		/// <param name="inX">The input X component.</param>
+		/// <param name="inY">The input Y component.</param>
+		public Vector2f(float inX, float inY)
+		{
+			this.X = inX;
+			this.Y = inY;
+		}
+
+		/// <summary>
+		/// Creates a new <see cref="Vector4f"/> object from a single input float, filling all components.
+		/// </summary>
+		/// <param name="all">The input component.</param>
+		public Vector2f(float all)
+			:this(all, all)
+		{
+
+		}
+
+		// TODO: Implement vector2f interpolation.
+		/// <summary>
+		/// Interpolates the instance between itself and the <paramref name="target"/> object by an alpha factor,
+		/// using the interpolation algorithm specified in <paramref name="interpolationType"/>.
+		/// </summary>
+		/// <param name="target">The target point.</param>
+		/// <param name="alpha">The alpha factor.</param>
+		/// <param name="interpolationType">The interpolation algorithm to use.</param>
+		/// <returns>An interpolated object.</returns>
+		public Vector2f Interpolate(Vector2f target, float alpha, InterpolationType interpolationType)
+		{
+			//return new Vector2f(0, 0);
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Creates a string representation of the current object.
+		/// </summary>
+		/// <returns>A string representation of the current object.</returns>
+		public override string ToString()
+		{
+			return $"{this.X}, {this.Y}";
+		}
+
+		public IReadOnlyCollection<float> Flatten()
+		{
+			return new[] {this.X, this.Y};
+		}
 	}
 
 	/// <summary>
 	/// A structure representing a 3D vector of shorts.
 	/// </summary>
-	public struct Vector3s
+	public struct Vector3s : IFlattenableData<short>
 	{
 		/// <summary>
 		/// X coordinate of this vector
@@ -687,6 +815,11 @@ namespace Warcraft.Core
 		{
 			return $"{this.X}, {this.Y}, {this.Z}";
 		}
+
+		public IReadOnlyCollection<short> Flatten()
+		{
+			return new[] {this.X, this.Y, this.Z};
+		}
 	}
 
 	/// <summary>
@@ -793,22 +926,36 @@ namespace Warcraft.Core
 	/// <summary>
 	/// A structure representing a three-dimensional collection of euler angles.
 	/// </summary>
-	public struct Rotator
+	public struct Rotator : IFlattenableData<float>
 	{
+		private Vector3f Values;
+
 		/// <summary>
 		/// Pitch of the rotator
 		/// </summary>
-		public float Pitch;
+		public float Pitch
+		{
+			get { return this.Values.X; }
+			set { this.Values.X = value; }
+		}
 
 		/// <summary>
 		/// Yaw of the rotator
 		/// </summary>
-		public float Yaw;
+		public float Yaw
+		{
+			get { return this.Values.Y; }
+			set { this.Values.Y = value; }
+		}
 
 		/// <summary>
 		/// Roll of the rotator
 		/// </summary>
-		public float Roll;
+		public float Roll
+		{
+			get { return this.Values.Z; }
+			set { this.Values.Z = value; }
+		}
 
 		/// <summary>
 		/// Creates a new rotator object from three floats.
@@ -818,9 +965,7 @@ namespace Warcraft.Core
 		/// <param name="inRoll">Roll</param>
 		public Rotator(float inPitch, float inYaw, float inRoll)
 		{
-			this.Pitch = inPitch;
-			this.Yaw = inYaw;
-			this.Roll = inRoll;
+			this.Values = new Vector3f(inPitch, inYaw, inRoll);
 		}
 
 		/// <summary>
@@ -841,32 +986,55 @@ namespace Warcraft.Core
 		{
 			return $"Pitch: {this.Pitch}, Yaw: {this.Yaw}, Roll: {this.Roll}";
 		}
+
+		public IReadOnlyCollection<float> Flatten()
+		{
+			return this.Values.Flatten();
+		}
 	}
 
 	/// <summary>
 	/// A structure representing a quaternion rotation (a three-dimensonal rotation with a scalar component)
 	/// </summary>
-	public struct Quaternion : IInterpolatable<Quaternion>
+	public struct Quaternion : IInterpolatable<Quaternion>, IFlattenableData<float>
 	{
+		private Vector4f Values;
+
 		/// <summary>
 		/// Pitch of the rotator
 		/// </summary>
-		public float X;
+		public float X
+		{
+			get { return this.Values.X; }
+			set { this.Values.X = value; }
+		}
 
 		/// <summary>
 		/// Yaw of the rotator
 		/// </summary>
-		public float Y;
+		public float Y
+		{
+			get { return this.Values.Y; }
+			set { this.Values.Y = value; }
+		}
 
 		/// <summary>
 		/// Roll of the rotator
 		/// </summary>
-		public float Z;
+		public float Z
+		{
+			get { return this.Values.Z; }
+			set { this.Values.Z = value; }
+		}
 
 		/// <summary>
 		/// The scalar of the quaternion
 		/// </summary>
-		public float Scalar;
+		public float Scalar
+		{
+			get { return this.Values.W; }
+			set { this.Values.W = value; }
+		}
 
 		/// <summary>
 		/// Creates a new rotator object from three floats.
@@ -877,10 +1045,7 @@ namespace Warcraft.Core
 		/// <param name="inScalar">Scalar</param>
 		public Quaternion(float inX, float inY, float inZ, float inScalar)
 		{
-			this.X = inX;
-			this.Y = inY;
-			this.Z = inZ;
-			this.Scalar = inScalar;
+			this.Values = new Vector4f(inX, inY, inZ, inScalar);
 		}
 
 		// TODO: Implement quaternion interpolation.
@@ -896,117 +1061,10 @@ namespace Warcraft.Core
 		{
 			throw new NotImplementedException();
 		}
-	}
 
-	/// <summary>
-	/// A structure representing a two-dimensional floating point vector.
-	/// </summary>
-	public struct Vector2f : IInterpolatable<Vector2f>
-	{
-		/// <summary>
-		/// The X component of the vector.
-		/// </summary>
-		public float X;
-
-		/// <summary>
-		/// The Y component of the vector.
-		/// </summary>
-		public float Y;
-
-		/// <summary>
-		/// Creates a new <see cref="Vector2f"/> object from two input floats.
-		/// </summary>
-		/// <param name="inX">The input X component.</param>
-		/// <param name="inY">The input Y component.</param>
-		public Vector2f(float inX, float inY)
+		public IReadOnlyCollection<float> Flatten()
 		{
-			this.X = inX;
-			this.Y = inY;
-		}
-
-		/// <summary>
-		/// Creates a new <see cref="Vector4f"/> object from a single input float, filling all components.
-		/// </summary>
-		/// <param name="all">The input component.</param>
-		public Vector2f(float all)
-			:this(all, all)
-		{
-
-		}
-
-		// TODO: Implement vector2f interpolation.
-		/// <summary>
-		/// Interpolates the instance between itself and the <paramref name="target"/> object by an alpha factor,
-		/// using the interpolation algorithm specified in <paramref name="interpolationType"/>.
-		/// </summary>
-		/// <param name="target">The target point.</param>
-		/// <param name="alpha">The alpha factor.</param>
-		/// <param name="interpolationType">The interpolation algorithm to use.</param>
-		/// <returns>An interpolated object.</returns>
-		public Vector2f Interpolate(Vector2f target, float alpha, InterpolationType interpolationType)
-		{
-			//return new Vector2f(0, 0);
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Creates a string representation of the current object.
-		/// </summary>
-		/// <returns>A string representation of the current object.</returns>
-		public override string ToString()
-		{
-			return $"{this.X}, {this.Y}";
-		}
-	}
-
-	/// <summary>
-	/// A structure representing a four-dimensional floating point vector.
-	/// </summary>
-	public struct Vector4f
-	{
-		/// <summary>
-		/// The X component of the vector.
-		/// </summary>
-		public float X;
-
-		/// <summary>
-		/// The Y component of the vector.
-		/// </summary>
-		public float Y;
-
-		/// <summary>
-		/// The Z component of the vector.
-		/// </summary>
-		public float Z;
-
-		/// <summary>
-		/// The W (or scalar) component of the vector.
-		/// </summary>
-		public float W;
-
-		/// <summary>
-		/// Creates a new <see cref="Vector4f"/> object from four input floats.
-		/// </summary>
-		/// <param name="inX">The input X component.</param>
-		/// <param name="inY">The input Y component.</param>
-		/// <param name="inZ">The input Z component.</param>
-		/// <param name="inW">The input W component.</param>
-		public Vector4f(float inX, float inY, float inZ, float inW)
-		{
-			this.X = inX;
-			this.Y = inY;
-			this.Z = inZ;
-			this.W = inW;
-		}
-
-		/// <summary>
-		/// Creates a new <see cref="Vector4f"/> object from a single input float, filling all components.
-		/// </summary>
-		/// <param name="all">The input component.</param>
-		public Vector4f(float all)
-			:this(all, all, all, all)
-		{
-
+			return this.Values.Flatten();
 		}
 	}
 
