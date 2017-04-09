@@ -51,6 +51,7 @@
     <Compile Include="Core\Compression\Squish\SingleColourFitLookupTables.cs" />
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Interfaces\IBinarySerializable.cs" />
+    <Compile Include="Core\Interfaces\IFlattenableData.cs" />
     <Compile Include="Core\Interfaces\IPostLoad.cs" />
     <Compile Include="Core\Interfaces\IRIFFChunk.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
