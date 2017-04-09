@@ -23,6 +23,7 @@
 using System;
 using Warcraft.Core.Interpolation;
 using System.Collections.Generic;
+using System.Linq;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.Core
@@ -129,6 +130,11 @@ namespace Warcraft.Core
 		{
 			return (this.BottomCorner + this.TopCorner) / 2;
 		}
+
+		public IReadOnlyCollection<float> Flatten()
+		{
+			return this.BottomCorner.Flatten().Concat(this.TopCorner.Flatten()).ToArray();
+		}
 	}
 
 	/// <summary>
@@ -157,6 +163,11 @@ namespace Warcraft.Core
 		{
 			this.BottomCorner = inBottomCorner;
 			this.TopCorner = inTopCorner;
+		}
+
+		public IReadOnlyCollection<short> Flatten()
+		{
+			return this.BottomCorner.Flatten().Concat(this.TopCorner.Flatten()).ToArray();
 		}
 	}
 
