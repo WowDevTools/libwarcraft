@@ -133,7 +133,7 @@ namespace Warcraft.Core
 
 		public IReadOnlyCollection<float> Flatten()
 		{
-			return this.BottomCorner.Flatten().Concat(this.TopCorner.Flatten()).ToArray();
+			return this.TopCorner.Flatten().Concat(this.BottomCorner.Flatten()).ToArray();
 		}
 	}
 
