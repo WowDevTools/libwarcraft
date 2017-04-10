@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelSkybox : IRIFFChunk, IBinarySerializable
+	public class ModelSkybox : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOSB";
 

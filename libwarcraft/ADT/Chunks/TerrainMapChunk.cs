@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MCNK Chunk - Main map chunk which contains a number of smaller subchunks. 256 of these are present in an ADT file.
 	/// </summary>
-	public class TerrainMapChunk : IRIFFChunk
+	public class TerrainMapChunk : IIFFChunk
 	{
 		public const string Signature = "MCNK";
 		/// <summary>

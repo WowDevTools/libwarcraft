@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class WorldTableAreaInfo : IRIFFChunk, IBinarySerializable
+	public class WorldTableAreaInfo : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MAIN";
 
@@ -86,9 +86,9 @@ namespace Warcraft.WDT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					foreach (AreaInfoEntry Entry in this.Entries)
+					foreach (AreaInfoEntry entry in this.Entries)
 					{
-						bw.Write(Entry.Serialize());
+						bw.Write(entry.Serialize());
 					}
 
 					bw.Flush();

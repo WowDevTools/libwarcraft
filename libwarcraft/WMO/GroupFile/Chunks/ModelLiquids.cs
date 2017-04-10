@@ -28,7 +28,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelLiquids : IRIFFChunk, IBinarySerializable
+	public class ModelLiquids : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MLIQ";
 

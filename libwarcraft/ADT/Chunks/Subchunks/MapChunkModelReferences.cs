@@ -26,11 +26,11 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkModelReferences : IRIFFChunk
+	public class MapChunkModelReferences : IIFFChunk
 	{
 		public const string Signature = "MCRF";
 
-		private byte[] data;
+		private byte[] Data;
 
 		public List<uint> GameModelObjectReferences = new List<uint>();
 		public List<uint> WorldModelObjectReferences = new List<uint>();
@@ -47,7 +47,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 		public void LoadBinaryData(byte[] inData)
 		{
-			this.data = inData;
+			this.Data = inData;
 		}
 
         public string GetSignature()
@@ -55,18 +55,18 @@ namespace Warcraft.ADT.Chunks.Subchunks
         	return Signature;
         }
 
-		public void PostLoadReferences(uint GameModelObjectCount, uint WorldModelObjectCount)
+		public void PostLoadReferences(uint gameModelObjectCount, uint worldModelObjectCount)
 		{
-			using (MemoryStream ms = new MemoryStream(this.data))
+			using (MemoryStream ms = new MemoryStream(this.Data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					for (int i = 0; i < GameModelObjectCount; ++i)
+					for (int i = 0; i < gameModelObjectCount; ++i)
 					{
 						this.GameModelObjectReferences.Add(br.ReadUInt32());
 					}
 
-					for (int i = 0; i < WorldModelObjectCount; ++i)
+					for (int i = 0; i < worldModelObjectCount; ++i)
 					{
 						this.WorldModelObjectReferences.Add(br.ReadUInt32());
 					}

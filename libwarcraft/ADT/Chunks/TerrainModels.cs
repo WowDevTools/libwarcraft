@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MMDX Chunk - Contains a list of all referenced M2 models in this ADT.
 	/// </summary>
-	public class TerrainModels : IRIFFChunk
+	public class TerrainModels : IIFFChunk
 	{
 		public const string Signature = "MMDX";
 

@@ -57,9 +57,9 @@ namespace Warcraft.MPQ.Tables.Block
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					foreach (BlockTableEntry Entry in this.Entries)
+					foreach (BlockTableEntry entry in this.Entries)
 					{
-						bw.Write(Entry.Serialize());
+						bw.Write(entry.Serialize());
 					}
 				}
 

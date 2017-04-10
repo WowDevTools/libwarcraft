@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelVisibleVertices : IRIFFChunk, IBinarySerializable
+	public class ModelVisibleVertices : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOVV";
 

@@ -64,8 +64,8 @@ namespace Warcraft.DBC
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					string DataSignature = new string(br.ReadChars(4));
-					if (Signature != DataSignature)
+					string dataSignature = new string(br.ReadChars(4));
+					if (Signature != dataSignature)
 					{
 						throw new FileLoadException("The loaded data did not have a valid DBC signature.");
 					}

@@ -30,10 +30,10 @@ namespace Warcraft.DBC.SpecialFields
 			private set;
 		}
 
-		public UInt16ForeignKey(string InRecord, string InField, ushort InValue)
-			: base(InRecord, InField)
+		public UInt16ForeignKey(string inRecord, string inField, ushort inValue)
+			: base(inRecord, inField)
 		{
-			this.Value = InValue;
+			this.Value = inValue;
 		}
 	}
 }

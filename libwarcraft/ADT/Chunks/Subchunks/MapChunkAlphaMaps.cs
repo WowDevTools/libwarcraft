@@ -29,12 +29,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	/// <summary>
 	/// MCAL Chunk - Contains alpha map data in one of three forms - uncompressed 2048, uncompressed 4096 and compressed.
 	/// </summary>
-	public class MapChunkAlphaMaps : IRIFFChunk
+	public class MapChunkAlphaMaps : IIFFChunk
 	{
 		public const string Signature = "MCAL";
 
 		//unformatted data contained in MCAL
-		private byte[] data;
+		private byte[] Data;
 
 		public MapChunkAlphaMaps()
 		{
@@ -53,7 +53,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 		public void LoadBinaryData(byte[] inData)
 		{
-			this.data = inData;
+			this.Data = inData;
 		}
 
         public string GetSignature()
@@ -62,22 +62,22 @@ namespace Warcraft.ADT.Chunks.Subchunks
         }
 
 
-		public List<byte> GetAlphaMap(uint MapOffset, TextureLayerFlags LayerFlags, MapChunkFlags MapFlags/*, TerrainTileFlags TileFlags*/)
+		public List<byte> GetAlphaMap(uint mapOffset, TextureLayerFlags layerFlags, MapChunkFlags mapFlags/*, TerrainTileFlags TileFlags*/)
 		{
 			return null;
 		}
 
-		private List<byte> DecompressAlphaMap(uint MapOffset)
+		private List<byte> DecompressAlphaMap(uint mapOffset)
 		{
-			List<byte> DecompressedAlphaMap = new List<byte>();
+			List<byte> decompressedAlphaMap = new List<byte>();
 
-			using (MemoryStream ms = new MemoryStream(this.data))
+			using (MemoryStream ms = new MemoryStream(this.Data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					br.BaseStream.Position = MapOffset;
+					br.BaseStream.Position = mapOffset;
 
-					while (DecompressedAlphaMap.Count > 4096)
+					while (decompressedAlphaMap.Count > 4096)
 					{
 						sbyte headerByte = br.ReadSByte();
 						int compressionCount = Math.Abs(headerByte);
@@ -92,7 +92,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 							for (int i = 0; i < copyBytes.Length; ++i)
 							{
-								DecompressedAlphaMap.Add(copyBytes[i]);
+								decompressedAlphaMap.Add(copyBytes[i]);
 							}
 						}
 						else
@@ -102,34 +102,34 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 							for (int i = 0; i < compressionCount; ++i)
 							{
-								DecompressedAlphaMap.Add(fillByte);
+								decompressedAlphaMap.Add(fillByte);
 							}
 						}
 					}
 				}
 			}
 
-			return DecompressedAlphaMap;
+			return decompressedAlphaMap;
 		}
 
-		private List<byte> Read4BitAlphaMap(byte[] CompressedAlphaMap, MapChunkFlags MapFlags)
+		private List<byte> Read4BitAlphaMap(byte[] compressedAlphaMap, MapChunkFlags mapFlags)
 		{
-			List<byte> DecompressedAlphaMap = new List<byte>();
+			List<byte> decompressedAlphaMap = new List<byte>();
 			for (int y = 0; y < 64; y++)
 			{
 				for (int x = 0; x < 32; x++)
 				{
-					if (MapFlags.HasFlag(MapChunkFlags.DoNotRepairAlphaMaps))
+					if (mapFlags.HasFlag(MapChunkFlags.DoNotRepairAlphaMaps))
 					{
 						//fill in normally
-						byte alpha1 = (byte)((CompressedAlphaMap[x + y * 32]) & 0xf0);
-						byte alpha2 = (byte)((CompressedAlphaMap[x + y * 32] << 4) & 0xf0);
+						byte alpha1 = (byte)((compressedAlphaMap[x + y * 32]) & 0xf0);
+						byte alpha2 = (byte)((compressedAlphaMap[x + y * 32] << 4) & 0xf0);
 
 						byte normalizedAlpha1 = (byte)(alpha1 * 17);
 						byte normalizedAlpha2 = (byte)(alpha2 * 17);
 
-						DecompressedAlphaMap.Add(normalizedAlpha1);
-						DecompressedAlphaMap.Add(normalizedAlpha2);
+						decompressedAlphaMap.Add(normalizedAlpha1);
+						decompressedAlphaMap.Add(normalizedAlpha2);
 					}
 					else
 					{
@@ -139,42 +139,42 @@ namespace Warcraft.ADT.Chunks.Subchunks
 							int yminus = y - 1;
 							//attempt to repair map on vertical axis
 
-							byte alpha1 = (byte)((CompressedAlphaMap[x + yminus * 32]) & 0xf0);
-							byte alpha2 = (byte)((CompressedAlphaMap[x + 1 + yminus * 32] << 4) & 0xf0);
+							byte alpha1 = (byte)((compressedAlphaMap[x + yminus * 32]) & 0xf0);
+							byte alpha2 = (byte)((compressedAlphaMap[x + 1 + yminus * 32] << 4) & 0xf0);
 
 							byte normalizedAlpha1 = (byte)(alpha1 * 17);
 							byte normalizedAlpha2 = (byte)(alpha2 * 17);
 
-							DecompressedAlphaMap.Add(normalizedAlpha1);
-							DecompressedAlphaMap.Add(normalizedAlpha2);
+							decompressedAlphaMap.Add(normalizedAlpha1);
+							decompressedAlphaMap.Add(normalizedAlpha2);
 						}
 						else if (x == 31)
 						{
 							int xminus = x - 1;
 
 							//attempt to repair map on horizontal axis
-							byte alpha = (byte)(CompressedAlphaMap[xminus + y * 32] << 4 & 0xf0);
+							byte alpha = (byte)(compressedAlphaMap[xminus + y * 32] << 4 & 0xf0);
 							byte normalizedAlpha = (byte)(alpha * 17);
 
-							DecompressedAlphaMap.Add(normalizedAlpha);
+							decompressedAlphaMap.Add(normalizedAlpha);
 						}
 						else
 						{
 							//fill in normally
-							byte alpha1 = (byte)((CompressedAlphaMap[x + y * 32]) & 0xf0);
-							byte alpha2 = (byte)((CompressedAlphaMap[x + y * 32] << 4) & 0xf0);
+							byte alpha1 = (byte)((compressedAlphaMap[x + y * 32]) & 0xf0);
+							byte alpha2 = (byte)((compressedAlphaMap[x + y * 32] << 4) & 0xf0);
 
 							byte normalizedAlpha1 = (byte)(alpha1 * 17);
 							byte normalizedAlpha2 = (byte)(alpha2 * 17);
 
-							DecompressedAlphaMap.Add(normalizedAlpha1);
-							DecompressedAlphaMap.Add(normalizedAlpha2);
+							decompressedAlphaMap.Add(normalizedAlpha1);
+							decompressedAlphaMap.Add(normalizedAlpha2);
 						}
 					}
 				}
 			}
 
-			return DecompressedAlphaMap;
+			return decompressedAlphaMap;
 		}
 		/*
 	     * Uncompressed with a size of 4096 (post WOTLK)

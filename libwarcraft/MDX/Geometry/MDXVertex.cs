@@ -32,8 +32,8 @@ namespace Warcraft.MDX.Geometry
 		public List<byte> BoneWeights;
 		public List<byte> BoneIndices;
 		public Vector3f Normal;
-		public Vector2f UVCoordinates_Channel1;
-		public Vector2f UVCoordinates_Channel2;
+		public Vector2f UVCoordinatesChannel1;
+		public Vector2f UVCoordinatesChannel2;
 
 		public MDXVertex(byte[] data)
 		{
@@ -45,8 +45,8 @@ namespace Warcraft.MDX.Geometry
 					this.BoneWeights = new List<byte>(br.ReadBytes(4));
 					this.BoneIndices = new List<byte>(br.ReadBytes(4));
 					this.Normal = br.ReadVector3f();
-					this.UVCoordinates_Channel1 = br.ReadVector2f();
-					this.UVCoordinates_Channel2 = br.ReadVector2f();
+					this.UVCoordinatesChannel1 = br.ReadVector2f();
+					this.UVCoordinatesChannel2 = br.ReadVector2f();
 				}
 			}
 		}

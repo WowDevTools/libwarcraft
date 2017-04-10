@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelDoodadInstances : IRIFFChunk, IBinarySerializable
+	public class ModelDoodadInstances : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MODD";
 

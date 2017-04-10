@@ -34,7 +34,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 	/// to Y-up, which OpenGL traditionally uses. When developing, use Y-up with libwarcraft - the vertices are
 	/// automatically converted to WoW's system when serializing.
 	/// </summary>
-	public class ModelVertices : IRIFFChunk, IBinarySerializable
+	public class ModelVertices : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOVT";
 

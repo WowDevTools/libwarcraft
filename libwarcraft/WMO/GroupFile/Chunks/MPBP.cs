@@ -27,7 +27,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 	/// <summary>
 	/// TODO: Unknown data
 	/// </summary>
-	public class MPBP : IRIFFChunk, IBinarySerializable
+	public class MPBP : IIFFChunk, IBinarySerializable
 	{
 		/// <summary>
 		/// The RIFF chunk signature of this chunk.

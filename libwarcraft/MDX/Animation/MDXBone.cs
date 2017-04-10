@@ -53,9 +53,9 @@ namespace Warcraft.MDX.Animation
 	public enum MDXBoneFlags : uint
 	{
 		SphericalBillboard = 0x8,
-		CylindricalBillboard_LockedX = 0x10,
-		CylindricalBillboard_LockedY = 0x20,
-		CylindricalBillboard_LockedZ = 0x40,
+		CylindricalBillboardLockedX = 0x10,
+		CylindricalBillboardLockedY = 0x20,
+		CylindricalBillboardLockedZ = 0x40,
 		Transformed = 0x200,
 		KinematicBone = 0x400,
 		ScaledAnimation = 0x1000

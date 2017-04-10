@@ -28,7 +28,7 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile
 {
-	public class ModelRootHeader : IRIFFChunk, IBinarySerializable
+	public class ModelRootHeader : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOHD";
 

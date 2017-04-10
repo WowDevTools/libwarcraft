@@ -28,7 +28,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelFog : IRIFFChunk, IBinarySerializable
+	public class ModelFog : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MFOG";
 

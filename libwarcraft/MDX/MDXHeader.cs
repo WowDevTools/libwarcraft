@@ -133,8 +133,8 @@ namespace Warcraft.MDX
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					string Signature = new string(br.ReadChars(4));
-					if (Signature != MDXHeader.Signature)
+					string signature = new string(br.ReadChars(4));
+					if (signature != MDXHeader.Signature)
 					{
 						throw new ArgumentException("The provided data stream does not contain a valid MDX signature. " +
 							"It might be a Legion file, or you may have omitted the signature, which should be \"MD20\".");
@@ -243,31 +243,31 @@ namespace Warcraft.MDX
 			}
 		}
 
-		public static WarcraftVersion GetModelVersion(uint Version)
+		public static WarcraftVersion GetModelVersion(uint version)
 		{
-			if (Version <= 256)
+			if (version <= 256)
 			{
 				return WarcraftVersion.Classic;
 			}
-			else if (Version <= 263 && Version > 256)
+			else if (version <= 263 && version > 256)
 			{
 				return WarcraftVersion.BurningCrusade;
 			}
-			else if (Version == 264)
+			else if (version == 264)
 			{
 				return WarcraftVersion.Wrath;
 			}
-			else if (Version <= 272 && Version > 264)
+			else if (version <= 272 && version > 264)
 			{
 				return WarcraftVersion.Cataclysm;
 			}
-			else if (Version < 274 && Version > 272)
+			else if (version < 274 && version > 272)
 			{
 				// It should be noted that this is a guess based on the newer and older
 				// model versions. If it works, great - YMMV
 				return WarcraftVersion.Warlords;
 			}
-			else if (Version >= 274)
+			else if (version >= 274)
 			{
 				return WarcraftVersion.Legion;
 			}

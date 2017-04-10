@@ -1,5 +1,5 @@
 ﻿//
-//  IRIFFChunk.cs
+//  IIFFChunk.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,16 +23,16 @@
 namespace Warcraft.Core.Interfaces
 {
 	/// <summary>
-	/// Contains common functionality for a binary RIFF block.
+	/// Contains common functionality for a binary IFF block.
 	///
-	/// RIFF blocks are stored in binary format as a signature, data length, and block data in the following layout:
+	/// IFF blocks are stored in binary format as a signature, data length, and block data in the following layout:
 	/// char[4] Signature;
 	/// uint32 BlockSize;
 	/// byte[BlockSize] BlockData;
 	///
 	/// Using
 	/// </summary>
-	public interface IRIFFChunk
+	public interface IIFFChunk
 	{
 		/// <summary>
 		/// Deserialzes the provided binary data of the object. This is the full data block which follows the data

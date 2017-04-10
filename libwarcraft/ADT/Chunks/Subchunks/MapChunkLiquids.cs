@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkLiquids : IRIFFChunk
+	public class MapChunkLiquids : IIFFChunk
 	{
 		public const string Signature = "MCLQ";
 

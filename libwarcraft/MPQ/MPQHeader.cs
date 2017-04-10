@@ -118,12 +118,12 @@ namespace Warcraft.MPQ
 
 		private uint ChunkSizeForHashing;
 
-		private string MD5_BlockTable;
-		private string MD5_HashTable;
-		private string MD5_ExtendedBlockTable;
-		private string MD5_BETTable;
-		private string MD5_HETTable;
-		private string MD5_Header;
+		private string MD5BlockTable;
+		private string MD5HashTable;
+		private string MD5ExtendedBlockTable;
+		private string MD5BETTable;
+		private string MD5HETTable;
+		private string MD5Header;
 		// The MD5_Header is calculated from the start of the signature to the end of the MD5_HETTable
 
 
@@ -207,12 +207,12 @@ namespace Warcraft.MPQ
 
 						this.ChunkSizeForHashing = br.ReadUInt32();
 
-						this.MD5_BlockTable = BitConverter.ToString(br.ReadBytes(16));
-						this.MD5_HashTable = BitConverter.ToString(br.ReadBytes(16));
-						this.MD5_ExtendedBlockTable = BitConverter.ToString(br.ReadBytes(16));
-						this.MD5_BETTable = BitConverter.ToString(br.ReadBytes(16));
-						this.MD5_HETTable = BitConverter.ToString(br.ReadBytes(16));
-						this.MD5_Header = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5BlockTable = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5HashTable = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5ExtendedBlockTable = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5BETTable = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5HETTable = BitConverter.ToString(br.ReadBytes(16));
+						this.MD5Header = BitConverter.ToString(br.ReadBytes(16));
 					}
 				}
 			}
@@ -509,12 +509,12 @@ namespace Warcraft.MPQ
 
 						bw.Write(this.ChunkSizeForHashing);
 
-						bw.Write(Encoding.UTF8.GetBytes(this.MD5_BlockTable));
-						bw.Write(Encoding.UTF8.GetBytes(this.MD5_HashTable));
-						bw.Write(Encoding.UTF8.GetBytes(this.MD5_ExtendedBlockTable));
-						bw.Write(Encoding.UTF8.GetBytes(this.MD5_BETTable));
-						bw.Write(Encoding.UTF8.GetBytes(this.MD5_HETTable));
-						bw.Write(Encoding.UTF8.GetBytes(this.MD5_Header));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5BlockTable));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5HashTable));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5ExtendedBlockTable));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5BETTable));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5HETTable));
+						bw.Write(Encoding.UTF8.GetBytes(this.MD5Header));
 					}
 				}
 

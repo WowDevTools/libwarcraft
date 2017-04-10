@@ -73,15 +73,15 @@ namespace Warcraft.MDX
 			using (BinaryReader br = new BinaryReader(dataStream))
 			{
 				// Read Wrath header or read pre-wrath header
-				WarcraftVersion Format = PeekFormat(br);
-				if (Format < WarcraftVersion.Wrath)
+				WarcraftVersion format = PeekFormat(br);
+				if (format < WarcraftVersion.Wrath)
 				{
 					this.Header = new MDXHeader(br.ReadBytes(324));
 				}
 				else
 				{
-					ModelObjectFlags Flags = PeekFlags(br);
-					if (Flags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
+					ModelObjectFlags flags = PeekFlags(br);
+					if (flags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
 					{
 						this.Header = new MDXHeader(br.ReadBytes(308));
 					}
@@ -212,45 +212,45 @@ namespace Warcraft.MDX
 					// Read the view headers
 					for (int i = 0; i < this.Header.LODViewsCount; ++i)
 					{
-						MDXSkinHeader SkinHeader = new MDXSkinHeader(br.ReadBytes(44));
+						MDXSkinHeader skinHeader = new MDXSkinHeader(br.ReadBytes(44));
 
 						MDXSkin skin = new MDXSkin();
-						skin.Header = SkinHeader;
+						skin.Header = skinHeader;
 
 						this.Skins.Add(skin);
 					}
 
 					// Read view data
-					foreach (MDXSkin View in this.Skins)
+					foreach (MDXSkin view in this.Skins)
 					{
 						// Read view vertex indices
-						View.VertexIndices = new List<ushort>();
-						br.BaseStream.Position = View.Header.VertexIndicesOffset;
-						for (int j = 0; j < View.Header.VertexIndexCount; ++j)
+						view.VertexIndices = new List<ushort>();
+						br.BaseStream.Position = view.Header.VertexIndicesOffset;
+						for (int j = 0; j < view.Header.VertexIndexCount; ++j)
 						{
-							View.VertexIndices.Add(br.ReadUInt16());
+							view.VertexIndices.Add(br.ReadUInt16());
 						}
 
 						// Read view triangle vertex indices
-						View.Triangles = new List<ushort>();
-						br.BaseStream.Position = View.Header.TriangleVertexIndicesOffset;
-						for (int j = 0; j < View.Header.TriangleVertexCount; ++j)
+						view.Triangles = new List<ushort>();
+						br.BaseStream.Position = view.Header.TriangleVertexIndicesOffset;
+						for (int j = 0; j < view.Header.TriangleVertexCount; ++j)
 						{
-							View.Triangles.Add(br.ReadUInt16());
+							view.Triangles.Add(br.ReadUInt16());
 						}
 
 						// Read view vertex properties
-						View.VertexProperties = new List<MDXVertexProperty>();
-						br.BaseStream.Position = View.Header.VertexPropertiesOffset;
-						for (int j = 0; j < View.Header.VertexPropertyCount; ++j)
+						view.VertexProperties = new List<MDXVertexProperty>();
+						br.BaseStream.Position = view.Header.VertexPropertiesOffset;
+						for (int j = 0; j < view.Header.VertexPropertyCount; ++j)
 						{
-							View.VertexProperties.Add(new MDXVertexProperty(br.ReadByte(), br.ReadByte(), br.ReadByte(), br.ReadByte()));
+							view.VertexProperties.Add(new MDXVertexProperty(br.ReadByte(), br.ReadByte(), br.ReadByte(), br.ReadByte()));
 						}
 
 						// Read view submeshes
-						View.Submeshes = new List<MDXSkinSection>();
-						br.BaseStream.Position = View.Header.SkinSectionOffset;
-						for (int j = 0; j < View.Header.SkinSectionCount; ++j)
+						view.Submeshes = new List<MDXSkinSection>();
+						br.BaseStream.Position = view.Header.SkinSectionOffset;
+						for (int j = 0; j < view.Header.SkinSectionCount; ++j)
 						{
 							byte[] submeshData;
 							if (MDXHeader.GetModelVersion(this.Header.Version) >= WarcraftVersion.BurningCrusade)
@@ -262,14 +262,14 @@ namespace Warcraft.MDX
 								submeshData = br.ReadBytes(32);
 							}
 
-							View.Submeshes.Add(new MDXSkinSection(submeshData));
+							view.Submeshes.Add(new MDXSkinSection(submeshData));
 						}
 
-						View.TextureUnits = new List<MDXTextureUnit>();
-						br.BaseStream.Position = View.Header.RenderBatchOffset;
-						for (int j = 0; j < View.Header.RenderBatchCount; ++j)
+						view.TextureUnits = new List<MDXTextureUnit>();
+						br.BaseStream.Position = view.Header.RenderBatchOffset;
+						for (int j = 0; j < view.Header.RenderBatchCount; ++j)
 						{
-							View.TextureUnits.Add(new MDXTextureUnit(br.ReadBytes(24)));
+							view.TextureUnits.Add(new MDXTextureUnit(br.ReadBytes(24)));
 						}
 					}
 				}
@@ -318,15 +318,15 @@ namespace Warcraft.MDX
 				br.BaseStream.Position = this.Header.TexturesOffset;
 				for (int i = 0; i < this.Header.TextureCount; ++i)
 				{
-					MDXTexture Texture = new MDXTexture(br.ReadBytes(16));
-					this.Textures.Add(Texture);
+					MDXTexture texture = new MDXTexture(br.ReadBytes(16));
+					this.Textures.Add(texture);
 				}
 
 				// Read the texture definition strings
-				foreach (MDXTexture Texture in this.Textures)
+				foreach (MDXTexture texture in this.Textures)
 				{
-					br.BaseStream.Position = Texture.FilenameOffset;
-					Texture.Filename = new string(br.ReadChars((int)Texture.FilenameLength));
+					br.BaseStream.Position = texture.FilenameOffset;
+					texture.Filename = new string(br.ReadChars((int)texture.FilenameLength));
 				}
 				/*
 				// TODO: Rework animation track reading

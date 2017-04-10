@@ -45,14 +45,14 @@ namespace Warcraft.MPQ.Attributes
 		/// <summary>
 		/// Creates a new <see cref="FileAttributes"/> object from two given hashes and a timestamp.
 		/// </summary>
-		/// <param name="CRC32">The CRC32 hash of the file.</param>
+		/// <param name="crc32">The CRC32 hash of the file.</param>
 		/// <param name="timestamp">The last modified timestamp of the file.</param>
-		/// <param name="MD5">The MD5 hash of the file. </param>
-		public FileAttributes(uint CRC32, ulong timestamp, string MD5)
+		/// <param name="md5">The MD5 hash of the file. </param>
+		public FileAttributes(uint crc32, ulong timestamp, string md5)
 		{
-			this.CRC32 = CRC32;
+			this.CRC32 = crc32;
 			this.Timestamp = timestamp;
-			this.MD5 = MD5;
+			this.MD5 = md5;
 		}
 	}
 }

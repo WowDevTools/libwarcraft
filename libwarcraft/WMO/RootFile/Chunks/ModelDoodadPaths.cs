@@ -33,7 +33,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 	/// this class either by indexing the path in <see cref="DoodadNames"/>, or by using the string offset and calling
 	/// <see cref="GetNameByOffset"/>.
 	/// </summary>
-	public class ModelDoodadPaths : IRIFFChunk, IBinarySerializable
+	public class ModelDoodadPaths : IIFFChunk, IBinarySerializable
 	{
 		/// <summary>
 		/// The RIFF signature for this block.

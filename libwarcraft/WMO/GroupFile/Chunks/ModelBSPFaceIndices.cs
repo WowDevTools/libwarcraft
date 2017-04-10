@@ -29,7 +29,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 	/// <summary>
 	/// Data chunk for BSP face indices.
 	/// </summary>
-	public class ModelBSPFaceIndices : IRIFFChunk, IBinarySerializable
+	public class ModelBSPFaceIndices : IIFFChunk, IBinarySerializable
 	{
 		/// <summary>
 		/// The RIFF chunk signature of this chunk.
@@ -94,9 +94,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
             	using (BinaryWriter bw = new BinaryWriter(ms))
             	{
-		            foreach (ushort BSPFaceIndex in this.BSPFaceIndices)
+		            foreach (ushort bspFaceIndex in this.BSPFaceIndices)
 		            {
-			            bw.Write(BSPFaceIndex);
+			            bw.Write(bspFaceIndex);
 		            }
             	}
 

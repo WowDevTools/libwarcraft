@@ -28,12 +28,12 @@ namespace Warcraft.MDX.Geometry
 	{
 		public readonly List<byte> BoneIndices = new List<byte>();
 
-		public MDXVertexProperty(byte InBoneA, byte InBoneB, byte InBoneC, byte InBoneD)
+		public MDXVertexProperty(byte inBoneA, byte inBoneB, byte inBoneC, byte inBoneD)
 		{
-			this.BoneIndices.Add(InBoneA);
-			this.BoneIndices.Add(InBoneB);
-			this.BoneIndices.Add(InBoneC);
-			this.BoneIndices.Add(InBoneD);
+			this.BoneIndices.Add(inBoneA);
+			this.BoneIndices.Add(inBoneB);
+			this.BoneIndices.Add(inBoneC);
+			this.BoneIndices.Add(inBoneD);
 		}
 	}
 }

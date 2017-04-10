@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MMDF Chunk - Contains M2 model placement information
 	/// </summary>
-	public class TerrainModelPlacementInfo : IRIFFChunk
+	public class TerrainModelPlacementInfo : IIFFChunk
 	{
 		public const string Signature = "MMDF";
 
@@ -54,9 +54,9 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					long EntryCount = br.BaseStream.Length / ModelPlacementEntry.GetSize();
+					long entryCount = br.BaseStream.Length / ModelPlacementEntry.GetSize();
 
-					for (int i = 0; i < EntryCount; ++i)
+					for (int i = 0; i < entryCount; ++i)
 					{
 						this.Entries.Add(new ModelPlacementEntry(br.ReadBytes(ModelPlacementEntry.GetSize())));
 					}

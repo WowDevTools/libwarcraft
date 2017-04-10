@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MTEX Chunk - Contains a list of all referenced textures in this ADT.
 	/// </summary>
-	public class TerrainTextures : IRIFFChunk
+	public class TerrainTextures : IIFFChunk
 	{
 		public const string Signature = "MTEX";
 

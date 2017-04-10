@@ -27,7 +27,7 @@ namespace Warcraft.TEX
 	/// <summary>
 	/// The texture data contained in a texture blob file.
 	/// </summary>
-	public class TextureBlobData : IRIFFChunk, IBinarySerializable
+	public class TextureBlobData : IIFFChunk, IBinarySerializable
 	{
 		/// <summary>
 		/// The RIFF chunk signature of this data chunk.

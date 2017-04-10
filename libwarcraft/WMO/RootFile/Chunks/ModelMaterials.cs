@@ -30,7 +30,7 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelMaterials : IRIFFChunk, IBinarySerializable
+	public class ModelMaterials : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOMT";
 

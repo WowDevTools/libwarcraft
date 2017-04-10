@@ -30,7 +30,7 @@ namespace Warcraft.TEX
 	/// <summary>
 	/// A block of filenames in a texture blob file.
 	/// </summary>
-	public class TextureBlobFilenames : IRIFFChunk, IBinarySerializable
+	public class TextureBlobFilenames : IIFFChunk, IBinarySerializable
 	{
 		/// <summary>
 		/// The RIFF chunk signature of this data chunk.

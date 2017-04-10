@@ -166,9 +166,9 @@ namespace Warcraft.MPQ.Tables.Hash
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					foreach (HashTableEntry Entry in this.Entries)
+					foreach (HashTableEntry entry in this.Entries)
 					{
-						bw.Write(Entry.Serialize());
+						bw.Write(entry.Serialize());
 					}
 				}
 

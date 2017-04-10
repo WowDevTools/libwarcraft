@@ -30,7 +30,7 @@ using Warcraft.WMO.GroupFile.Chunks;
 
 namespace Warcraft.WMO.GroupFile
 {
-	public class ModelGroupData : IRIFFChunk, IBinarySerializable
+	public class ModelGroupData : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOGP";
 

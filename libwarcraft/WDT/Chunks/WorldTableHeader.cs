@@ -25,7 +25,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class WorldTableHeader : IRIFFChunk, IBinarySerializable
+	public class WorldTableHeader : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MPHD";
 

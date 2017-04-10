@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTriangleStrips : IRIFFChunk, IBinarySerializable
+	public class ModelTriangleStrips : IIFFChunk, IBinarySerializable
 	{
 		public ModelTriangleStrips()
 		{

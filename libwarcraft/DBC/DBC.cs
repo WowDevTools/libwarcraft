@@ -113,14 +113,14 @@ namespace Warcraft.DBC
 		/// Gets a record from the database by its primary key ID.
 		/// </summary>
 		/// <returns>The record</returns>
-		/// <param name="ID">Primary key ID.</param>
-		public T GetRecordByID(uint ID)
+		/// <param name="id">Primary key ID.</param>
+		public T GetRecordByID(uint id)
 		{
-			foreach (T Record in this.Records)
+			foreach (T record in this.Records)
 			{
-				if (Record.ID == ID)
+				if (record.ID == id)
 				{
-					return Record;
+					return record;
 				}
 			}
 

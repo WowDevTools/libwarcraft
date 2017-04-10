@@ -141,11 +141,11 @@ namespace Warcraft.BLP
 			long startPosition = br.BaseStream.Position;
 			string dataSignature = new string(br.ReadChars(4));
 
-			BLPFormat Format;
-			if (Enum.TryParse(dataSignature, out Format))
+			BLPFormat format;
+			if (Enum.TryParse(dataSignature, out format))
 			{
 				br.BaseStream.Position = startPosition;
-				return Format;
+				return format;
 			}
 
 			throw new FileLoadException("The provided data did not have a BLP signature.");

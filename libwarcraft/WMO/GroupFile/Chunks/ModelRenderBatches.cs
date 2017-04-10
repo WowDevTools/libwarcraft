@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelRenderBatches : IRIFFChunk, IBinarySerializable
+	public class ModelRenderBatches : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOBA";
 

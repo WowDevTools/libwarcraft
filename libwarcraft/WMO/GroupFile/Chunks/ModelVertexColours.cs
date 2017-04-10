@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelVertexColours : IRIFFChunk, IBinarySerializable
+	public class ModelVertexColours : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOCV";
 

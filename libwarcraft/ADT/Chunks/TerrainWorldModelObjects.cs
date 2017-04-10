@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MWMO Chunk - Contains a list of all referenced WMO models in this ADT.
 	/// </summary>
-	public class TerrainWorldModelObjects : IRIFFChunk, IBinarySerializable
+	public class TerrainWorldModelObjects : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MWMO";
 

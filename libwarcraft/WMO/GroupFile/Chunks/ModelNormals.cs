@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelNormals : IRIFFChunk, IBinarySerializable
+	public class ModelNormals : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MONR";
 

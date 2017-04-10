@@ -28,7 +28,7 @@ using Warcraft.WMO.GroupFile;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelGroupInformation : IRIFFChunk, IBinarySerializable
+	public class ModelGroupInformation : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOGI";
 

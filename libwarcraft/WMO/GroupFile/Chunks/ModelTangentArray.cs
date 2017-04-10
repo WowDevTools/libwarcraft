@@ -27,12 +27,12 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTangentArray : IRIFFChunk, IBinarySerializable, IPostLoad<ModelTangentArrayPostLoadParameters>
+	public class ModelTangentArray : IIFFChunk, IBinarySerializable, IPostLoad<ModelTangentArrayPostLoadParameters>
 	{
 		public const string Signature = "MOTA";
 
 		private bool hasFinishedLoading;
-		private byte[] data;
+		private byte[] Data;
 
 		public List<short> FirstIndices = new List<short>();
 		public List<Vector4f> Tangents = new List<Vector4f>();
@@ -49,7 +49,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
 		public void LoadBinaryData(byte[] inData)
 		{
-			this.data = inData;
+			this.Data = inData;
 			this.hasFinishedLoading = false;
 		}
 
@@ -86,7 +86,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
 		public void PostLoad(ModelTangentArrayPostLoadParameters loadingParameters)
 		{
-			using (MemoryStream ms = new MemoryStream(this.data))
+			using (MemoryStream ms = new MemoryStream(this.Data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -102,7 +102,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 				}
 			}
 
-			this.data = null;
+			this.Data = null;
 		}
 	}
 

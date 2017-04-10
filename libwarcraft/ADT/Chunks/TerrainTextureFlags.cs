@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	public class TerrainTextureFlags : IRIFFChunk
+	public class TerrainTextureFlags : IIFFChunk
 	{
 		public const string Signature = "MTXF";
 
@@ -47,9 +47,9 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					long EntryCount = br.BaseStream.Length / 4;
+					long entryCount = br.BaseStream.Length / 4;
 
-					for (int i = 0; i < EntryCount; ++i)
+					for (int i = 0; i < entryCount; ++i)
 					{
 						this.TextureFlags.Add((TerrainTextureFlag)br.ReadUInt32());
 					}

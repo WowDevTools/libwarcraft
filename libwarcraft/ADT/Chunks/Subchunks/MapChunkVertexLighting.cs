@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexLighting : IRIFFChunk
+	public class MapChunkVertexLighting : IIFFChunk
 	{
 		public const string Signature = "MCLV";
 

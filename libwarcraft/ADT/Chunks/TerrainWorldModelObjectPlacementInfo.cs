@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MODF Chunk - Contains WMO model placement information
 	/// </summary>
-	public class TerrainWorldModelObjectPlacementInfo : IRIFFChunk, IBinarySerializable
+	public class TerrainWorldModelObjectPlacementInfo : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MODF";
 
@@ -59,8 +59,8 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					long EntryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
-					for (int i = 0; i < EntryCount; ++i)
+					long entryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
+					for (int i = 0; i < entryCount; ++i)
 					{
 						this.Entries.Add(new WorldModelObjectPlacementEntry(br.ReadBytes(WorldModelObjectPlacementEntry.GetSize())));
 					}
@@ -79,9 +79,9 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					foreach (WorldModelObjectPlacementEntry Entry in this.Entries)
+					foreach (WorldModelObjectPlacementEntry entry in this.Entries)
 					{
-						bw.Write(Entry.Serialize());
+						bw.Write(entry.Serialize());
 					}
 				}
 

@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelPortalVertices : IRIFFChunk, IBinarySerializable
+	public class ModelPortalVertices : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOPV";
 

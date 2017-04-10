@@ -27,7 +27,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MVER Chunk - Contains the ADT version
 	/// </summary>
-	public class TerrainVersion : IRIFFChunk, IBinarySerializable
+	public class TerrainVersion : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MVER";
 

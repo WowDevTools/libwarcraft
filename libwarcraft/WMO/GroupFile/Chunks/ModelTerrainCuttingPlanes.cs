@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTerrainCuttingPlanes : IRIFFChunk, IBinarySerializable
+	public class ModelTerrainCuttingPlanes : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOPL";
 

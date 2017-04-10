@@ -29,7 +29,7 @@ namespace Warcraft.TEX
 	/// <summary>
 	/// Holds a set of <see cref="TextureBlobDataEntry"/> objects. This acts as a reference table.
 	/// </summary>
-	public class TextureBlobDataEntries : IRIFFChunk, IBinarySerializable
+	public class TextureBlobDataEntries : IIFFChunk, IBinarySerializable
 	{
 		/// <summary>
 		/// The RIFF chunk signature of this data chunk.

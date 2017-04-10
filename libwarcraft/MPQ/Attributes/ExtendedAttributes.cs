@@ -82,7 +82,7 @@ namespace Warcraft.MPQ.Attributes
 						this.Version = br.ReadUInt32();
 						this.AttributesPresent = (AttributeTypes)br.ReadUInt32();
 
-						List<uint> CRCHashes = new List<uint>();
+						List<uint> crcHashes = new List<uint>();
 						if (this.AttributesPresent.HasFlag(AttributeTypes.CRC32))
 						{
 							expectedDataLength += sizeof(uint) * fileBlockCount;
@@ -91,11 +91,11 @@ namespace Warcraft.MPQ.Attributes
 							{
 								if (data.Length >= expectedDataLength)
 								{
-									CRCHashes.Add(br.ReadUInt32());
+									crcHashes.Add(br.ReadUInt32());
 								}
 								else
 								{
-									CRCHashes.Add(0);
+									crcHashes.Add(0);
 								}
 							}
 						}
@@ -103,7 +103,7 @@ namespace Warcraft.MPQ.Attributes
 						{
 							for (int i = 0; i < fileBlockCount; ++i)
 							{
-								CRCHashes.Add(0);
+								crcHashes.Add(0);
 							}
 						}
 
@@ -132,7 +132,7 @@ namespace Warcraft.MPQ.Attributes
 							}
 						}
 
-						List<string> MD5Hashes = new List<string>();
+						List<string> md5Hashes = new List<string>();
 						if (this.AttributesPresent.HasFlag(AttributeTypes.MD5))
 						{
 							expectedDataLength += 16 * fileBlockCount;
@@ -143,11 +143,11 @@ namespace Warcraft.MPQ.Attributes
 								{
 									byte[] md5Data = br.ReadBytes(16);
 									string md5 = BitConverter.ToString(md5Data).Replace("-", "");
-									MD5Hashes.Add(md5);
+									md5Hashes.Add(md5);
 								}
 								else
 								{
-									MD5Hashes.Add("");
+									md5Hashes.Add("");
 								}
 							}
 						}
@@ -155,14 +155,14 @@ namespace Warcraft.MPQ.Attributes
 						{
 							for (int i = 0; i < fileBlockCount; ++i)
 							{
-								MD5Hashes.Add("");
+								md5Hashes.Add("");
 							}
 						}
 
 						this.FileAttributes = new List<FileAttributes>();
 						for (int i = 0; i < fileBlockCount; ++i)
 						{
-							this.FileAttributes.Add(new FileAttributes(CRCHashes[i], timestamps[i], MD5Hashes[i]));
+							this.FileAttributes.Add(new FileAttributes(crcHashes[i], timestamps[i], md5Hashes[i]));
 						}
 					}
 				}

@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTextureCoordinates : IRIFFChunk, IBinarySerializable
+	public class ModelTextureCoordinates : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOTV";
 

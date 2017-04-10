@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelVertexIndices : IRIFFChunk, IBinarySerializable
+	public class ModelVertexIndices : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOVI";
 

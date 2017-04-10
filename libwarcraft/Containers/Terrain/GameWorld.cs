@@ -54,26 +54,26 @@ namespace Warcraft.Containers.Terrain
 
 		public readonly List<TerrainTile> LoadedTerrainTiles = new List<TerrainTile>();
 
-		public GameWorld(string InWorldPath, string InWorldName, WarcraftVersion InGameVersion, IPackage InPackage, byte[] InWorldData)
+		public GameWorld(string inWorldPath, string inWorldName, WarcraftVersion inGameVersion, IPackage inPackage, byte[] inWorldData)
 		{
-			this.WorldPath = InWorldPath;
-			this.WorldName = InWorldName;
-			this.GameVersion = InGameVersion;
-			this.Package = InPackage;
+			this.WorldPath = inWorldPath;
+			this.WorldName = inWorldName;
+			this.GameVersion = inGameVersion;
+			this.Package = inPackage;
 
 			// Load the world metadata
-			this.WorldDataTable = new WorldTable(InWorldData);
+			this.WorldDataTable = new WorldTable(inWorldData);
 
 			// Load all ADTs here? Bad for memory, perhaps better to leave it to the user to lazy load as needed
 		}
 
-		public TerrainTile LoadTile(uint TileXPosition, uint TileYPosition)
+		public TerrainTile LoadTile(uint tileXPosition, uint tileYPosition)
 		{
-			string TilePath = CreateTilePath(TileXPosition, TileYPosition);
+			string tilePath = CreateTilePath(tileXPosition, tileYPosition);
 
-			if (this.Package.ContainsFile(TilePath))
+			if (this.Package.ContainsFile(tilePath))
 			{
-				byte[] terrainTileData = this.Package.ExtractFile(TilePath);
+				byte[] terrainTileData = this.Package.ExtractFile(tilePath);
 				if (terrainTileData != null)
 				{
 					// TODO: [#9] Pass in DBC entry to allow loading of liquid vertex data
@@ -87,9 +87,9 @@ namespace Warcraft.Containers.Terrain
 			return null;
 		}
 
-		private string CreateTilePath(uint TileXPosition, uint TileYPosition)
+		private string CreateTilePath(uint tileXPosition, uint tileYPosition)
 		{
-			return $"{this.WorldPath}\\{this.WorldName}_{TileXPosition}_{TileYPosition}.adt";
+			return $"{this.WorldPath}\\{this.WorldName}_{tileXPosition}_{tileYPosition}.adt";
 		}
 	}
 }

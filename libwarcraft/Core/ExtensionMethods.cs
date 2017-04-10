@@ -50,8 +50,8 @@ namespace Warcraft.Core
 				bw.Write(vertex.BoneWeights.ToArray());
 				bw.Write(vertex.BoneIndices.ToArray());
 				bw.WriteVector3f(vertex.Normal, AxisConfiguration.YUp);
-				bw.WriteVector2f(vertex.UVCoordinates_Channel1);
-				bw.WriteVector2f(vertex.UVCoordinates_Channel2);
+				bw.WriteVector2f(vertex.UVCoordinatesChannel1);
+				bw.WriteVector2f(vertex.UVCoordinatesChannel2);
 
 				return ms.ToArray();
 			}
@@ -180,12 +180,12 @@ namespace Warcraft.Core
 		/// <param name="binaryReader">binaryReader.</param>
 		public static RGBA ReadRGBA(this BinaryReader binaryReader)
 		{
-			byte R = binaryReader.ReadByte();
-			byte G = binaryReader.ReadByte();
-			byte B = binaryReader.ReadByte();
-			byte A = binaryReader.ReadByte();
+			byte r = binaryReader.ReadByte();
+			byte g = binaryReader.ReadByte();
+			byte b = binaryReader.ReadByte();
+			byte a = binaryReader.ReadByte();
 
-			RGBA rgba = new RGBA(R, G, B, A);
+			RGBA rgba = new RGBA(r, g, b, a);
 
 			return rgba;
 		}
@@ -197,12 +197,12 @@ namespace Warcraft.Core
 		/// <param name="binaryReader">binaryReader.</param>
 		public static BGRA ReadBGRA(this BinaryReader binaryReader)
 		{
-			byte B = binaryReader.ReadByte();
-			byte G = binaryReader.ReadByte();
-			byte R = binaryReader.ReadByte();
-			byte A = binaryReader.ReadByte();
+			byte b = binaryReader.ReadByte();
+			byte g = binaryReader.ReadByte();
+			byte r = binaryReader.ReadByte();
+			byte a = binaryReader.ReadByte();
 
-			BGRA bgra = new BGRA(B, G, R, A);
+			BGRA bgra = new BGRA(b, g, r, a);
 
 			return bgra;
 		}
@@ -256,11 +256,11 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Reads an RIFF-style chunk from the stream. The chunk must have the <see cref="IRIFFChunk"/>
+		/// Reads an IFF-style chunk from the stream. The chunk must have the <see cref="IIFFChunk"/>
 		/// interface, and implement a parameterless constructor.
 		/// </summary>
 		/// <param name="reader">The current <see cref="BinaryReader"/></param>
-		public static T ReadIFFChunk<T>(this BinaryReader reader) where T : IRIFFChunk, new()
+		public static T ReadIFFChunk<T>(this BinaryReader reader) where T : IIFFChunk, new()
 		{
 			string chunkSignature = reader.ReadChunkSignature();
 			uint chunkSize = reader.ReadUInt32();
@@ -362,19 +362,19 @@ namespace Warcraft.Core
 				}
 				case AxisConfiguration.YUp:
 				{
-					float X = binaryReader.ReadSingle();
-					float Z = binaryReader.ReadSingle();
-					float Y = binaryReader.ReadSingle() * -1.0f;
+					float x = binaryReader.ReadSingle();
+					float z = binaryReader.ReadSingle();
+					float y = binaryReader.ReadSingle() * -1.0f;
 
-					return new Vector3f(X, Y, Z);
+					return new Vector3f(x, y, z);
 				}
 				case AxisConfiguration.ZUp:
 				{
-					float X = binaryReader.ReadSingle();
-					float Z = binaryReader.ReadSingle() * -1.0f;
-					float Y = binaryReader.ReadSingle();
+					float x = binaryReader.ReadSingle();
+					float z = binaryReader.ReadSingle() * -1.0f;
+					float y = binaryReader.ReadSingle();
 
-					return new Vector3f(X, Y, Z);
+					return new Vector3f(x, y, z);
 				}
 				default:
 				{
@@ -400,23 +400,23 @@ namespace Warcraft.Core
 				}
 				case AxisConfiguration.YUp:
 				{
-					float X = binaryReader.ReadSingle();
-					float Z = binaryReader.ReadSingle();
-					float Y = binaryReader.ReadSingle() * -1.0f;
+					float x = binaryReader.ReadSingle();
+					float z = binaryReader.ReadSingle();
+					float y = binaryReader.ReadSingle() * -1.0f;
 
-					float W = binaryReader.ReadSingle();
+					float w = binaryReader.ReadSingle();
 
-					return new Vector4f(X, Y, Z, W);
+					return new Vector4f(x, y, z, w);
 				}
 				case AxisConfiguration.ZUp:
 				{
-					float X = binaryReader.ReadSingle();
-					float Z = binaryReader.ReadSingle() * -1.0f;
-					float Y = binaryReader.ReadSingle();
+					float x = binaryReader.ReadSingle();
+					float z = binaryReader.ReadSingle() * -1.0f;
+					float y = binaryReader.ReadSingle();
 
-					float W = binaryReader.ReadSingle();
+					float w = binaryReader.ReadSingle();
 
-					return new Vector4f(X, Y, Z, W);
+					return new Vector4f(x, y, z, w);
 				}
 				default:
 				{
@@ -442,19 +442,19 @@ namespace Warcraft.Core
 				}
 				case AxisConfiguration.YUp:
 				{
-					short X = binaryReader.ReadInt16();
-					short Z = binaryReader.ReadInt16();
-					short Y = (short)(binaryReader.ReadInt16() * -1);
+					short x = binaryReader.ReadInt16();
+					short z = binaryReader.ReadInt16();
+					short y = (short)(binaryReader.ReadInt16() * -1);
 
-					return new Vector3s(X, Y, Z);
+					return new Vector3s(x, y, z);
 				}
 				case AxisConfiguration.ZUp:
 				{
-					short X = binaryReader.ReadInt16();
-					short Z = (short)(binaryReader.ReadInt16() * -1);
-					short Y = binaryReader.ReadInt16();
+					short x = binaryReader.ReadInt16();
+					short z = (short)(binaryReader.ReadInt16() * -1);
+					short y = binaryReader.ReadInt16();
 
-					return new Vector3s(X, Y, Z);
+					return new Vector3s(x, y, z);
 				}
 				default:
 				{
@@ -541,10 +541,10 @@ namespace Warcraft.Core
 		/// Writes the provided string to the data stream as a C-style null-terminated string.
 		/// </summary>
 		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
-		/// <param name="InputString">Input string.</param>
-		public static void WriteNullTerminatedString(this BinaryWriter binaryWriter, string InputString)
+		/// <param name="inputString">Input string.</param>
+		public static void WriteNullTerminatedString(this BinaryWriter binaryWriter, string inputString)
 		{
-			foreach (char c in InputString)
+			foreach (char c in inputString)
 			{
 				binaryWriter.Write(c);
 			}
@@ -556,17 +556,17 @@ namespace Warcraft.Core
 		/// Writes an RIFF-style chunk signature to the data stream.
 		/// </summary>
 		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
-		/// <param name="Signature">Signature.</param>
-		public static void WriteChunkSignature(this BinaryWriter binaryWriter, string Signature)
+		/// <param name="signature">Signature.</param>
+		public static void WriteChunkSignature(this BinaryWriter binaryWriter, string signature)
 		{
-			if (Signature.Length != 4)
+			if (signature.Length != 4)
 			{
 				throw new InvalidDataException("The signature must be an ASCII string of exactly four characters.");
 			}
 
 			for (int i = 3; i >= 0; --i)
 			{
-				binaryWriter.Write(Signature[i]);
+				binaryWriter.Write(signature[i]);
 			}
 		}
 
@@ -574,7 +574,7 @@ namespace Warcraft.Core
 		/// <summary>
 		/// Writes an RIFF-style chunk to the data stream.
 		/// </summary>
-		public static void WriteIFFChunk<T>(this BinaryWriter binaryWriter, T chunk) where T : IRIFFChunk, IBinarySerializable
+		public static void WriteIFFChunk<T>(this BinaryWriter binaryWriter, T chunk) where T : IIFFChunk, IBinarySerializable
 		{
 			byte[] serializedChunk = chunk.Serialize();
 
@@ -641,12 +641,12 @@ namespace Warcraft.Core
 		/// Writes a 12-byte <see cref="Rotator"/> value to the data stream in Pitch/Yaw/Roll order.
 		/// </summary>
 		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
-		/// <param name="InRotator">Rotator.</param>
-		public static void WriteRotator(this BinaryWriter binaryWriter, Rotator InRotator)
+		/// <param name="inRotator">Rotator.</param>
+		public static void WriteRotator(this BinaryWriter binaryWriter, Rotator inRotator)
 		{
-			binaryWriter.Write(InRotator.Pitch);
-			binaryWriter.Write(InRotator.Yaw);
-			binaryWriter.Write(InRotator.Roll);
+			binaryWriter.Write(inRotator.Pitch);
+			binaryWriter.Write(inRotator.Yaw);
+			binaryWriter.Write(inRotator.Roll);
 		}
 
 		/// <summary>

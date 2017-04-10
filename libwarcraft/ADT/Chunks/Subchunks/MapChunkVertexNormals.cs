@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexNormals : IRIFFChunk
+	public class MapChunkVertexNormals : IIFFChunk
 	{
 		public const string Signature = "MCNR";
 
@@ -58,10 +58,10 @@ namespace Warcraft.ADT.Chunks.Subchunks
 							for (int x = 0; x < 9; ++x)
 							{
 								sbyte X = br.ReadSByte();
-								sbyte Z = br.ReadSByte();
+								sbyte z = br.ReadSByte();
 								sbyte Y = br.ReadSByte();
 
-								this.HighResVertexNormals.Add(new Vector3f(X, Y, Z));
+								this.HighResVertexNormals.Add(new Vector3f(X, Y, z));
 							}
 						}
 						else
@@ -70,10 +70,10 @@ namespace Warcraft.ADT.Chunks.Subchunks
 							for (int x = 0; x < 8; ++x)
 							{
 								sbyte X = br.ReadSByte();
-								sbyte Z = br.ReadSByte();
+								sbyte z = br.ReadSByte();
 								sbyte Y = br.ReadSByte();
 
-								this.LowResVertexNormals.Add(new Vector3f(X, Y, Z));
+								this.LowResVertexNormals.Add(new Vector3f(X, Y, z));
 							}
 						}
 					}

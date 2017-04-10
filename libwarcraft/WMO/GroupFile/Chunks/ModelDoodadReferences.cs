@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelDoodadReferences : IRIFFChunk, IBinarySerializable
+	public class ModelDoodadReferences : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MODR";
 

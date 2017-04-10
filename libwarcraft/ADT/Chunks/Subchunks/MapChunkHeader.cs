@@ -129,11 +129,11 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// <summary>
 		/// It is not yet known what predTex does.
 		/// </summary>
-		public uint predTex;
+		public uint PredTex;
 		/// <summary>
 		/// It is not yet known what noEffectDoodad does.
 		/// </summary>
-		public uint noEffectDoodad;
+		public uint NoEffectDoodad;
 
 		/// <summary>
 		/// MCNK-based Offset of the MCSE Sound Emitters Chunk
@@ -209,8 +209,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					// TODO: This is a set of 8 by 8 2-bit integers. Shift and read into a byte array.
 					this.LowResTextureMap = br.ReadUInt16();
 
-					this.predTex = br.ReadUInt32();
-					this.noEffectDoodad = br.ReadUInt32();
+					this.PredTex = br.ReadUInt32();
+					this.NoEffectDoodad = br.ReadUInt32();
 
 					this.SoundEmittersOffset = br.ReadUInt32();
 					this.SoundEmitterCount = br.ReadUInt32();

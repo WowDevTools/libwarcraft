@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
-	public class WorldLODMapAreaHoles : IRIFFChunk, IBinarySerializable
+	public class WorldLODMapAreaHoles : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MAHO";
 

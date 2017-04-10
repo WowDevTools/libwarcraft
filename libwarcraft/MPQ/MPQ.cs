@@ -57,7 +57,7 @@ namespace Warcraft.MPQ
 		/// <summary>
 		/// Whether or not this instance has been disposed.
 		/// </summary>
-		private bool bDisposed;
+		private bool IsDisposed;
 
 		/// <summary>
 		/// The header of the MPQ archive. Contains information about sizes and offsets of relational structures
@@ -209,7 +209,7 @@ namespace Warcraft.MPQ
 		/// <returns><c>true</c> if this archive has file attributes; otherwise, <c>false</c>.</returns>
 		public bool HasFileAttributes()
 		{
-			if (this.bDisposed)
+			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
@@ -256,7 +256,7 @@ namespace Warcraft.MPQ
 		/// <returns><c>true</c> if this archive has a listfile; otherwise, <c>false</c>.</returns>
 		public bool HasFileList()
 		{
-			if (this.bDisposed)
+			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
@@ -271,7 +271,7 @@ namespace Warcraft.MPQ
 		/// <returns>The listfile.</returns>
 		public List<string> GetFileList()
 		{
-			if (this.bDisposed)
+			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
@@ -293,7 +293,7 @@ namespace Warcraft.MPQ
 		/// <returns>The internal file list.</returns>
 		public List<string> GetInternalFileList()
 		{
-			if (this.bDisposed)
+			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
@@ -330,7 +330,7 @@ namespace Warcraft.MPQ
 		/// <returns>The external file list.</returns>
 		public List<string> GetExternalFileList()
 		{
-			if (this.bDisposed)
+			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
@@ -344,7 +344,7 @@ namespace Warcraft.MPQ
 		/// <param name="inExternalListfile">In external listfile.</param>
 		public void SetFileList(List<string> inExternalListfile)
 		{
-			if (this.bDisposed)
+			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
@@ -358,7 +358,7 @@ namespace Warcraft.MPQ
 		/// </summary>
 		public void ResetExternalFileList()
 		{
-			if (this.bDisposed)
+			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
@@ -373,7 +373,7 @@ namespace Warcraft.MPQ
 		/// <param name="filePath">File path.</param>
 		public bool ContainsFile(string filePath)
 		{
-			if (this.bDisposed)
+			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
@@ -389,7 +389,7 @@ namespace Warcraft.MPQ
 		/// <param name="filePath">File path.</param>
 		public MPQFileInfo GetFileInfo(string filePath)
 		{
-			if (this.bDisposed)
+			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
@@ -422,7 +422,7 @@ namespace Warcraft.MPQ
 		/// <param name="filePath">Path to the file in the archive.</param>
 		public byte[] ExtractFile(string filePath)
 		{
-			if (this.bDisposed)
+			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
@@ -788,7 +788,7 @@ namespace Warcraft.MPQ
 				this.ArchiveReader.Dispose();
 			}
 
-			this.bDisposed = true;
+			this.IsDisposed = true;
 		}
 	}
 }

@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	public class TerrainBoundingBox : IRIFFChunk, IBinarySerializable
+	public class TerrainBoundingBox : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MFBO";
 

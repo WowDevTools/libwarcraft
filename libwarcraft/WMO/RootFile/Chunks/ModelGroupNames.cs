@@ -30,7 +30,7 @@ using Warcraft.WMO.GroupFile;
 namespace Warcraft.WMO.RootFile.Chunks
 {
 	// TODO: Rework to support offset-based seeking and adding of strings
-	public class ModelGroupNames : IRIFFChunk, IBinarySerializable
+	public class ModelGroupNames : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOGN";
 

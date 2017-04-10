@@ -29,7 +29,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 	/// <summary>
 	/// Data chunk for triangle strip indices.
 	/// </summary>
-	public class ModelTriangleStripIndices : IRIFFChunk, IBinarySerializable
+	public class ModelTriangleStripIndices : IIFFChunk, IBinarySerializable
 	{
 		/// <summary>
 		/// The RIFF chunk signature of this chunk.

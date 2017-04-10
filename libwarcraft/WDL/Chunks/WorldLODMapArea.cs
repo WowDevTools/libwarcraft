@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
-	public class WorldLODMapArea : IRIFFChunk, IBinarySerializable
+	public class WorldLODMapArea : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MARE";
 

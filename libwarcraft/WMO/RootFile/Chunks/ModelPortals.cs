@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelPortals : IRIFFChunk, IBinarySerializable
+	public class ModelPortals : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOPT";
 

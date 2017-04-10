@@ -28,7 +28,7 @@ namespace Warcraft.TEX
 	/// <summary>
 	/// Version header for a texture blob file.
 	/// </summary>
-	public class TextureBlobVersion : IRIFFChunk, IBinarySerializable
+	public class TextureBlobVersion : IIFFChunk, IBinarySerializable
 	{
 		/// <summary>
 		/// The RIFF chunk signature of this data chunk.

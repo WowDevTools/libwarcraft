@@ -24,22 +24,22 @@ namespace Warcraft.Core.Interpolation
 {
 	public static class Interpolation
 	{
-		public static float InterpolateFlat(float A, float B, float Alpha)
+		public static float InterpolateFlat(float a, float b, float alpha)
 		{
 			return 0.0f;
 		}
 
-		public static float InterpolateLinear(float A, float B, float Alpha)
+		public static float InterpolateLinear(float a, float b, float alpha)
 		{
 			return 0.0f;
 		}
 
-		public static float InterpolateHermite(float A, float TangentA, float B, float TangentB, float Alpha)
+		public static float InterpolateHermite(float a, float tangentA, float b, float tangentB, float alpha)
 		{
 			return 0.0f;
 		}
 
-		public static float InterpolateBezier(float A, float TangentA, float B, float TangentB, float Alpha)
+		public static float InterpolateBezier(float a, float tangentA, float b, float tangentB, float alpha)
 		{
 			return 0.0f;
 		}

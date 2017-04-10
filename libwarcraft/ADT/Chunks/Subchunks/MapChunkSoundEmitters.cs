@@ -26,11 +26,11 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkSoundEmitters : IRIFFChunk, IBinarySerializable, IPostLoad<uint>
+	public class MapChunkSoundEmitters : IIFFChunk, IBinarySerializable, IPostLoad<uint>
 	{
 		public const string Signature = "MCSE";
 		private bool hasFinishedLoading;
-		private byte[] data;
+		private byte[] Data;
 
 
 		public MapChunkSoundEmitters()
@@ -45,7 +45,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 		public void LoadBinaryData(byte[] inData)
 		{
-			this.data = inData;
+			this.Data = inData;
 		}
 
         public string GetSignature()
