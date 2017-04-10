@@ -267,7 +267,7 @@ namespace Warcraft.MDX
 				// model versions. If it works, great - YMMV
 				return WarcraftVersion.Warlords;
 			}
-			else if (Version <= 274)
+			else if (Version >= 274)
 			{
 				return WarcraftVersion.Legion;
 			}

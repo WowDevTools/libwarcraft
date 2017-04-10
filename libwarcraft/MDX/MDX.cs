@@ -45,7 +45,7 @@ namespace Warcraft.MDX
 		public readonly List<MDXBone> Bones = new List<MDXBone>();
 
 		public readonly List<MDXVertex> Vertices = new List<MDXVertex>();
-		public readonly List<MDXSkin> LODViews = new List<MDXSkin>();
+		public readonly List<MDXSkin> Skins = new List<MDXSkin>();
 		public readonly List<MDXSubmeshColourAnimation> ColourAnimations = new List<MDXSubmeshColourAnimation>();
 		public readonly List<short> TransparencyLookupTable = new List<short>();
 		public readonly List<MDXTrack<short>> TransparencyAnimations = new List<MDXTrack<short>>();
@@ -55,9 +55,22 @@ namespace Warcraft.MDX
 		public readonly List<MDXTexture> Textures = new List<MDXTexture>();
 		public readonly List<uint> TextureLookupTable = new List<uint>();
 
-		public MDX(Stream MDXStream)
+		public MDX(byte[] data)
 		{
-			using (BinaryReader br = new BinaryReader(MDXStream))
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				LoadFromStream(ms);
+			}
+		}
+
+		public MDX(Stream dataStream)
+		{
+			LoadFromStream(dataStream);
+		}
+
+		private void LoadFromStream(Stream dataStream)
+		{
+			using (BinaryReader br = new BinaryReader(dataStream))
 			{
 				// Read Wrath header or read pre-wrath header
 				WarcraftVersion Format = PeekFormat(br);
@@ -204,11 +217,11 @@ namespace Warcraft.MDX
 						MDXSkin skin = new MDXSkin();
 						skin.Header = SkinHeader;
 
-						this.LODViews.Add(skin);
+						this.Skins.Add(skin);
 					}
 
 					// Read view data
-					foreach (MDXSkin View in this.LODViews)
+					foreach (MDXSkin View in this.Skins)
 					{
 						// Read view vertex indices
 						View.VertexIndices = new List<ushort>();
