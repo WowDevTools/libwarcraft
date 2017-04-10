@@ -58,11 +58,11 @@ namespace Warcraft.ADT.Chunks.Subchunks
 							// Read a block of 9 high res normals
 							for (int x = 0; x < 9; ++x)
 							{
-								sbyte X = br.ReadSByte();
-								sbyte z = br.ReadSByte();
-								sbyte Y = br.ReadSByte();
+								sbyte normX = br.ReadSByte();
+								sbyte normZ = br.ReadSByte();
+								sbyte normY = br.ReadSByte();
 
-								this.HighResVertexNormals.Add(new Vector3f(X, Y, z));
+								this.HighResVertexNormals.Add(new Vector3f(normX, normY, normZ));
 							}
 						}
 						else
@@ -70,11 +70,11 @@ namespace Warcraft.ADT.Chunks.Subchunks
 							// Read a block of 8 low res normals
 							for (int x = 0; x < 8; ++x)
 							{
-								sbyte X = br.ReadSByte();
-								sbyte z = br.ReadSByte();
-								sbyte Y = br.ReadSByte();
+								sbyte normX = br.ReadSByte();
+								sbyte normZ = br.ReadSByte();
+								sbyte normY = br.ReadSByte();
 
-								this.LowResVertexNormals.Add(new Vector3f(X, Y, z));
+								this.LowResVertexNormals.Add(new Vector3f(normX, normY, normZ));
 							}
 						}
 					}

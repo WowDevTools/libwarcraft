@@ -132,17 +132,17 @@ namespace Warcraft.MDX
 				for (int i = 0; i < this.Header.BoneCount; ++i)
 				{
 					// TODO: properly skip to the next bone record, data is not aligned
-					MDXBone Bone = new MDXBone();
+					MDXBone bone = new MDXBone();
 
-					Bone.AnimationID = br.ReadInt32();
-					Bone.Flags = (MDXBoneFlags)br.ReadUInt32();
-					Bone.ParentBone = br.ReadInt16();
-					Bone.SubmeshID = br.ReadUInt16();
+					bone.AnimationID = br.ReadInt32();
+					bone.Flags = (MDXBoneFlags)br.ReadUInt32();
+					bone.ParentBone = br.ReadInt16();
+					bone.SubmeshID = br.ReadUInt16();
 
 					if (MDXHeader.GetModelVersion(this.Header.Version) >= WarcraftVersion.BurningCrusade)
 					{
-						Bone.Unknown1 = br.ReadUInt16();
-						Bone.Unknown1 = br.ReadUInt16();
+						bone.Unknown1 = br.ReadUInt16();
+						bone.Unknown1 = br.ReadUInt16();
 					}
 
 					// TODO: Rework animation track reading
@@ -151,9 +151,9 @@ namespace Warcraft.MDX
 					//Bone.AnimatedRotation = new MDXTrack<Quaternion>(br, MDXHeader.GetModelVersion(Header.Version));
 					//Bone.AnimatedScale = new MDXTrack<Vector3f>(br, MDXHeader.GetModelVersion(Header.Version));
 
-					Bone.PivotPoint = br.ReadVector3f();
+					bone.PivotPoint = br.ReadVector3f();
 
-					this.Bones.Add(Bone);
+					this.Bones.Add(bone);
 				}
 
 				/*

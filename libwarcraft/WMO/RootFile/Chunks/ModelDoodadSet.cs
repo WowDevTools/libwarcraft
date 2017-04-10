@@ -32,7 +32,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 	/// </summary>
 	public class DoodadSet : IBinarySerializable
 	{
-		private string _name;
+		private string InternalName;
 		/// <summary>
 		/// The name of the doodad set. This name is stored in the block as binary data, and may not be longer than 20
 		/// characters.
@@ -40,7 +40,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 		/// <exception cref="ArgumentException">Thrown if the assigned name is longer than 20 characters.</exception>
 		public string Name
 		{
-			get { return this._name; }
+			get { return this.InternalName; }
 			set
 			{
 				if (value.Length > 20)
@@ -48,7 +48,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					throw new ArgumentException("Doodad set names may not be longer than 20 characters.", nameof(this.Name));
 				}
 
-				this._name = value;
+				this.InternalName = value;
 			}
 		}
 

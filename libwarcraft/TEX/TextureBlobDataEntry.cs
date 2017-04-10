@@ -53,7 +53,7 @@ namespace Warcraft.TEX
 		/// </summary>
 		public byte TextureHeight;
 
-		private byte _mipMapCount;
+		private byte InternalMipMapCount;
 		/// <summary>
 		/// The number of mipmaps for each texture.
 		/// </summary>
@@ -61,7 +61,7 @@ namespace Warcraft.TEX
 		{
 			get
 			{
-				return this._mipMapCount;
+				return this.InternalMipMapCount;
 			}
 			set
 			{
@@ -71,7 +71,7 @@ namespace Warcraft.TEX
 						"The mip level count must be below 127, since it is packed into a single byte when serialized.");
 				}
 
-				this._mipMapCount = value;
+				this.InternalMipMapCount = value;
 			}
 		}
 

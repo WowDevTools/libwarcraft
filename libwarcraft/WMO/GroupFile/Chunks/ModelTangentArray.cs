@@ -32,7 +32,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 	{
 		public const string Signature = "MOTA";
 
-		private bool hasFinishedLoading;
+		private bool InternalHasFinishedLoading;
 		private byte[] Data;
 
 		public List<short> FirstIndices = new List<short>();
@@ -40,7 +40,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
 		public ModelTangentArray()
 		{
-			this.hasFinishedLoading = true;
+			this.InternalHasFinishedLoading = true;
 		}
 
 		public ModelTangentArray(byte[] inData)
@@ -51,7 +51,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 		public void LoadBinaryData(byte[] inData)
 		{
 			this.Data = inData;
-			this.hasFinishedLoading = false;
+			this.InternalHasFinishedLoading = false;
 		}
 
 		public string GetSignature()
@@ -82,7 +82,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
 		public bool HasFinishedLoading()
 		{
-			return this.hasFinishedLoading;
+			return this.InternalHasFinishedLoading;
 		}
 
 		public void PostLoad(ModelTangentArrayPostLoadParameters loadingParameters)
