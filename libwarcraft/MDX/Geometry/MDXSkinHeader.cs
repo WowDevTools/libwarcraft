@@ -1,5 +1,5 @@
 //
-//  MDXSkinHeader.cs
+//  MDXViewHeader.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,12 +20,53 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.IO;
+
 namespace Warcraft.MDX.Geometry
 {
 	public class MDXSkinHeader
 	{
-		public MDXSkinHeader()
+		public uint VertexIndexCount;
+		public uint VertexIndicesOffset;
+
+		public uint TriangleVertexCount;
+		public uint TriangleVertexIndicesOffset;
+
+		public uint VertexPropertyCount;
+		public uint VertexPropertiesOffset;
+
+		public uint SkinSectionCount;
+		public uint SkinSectionOffset;
+
+		public uint RenderBatchCount;
+		public uint RenderBatchOffset;
+
+		public uint TransitionDistance;
+
+		public MDXSkinHeader(byte[] data)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.VertexIndexCount = br.ReadUInt32();
+					this.VertexIndicesOffset = br.ReadUInt32();
+
+					this.TriangleVertexCount = br.ReadUInt32();
+					this.TriangleVertexIndicesOffset = br.ReadUInt32();
+
+					this.VertexPropertyCount = br.ReadUInt32();
+					this.VertexPropertiesOffset = br.ReadUInt32();
+
+					this.SkinSectionCount = br.ReadUInt32();
+					this.SkinSectionOffset = br.ReadUInt32();
+
+					this.RenderBatchCount = br.ReadUInt32();
+					this.RenderBatchOffset = br.ReadUInt32();
+
+					this.TransitionDistance = br.ReadUInt32();
+				}
+			}
 		}
 	}
 }

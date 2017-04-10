@@ -1,5 +1,5 @@
 //
-//  MDXSubmesh.cs
+//  MDXSkinSection.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,7 +25,7 @@ using System.IO;
 
 namespace Warcraft.MDX.Geometry
 {
-	public class MDXSubmesh
+	public class MDXSkinSection
 	{
 		public uint PartID;
 		public ushort StartVertexIndex;
@@ -40,7 +40,7 @@ namespace Warcraft.MDX.Geometry
 		public Vector3f BoundingShellMedianPoint;
 		public float BoundingSphereRadius;
 
-		public MDXSubmesh(byte[] data)
+		public MDXSkinSection(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{

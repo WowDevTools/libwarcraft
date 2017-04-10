@@ -1,5 +1,5 @@
 //
-//  MDXSkin.cs
+//  MDXView.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,12 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using Warcraft.MDX.Visual;
+
 namespace Warcraft.MDX.Geometry
 {
 	public class MDXSkin
 	{
+		public MDXSkinHeader Header;
+		public List<ushort> VertexIndices;
+		public List<ushort> Triangles;
+		public List<MDXVertexProperty> VertexProperties;
+		public List<MDXSkinSection> Submeshes;
+		public List<MDXTextureUnit> TextureUnits;
+
 		public MDXSkin()
 		{
+
 		}
 	}
 }

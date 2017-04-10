@@ -123,13 +123,10 @@
     <Compile Include="MDX\MDXHeader.cs" />
     <Compile Include="MDX\Visual\MDXTexture.cs" />
     <Compile Include="MDX\Geometry\MDXVertex.cs" />
-    <Compile Include="MDX\Geometry\MDXView.cs" />
-    <Compile Include="MDX\Geometry\MDXViewHeader.cs" />
     <Compile Include="MDX\Geometry\MDXSkin.cs" />
     <Compile Include="MDX\Geometry\MDXSkinHeader.cs" />
-    <Compile Include="MDX\Geometry\MDXTriangle.cs" />
     <Compile Include="MDX\Geometry\MDXVertexProperty.cs" />
-    <Compile Include="MDX\Geometry\MDXSubmesh.cs" />
+    <Compile Include="MDX\Geometry\MDXSkinSection.cs" />
     <Compile Include="MDX\Visual\MDXTextureUnit.cs" />
     <Compile Include="MDX\Animation\MDXAnimationSequence.cs" />
     <Compile Include="MDX\Animation\MDXPlayableAnimationLookupTableEntry.cs" />

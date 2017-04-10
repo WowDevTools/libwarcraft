@@ -45,7 +45,7 @@ namespace Warcraft.MDX
 		public readonly List<MDXBone> Bones = new List<MDXBone>();
 
 		public readonly List<MDXVertex> Vertices = new List<MDXVertex>();
-		public readonly List<MDXView> LODViews = new List<MDXView>();
+		public readonly List<MDXSkin> LODViews = new List<MDXSkin>();
 		public readonly List<MDXSubmeshColourAnimation> ColourAnimations = new List<MDXSubmeshColourAnimation>();
 		public readonly List<short> TransparencyLookupTable = new List<short>();
 		public readonly List<MDXTrack<short>> TransparencyAnimations = new List<MDXTrack<short>>();
@@ -111,7 +111,7 @@ namespace Warcraft.MDX
 					for (int i = 0; i < this.Header.PlayableAnimationLookupTableEntryCount; ++i)
 					{
 						this.PlayableAnimationLookupTable.Add(new MDXPlayableAnimationLookupTableEntry(br.ReadBytes(4)));
-					}					
+					}
 				}
 
 				// Seek to bone block
@@ -199,16 +199,16 @@ namespace Warcraft.MDX
 					// Read the view headers
 					for (int i = 0; i < this.Header.LODViewsCount; ++i)
 					{
-						MDXViewHeader ViewHeader = new MDXViewHeader(br.ReadBytes(44));
+						MDXSkinHeader SkinHeader = new MDXSkinHeader(br.ReadBytes(44));
 
-						MDXView View = new MDXView();
-						View.Header = ViewHeader;
+						MDXSkin skin = new MDXSkin();
+						skin.Header = SkinHeader;
 
-						this.LODViews.Add(View);
+						this.LODViews.Add(skin);
 					}
 
 					// Read view data
-					foreach (MDXView View in this.LODViews)
+					foreach (MDXSkin View in this.LODViews)
 					{
 						// Read view vertex indices
 						View.VertexIndices = new List<ushort>();
@@ -218,14 +218,12 @@ namespace Warcraft.MDX
 							View.VertexIndices.Add(br.ReadUInt16());
 						}
 
-						// Read view triangles
-						View.Triangles = new List<MDXTriangle>();
+						// Read view triangle vertex indices
+						View.Triangles = new List<ushort>();
 						br.BaseStream.Position = View.Header.TriangleVertexIndicesOffset;
-						for (int j = 0; j < View.Header.TriangleVertexCount / 3; ++j)
+						for (int j = 0; j < View.Header.TriangleVertexCount; ++j)
 						{
-							MDXTriangle Triangle = new MDXTriangle(br.ReadUInt16(), br.ReadUInt16(), br.ReadUInt16());
-
-							View.Triangles.Add(Triangle);							
+							View.Triangles.Add(br.ReadUInt16());
 						}
 
 						// Read view vertex properties
@@ -237,9 +235,9 @@ namespace Warcraft.MDX
 						}
 
 						// Read view submeshes
-						View.Submeshes = new List<MDXSubmesh>();
-						br.BaseStream.Position = View.Header.SubmeshesOffset;
-						for (int j = 0; j < View.Header.SubmeshCount; ++j)
+						View.Submeshes = new List<MDXSkinSection>();
+						br.BaseStream.Position = View.Header.SkinSectionOffset;
+						for (int j = 0; j < View.Header.SkinSectionCount; ++j)
 						{
 							byte[] submeshData;
 							if (MDXHeader.GetModelVersion(this.Header.Version) >= WarcraftVersion.BurningCrusade)
@@ -251,12 +249,12 @@ namespace Warcraft.MDX
 								submeshData = br.ReadBytes(32);
 							}
 
-							View.Submeshes.Add(new MDXSubmesh(submeshData));
+							View.Submeshes.Add(new MDXSkinSection(submeshData));
 						}
 
 						View.TextureUnits = new List<MDXTextureUnit>();
-						br.BaseStream.Position = View.Header.TexturesOffset;
-						for (int j = 0; j < View.Header.TextureCount; ++j)
+						br.BaseStream.Position = View.Header.RenderBatchOffset;
+						for (int j = 0; j < View.Header.RenderBatchCount; ++j)
 						{
 							View.TextureUnits.Add(new MDXTextureUnit(br.ReadBytes(24)));
 						}
@@ -272,7 +270,7 @@ namespace Warcraft.MDX
 				// Seek to submesh animation block
 				br.BaseStream.Position = Header.SubmeshColourAnimationsOffset;
 				for (int i = 0; i < Header.SubmeshColourAnimationCount; ++i)
-				{					
+				{
 					MDXTrack<RGB> ColourTrack = new MDXTrack<RGB>(br, MDXHeader.GetModelVersion(Header.Version));
 					MDXTrack<short> OpacityTrack = new MDXTrack<short>(br, MDXHeader.GetModelVersion(Header.Version));
 
@@ -301,7 +299,7 @@ namespace Warcraft.MDX
 				}
 				*/
 
-				// TODO: Use this pattern for the tracks as well, where values are outreferenced 
+				// TODO: Use this pattern for the tracks as well, where values are outreferenced
 				// from the block
 				// Seek to Texture definition block
 				br.BaseStream.Position = this.Header.TexturesOffset;
@@ -385,7 +383,7 @@ namespace Warcraft.MDX
 
 				// Replaceable textures
 
-				// Render flags			
+				// Render flags
 				// Seek to render flag block
 				br.BaseStream.Position = this.Header.RenderFlagsOffset;
 				for (int i = 0; i < this.Header.RenderFlagCount; ++i)
@@ -456,7 +454,7 @@ namespace Warcraft.MDX
 			// Skip ahead to the version block
 			br.BaseStream.Position += 4;
 
-			uint rawVersion = br.ReadUInt32();			
+			uint rawVersion = br.ReadUInt32();
 
 			// Seek back to the initial position
 			br.BaseStream.Position = initialPosition;
