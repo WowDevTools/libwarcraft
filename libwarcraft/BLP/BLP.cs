@@ -26,11 +26,11 @@ using System.Drawing;
 using System.Collections;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
-
-using Squish;
 using Warcraft.Core;
 using Warcraft.Core.Quantization;
 using System.Drawing.Drawing2D;
+using Warcraft.Core.Compression.Squish;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.BLP
 {

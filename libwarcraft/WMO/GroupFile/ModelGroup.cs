@@ -25,6 +25,7 @@ using System.IO;
 using Warcraft.ADT.Chunks;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 using Warcraft.WMO.GroupFile.Chunks;
 
 namespace Warcraft.WMO.GroupFile

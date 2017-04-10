@@ -21,6 +21,7 @@
 //
 
 using Warcraft.Core;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.MDX.Animation
 {

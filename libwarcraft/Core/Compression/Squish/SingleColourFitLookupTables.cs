@@ -1,4 +1,4 @@
-﻿namespace Squish
+﻿namespace Warcraft.Core.Compression.Squish
 {
 	internal partial class SingleColourFit
 	{

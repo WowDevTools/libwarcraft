@@ -40,10 +40,11 @@ freely, subject to the following restrictions:
 
 Mark Adler    madler@alumni.caltech.edu
  */
+
 using System;
 using System.IO;
 
-namespace Blast
+namespace Warcraft.Core.Compression.Blast
 {
 	public class BlastException : Exception
 	{

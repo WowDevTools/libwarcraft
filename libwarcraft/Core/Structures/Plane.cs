@@ -1,5 +1,5 @@
-//
-//  MDXUVAnimation.cs
+﻿//
+//  Plane.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,20 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.Core;
-using Warcraft.Core.Structures;
-
-namespace Warcraft.MDX.Animation
+namespace Warcraft.Core.Structures
 {
-	public class MDXUVAnimation
+	/// <summary>
+	/// A structure representing a plane in model space.
+	/// </summary>
+	public struct Plane
 	{
-		public MDXTrack<Vector3f> TranslationTrack;
-		public MDXTrack<Quaternion> RotationTrack;
-		public MDXTrack<Vector3f> ScaleTrack;
+		/// <summary>
+		/// A normal vector perpendicular to the plane.
+		/// </summary>
+		public Vector3f Normal;
 
-		public MDXUVAnimation()
+		/// <summary>
+		/// The distance from the center of the model where the plane is.
+		/// </summary>
+		public float DistanceFromCenter;
+
+		/// <summary>
+		/// Creates a new <see cref="Plane"/> from a normal and a distance from the center of the model.
+		/// </summary>
+		public Plane(Vector3f inNormal, float inDistanceFromCenter)
 		{
+			this.Normal = inNormal;
+			this.DistanceFromCenter = inDistanceFromCenter;
 		}
 	}
 }
-

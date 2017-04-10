@@ -22,6 +22,7 @@
 using System;
 using Warcraft.Core;
 using System.IO;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.MDX.Animation
 {

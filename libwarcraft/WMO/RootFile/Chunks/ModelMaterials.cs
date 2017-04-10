@@ -26,6 +26,7 @@ using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Shading;
+using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile.Chunks

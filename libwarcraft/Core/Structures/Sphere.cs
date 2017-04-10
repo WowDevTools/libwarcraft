@@ -1,5 +1,5 @@
-//
-//  MDXVertex.cs
+﻿//
+//  Sphere.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,37 +20,33 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.Core;
-using System.Collections.Generic;
-using System.IO;
-using Warcraft.Core.Structures;
-
-namespace Warcraft.MDX.Geometry
+namespace Warcraft.Core.Structures
 {
-	public class MDXVertex
+	/// <summary>
+	/// A structure representing an axis-aligned sphere, comprised of a <see cref="Vector3f"/> position and a
+	/// <see cref="float"/> radius.
+	/// </summary>
+	public struct Sphere
 	{
+		/// <summary>
+		/// The position of the sphere in model space.
+		/// </summary>
 		public Vector3f Position;
-		public List<byte> BoneWeights;
-		public List<byte> BoneIndices;
-		public Vector3f Normal;
-		public Vector2f UVCoordinatesChannel1;
-		public Vector2f UVCoordinatesChannel2;
 
-		public MDXVertex(byte[] data)
+		/// <summary>
+		/// The radius of the sphere.
+		/// </summary>
+		public float Radius;
+
+		/// <summary>
+		/// Creates a new <see cref="Sphere"/> object from a position and a radius.
+		/// </summary>
+		/// <param name="inPosition">The sphere's position in model space.</param>
+		/// <param name="inRadius">The sphere's radius.</param>
+		public Sphere(Vector3f inPosition, float inRadius)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Position = br.ReadVector3f();
-					this.BoneWeights = new List<byte>(br.ReadBytes(4));
-					this.BoneIndices = new List<byte>(br.ReadBytes(4));
-					this.Normal = br.ReadVector3f();
-					this.UVCoordinatesChannel1 = br.ReadVector2f();
-					this.UVCoordinatesChannel2 = br.ReadVector2f();
-				}
-			}
+			this.Position = inPosition;
+			this.Radius = inRadius;
 		}
 	}
 }
-

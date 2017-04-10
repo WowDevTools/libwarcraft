@@ -1,6 +1,6 @@
 using System;
 
-namespace Squish {
+namespace Warcraft.Core.Compression.Squish {
     internal struct Vector3 {
         public float X, Y, Z;
 

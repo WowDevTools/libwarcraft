@@ -1,5 +1,5 @@
 //
-//  MDXUVAnimation.cs
+//  AxisConfiguration.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,20 +20,26 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.Core;
-using Warcraft.Core.Structures;
-
-namespace Warcraft.MDX.Animation
+namespace Warcraft.Core.Structures
 {
-	public class MDXUVAnimation
+	/// <summary>
+	/// An axis configuration, that is, how vector data should be interpreted.
+	/// </summary>
+	public enum AxisConfiguration
 	{
-		public MDXTrack<Vector3f> TranslationTrack;
-		public MDXTrack<Quaternion> RotationTrack;
-		public MDXTrack<Vector3f> ScaleTrack;
+		/// <summary>
+		/// No assumptions should be made about the vector storage format, and should be read as XYZ.
+		/// </summary>
+		Native,
 
-		public MDXUVAnimation()
-		{
-		}
+		/// <summary>
+		/// Assume that the data is stored as Y-up.
+		/// </summary>
+		YUp,
+
+		/// <summary>
+		/// Assume that the data is stored as Z-up.
+		/// </summary>
+		ZUp
 	}
 }
-

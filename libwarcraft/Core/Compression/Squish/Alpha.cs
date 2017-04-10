@@ -1,6 +1,6 @@
 using System;
 
-namespace Squish {
+namespace Warcraft.Core.Compression.Squish {
     internal static class Alpha {
         #region DXT3
         private static int FloatToInt(float a, int limit) {

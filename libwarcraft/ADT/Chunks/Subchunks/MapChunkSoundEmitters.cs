@@ -22,6 +22,7 @@
 using System;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.ADT.Chunks.Subchunks

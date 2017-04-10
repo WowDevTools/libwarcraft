@@ -26,6 +26,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 using Warcraft.MDX.Geometry;
 
 namespace Warcraft.Core

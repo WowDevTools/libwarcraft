@@ -25,6 +25,7 @@ using Warcraft.Core;
 using System.Collections.Generic;
 using System;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.BLP
 {

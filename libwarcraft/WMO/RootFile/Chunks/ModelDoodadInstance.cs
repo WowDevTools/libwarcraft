@@ -2,6 +2,7 @@
 using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {

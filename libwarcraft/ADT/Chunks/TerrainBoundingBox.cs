@@ -24,6 +24,7 @@
 using Warcraft.Core;
 using System.IO;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks
 {
