@@ -45,6 +45,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\System.Numerics.Vectors.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLS\BLS.cs" />
@@ -54,8 +57,6 @@
     <Compile Include="Core\Structures\BGRA.cs" />
     <Compile Include="Core\Structures\Box.cs" />
     <Compile Include="Core\Structures\Range.cs" />
-    <Compile Include="Core\Structures\Plane.cs" />
-    <Compile Include="Core\Structures\Quaternion.cs" />
     <Compile Include="Core\Structures\Resolution.cs" />
     <Compile Include="Core\Structures\RGB.cs" />
     <Compile Include="Core\Structures\RGBA.cs" />
@@ -63,10 +64,6 @@
     <Compile Include="Core\Structures\ShortBox.cs" />
     <Compile Include="Core\Structures\ShortPlane.cs" />
     <Compile Include="Core\Structures\Sphere.cs" />
-    <Compile Include="Core\Structures\Vector2f.cs" />
-    <Compile Include="Core\Structures\Vector3f.cs" />
-    <Compile Include="Core\Structures\Vector3s.cs" />
-    <Compile Include="Core\Structures\Vector4f.cs" />
     <Compile Include="Core\Compression\Squish\SingleColourFit.cs" />
     <Compile Include="Core\Compression\Squish\SingleColourFitLookupTables.cs" />
     <Compile Include="Core\Exceptions.cs" />
@@ -74,6 +71,7 @@
     <Compile Include="Core\Interfaces\IFlattenableData.cs" />
     <Compile Include="Core\Interfaces\IPostLoad.cs" />
     <Compile Include="Core\Interfaces\IIFFChunk.cs" />
+    <Compile Include="Core\Structures\Vector3s.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
@@ -260,6 +258,7 @@
     <None Include="Core\Compression\Blast\reference-code\blast.c" />
     <None Include="Core\Compression\Blast\reference-code\blast.h" />
     <None Include="Core\Compression\Squish\README" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

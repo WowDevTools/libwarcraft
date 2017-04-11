@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Numerics;
+
 namespace Warcraft.Core.Structures
 {
 	/// <summary>
@@ -30,7 +32,7 @@ namespace Warcraft.Core.Structures
 		/// <summary>
 		/// The values in the structure.
 		/// </summary>
-		private Vector3f Values;
+		private Vector3 Values;
 
 		/// <summary>
 		/// The red component.
@@ -86,14 +88,14 @@ namespace Warcraft.Core.Structures
 		/// <param name="inB">The input green component.</param>
 		public RGB(float inR, float inG, float inB)
 		{
-			this.Values = new Vector3f(inR, inG, inB);
+			this.Values = new Vector3(inR, inG, inB);
 		}
 
 		/// <summary>
-		/// Creates a new <see cref="RGB"/> object from a <see cref="Vector3f"/> colour vector.
+		/// Creates a new <see cref="RGB"/> object from a <see cref="Vector3"/> colour vector.
 		/// </summary>
 		/// <param name="inVector">The input colour vector.</param>
-		public RGB(Vector3f inVector)
+		public RGB(Vector3 inVector)
 		{
 			this.Values = inVector;
 		}

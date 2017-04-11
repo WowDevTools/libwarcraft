@@ -22,6 +22,7 @@
 
 using System.IO;
 using System.Collections.Generic;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
@@ -32,8 +33,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	{
 		public const string Signature = "MCNR";
 
-		public List<Vector3f> HighResVertexNormals = new List<Vector3f>();
-		public List<Vector3f> LowResVertexNormals = new List<Vector3f>();
+		public List<Vector3> HighResVertexNormals = new List<Vector3>();
+		public List<Vector3> LowResVertexNormals = new List<Vector3>();
 
 		public MapChunkVertexNormals()
 		{
@@ -62,7 +63,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 								sbyte normZ = br.ReadSByte();
 								sbyte normY = br.ReadSByte();
 
-								this.HighResVertexNormals.Add(new Vector3f(normX, normY, normZ));
+								this.HighResVertexNormals.Add(new Vector3(normX, normY, normZ));
 							}
 						}
 						else
@@ -74,7 +75,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 								sbyte normZ = br.ReadSByte();
 								sbyte normY = br.ReadSByte();
 
-								this.LowResVertexNormals.Add(new Vector3f(normX, normY, normZ));
+								this.LowResVertexNormals.Add(new Vector3(normX, normY, normZ));
 							}
 						}
 					}

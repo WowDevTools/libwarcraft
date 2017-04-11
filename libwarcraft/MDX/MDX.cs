@@ -151,7 +151,7 @@ namespace Warcraft.MDX
 					//Bone.AnimatedRotation = new MDXTrack<Quaternion>(br, MDXHeader.GetModelVersion(Header.Version));
 					//Bone.AnimatedScale = new MDXTrack<Vector3f>(br, MDXHeader.GetModelVersion(Header.Version));
 
-					bone.PivotPoint = br.ReadVector3f();
+					bone.PivotPoint = br.ReadVector3();
 
 					this.Bones.Add(bone);
 				}
@@ -164,7 +164,7 @@ namespace Warcraft.MDX
 					br.BaseStream.Position = Bone.AnimatedTranslation.Values.ElementsOffset;
 					for (int j = 0; j < Bone.AnimatedTranslation.Values.Count; ++j)
 					{
-						Bone.AnimatedTranslation.Values.Add(br.ReadVector3f());
+						Bone.AnimatedTranslation.Values.Add(br.ReadVector3());
 					}
 
 					// Read animation rotation block
@@ -185,7 +185,7 @@ namespace Warcraft.MDX
 					br.BaseStream.Position = Bone.AnimatedScale.ValuesOffset;
 					for (int j = 0; j < Bone.AnimatedScale.ValueCount; ++j)
 					{
-						Bone.AnimatedScale.Values.Add(br.ReadVector3f());
+						Bone.AnimatedScale.Values.Add(br.ReadVector3());
 					}
 				}
 				*/
@@ -300,7 +300,7 @@ namespace Warcraft.MDX
 					br.BaseStream.Position = ColourAnimation.ColourTrack.ValuesOffset;
 					for (int j = 0; j < ColourAnimation.ColourTrack.ValueCount; ++j)
 					{
-						ColourAnimation.ColourTrack.Values.Add(new RGB(br.ReadVector3f()));
+						ColourAnimation.ColourTrack.Values.Add(new RGB(br.ReadVector3()));
 					}
 
 					// Read the opacity track
@@ -368,7 +368,7 @@ namespace Warcraft.MDX
 					br.BaseStream.Position = UVAnimation.TranslationTrack.ValuesOffset;
 					for (int j = 0; j < UVAnimation.TranslationTrack.ValueCount; ++j)
 					{
-						UVAnimation.TranslationTrack.Values.Add(br.ReadVector3f());
+						UVAnimation.TranslationTrack.Values.Add(br.ReadVector3());
 					}
 
 					// Read animation rotation block
@@ -389,7 +389,7 @@ namespace Warcraft.MDX
 					br.BaseStream.Position = UVAnimation.ScaleTrack.ValuesOffset;
 					for (int j = 0; j < UVAnimation.ScaleTrack.ValueCount; ++j)
 					{
-						UVAnimation.ScaleTrack.Values.Add(br.ReadVector3f());
+						UVAnimation.ScaleTrack.Values.Add(br.ReadVector3());
 					}
 				}
 				*/

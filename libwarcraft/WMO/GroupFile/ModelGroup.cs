@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using Warcraft.ADT.Chunks;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
@@ -83,7 +84,7 @@ namespace Warcraft.WMO.GroupFile
 		/// Gets the position of the model group, relative to the model root.
 		/// </summary>
 		/// <returns></returns>
-		public Vector3f GetPosition()
+		public Vector3 GetPosition()
 		{
 			return GetBoundingBox().GetCenterCoordinates();
 		}
@@ -119,7 +120,7 @@ namespace Warcraft.WMO.GroupFile
 		/// Gets the vertex positions contained in this model group.
 		/// </summary>
 		/// <returns>A list of vertex positions.</returns>
-		public List<Vector3f> GetVertices()
+		public List<Vector3> GetVertices()
 		{
 			return this.GroupData.Vertices.Vertices;
 		}
@@ -128,7 +129,7 @@ namespace Warcraft.WMO.GroupFile
 		/// Gets the vertex normals contained in this model group.
 		/// </summary>
 		/// <returns>A list of vertex normals.</returns>
-		public List<Vector3f> GetNormals()
+		public List<Vector3> GetNormals()
 		{
 			return this.GroupData.Normals.Normals;
 		}
@@ -137,7 +138,7 @@ namespace Warcraft.WMO.GroupFile
 		/// Gets the texture coordinates for the vertices contained in this model group.
 		/// </summary>
 		/// <returns>A list of texture coordinates.</returns>
-		public List<Vector2f> GetTextureCoordinates()
+		public List<Vector2> GetTextureCoordinates()
 		{
 			return this.GroupData.TextureCoordinates.TextureCoordinates;
 		}

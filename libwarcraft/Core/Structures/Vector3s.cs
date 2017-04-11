@@ -1,4 +1,4 @@
-﻿//
+//
 //  Vector3s.cs
 //
 //  Author:

@@ -25,6 +25,7 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using System.Numerics;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
 using Warcraft.MDX.Geometry;
@@ -37,6 +38,48 @@ namespace Warcraft.Core
 	public static class ExtensionMethods
 	{
 		/// <summary>
+		/// Flattens a <see cref="Vector4"/> into an array of floats, similar to how the <see cref="IFlattenableData{T}"/>
+		/// interface works.
+		/// </summary>
+		/// <param name="vector4">The vector to flatten.</param>
+		/// <returns>An array of floats.</returns>
+		public static float[] Flatten(this Vector4 vector4)
+		{
+			float[] outArr = new float[4];
+			vector4.CopyTo(outArr);
+
+			return outArr;
+		}
+
+		/// <summary>
+		/// Flattens a <see cref="Vector3"/> into an array of floats, similar to how the <see cref="IFlattenableData{T}"/>
+		/// interface works.
+		/// </summary>
+		/// <param name="vector3">The vector to flatten.</param>
+		/// <returns>An array of floats.</returns>
+		public static float[] Flatten(this Vector3 vector3)
+		{
+			float[] outArr = new float[3];
+			vector3.CopyTo(outArr);
+
+			return outArr;
+		}
+
+		/// <summary>
+		/// Flattens a <see cref="Vector2"/> into an array of floats, similar to how the <see cref="IFlattenableData{T}"/>
+		/// interface works.
+		/// </summary>
+		/// <param name="vector2">The vector to flatten.</param>
+		/// <returns>An array of floats.</returns>
+		public static float[] Flatten(this Vector2 vector2)
+		{
+			float[] outArr = new float[2];
+			vector2.CopyTo(outArr);
+
+			return outArr;
+		}
+
+		/// <summary>
 		/// Packs an <see cref="MDXVertex"/> for use with an OpenGL buffer.
 		/// In effect, it transforms it from Z-up to Y-up.
 		/// </summary>
@@ -47,12 +90,12 @@ namespace Warcraft.Core
 			using (MemoryStream ms = new MemoryStream())
 			using (BinaryWriter bw = new BinaryWriter(ms))
 			{
-				bw.WriteVector3f(vertex.Position, AxisConfiguration.YUp);
+				bw.WriteVector3(vertex.Position, AxisConfiguration.YUp);
 				bw.Write(vertex.BoneWeights.ToArray());
 				bw.Write(vertex.BoneIndices.ToArray());
-				bw.WriteVector3f(vertex.Normal, AxisConfiguration.YUp);
-				bw.WriteVector2f(vertex.UVCoordinatesChannel1);
-				bw.WriteVector2f(vertex.UVCoordinatesChannel2);
+				bw.WriteVector3(vertex.Normal, AxisConfiguration.YUp);
+				bw.WriteVector2(vertex.UVCoordinatesChannel1);
+				bw.WriteVector2(vertex.UVCoordinatesChannel2);
 
 				return ms.ToArray();
 			}
@@ -279,13 +322,13 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Reads an 16-byte <see cref="Plane"/> from the data stream.
+		/// Reads an 16-byte <see cref="Structures.Plane"/> from the data stream.
 		/// </summary>
 		/// <returns>The plane.</returns>
 		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
 		public static Plane ReadPlane(this BinaryReader binaryReader)
 		{
-			return new Plane(binaryReader.ReadVector3f(), binaryReader.ReadSingle());
+			return new Plane(binaryReader.ReadVector3(), binaryReader.ReadSingle());
 		}
 
 		/// <summary>
@@ -310,7 +353,7 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Reads a 16-byte 32-bit <see cref="Quaternion"/> structure from the data stream, and advances the position of the stream by
+		/// Reads a 16-byte 32-bit <see cref="Structures.Quaternion"/> structure from the data stream, and advances the position of the stream by
 		/// 16 bytes.
 		/// </summary>
 		/// <returns>The quaternion.</returns>
@@ -343,7 +386,7 @@ namespace Warcraft.Core
 		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
 		public static Rotator ReadRotator(this BinaryReader binaryReader)
 		{
-			return new Rotator(binaryReader.ReadVector3f());
+			return new Rotator(binaryReader.ReadVector3());
 		}
 
 		/// <summary>
@@ -353,13 +396,13 @@ namespace Warcraft.Core
 		/// <returns>The vector3f.</returns>
 		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
 		/// <param name="convertTo">Which axis configuration the read vector should be converted to.</param>
-		public static Vector3f ReadVector3f(this BinaryReader binaryReader, AxisConfiguration convertTo = AxisConfiguration.YUp)
+		public static Vector3 ReadVector3(this BinaryReader binaryReader, AxisConfiguration convertTo = AxisConfiguration.YUp)
 		{
 			switch (convertTo)
 			{
 				case AxisConfiguration.Native:
 				{
-					return new Vector3f(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
+					return new Vector3(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
 				}
 				case AxisConfiguration.YUp:
 				{
@@ -367,15 +410,15 @@ namespace Warcraft.Core
 					float z = binaryReader.ReadSingle();
 					float y = binaryReader.ReadSingle() * -1.0f;
 
-					return new Vector3f(x, y, z);
+					return new Vector3(x, y, z);
 				}
 				case AxisConfiguration.ZUp:
 				{
-					float x = binaryReader.ReadSingle();
+					float x =  binaryReader.ReadSingle();
 					float z = binaryReader.ReadSingle() * -1.0f;
 					float y = binaryReader.ReadSingle();
 
-					return new Vector3f(x, y, z);
+					return new Vector3(x, y, z);
 				}
 				default:
 				{
@@ -385,19 +428,19 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Reads a 16-byte <see cref="Vector4f"/> structure from the data stream and advances the position of the stream by
+		/// Reads a 16-byte <see cref="Vector4"/> structure from the data stream and advances the position of the stream by
 		/// 16 bytes.
 		/// </summary>
 		/// <returns>The vector3f.</returns>
 		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
 		/// <param name="convertTo">Which axis configuration the read vector should be converted to.</param>
-		public static Vector4f ReadVector4f(this BinaryReader binaryReader, AxisConfiguration convertTo = AxisConfiguration.YUp)
+		public static Vector4 ReadVector4(this BinaryReader binaryReader, AxisConfiguration convertTo = AxisConfiguration.YUp)
 		{
 			switch (convertTo)
 			{
 				case AxisConfiguration.Native:
 				{
-					return new Vector4f(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
+					return new Vector4(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
 				}
 				case AxisConfiguration.YUp:
 				{
@@ -407,7 +450,7 @@ namespace Warcraft.Core
 
 					float w = binaryReader.ReadSingle();
 
-					return new Vector4f(x, y, z, w);
+					return new Vector4(x, y, z, w);
 				}
 				case AxisConfiguration.ZUp:
 				{
@@ -417,7 +460,7 @@ namespace Warcraft.Core
 
 					float w = binaryReader.ReadSingle();
 
-					return new Vector4f(x, y, z, w);
+					return new Vector4(x, y, z, w);
 				}
 				default:
 				{
@@ -465,14 +508,14 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Reads an 8-byte <see cref="Vector2f"/> structure from the data stream and advances the position of the stream by
+		/// Reads an 8-byte <see cref="Vector2"/> structure from the data stream and advances the position of the stream by
 		/// 8 bytes.
 		/// </summary>
 		/// <returns>The vector2f.</returns>
 		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
-		public static Vector2f ReadVector2f(this BinaryReader binaryReader)
+		public static Vector2 ReadVector2(this BinaryReader binaryReader)
 		{
-			return new Vector2f(binaryReader.ReadSingle(), binaryReader.ReadSingle());
+			return new Vector2(binaryReader.ReadSingle(), binaryReader.ReadSingle());
 		}
 
 		/// <summary>
@@ -483,7 +526,7 @@ namespace Warcraft.Core
 		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
 		public static Box ReadBox(this BinaryReader binaryReader)
 		{
-			return new Box(binaryReader.ReadVector3f(), binaryReader.ReadVector3f());
+			return new Box(binaryReader.ReadVector3(), binaryReader.ReadVector3());
 		}
 
 		/// <summary>
@@ -591,8 +634,8 @@ namespace Warcraft.Core
         /// <param name="plane">The plane to write.</param>
 		public static void WritePlane(this BinaryWriter binaryWriter, Plane plane)
 		{
-			binaryWriter.WriteVector3f(plane.Normal);
-			binaryWriter.Write(plane.DistanceFromCenter);
+			binaryWriter.WriteVector3(plane.Normal);
+			binaryWriter.Write(plane.D);
 		}
 
 		/// <summary>
@@ -621,7 +664,7 @@ namespace Warcraft.Core
 			binaryWriter.Write(quaternion.X);
 			binaryWriter.Write(quaternion.Y);
 			binaryWriter.Write(quaternion.Z);
-			binaryWriter.Write(quaternion.Scalar);
+			binaryWriter.Write(quaternion.W);
 		}
 
 		/// <summary>
@@ -635,7 +678,7 @@ namespace Warcraft.Core
 			binaryWriter.Write(FloatQuatValueToShort(quaternion.X));
 			binaryWriter.Write(FloatQuatValueToShort(quaternion.Y));
 			binaryWriter.Write(FloatQuatValueToShort(quaternion.Z));
-			binaryWriter.Write(FloatQuatValueToShort(quaternion.Scalar));
+			binaryWriter.Write(FloatQuatValueToShort(quaternion.W));
 		}
 
 		/// <summary>
@@ -657,7 +700,7 @@ namespace Warcraft.Core
 		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="vector">The Vector to write.</param>
 		/// <param name="storeAs">Which axis configuration the read vector should be stored as.</param>
-		public static void WriteVector3f(this BinaryWriter binaryWriter, Vector3f vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
+		public static void WriteVector3(this BinaryWriter binaryWriter, Vector3 vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
 		{
 			switch (storeAs)
 			{
@@ -682,13 +725,13 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-		/// Writes a 16-byte <see cref="Vector4f"/> value to the data stream in XYZW order. This function
+		/// Writes a 16-byte <see cref="Vector4"/> value to the data stream in XYZW order. This function
 		/// expects a Y-up vector.
 		/// </summary>
 		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="vector">The Vector to write.</param>
 		/// <param name="storeAs">Which axis configuration the read vector should be stored as.</param>
-		public static void WriteVector4f(this BinaryWriter binaryWriter, Vector4f vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
+		public static void WriteVector4(this BinaryWriter binaryWriter, Vector4 vector, AxisConfiguration storeAs = AxisConfiguration.ZUp)
 		{
 			switch (storeAs)
 			{
@@ -759,11 +802,11 @@ namespace Warcraft.Core
 		}
 
 		/// <summary>
-        /// Writes an 8-byte <see cref="Vector2f"/> value to the data stream in XY order.
+        /// Writes an 8-byte <see cref="Vector2"/> value to the data stream in XY order.
 		/// </summary>
 		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="vector">The Vector to write.</param>
-		public static void WriteVector2f(this BinaryWriter binaryWriter, Vector2f vector)
+		public static void WriteVector2(this BinaryWriter binaryWriter, Vector2 vector)
 		{
 			binaryWriter.Write(vector.X);
 			binaryWriter.Write(vector.Y);
@@ -777,8 +820,8 @@ namespace Warcraft.Core
 		/// <param name="box">In box.</param>
 		public static void WriteBox(this BinaryWriter binaryWriter, Box box)
 		{
-			binaryWriter.WriteVector3f(box.BottomCorner);
-			binaryWriter.WriteVector3f(box.TopCorner);
+			binaryWriter.WriteVector3(box.BottomCorner);
+			binaryWriter.WriteVector3(box.TopCorner);
 		}
 
 		/// <summary>

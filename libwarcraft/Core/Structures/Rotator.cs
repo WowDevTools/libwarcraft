@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.Numerics;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.Core.Structures
@@ -30,7 +31,7 @@ namespace Warcraft.Core.Structures
 	/// </summary>
 	public struct Rotator : IFlattenableData<float>
 	{
-		private Vector3f Values;
+		private Vector3 Values;
 
 		/// <summary>
 		/// Pitch of the rotator
@@ -67,14 +68,14 @@ namespace Warcraft.Core.Structures
 		/// <param name="inRoll">Roll</param>
 		public Rotator(float inPitch, float inYaw, float inRoll)
 		{
-			this.Values = new Vector3f(inPitch, inYaw, inRoll);
+			this.Values = new Vector3(inPitch, inYaw, inRoll);
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Rotator"/> struct.
 		/// </summary>
 		/// <param name="inVector">In vector.</param>
-		public Rotator(Vector3f inVector)
+		public Rotator(Vector3 inVector)
 			:this(inVector.X, inVector.Y, inVector.Z)
 		{
 

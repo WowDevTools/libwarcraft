@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
@@ -36,7 +37,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 		private byte[] Data;
 
 		public List<short> FirstIndices = new List<short>();
-		public List<Vector4f> Tangents = new List<Vector4f>();
+		public List<Vector4> Tangents = new List<Vector4>();
 
 		public ModelTangentArray()
 		{
@@ -70,9 +71,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 			            bw.Write(firstIndex);
 		            }
 
-		            foreach (Vector4f tangent in this.Tangents)
+		            foreach (Vector4 tangent in this.Tangents)
 		            {
-			            bw.WriteVector4f(tangent);
+			            bw.WriteVector4(tangent);
 		            }
             	}
 
@@ -98,7 +99,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
 					for (int i = 0; i < loadingParameters.AccumulatedIndexCount; ++i)
 					{
-						this.Tangents.Add(br.ReadVector4f());
+						this.Tangents.Add(br.ReadVector4());
 					}
 				}
 			}

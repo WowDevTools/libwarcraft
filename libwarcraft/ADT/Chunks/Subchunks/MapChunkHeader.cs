@@ -22,6 +22,7 @@
 
 using Warcraft.Core;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks.Subchunks
@@ -158,7 +159,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// The map tile position is a global offset that is applied to the entire heightmap to allow for
 		/// far greater height differences in the world.
 		/// </summary>
-		public Vector3f MapTilePosition;
+		public Vector3 MapTilePosition;
 
 		/// <summary>
 		/// MCNK-based Offset of the MCCV Chunk
@@ -218,7 +219,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					this.LiquidOffset = br.ReadUInt32();
 					this.LiquidSize = br.ReadUInt32();
 
-					this.MapTilePosition = br.ReadVector3f();
+					this.MapTilePosition = br.ReadVector3();
 
 					if (this.Flags.HasFlag(MapChunkFlags.HasVertexShading))
 					{

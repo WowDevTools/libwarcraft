@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
@@ -32,7 +33,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 	{
 		public const string Signature = "MOPV";
 
-		public readonly List<Vector3f> Vertices = new List<Vector3f>();
+		public readonly List<Vector3> Vertices = new List<Vector3>();
 
 		public ModelPortalVertices()
 		{
@@ -52,7 +53,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 				{
 					while (ms.Position < ms.Length)
 					{
-						this.Vertices.Add(br.ReadVector3f());
+						this.Vertices.Add(br.ReadVector3());
 					}
 				}
 			}
@@ -69,9 +70,9 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
             	using (BinaryWriter bw = new BinaryWriter(ms))
             	{
-		            foreach (Vector3f portalVertex in this.Vertices)
+		            foreach (Vector3 portalVertex in this.Vertices)
 		            {
-			            bw.WriteVector3f(portalVertex);
+			            bw.WriteVector3(portalVertex);
 		            }
             	}
 

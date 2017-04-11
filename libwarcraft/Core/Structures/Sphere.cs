@@ -20,10 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Numerics;
+
 namespace Warcraft.Core.Structures
 {
 	/// <summary>
-	/// A structure representing an axis-aligned sphere, comprised of a <see cref="Vector3f"/> position and a
+	/// A structure representing an axis-aligned sphere, comprised of a <see cref="Vector3"/> position and a
 	/// <see cref="float"/> radius.
 	/// </summary>
 	public struct Sphere
@@ -31,7 +33,7 @@ namespace Warcraft.Core.Structures
 		/// <summary>
 		/// The position of the sphere in model space.
 		/// </summary>
-		public Vector3f Position;
+		public Vector3 Position;
 
 		/// <summary>
 		/// The radius of the sphere.
@@ -43,7 +45,7 @@ namespace Warcraft.Core.Structures
 		/// </summary>
 		/// <param name="inPosition">The sphere's position in model space.</param>
 		/// <param name="inRadius">The sphere's radius.</param>
-		public Sphere(Vector3f inPosition, float inRadius)
+		public Sphere(Vector3 inPosition, float inRadius)
 		{
 			this.Position = inPosition;
 			this.Radius = inRadius;

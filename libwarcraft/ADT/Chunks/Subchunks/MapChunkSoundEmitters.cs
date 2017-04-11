@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
@@ -78,8 +79,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	public class DatabaseSoundEmitter : SoundEmitter, IBinarySerializable
 	{
 		public UInt32ForeignKey SoundEntryID;
-		public Vector3f Position;
-		public Vector3f Size;
+		public Vector3 Position;
+		public Vector3 Size;
 
 		public byte[] Serialize()
 		{
@@ -91,7 +92,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	{
 		public uint SoundID;
 		public uint SoundNameID;
-		public Vector3f Position;
+		public Vector3 Position;
 		public float AttenuationRadiusStart;
 		public float AttenuationRadiusEnd;
 		public float CutoffDistance;

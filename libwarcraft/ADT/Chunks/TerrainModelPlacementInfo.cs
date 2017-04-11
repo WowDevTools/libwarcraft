@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
@@ -89,7 +90,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Position of the model
 		/// </summary>
-		public Vector3f Position;
+		public Vector3 Position;
 		/// <summary>
 		/// Rotation of the model
 		/// </summary>
@@ -117,7 +118,7 @@ namespace Warcraft.ADT.Chunks
 				{
 					this.ModelEntryIndex = br.ReadUInt32();
 					this.UniqueID = br.ReadUInt32();
-					this.Position = br.ReadVector3f();
+					this.Position = br.ReadVector3();
 					this.Rotation = br.ReadRotator();
 
 					this.ScalingFactor = br.ReadUInt16();

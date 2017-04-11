@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Structures;
 
@@ -27,9 +28,9 @@ namespace Warcraft.MDX.Animation
 {
 	public class MDXUVAnimation
 	{
-		public MDXTrack<Vector3f> TranslationTrack;
+		public MDXTrack<Vector3> TranslationTrack;
 		public MDXTrack<Quaternion> RotationTrack;
-		public MDXTrack<Vector3f> ScaleTrack;
+		public MDXTrack<Vector3> ScaleTrack;
 
 		public MDXUVAnimation()
 		{

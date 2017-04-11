@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
@@ -90,7 +91,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public bool UseUnknown2;
 
 		public BGRA Colour;
-		public Vector3f Position;
+		public Vector3 Position;
 		public float Intensity;
 
 		public float AttenuationStartRadius;
@@ -114,7 +115,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					this.UseUnknown2 = br.ReadBoolean();
 
 					this.Colour = br.ReadBGRA();
-					this.Position = br.ReadVector3f();
+					this.Position = br.ReadVector3();
 					this.Intensity = br.ReadSingle();
 
 					this.AttenuationStartRadius = br.ReadSingle();
@@ -147,7 +148,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 		            bw.Write(this.UseUnknown2);
 
 		            bw.WriteBGRA(this.Colour);
-		            bw.WriteVector3f(this.Position);
+		            bw.WriteVector3(this.Position);
 		            bw.Write(this.Intensity);
 
 		            bw.Write(this.AttenuationStartRadius);

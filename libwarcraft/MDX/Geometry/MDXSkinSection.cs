@@ -22,6 +22,7 @@
 
 using Warcraft.Core;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core.Structures;
 
 namespace Warcraft.MDX.Geometry
@@ -37,8 +38,8 @@ namespace Warcraft.MDX.Geometry
 		public ushort StartBoneIndex;
 		public ushort InfluencingBonesIndex;
 		public ushort RootBoneIndex;
-		public Vector3f SubmeshMedianPoint;
-		public Vector3f BoundingShellMedianPoint;
+		public Vector3 SubmeshMedianPoint;
+		public Vector3 BoundingShellMedianPoint;
 		public float BoundingSphereRadius;
 
 		public MDXSkinSection(byte[] data)
@@ -56,11 +57,11 @@ namespace Warcraft.MDX.Geometry
 					this.StartBoneIndex = br.ReadUInt16();
 					this.InfluencingBonesIndex = br.ReadUInt16();
 					this.RootBoneIndex = br.ReadUInt16();
-					this.SubmeshMedianPoint = br.ReadVector3f();
+					this.SubmeshMedianPoint = br.ReadVector3();
 
 					if (br.BaseStream.Length > 32)
 					{
-						this.BoundingShellMedianPoint = br.ReadVector3f();
+						this.BoundingShellMedianPoint = br.ReadVector3();
 						this.BoundingSphereRadius = br.ReadSingle();
 					}
 				}

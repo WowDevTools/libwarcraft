@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.Core.Structures
@@ -35,12 +36,12 @@ namespace Warcraft.Core.Structures
 		/// <summary>
 		/// The bottom corner of the bounding box.
 		/// </summary>
-		public Vector3f BottomCorner;
+		public Vector3 BottomCorner;
 
 		/// <summary>
 		/// The top corner of the bounding box.
 		/// </summary>
-		public Vector3f TopCorner;
+		public Vector3 TopCorner;
 
 		/// <summary>
 		/// Creates a new <see cref="Box"/> object from a top and bottom corner.
@@ -48,7 +49,7 @@ namespace Warcraft.Core.Structures
 		/// <param name="inBottomCorner">The bottom corner of the box.</param>
 		/// <param name="inTopCorner">The top corner of the box.</param>
 		/// <returns>A new <see cref="Box"/> object.</returns>
-		public Box(Vector3f inBottomCorner, Vector3f inTopCorner)
+		public Box(Vector3 inBottomCorner, Vector3 inTopCorner)
 		{
 			this.BottomCorner = inBottomCorner;
 			this.TopCorner = inTopCorner;
@@ -58,7 +59,7 @@ namespace Warcraft.Core.Structures
 		/// Gets the coordinates of the center of the box.
 		/// </summary>
 		/// <returns>A vector with the coordinates of the center of the box.</returns>
-		public Vector3f GetCenterCoordinates()
+		public Vector3 GetCenterCoordinates()
 		{
 			return (this.BottomCorner + this.TopCorner) / 2;
 		}

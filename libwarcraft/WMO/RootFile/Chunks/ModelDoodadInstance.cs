@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
@@ -33,7 +34,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public DoodadInstanceFlags Flags;
 
 
-		public Vector3f Position;
+		public Vector3 Position;
 		public Quaternion Orientation;
 		public float Scale;
 		public BGRA StaticLightingColour;
@@ -52,7 +53,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 					this.Flags = (DoodadInstanceFlags) br.ReadByte();
 
-					this.Position = br.ReadVector3f();
+					this.Position = br.ReadVector3();
 
 					// TODO: Investigate whether or not this is a Quat16 in >= BC
 					this.Orientation = br.ReadQuaternion32();
@@ -81,7 +82,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					bw.Write(finalNameOffsetBytes);
 					bw.Write((byte)this.Flags);
 
-					bw.WriteVector3f(this.Position);
+					bw.WriteVector3(this.Position);
 
 					// TODO: Investigate whether or not this is a Quat16 in >= BC
 					bw.WriteQuaternion32(this.Orientation);

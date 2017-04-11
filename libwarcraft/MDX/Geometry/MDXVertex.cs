@@ -23,18 +23,19 @@
 using Warcraft.Core;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core.Structures;
 
 namespace Warcraft.MDX.Geometry
 {
 	public class MDXVertex
 	{
-		public Vector3f Position;
+		public Vector3 Position;
 		public List<byte> BoneWeights;
 		public List<byte> BoneIndices;
-		public Vector3f Normal;
-		public Vector2f UVCoordinatesChannel1;
-		public Vector2f UVCoordinatesChannel2;
+		public Vector3 Normal;
+		public Vector2 UVCoordinatesChannel1;
+		public Vector2 UVCoordinatesChannel2;
 
 		public MDXVertex(byte[] data)
 		{
@@ -42,12 +43,12 @@ namespace Warcraft.MDX.Geometry
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Position = br.ReadVector3f();
+					this.Position = br.ReadVector3();
 					this.BoneWeights = new List<byte>(br.ReadBytes(4));
 					this.BoneIndices = new List<byte>(br.ReadBytes(4));
-					this.Normal = br.ReadVector3f();
-					this.UVCoordinatesChannel1 = br.ReadVector2f();
-					this.UVCoordinatesChannel2 = br.ReadVector2f();
+					this.Normal = br.ReadVector3();
+					this.UVCoordinatesChannel1 = br.ReadVector2();
+					this.UVCoordinatesChannel2 = br.ReadVector2();
 				}
 			}
 		}

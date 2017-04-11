@@ -22,10 +22,10 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using Warcraft.ADT.Chunks.Subchunks;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
-using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
@@ -38,7 +38,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 		public uint WidthTileFlags;
 		public uint HeightTileFlags;
 
-		public Vector3f Location;
+		public Vector3 Location;
 		public ushort MaterialIndex;
 
 		public List<LiquidVertex> LiquidVertices = new List<LiquidVertex>();
@@ -65,7 +65,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 		            this.WidthTileFlags = br.ReadUInt32();
 		            this.HeightTileFlags = br.ReadUInt32();
 
-		            this.Location = br.ReadVector3f();
+		            this.Location = br.ReadVector3();
 		            this.MaterialIndex = br.ReadUInt16();
 
 		            uint vertexCount = this.WidthVertices * this.HeightVertices;
@@ -100,7 +100,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 		            bw.Write(this.WidthTileFlags);
 		            bw.Write(this.HeightTileFlags);
 
-		            bw.WriteVector3f(this.Location);
+		            bw.WriteVector3(this.Location);
 		            bw.Write(this.MaterialIndex);
 
 		            foreach (LiquidVertex liquidVertex in this.LiquidVertices)

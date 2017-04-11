@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
@@ -32,7 +33,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 	{
 		public const string Signature = "MOTV";
 
-		public readonly List<Vector2f> TextureCoordinates = new List<Vector2f>();
+		public readonly List<Vector2> TextureCoordinates = new List<Vector2>();
 
 		public ModelTextureCoordinates()
 		{
@@ -51,7 +52,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             	{
 		            while (ms.Position < ms.Length)
 		            {
-			            this.TextureCoordinates.Add(br.ReadVector2f());
+			            this.TextureCoordinates.Add(br.ReadVector2());
 		            }
             	}
             }
@@ -68,9 +69,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
             	using (BinaryWriter bw = new BinaryWriter(ms))
             	{
-		            foreach (Vector2f textureCoordinate in this.TextureCoordinates)
+		            foreach (Vector2 textureCoordinate in this.TextureCoordinates)
 		            {
-			            bw.WriteVector2f(textureCoordinate);
+			            bw.WriteVector2(textureCoordinate);
 		            }
             	}
 

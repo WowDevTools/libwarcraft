@@ -20,8 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.Core;
-using Warcraft.Core.Structures;
+using System.Numerics;
 
 namespace Warcraft.MDX.Animation
 {
@@ -32,7 +31,7 @@ namespace Warcraft.MDX.Animation
 		public short ParentBone;
 		public ushort SubmeshID;
 
-		/* 
+		/*
 			Only present in Version >= BC
 		*/
 		public ushort Unknown1;
@@ -41,10 +40,10 @@ namespace Warcraft.MDX.Animation
 		public ushort Unknown2;
 		// ...
 
-		public MDXTrack<Vector3f> AnimatedTranslation;
+		public MDXTrack<Vector3> AnimatedTranslation;
 		public MDXTrack<Quaternion> AnimatedRotation;
-		public MDXTrack<Vector3f> AnimatedScale;
-		public Vector3f PivotPoint;
+		public MDXTrack<Vector3> AnimatedScale;
+		public Vector3 PivotPoint;
 
 		public MDXBone()
 		{

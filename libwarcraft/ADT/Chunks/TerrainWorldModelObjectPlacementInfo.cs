@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
@@ -110,7 +111,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Position of the WMO
 		/// </summary>
-		public Vector3f Position;
+		public Vector3 Position;
 		/// <summary>
 		/// Rotation of the model
 		/// </summary>
@@ -154,7 +155,7 @@ namespace Warcraft.ADT.Chunks
 					this.WorldModelObjectEntryIndex = br.ReadUInt32();
 					this.UniqueID = br.ReadInt32();
 
-					this.Position = br.ReadVector3f();
+					this.Position = br.ReadVector3();
 					this.Rotation = br.ReadRotator();
 					this.BoundingBox = br.ReadBox();
 
@@ -184,7 +185,7 @@ namespace Warcraft.ADT.Chunks
 					bw.Write(this.WorldModelObjectEntryIndex);
 					bw.Write(this.UniqueID);
 
-					bw.WriteVector3f(this.Position);
+					bw.WriteVector3(this.Position);
 					bw.WriteRotator(this.Rotation);
 					bw.WriteBox(this.BoundingBox);
 
