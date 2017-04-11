@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 
 namespace Warcraft.Core.Compression.Squish
 {

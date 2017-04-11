@@ -797,7 +797,9 @@ namespace Warcraft.Core
 					break;
 				}
 				default:
+				{
 					throw new ArgumentOutOfRangeException(nameof(storeAs), storeAs, null);
+				}
 			}
 		}
 
