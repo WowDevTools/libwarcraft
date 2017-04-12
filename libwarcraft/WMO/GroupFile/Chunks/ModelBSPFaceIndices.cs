@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 namespace Warcraft.WMO.GroupFile.Chunks
 {
 	/// <summary>
-	/// Data chunk for BSP face indices.
+	/// ExtendedData chunk for BSP face indices.
 	/// </summary>
 	public class ModelBSPFaceIndices : IIFFChunk, IBinarySerializable
 	{

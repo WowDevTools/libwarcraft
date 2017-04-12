@@ -26,7 +26,7 @@ using System.Drawing;
 using System.Collections;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Quantization;
 using System.Drawing.Drawing2D;
 using Warcraft.Core.Compression.Squish;
@@ -71,7 +71,7 @@ namespace Warcraft.BLP
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.BLP.BLP"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public BLP(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
@@ -342,7 +342,7 @@ namespace Warcraft.BLP
 		/// Decompresses a mipmap in the file at the specified level from the specified data.
 		/// </summary>
 		/// <returns>The mipmap.</returns>
-		/// <param name="inData">Data containing the mipmap level.</param>
+		/// <param name="inData">ExtendedData containing the mipmap level.</param>
 		/// <param name="mipLevel">The mipmap level of the data</param>
 		private Bitmap DecompressMipMap(byte[] inData, uint mipLevel)
 		{
@@ -588,7 +588,7 @@ namespace Warcraft.BLP
 										byte pixelAlpha = resizedImage.GetPixel(x + i, y).A;
 
 										// Map the value to a 4-bit integer
-										pixelAlpha = (byte)ExtensionMethods.Map(pixelAlpha, 0, 255, 0, 15);
+										pixelAlpha = (byte)ExtendedMath.Map(pixelAlpha, 0, 255, 0, 15);
 
 										// Shift the value to the upper bits on the first iteration, and leave it where it is
 										// on the second one
@@ -746,7 +746,7 @@ namespace Warcraft.BLP
 				// The alpha value is stored per-bit in the byte (8 alpha values per byte)
 				for (byte i = 0; i < 8; ++i)
 				{
-					byte alphaBit = (byte)ExtensionMethods.Map(((dataByte >> (7 - i)) & 0x01), 0, 1, 0, 255);
+					byte alphaBit = (byte)ExtendedMath.Map(((dataByte >> (7 - i)) & 0x01), 0, 1, 0, 255);
 
 					// At this point, alphaBit will be either 0 or 1. Map this to 0 or 255.
 					if (alphaBit > 0)
@@ -776,8 +776,8 @@ namespace Warcraft.BLP
 			{
 				// The alpha value is stored as half a byte (2 alpha values per byte)
 				// Extract these two values and map them to a byte size (4 bits can hold 0 - 15 alpha)
-				byte alphaValue1 = (byte)ExtensionMethods.Map((alphaByte >> 4), 0, 15, 0, 255);
-				byte alphaValue2 = (byte)ExtensionMethods.Map((alphaByte & 0x0F), 0, 15, 0, 255);
+				byte alphaValue1 = (byte)ExtendedMath.Map((alphaByte >> 4), 0, 15, 0, 255);
+				byte alphaValue2 = (byte)ExtendedMath.Map((alphaByte & 0x0F), 0, 15, 0, 255);
 				alphaValues.Add(alphaValue1);
 				alphaValues.Add(alphaValue2);
 			}
@@ -874,12 +874,12 @@ namespace Warcraft.BLP
 					if (j == 0)
 					{
 						// Pack into the first four bits
-						packedAlphaValue |= (byte)(ExtensionMethods.Map((alphaValue), 0, 255, 0, 15) << 4);
+						packedAlphaValue |= (byte)(ExtendedMath.Map(alphaValue, 0, 255, 0, 15) << 4);
 					}
 					else
 					{
 						// Pack into the last four bits
-						packedAlphaValue |= (byte)(ExtensionMethods.Map((alphaValue & 0x0F), 0, 255, 0, 15));
+						packedAlphaValue |= (byte)ExtendedMath.Map(alphaValue & 0x0F, 0, 255, 0, 15);
 					}
 				}
 

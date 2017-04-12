@@ -21,7 +21,6 @@
 //
 
 using System.IO;
-using Warcraft.Core;
 using System.Collections.Generic;
 using System;
 using Warcraft.Core.Interfaces;
@@ -91,7 +90,7 @@ namespace Warcraft.BLP
 		/// This constructor creates a header from input data read from a BLP file.
 		/// Usually, this is 148 bytes.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public BLPHeader(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))

@@ -21,8 +21,6 @@
 //
 
 using System.Numerics;
-using Warcraft.Core;
-using Warcraft.Core.Structures;
 
 namespace Warcraft.MDX.Animation
 {

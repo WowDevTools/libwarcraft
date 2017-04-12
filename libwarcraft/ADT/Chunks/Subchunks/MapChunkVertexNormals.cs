@@ -23,9 +23,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Numerics;
-using Warcraft.Core;
 using Warcraft.Core.Interfaces;
-using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {

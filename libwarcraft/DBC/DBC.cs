@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;
 
@@ -63,7 +64,7 @@ namespace Warcraft.DBC
 		/// Initializes a new instance of the <see cref="DBC"/> class.
 		/// </summary>
 		/// <param name="inVersion">In version.</param>
-		/// <param name="data">Data.</param>
+		/// <param name="data">ExtendedData.</param>
 		public DBC(WarcraftVersion inVersion, byte[] data)
 		{
 			this.Version = inVersion;

@@ -73,7 +73,7 @@ namespace Warcraft.MPQ.Crypto
 		/// are simply appended at the end of the data block.
 		/// </summary>
 		/// <returns>The encrypted data.</returns>
-		/// <param name="data">Data to be encrypted.</param>
+		/// <param name="data">ExtendedData to be encrypted.</param>
 		/// <param name="key">The encryption key to use.</param>
 		public static byte[] EncryptData(byte[] data, uint key)
 		{
@@ -85,7 +85,7 @@ namespace Warcraft.MPQ.Crypto
 		/// are considered not encrypted.
 		/// </summary>
 		/// <returns>The decrypted data.</returns>
-		/// <param name="data">Data to be decrypted.</param>
+		/// <param name="data">ExtendedData to be decrypted.</param>
 		/// <param name="key">The decryption key to use.</param>
 		public static byte[] DecryptData(byte[] data, uint key)
 		{
@@ -96,7 +96,7 @@ namespace Warcraft.MPQ.Crypto
 		/// Internal XOR function that encrypts and decrypts a block of data.
 		/// </summary>
 		/// <returns>The encrypted or decrypted data.</returns>
-		/// <param name="data">Data.</param>
+		/// <param name="data">ExtendedData.</param>
 		/// <param name="key">Key.</param>
 		private static byte[] InternalEncryptDecrypt(byte[] data, uint key)
 		{

@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 namespace Warcraft.WMO.GroupFile.Chunks
 {
 	/// <summary>
-	/// Data chunk for triangle strip indices.
+	/// ExtendedData chunk for triangle strip indices.
 	/// </summary>
 	public class ModelTriangleStripIndices : IIFFChunk, IBinarySerializable
 	{

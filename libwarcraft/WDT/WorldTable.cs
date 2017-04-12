@@ -23,8 +23,8 @@
 using Warcraft.ADT.Chunks;
 using Warcraft.WDT.Chunks;
 using System.IO;
-using Warcraft.Core;
 using System.Collections.Generic;
+using Warcraft.Core.Extensions;
 
 namespace Warcraft.WDT
 {

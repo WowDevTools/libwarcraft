@@ -23,7 +23,6 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Warcraft.DBC.SpecialFields;
-using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
 
@@ -49,7 +48,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainLiquid"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public TerrainLiquid(byte[] inData)
 		{
 			LoadBinaryData(inData);

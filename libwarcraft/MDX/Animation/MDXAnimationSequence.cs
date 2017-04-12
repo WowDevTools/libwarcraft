@@ -20,8 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
-using Warcraft.Core;
 using System.IO;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Structures;
 
 namespace Warcraft.MDX.Animation

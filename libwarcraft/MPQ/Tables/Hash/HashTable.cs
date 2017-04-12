@@ -54,7 +54,7 @@ namespace Warcraft.MPQ.Tables.Hash
 		/// Initializes a new instance of the <see cref="HashTable"/> class from
 		/// a block of data containing hash table entries.
 		/// </summary>
-		/// <param name="data">Data.</param>
+		/// <param name="data">ExtendedData.</param>
 		public HashTable(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))

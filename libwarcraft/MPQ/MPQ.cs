@@ -742,7 +742,7 @@ namespace Warcraft.MPQ
 
 		/// <summary>
 		/// Determines whether or not the archive requires the format to be extended.
-		/// Extended formats are at least <see cref="MPQFormat.ExtendedV1"/> and up.
+		/// ExtendedIO formats are at least <see cref="MPQFormat.ExtendedV1"/> and up.
 		/// </summary>
 		/// <returns><c>true</c>, if extended format is required, <c>false</c> otherwise.</returns>
 		private bool RequiresExtendedFormat()

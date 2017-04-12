@@ -57,7 +57,7 @@ namespace Warcraft.Core.Quantization
 			Bitmap output = new Bitmap(width, height, PixelFormat.Format8bppIndexed);
 
 			// Now lock the bitmap into memory
-			using (Graphics g = Graphics.FromImage(copy))
+			using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(copy))
 			{
 				g.PageUnit = GraphicsUnit.Pixel;
 

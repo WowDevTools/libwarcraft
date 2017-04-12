@@ -22,7 +22,7 @@
 
 using System.IO;
 using Warcraft.ADT.Chunks.Subchunks;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
@@ -96,7 +96,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainMapChunk"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public TerrainMapChunk(byte[] inData)
 		{
 			LoadBinaryData(inData);

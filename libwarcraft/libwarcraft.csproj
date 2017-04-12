@@ -56,6 +56,10 @@
     <Compile Include="BLS\BLS.cs" />
     <Compile Include="BLS\BLSHeader.cs" />
     <Compile Include="BLS\ShaderBlock.cs" />
+    <Compile Include="Core\Extensions\ExtendedData.cs" />
+    <Compile Include="Core\Extensions\ExtendedGraphics.cs" />
+    <Compile Include="Core\Extensions\ExtendedIO.cs" />
+    <Compile Include="Core\Extensions\ExtendedMath.cs" />
     <Compile Include="Core\Structures\AxisConfiguration.cs" />
     <Compile Include="Core\Structures\BGRA.cs" />
     <Compile Include="Core\Structures\Box.cs" />
@@ -89,7 +93,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLP\BLP.cs" />
     <Compile Include="BLP\BLPHeader.cs" />
-    <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="BLP\BLPPixelFormat.cs" />
     <Compile Include="BLP\TextureCompressionType.cs" />
     <Compile Include="MPQ\MPQ.cs" />

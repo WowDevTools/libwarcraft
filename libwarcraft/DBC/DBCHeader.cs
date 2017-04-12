@@ -57,7 +57,7 @@ namespace Warcraft.DBC
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.DBC.DBCHeader"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
+		/// <param name="data">ExtendedData.</param>
 		public DBCHeader(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))

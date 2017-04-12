@@ -94,21 +94,21 @@ namespace Warcraft.MPQ
 		}
 
 		/*
-			Fields present in Extended Format (v1)
+			Fields present in ExtendedIO Format (v1)
 		*/
 		private ulong ExtendedBlockTableOffset;
 		private ushort ExtendedFormatHashTableOffsetBits;
 		private ushort ExtendedFormatBlockTableOffsetBits;
 
 		/*
-			Fields present in Extended Format (v2)
+			Fields present in ExtendedIO Format (v2)
 		*/
 		private ulong LongArchiveSize;
 		private ulong BETTableOffset;
 		private ulong HETTableOffset;
 
 		/*
-			Fields present in Extended Format (v3)
+			Fields present in ExtendedIO Format (v3)
 		*/
 		private ulong CompressedHashTableSize;
 		private ulong CompressedBlockTableSize;

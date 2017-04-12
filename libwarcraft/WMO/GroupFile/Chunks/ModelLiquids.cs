@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using Warcraft.ADT.Chunks.Subchunks;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks

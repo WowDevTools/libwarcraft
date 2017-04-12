@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.Core.Structures

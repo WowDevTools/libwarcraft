@@ -45,7 +45,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.Subchunks.MapChunkAlphaMaps"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public MapChunkAlphaMaps(byte[] inData)
 		{
 			LoadBinaryData(inData);

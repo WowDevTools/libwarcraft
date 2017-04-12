@@ -53,7 +53,7 @@ namespace Warcraft.MDX.Animation
 		/// The value references in the track are not filled, as they can be a number of different types.
 		/// When used, you must fill the values yourself after the creation of the track.
 		/// </summary>
-		/// <param name="data">Data.</param>
+		/// <param name="data">ExtendedData.</param>
 		/// <param name="filePath">File path to the M2 file.</param>
 		/// <param name="format">Format.</param>
 		public MDXTrack(byte[] data, string filePath, WarcraftVersion format)

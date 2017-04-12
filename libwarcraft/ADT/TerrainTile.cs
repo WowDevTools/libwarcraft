@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.ADT.Chunks;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.WDT.Chunks;
 
 namespace Warcraft.ADT

@@ -30,7 +30,7 @@ namespace Warcraft.Core.Compression
 {
 	/// <summary>
 	/// Compression handling for all compression algorithms used in MPQ archives.
-	/// Data can be decompressed manually or by using one of the helper methods
+	/// ExtendedData can be decompressed manually or by using one of the helper methods
 	/// for when multiple algorithms have been used.
 	/// </summary>
 	public static class Compression

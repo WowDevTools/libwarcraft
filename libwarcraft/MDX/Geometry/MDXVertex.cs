@@ -20,11 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.Core;
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
-using Warcraft.Core.Structures;
+using Warcraft.Core.Extensions;
 
 namespace Warcraft.MDX.Geometry
 {
