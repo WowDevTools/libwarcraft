@@ -20,16 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Drawing;
-using System.IO;
-using System.Text;
-using System.Collections.Generic;
-using System.Numerics;
-using Warcraft.Core.Extensions;
-using Warcraft.Core.Interfaces;
-using Warcraft.Core.Structures;
-using Warcraft.MDX.Geometry;
 
 namespace Warcraft.Core.Extensions
 {
@@ -60,7 +51,6 @@ namespace Warcraft.Core.Extensions
 					}
 
 					Color negativePixel = Color.FromArgb(pixelAlpha, 255 - pixel.R, 255 - pixel.G, 255 - pixel.B);
-					//Color negativePixel = Color.FromArgb(pixelAlpha, 255 - pixel.G, 255 - pixel.B, 255 - pixel.A);
 
 					outMap.SetPixel(x, y, negativePixel);
 				}
