@@ -525,8 +525,10 @@ namespace Warcraft.Core.Extensions
 		}
 
 		/// <summary>
-		/// Writes a 12-byte <see cref="Vector3f"/> value to the data stream in XYZ order. This function
-		/// expects a Y-up vector.
+		/// Writes a 12-byte <see cref="Vector3"/> value to the data stream. This function
+		/// expects a Y-up vector. By default, this function will store the vector in a Z-up axis configuration, which
+		/// is what World of Warcraft expects. This can be overridden. Passing <see cref="AxisConfiguration.Native"/> is
+		/// considered Y-up, as it is the way vectors are handled internally in the library.
 		/// </summary>
 		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="vector">The Vector to write.</param>
@@ -557,7 +559,9 @@ namespace Warcraft.Core.Extensions
 
 		/// <summary>
 		/// Writes a 16-byte <see cref="Vector4"/> value to the data stream in XYZW order. This function
-		/// expects a Y-up vector.
+		/// expects a Y-up vector. By default, this function will store the vector in a Z-up axis configuration, which
+		/// is what World of Warcraft expects. This can be overridden. Passing <see cref="AxisConfiguration.Native"/> is
+		/// considered Y-up, as it is the way vectors are handled internally in the library.
 		/// </summary>
 		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
 		/// <param name="vector">The Vector to write.</param>
