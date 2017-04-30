@@ -27,6 +27,7 @@ using Warcraft.MDX.Geometry;
 using Warcraft.MDX.Animation;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
+using Warcraft.MDX.Geometry.Skin;
 
 namespace Warcraft.MDX
 {

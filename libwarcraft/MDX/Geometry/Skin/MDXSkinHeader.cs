@@ -22,7 +22,7 @@
 
 using System.IO;
 
-namespace Warcraft.MDX.Geometry
+namespace Warcraft.MDX.Geometry.Skin
 {
 	public class MDXSkinHeader
 	{

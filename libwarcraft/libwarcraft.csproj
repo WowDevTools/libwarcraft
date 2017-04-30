@@ -83,6 +83,10 @@
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
     <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
+    <Compile Include="MDX\Geometry\Skin\BaseSkinSectionIdentifier.cs" />
+    <Compile Include="MDX\Geometry\Skin\MDXSkin.cs" />
+    <Compile Include="MDX\Geometry\Skin\MDXSkinHeader.cs" />
+    <Compile Include="MDX\Geometry\Skin\MDXSkinSection.cs" />
     <Compile Include="MDX\Visual\EMDXTextureFlags.cs" />
     <Compile Include="MDX\Visual\EMDXTextureType.cs" />
     <Compile Include="MDX\Visual\EMDXRenderBatchFlags.cs" />
@@ -151,10 +155,7 @@
     <Compile Include="MDX\MDXHeader.cs" />
     <Compile Include="MDX\Visual\MDXTexture.cs" />
     <Compile Include="MDX\Geometry\MDXVertex.cs" />
-    <Compile Include="MDX\Geometry\MDXSkin.cs" />
-    <Compile Include="MDX\Geometry\MDXSkinHeader.cs" />
     <Compile Include="MDX\Geometry\MDXVertexProperty.cs" />
-    <Compile Include="MDX\Geometry\MDXSkinSection.cs" />
     <Compile Include="MDX\Visual\MDXRenderBatch.cs" />
     <Compile Include="MDX\Animation\MDXAnimationSequence.cs" />
     <Compile Include="MDX\Animation\MDXPlayableAnimationLookupTableEntry.cs" />

@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Warcraft.MDX.Visual;
 
-namespace Warcraft.MDX.Geometry
+namespace Warcraft.MDX.Geometry.Skin
 {
 	// TODO: This class is manually filled when reading the different skins in the MDX class
 	public class MDXSkin
