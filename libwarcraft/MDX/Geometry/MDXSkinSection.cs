@@ -28,7 +28,8 @@ namespace Warcraft.MDX.Geometry
 {
 	public class MDXSkinSection
 	{
-		public uint PartID;
+		public ushort PartID;
+		public ushort Level;
 		public ushort StartVertexIndex;
 		public ushort VertexCount;
 		public ushort StartTriangleIndex;
@@ -47,7 +48,8 @@ namespace Warcraft.MDX.Geometry
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.PartID = br.ReadUInt32();
+					this.PartID = br.ReadUInt16();
+					this.Level = br.ReadUInt16();
 					this.StartVertexIndex = br.ReadUInt16();
 					this.VertexCount = br.ReadUInt16();
 					this.StartTriangleIndex = br.ReadUInt16();

@@ -31,8 +31,8 @@ namespace Warcraft.MDX.Geometry
 		public List<ushort> VertexIndices;
 		public List<ushort> Triangles;
 		public List<MDXVertexProperty> VertexProperties;
-		public List<MDXSkinSection> Submeshes;
-		public List<MDXTextureUnit> TextureUnits;
+		public List<MDXSkinSection> Sections;
+		public List<MDXRenderBatch> RenderBatches;
 
 		public MDXSkin()
 		{

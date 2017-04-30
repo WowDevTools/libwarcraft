@@ -1,5 +1,5 @@
 //
-//  MDXTextureUnit.cs
+//  MDXRenderBatch.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,35 +24,39 @@ using System.IO;
 
 namespace Warcraft.MDX.Visual
 {
-	public class MDXTextureUnit
+	public class MDXRenderBatch
 	{
-		public ETextureUnitFlags Flags;
-		public short RenderOrder;
+		public ERenderBatchFlags Flags;
+		public sbyte RenderOrder;
+
 		public ushort SubmeshIndex;
-		public ushort UnknownIndex;
+		public ushort GeosetIndex;
 		public short ColorIndex;
 		public ushort RenderFlagsIndex;
-		public ushort Layer;
-		public ushort OPCount;
+		public ushort Layer; // Also known as MaterialIndex
+		public ushort OPCount; // Also known as MaterialLayerCount
+
 		public ushort TextureLookupTableIndex;
 		public ushort TextureUnitLookupTableIndex;
 		public ushort TransparencyLookupTableIndex;
 		public ushort UVAnimationLookupTableIndex;
 
-		public MDXTextureUnit(byte[] data)
+		public MDXRenderBatch(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Flags = (ETextureUnitFlags)br.ReadUInt16();
-					this.RenderOrder = br.ReadInt16();
+					this.Flags = (ERenderBatchFlags)br.ReadByte();
+					this.RenderOrder = br.ReadSByte();
+
 					this.SubmeshIndex = br.ReadUInt16();
-					this.UnknownIndex = br.ReadUInt16();
+					this.GeosetIndex = br.ReadUInt16();
 					this.ColorIndex = br.ReadInt16();
 					this.RenderFlagsIndex = br.ReadUInt16();
 					this.Layer = br.ReadUInt16();
 					this.OPCount = br.ReadUInt16();
+
 					this.TextureLookupTableIndex = br.ReadUInt16();
 					this.TextureUnitLookupTableIndex = br.ReadUInt16();
 					this.TransparencyLookupTableIndex = br.ReadUInt16();
@@ -62,8 +66,9 @@ namespace Warcraft.MDX.Visual
 		}
 	}
 
+	// TODO: This is incorrect
 	[Flags]
-	public enum ETextureUnitFlags : ushort
+	public enum ERenderBatchFlags : byte
 	{
 		Static = 0x10,
 		Animated = 0x00

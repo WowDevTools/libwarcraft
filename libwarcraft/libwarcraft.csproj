@@ -150,7 +150,7 @@
     <Compile Include="MDX\Geometry\MDXSkinHeader.cs" />
     <Compile Include="MDX\Geometry\MDXVertexProperty.cs" />
     <Compile Include="MDX\Geometry\MDXSkinSection.cs" />
-    <Compile Include="MDX\Visual\MDXTextureUnit.cs" />
+    <Compile Include="MDX\Visual\MDXRenderBatch.cs" />
     <Compile Include="MDX\Animation\MDXAnimationSequence.cs" />
     <Compile Include="MDX\Animation\MDXPlayableAnimationLookupTableEntry.cs" />
     <Compile Include="MDX\Animation\MDXBone.cs" />

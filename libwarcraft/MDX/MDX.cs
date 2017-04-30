@@ -249,7 +249,7 @@ namespace Warcraft.MDX
 						}
 
 						// Read view submeshes
-						view.Submeshes = new List<MDXSkinSection>();
+						view.Sections = new List<MDXSkinSection>();
 						br.BaseStream.Position = view.Header.SkinSectionOffset;
 						for (int j = 0; j < view.Header.SkinSectionCount; ++j)
 						{
@@ -263,14 +263,14 @@ namespace Warcraft.MDX
 								submeshData = br.ReadBytes(32);
 							}
 
-							view.Submeshes.Add(new MDXSkinSection(submeshData));
+							view.Sections.Add(new MDXSkinSection(submeshData));
 						}
 
-						view.TextureUnits = new List<MDXTextureUnit>();
+						view.RenderBatches = new List<MDXRenderBatch>();
 						br.BaseStream.Position = view.Header.RenderBatchOffset;
 						for (int j = 0; j < view.Header.RenderBatchCount; ++j)
 						{
-							view.TextureUnits.Add(new MDXTextureUnit(br.ReadBytes(24)));
+							view.RenderBatches.Add(new MDXRenderBatch(br.ReadBytes(24)));
 						}
 					}
 				}
