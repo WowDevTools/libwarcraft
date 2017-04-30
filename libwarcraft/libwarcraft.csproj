@@ -83,6 +83,11 @@
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
     <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
+    <Compile Include="MDX\Visual\EMDXTextureFlags.cs" />
+    <Compile Include="MDX\Visual\EMDXTextureType.cs" />
+    <Compile Include="MDX\Visual\EMDXRenderBatchFlags.cs" />
+    <Compile Include="MDX\Visual\EMDXBlendMode.cs" />
+    <Compile Include="MDX\Visual\EMDXRenderFlag.cs" />
     <Compile Include="MPQ\Attributes\AttributeTypes.cs" />
     <Compile Include="MPQ\Attributes\FileAttributes.cs" />
     <Compile Include="MPQ\Tables\Extended\Block\ExtendedBlockTable.cs" />
@@ -158,7 +163,7 @@
     <Compile Include="MDX\Animation\MDXArray.cs" />
     <Compile Include="Core\Interpolation\IInterpolatable.cs" />
     <Compile Include="Core\Interpolation\Interpolation.cs" />
-    <Compile Include="MDX\Visual\MDXRenderFlag.cs" />
+    <Compile Include="MDX\Visual\MDXRenderFlagPair.cs" />
     <Compile Include="MDX\Animation\MDXSubmeshColourAnimation.cs" />
     <Compile Include="MDX\Animation\MDXUVAnimation.cs" />
     <Compile Include="DBC\DBC.cs" />

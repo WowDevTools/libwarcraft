@@ -19,15 +19,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-using System;
+
 using System.IO;
 
 namespace Warcraft.MDX.Visual
 {
 	public class MDXRenderBatch
 	{
-		public ERenderBatchFlags Flags;
+		public EMDXRenderBatchFlags Flags;
 		public sbyte RenderOrder;
+
+		public ushort ShaderID;
 
 		public ushort SubmeshIndex;
 		public ushort GeosetIndex;
@@ -37,7 +39,7 @@ namespace Warcraft.MDX.Visual
 		public ushort OPCount; // Also known as MaterialLayerCount
 
 		public ushort TextureLookupTableIndex;
-		public ushort TextureUnitLookupTableIndex;
+		public ushort RenderBatchLookupTableIndex;
 		public ushort TransparencyLookupTableIndex;
 		public ushort UVAnimationLookupTableIndex;
 
@@ -47,8 +49,10 @@ namespace Warcraft.MDX.Visual
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Flags = (ERenderBatchFlags)br.ReadByte();
+					this.Flags = (EMDXRenderBatchFlags)br.ReadByte();
 					this.RenderOrder = br.ReadSByte();
+
+					this.ShaderID = br.ReadUInt16();
 
 					this.SubmeshIndex = br.ReadUInt16();
 					this.GeosetIndex = br.ReadUInt16();
@@ -58,20 +62,12 @@ namespace Warcraft.MDX.Visual
 					this.OPCount = br.ReadUInt16();
 
 					this.TextureLookupTableIndex = br.ReadUInt16();
-					this.TextureUnitLookupTableIndex = br.ReadUInt16();
+					this.RenderBatchLookupTableIndex = br.ReadUInt16();
 					this.TransparencyLookupTableIndex = br.ReadUInt16();
 					this.UVAnimationLookupTableIndex = br.ReadUInt16();
 				}
 			}
 		}
-	}
-
-	// TODO: This is incorrect
-	[Flags]
-	public enum ERenderBatchFlags : byte
-	{
-		Static = 0x10,
-		Animated = 0x00
 	}
 }
 

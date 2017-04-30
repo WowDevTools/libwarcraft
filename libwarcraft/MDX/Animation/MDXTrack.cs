@@ -48,7 +48,7 @@ namespace Warcraft.MDX.Animation
 		public readonly MDXArray<MDXArray<T>> Values;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.MDX.Animation.MDXTrack</c>"/> class.
+		/// Initializes a new instance of the <see cref="Warcraft.MDX.Animation.MDXTrack{T}"/> class.
 		/// This class fires off a new BinaryReader, as it outreferences values elsewhere in the file.
 		/// The value references in the track are not filled, as they can be a number of different types.
 		/// When used, you must fill the values yourself after the creation of the track.

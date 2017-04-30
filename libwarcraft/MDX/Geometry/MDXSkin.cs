@@ -25,6 +25,7 @@ using Warcraft.MDX.Visual;
 
 namespace Warcraft.MDX.Geometry
 {
+	// TODO: This class is manually filled when reading the different skins in the MDX class
 	public class MDXSkin
 	{
 		public MDXSkinHeader Header;
@@ -33,11 +34,6 @@ namespace Warcraft.MDX.Geometry
 		public List<MDXVertexProperty> VertexProperties;
 		public List<MDXSkinSection> Sections;
 		public List<MDXRenderBatch> RenderBatches;
-
-		public MDXSkin()
-		{
-
-		}
 	}
 }
 

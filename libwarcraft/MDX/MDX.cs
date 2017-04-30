@@ -51,7 +51,7 @@ namespace Warcraft.MDX
 		public readonly List<short> TransparencyLookupTable = new List<short>();
 		public readonly List<MDXTrack<short>> TransparencyAnimations = new List<MDXTrack<short>>();
 		public readonly List<MDXUVAnimation> UVAnimations = new List<MDXUVAnimation>();
-		public readonly List<short> TextureUnitLookupTable = new List<short>();
+		public readonly List<short> RenderBatchLookupTable = new List<short>();
 		public readonly List<MDXRenderFlagPair> RenderFlags = new List<MDXRenderFlagPair>();
 		public readonly List<MDXTexture> Textures = new List<MDXTexture>();
 		public readonly List<uint> TextureLookupTable = new List<uint>();
@@ -414,7 +414,7 @@ namespace Warcraft.MDX
 				br.BaseStream.Position = this.Header.TextureUnitsOffset;
 				for (int i = 0; i < this.Header.TextureUnitCount; ++i)
 				{
-					this.TextureUnitLookupTable.Add(br.ReadInt16());
+					this.RenderBatchLookupTable.Add(br.ReadInt16());
 				}
 
 				// Transparency lookup

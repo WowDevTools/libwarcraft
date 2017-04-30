@@ -26,12 +26,12 @@ namespace Warcraft.MDX
 	[Flags]
 	public enum ModelObjectFlags : uint
 	{
-		TiltX = 0x0001,
-		TiltY = 0x0002,
-		HasBlendModeOverrides = 0x0008,
-		HasPhysicsData = 0x0020,
-		HasSkinLODs = 0x0080,
-		UnknownCameraFlag = 0x0100
+		TiltX						= 0x1,
+		TiltY						= 0x2,
+		HasBlendModeOverrides		= 0x8,
+		HasPhysicsData				= 0x20,
+		HasSkinLODs					= 0x80,
+		UnknownCameraFlag			= 0x100
 	}
 }
 

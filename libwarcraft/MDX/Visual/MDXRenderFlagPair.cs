@@ -1,5 +1,5 @@
 //
-//  MDXRenderFlag.cs
+//  EMDXRenderFlagPair.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,15 +19,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-using System;
+
 using System.IO;
 
 namespace Warcraft.MDX.Visual
 {
 	public class MDXRenderFlagPair
 	{
-		public MDXRenderFlag Flags;
-		public MDXBlendMode BlendingMode;
+		public EMDXRenderFlag Flags;
+		public EMDXBlendMode BlendingMode;
 
 		public MDXRenderFlagPair(byte[] data)
 		{
@@ -35,33 +35,11 @@ namespace Warcraft.MDX.Visual
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.Flags = (MDXRenderFlag)br.ReadUInt16();
-					this.BlendingMode = (MDXBlendMode)br.ReadUInt16();
+					this.Flags = (EMDXRenderFlag)br.ReadUInt16();
+					this.BlendingMode = (EMDXBlendMode)br.ReadUInt16();
 				}
 			}
 		}
-	}
-
-	[Flags]
-	public enum MDXRenderFlag : ushort
-	{
-		Unlit = 0x01,
-		NoFog = 0x02,
-		TwoSided = 0x04,
-		Unknown = 0x08,
-		DisableZBuffering = 0x10
-	}
-
-	[Flags]
-	public enum MDXBlendMode : ushort
-	{
-		Opaque = 0,
-		AlphaTestOnly = 1,
-		AlphaBlending = 2,
-		Additive = 3,
-		AdditiveAlpha = 4,
-		Modulate = 5,
-		DeeprunTramMagic = 6
 	}
 }
 

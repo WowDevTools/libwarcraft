@@ -19,9 +19,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 using System;
-using Warcraft.Core;
 using System.IO;
+using Warcraft.Core;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Structures;
 
@@ -136,7 +137,7 @@ namespace Warcraft.MDX
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					string signature = new string(br.ReadChars(4));
-					if (signature != MDXHeader.Signature)
+					if (signature != Signature)
 					{
 						throw new ArgumentException("The provided data stream does not contain a valid MDX signature. " +
 							"It might be a Legion file, or you may have omitted the signature, which should be \"MD20\".");
@@ -251,32 +252,35 @@ namespace Warcraft.MDX
 			{
 				return WarcraftVersion.Classic;
 			}
-			else if (version <= 263 && version > 256)
+
+			if (version <= 263 && version > 256)
 			{
 				return WarcraftVersion.BurningCrusade;
 			}
-			else if (version == 264)
+
+			if (version == 264)
 			{
 				return WarcraftVersion.Wrath;
 			}
-			else if (version <= 272 && version > 264)
+
+			if (version <= 272 && version > 264)
 			{
 				return WarcraftVersion.Cataclysm;
 			}
-			else if (version < 274 && version > 272)
+
+			if (version < 274 && version > 272)
 			{
 				// It should be noted that this is a guess based on the newer and older
 				// model versions. If it works, great - YMMV
 				return WarcraftVersion.Warlords;
 			}
-			else if (version >= 274)
+
+			if (version >= 274)
 			{
 				return WarcraftVersion.Legion;
 			}
-			else
-			{
-				return WarcraftVersion.Unknown;
-			}
+
+			return WarcraftVersion.Unknown;
 		}
 	}
 }
