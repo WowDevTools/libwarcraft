@@ -54,10 +54,10 @@ namespace Warcraft.MDX
 		public uint KeyedBoneLookupTablesOffset;
 		public uint VertexCount;
 		public uint VerticesOffset;
-		public uint LODViewsCount;
+		public uint SkinCount;
 
 		// Pre-Wrath
-		public uint LODViewsOffset;
+		public uint SkinsOffset;
 		// End Pre-Wrath
 
 		public uint SubmeshColourAnimationCount;
@@ -167,11 +167,11 @@ namespace Warcraft.MDX
 
 					this.VertexCount = br.ReadUInt32();
 					this.VerticesOffset = br.ReadUInt32();
-					this.LODViewsCount = br.ReadUInt32();
+					this.SkinCount = br.ReadUInt32();
 
 					if (GetModelVersion(this.Version) < WarcraftVersion.Wrath)
 					{
-						this.LODViewsOffset = br.ReadUInt32();
+						this.SkinsOffset = br.ReadUInt32();
 					}
 
 					this.SubmeshColourAnimationCount = br.ReadUInt32();

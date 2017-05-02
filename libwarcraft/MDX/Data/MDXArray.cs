@@ -95,6 +95,7 @@ namespace Warcraft.MDX.Data
 		/// referenced values.
 		/// </summary>
 		/// <param name="br">The reader to use.</param>
+		/// <param name="version">The contextually version for the stored objects.</param>
 		public MDXArray(BinaryReader br, WarcraftVersion version)
 		{
 			this.Count = br.ReadUInt32();

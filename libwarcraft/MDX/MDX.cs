@@ -211,10 +211,10 @@ namespace Warcraft.MDX
 				// Seek to view block
 				if (format < WarcraftVersion.Wrath)
 				{
-					br.BaseStream.Position = this.Header.LODViewsOffset;
+					br.BaseStream.Position = this.Header.SkinsOffset;
 
 					// Read the skins headers
-					for (int i = 0; i < this.Header.LODViewsCount; ++i)
+					for (int i = 0; i < this.Header.SkinCount; ++i)
 					{
 						this.Skins.Add(br.ReadMDXSkin(format));
 					}
