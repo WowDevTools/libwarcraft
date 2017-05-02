@@ -33,7 +33,7 @@ namespace Warcraft.MDX.Animation
 	public class MDXTrack<T> : IVersionedClass
 	{
 		public InterpolationType Interpolationtype;
-		public short GlobalSequenceID;
+		public ushort GlobalSequenceID;
 
 		/*
 			<= BC
