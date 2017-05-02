@@ -1,5 +1,5 @@
 //
-//  MDXSkinColourAnimation.cs
+//  MDXColourAnimation.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,17 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.IO;
+using Warcraft.Core;
+using Warcraft.Core.Extensions;
+using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXSkinColourAnimation
+	public class MDXColourAnimation : IVersionedClass
 	{
 		public MDXTrack<RGB> ColourTrack;
 		public MDXTrack<short> OpacityTrack;
 
-		public MDXSkinColourAnimation()
+		public MDXColourAnimation(BinaryReader br, WarcraftVersion version)
 		{
+			this.ColourTrack = br.ReadMDXTrack<RGB>(version);
+			this.OpacityTrack = br.ReadMDXTrack<short>(version);
 		}
 	}
 }

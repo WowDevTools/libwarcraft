@@ -1,5 +1,5 @@
 //
-//  MDXTextureTransform.cs
+//  MDXBoneFlag.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.IO;
-using System.Numerics;
-using Warcraft.Core;
-using Warcraft.Core.Extensions;
-using Warcraft.Core.Interfaces;
-
 namespace Warcraft.MDX.Animation
 {
-	public class MDXTextureTransform : IVersionedClass
+	public enum MDXBoneFlag : uint
 	{
-		public MDXTrack<Vector3> Translation;
-		public MDXTrack<Quaternion> Rotation;
-		public MDXTrack<Vector3> Scale;
-
-		public MDXTextureTransform(BinaryReader br, WarcraftVersion version)
-		{
-			this.Translation = br.ReadMDXTrack<Vector3>(version);
-			this.Rotation = br.ReadMDXTrack<Quaternion>(version);
-			this.Scale = br.ReadMDXTrack<Vector3>(version);
-		}
+		SphericalBillboard			= 0x8,
+		CylindricalBillboardLockedX	= 0x10,
+		CylindricalBillboardLockedY	= 0x20,
+		CylindricalBillboardLockedZ	= 0x40,
+		Transformed					= 0x200,
+		KinematicBone				= 0x400,
+		ScaledAnimation				= 0x1000
 	}
 }
-

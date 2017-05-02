@@ -22,6 +22,7 @@
 
 using Warcraft.Core.Interpolation;
 using System.IO;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
@@ -55,21 +56,53 @@ namespace Warcraft.MDX.Animation
 		/// </summary>
 		/// <param name="br"></param>
 		/// <param name="version">Format.</param>
-		public MDXTrack(BinaryReader br, WarcraftVersion version)
+		/// <param name="valueless">
+		/// If this value is true, it indicates that no values are associated with
+		/// this track, and any value-related reading should be skipped.
+		/// </param>
+		public MDXTrack(BinaryReader br, WarcraftVersion version, bool valueless = false)
 		{
-			this.Interpolationtype = (InterpolationType)br.ReadInt16();
-			this.GlobalSequenceID = br.ReadInt16();
+			this.Interpolationtype = (InterpolationType)br.ReadUInt16();
+			this.GlobalSequenceID = br.ReadUInt16();
 
 			if (version < WarcraftVersion.Wrath)
 			{
 				this.CompositeTimelineInterpolationRanges = br.ReadMDXArray<IntegerRange>();
 				this.CompositeTimelineTimestamps = br.ReadMDXArray<uint>();
-				this.CompositeTimelineValues = br.ReadMDXArray<T>();
+
+				if (valueless)
+				{
+					return;
+				}
+
+				// HACK: MDXTracks with quaternions need to have the version passed along
+				if (typeof(T) == typeof(Quaternion))
+				{
+					this.CompositeTimelineValues = br.ReadMDXArray<T>(version);
+				}
+				else
+				{
+					this.CompositeTimelineValues = br.ReadMDXArray<T>();
+				}
 			}
 			else
 			{
 				this.Timestamps = br.ReadMDXArray<MDXArray<uint>>();
-				this.Values = br.ReadMDXArray<MDXArray<T>>();
+
+				if (valueless)
+				{
+					return;
+				}
+
+				// HACK: MDXTracks with quaternions need to have the version passed along
+				if (typeof(T) == typeof(Quaternion))
+				{
+					this.Values = br.ReadMDXArray<MDXArray<T>>(version);
+				}
+				else
+				{
+					this.Values = br.ReadMDXArray<MDXArray<T>>();
+				}
 			}
 		}
 	}

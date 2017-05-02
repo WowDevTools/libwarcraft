@@ -107,6 +107,22 @@ namespace Warcraft.MDX.Data
 		}
 
 		/// <summary>
+		/// Gets all of the values contained in this <see cref="MDXArray{T}"/>. This copies all of the values
+		/// to a new list.
+		/// </summary>
+		/// <returns></returns>
+		public List<T> GetValues()
+		{
+			if (!this.IsFilled)
+			{
+				throw new InvalidOperationException("The values of the array cannot be accessed before it has been " +
+				                                    "filled with its values.");
+			}
+
+			return new List<T>(this.Values);
+		}
+
+		/// <summary>
 		/// Fills the array using a given collection of values. The collection must have the same number of elements
 		/// as the stored number of elements in the <see cref="MDXArray{T}"/> information header.
 		/// </summary>

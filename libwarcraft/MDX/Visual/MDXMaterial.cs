@@ -1,5 +1,5 @@
 //
-//  EMDXRenderFlagPair.cs
+//  MDXMaterial.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -29,16 +29,10 @@ namespace Warcraft.MDX.Visual
 		public EMDXRenderFlag Flags;
 		public EMDXBlendMode BlendingMode;
 
-		public MDXMaterial(byte[] data)
+		public MDXMaterial(BinaryReader br)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Flags = (EMDXRenderFlag)br.ReadUInt16();
-					this.BlendingMode = (EMDXBlendMode)br.ReadUInt16();
-				}
-			}
+			this.Flags = (EMDXRenderFlag)br.ReadUInt16();
+			this.BlendingMode = (EMDXBlendMode)br.ReadUInt16();
 		}
 	}
 }

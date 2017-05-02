@@ -1,5 +1,5 @@
 //
-//  MDXTextureTransform.cs
+//  MDXAnimationSequenceFlags.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.IO;
-using System.Numerics;
-using Warcraft.Core;
-using Warcraft.Core.Extensions;
-using Warcraft.Core.Interfaces;
+
+using System;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXTextureTransform : IVersionedClass
+	[Flags]
+	public enum MDXAnimationSequenceFlags : uint
 	{
-		public MDXTrack<Vector3> Translation;
-		public MDXTrack<Quaternion> Rotation;
-		public MDXTrack<Vector3> Scale;
-
-		public MDXTextureTransform(BinaryReader br, WarcraftVersion version)
-		{
-			this.Translation = br.ReadMDXTrack<Vector3>(version);
-			this.Rotation = br.ReadMDXTrack<Quaternion>(version);
-			this.Scale = br.ReadMDXTrack<Vector3>(version);
-		}
+		SetBlendAnimation = 0x01,
+		Unknown1 = 0x02,
+		Unknown2 = 0x04,
+		Unknown3 = 0x08,
+		LoadedAsLowPrioritySequence = 0x10,
+		Looping = 0x20,
+		IsAliasedAndHasFollowupAnimation = 0x40,
+		IsBlended = 0x80,
+		LocallyStoredSequence = 0x100
 	}
 }
-

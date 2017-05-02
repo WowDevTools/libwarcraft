@@ -1,5 +1,5 @@
 //
-//  MDXTextureTransform.cs
+//  MDXPlayableAnimationFlags.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.IO;
-using System.Numerics;
-using Warcraft.Core;
-using Warcraft.Core.Extensions;
-using Warcraft.Core.Interfaces;
+using System;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXTextureTransform : IVersionedClass
+	[Flags]
+	public enum MDXPlayableAnimationFlags : short
 	{
-		public MDXTrack<Vector3> Translation;
-		public MDXTrack<Quaternion> Rotation;
-		public MDXTrack<Vector3> Scale;
-
-		public MDXTextureTransform(BinaryReader br, WarcraftVersion version)
-		{
-			this.Translation = br.ReadMDXTrack<Vector3>(version);
-			this.Rotation = br.ReadMDXTrack<Quaternion>(version);
-			this.Scale = br.ReadMDXTrack<Vector3>(version);
-		}
+		PlayNormally = 0,
+		PlayReversed = 1,
+		Freeze = 3
 	}
 }
-

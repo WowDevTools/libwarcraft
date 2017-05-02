@@ -84,6 +84,11 @@ namespace Warcraft.MDX.Geometry
 				}
 			}
 		}
+
+		public static int GetSize()
+		{
+			return 48;
+		}
 	}
 }
 

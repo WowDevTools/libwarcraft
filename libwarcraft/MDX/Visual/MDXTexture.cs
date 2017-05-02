@@ -21,6 +21,8 @@
 //
 
 using System.IO;
+using System.Linq;
+using Warcraft.Core.Extensions;
 
 namespace Warcraft.MDX.Visual
 {
@@ -28,23 +30,15 @@ namespace Warcraft.MDX.Visual
 	{
 		public EMDXTextureType TextureType;
 		public EMDXTextureFlags Flags;
-		public uint FilenameLength;
-		public uint FilenameOffset;
 
 		public string Filename;
 
-		public MDXTexture(byte[] data)
+		public MDXTexture(BinaryReader br)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.TextureType = (EMDXTextureType)br.ReadUInt32();
-					this.Flags = (EMDXTextureFlags)br.ReadUInt32();
-					this.FilenameLength = br.ReadUInt32();
-					this.FilenameOffset = br.ReadUInt32();
-				}
-			}
+			this.TextureType = (EMDXTextureType)br.ReadUInt32();
+			this.Flags = (EMDXTextureFlags)br.ReadUInt32();
+
+			this.Filename = new string(br.ReadMDXArray<char>().ToArray());
 		}
 	}
 }

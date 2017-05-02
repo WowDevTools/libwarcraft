@@ -29,9 +29,11 @@ using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
 using Warcraft.MDX.Animation;
 using Warcraft.MDX.Data;
+using Warcraft.MDX.Gameplay;
 using Warcraft.MDX.Geometry;
 using Warcraft.MDX.Geometry.Skin;
 using Warcraft.MDX.Visual;
+using Warcraft.MDX.Visual.FX;
 
 namespace Warcraft.Core.Extensions
 {
@@ -52,6 +54,7 @@ namespace Warcraft.Core.Extensions
 		{
 			// Builtin types
 			{ typeof(byte), r => r.ReadByte() },
+			{ typeof(char), r => r.ReadChar() },
 			{ typeof(sbyte), r => r.ReadSByte() },
 			{ typeof(short), r => r.ReadInt16() },
 			{ typeof(ushort), r => r.ReadUInt16() },
@@ -67,6 +70,7 @@ namespace Warcraft.Core.Extensions
 			// Standard Warcraft library types
 			{ typeof(Range), r => r.ReadRange() },
 			{ typeof(IntegerRange), r => r.ReadIntegerRange() },
+			{ typeof(RGB), r => r.ReadRGB() },
 			{ typeof(RGBA), r => r.ReadRGBA() },
 			{ typeof(BGRA), r => r.ReadBGRA() },
 			{ typeof(Plane), r => r.ReadPlane() },
@@ -84,15 +88,32 @@ namespace Warcraft.Core.Extensions
 			// MDX types
 			{ typeof(MDXVertexProperty), r => r.ReadMDXVertexProperty() },
 			{ typeof(MDXRenderBatch), r => r.ReadMDXRenderBatch() },
+			{ typeof(MDXVertex), r => r.ReadMDXVertex() },
+			{ typeof(MDXTexture), r => r.ReadMDXTexture() },
+			{ typeof(MDXMaterial), r => r.ReadMDXMaterial() },
+			{ typeof(MDXAttachmentType), r => r.ReadMDXAttachmentType() },
+			{ typeof(MDXCameraType), r => r.ReadMDXCameraType() },
+			{ typeof(MDXPlayableAnimationLookupTableEntry), r => r.ReadMDXPlayableAnimationLookupTableEntry()},
 
 			// A few very specific MDXArray types, which are used with M2Tracks. This is a dirty, dirty hack to enable
 			// jagged MDXArrays, since we can't cram a generic type in here
-			{ typeof(MDXArray<uint>), r => r.ReadMDXArray<uint>()},
+
 			{ typeof(MDXArray<Vector3>), r => r.ReadMDXArray<Vector3>()},
 			{ typeof(MDXArray<byte>), r => r.ReadMDXArray<byte>()},
 			{ typeof(MDXArray<short>), r => r.ReadMDXArray<short>()},
+			{ typeof(MDXArray<ushort>), r => r.ReadMDXArray<ushort>()},
+			{ typeof(MDXArray<int>), r => r.ReadMDXArray<int>()},
 			{ typeof(MDXArray<uint>), r => r.ReadMDXArray<uint>()},
 			{ typeof(MDXArray<float>), r => r.ReadMDXArray<float>()},
+			{ typeof(MDXArray<RGB>), r => r.ReadMDXArray<RGB>()},
+			{ typeof(MDXArray<RGBA>), r => r.ReadMDXArray<RGBA>()},
+			{ typeof(MDXArray<BGRA>), r => r.ReadMDXArray<BGRA>()},
+			{ typeof(MDXArray<SplineKey<float>>), r => r.ReadMDXArray<SplineKey<float>>()},
+			{ typeof(MDXArray<SplineKey<Vector3>>), r => r.ReadMDXArray<SplineKey<Vector3>>()},
+
+			// Some spline key types
+			{ typeof(SplineKey<float>), r => r.ReadSplineKey<float>()},
+			{ typeof(SplineKey<Vector3>), r => r.ReadSplineKey<Vector3>()}
 		};
 
 		/// <summary>
@@ -104,6 +125,16 @@ namespace Warcraft.Core.Extensions
 			// MDX types
 			{ typeof(MDXSkin), (r, v) => r.ReadMDXSkin(v) },
 			{ typeof(MDXSkinSection), (r, v) => r.ReadMDXSkinSection(v)},
+			{ typeof(MDXAnimationSequence), (r, v) => r.ReadMDXAnimationSequence(v)},
+
+			{ typeof(MDXBone), (r, v) => r.ReadMDXBone(v)},
+			{ typeof(MDXTextureWeight), (r, v) => r.ReadMDXTextureWeight(v)},
+			{ typeof(MDXTextureTransform), (r, v) => r.ReadMDXTextureTransform(v)},
+			{ typeof(MDXAttachment), (r, v) => r.ReadMDXAttachment(v)},
+			{ typeof(MDXAnimationEvent), (r, v) => r.ReadMDXAnimationEvent(v)},
+			{ typeof(MDXLight), (r, v) => r.ReadMDXLight(v)},
+			{ typeof(MDXCamera), (r, v) => r.ReadMDXCamera(v)},
+			{ typeof(MDXRibbonEmitter), (r, v) => r.ReadMDXRibbonEmitter(v)},
 
 			// System.Numerics.Vectors types
 			{ typeof(Quaternion), (r, v) => v >= WarcraftVersion.BurningCrusade ? r.ReadQuaternion16() : r.ReadQuaternion32()},
@@ -125,7 +156,7 @@ namespace Warcraft.Core.Extensions
 			if (!TypeReaderMap.ContainsKey(typeof(T)))
 			{
 				throw new ArgumentException("The given generic type has no supported reading function associated " +
-				                            "with it.", nameof(T));
+				                            "with it.", typeof(T).Name);
 			}
 
 			return TypeReaderMap[typeof(T)](br);
@@ -153,6 +184,27 @@ namespace Warcraft.Core.Extensions
 		/*
 			BinaryReader Extensions for standard typess
 		*/
+
+		/// <summary>
+		/// Reads a spline key with a value and in/out tangents from the data stream.
+		/// </summary>
+		/// <param name="binaryReader"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static SplineKey<T> ReadSplineKey<T>(this BinaryReader binaryReader)
+		{
+			return new SplineKey<T>(binaryReader);
+		}
+
+		/// <summary>
+		/// Reads a 12-byte <see cref="RGB"/> value from the data stream.
+		/// </summary>
+		/// <param name="binaryReader"></param>
+		/// <returns></returns>
+		public static RGB ReadRGB(this BinaryReader binaryReader)
+		{
+			return new RGB(binaryReader.ReadVector3());
+		}
 
 		/// <summary>
 		/// Reads an 8-byte Range value from the data stream.
@@ -230,7 +282,7 @@ namespace Warcraft.Core.Extensions
 		/// Reads a 4-byte RIFF chunk signature from the data stream.
 		/// </summary>
 		/// <returns>The signature as a string.</returns>
-		public static string ReadChunkSignature(this BinaryReader binaryReader)
+		public static string ReadBinarySignature(this BinaryReader binaryReader)
 		{
 			// The signatures are stored in reverse in the file, so we'll need to read them backwards into
 			// the buffer.
@@ -250,7 +302,7 @@ namespace Warcraft.Core.Extensions
 		/// </summary>
 		public static string PeekChunkSignature(this BinaryReader binaryReader)
 		{
-			string chunkSignature = binaryReader.ReadChunkSignature();
+			string chunkSignature = binaryReader.ReadBinarySignature();
 			binaryReader.BaseStream.Position -= chunkSignature.Length;
 
 			return chunkSignature;
@@ -263,7 +315,7 @@ namespace Warcraft.Core.Extensions
 		/// <param name="reader">The current <see cref="BinaryReader"/></param>
 		public static T ReadIFFChunk<T>(this BinaryReader reader) where T : IIFFChunk, new()
 		{
-			string chunkSignature = reader.ReadChunkSignature();
+			string chunkSignature = reader.ReadBinarySignature();
 			uint chunkSize = reader.ReadUInt32();
 			byte[] chunkData = reader.ReadBytes((int)chunkSize);
 
