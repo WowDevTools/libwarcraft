@@ -66,6 +66,7 @@
     <Compile Include="Core\Structures\AxisConfiguration.cs" />
     <Compile Include="Core\Structures\BGRA.cs" />
     <Compile Include="Core\Structures\Box.cs" />
+    <Compile Include="Core\Structures\IntegerRange.cs" />
     <Compile Include="Core\Structures\Range.cs" />
     <Compile Include="Core\Structures\Resolution.cs" />
     <Compile Include="Core\Structures\RGB.cs" />

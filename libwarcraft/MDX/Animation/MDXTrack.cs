@@ -19,66 +19,57 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-using System;
+
 using Warcraft.Core.Interpolation;
-using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
+using Warcraft.Core.Extensions;
+using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 using Warcraft.MDX.Data;
 
 namespace Warcraft.MDX.Animation
 {
-	// TODO: Rework this into a nongeneric class
-	[Obsolete]
-	public class MDXTrack<T>
+	public class MDXTrack<T> : IVersionedClass
 	{
 		public InterpolationType Interpolationtype;
 		public short GlobalSequenceID;
 
 		/*
 			<= BC
-			Read these values and fill in the lists with
-			the data.
 		*/
 
-		public readonly MDXArray<KeyValuePair<int, int>> InterpolationRanges;
+		public readonly MDXArray<IntegerRange> CompositeTimelineInterpolationRanges;
+		public readonly MDXArray<uint> CompositeTimelineTimestamps;
+		public readonly MDXArray<T> CompositeTimelineValues;
 
 		/*
 			>= Wrath
-			Read the lists directly.
 		*/
-		public readonly MDXArray<MDXArray<int>> Timestamps;
+
+		public readonly MDXArray<MDXArray<uint>> Timestamps;
 		public readonly MDXArray<MDXArray<T>> Values;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.MDX.Animation.MDXTrack{T}"/> class.
-		/// This class fires off a new BinaryReader, as it outreferences values elsewhere in the file.
-		/// The value references in the track are not filled, as they can be a number of different types.
-		/// When used, you must fill the values yourself after the creation of the track.
 		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		/// <param name="filePath">File path to the M2 file.</param>
-		/// <param name="format">Format.</param>
-		public MDXTrack(byte[] data, string filePath, WarcraftVersion format)
+		/// <param name="br"></param>
+		/// <param name="version">Format.</param>
+		public MDXTrack(BinaryReader br, WarcraftVersion version)
 		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Interpolationtype = (InterpolationType)br.ReadInt16();
-					this.GlobalSequenceID = br.ReadInt16();
+			this.Interpolationtype = (InterpolationType)br.ReadInt16();
+			this.GlobalSequenceID = br.ReadInt16();
 
-					if (format < WarcraftVersion.Wrath)
-					{
-						this.InterpolationRanges = new MDXArray<KeyValuePair<int, int>>(br.ReadBytes(8));
-						this.Timestamps = new MDXArray<MDXArray<int>>(br.ReadBytes(8));
-						this.Values = new MDXArray<MDXArray<T>>(br.ReadBytes(8));
-					}
-					else
-					{
-						throw new NotImplementedException();
-					}
-				}
+			if (version < WarcraftVersion.Wrath)
+			{
+				this.CompositeTimelineInterpolationRanges = br.ReadMDXArray<IntegerRange>();
+				this.CompositeTimelineTimestamps = br.ReadMDXArray<uint>();
+				this.CompositeTimelineValues = br.ReadMDXArray<T>();
+			}
+			else
+			{
+				this.Timestamps = br.ReadMDXArray<MDXArray<uint>>();
+				this.Values = br.ReadMDXArray<MDXArray<T>>();
 			}
 		}
 	}

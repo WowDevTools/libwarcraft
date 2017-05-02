@@ -24,6 +24,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Warcraft.Core.Interfaces;
+using Warcraft.MDX.Animation;
 using Warcraft.MDX.Data;
 using Warcraft.MDX.Geometry;
 using Warcraft.MDX.Geometry.Skin;
@@ -91,6 +92,18 @@ namespace Warcraft.Core.Extensions
 			}
 
 			return new MDXArray<T>(binaryReader, version);
+		}
+
+		/// <summary>
+		/// Reads an <see cref="MDXTrack{T}"/> of type <typeparamref name="T"/> from the data stream.
+		/// </summary>
+		/// <param name="binaryReader"></param>
+		/// <param name="version"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static MDXTrack<T> ReadMDXTrack<T>(this BinaryReader binaryReader, WarcraftVersion version)
+		{
+			return new MDXTrack<T>(binaryReader, version);
 		}
 
 		/// <summary>

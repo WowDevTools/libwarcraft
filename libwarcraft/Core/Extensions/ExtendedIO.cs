@@ -66,6 +66,7 @@ namespace Warcraft.Core.Extensions
 
 			// Standard Warcraft library types
 			{ typeof(Range), r => r.ReadRange() },
+			{ typeof(IntegerRange), r => r.ReadIntegerRange() },
 			{ typeof(RGBA), r => r.ReadRGBA() },
 			{ typeof(BGRA), r => r.ReadBGRA() },
 			{ typeof(Plane), r => r.ReadPlane() },
@@ -83,6 +84,15 @@ namespace Warcraft.Core.Extensions
 			// MDX types
 			{ typeof(MDXVertexProperty), r => r.ReadMDXVertexProperty() },
 			{ typeof(MDXRenderBatch), r => r.ReadMDXRenderBatch() },
+
+			// A few very specific MDXArray types, which are used with M2Tracks. This is a dirty, dirty hack to enable
+			// jagged MDXArrays, since we can't cram a generic type in here
+			{ typeof(MDXArray<uint>), r => r.ReadMDXArray<uint>()},
+			{ typeof(MDXArray<Vector3>), r => r.ReadMDXArray<Vector3>()},
+			{ typeof(MDXArray<byte>), r => r.ReadMDXArray<byte>()},
+			{ typeof(MDXArray<short>), r => r.ReadMDXArray<short>()},
+			{ typeof(MDXArray<uint>), r => r.ReadMDXArray<uint>()},
+			{ typeof(MDXArray<float>), r => r.ReadMDXArray<float>()},
 		};
 
 		/// <summary>
@@ -94,6 +104,12 @@ namespace Warcraft.Core.Extensions
 			// MDX types
 			{ typeof(MDXSkin), (r, v) => r.ReadMDXSkin(v) },
 			{ typeof(MDXSkinSection), (r, v) => r.ReadMDXSkinSection(v)},
+
+			// System.Numerics.Vectors types
+			{ typeof(Quaternion), (r, v) => v >= WarcraftVersion.BurningCrusade ? r.ReadQuaternion16() : r.ReadQuaternion32()},
+
+			// Specific versioned MDXArray types
+			{ typeof(MDXArray<Quaternion>), (r, v) => r.ReadMDXArray<Quaternion>(v)},
 		};
 
 		/// <summary>
@@ -146,6 +162,16 @@ namespace Warcraft.Core.Extensions
 		public static Range ReadRange(this BinaryReader binaryReader)
 		{
 			return new Range(binaryReader.ReadSingle(), binaryReader.ReadSingle());
+		}
+
+		/// <summary>
+		/// Reads an 8-byte <see cref="IntegerRange"/> value from the data stream.
+		/// </summary>
+		/// <param name="binaryReader"></param>
+		/// <returns></returns>
+		public static IntegerRange ReadIntegerRange(this BinaryReader binaryReader)
+		{
+			return new IntegerRange(binaryReader.ReadUInt32(), binaryReader.ReadUInt32());
 		}
 
 		/// <summary>
