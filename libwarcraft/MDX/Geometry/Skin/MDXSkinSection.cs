@@ -22,6 +22,7 @@
 
 using System.IO;
 using System.Numerics;
+using Warcraft.Core;
 using Warcraft.Core.Extensions;
 
 namespace Warcraft.MDX.Geometry.Skin
@@ -145,6 +146,21 @@ namespace Warcraft.MDX.Geometry.Skin
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Gets the absolute serialized byte size of this class.
+		/// </summary>
+		/// <param name="version">The version that is contextually relevant.</param>
+		/// <returns>The size of a serialized object.</returns>
+		public static int GetSize(WarcraftVersion version)
+		{
+			if (version > WarcraftVersion.Cataclysm)
+			{
+				return 48;
+			}
+
+			return 32;
 		}
 	}
 }

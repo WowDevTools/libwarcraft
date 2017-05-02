@@ -51,8 +51,10 @@ namespace Warcraft.MDX
 		public readonly List<MDXSkinColourAnimation> ColourAnimations = new List<MDXSkinColourAnimation>();
 		public readonly List<short> TransparencyLookupTable = new List<short>();
 		public readonly List<MDXTrack<short>> TransparencyAnimations = new List<MDXTrack<short>>();
-		public readonly List<MDXUVAnimation> UVAnimations = new List<MDXUVAnimation>();
-		public readonly List<short> RenderBatchLookupTable = new List<short>();
+
+		public readonly List<short> TextureTransformLookupTable = new List<short>();
+		public readonly List<MDXTextureTransform> TextureTransformations = new List<MDXTextureTransform>();
+		public readonly List<short> TextureSlotLookupTable = new List<short>();
 		public readonly List<MDXMaterial> Materials = new List<MDXMaterial>();
 		public readonly List<MDXTexture> Textures = new List<MDXTexture>();
 		public readonly List<ushort> TextureLookupTable = new List<ushort>();
@@ -211,68 +213,10 @@ namespace Warcraft.MDX
 				{
 					br.BaseStream.Position = this.Header.LODViewsOffset;
 
-					// Read the view headers
+					// Read the skins headers
 					for (int i = 0; i < this.Header.LODViewsCount; ++i)
 					{
-						MDXSkinHeader skinHeader = new MDXSkinHeader(br.ReadBytes(44));
-
-						MDXSkin skin = new MDXSkin();
-						skin.Header = skinHeader;
-
-						this.Skins.Add(skin);
-					}
-
-					// Read view data
-					foreach (MDXSkin view in this.Skins)
-					{
-						// Read view vertex indices
-						view.VertexIndices = new List<ushort>();
-						br.BaseStream.Position = view.Header.VertexIndicesOffset;
-						for (int j = 0; j < view.Header.VertexIndexCount; ++j)
-						{
-							view.VertexIndices.Add(br.ReadUInt16());
-						}
-
-						// Read view triangle vertex indices
-						view.Triangles = new List<ushort>();
-						br.BaseStream.Position = view.Header.TriangleVertexIndicesOffset;
-						for (int j = 0; j < view.Header.TriangleVertexCount; ++j)
-						{
-							view.Triangles.Add(br.ReadUInt16());
-						}
-
-						// Read view vertex properties
-						view.VertexProperties = new List<MDXVertexProperty>();
-						br.BaseStream.Position = view.Header.VertexPropertiesOffset;
-						for (int j = 0; j < view.Header.VertexPropertyCount; ++j)
-						{
-							view.VertexProperties.Add(new MDXVertexProperty(br.ReadByte(), br.ReadByte(), br.ReadByte(), br.ReadByte()));
-						}
-
-						// Read view submeshes
-						view.Sections = new List<MDXSkinSection>();
-						br.BaseStream.Position = view.Header.SkinSectionOffset;
-						for (int j = 0; j < view.Header.SkinSectionCount; ++j)
-						{
-							byte[] submeshData;
-							if (MDXHeader.GetModelVersion(this.Header.Version) >= WarcraftVersion.BurningCrusade)
-							{
-								submeshData = br.ReadBytes(48);
-							}
-							else
-							{
-								submeshData = br.ReadBytes(32);
-							}
-
-							view.Sections.Add(new MDXSkinSection(submeshData));
-						}
-
-						view.RenderBatches = new List<MDXRenderBatch>();
-						br.BaseStream.Position = view.Header.RenderBatchOffset;
-						for (int j = 0; j < view.Header.RenderBatchCount; ++j)
-						{
-							view.RenderBatches.Add(new MDXRenderBatch(br.ReadBytes(24)));
-						}
+						this.Skins.Add(br.ReadMDXSkin());
 					}
 				}
 				else
@@ -356,15 +300,15 @@ namespace Warcraft.MDX
 				{
 					br.BaseStream.Position = Header.UVTextureAnimationsOffset + (i * 84);
 
-					MDXUVAnimation UVAnimation = new MDXUVAnimation();
+					MDXTextureTransform UVAnimation = new MDXTextureTransform();
 					UVAnimation.TranslationTrack = new MDXTrack<Vector3f>(br, MDXHeader.GetModelVersion(Header.Version));
 					UVAnimation.RotationTrack = new MDXTrack<Quaternion>(br, MDXHeader.GetModelVersion(Header.Version));
 					UVAnimation.ScaleTrack = new MDXTrack<Vector3f>(br, MDXHeader.GetModelVersion(Header.Version));
 
-					UVAnimations.Add(UVAnimation);
+					TextureTransformations.Add(UVAnimation);
 				}
 				// Read UV animation track data
-				foreach (MDXUVAnimation UVAnimation in UVAnimations)
+				foreach (MDXTextureTransform UVAnimation in TextureTransformations)
 				{
 					// Read animation translation block
 					br.BaseStream.Position = UVAnimation.TranslationTrack.ValuesOffset;
@@ -420,7 +364,7 @@ namespace Warcraft.MDX
 				br.BaseStream.Position = this.Header.RenderBatchLookupTableOffset;
 				for (int i = 0; i < this.Header.RenderBatchLookupTableCount; ++i)
 				{
-					this.RenderBatchLookupTable.Add(br.ReadInt16());
+					this.TextureSlotLookupTable.Add(br.ReadInt16());
 				}
 
 				// Transparency lookup

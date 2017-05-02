@@ -1,5 +1,5 @@
 //
-//  MDXUVAnimation.cs
+//  MDXTextureTransform.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,13 +24,13 @@ using System.Numerics;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXUVAnimation
+	public class MDXTextureTransform
 	{
 		public MDXTrack<Vector3> TranslationTrack;
 		public MDXTrack<Quaternion> RotationTrack;
 		public MDXTrack<Vector3> ScaleTrack;
 
-		public MDXUVAnimation()
+		public MDXTextureTransform()
 		{
 		}
 	}

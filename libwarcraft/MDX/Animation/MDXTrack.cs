@@ -24,6 +24,7 @@ using Warcraft.Core.Interpolation;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
+using Warcraft.MDX.Data;
 
 namespace Warcraft.MDX.Animation
 {

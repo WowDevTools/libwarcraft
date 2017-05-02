@@ -26,8 +26,13 @@ using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core.Extensions;
 
-namespace Warcraft.MDX.Animation
+namespace Warcraft.MDX.Data
 {
+	/// <summary>
+	/// Represents an array of values, referenced by an element count and a byte offset to where the elements are
+	/// stored.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public class MDXArray<T> : IEnumerable<T>
 	{
 		/// <summary>
@@ -48,7 +53,7 @@ namespace Warcraft.MDX.Animation
 		/// <summary>
 		/// Whether or not the array has been filled with its values.
 		/// </summary>
-		private readonly bool IsFilled;
+		private bool IsFilled;
 
 		/// <summary>
 		/// Deserializes the information header of an <see cref="MDXArray{T}"/> without reading its values. The values
@@ -117,6 +122,8 @@ namespace Warcraft.MDX.Animation
 			}
 
 			br.BaseStream.Position = initialPositionBeforeJumpToData;
+
+			this.IsFilled = true;
 		}
 
 		/// <summary>

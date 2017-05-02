@@ -28,6 +28,7 @@ using System.Text;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
 using Warcraft.MDX.Animation;
+using Warcraft.MDX.Data;
 
 namespace Warcraft.Core.Extensions
 {
@@ -75,6 +76,8 @@ namespace Warcraft.Core.Extensions
 			{ typeof(Vector2), r => r.ReadVector2() },
 			{ typeof(Vector3), r => r.ReadVector3() },
 			{ typeof(Vector4), r => r.ReadVector4() },
+
+			// MDX types
 		};
 
 		/// <summary>

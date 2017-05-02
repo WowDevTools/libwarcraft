@@ -61,6 +61,7 @@
     <Compile Include="Core\Extensions\ExtendedGraphics.cs" />
     <Compile Include="Core\Extensions\ExtendedIO.cs" />
     <Compile Include="Core\Extensions\ExtendedMath.cs" />
+    <Compile Include="Core\Extensions\ExtendedModelIO.cs" />
     <Compile Include="Core\Structures\AxisConfiguration.cs" />
     <Compile Include="Core\Structures\BGRA.cs" />
     <Compile Include="Core\Structures\Box.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
     <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
+    <Compile Include="MDX\Data\MDXArray.cs" />
     <Compile Include="MDX\Geometry\Skin\BaseSkinSectionIdentifier.cs" />
     <Compile Include="MDX\Geometry\Skin\MDXSkin.cs" />
     <Compile Include="MDX\Geometry\Skin\MDXSkinHeader.cs" />
@@ -162,12 +164,11 @@
     <Compile Include="MDX\Animation\MDXPlayableAnimationLookupTableEntry.cs" />
     <Compile Include="MDX\Animation\MDXBone.cs" />
     <Compile Include="MDX\Animation\MDXTrack.cs" />
-    <Compile Include="MDX\Animation\MDXArray.cs" />
     <Compile Include="Core\Interpolation\IInterpolatable.cs" />
     <Compile Include="Core\Interpolation\Interpolation.cs" />
     <Compile Include="MDX\Visual\MDXMaterial.cs" />
     <Compile Include="MDX\Animation\MDXSkinColourAnimation.cs" />
-    <Compile Include="MDX\Animation\MDXUVAnimation.cs" />
+    <Compile Include="MDX\Animation\MDXTextureTransform.cs" />
     <Compile Include="DBC\DBC.cs" />
     <Compile Include="DBC\DBCHeader.cs" />
     <Compile Include="Core\WarcraftVersion.cs" />
