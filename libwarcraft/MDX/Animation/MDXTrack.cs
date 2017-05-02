@@ -27,6 +27,8 @@ using Warcraft.Core;
 
 namespace Warcraft.MDX.Animation
 {
+	// TODO: Rework this into a nongeneric class
+	[Obsolete]
 	public class MDXTrack<T>
 	{
 		public InterpolationType Interpolationtype;

@@ -27,6 +27,7 @@ using System.Numerics;
 using System.Text;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
+using Warcraft.MDX.Animation;
 
 namespace Warcraft.Core.Extensions
 {
@@ -36,8 +37,80 @@ namespace Warcraft.Core.Extensions
 	public static class ExtendedIO
 	{
 		/*
+			Generic BinaryReader read function
+		*/
+
+		/// <summary>
+		/// Type mapping function dictionary. All supported types of the generic reading function are listed here.
+		/// Note that strings are read as C-style null-terminated strings, and not C#-style length-prefixed strings.
+		/// </summary>
+		private static readonly Dictionary<Type, Func<BinaryReader, dynamic>> TypeReaderMap = new Dictionary<Type, Func<BinaryReader, dynamic>>
+		{
+			// Builtin types
+			{ typeof(byte), r => r.ReadByte() },
+			{ typeof(sbyte), r => r.ReadSByte() },
+			{ typeof(short), r => r.ReadInt16() },
+			{ typeof(ushort), r => r.ReadUInt16() },
+			{ typeof(int), r => r.ReadInt32() },
+			{ typeof(uint), r => r.ReadUInt32() },
+			{ typeof(long), r => r.ReadInt64() },
+			{ typeof(ulong), r => r.ReadUInt64() },
+			{ typeof(float), r => r.ReadSingle() },
+			{ typeof(double), r => r.ReadDouble() },
+			{ typeof(decimal), r => r.ReadDecimal() },
+			{ typeof(string), r => r.ReadNullTerminatedString() },
+
+			// Standard Warcraft library types
+			{ typeof(Range), r => r.ReadRange() },
+			{ typeof(RGBA), r => r.ReadRGBA() },
+			{ typeof(BGRA), r => r.ReadBGRA() },
+			{ typeof(Plane), r => r.ReadPlane() },
+			{ typeof(ShortPlane), r => r.ReadShortPlane() },
+			{ typeof(Rotator), r => r.ReadRotator() },
+			{ typeof(Vector3s), r => r.ReadVector3s() },
+			{ typeof(Box), r => r.ReadBox() },
+			{ typeof(ShortBox), r => r.ReadShortBox() },
+
+			// System.Numerics.Vectors types
+			{ typeof(Vector2), r => r.ReadVector2() },
+			{ typeof(Vector3), r => r.ReadVector3() },
+			{ typeof(Vector4), r => r.ReadVector4() },
+		};
+
+		/// <summary>
+		/// Reads a value of type <typeparamref name="T"/> from the data stream. The generic type must be
+		/// explicitly implemented in <see cref="TypeReaderMap"/>. Note that strings are read as C-style null-terminated
+		/// strings, and not C#-style length-prefixed strings.
+		/// </summary>
+		/// <param name="br"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static T Read<T>(this BinaryReader br)
+		{
+			if (!TypeReaderMap.ContainsKey(typeof(T)))
+			{
+				throw new ArgumentException("The given generic type has no supported reading function associated " +
+				                            "with it.", nameof(T));
+			}
+
+			return TypeReaderMap[typeof(T)](br);
+		}
+
+		/*
 			BinaryReader Extensions for standard typess
 		*/
+
+		/// <summary>
+		/// Reads an <see cref="MDXArray{T}"/> of type <typeparamref name="T"/> from the data stream.
+		/// This advances the position of the reader by 8 bytes.
+		/// </summary>
+		/// <param name="binaryReader">binaryReader.</param>
+		/// <typeparam name="T">The type which the array encapsulates.</typeparam>
+		/// <returns>A new array, filled with the values it references.</returns>
+		public static MDXArray<T> ReadMDXArray<T>(this BinaryReader binaryReader)
+		{
+			return new MDXArray<T>(binaryReader);
+		}
 
 		/// <summary>
 		/// Reads an 8-byte Range value from the data stream.

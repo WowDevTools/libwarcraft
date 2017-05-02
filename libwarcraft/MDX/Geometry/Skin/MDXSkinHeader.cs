@@ -24,25 +24,75 @@ using System.IO;
 
 namespace Warcraft.MDX.Geometry.Skin
 {
+	/// <summary>
+	/// The header of an <see cref="MDXSkin"/> object.
+	/// </summary>
 	public class MDXSkinHeader
 	{
+		/// <summary>
+		/// The number of vertex indices used in this skin.
+		/// </summary>
 		public uint VertexIndexCount;
+
+		/// <summary>
+		/// The byte offset where the indices are found.
+		/// </summary>
 		public uint VertexIndicesOffset;
 
+
+		/// <summary>
+		/// The number of triangles that compose this skin.
+		/// </summary>
 		public uint TriangleVertexCount;
+
+		/// <summary>
+		/// The byte offset where the triangles are found.
+		/// </summary>
 		public uint TriangleVertexIndicesOffset;
 
+
+		/// <summary>
+		/// The number of vertex properties used in this skin. Commonly the same as the number of vertices.
+		/// </summary>
 		public uint VertexPropertyCount;
+
+		/// <summary>
+		/// The byte offset where the vertex properties are found.
+		/// </summary>
 		public uint VertexPropertiesOffset;
 
+
+		/// <summary>
+		/// The number of sections in this skin.
+		/// </summary>
 		public uint SkinSectionCount;
+
+		/// <summary>
+		/// The byte offset where the skin sections are found.
+		/// </summary>
 		public uint SkinSectionOffset;
 
+
+		/// <summary>
+		/// The number of rendering batches (that is, shading information) in this skin.
+		/// </summary>
 		public uint RenderBatchCount;
+
+		/// <summary>
+		/// The byte offset where the rendering batches are found.
+		/// </summary>
 		public uint RenderBatchOffset;
 
-		public uint TransitionDistance;
 
+		/// <summary>
+		/// The maximum number of bones in each draw call.
+		/// </summary>
+		public uint BoneCountMax;
+
+		/// <summary>
+		/// Deserializes a new <see cref="MDXSkinHeader"/> object from binary data.
+		/// </summary>
+		/// <param name="data">The data which contains the header.</param>
 		public MDXSkinHeader(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
@@ -64,7 +114,7 @@ namespace Warcraft.MDX.Geometry.Skin
 					this.RenderBatchCount = br.ReadUInt32();
 					this.RenderBatchOffset = br.ReadUInt32();
 
-					this.TransitionDistance = br.ReadUInt32();
+					this.BoneCountMax = br.ReadUInt32();
 				}
 			}
 		}
