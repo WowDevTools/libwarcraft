@@ -24,6 +24,7 @@ using System.IO;
 using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MDX.Geometry.Skin
 {
@@ -31,7 +32,7 @@ namespace Warcraft.MDX.Geometry.Skin
 	/// A section of an <see cref="MDXSkin"/>. Each section is associated with a single material or distinct rendering
 	/// operation.
 	/// </summary>
-	public class MDXSkinSection
+	public class MDXSkinSection : IVersionedClass
 	{
 		/// <summary>
 		/// An identifier which specifies what type of skin section this is. It differentiates standard parts, such as

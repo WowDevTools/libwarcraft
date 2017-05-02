@@ -22,6 +22,9 @@
 
 using System;
 using System.IO;
+using System.Linq;
+using Warcraft.Core.Interfaces;
+using Warcraft.MDX.Data;
 using Warcraft.MDX.Geometry;
 using Warcraft.MDX.Geometry.Skin;
 using Warcraft.MDX.Visual;
@@ -38,20 +41,56 @@ namespace Warcraft.Core.Extensions
 		/// Reads an <see cref="MDXSkin"/> from the data stream.
 		/// </summary>
 		/// <param name="binaryReader">The reader to use.</param>
+		/// <param name="version">The contextually relevant version to target.</param>
 		/// <returns>A fully read skin.</returns>
-		public static MDXSkin ReadMDXSkin(this BinaryReader binaryReader)
+		public static MDXSkin ReadMDXSkin(this BinaryReader binaryReader, WarcraftVersion version)
 		{
 			MDXSkin skin = new MDXSkin
 			{
 				VertexIndices = binaryReader.ReadMDXArray<ushort>(),
 				Triangles = binaryReader.ReadMDXArray<ushort>(),
 				VertexProperties = binaryReader.ReadMDXArray<MDXVertexProperty>(),
-				Sections = binaryReader.ReadMDXArray<MDXSkinSection>(),
+				Sections = binaryReader.ReadMDXArray<MDXSkinSection>(version),
 				RenderBatches = binaryReader.ReadMDXArray<MDXRenderBatch>(),
 				BoneCountMax = binaryReader.ReadUInt32()
 			};
 
 			return skin;
+		}
+
+		/// <summary>
+		/// Reads an <see cref="MDXArray{T}"/> of type <typeparamref name="T"/> from the data stream.
+		/// This advances the position of the reader by 8 bytes.
+		/// </summary>
+		/// <param name="binaryReader">binaryReader.</param>
+		/// <typeparam name="T">The type which the array encapsulates.</typeparam>
+		/// <returns>A new array, filled with the values it references.</returns>
+		public static MDXArray<T> ReadMDXArray<T>(this BinaryReader binaryReader)
+		{
+			if (typeof(T).GetInterfaces().Contains(typeof(IVersionedClass)))
+			{
+				throw new InvalidOperationException("Versioned classes must be provided with a target version.");
+			}
+
+			return new MDXArray<T>(binaryReader);
+		}
+
+		/// <summary>
+		/// Reads an <see cref="MDXArray{T}"/> of type <typeparamref name="T"/> from the data stream.
+		/// This advances the position of the reader by 8 bytes.
+		/// </summary>
+		/// <param name="binaryReader">binaryReader.</param>
+		/// <param name="version">The contextually relevant version of the stored objects.</param>
+		/// <typeparam name="T">The type which the array encapsulates.</typeparam>
+		/// <returns>A new array, filled with the values it references.</returns>
+		public static MDXArray<T> ReadMDXArray<T>(this BinaryReader binaryReader, WarcraftVersion version)
+		{
+			if (!typeof(T).GetInterfaces().Contains(typeof(IVersionedClass)))
+			{
+				return new MDXArray<T>(binaryReader);
+			}
+
+			return new MDXArray<T>(binaryReader, version);
 		}
 
 		/// <summary>

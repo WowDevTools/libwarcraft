@@ -58,7 +58,7 @@ namespace Warcraft.MDX.Visual
 		public ushort GeosetIndex;
 
 		/// <summary>
-		/// The index of a colour animation track which this batch should use.
+		/// The index of a colour animation track which this batch should use. -1 denotes no colour.
 		/// This is an index into <see cref="MDX.ColourAnimations"/>
 		/// </summary>
 		public short ColorIndex;

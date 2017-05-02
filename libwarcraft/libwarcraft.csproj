@@ -62,6 +62,7 @@
     <Compile Include="Core\Extensions\ExtendedIO.cs" />
     <Compile Include="Core\Extensions\ExtendedMath.cs" />
     <Compile Include="Core\Extensions\ExtendedModelIO.cs" />
+    <Compile Include="Core\Interfaces\IVersionedClass.cs" />
     <Compile Include="Core\Structures\AxisConfiguration.cs" />
     <Compile Include="Core\Structures\BGRA.cs" />
     <Compile Include="Core\Structures\Box.cs" />

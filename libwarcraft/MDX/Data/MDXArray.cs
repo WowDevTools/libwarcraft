@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
 using Warcraft.Core.Extensions;
 
 namespace Warcraft.MDX.Data
@@ -90,6 +91,21 @@ namespace Warcraft.MDX.Data
 		}
 
 		/// <summary>
+		/// Reads an <see cref="MDXArray{T}"/> using a given <see cref="BinaryReader"/>, and fills it with its
+		/// referenced values.
+		/// </summary>
+		/// <param name="br">The reader to use.</param>
+		public MDXArray(BinaryReader br, WarcraftVersion version)
+		{
+			this.Count = br.ReadUInt32();
+			this.ElementsOffset = br.ReadUInt32();
+
+			Fill(br, version);
+
+			this.IsFilled = true;
+		}
+
+		/// <summary>
 		/// Fills the array using a given collection of values. The collection must have the same number of elements
 		/// as the stored number of elements in the <see cref="MDXArray{T}"/> information header.
 		/// </summary>
@@ -119,6 +135,27 @@ namespace Warcraft.MDX.Data
 			for (int i = 0; i < this.Count; ++i)
 			{
 				this.Values.Add(br.Read<T>());
+			}
+
+			br.BaseStream.Position = initialPositionBeforeJumpToData;
+
+			this.IsFilled = true;
+		}
+
+		/// <summary>
+		/// Fills the array with versioned objects using the given <see cref="BinaryReader"/>. The position of the
+		/// reader will not be modified by this method.
+		/// </summary>
+		/// <param name="br"></param>
+		/// <param name="version">The contextually relevant version of the stored objects.</param>
+		public void Fill(BinaryReader br, WarcraftVersion version)
+		{
+			long initialPositionBeforeJumpToData = br.BaseStream.Position;
+			br.BaseStream.Position = this.ElementsOffset;
+
+			for (int i = 0; i < this.Count; ++i)
+			{
+				this.Values.Add(br.Read<T>(version));
 			}
 
 			br.BaseStream.Position = initialPositionBeforeJumpToData;

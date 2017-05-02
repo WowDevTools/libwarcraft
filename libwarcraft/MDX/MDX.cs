@@ -121,7 +121,7 @@ namespace Warcraft.MDX
 					this.AnimationSequenceLookupTable.Add(br.ReadInt16());
 				}
 
-				if (MDXHeader.GetModelVersion(this.Header.Version) < WarcraftVersion.Wrath)
+				if (format < WarcraftVersion.Wrath)
 				{
 					// Seek to Playable Animations Lookup Table
 					br.BaseStream.Position = this.Header.PlayableAnimationLookupTableOffset;
@@ -143,7 +143,7 @@ namespace Warcraft.MDX
 					bone.ParentBone = br.ReadInt16();
 					bone.SubmeshID = br.ReadUInt16();
 
-					if (MDXHeader.GetModelVersion(this.Header.Version) >= WarcraftVersion.BurningCrusade)
+					if (format >= WarcraftVersion.BurningCrusade)
 					{
 						bone.Unknown1 = br.ReadUInt16();
 						bone.Unknown1 = br.ReadUInt16();
@@ -209,14 +209,14 @@ namespace Warcraft.MDX
 				}
 
 				// Seek to view block
-				if (MDXHeader.GetModelVersion(this.Header.Version) < WarcraftVersion.Wrath)
+				if (format < WarcraftVersion.Wrath)
 				{
 					br.BaseStream.Position = this.Header.LODViewsOffset;
 
 					// Read the skins headers
 					for (int i = 0; i < this.Header.LODViewsCount; ++i)
 					{
-						this.Skins.Add(br.ReadMDXSkin());
+						this.Skins.Add(br.ReadMDXSkin(format));
 					}
 				}
 				else

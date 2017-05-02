@@ -24,10 +24,23 @@ using System.Collections.Generic;
 
 namespace Warcraft.MDX.Geometry
 {
+	/// <summary>
+	/// A quartet of bone indices into the <see cref="MDX.KeyedBoneLookupTable"/>, which are associated with a vertex.
+	/// </summary>
 	public class MDXVertexProperty
 	{
+		/// <summary>
+		/// A list of bone indices.
+		/// </summary>
 		public readonly List<byte> BoneIndices = new List<byte>();
 
+		/// <summary>
+		/// Creates a new <see cref="MDXVertexProperty"/> object from a set of bone indices.
+		/// </summary>
+		/// <param name="inBoneA">The first bone.</param>
+		/// <param name="inBoneB">The second bone.</param>
+		/// <param name="inBoneC">The third bone.</param>
+		/// <param name="inBoneD">The fourth bone.</param>
 		public MDXVertexProperty(byte inBoneA, byte inBoneB, byte inBoneC, byte inBoneD)
 		{
 			this.BoneIndices.Add(inBoneA);

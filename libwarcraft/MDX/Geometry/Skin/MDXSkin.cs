@@ -21,6 +21,7 @@
 //
 
 using System.IO;
+using Warcraft.Core.Interfaces;
 using Warcraft.MDX.Data;
 using Warcraft.MDX.Visual;
 
@@ -31,7 +32,7 @@ namespace Warcraft.MDX.Geometry.Skin
 	/// model. Each skin acts as a LOD (level of detail) instance. Skins, due to the way MDX files are serialized,
 	/// are read using an extension to the builtin <see cref="BinaryReader"/>.
 	/// </summary>
-	public class MDXSkin
+	public class MDXSkin : IVersionedClass
 	{
 		/// <summary>
 		/// A list of vertices from the global vertex list which are used in this skin.

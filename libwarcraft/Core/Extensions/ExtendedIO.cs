@@ -29,6 +29,9 @@ using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
 using Warcraft.MDX.Animation;
 using Warcraft.MDX.Data;
+using Warcraft.MDX.Geometry;
+using Warcraft.MDX.Geometry.Skin;
+using Warcraft.MDX.Visual;
 
 namespace Warcraft.Core.Extensions
 {
@@ -78,6 +81,19 @@ namespace Warcraft.Core.Extensions
 			{ typeof(Vector4), r => r.ReadVector4() },
 
 			// MDX types
+			{ typeof(MDXVertexProperty), r => r.ReadMDXVertexProperty() },
+			{ typeof(MDXRenderBatch), r => r.ReadMDXRenderBatch() },
+		};
+
+		/// <summary>
+		/// Versioned type mapping function dictionary. All supported types of the versioned generic reading function
+		/// are listed here.
+		/// </summary>
+		private static readonly Dictionary<Type, Func<BinaryReader, WarcraftVersion, dynamic>> VersionedTypeReaderMap = new Dictionary<Type, Func<BinaryReader, WarcraftVersion, dynamic>>
+		{
+			// MDX types
+			{ typeof(MDXSkin), (r, v) => r.ReadMDXSkin(v) },
+			{ typeof(MDXSkinSection), (r, v) => r.ReadMDXSkinSection(v)},
 		};
 
 		/// <summary>
@@ -99,21 +115,28 @@ namespace Warcraft.Core.Extensions
 			return TypeReaderMap[typeof(T)](br);
 		}
 
+		/// <summary>
+		/// Reads a versioned value of type <typeparamref name="T"/> from the data stream. The generic type must be
+		/// explicitly implemented in <see cref="VersionedTypeReaderMap"/>.
+		/// </summary>
+		/// <param name="br"></param>
+		/// <param name="version">The contextually relevant version for the object to be read.</param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static T Read<T>(this BinaryReader br, WarcraftVersion version)
+		{
+			if (!VersionedTypeReaderMap.ContainsKey(typeof(T)))
+			{
+				throw new ArgumentException("The given generic type has no supported reading function associated " +
+				                            "with it.", nameof(T));
+			}
+
+			return VersionedTypeReaderMap[typeof(T)](br, version);
+		}
+
 		/*
 			BinaryReader Extensions for standard typess
 		*/
-
-		/// <summary>
-		/// Reads an <see cref="MDXArray{T}"/> of type <typeparamref name="T"/> from the data stream.
-		/// This advances the position of the reader by 8 bytes.
-		/// </summary>
-		/// <param name="binaryReader">binaryReader.</param>
-		/// <typeparam name="T">The type which the array encapsulates.</typeparam>
-		/// <returns>A new array, filled with the values it references.</returns>
-		public static MDXArray<T> ReadMDXArray<T>(this BinaryReader binaryReader)
-		{
-			return new MDXArray<T>(binaryReader);
-		}
 
 		/// <summary>
 		/// Reads an 8-byte Range value from the data stream.
