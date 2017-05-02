@@ -48,14 +48,14 @@ namespace Warcraft.MDX
 
 		public readonly List<MDXVertex> Vertices = new List<MDXVertex>();
 		public readonly List<MDXSkin> Skins = new List<MDXSkin>();
-		public readonly List<MDXSubmeshColourAnimation> ColourAnimations = new List<MDXSubmeshColourAnimation>();
+		public readonly List<MDXSkinColourAnimation> ColourAnimations = new List<MDXSkinColourAnimation>();
 		public readonly List<short> TransparencyLookupTable = new List<short>();
 		public readonly List<MDXTrack<short>> TransparencyAnimations = new List<MDXTrack<short>>();
 		public readonly List<MDXUVAnimation> UVAnimations = new List<MDXUVAnimation>();
 		public readonly List<short> RenderBatchLookupTable = new List<short>();
-		public readonly List<MDXRenderFlagPair> RenderFlags = new List<MDXRenderFlagPair>();
+		public readonly List<MDXMaterial> Materials = new List<MDXMaterial>();
 		public readonly List<MDXTexture> Textures = new List<MDXTexture>();
-		public readonly List<uint> TextureLookupTable = new List<uint>();
+		public readonly List<ushort> TextureLookupTable = new List<ushort>();
 
 		public MDX(byte[] data)
 		{
@@ -289,14 +289,14 @@ namespace Warcraft.MDX
 					MDXTrack<RGB> ColourTrack = new MDXTrack<RGB>(br, MDXHeader.GetModelVersion(Header.Version));
 					MDXTrack<short> OpacityTrack = new MDXTrack<short>(br, MDXHeader.GetModelVersion(Header.Version));
 
-					MDXSubmeshColourAnimation ColourAnimation = new MDXSubmeshColourAnimation();
+					MDXSkinColourAnimation ColourAnimation = new MDXSkinColourAnimation();
 					ColourAnimation.ColourTrack = ColourTrack;
 					ColourAnimation.OpacityTrack = OpacityTrack;
 
 					ColourAnimations.Add(ColourAnimation);
 				}
 				// Read submesh animation values
-				foreach (MDXSubmeshColourAnimation ColourAnimation in ColourAnimations)
+				foreach (MDXSkinColourAnimation ColourAnimation in ColourAnimations)
 				{
 					// Read the colour track
 					br.BaseStream.Position = ColourAnimation.ColourTrack.ValuesOffset;
@@ -400,20 +400,25 @@ namespace Warcraft.MDX
 
 				// Render flags
 				// Seek to render flag block
-				br.BaseStream.Position = this.Header.RenderFlagsOffset;
-				for (int i = 0; i < this.Header.RenderFlagCount; ++i)
+				br.BaseStream.Position = this.Header.MaterialsOffset;
+				for (int i = 0; i < this.Header.MaterialsCount; ++i)
 				{
-					this.RenderFlags.Add(new MDXRenderFlagPair(br.ReadBytes(4)));
+					this.Materials.Add(new MDXMaterial(br.ReadBytes(4)));
 				}
 
 				// Bone lookup
 
 				// Texture lookup
+				br.BaseStream.Position = this.Header.TextureLookupTableOffset;
+				for (int i = 0; i < this.Header.TextureLookupTableCount; ++i)
+				{
+					this.TextureLookupTable.Add(br.ReadUInt16());
+				}
 
 				// Texture unit lookup
 				// Seek to texture unit lookup block
-				br.BaseStream.Position = this.Header.TextureUnitsOffset;
-				for (int i = 0; i < this.Header.TextureUnitCount; ++i)
+				br.BaseStream.Position = this.Header.RenderBatchLookupTableOffset;
+				for (int i = 0; i < this.Header.RenderBatchLookupTableCount; ++i)
 				{
 					this.RenderBatchLookupTable.Add(br.ReadInt16());
 				}

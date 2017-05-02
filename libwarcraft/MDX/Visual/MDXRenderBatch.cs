@@ -34,9 +34,9 @@ namespace Warcraft.MDX.Visual
 		public ushort SubmeshIndex;
 		public ushort GeosetIndex;
 		public short ColorIndex;
-		public ushort RenderFlagsIndex;
-		public ushort Layer; // Also known as MaterialIndex
-		public ushort OPCount; // Also known as MaterialLayerCount
+		public ushort MaterialIndex;
+		public ushort MaterialLayer;
+		public ushort TextureCount;
 
 		public ushort TextureLookupTableIndex;
 		public ushort RenderBatchLookupTableIndex;
@@ -57,9 +57,9 @@ namespace Warcraft.MDX.Visual
 					this.SubmeshIndex = br.ReadUInt16();
 					this.GeosetIndex = br.ReadUInt16();
 					this.ColorIndex = br.ReadInt16();
-					this.RenderFlagsIndex = br.ReadUInt16();
-					this.Layer = br.ReadUInt16();
-					this.OPCount = br.ReadUInt16();
+					this.MaterialIndex = br.ReadUInt16();
+					this.MaterialLayer = br.ReadUInt16();
+					this.TextureCount = br.ReadUInt16();
 
 					this.TextureLookupTableIndex = br.ReadUInt16();
 					this.RenderBatchLookupTableIndex = br.ReadUInt16();

@@ -77,15 +77,15 @@ namespace Warcraft.MDX
 		public uint UVTextureAnimationsOffset;
 		public uint ReplaceableTextureCount;
 		public uint ReplaceableTexturesOffset;
-		public uint RenderFlagCount;
-		public uint RenderFlagsOffset;
+		public uint MaterialsCount;
+		public uint MaterialsOffset;
 
 		public uint BoneLookupTableCount;
 		public uint BoneLookupTablesOffset;
 		public uint TextureLookupTableCount;
-		public uint TextureLookupTablesOffset;
-		public uint TextureUnitCount;
-		public uint TextureUnitsOffset;
+		public uint TextureLookupTableOffset;
+		public uint RenderBatchLookupTableCount;
+		public uint RenderBatchLookupTableOffset;
 		public uint TransparencyLookupTableCount;
 		public uint TransparencyLookupTablesOffset;
 		public uint UVTextureAnimationLookupTableCount;
@@ -191,15 +191,15 @@ namespace Warcraft.MDX
 					this.UVTextureAnimationsOffset = br.ReadUInt32();
 					this.ReplaceableTextureCount = br.ReadUInt32();
 					this.ReplaceableTexturesOffset = br.ReadUInt32();
-					this.RenderFlagCount = br.ReadUInt32();
-					this.RenderFlagsOffset = br.ReadUInt32();
+					this.MaterialsCount = br.ReadUInt32();
+					this.MaterialsOffset = br.ReadUInt32();
 
 					this.BoneLookupTableCount = br.ReadUInt32();
 					this.BoneLookupTablesOffset = br.ReadUInt32();
 					this.TextureLookupTableCount = br.ReadUInt32();
-					this.TextureLookupTablesOffset = br.ReadUInt32();
-					this.TextureUnitCount = br.ReadUInt32();
-					this.TextureUnitsOffset = br.ReadUInt32();
+					this.TextureLookupTableOffset = br.ReadUInt32();
+					this.RenderBatchLookupTableCount = br.ReadUInt32();
+					this.RenderBatchLookupTableOffset = br.ReadUInt32();
 					this.TransparencyLookupTableCount = br.ReadUInt32();
 					this.TransparencyLookupTablesOffset = br.ReadUInt32();
 					this.UVTextureAnimationLookupTableCount = br.ReadUInt32();

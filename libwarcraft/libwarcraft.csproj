@@ -164,8 +164,8 @@
     <Compile Include="MDX\Animation\MDXArray.cs" />
     <Compile Include="Core\Interpolation\IInterpolatable.cs" />
     <Compile Include="Core\Interpolation\Interpolation.cs" />
-    <Compile Include="MDX\Visual\MDXRenderFlagPair.cs" />
-    <Compile Include="MDX\Animation\MDXSubmeshColourAnimation.cs" />
+    <Compile Include="MDX\Visual\MDXMaterial.cs" />
+    <Compile Include="MDX\Animation\MDXSkinColourAnimation.cs" />
     <Compile Include="MDX\Animation\MDXUVAnimation.cs" />
     <Compile Include="DBC\DBC.cs" />
     <Compile Include="DBC\DBCHeader.cs" />

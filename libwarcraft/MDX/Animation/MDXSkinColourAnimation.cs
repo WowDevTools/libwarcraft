@@ -1,5 +1,5 @@
 //
-//  EMDXRenderFlagPair.cs
+//  MDXSkinColourAnimation.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.IO;
+using Warcraft.Core.Structures;
 
-namespace Warcraft.MDX.Visual
+namespace Warcraft.MDX.Animation
 {
-	public class MDXRenderFlagPair
+	public class MDXSkinColourAnimation
 	{
-		public EMDXRenderFlag Flags;
-		public EMDXBlendMode BlendingMode;
+		public MDXTrack<RGB> ColourTrack;
+		public MDXTrack<short> OpacityTrack;
 
-		public MDXRenderFlagPair(byte[] data)
+		public MDXSkinColourAnimation()
 		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Flags = (EMDXRenderFlag)br.ReadUInt16();
-					this.BlendingMode = (EMDXBlendMode)br.ReadUInt16();
-				}
-			}
 		}
 	}
 }

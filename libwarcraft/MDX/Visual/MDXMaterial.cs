@@ -1,5 +1,5 @@
 //
-//  MDXSubmeshColourAnimation.cs
+//  EMDXRenderFlagPair.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,17 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.Core.Structures;
+using System.IO;
 
-namespace Warcraft.MDX.Animation
+namespace Warcraft.MDX.Visual
 {
-	public class MDXSubmeshColourAnimation
+	public class MDXMaterial
 	{
-		public MDXTrack<RGB> ColourTrack;
-		public MDXTrack<short> OpacityTrack;
+		public EMDXRenderFlag Flags;
+		public EMDXBlendMode BlendingMode;
 
-		public MDXSubmeshColourAnimation()
+		public MDXMaterial(byte[] data)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					this.Flags = (EMDXRenderFlag)br.ReadUInt16();
+					this.BlendingMode = (EMDXBlendMode)br.ReadUInt16();
+				}
+			}
 		}
 	}
 }
