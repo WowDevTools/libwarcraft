@@ -22,8 +22,9 @@
 
 namespace Warcraft.MDX.Gameplay
 {
-	public enum MDXAttachmentType : uint
+	public enum MDXAttachmentType : short
 	{
+		None					= -1,
 		ShieldOrMountMain		= 0,
 		HandRight				= 1,
 		HandLeft				= 2,

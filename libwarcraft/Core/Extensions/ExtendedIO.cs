@@ -55,6 +55,7 @@ namespace Warcraft.Core.Extensions
 			// Builtin types
 			{ typeof(byte), r => r.ReadByte() },
 			{ typeof(char), r => r.ReadChar() },
+			{ typeof(bool), r => r.ReadBoolean() },
 			{ typeof(sbyte), r => r.ReadSByte() },
 			{ typeof(short), r => r.ReadInt16() },
 			{ typeof(ushort), r => r.ReadUInt16() },

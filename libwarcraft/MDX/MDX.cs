@@ -62,14 +62,14 @@ namespace Warcraft.MDX
 		public MDXArray<MDXTexture> Textures;
 		public MDXArray<MDXTextureWeight> TransparencyAnimations;
 		public MDXArray<MDXTextureTransform> TextureTransformations;
-		public MDXArray<ushort> ReplaceableTextureLookupTable;
+		public MDXArray<short> ReplaceableTextureLookupTable;
 		public MDXArray<MDXMaterial> Materials;
 
-		public MDXArray<ushort> BoneLookupTable;
-		public MDXArray<ushort> TextureLookupTable;
+		public MDXArray<short> BoneLookupTable;
+		public MDXArray<short> TextureLookupTable;
 		public MDXArray<short> TextureSlotLookupTable;
-		public MDXArray<ushort> TransparencyLookupTable;
-		public MDXArray<ushort> TextureTransformationLookupTable;
+		public MDXArray<short> TransparencyLookupTable;
+		public MDXArray<short> TextureTransformationLookupTable;
 
 		public Box BoundingBox;
 		public float BoundingSphereRadius;
@@ -161,14 +161,14 @@ namespace Warcraft.MDX
 				}
 
 				this.TextureTransformations = br.ReadMDXArray<MDXTextureTransform>(this.Version);
-				this.ReplaceableTextureLookupTable = br.ReadMDXArray<ushort>();
+				this.ReplaceableTextureLookupTable = br.ReadMDXArray<short>();
 				this.Materials = br.ReadMDXArray<MDXMaterial>();
 
-				this.BoneLookupTable = br.ReadMDXArray<ushort>();
-				this.TextureLookupTable = br.ReadMDXArray<ushort>();
+				this.BoneLookupTable = br.ReadMDXArray<short>();
+				this.TextureLookupTable = br.ReadMDXArray<short>();
 				this.TextureSlotLookupTable = br.ReadMDXArray<short>();
-				this.TransparencyLookupTable = br.ReadMDXArray<ushort>();
-				this.TextureTransformationLookupTable = br.ReadMDXArray<ushort>();
+				this.TransparencyLookupTable = br.ReadMDXArray<short>();
+				this.TextureTransformationLookupTable = br.ReadMDXArray<short>();
 
 				this.BoundingBox = br.ReadBox();
 				this.BoundingSphereRadius = br.ReadSingle();

@@ -23,6 +23,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using Warcraft.Core.Interfaces;
 using Warcraft.MDX.Animation;
 using Warcraft.MDX.Data;
@@ -88,7 +89,8 @@ namespace Warcraft.Core.Extensions
 		/// <returns>A new array, filled with the values it references.</returns>
 		public static MDXArray<T> ReadMDXArray<T>(this BinaryReader binaryReader, WarcraftVersion version)
 		{
-			if (!typeof(T).GetInterfaces().Contains(typeof(IVersionedClass)))
+			// Quaternion hack, since it's packed into 16 bits in some versions
+			if (!typeof(T).GetInterfaces().Contains(typeof(IVersionedClass)) && typeof(T) != typeof(Quaternion))
 			{
 				return new MDXArray<T>(binaryReader);
 			}
@@ -114,7 +116,7 @@ namespace Warcraft.Core.Extensions
 		/// <returns></returns>
 		public static MDXAttachmentType ReadMDXAttachmentType(this BinaryReader binaryReader)
 		{
-			return (MDXAttachmentType)binaryReader.ReadUInt32();
+			return (MDXAttachmentType)binaryReader.ReadInt16();
 		}
 
 		/// <summary>
@@ -188,7 +190,7 @@ namespace Warcraft.Core.Extensions
 		/// <returns></returns>
 		public static MDXCameraType ReadMDXCameraType(this BinaryReader binaryReader)
 		{
-			return (MDXCameraType) binaryReader.ReadInt32();
+			return (MDXCameraType) binaryReader.ReadInt16();
 		}
 
 		/// <summary>
