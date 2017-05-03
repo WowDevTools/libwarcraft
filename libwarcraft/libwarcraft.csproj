@@ -63,7 +63,12 @@
     <Compile Include="Core\Extensions\ExtendedMath.cs" />
     <Compile Include="Core\Extensions\ExtendedModelIO.cs" />
     <Compile Include="Core\Interfaces\IVersionedClass.cs" />
-    <Compile Include="Core\Shading\BlendingMode.cs" />
+    <Compile Include="Core\Shading\Blending\AlphaDestination.cs" />
+    <Compile Include="Core\Shading\Blending\AlphaSource.cs" />
+    <Compile Include="Core\Shading\Blending\BlendingMode.cs" />
+    <Compile Include="Core\Shading\Blending\BlendingState.cs" />
+    <Compile Include="Core\Shading\Blending\ColourDestination.cs" />
+    <Compile Include="Core\Shading\Blending\ColourSource.cs" />
     <Compile Include="Core\Structures\AxisConfiguration.cs" />
     <Compile Include="Core\Structures\BGRA.cs" />
     <Compile Include="Core\Structures\Box.cs" />

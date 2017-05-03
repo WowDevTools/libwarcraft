@@ -124,9 +124,9 @@ namespace Warcraft.Core.Extensions
 		/// </summary>
 		/// <param name="binaryReader"></param>
 		/// <returns></returns>
-		public static MDXMaterial ReadMDXMaterial(this BinaryReader binaryReader)
+		public static MDXMaterial ReadMDXMaterial(this BinaryReader binaryReader, WarcraftVersion version)
 		{
-			return new MDXMaterial(binaryReader);
+			return new MDXMaterial(binaryReader, version);
 		}
 
 		/// <summary>

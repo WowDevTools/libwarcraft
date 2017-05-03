@@ -20,11 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-
-namespace Warcraft.Core.Shading
+namespace Warcraft.Core.Shading.Blending
 {
-	[Flags]
 	public enum BlendingMode : ushort
 	{
 		Opaque							= 0,

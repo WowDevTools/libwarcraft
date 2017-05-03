@@ -91,7 +91,6 @@ namespace Warcraft.Core.Extensions
 			{ typeof(MDXRenderBatch), r => r.ReadMDXRenderBatch() },
 			{ typeof(MDXVertex), r => r.ReadMDXVertex() },
 			{ typeof(MDXTexture), r => r.ReadMDXTexture() },
-			{ typeof(MDXMaterial), r => r.ReadMDXMaterial() },
 			{ typeof(MDXAttachmentType), r => r.ReadMDXAttachmentType() },
 			{ typeof(MDXCameraType), r => r.ReadMDXCameraType() },
 			{ typeof(MDXPlayableAnimationLookupTableEntry), r => r.ReadMDXPlayableAnimationLookupTableEntry()},
@@ -136,6 +135,7 @@ namespace Warcraft.Core.Extensions
 			{ typeof(MDXLight), (r, v) => r.ReadMDXLight(v)},
 			{ typeof(MDXCamera), (r, v) => r.ReadMDXCamera(v)},
 			{ typeof(MDXRibbonEmitter), (r, v) => r.ReadMDXRibbonEmitter(v)},
+			{ typeof(MDXMaterial), (r, v)=> r.ReadMDXMaterial(v) },
 
 			// System.Numerics.Vectors types
 			{ typeof(Quaternion), (r, v) => v >= WarcraftVersion.BurningCrusade ? r.ReadQuaternion16() : r.ReadQuaternion32()},

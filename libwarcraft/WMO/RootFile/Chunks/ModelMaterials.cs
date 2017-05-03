@@ -26,6 +26,7 @@ using System.IO;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Shading;
+using Warcraft.Core.Shading.Blending;
 using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
