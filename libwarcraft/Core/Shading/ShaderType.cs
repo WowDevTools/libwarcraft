@@ -1,5 +1,5 @@
 //
-//  ShaderTypes.cs
+//  ShaderType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,7 +25,7 @@ namespace Warcraft.Core.Shading
 	/// <summary>
 	/// All of the shader types present in WoW.
 	/// </summary>
-	public enum ShaderTypes
+	public enum ShaderType
 	{
 		/// <summary>
 		/// Simple diffuse shading.

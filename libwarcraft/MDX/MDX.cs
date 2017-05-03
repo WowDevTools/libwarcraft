@@ -202,6 +202,11 @@ namespace Warcraft.MDX
 			}
 		}
 
+		/// <summary>
+		/// Translates a given numerical model version number into its equivalent <see cref="WarcraftVersion"/>.
+		/// </summary>
+		/// <param name="version">The numerical model version.</param>
+		/// <returns>An equivalent Warcraft version.</returns>
 		public static WarcraftVersion GetModelVersion(uint version)
 		{
 			if (version <= 256)
@@ -209,7 +214,7 @@ namespace Warcraft.MDX
 				return WarcraftVersion.Classic;
 			}
 
-			if (version <= 263 && version > 256)
+			if (version <= 263)
 			{
 				return WarcraftVersion.BurningCrusade;
 			}
@@ -219,12 +224,12 @@ namespace Warcraft.MDX
 				return WarcraftVersion.Wrath;
 			}
 
-			if (version <= 272 && version > 264)
+			if (version <= 272)
 			{
 				return WarcraftVersion.Cataclysm;
 			}
 
-			if (version < 274 && version > 272)
+			if (version < 274)
 			{
 				// It should be noted that this is a guess based on the newer and older
 				// model versions. If it works, great - YMMV

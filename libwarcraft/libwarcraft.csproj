@@ -63,6 +63,7 @@
     <Compile Include="Core\Extensions\ExtendedMath.cs" />
     <Compile Include="Core\Extensions\ExtendedModelIO.cs" />
     <Compile Include="Core\Interfaces\IVersionedClass.cs" />
+    <Compile Include="Core\Shading\BlendingMode.cs" />
     <Compile Include="Core\Structures\AxisConfiguration.cs" />
     <Compile Include="Core\Structures\BGRA.cs" />
     <Compile Include="Core\Structures\Box.cs" />
@@ -105,7 +106,6 @@
     <Compile Include="MDX\Visual\EMDXTextureFlags.cs" />
     <Compile Include="MDX\Visual\EMDXTextureType.cs" />
     <Compile Include="MDX\Visual\EMDXRenderBatchFlags.cs" />
-    <Compile Include="MDX\Visual\EMDXBlendMode.cs" />
     <Compile Include="MDX\Visual\EMDXRenderFlag.cs" />
     <Compile Include="MDX\Visual\MDXLight.cs" />
     <Compile Include="MDX\Visual\MDXLightType.cs" />
@@ -147,7 +147,7 @@
     <Compile Include="Core\Compression\Squish\Flags.cs" />
     <Compile Include="Core\Compression\Squish\Maths.cs" />
     <Compile Include="Core\Compression\Squish\SquishCompression.cs" />
-    <Compile Include="Core\Shading\ShaderTypes.cs" />
+    <Compile Include="Core\Shading\ShaderType.cs" />
     <Compile Include="TEX\TextureBlob.cs" />
     <Compile Include="TEX\TextureBlobCompressionType.cs" />
     <Compile Include="TEX\TextureBlobData.cs" />

@@ -87,7 +87,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 	public class ModelMaterial : IBinarySerializable
 	{
 		public MaterialFlags Flags;
-		public ShaderTypes Shader;
+		public ShaderType Shader;
 		public BlendingMode BlendMode;
 
 		public uint FirstTextureOffset;
@@ -136,7 +136,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					this.Flags = (MaterialFlags) br.ReadUInt32();
-					this.Shader = (ShaderTypes) br.ReadUInt32();
+					this.Shader = (ShaderType) br.ReadUInt32();
 					this.BlendMode = (BlendingMode) br.ReadUInt32();
 
 					this.FirstTextureOffset = br.ReadUInt32();
@@ -200,23 +200,17 @@ namespace Warcraft.WMO.RootFile.Chunks
 	[Flags]
 	public enum MaterialFlags : uint
 	{
-		UnknownPossiblyLightmap = 0x001,
-		Unknown2				= 0x002,
-		TwoSided				= 0x004,
-		Darken					= 0x008,
-		UnshadedDuringNight		= 0x010,
-		Unknown3				= 0x020,
-		TextureWrappingClamp	= 0x040,
-		TextureWrappingRepeat	= 0x080,
+		UnknownPossiblyLightmap = 0x1,
+		Unknown2				= 0x2,
+		TwoSided				= 0x4,
+		Darken					= 0x8,
+		UnshadedDuringNight		= 0x10,
+		Unknown3				= 0x20,
+		TextureWrappingClamp	= 0x40,
+		TextureWrappingRepeat	= 0x80,
 		Unknown4				= 0x100
 
 		// Followed by 23 unused flags
-	}
-
-	public enum BlendingMode : uint
-	{
-		Opaque = 0,
-		Transparent = 1
 	}
 }
 

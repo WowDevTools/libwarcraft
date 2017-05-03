@@ -91,8 +91,8 @@ namespace Warcraft.Core.Extensions
 				bw.Write(vertex.BoneWeights.ToArray());
 				bw.Write(vertex.BoneIndices.ToArray());
 				bw.WriteVector3(vertex.Normal, AxisConfiguration.YUp);
-				bw.WriteVector2(vertex.UVCoordinatesChannel1);
-				bw.WriteVector2(vertex.UVCoordinatesChannel2);
+				bw.WriteVector2(vertex.UV1);
+				bw.WriteVector2(vertex.UV2);
 
 				return ms.ToArray();
 			}

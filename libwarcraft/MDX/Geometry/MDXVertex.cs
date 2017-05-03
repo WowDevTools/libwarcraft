@@ -57,13 +57,13 @@ namespace Warcraft.MDX.Geometry
 		/// UV texture coordinates for this vertex. There are two UV channels for each vertex, of which this is the
 		/// first.
 		/// </summary>
-		public Vector2 UVCoordinatesChannel1;
+		public Vector2 UV1;
 
 		/// <summary>
 		/// UV texture coordinates for this vertex. There are two UV channels for each vertex, of which this is the
 		/// second.
 		/// </summary>
-		public Vector2 UVCoordinatesChannel2;
+		public Vector2 UV2;
 
 		/// <summary>
 		/// Deserializes an <see cref="MDXVertex"/> from binary data.
@@ -79,12 +79,16 @@ namespace Warcraft.MDX.Geometry
 					this.BoneWeights = new List<byte>(br.ReadBytes(4));
 					this.BoneIndices = new List<byte>(br.ReadBytes(4));
 					this.Normal = br.ReadVector3();
-					this.UVCoordinatesChannel1 = br.ReadVector2();
-					this.UVCoordinatesChannel2 = br.ReadVector2();
+					this.UV1 = br.ReadVector2();
+					this.UV2 = br.ReadVector2();
 				}
 			}
 		}
 
+		/// <summary>
+		/// Gets the absolute byte size of a serialized object.
+		/// </summary>
+		/// <returns></returns>
 		public static int GetSize()
 		{
 			return 48;
