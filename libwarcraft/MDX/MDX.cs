@@ -162,7 +162,7 @@ namespace Warcraft.MDX
 
 				this.TextureTransformations = br.ReadMDXArray<MDXTextureTransform>(this.Version);
 				this.ReplaceableTextureLookupTable = br.ReadMDXArray<short>();
-				this.Materials = br.ReadMDXArray<MDXMaterial>();
+				this.Materials = br.ReadMDXArray<MDXMaterial>(this.Version);
 
 				this.BoneLookupTable = br.ReadMDXArray<short>();
 				this.TextureLookupTable = br.ReadMDXArray<short>();
