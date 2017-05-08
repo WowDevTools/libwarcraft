@@ -181,7 +181,12 @@ namespace Warcraft.Core
 		/// <summary>
 		/// Hypertext file. Commonly known as a website.
 		/// </summary>
-		HTML									= 0x2000000
+		HTML									= 0x2000000,
+
+		/// <summary>
+		/// Some form of assembled code.
+		/// </summary>
+		Assembly								= 0x4000000
 	}
 }
 
