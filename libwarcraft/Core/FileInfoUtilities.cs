@@ -70,6 +70,7 @@ namespace Warcraft.Core
 				{
 					return WarcraftFileType.Shader;
 				}
+				case "wlm":
 				case "wlw":
 				{
 					return WarcraftFileType.TerrainWater;
@@ -151,14 +152,28 @@ namespace Warcraft.Core
 				}
 				case "htm":
 				case "html":
+				case "url":
 				{
 					return WarcraftFileType.HTML;
 				}
+				case "zmp":
 				case "dylib":
 				case "dll":
 				case "exe":
 				{
 					return WarcraftFileType.Assembly;
+				}
+				case "sbt":
+				{
+					return WarcraftFileType.Subtitles;
+				}
+				case "ttf":
+				{
+					return WarcraftFileType.Font;
+				}
+				case "txt":
+				{
+					return WarcraftFileType.Text;
 				}
 				default:
 				{

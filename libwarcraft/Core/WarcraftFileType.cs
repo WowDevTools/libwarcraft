@@ -140,53 +140,87 @@ namespace Warcraft.Core
 		// Here come a few "normal" files
 		/// <summary>
 		/// WAV-compressed audio.
+		/// .wav
 		/// </summary>
 		WaveAudio								= 0x20000,
 
 		/// <summary>
 		/// MP3-compressed audio.
+		/// .mp3
 		/// </summary>
 		MP3Audio								= 0x40000,
 
 		/// <summary>
 		/// EXtensible Markup Language file.
+		/// .xml
 		/// </summary>
 		XML										= 0x80000,
 
 		/// <summary>
 		/// JPEG image file.
+		/// .jpg
+		/// .jpeg
 		/// </summary>
 		JPGImage								= 0x100000,
 
 		/// <summary>
 		/// Animated GIF file. It's pronounced with a hard G.
+		/// .gif
 		/// </summary>
 		GIFImage								= 0x200000,
 
 		/// <summary>
 		/// PNG image.
+		/// .png
 		/// </summary>
 		PNGImage								= 0x400000,
 
 		/// <summary>
 		/// INI configuration file.
+		/// .ini
 		/// </summary>
 		INI										= 0x800000,
 
 		/// <summary>
 		/// PDF presentation file.
+		/// .pdf
 		/// </summary>
 		PDF										= 0x1000000,
 
 		/// <summary>
 		/// Hypertext file. Commonly known as a website.
+		/// .html
+		/// .htm
+		/// .url
 		/// </summary>
 		HTML									= 0x2000000,
 
 		/// <summary>
 		/// Some form of assembled code.
+		/// .exe
+		/// .dll
+		/// .dylib
+		/// .zmp
 		/// </summary>
-		Assembly								= 0x4000000
+		Assembly								= 0x4000000,
+
+		/// <summary>
+		/// Movie subtitles.
+		/// .sbt
+		/// </summary>
+		Subtitles								= 0x8000000,
+
+		/// <summary>
+		/// A font.
+		/// .tff
+		/// </summary>
+		Font									= 0x10000000,
+
+		/// <summary>
+		/// Simple text.
+		/// .txt
+		/// </summary>
+		Text 									= 0x20000000
 	}
 }
 
