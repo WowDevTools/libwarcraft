@@ -62,6 +62,7 @@
     <Compile Include="Core\Extensions\ExtendedIO.cs" />
     <Compile Include="Core\Extensions\ExtendedMath.cs" />
     <Compile Include="Core\Extensions\ExtendedModelIO.cs" />
+    <Compile Include="Core\FileInfoUtilities.cs" />
     <Compile Include="Core\Interfaces\IVersionedClass.cs" />
     <Compile Include="Core\Shading\Blending\AlphaDestination.cs" />
     <Compile Include="Core\Shading\Blending\AlphaSource.cs" />
