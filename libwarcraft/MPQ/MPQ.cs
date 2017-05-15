@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Warcraft.Core;
 using Warcraft.Core.Compression;
 using Warcraft.MPQ.Crypto;
@@ -181,6 +182,7 @@ namespace Warcraft.MPQ
 
 					for (int i = 0; i < this.Header.GetBlockTableEntryCount(); ++i)
 					{
+
 						this.ExtendedBlockTable.Add(this.ArchiveReader.ReadUInt16());
 					}
 				}
