@@ -29,7 +29,7 @@ namespace Warcraft.Core
 	/// to easily distinguish file types and associated functionality.
 	/// </summary>
 	[Flags]
-	public enum WarcraftFileType : uint
+	public enum WarcraftFileType : ulong
 	{
 		/// <summary>
 		/// Unknown file. This file type hasn't been entered into the source code yet.
@@ -188,19 +188,24 @@ namespace Warcraft.Core
 		PDF										= 0x1000000,
 
 		/// <summary>
-		/// Hypertext file. Commonly known as a website.
+		/// Web-related file.
 		/// .html
 		/// .htm
 		/// .url
+		/// .js
+		/// .css
 		/// </summary>
-		HTML									= 0x2000000,
+		Web									= 0x2000000,
 
 		/// <summary>
-		/// Some form of assembled code.
+		/// Some form of assembled code or binary data.
 		/// .exe
 		/// .dll
 		/// .dylib
 		/// .zmp
+		/// .plist
+		/// .xib
+		/// .nib
 		/// </summary>
 		Assembly								= 0x4000000,
 
@@ -220,7 +225,65 @@ namespace Warcraft.Core
 		/// Simple text.
 		/// .txt
 		/// </summary>
-		Text 									= 0x20000000
+		Text 									= 0x20000000,
+
+		/// <summary>
+		/// Animation definitions for a model.
+		/// </summary>
+		Animation								= 0x40000000,
+
+		/// <summary>
+		/// Physics definitions for a model.
+		/// </summary>
+		Physics									= 0x80000000,
+
+		/// <summary>
+		/// Skeletal definitons for a model.
+		/// </summary>
+		Skeleton								= 0x100000000,
+
+		/// <summary>
+		/// A targa image.
+		/// </summary>
+		TargaImage								= 0x200000000,
+
+		/// <summary>
+		/// A bitmap image.
+		/// </summary>
+		BitmapImage								= 0x400000000,
+
+		/// <summary>
+		/// OGG Vorbis audio.
+		/// </summary>
+		VorbisAudio								= 0x800000000,
+
+		/// <summary>
+		/// Windows Media Audio.
+		/// </summary>
+		WMAAudio								= 0x1000000000,
+
+		/// <summary>
+		/// Cached client data.
+		/// </summary>
+		DataCache								= 0x2000000000,
+
+		/// <summary>
+		/// Icon storage format.
+		/// .icns
+		/// </summary>
+		IconImage								= 0x4000000000,
+
+		/// <summary>
+		/// Some form of code script.
+		/// .lua
+		/// </summary>
+		Script									= 0x8000000000,
+
+		/// <summary>
+		/// Light data.
+		/// .lit
+		/// </summary>
+		Lighting								= 0x10000000000
 	}
 }
 

@@ -63,10 +63,16 @@ namespace Warcraft.Core
 					return WarcraftFileType.ConfigurationFile;
 				}
 				case "dbc":
+				case "adb":
+				case "db2":
+				case "dbc2":
+				case "db":
+				case "tbl":
 				{
 					return WarcraftFileType.DatabaseContainer;
 				}
 				case "bls":
+				case "wfx":
 				{
 					return WarcraftFileType.Shader;
 				}
@@ -153,13 +159,18 @@ namespace Warcraft.Core
 				case "htm":
 				case "html":
 				case "url":
+				case "js":
+				case "css":
 				{
-					return WarcraftFileType.HTML;
+					return WarcraftFileType.Web;
 				}
 				case "zmp":
 				case "dylib":
 				case "dll":
 				case "exe":
+				case "plist":
+				case "nib":
+				case "xib":
 				{
 					return WarcraftFileType.Assembly;
 				}
@@ -174,6 +185,50 @@ namespace Warcraft.Core
 				case "txt":
 				{
 					return WarcraftFileType.Text;
+				}
+				case "anim":
+				{
+					return WarcraftFileType.Animation;
+				}
+				case "phys":
+				{
+					return WarcraftFileType.Physics;
+				}
+				case "bone":
+				{
+					return WarcraftFileType.Skeleton;
+				}
+				case "tga":
+				{
+					return WarcraftFileType.TargaImage;
+				}
+				case "bmp":
+				{
+					return WarcraftFileType.BitmapImage;
+				}
+				case "ogg":
+				{
+					return WarcraftFileType.VorbisAudio;
+				}
+				case "wma":
+				{
+					return WarcraftFileType.WMAAudio;
+				}
+				case "wdb":
+				{
+					return WarcraftFileType.DataCache;
+				}
+				case "icns":
+				{
+					return WarcraftFileType.IconImage;
+				}
+				case "lua":
+				{
+					return WarcraftFileType.Script;
+				}
+				case "lit":
+				{
+					return WarcraftFileType.Lighting;
 				}
 				default:
 				{
