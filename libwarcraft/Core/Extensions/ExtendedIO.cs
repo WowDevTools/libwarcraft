@@ -35,6 +35,8 @@ using Warcraft.MDX.Geometry.Skin;
 using Warcraft.MDX.Visual;
 using Warcraft.MDX.Visual.FX;
 
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace Warcraft.Core.Extensions
 {
 	/// <summary>
