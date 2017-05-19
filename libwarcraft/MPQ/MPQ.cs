@@ -730,16 +730,25 @@ namespace Warcraft.MPQ
 		/// </summary>
 		/// <returns>A byte array representing the final file.</returns>
 		/// <param name="sectors">Input file sectors.</param>
-		private static byte[] StitchSectors(IEnumerable<byte[]> sectors)
+		private static byte[] StitchSectors(IReadOnlyCollection<byte[]> sectors)
 		{
-			// Pull out your sowing kit, it's stitching time!
-			List<byte> stitchedSectors = new List<byte>();
-			foreach (byte[] finalSector in sectors)
+			long finalSize = 0;
+			foreach (byte[] sector in sectors)
 			{
-				stitchedSectors.AddRange(finalSector);
+				finalSize += sector.Length;
 			}
 
-			return stitchedSectors.ToArray();
+			byte[] finalBlock = new byte[finalSize];
+
+			// Pull out your sowing kit, it's stitching time!
+			int writtenBytes = 0;
+			foreach (byte[] sector in sectors)
+			{
+				Buffer.BlockCopy(sector, 0, finalBlock, writtenBytes, sector.Length);
+				writtenBytes += sector.Length;
+			}
+
+			return finalBlock;
 		}
 
 		/// <summary>
