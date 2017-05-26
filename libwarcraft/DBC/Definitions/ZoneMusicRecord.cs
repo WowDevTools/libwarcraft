@@ -21,6 +21,7 @@
 //
 
 using Warcraft.Core;
+using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -41,7 +42,7 @@ namespace Warcraft.DBC.Definitions
 		public uint SoundsDay;
 		public uint SoundsNight;
 		
-		public override void LoadRecord(byte[] data)
+		public override void PostLoad(byte[] data)
 		{
 			throw new System.NotImplementedException();
 		}

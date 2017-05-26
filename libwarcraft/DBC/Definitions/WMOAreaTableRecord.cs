@@ -43,7 +43,7 @@ namespace Warcraft.DBC.Definitions
 		public uint Flags;
 		private LocalizedStringReference AreaName;
 
-		public override void LoadRecord(byte[] data)
+		public override void PostLoad(byte[] data)
 		{
 			throw new System.NotImplementedException();
 		}

@@ -32,7 +32,7 @@ namespace Warcraft.DBC.Definitions
 		public UInt32ForeignKey SoundEntriesDay;
 		public UInt32ForeignKey SoundEntriesNight;
 		
-		public override void LoadRecord(byte[] data)
+		public override void PostLoad(byte[] data)
 		{
 			throw new System.NotImplementedException();
 		}

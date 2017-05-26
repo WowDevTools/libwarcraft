@@ -34,7 +34,7 @@ namespace Warcraft.DBC.Definitions
 		public uint Priority;
 		public uint MinDelayMinutes;
 		
-		public override void LoadRecord(byte[] data)
+		public override void PostLoad(byte[] data)
 		{
 			throw new System.NotImplementedException();
 		}

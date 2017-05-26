@@ -46,7 +46,7 @@ namespace Warcraft.DBC.Definitions
 		public float DistanceCutOff;
 		public uint EAXDefinition;
 		
-		public override void LoadRecord(byte[] data)
+		public override void PostLoad(byte[] data)
 		{
 			throw new System.NotImplementedException();
 		}

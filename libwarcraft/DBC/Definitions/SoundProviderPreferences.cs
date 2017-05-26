@@ -55,7 +55,7 @@ namespace Warcraft.DBC.Definitions
 		public float EAX3HFReference;
 		public float EAX3LFReference;
 		
-		public override void LoadRecord(byte[] data)
+		public override void PostLoad(byte[] data)
 		{
 			throw new System.NotImplementedException();
 		}
