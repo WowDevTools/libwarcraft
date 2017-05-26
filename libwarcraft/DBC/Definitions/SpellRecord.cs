@@ -43,7 +43,7 @@ namespace Warcraft.DBC.Definitions
 		public SpellAttributeG AttributesG;
 
 
-		public override void LoadData(byte[] data)
+		public override void LoadRecord(byte[] data)
 		{
 			throw new NotImplementedException();
 		}

@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f53cfb61-d311-4ebd-b9e6-22648d11b929" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.libwarcraft/.idea/contentModel.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.libwarcraft/.idea/markdown-navigator.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.libwarcraft/.idea/markdown-navigator/profiles_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.libwarcraft/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.libwarcraft/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.libwarcraft/riderModule.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundEntriesRecord.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundProviderPreferences.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneMusicRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/DBC.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/DBC.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/AnimationDataRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/AnimationDataRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/DBCRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/DBCRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidObjectRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidObjectRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidTypeRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidTypeRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/MapRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/MapRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SpellRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SpellRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/UnknownRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/UnknownRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/libwarcraft.csproj" afterPath="$PROJECT_DIR$/libwarcraft/libwarcraft.csproj" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="MapRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/MapRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-130">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1495801698112" expanded="true" signature="0:785" ph="/* MapRecord.cs ... */" />
+                <marker date="1495801698112" expanded="false" signature="793:834" ph="..." />
+                <marker date="1495801698112" expanded="true" signature="870:1716" ph="{...}" />
+                <marker date="1495801698112" expanded="true" signature="908:1714" ph="{...}" />
+                <marker date="1495801698112" expanded="true" signature="1489:1537" ph="{...}" />
+                <marker date="1495801698112" expanded="true" signature="1576:1624" ph="{...}" />
+                <marker date="1495801698112" expanded="true" signature="1663:1711" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WMOAreaTableRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="28" column="38" lean-forward="false" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+              <folding>
+                <marker date="1495802528051" expanded="true" signature="0:794" ph="/* WMOAreaTableRecord.cs ... */" />
+                <marker date="1495802528051" expanded="true" signature="865:1707" ph="{...}" />
+                <marker date="1495802528051" expanded="true" signature="912:1705" ph="{...}" />
+                <marker date="1495802528051" expanded="true" signature="1459:1514" ph="{...}" />
+                <marker date="1495802528051" expanded="true" signature="1553:1608" ph="{...}" />
+                <marker date="1495802528051" expanded="true" signature="1647:1702" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ZoneMusicRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneMusicRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="29" column="38" lean-forward="false" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
+              <folding>
+                <marker date="1495802528783" expanded="true" signature="0:791" ph="/* ZoneMusicRecord.cs ... */" />
+                <marker date="1495802528783" expanded="true" signature="799:847" ph="..." />
+                <marker date="1495802528783" expanded="true" signature="883:1709" ph="{...}" />
+                <marker date="1495802528783" expanded="true" signature="927:1707" ph="{...}" />
+                <marker date="1495802528783" expanded="true" signature="1461:1516" ph="{...}" />
+                <marker date="1495802528783" expanded="true" signature="1555:1610" ph="{...}" />
+                <marker date="1495802528783" expanded="true" signature="1649:1704" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ZoneIntroMusicTableRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <folding>
+                <marker date="1495802574444" expanded="true" signature="0:801" ph="/* ZoneIntroMusicTableRecord.cs ... */" />
+                <marker date="1495802574444" expanded="true" signature="809:857" ph="..." />
+                <marker date="1495802574444" expanded="true" signature="893:1433" ph="{...}" />
+                <marker date="1495802574444" expanded="true" signature="947:1431" ph="{...}" />
+                <marker date="1495802574444" expanded="true" signature="1185:1240" ph="{...}" />
+                <marker date="1495802574444" expanded="true" signature="1279:1334" ph="{...}" />
+                <marker date="1495802574444" expanded="true" signature="1373:1428" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SoundAmbienceRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <folding>
+                <marker date="1495802633138" expanded="true" signature="0:794" ph="/* ZoneAmbienceRecord.cs ... */" />
+                <marker date="1495802633138" expanded="true" signature="802:850" ph="..." />
+                <marker date="1495802633138" expanded="true" signature="886:1374" ph="{...}" />
+                <marker date="1495802633138" expanded="true" signature="933:1372" ph="{...}" />
+                <marker date="1495802633138" expanded="true" signature="1126:1181" ph="{...}" />
+                <marker date="1495802633138" expanded="true" signature="1220:1275" ph="{...}" />
+                <marker date="1495802633138" expanded="true" signature="1314:1369" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SoundProviderPreferences.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundProviderPreferences.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="825">
+              <caret line="55" column="37" lean-forward="false" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
+              <folding>
+                <marker date="1495803559071" expanded="true" signature="0:800" ph="/* SoundProviderPreferences.cs ... */" />
+                <marker date="1495803559071" expanded="true" signature="808:856" ph="..." />
+                <marker date="1495803559071" expanded="true" signature="892:2106" ph="{...}" />
+                <marker date="1495803559071" expanded="true" signature="951:2104" ph="{...}" />
+                <marker date="1495803559071" expanded="true" signature="1858:1913" ph="{...}" />
+                <marker date="1495803559071" expanded="true" signature="1952:2007" ph="{...}" />
+                <marker date="1495803559071" expanded="true" signature="2046:2101" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ForeignKey.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/ForeignKey.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="30" column="9" lean-forward="true" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+              <folding>
+                <marker date="1482483772871" expanded="true" signature="0:786" ph="/* ForeignKey.cs ... */" />
+                <marker date="1482483772871" expanded="true" signature="824:1087" ph="{...}" />
+                <marker date="1482483772871" expanded="true" signature="851:1085" ph="{...}" />
+                <marker date="1482483772871" expanded="true" signature="877:911" ph="{...}" />
+                <marker date="1482483772871" expanded="true" signature="934:968" ph="{...}" />
+                <marker date="1482483772871" expanded="true" signature="1022:1082" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBC.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/DBC.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="53" column="22" lean-forward="false" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="22" />
+              <folding>
+                <marker date="1495801899145" expanded="true" signature="0:779" ph="/* DBC.cs ... */" />
+                <marker date="1495801899145" expanded="false" signature="786:931" ph="..." />
+                <marker date="1495801899145" expanded="true" signature="955:4451" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="959:1085" ph="/// DBC file handler. Parses and presents DBC files in a statically typed, easy to use fashion. ... " />
+                <marker date="1495801899145" expanded="true" signature="1126:4449" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="1132:1270" ph="/// The header of the database file. Describes the sizes and field counts of the records in the database. ... " />
+                <marker date="1495801899145" expanded="true" signature="1301:1468" ph="/// The game version this database is valid for. This affects how the records are parsed, and is vital for ... " />
+                <marker date="1495801899145" expanded="true" signature="1501:1533" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="1537:1753" ph="/// The records contained in the database. The records are not guaranteed to be in order by ID. ... " />
+                <marker date="1495801899145" expanded="true" signature="1799:1864" ph="/// The strings in the DBC file. ... " />
+                <marker date="1495801899145" expanded="true" signature="1920:2113" ph="/// Initializes a new instance of the &lt;see cref=&quot;Warcraft.DBC&quot;/&gt; class. ... " />
+                <marker date="1495801899145" expanded="true" signature="2166:3443" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="2252:3439" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="2308:3434" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="2439:3298" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="2607:2728" ph="/* If the record is of the UnknownRecord type, ... */" />
+                <marker date="1495801899145" expanded="true" signature="2766:3221" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="2912:3032" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="3093:3213" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="3359:3428" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="3447:3621" ph="/// Gets a record from the database by its primary key ID. ... " />
+                <marker date="1495801899145" expanded="true" signature="3655:3785" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="3697:3764" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="3727:3759" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="3789:4147" ph="/// Resolves a string reference. String references are stored as offsets into the string data block ... " />
+                <marker date="1495801899145" expanded="true" signature="4213:4446" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="4289:4427" ph="{...}" />
+                <marker date="1495801899145" expanded="true" signature="4341:4378" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AnimationDataRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/AnimationDataRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-540">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1495801698068" expanded="true" signature="0:795" ph="/* AnimationDataRecord.cs ... */" />
+                <marker date="1495801698068" expanded="false" signature="803:882" ph="..." />
+                <marker date="1495801698068" expanded="true" signature="918:5413" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="922:1087" ph="/// Animation data record. This database defines the different animations models can have, and ... " />
+                <marker date="1495801698068" expanded="true" signature="1133:4859" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="1192:1255" ph="/// The name of the animation. ... " />
+                <marker date="1495801698068" expanded="true" signature="1290:1412" ph="/// The weapon flags. This affects how the model's weapons are held during the animation. ... " />
+                <marker date="1495801698068" expanded="true" signature="1502:1554" ph="/// The body flags. ... " />
+                <marker date="1495801698068" expanded="true" signature="1626:1687" ph="/// General animation flags. ... " />
+                <marker date="1495801698068" expanded="true" signature="1712:1795" ph="/// The fallback animation that precedes this one. ... " />
+                <marker date="1495801698068" expanded="true" signature="1844:1949" ph="/// The top-level behaviour animation that this animation is a child of. ... " />
+                <marker date="1495801698068" expanded="true" signature="1999:2168" ph="/// The behaviour tier of the animation. In most cases, this indicates whether or not the animation ... " />
+                <marker date="1495801698068" expanded="true" signature="2241:2352" ph="/// Loads and parses the provided data. ... " />
+                <marker date="1495801698068" expanded="true" signature="2399:3279" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="2451:2573" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="2626:3275" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="2682:3270" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="2827:2945" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="3206:3264" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="3283:3390" ph="/// Gets the size of the record. ... " />
+                <marker date="1495801698068" expanded="true" signature="3428:4065" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="3480:3611" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="3637:4061" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="4069:4188" ph="/// Gets the field count for this record at. ... " />
+                <marker date="1495801698068" expanded="true" signature="4226:4856" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="4278:4409" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="4435:4852" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="4862:4920" ph="/// Weapon animation flags. ... " />
+                <marker date="1495801698068" expanded="true" signature="4961:5411" ph="{...}" />
+                <marker date="1495801698068" expanded="true" signature="4967:5057" ph="/// Ignores the current state of the character's weapons. ... " />
+                <marker date="1495801698068" expanded="true" signature="5073:5165" ph="/// Sheathes the weapons for the duration of the animation. ... " />
+                <marker date="1495801698068" expanded="true" signature="5184:5276" ph="/// Sheathes the weapons for the duration of the animation. ... " />
+                <marker date="1495801698068" expanded="true" signature="5297:5391" ph="/// Unsheathes the weapons for the duration of the animation. ... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBCRecord.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/DBCRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-340">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1495801698080" expanded="true" signature="0:789" ph="/* DBCDefinition.cs ... */" />
+                <marker date="1495801698080" expanded="true" signature="847:1923" ph="{...}" />
+                <marker date="1495801698080" expanded="true" signature="882:1921" ph="{...}" />
+                <marker date="1495801698080" expanded="true" signature="888:1028" ph="/// The record ID. This is the equivalent of a primary key in an SQL database, and is unique to the record. ... " />
+                <marker date="1495801698080" expanded="true" signature="1045:1079" ph="{...}" />
+                <marker date="1495801698080" expanded="true" signature="1083:1196" ph="/// The game version this record is valid for. ... " />
+                <marker date="1495801698080" expanded="true" signature="1229:1263" ph="{...}" />
+                <marker date="1495801698080" expanded="true" signature="1267:1346" ph="/// Sets the version this record is valid for. ... " />
+                <marker date="1495801698080" expanded="true" signature="1406:1443" ph="{...}" />
+                <marker date="1495801698080" expanded="true" signature="1447:1558" ph="/// Loads and parses the provided data. ... " />
+                <marker date="1495801698080" expanded="true" signature="1610:1729" ph="/// Gets the field count for this record at. ... " />
+                <marker date="1495801698080" expanded="true" signature="1772:1879" ph="/// Gets the size of the record. ... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/DBC.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneMusicRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundEntriesRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundProviderPreferences.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="-1" />
+    <option name="width" value="1920" />
+    <option name="height" value="1050" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="SolutionExplorer">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft.Tests" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DBC" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DBC" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpecialFields" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DBC" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Definitions" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <option name="show-file-system" value="false" />
+        <option name="show-all-items" value="false" />
+      </pane>
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected=".NET Project.Default">
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="DotNetProject" factoryName=".NET Project">
+      <option name="PROJECT_PATH" value="" />
+      <option name="PROJECT_KIND" value="None" />
+      <option name="PROJECT_TFM" value="" />
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="USE_MONO" value="0" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="false" name="Default" type="DotNetProject" factoryName=".NET Project">
+      <option name="PROJECT_PATH" value="" />
+      <option name="PROJECT_KIND" value="None" />
+      <option name="PROJECT_TFM" value="" />
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="USE_MONO" value="0" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <envs />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue=".NET Project.Default" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f53cfb61-d311-4ebd-b9e6-22648d11b929" name="Default" comment="" />
+      <created>1495801434665</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1495801434665</updated>
+      <workItem from="1495801435980" duration="2446000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="2446000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="-1" width="1920" height="1050" extended-state="6" />
+    <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15208112" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added WMOAreaTable record and associated audio records." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added WMOAreaTable record and associated audio records." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/AnimationDataRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-540">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1495801698068" expanded="true" signature="0:795" ph="/* AnimationDataRecord.cs ... */" />
+            <marker date="1495801698068" expanded="false" signature="803:882" ph="..." />
+            <marker date="1495801698068" expanded="true" signature="918:5413" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="922:1087" ph="/// Animation data record. This database defines the different animations models can have, and ... " />
+            <marker date="1495801698068" expanded="true" signature="1133:4859" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="1192:1255" ph="/// The name of the animation. ... " />
+            <marker date="1495801698068" expanded="true" signature="1290:1412" ph="/// The weapon flags. This affects how the model's weapons are held during the animation. ... " />
+            <marker date="1495801698068" expanded="true" signature="1502:1554" ph="/// The body flags. ... " />
+            <marker date="1495801698068" expanded="true" signature="1626:1687" ph="/// General animation flags. ... " />
+            <marker date="1495801698068" expanded="true" signature="1712:1795" ph="/// The fallback animation that precedes this one. ... " />
+            <marker date="1495801698068" expanded="true" signature="1844:1949" ph="/// The top-level behaviour animation that this animation is a child of. ... " />
+            <marker date="1495801698068" expanded="true" signature="1999:2168" ph="/// The behaviour tier of the animation. In most cases, this indicates whether or not the animation ... " />
+            <marker date="1495801698068" expanded="true" signature="2241:2352" ph="/// Loads and parses the provided data. ... " />
+            <marker date="1495801698068" expanded="true" signature="2399:3279" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="2451:2573" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="2626:3275" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="2682:3270" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="2827:2945" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="3206:3264" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="3283:3390" ph="/// Gets the size of the record. ... " />
+            <marker date="1495801698068" expanded="true" signature="3428:4065" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="3480:3611" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="3637:4061" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="4069:4188" ph="/// Gets the field count for this record at. ... " />
+            <marker date="1495801698068" expanded="true" signature="4226:4856" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="4278:4409" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="4435:4852" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="4862:4920" ph="/// Weapon animation flags. ... " />
+            <marker date="1495801698068" expanded="true" signature="4961:5411" ph="{...}" />
+            <marker date="1495801698068" expanded="true" signature="4967:5057" ph="/// Ignores the current state of the character's weapons. ... " />
+            <marker date="1495801698068" expanded="true" signature="5073:5165" ph="/// Sheathes the weapons for the duration of the animation. ... " />
+            <marker date="1495801698068" expanded="true" signature="5184:5276" ph="/// Sheathes the weapons for the duration of the animation. ... " />
+            <marker date="1495801698068" expanded="true" signature="5297:5391" ph="/// Unsheathes the weapons for the duration of the animation. ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/DBCRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-340">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1495801698080" expanded="true" signature="0:789" ph="/* DBCDefinition.cs ... */" />
+            <marker date="1495801698080" expanded="true" signature="847:1923" ph="{...}" />
+            <marker date="1495801698080" expanded="true" signature="882:1921" ph="{...}" />
+            <marker date="1495801698080" expanded="true" signature="888:1028" ph="/// The record ID. This is the equivalent of a primary key in an SQL database, and is unique to the record. ... " />
+            <marker date="1495801698080" expanded="true" signature="1045:1079" ph="{...}" />
+            <marker date="1495801698080" expanded="true" signature="1083:1196" ph="/// The game version this record is valid for. ... " />
+            <marker date="1495801698080" expanded="true" signature="1229:1263" ph="{...}" />
+            <marker date="1495801698080" expanded="true" signature="1267:1346" ph="/// Sets the version this record is valid for. ... " />
+            <marker date="1495801698080" expanded="true" signature="1406:1443" ph="{...}" />
+            <marker date="1495801698080" expanded="true" signature="1447:1558" ph="/// Loads and parses the provided data. ... " />
+            <marker date="1495801698080" expanded="true" signature="1610:1729" ph="/// Gets the field count for this record at. ... " />
+            <marker date="1495801698080" expanded="true" signature="1772:1879" ph="/// Gets the size of the record. ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/DBC.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="53" column="22" lean-forward="false" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="22" />
+          <folding>
+            <marker date="1495801899145" expanded="true" signature="0:779" ph="/* DBC.cs ... */" />
+            <marker date="1495801899145" expanded="false" signature="786:931" ph="..." />
+            <marker date="1495801899145" expanded="true" signature="955:4451" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="959:1085" ph="/// DBC file handler. Parses and presents DBC files in a statically typed, easy to use fashion. ... " />
+            <marker date="1495801899145" expanded="true" signature="1126:4449" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="1132:1270" ph="/// The header of the database file. Describes the sizes and field counts of the records in the database. ... " />
+            <marker date="1495801899145" expanded="true" signature="1301:1468" ph="/// The game version this database is valid for. This affects how the records are parsed, and is vital for ... " />
+            <marker date="1495801899145" expanded="true" signature="1501:1533" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="1537:1753" ph="/// The records contained in the database. The records are not guaranteed to be in order by ID. ... " />
+            <marker date="1495801899145" expanded="true" signature="1799:1864" ph="/// The strings in the DBC file. ... " />
+            <marker date="1495801899145" expanded="true" signature="1920:2113" ph="/// Initializes a new instance of the &lt;see cref=&quot;Warcraft.DBC&quot;/&gt; class. ... " />
+            <marker date="1495801899145" expanded="true" signature="2166:3443" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="2252:3439" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="2308:3434" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="2439:3298" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="2607:2728" ph="/* If the record is of the UnknownRecord type, ... */" />
+            <marker date="1495801899145" expanded="true" signature="2766:3221" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="2912:3032" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="3093:3213" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="3359:3428" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="3447:3621" ph="/// Gets a record from the database by its primary key ID. ... " />
+            <marker date="1495801899145" expanded="true" signature="3655:3785" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="3697:3764" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="3727:3759" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="3789:4147" ph="/// Resolves a string reference. String references are stored as offsets into the string data block ... " />
+            <marker date="1495801899145" expanded="true" signature="4213:4446" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="4289:4427" ph="{...}" />
+            <marker date="1495801899145" expanded="true" signature="4341:4378" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/UInt32ForeignKey.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1482483772871" expanded="true" signature="0:791" ph="/* Int32ForeignKey.cs ... */" />
+            <marker date="1482483772871" expanded="true" signature="829:1071" ph="{...}" />
+            <marker date="1482483772871" expanded="true" signature="875:1069" ph="{...}" />
+            <marker date="1482483772871" expanded="true" signature="898:930" ph="{...}" />
+            <marker date="1482483772871" expanded="true" signature="1033:1066" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidObjectRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1495801698096" expanded="true" signature="0:795" ph="/* AnimationDataRecord.cs ... */" />
+            <marker date="1495801698096" expanded="false" signature="803:844" ph="..." />
+            <marker date="1495801698096" expanded="true" signature="880:1349" ph="{...}" />
+            <marker date="1495801698096" expanded="true" signature="927:1347" ph="{...}" />
+            <marker date="1495801698096" expanded="true" signature="1122:1170" ph="{...}" />
+            <marker date="1495801698096" expanded="true" signature="1209:1257" ph="{...}" />
+            <marker date="1495801698096" expanded="true" signature="1296:1344" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidTypeRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-405">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="2" />
+          <folding>
+            <marker date="1495801698040" expanded="true" signature="0:792" ph="/* LiquidTypeRecord.cs ... */" />
+            <marker date="1495801698040" expanded="false" signature="799:878" ph="..." />
+            <marker date="1495801698040" expanded="true" signature="914:4211" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="959:4011" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="1015:1075" ph="/// The name of the liquid. ... " />
+            <marker date="1495801698040" expanded="true" signature="1132:1231" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="1143:1187" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="1194:1227" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="1275:1386" ph="/// Loads and parses the provided data. ... " />
+            <marker date="1495801698040" expanded="true" signature="1433:1964" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="1485:1607" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="1660:1960" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="1716:1955" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="2007:2378" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="2057:2089" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="2147:2374" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="2425:2532" ph="/// Gets the size of the record. ... " />
+            <marker date="1495801698040" expanded="true" signature="2570:3212" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="2622:2753" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="2779:3208" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="3216:3335" ph="/// Gets the field count for this record at. ... " />
+            <marker date="1495801698040" expanded="true" signature="3373:4008" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="3425:3556" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="3582:4004" ph="{...}" />
+            <marker date="1495801698040" expanded="true" signature="4036:4209" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/MapRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-130">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1495801698112" expanded="true" signature="0:785" ph="/* MapRecord.cs ... */" />
+            <marker date="1495801698112" expanded="false" signature="793:834" ph="..." />
+            <marker date="1495801698112" expanded="true" signature="870:1716" ph="{...}" />
+            <marker date="1495801698112" expanded="true" signature="908:1714" ph="{...}" />
+            <marker date="1495801698112" expanded="true" signature="1489:1537" ph="{...}" />
+            <marker date="1495801698112" expanded="true" signature="1576:1624" ph="{...}" />
+            <marker date="1495801698112" expanded="true" signature="1663:1711" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="28" column="38" lean-forward="false" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+          <folding>
+            <marker date="1495802528051" expanded="true" signature="0:794" ph="/* WMOAreaTableRecord.cs ... */" />
+            <marker date="1495802528051" expanded="true" signature="865:1707" ph="{...}" />
+            <marker date="1495802528051" expanded="true" signature="912:1705" ph="{...}" />
+            <marker date="1495802528051" expanded="true" signature="1459:1514" ph="{...}" />
+            <marker date="1495802528051" expanded="true" signature="1553:1608" ph="{...}" />
+            <marker date="1495802528051" expanded="true" signature="1647:1702" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneMusicRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="38" lean-forward="false" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
+          <folding>
+            <marker date="1495802528783" expanded="true" signature="0:791" ph="/* ZoneMusicRecord.cs ... */" />
+            <marker date="1495802528783" expanded="true" signature="799:847" ph="..." />
+            <marker date="1495802528783" expanded="true" signature="883:1709" ph="{...}" />
+            <marker date="1495802528783" expanded="true" signature="927:1707" ph="{...}" />
+            <marker date="1495802528783" expanded="true" signature="1461:1516" ph="{...}" />
+            <marker date="1495802528783" expanded="true" signature="1555:1610" ph="{...}" />
+            <marker date="1495802528783" expanded="true" signature="1649:1704" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <marker date="1495802574444" expanded="true" signature="0:801" ph="/* ZoneIntroMusicTableRecord.cs ... */" />
+            <marker date="1495802574444" expanded="true" signature="809:857" ph="..." />
+            <marker date="1495802574444" expanded="true" signature="893:1433" ph="{...}" />
+            <marker date="1495802574444" expanded="true" signature="947:1431" ph="{...}" />
+            <marker date="1495802574444" expanded="true" signature="1185:1240" ph="{...}" />
+            <marker date="1495802574444" expanded="true" signature="1279:1334" ph="{...}" />
+            <marker date="1495802574444" expanded="true" signature="1373:1428" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundEntriesRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="35" column="29" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="104" selection-end-column="1" />
+          <folding>
+            <marker date="1495803114844" expanded="true" signature="0:794" ph="/* SoundEntriesRecord.cs ... */" />
+            <marker date="1495803114844" expanded="true" signature="802:884" ph="..." />
+            <marker date="1495803114844" expanded="true" signature="920:2487" ph="{...}" />
+            <marker date="1495803114844" expanded="true" signature="967:1835" ph="{...}" />
+            <marker date="1495803114844" expanded="true" signature="1589:1644" ph="{...}" />
+            <marker date="1495803114844" expanded="true" signature="1683:1738" ph="{...}" />
+            <marker date="1495803114844" expanded="true" signature="1777:1832" ph="{...}" />
+            <marker date="1495803114844" expanded="true" signature="1866:2485" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <marker date="1495802633138" expanded="true" signature="0:794" ph="/* ZoneAmbienceRecord.cs ... */" />
+            <marker date="1495802633138" expanded="true" signature="802:850" ph="..." />
+            <marker date="1495802633138" expanded="true" signature="886:1374" ph="{...}" />
+            <marker date="1495802633138" expanded="true" signature="933:1372" ph="{...}" />
+            <marker date="1495802633138" expanded="true" signature="1126:1181" ph="{...}" />
+            <marker date="1495802633138" expanded="true" signature="1220:1275" ph="{...}" />
+            <marker date="1495802633138" expanded="true" signature="1314:1369" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundProviderPreferences.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="55" column="37" lean-forward="false" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
+          <folding>
+            <marker date="1495803559071" expanded="true" signature="0:800" ph="/* SoundProviderPreferences.cs ... */" />
+            <marker date="1495803559071" expanded="true" signature="808:856" ph="..." />
+            <marker date="1495803559071" expanded="true" signature="892:2106" ph="{...}" />
+            <marker date="1495803559071" expanded="true" signature="951:2104" ph="{...}" />
+            <marker date="1495803559071" expanded="true" signature="1858:1913" ph="{...}" />
+            <marker date="1495803559071" expanded="true" signature="1952:2007" ph="{...}" />
+            <marker date="1495803559071" expanded="true" signature="2046:2101" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/ForeignKey.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="9" lean-forward="true" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+          <folding>
+            <marker date="1482483772871" expanded="true" signature="0:786" ph="/* ForeignKey.cs ... */" />
+            <marker date="1482483772871" expanded="true" signature="824:1087" ph="{...}" />
+            <marker date="1482483772871" expanded="true" signature="851:1085" ph="{...}" />
+            <marker date="1482483772871" expanded="true" signature="877:911" ph="{...}" />
+            <marker date="1482483772871" expanded="true" signature="934:968" ph="{...}" />
+            <marker date="1482483772871" expanded="true" signature="1022:1082" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

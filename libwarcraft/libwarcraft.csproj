@@ -61,7 +61,13 @@
     <Compile Include="Core\Interfaces\IRIFFChunk.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
     <Compile Include="DBC\Definitions\MapRecord.cs" />
+    <Compile Include="DBC\Definitions\SoundAmbienceRecord.cs" />
+    <Compile Include="DBC\Definitions\SoundEntriesRecord.cs" />
+    <Compile Include="DBC\Definitions\SoundProviderPreferences.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
+    <Compile Include="DBC\Definitions\WMOAreaTableRecord.cs" />
+    <Compile Include="DBC\Definitions\ZoneIntroMusicTableRecord.cs" />
+    <Compile Include="DBC\Definitions\ZoneMusicRecord.cs" />
     <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLP\BLP.cs" />

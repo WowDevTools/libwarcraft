@@ -1,5 +1,5 @@
-﻿//
-//  AnimationDataRecord.cs
+//
+//  ZoneIntroMusicTableRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,32 +20,33 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
+using Warcraft.Core;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	public class LiquidObjectRecord : DBCRecord
+	public class ZoneIntroMusicTableRecord : DBCRecord
 	{
-		public float FlowDirection;
-		public float FlowSpeed;
-		public UInt32ForeignKey LiquidType;
-		public uint Fishable;
-		public uint Reflection;
+		public const string RecordName = "ZoneIntroMusicTable";
 
+		public StringReference Name;
+		public UInt32ForeignKey SoundEntries;
+		public uint Priority;
+		public uint MinDelayMinutes;
+		
 		public override void LoadRecord(byte[] data)
 		{
-			throw new NotImplementedException();
+			throw new System.NotImplementedException();
 		}
 
 		public override int GetFieldCount()
 		{
-			throw new NotImplementedException();
+			throw new System.NotImplementedException();
 		}
 
 		public override int GetRecordSize()
 		{
-			throw new NotImplementedException();
+			throw new System.NotImplementedException();
 		}
 	}
 }

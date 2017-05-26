@@ -1,5 +1,5 @@
-﻿//
-//  AnimationDataRecord.cs
+//
+//  WMOAreaTableRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,32 +20,42 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	public class LiquidObjectRecord : DBCRecord
+	public class WMOAreaTableRecord : DBCRecord
 	{
-		public float FlowDirection;
-		public float FlowSpeed;
-		public UInt32ForeignKey LiquidType;
-		public uint Fishable;
-		public uint Reflection;
+		public const string RecordName = "WMOAreaTable";
+		
+		public uint WMOID;
+		public uint NameSetID;
+		public uint WMOGroupID;
+		public uint DayAmbienceSoundID;
+		public uint NightAmbienceSoundID;
+		public uint SoundProviderPref;
+		public uint SoundProviderPrefUnderwater;
+		public uint MIDIAmbience;
+		public uint MIDIAmbienceUnderwater;
+		public UInt32ForeignKey ZoneMusic;
+		public uint IntroSound;
+		public uint IntroPriority;
+		public uint Flags;
+		private LocalizedStringReference AreaName;
 
 		public override void LoadRecord(byte[] data)
 		{
-			throw new NotImplementedException();
+			throw new System.NotImplementedException();
 		}
 
 		public override int GetFieldCount()
 		{
-			throw new NotImplementedException();
+			throw new System.NotImplementedException();
 		}
 
 		public override int GetRecordSize()
 		{
-			throw new NotImplementedException();
+			throw new System.NotImplementedException();
 		}
 	}
 }

@@ -1,5 +1,5 @@
-﻿//
-//  AnimationDataRecord.cs
+//
+//  ZoneAmbienceRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,32 +20,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
+using Warcraft.Core;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	public class LiquidObjectRecord : DBCRecord
+	public class ZoneAmbienceRecord : DBCRecord
 	{
-		public float FlowDirection;
-		public float FlowSpeed;
-		public UInt32ForeignKey LiquidType;
-		public uint Fishable;
-		public uint Reflection;
+		public const string RecordName = "ZoneAmbience";
 
+		public UInt32ForeignKey SoundEntriesDay;
+		public UInt32ForeignKey SoundEntriesNight;
+		
 		public override void LoadRecord(byte[] data)
 		{
-			throw new NotImplementedException();
+			throw new System.NotImplementedException();
 		}
 
 		public override int GetFieldCount()
 		{
-			throw new NotImplementedException();
+			throw new System.NotImplementedException();
 		}
 
 		public override int GetRecordSize()
 		{
-			throw new NotImplementedException();
+			throw new System.NotImplementedException();
 		}
 	}
 }

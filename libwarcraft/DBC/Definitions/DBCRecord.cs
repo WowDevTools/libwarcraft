@@ -57,7 +57,7 @@ namespace Warcraft.DBC.Definitions
 		/// Loads and parses the provided data.
 		/// </summary>
 		/// <param name="data">Data.</param>
-		public abstract void LoadData(byte[] data);
+		public abstract void LoadRecord(byte[] data);
 
 		/// <summary>
 		/// Gets the field count for this record at.

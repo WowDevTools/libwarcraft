@@ -45,7 +45,7 @@ namespace Warcraft.DBC.Definitions
 		public uint Unknown4;
 		public uint Unknown5;
 
-		public override void LoadData(byte[] data)
+		public override void LoadRecord(byte[] data)
 		{
 			throw new NotImplementedException();
 		}

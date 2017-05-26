@@ -60,13 +60,13 @@ namespace Warcraft.DBC
 		public List<string> Strings = new List<string>();
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.DBC.DBC"/> class.
+		/// Initializes a new instance of the <see cref="Warcraft.DBC"/> class.
 		/// </summary>
-		/// <param name="InVersion">In version.</param>
+		/// <param name="inVersion">In version.</param>
 		/// <param name="data">Data.</param>
-		public DBC(WarcraftVersion InVersion, byte[] data)
+		public DBC(WarcraftVersion inVersion, byte[] data)
 		{
-			this.Version = InVersion;
+			this.Version = inVersion;
 
 			using (MemoryStream ms = new MemoryStream(data))
 			{
@@ -79,7 +79,7 @@ namespace Warcraft.DBC
 						byte[] rawRecord = br.ReadBytes((int)this.Header.RecordSize);
 
 						T record = Activator.CreateInstance<T>();
-						record.SetVersion(InVersion);
+						record.SetVersion(inVersion);
 
 						// If the record is of the UnknownRecord type,
 						// this DBC file will just load the data without sanity checking it.
@@ -96,7 +96,7 @@ namespace Warcraft.DBC
 							}
 						}
 
-						record.LoadData(rawRecord);
+						record.LoadRecord(rawRecord);
 
 						this.Records.Add(record);
 					}
