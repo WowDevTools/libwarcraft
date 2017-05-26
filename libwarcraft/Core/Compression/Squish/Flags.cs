@@ -1,6 +1,6 @@
 using System;
 
-namespace Squish {
+namespace Warcraft.Core.Compression.Squish {
     [Flags]
     public enum SquishOptions
     {

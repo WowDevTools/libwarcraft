@@ -24,7 +24,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class MOBS : IRIFFChunk, IBinarySerializable
+	public class MOBS : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOBS";
 

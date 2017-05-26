@@ -22,15 +22,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MODF Chunk - Contains WMO model placement information
 	/// </summary>
-	public class TerrainWorldModelObjectPlacementInfo : IRIFFChunk, IBinarySerializable
+	public class TerrainWorldModelObjectPlacementInfo : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MODF";
 
@@ -47,7 +49,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldModelObjectPlacementInfo"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public TerrainWorldModelObjectPlacementInfo(byte[] inData)
 		{
 			LoadBinaryData(inData);
@@ -59,8 +61,8 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					long EntryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
-					for (int i = 0; i < EntryCount; ++i)
+					long entryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
+					for (int i = 0; i < entryCount; ++i)
 					{
 						this.Entries.Add(new WorldModelObjectPlacementEntry(br.ReadBytes(WorldModelObjectPlacementEntry.GetSize())));
 					}
@@ -79,9 +81,9 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					foreach (WorldModelObjectPlacementEntry Entry in this.Entries)
+					foreach (WorldModelObjectPlacementEntry entry in this.Entries)
 					{
-						bw.Write(Entry.Serialize());
+						bw.Write(entry.Serialize());
 					}
 				}
 
@@ -109,7 +111,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Position of the WMO
 		/// </summary>
-		public Vector3f Position;
+		public Vector3 Position;
 		/// <summary>
 		/// Rotation of the model
 		/// </summary>
@@ -143,7 +145,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.WorldModelObjectPlacementEntry"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
+		/// <param name="data">ExtendedData.</param>
 		public WorldModelObjectPlacementEntry(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
@@ -153,7 +155,7 @@ namespace Warcraft.ADT.Chunks
 					this.WorldModelObjectEntryIndex = br.ReadUInt32();
 					this.UniqueID = br.ReadInt32();
 
-					this.Position = br.ReadVector3f();
+					this.Position = br.ReadVector3();
 					this.Rotation = br.ReadRotator();
 					this.BoundingBox = br.ReadBox();
 
@@ -183,7 +185,7 @@ namespace Warcraft.ADT.Chunks
 					bw.Write(this.WorldModelObjectEntryIndex);
 					bw.Write(this.UniqueID);
 
-					bw.WriteVector3f(this.Position);
+					bw.WriteVector3(this.Position);
 					bw.WriteRotator(this.Rotation);
 					bw.WriteBox(this.BoundingBox);
 

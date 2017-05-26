@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;
 
@@ -52,18 +53,18 @@ namespace Warcraft.DBC
 		/// The records contained in the database. The records are not guaranteed to be in order by ID.
 		/// In order to access records by their primary key, use <see cref="GetRecordByID"/>.
 		/// </summary>
-		public List<T> Records = new List<T>();
+		public readonly List<T> Records = new List<T>();
 
 		/// <summary>
 		/// The strings in the DBC file.
 		/// </summary>
-		public List<string> Strings = new List<string>();
+		public readonly List<string> Strings = new List<string>();
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.DBC"/> class.
+		/// Initializes a new instance of the <see cref="DBC"/> class.
 		/// </summary>
 		/// <param name="inVersion">In version.</param>
-		/// <param name="data">Data.</param>
+		/// <param name="data">ExtendedData.</param>
 		public DBC(WarcraftVersion inVersion, byte[] data)
 		{
 			this.Version = inVersion;
@@ -96,8 +97,7 @@ namespace Warcraft.DBC
 							}
 						}
 
-						record.LoadRecord(rawRecord);
-
+						record.PostLoad(rawRecord);	
 						this.Records.Add(record);
 					}
 
@@ -113,14 +113,14 @@ namespace Warcraft.DBC
 		/// Gets a record from the database by its primary key ID.
 		/// </summary>
 		/// <returns>The record</returns>
-		/// <param name="ID">Primary key ID.</param>
-		public T GetRecordByID(uint ID)
+		/// <param name="id">Primary key ID.</param>
+		public T GetRecordByID(uint id)
 		{
-			foreach (T Record in this.Records)
+			foreach (T record in this.Records)
 			{
-				if (Record.ID == ID)
+				if (record.ID == id)
 				{
-					return Record;
+					return record;
 				}
 			}
 

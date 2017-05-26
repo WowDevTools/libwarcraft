@@ -20,17 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
-using Warcraft.Core;
+using System.Numerics;
 using Warcraft.Core.Interfaces;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkSoundEmitters : IRIFFChunk, IBinarySerializable, IPostLoad<uint>
+	public class MapChunkSoundEmitters : IIFFChunk, IBinarySerializable, IPostLoad<uint>
 	{
 		public const string Signature = "MCSE";
 		private bool hasFinishedLoading;
-		private byte[] data;
+		private byte[] Data;
 
 
 		public MapChunkSoundEmitters()
@@ -45,7 +45,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 		public void LoadBinaryData(byte[] inData)
 		{
-			this.data = inData;
+			this.Data = inData;
 		}
 
         public string GetSignature()
@@ -77,8 +77,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	public class DatabaseSoundEmitter : SoundEmitter, IBinarySerializable
 	{
 		public UInt32ForeignKey SoundEntryID;
-		public Vector3f Position;
-		public Vector3f Size;
+		public Vector3 Position;
+		public Vector3 Size;
 
 		public byte[] Serialize()
 		{
@@ -90,7 +90,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	{
 		public uint SoundID;
 		public uint SoundNameID;
-		public Vector3f Position;
+		public Vector3 Position;
 		public float AttenuationRadiusStart;
 		public float AttenuationRadiusEnd;
 		public float CutoffDistance;

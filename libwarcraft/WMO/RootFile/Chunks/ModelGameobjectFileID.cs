@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelGameObjectFileID : IRIFFChunk, IBinarySerializable
+	public class ModelGameObjectFileID : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "GFID";
 

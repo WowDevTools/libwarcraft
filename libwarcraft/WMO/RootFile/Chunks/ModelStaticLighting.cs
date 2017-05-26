@@ -22,12 +22,14 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelStaticLighting : IRIFFChunk, IBinarySerializable
+	public class ModelStaticLighting : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOLT";
 
@@ -84,12 +86,12 @@ namespace Warcraft.WMO.RootFile.Chunks
 	{
 		public LightType Type;
 
-		public bool bUseAttenuation;
-		public bool bUseUnknown1;
-		public bool bUseUnknown2;
+		public bool UseAttenuation;
+		public bool UseUnknown1;
+		public bool UseUnknown2;
 
 		public BGRA Colour;
-		public Vector3f Position;
+		public Vector3 Position;
 		public float Intensity;
 
 		public float AttenuationStartRadius;
@@ -108,12 +110,12 @@ namespace Warcraft.WMO.RootFile.Chunks
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					this.Type = (LightType) br.ReadByte();
-					this.bUseAttenuation = br.ReadBoolean();
-					this.bUseUnknown1 = br.ReadBoolean();
-					this.bUseUnknown2 = br.ReadBoolean();
+					this.UseAttenuation = br.ReadBoolean();
+					this.UseUnknown1 = br.ReadBoolean();
+					this.UseUnknown2 = br.ReadBoolean();
 
 					this.Colour = br.ReadBGRA();
-					this.Position = br.ReadVector3f();
+					this.Position = br.ReadVector3();
 					this.Intensity = br.ReadSingle();
 
 					this.AttenuationStartRadius = br.ReadSingle();
@@ -141,12 +143,12 @@ namespace Warcraft.WMO.RootFile.Chunks
             	{
             		bw.Write((byte)this.Type);
 
-		            bw.Write(this.bUseAttenuation);
-		            bw.Write(this.bUseUnknown1);
-		            bw.Write(this.bUseUnknown2);
+		            bw.Write(this.UseAttenuation);
+		            bw.Write(this.UseUnknown1);
+		            bw.Write(this.UseUnknown2);
 
 		            bw.WriteBGRA(this.Colour);
-		            bw.WriteVector3f(this.Position);
+		            bw.WriteVector3(this.Position);
 		            bw.Write(this.Intensity);
 
 		            bw.Write(this.AttenuationStartRadius);

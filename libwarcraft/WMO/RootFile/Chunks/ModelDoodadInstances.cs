@@ -20,14 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelDoodadInstances : IRIFFChunk, IBinarySerializable
+	public class ModelDoodadInstances : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MODD";
 

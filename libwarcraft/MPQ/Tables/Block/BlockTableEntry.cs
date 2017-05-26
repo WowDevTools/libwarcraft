@@ -21,16 +21,40 @@
 //
 
 using System.IO;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MPQ.Tables.Block
 {
-	public class BlockTableEntry
+	/// <summary>
+	/// Represents a table entry in the block table, which holds information about how a file is stored in the
+	/// archive, its size, and where it is.
+	/// </summary>
+	public class BlockTableEntry : IBinarySerializable
 	{
+		/// <summary>
+		/// The offset into the archive file where the file data begins.
+		/// </summary>
 		private readonly uint BlockOffset;
+
+		/// <summary>
+		/// The absolute size in bytes of the stored file data.
+		/// </summary>
 		private readonly uint BlockSize;
+
+		/// <summary>
+		/// The absolute original file size in bytes.
+		/// </summary>
 		private readonly uint FileSize;
+
+		/// <summary>
+		/// A set of flags which holds some information about how the file is stored.
+		/// </summary>
 		public BlockFlags Flags;
 
+		/// <summary>
+		/// Deserializes a <see cref="BlockTableEntry"/> from provided binary data.
+		/// </summary>
+		/// <param name="data">The serialized data.</param>
 		public BlockTableEntry(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
@@ -54,6 +78,12 @@ namespace Warcraft.MPQ.Tables.Block
 			return this.BlockOffset;
 		}
 
+		/// <summary>
+		/// Gets the block offset, merging the provided high bits with
+		/// the offset in the block table entry.
+		/// </summary>
+		/// <param name="highBits">The bits to merge in.</param>
+		/// <returns>The final offset.</returns>
 		public ulong GetExtendedBlockOffset(ushort highBits)
 		{
 			return MPQHeader.MergeHighBits(this.BlockOffset, highBits);
@@ -104,6 +134,72 @@ namespace Warcraft.MPQ.Tables.Block
 			return (this.BlockOffset == 0) && (this.BlockSize == 0) && (this.FileSize == 0) && (this.Flags == 0);
 		}
 
+		/// <summary>
+		/// Determines whether or not the file data contained in this block is compressed or not.
+		/// Oddly enough, on occasion the block will be marked as compressed but will not actually be compressed.
+		/// These sorts of blocks can be detected by comparing the block size with the actual file size, which
+		/// is done by this method.
+		/// </summary>
+		/// <returns><value>true</value> if the block is compressed; otherwise, <value>false</value>.</returns>
+		public bool IsCompressed()
+		{
+			bool isCompressedInAnyWay = this.Flags.HasFlag(BlockFlags.IsCompressed) ||
+			                            this.Flags.HasFlag(BlockFlags.IsCompressedMultiple) ||
+										this.Flags.HasFlag(BlockFlags.IsImploded);
+
+			// Oddly enough, on occasion the block will be marked as compressed but will not actually be compressed.
+			// These sorts of blocks can be detected by comparing the block size with the actual file size.
+			return (this.BlockSize != this.FileSize) && isCompressedInAnyWay;
+		}
+
+		/// <summary>
+		/// Determines whether or not the file data contained in this block is encrypted or not.
+		/// </summary>
+		/// <returns><value>true</value> if the block is encrypted; otherwise, <value>false</value>.</returns>
+		public bool IsEncrypted()
+		{
+			return this.Flags.HasFlag(BlockFlags.IsEncrypted);
+		}
+
+		/// <summary>
+		/// Determines whether or not the file data is stored as a set of sectors. If not, it's in a single unit.
+		/// </summary>
+		/// <returns><value>true</value> if the block is stored in sectors; otherwise, <value>false</value>.</returns>
+		public bool HasSectors()
+		{
+			return !this.Flags.HasFlag(BlockFlags.IsSingleUnit);
+		}
+
+		/// <summary>
+		/// Determines whether or not this block entry is pointing to any file data at all.
+		/// </summary>
+		/// <returns><value>true</value> if the block points to any data; otherwise, <value>false</value>.</returns>
+		public bool HasData()
+		{
+			return this.Flags.HasFlag(BlockFlags.Exists) && !this.Flags.HasFlag(BlockFlags.IsDeletionMarker);
+		}
+
+		/// <summary>
+		/// Determines whether or not the file data is stored as a single unit. If not, it's in sectors.
+		/// </summary>
+		/// <returns><value>true</value> if the block is stored as a single unit; otherwise, <value>false</value>.</returns>
+		public bool IsSingleUnit()
+		{
+			return this.Flags.HasFlag(BlockFlags.IsSingleUnit);
+		}
+
+		/// <summary>
+		/// Determined whether or not the encryption key should be adjusted by the block offset.
+		/// </summary>
+		/// <returns><value>true</value> if the key should be adjusted; otherwise, <value>false</value>.</returns>
+		public bool ShouldEncryptionKeyBeAdjusted()
+		{
+			return this.Flags.HasFlag(BlockFlags.HasAdjustedEncryptionKey);
+		}
+
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
 		public byte[] Serialize()
 		{
 			using (MemoryStream ms = new MemoryStream())

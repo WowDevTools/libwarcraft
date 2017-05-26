@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelPortalReferences : IRIFFChunk, IBinarySerializable
+	public class ModelPortalReferences : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOPR";
 

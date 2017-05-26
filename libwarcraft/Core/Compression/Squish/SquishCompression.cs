@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.IO;
 
-namespace Squish
+namespace Warcraft.Core.Compression.Squish
 {
 	public static class SquishCompression
 	{

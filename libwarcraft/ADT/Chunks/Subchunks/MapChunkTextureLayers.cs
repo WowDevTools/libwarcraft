@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	/// <summary>
 	/// MCLY Chunk - Contains definitions for the alpha map layers.
 	/// </summary>
-	public class MapChunkTextureLayers : IRIFFChunk
+	public class MapChunkTextureLayers : IIFFChunk
 	{
 		public const string Signature = "MCLY";
 

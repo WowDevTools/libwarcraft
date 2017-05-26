@@ -20,45 +20,53 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.IO;
+using System.Numerics;
 using Warcraft.Core;
+using Warcraft.Core.Extensions;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXBone
+	public class MDXBone : IVersionedClass
 	{
-		public int AnimationID;
-		public MDXBoneFlags Flags;
+		public int SocketLookupTableIndex;
+		public MDXBoneFlag Flags;
 		public short ParentBone;
-		public ushort SubmeshID;
+		public ushort SkinSectionID; // Likely not the correct name
 
-		/* 
-			Only present in Version >= BC
+		/*
+			Only present in Version >= BC. Naming is most likely incorrect.
 		*/
-		public ushort Unknown1;
+		public ushort DistanceToFurtherDesc;
+		public ushort ZRationOfBoneChain;
 
-		// This one might actually be a short and not a ushort
-		public ushort Unknown2;
 		// ...
+		public MDXTrack<Vector3> Translation;
+		public MDXTrack<Quaternion> Rotation;
+		public MDXTrack<Vector3> Scale;
 
-		public MDXTrack<Vector3f> AnimatedTranslation;
-		public MDXTrack<Quaternion> AnimatedRotation;
-		public MDXTrack<Vector3f> AnimatedScale;
-		public Vector3f PivotPoint;
+		public Vector3 PivotPoint;
 
-		public MDXBone()
+		public MDXBone(BinaryReader br, WarcraftVersion version)
 		{
-		}
-	}
+			this.SocketLookupTableIndex = br.ReadInt32();
+			this.Flags = (MDXBoneFlag) br.ReadUInt32();
+			this.ParentBone = br.ReadInt16();
+			this.SkinSectionID = br.ReadUInt16();
 
-	public enum MDXBoneFlags : uint
-	{
-		SphericalBillboard = 0x8,
-		CylindricalBillboard_LockedX = 0x10,
-		CylindricalBillboard_LockedY = 0x20,
-		CylindricalBillboard_LockedZ = 0x40,
-		Transformed = 0x200,
-		KinematicBone = 0x400,
-		ScaledAnimation = 0x1000
+			if (version >= WarcraftVersion.BurningCrusade)
+			{
+				this.DistanceToFurtherDesc = br.ReadUInt16();
+				this.ZRationOfBoneChain = br.ReadUInt16();
+			}
+
+			this.Translation = br.ReadMDXTrack<Vector3>(version);
+			this.Rotation = br.ReadMDXTrack<Quaternion>(version);
+			this.Scale = br.ReadMDXTrack<Vector3>(version);
+
+			this.PivotPoint = br.ReadVector3();
+		}
 	}
 }
 

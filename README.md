@@ -18,13 +18,14 @@ libwarcraft currently implements the following file formats:
 * MPQ (Mike O'Brien Package). Read, Basic to extended v1 format.
 * DBC (Database - Client). Read, DB1 format.
 * TRS (Hashmap Translation Table): Read support.
+* MDX (Model). Read support, up to and including Wrath of the Lich King. External .skin and .anim files cannot be loaded yet.
 * WDT (World Tables): Fully compliant Read & Write.
 * WDL (World LOD): Fully compliant Read & Write.
 * WMO (World Model). Fully compliant Read & Write.
 
 The following formats are still in progress, and may not work as intended (or at all):
-* MDX (Model). Partial Read, Wrath of the Lich King. No animation data exposed, but it's being read internally.
-* ADT (Areadata Tile). Near-full read support, up to and including Wrath of the Lich King.
+
+* ADT (Areadata Tile). Near-full read support, up to and including Wrath of the Lich King. However, the code is old and works like arse.
 
 The following formats are not implemented yet:
 * WLW (World Liquids - Water)

@@ -1,13 +1,13 @@
-/* 
-  THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF 
-  ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO 
-  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A 
-  PARTICULAR PURPOSE. 
-  
-    This is sample code and is freely distributable. 
+/*
+  THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
+  ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+  PARTICULAR PURPOSE.
+
+    This is sample code and is freely distributable.
 
     Source: http://codebetter.com/brendantompkins/2007/06/14/gif-image-color-quantizer-now-with-safe-goodness/
-*/ 
+*/
 
 using System;
 using System.Drawing;
@@ -21,7 +21,6 @@ namespace Warcraft.Core.Quantization
 	/// </summary>
 	public abstract class Quantizer
 	{
-
 		/// <summary>
 		/// Construct the quantizer
 		/// </summary>
@@ -58,7 +57,7 @@ namespace Warcraft.Core.Quantization
 			Bitmap output = new Bitmap(width, height, PixelFormat.Format8bppIndexed);
 
 			// Now lock the bitmap into memory
-			using (Graphics g = Graphics.FromImage(copy))
+			using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(copy))
 			{
 				g.PageUnit = GraphicsUnit.Pixel;
 
@@ -86,7 +85,7 @@ namespace Warcraft.Core.Quantization
 					FirstPass(sourceData, width, height);
 				}
 
-				// Then set the color palette on the output bitmap. I'm passing in the current palette 
+				// Then set the color palette on the output bitmap. I'm passing in the current palette
 				// as there's no way to construct a new, empty palette.
 				output.Palette = GetPalette(output.Palette);
 
@@ -110,10 +109,10 @@ namespace Warcraft.Core.Quantization
 		/// <param name="sourceData">The source data</param>
 		/// <param name="width">The width in pixels of the image</param>
 		/// <param name="height">The height in pixels of the image</param>
-		protected  virtual void FirstPass(BitmapData sourceData, int width, int height)
+		protected virtual void FirstPass(BitmapData sourceData, int width, int height)
 		{
 			// Define the source data pointers. The source row is a byte to
-			// keep addition of the stride value easier (as this is in bytes)              
+			// keep addition of the stride value easier (as this is in bytes)
 			IntPtr pSourceRow = sourceData.Scan0;
 
 			// Loop through each row
@@ -124,9 +123,9 @@ namespace Warcraft.Core.Quantization
 
 				// And loop through each column
 				for (int col = 0; col < width; col++)
-				{            
-					InitialQuantizePixel(new Color32(pSourcePixel)); 
-					pSourcePixel = (IntPtr)((Int32)pSourcePixel + this._pixelSize);
+				{
+					InitialQuantizePixel(new Color32(pSourcePixel));
+					pSourcePixel = (IntPtr)((int)pSourcePixel + this._pixelSize);
 				}	// Now I have the pixel, call the FirstPassQuantize function...
 
 				// Add the stride to the source row
@@ -245,8 +244,6 @@ namespace Warcraft.Core.Quantization
 		private bool _singlePass;
 		private int _pixelSize;
 
-     
-
 		/// <summary>
 		/// Struct that defines a 32 bpp colour
 		/// </summary>
@@ -258,11 +255,13 @@ namespace Warcraft.Core.Quantization
 		[StructLayout(LayoutKind.Explicit)]
 		public struct Color32
 		{
-
+			/// <summary>
+			/// Creates a new <see cref="Color32"/> object from an input pointer to a source pixel.
+			/// </summary>
+			/// <param name="pSourcePixel"></param>
 			public Color32(IntPtr pSourcePixel)
 			{
 				this = (Color32)Marshal.PtrToStructure(pSourcePixel, typeof(Color32));
-                           
 			}
 
 			/// <summary>

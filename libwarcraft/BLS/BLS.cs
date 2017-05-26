@@ -26,11 +26,27 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.BLS
 {
+	/// <summary>
+	/// The BLS (assumed to be shorthand for Blizzard Shader) class represents a set of shaders, stored in binary
+	/// format. Each shader has a shader block with some information and data, and each BLS file can contain multiple
+	/// shaders for different architectures and configurations.
+	/// </summary>
 	public class BLS : IBinarySerializable
 	{
+		/// <summary>
+		/// The header of the BLS file.
+		/// </summary>
 		public BLSHeader Header;
+
+		/// <summary>
+		/// A list containing all the shader blocks in this shader container.
+		/// </summary>
 		public List<ShaderBlock> Shaders = new List<ShaderBlock>();
 
+		/// <summary>
+		/// Creates a new instance of the <see cref="BLS"/> class from supplied binary data.
+		/// </summary>
+		/// <param name="inData">The binary data containing the BLS file.</param>
 		public BLS(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
@@ -56,6 +72,9 @@ namespace Warcraft.BLS
             }
 		}
 
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
 		public byte[] Serialize()
 		{
 			using (MemoryStream ms = new MemoryStream())

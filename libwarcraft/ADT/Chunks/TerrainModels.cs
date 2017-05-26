@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MMDX Chunk - Contains a list of all referenced M2 models in this ADT.
 	/// </summary>
-	public class TerrainModels : IRIFFChunk
+	public class TerrainModels : IIFFChunk
 	{
 		public const string Signature = "MMDX";
 
@@ -47,7 +47,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainModels"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public TerrainModels(byte[] inData)
 		{
 			LoadBinaryData(inData);

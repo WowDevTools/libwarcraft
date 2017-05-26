@@ -1,6 +1,7 @@
 using System;
+using System.Numerics;
 
-namespace Squish
+namespace Warcraft.Core.Compression.Squish
 {
 	internal class ClusterFit : ColourFit
 	{

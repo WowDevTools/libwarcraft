@@ -22,13 +22,13 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
 	// TODO: Rework to support offset-based seeking and adding of strings
-	public class ModelTextures : IRIFFChunk, IBinarySerializable
+	public class ModelTextures : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOTX";
 

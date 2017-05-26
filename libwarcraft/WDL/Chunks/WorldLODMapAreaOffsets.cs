@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
-	public class WorldLODMapAreaOffsets : IRIFFChunk, IBinarySerializable
+	public class WorldLODMapAreaOffsets : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MAOF";
 

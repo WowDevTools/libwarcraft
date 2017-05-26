@@ -24,26 +24,48 @@ using System.IO;
 
 namespace Warcraft.DBC
 {
+	/// <summary>
+	/// The header of a DBC file.
+	/// </summary>
 	public class DBCHeader
 	{
+		/// <summary>
+		/// The data signature of a DBC file.
+		/// </summary>
 		public const string Signature = "WDBC";
+
+		/// <summary>
+		/// The number of records in the database.
+		/// </summary>
 		public uint RecordCount;
+
+		/// <summary>
+		/// The field count in the database.
+		/// </summary>
 		public uint FieldCount;
+
+		/// <summary>
+		/// The size of a single record in the database.
+		/// </summary>
 		public uint RecordSize;
+
+		/// <summary>
+		/// The size of the string block in the database. This block is always stored at the end of the database.
+		/// </summary>
 		public uint StringBlockSize;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.DBC.DBCHeader"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
+		/// <param name="data">ExtendedData.</param>
 		public DBCHeader(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					string DataSignature = new string(br.ReadChars(4));
-					if (Signature != DataSignature)
+					string dataSignature = new string(br.ReadChars(4));
+					if (Signature != dataSignature)
 					{
 						throw new FileLoadException("The loaded data did not have a valid DBC signature.");
 					}

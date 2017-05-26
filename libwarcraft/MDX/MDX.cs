@@ -19,476 +19,229 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 using System;
 using System.IO;
-using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using Warcraft.MDX.Visual;
 using Warcraft.MDX.Geometry;
 using Warcraft.MDX.Animation;
 using Warcraft.Core;
+using Warcraft.Core.Extensions;
+using Warcraft.Core.Structures;
+using Warcraft.MDX.Data;
+using Warcraft.MDX.Gameplay;
+using Warcraft.MDX.Geometry.Skin;
+using Warcraft.MDX.Visual.FX;
 
 namespace Warcraft.MDX
 {
-	public class MDX : IDisposable
+	public class MDX
 	{
-		public MDXHeader Header;
-
+		public const string Signature = "MD20";
+		public WarcraftVersion Version;
 		public string Name;
 
-		public readonly List<uint> GlobalSequenceTimestamps = new List<uint>();
+		public ModelObjectFlags GlobalModelFlags;
 
-		public readonly List<MDXAnimationSequence> AnimationSequences = new List<MDXAnimationSequence>();
-		public readonly List<short> AnimationSequenceLookupTable = new List<short>();
-		public readonly List<MDXPlayableAnimationLookupTableEntry> PlayableAnimationLookupTable = new List<MDXPlayableAnimationLookupTableEntry>();
+		public MDXArray<uint> GlobalSequenceTimestamps;
+		public MDXArray<MDXAnimationSequence> AnimationSequences;
+		public MDXArray<ushort> AnimationSequenceLookupTable;
 
-		public readonly List<short> KeyedBoneLookupTable = new List<short>();
-		public readonly List<MDXBone> Bones = new List<MDXBone>();
+		public MDXArray<MDXPlayableAnimationLookupTableEntry> PlayableAnimationLookupTable;
 
-		public readonly List<MDXVertex> Vertices = new List<MDXVertex>();
-		public readonly List<MDXView> LODViews = new List<MDXView>();
-		public readonly List<MDXSubmeshColourAnimation> ColourAnimations = new List<MDXSubmeshColourAnimation>();
-		public readonly List<short> TransparencyLookupTable = new List<short>();
-		public readonly List<MDXTrack<short>> TransparencyAnimations = new List<MDXTrack<short>>();
-		public readonly List<MDXUVAnimation> UVAnimations = new List<MDXUVAnimation>();
-		public readonly List<short> TextureUnitLookupTable = new List<short>();
-		public readonly List<MDXRenderFlagPair> RenderFlags = new List<MDXRenderFlagPair>();
-		public readonly List<MDXTexture> Textures = new List<MDXTexture>();
-		public readonly List<uint> TextureLookupTable = new List<uint>();
+		public MDXArray<MDXBone> Bones;
+		public MDXArray<ushort> BoneSocketLookupTable;
 
-		public MDX(Stream MDXStream)
+		public MDXArray<MDXVertex> Vertices;
+		public MDXArray<MDXSkin> Skins;
+		public uint SkinCount;
+
+		public MDXArray<MDXColourAnimation> ColourAnimations;
+		public MDXArray<MDXTexture> Textures;
+		public MDXArray<MDXTextureWeight> TransparencyAnimations;
+		public MDXArray<MDXTextureTransform> TextureTransformations;
+		public MDXArray<short> ReplaceableTextureLookupTable;
+		public MDXArray<MDXMaterial> Materials;
+
+		public MDXArray<short> BoneLookupTable;
+		public MDXArray<short> TextureLookupTable;
+		public MDXArray<short> TextureSlotLookupTable;
+		public MDXArray<short> TransparencyLookupTable;
+		public MDXArray<short> TextureTransformationLookupTable;
+
+		public Box BoundingBox;
+		public float BoundingSphereRadius;
+
+		public Box CollisionBox;
+		public float CollisionSphereRadius;
+
+		public MDXArray<ushort> CollisionTriangles;
+		public MDXArray<Vector3> CollisionVertices;
+		public MDXArray<Vector3> CollisionNormals;
+
+		public MDXArray<MDXAttachment> Attachments;
+		public MDXArray<MDXAttachmentType> AttachmentLookupTable;
+
+		public MDXArray<MDXAnimationEvent> AnimationEvents;
+
+		public MDXArray<MDXLight> Lights;
+
+		public MDXArray<MDXCamera> Cameras;
+		public MDXArray<MDXCameraType> CameraTypeLookupTable;
+
+		public MDXArray<MDXRibbonEmitter> RibbonEmitters;
+		// ribbon emitters
+		// particle emitters
+
+		// cond: wrath & blendmap overrides
+		public MDXArray<ushort> BlendMapOverrides;
+
+		public MDX(byte[] data)
 		{
-			using (BinaryReader br = new BinaryReader(MDXStream))
+			using (MemoryStream ms = new MemoryStream(data))
 			{
-				// Read Wrath header or read pre-wrath header
-				WarcraftVersion Format = PeekFormat(br);
-				if (Format < WarcraftVersion.Wrath)
-				{
-					this.Header = new MDXHeader(br.ReadBytes(324));
-				}
-				else
-				{
-					ModelObjectFlags Flags = PeekFlags(br);
-					if (Flags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
-					{
-						this.Header = new MDXHeader(br.ReadBytes(308));
-					}
-					else
-					{
-						this.Header = new MDXHeader(br.ReadBytes(312));
-					}
-				}
-
-				// Seek and read model name
-				br.BaseStream.Position = this.Header.NameOffset;
-				this.Name = new string(br.ReadChars((int) this.Header.NameLength));
-
-				// Seek to Global Sequences
-				br.BaseStream.Position = this.Header.GlobalSequencesOffset;
-				for (int i = 0; i < this.Header.GlobalSequenceCount; ++i)
-				{
-					this.GlobalSequenceTimestamps.Add(br.ReadUInt32());
-				}
-
-				// Seek to Animation Sequences
-				br.BaseStream.Position = this.Header.AnimationSequencesOffset;
-				int sequenceSize = MDXAnimationSequence.GetSize();
-				for (int i = 0; i < this.Header.AnimationSequenceCount; ++i)
-				{
-					this.AnimationSequences.Add(new MDXAnimationSequence(br.ReadBytes(sequenceSize)));
-				}
-
-				// Seek to Animation Sequence Lookup Table
-				br.BaseStream.Position = this.Header.AnimationLookupTableOffset;
-				for (int i = 0; i < this.Header.AnimationLookupTableEntryCount; ++i)
-				{
-					this.AnimationSequenceLookupTable.Add(br.ReadInt16());
-				}
-
-				if (MDXHeader.GetModelVersion(this.Header.Version) < WarcraftVersion.Wrath)
-				{
-					// Seek to Playable Animations Lookup Table
-					br.BaseStream.Position = this.Header.PlayableAnimationLookupTableOffset;
-					for (int i = 0; i < this.Header.PlayableAnimationLookupTableEntryCount; ++i)
-					{
-						this.PlayableAnimationLookupTable.Add(new MDXPlayableAnimationLookupTableEntry(br.ReadBytes(4)));
-					}					
-				}
-
-				// Seek to bone block
-				br.BaseStream.Position = this.Header.BonesOffset;
-				for (int i = 0; i < this.Header.BoneCount; ++i)
-				{
-					// TODO: properly skip to the next bone record, data is not aligned
-					MDXBone Bone = new MDXBone();
-
-					Bone.AnimationID = br.ReadInt32();
-					Bone.Flags = (MDXBoneFlags)br.ReadUInt32();
-					Bone.ParentBone = br.ReadInt16();
-					Bone.SubmeshID = br.ReadUInt16();
-
-					if (MDXHeader.GetModelVersion(this.Header.Version) >= WarcraftVersion.BurningCrusade)
-					{
-						Bone.Unknown1 = br.ReadUInt16();
-						Bone.Unknown1 = br.ReadUInt16();
-					}
-
-					// TODO: Rework animation track reading
-					// Read bone animation header block
-					//Bone.AnimatedTranslation = new MDXTrack<Vector3f>(br, MDXHeader.GetModelVersion(Header.Version));
-					//Bone.AnimatedRotation = new MDXTrack<Quaternion>(br, MDXHeader.GetModelVersion(Header.Version));
-					//Bone.AnimatedScale = new MDXTrack<Vector3f>(br, MDXHeader.GetModelVersion(Header.Version));
-
-					Bone.PivotPoint = br.ReadVector3f();
-
-					this.Bones.Add(Bone);
-				}
-
-				/*
-				// Read bone animation data
-				foreach (MDXBone Bone in Bones)
-				{
-					// Read animation translation block
-					br.BaseStream.Position = Bone.AnimatedTranslation.Values.ElementsOffset;
-					for (int j = 0; j < Bone.AnimatedTranslation.Values.Count; ++j)
-					{
-						Bone.AnimatedTranslation.Values.Add(br.ReadVector3f());
-					}
-
-					// Read animation rotation block
-					br.BaseStream.Position = Bone.AnimatedRotation.ValuesOffset;
-					for (int j = 0; j < Bone.AnimatedRotation.ValueCount; ++j)
-					{
-						if (MDXHeader.GetModelVersion(Header.Version) > MDXFormat.Classic)
-						{
-							Bone.AnimatedRotation.Values.Add(br.ReadQuaternion16());
-						}
-						else
-						{
-							Bone.AnimatedRotation.Values.Add(br.ReadQuaternion32());
-						}
-					}
-
-					// Read animation scale block
-					br.BaseStream.Position = Bone.AnimatedScale.ValuesOffset;
-					for (int j = 0; j < Bone.AnimatedScale.ValueCount; ++j)
-					{
-						Bone.AnimatedScale.Values.Add(br.ReadVector3f());
-					}
-				}
-				*/
-
-				// Seek to Skeletal Bone Lookup Table
-				br.BaseStream.Position = this.Header.KeyedBoneLookupTablesOffset;
-				for (int i = 0; i < this.Header.KeyedBoneLookupTableCount; ++i)
-				{
-					this.KeyedBoneLookupTable.Add(br.ReadInt16());
-				}
-
-				// Seek to vertex block
-				br.BaseStream.Position = this.Header.VerticesOffset;
-				for (int i = 0; i < this.Header.VertexCount; ++i)
-				{
-					this.Vertices.Add(new MDXVertex(br.ReadBytes(48)));
-				}
-
-				// Seek to view block
-				if (MDXHeader.GetModelVersion(this.Header.Version) < WarcraftVersion.Wrath)
-				{
-					br.BaseStream.Position = this.Header.LODViewsOffset;
-
-					// Read the view headers
-					for (int i = 0; i < this.Header.LODViewsCount; ++i)
-					{
-						MDXViewHeader ViewHeader = new MDXViewHeader(br.ReadBytes(44));
-
-						MDXView View = new MDXView();
-						View.Header = ViewHeader;
-
-						this.LODViews.Add(View);
-					}
-
-					// Read view data
-					foreach (MDXView View in this.LODViews)
-					{
-						// Read view vertex indices
-						View.VertexIndices = new List<ushort>();
-						br.BaseStream.Position = View.Header.VertexIndicesOffset;
-						for (int j = 0; j < View.Header.VertexIndexCount; ++j)
-						{
-							View.VertexIndices.Add(br.ReadUInt16());
-						}
-
-						// Read view triangles
-						View.Triangles = new List<MDXTriangle>();
-						br.BaseStream.Position = View.Header.TriangleVertexIndicesOffset;
-						for (int j = 0; j < View.Header.TriangleVertexCount / 3; ++j)
-						{
-							MDXTriangle Triangle = new MDXTriangle(br.ReadUInt16(), br.ReadUInt16(), br.ReadUInt16());
-
-							View.Triangles.Add(Triangle);							
-						}
-
-						// Read view vertex properties
-						View.VertexProperties = new List<MDXVertexProperty>();
-						br.BaseStream.Position = View.Header.VertexPropertiesOffset;
-						for (int j = 0; j < View.Header.VertexPropertyCount; ++j)
-						{
-							View.VertexProperties.Add(new MDXVertexProperty(br.ReadByte(), br.ReadByte(), br.ReadByte(), br.ReadByte()));
-						}
-
-						// Read view submeshes
-						View.Submeshes = new List<MDXSubmesh>();
-						br.BaseStream.Position = View.Header.SubmeshesOffset;
-						for (int j = 0; j < View.Header.SubmeshCount; ++j)
-						{
-							byte[] submeshData;
-							if (MDXHeader.GetModelVersion(this.Header.Version) >= WarcraftVersion.BurningCrusade)
-							{
-								submeshData = br.ReadBytes(48);
-							}
-							else
-							{
-								submeshData = br.ReadBytes(32);
-							}
-
-							View.Submeshes.Add(new MDXSubmesh(submeshData));
-						}
-
-						View.TextureUnits = new List<MDXTextureUnit>();
-						br.BaseStream.Position = View.Header.TexturesOffset;
-						for (int j = 0; j < View.Header.TextureCount; ++j)
-						{
-							View.TextureUnits.Add(new MDXTextureUnit(br.ReadBytes(24)));
-						}
-					}
-				}
-				else
-				{
-					throw new NotImplementedException();
-				}
-
-				/*
-				// TODO: Rework animation track reading
-				// Seek to submesh animation block
-				br.BaseStream.Position = Header.SubmeshColourAnimationsOffset;
-				for (int i = 0; i < Header.SubmeshColourAnimationCount; ++i)
-				{					
-					MDXTrack<RGB> ColourTrack = new MDXTrack<RGB>(br, MDXHeader.GetModelVersion(Header.Version));
-					MDXTrack<short> OpacityTrack = new MDXTrack<short>(br, MDXHeader.GetModelVersion(Header.Version));
-
-					MDXSubmeshColourAnimation ColourAnimation = new MDXSubmeshColourAnimation();
-					ColourAnimation.ColourTrack = ColourTrack;
-					ColourAnimation.OpacityTrack = OpacityTrack;
-
-					ColourAnimations.Add(ColourAnimation);
-				}
-				// Read submesh animation values
-				foreach (MDXSubmeshColourAnimation ColourAnimation in ColourAnimations)
-				{
-					// Read the colour track
-					br.BaseStream.Position = ColourAnimation.ColourTrack.ValuesOffset;
-					for (int j = 0; j < ColourAnimation.ColourTrack.ValueCount; ++j)
-					{
-						ColourAnimation.ColourTrack.Values.Add(new RGB(br.ReadVector3f()));
-					}
-
-					// Read the opacity track
-					br.BaseStream.Position = ColourAnimation.OpacityTrack.ValuesOffset;
-					for (int j = 0; j < ColourAnimation.OpacityTrack.ValueCount; ++j)
-					{
-						ColourAnimation.OpacityTrack.Values.Add(br.ReadInt16());
-					}
-				}
-				*/
-
-				// TODO: Use this pattern for the tracks as well, where values are outreferenced 
-				// from the block
-				// Seek to Texture definition block
-				br.BaseStream.Position = this.Header.TexturesOffset;
-				for (int i = 0; i < this.Header.TextureCount; ++i)
-				{
-					MDXTexture Texture = new MDXTexture(br.ReadBytes(16));
-					this.Textures.Add(Texture);
-				}
-
-				// Read the texture definition strings
-				foreach (MDXTexture Texture in this.Textures)
-				{
-					br.BaseStream.Position = Texture.FilenameOffset;
-					Texture.Filename = new string(br.ReadChars((int)Texture.FilenameLength));
-				}
-				/*
-				// TODO: Rework animation track reading
-				// Seek to transparency block
-				br.BaseStream.Position = Header.TransparencyAnimationsOffset;
-				for (int i = 0; i < Header.TransparencyAnimationCount; ++i)
-				{
-					TransparencyAnimations.Add(new MDXTrack<short>(br, MDXHeader.GetModelVersion(Header.Version)));
-				}
-				// Read transparency animation block data
-				foreach (MDXTrack<short> TransparencyTrack in TransparencyAnimations)
-				{
-					// Read the opacity track
-					br.BaseStream.Position = TransparencyTrack.ValuesOffset;
-					for (int j = 0; j < TransparencyTrack.ValueCount; ++j)
-					{
-						TransparencyTrack.Values.Add(br.ReadInt16());
-					}
-				}
-
-				// TODO: Rework animation track reading
-				// UV Animations
-				br.BaseStream.Position = Header.UVTextureAnimationsOffset;
-				for (int i = 0; i < Header.UVTextureAnimationCount; ++i)
-				{
-					br.BaseStream.Position = Header.UVTextureAnimationsOffset + (i * 84);
-
-					MDXUVAnimation UVAnimation = new MDXUVAnimation();
-					UVAnimation.TranslationTrack = new MDXTrack<Vector3f>(br, MDXHeader.GetModelVersion(Header.Version));
-					UVAnimation.RotationTrack = new MDXTrack<Quaternion>(br, MDXHeader.GetModelVersion(Header.Version));
-					UVAnimation.ScaleTrack = new MDXTrack<Vector3f>(br, MDXHeader.GetModelVersion(Header.Version));
-
-					UVAnimations.Add(UVAnimation);
-				}
-				// Read UV animation track data
-				foreach (MDXUVAnimation UVAnimation in UVAnimations)
-				{
-					// Read animation translation block
-					br.BaseStream.Position = UVAnimation.TranslationTrack.ValuesOffset;
-					for (int j = 0; j < UVAnimation.TranslationTrack.ValueCount; ++j)
-					{
-						UVAnimation.TranslationTrack.Values.Add(br.ReadVector3f());
-					}
-
-					// Read animation rotation block
-					br.BaseStream.Position = UVAnimation.RotationTrack.ValuesOffset;
-					for (int j = 0; j < UVAnimation.RotationTrack.ValueCount; ++j)
-					{
-						if (MDXHeader.GetModelVersion(Header.Version) > MDXFormat.Classic)
-						{
-							UVAnimation.RotationTrack.Values.Add(br.ReadQuaternion16());
-						}
-						else
-						{
-							UVAnimation.RotationTrack.Values.Add(br.ReadQuaternion32());
-						}
-					}
-
-					// Read animation scale block
-					br.BaseStream.Position = UVAnimation.ScaleTrack.ValuesOffset;
-					for (int j = 0; j < UVAnimation.ScaleTrack.ValueCount; ++j)
-					{
-						UVAnimation.ScaleTrack.Values.Add(br.ReadVector3f());
-					}
-				}
-				*/
-
-				// Replaceable textures
-
-				// Render flags			
-				// Seek to render flag block
-				br.BaseStream.Position = this.Header.RenderFlagsOffset;
-				for (int i = 0; i < this.Header.RenderFlagCount; ++i)
-				{
-					this.RenderFlags.Add(new MDXRenderFlagPair(br.ReadBytes(4)));
-				}
-
-				// Bone lookup
-
-				// Texture lookup
-
-				// Texture unit lookup
-				// Seek to texture unit lookup block
-				br.BaseStream.Position = this.Header.TextureUnitsOffset;
-				for (int i = 0; i < this.Header.TextureUnitCount; ++i)
-				{
-					this.TextureUnitLookupTable.Add(br.ReadInt16());
-				}
-
-				// Transparency lookup
-				// Seek to transparency lookup table
-				br.BaseStream.Position = this.Header.TransparencyLookupTablesOffset;
-				for (int i = 0; i < this.Header.TransparencyLookupTableCount; ++i)
-				{
-					this.TransparencyLookupTable.Add(br.ReadInt16());
-				}
-
-				// UV animation lookup
-
-				// Bounding box
-
-				// Bounding radius
-
-				// Collision box
-
-				// Collision radius
-
-				// Bounding tris
-
-				// Bounding verts
-
-				// Bounding normals
-
-				// Attachments
-
-				// Attachment lookup
-
-				// Anim notifies (events)
-
-				// Lights
-
-				// Cameras
-
-				// Camera lookup
-
-				// Ribbon Emitters
-
-				// Particle Emitters
-
-				// Blend maps (if flags say they exist)
+				LoadFromStream(ms);
 			}
 		}
 
-		private WarcraftVersion PeekFormat(BinaryReader br)
+		public MDX(Stream dataStream)
 		{
-			long initialPosition = br.BaseStream.Position;
-
-			// Skip ahead to the version block
-			br.BaseStream.Position += 4;
-
-			uint rawVersion = br.ReadUInt32();			
-
-			// Seek back to the initial position
-			br.BaseStream.Position = initialPosition;
-
-			return MDXHeader.GetModelVersion(rawVersion);
+			LoadFromStream(dataStream);
 		}
 
-		private ModelObjectFlags PeekFlags(BinaryReader br)
+		private void LoadFromStream(Stream dataStream)
 		{
-			long initialPosition = br.BaseStream.Position;
+			using (BinaryReader br = new BinaryReader(dataStream))
+			{
+				string dataSignature = new string(br.ReadBinarySignature().Reverse().ToArray());
+				if (dataSignature != Signature)
+				{
+					throw new ArgumentException("The provided data stream does not contain a valid MDX signature. " +
+					                            "It might be a Legion file, or you may have omitted the signature, which should be \"MD20\".");
+				}
 
-			// Skip ahead to the flag block
-			br.BaseStream.Position += 16;
+				this.Version = GetModelVersion(br.ReadUInt32());
+				this.Name = new string(br.ReadMDXArray<char>().GetValues().ToArray());
+				this.GlobalModelFlags = (ModelObjectFlags) br.ReadUInt32();
 
-			ModelObjectFlags flags = (ModelObjectFlags)br.ReadUInt32();
+				this.GlobalSequenceTimestamps = br.ReadMDXArray<uint>();
+				this.AnimationSequences = br.ReadMDXArray<MDXAnimationSequence>(this.Version);
+				this.AnimationSequenceLookupTable = br.ReadMDXArray<ushort>();
 
-			// Seek back to the initial position
-			br.BaseStream.Position = initialPosition;
+				if (this.Version < WarcraftVersion.Wrath)
+				{
+					this.PlayableAnimationLookupTable = br.ReadMDXArray<MDXPlayableAnimationLookupTableEntry>();
+				}
 
-			return flags;
+				this.Bones = br.ReadMDXArray<MDXBone>(this.Version);
+				this.BoneSocketLookupTable = br.ReadMDXArray<ushort>();
+				this.Vertices = br.ReadMDXArray<MDXVertex>();
+
+				if (this.Version < WarcraftVersion.Wrath)
+				{
+					this.Skins = br.ReadMDXArray<MDXSkin>(this.Version);
+				}
+				else
+				{
+					// Skins are stored out of file, figure out a clean solution
+					this.SkinCount = br.ReadUInt32();
+				}
+
+				this.ColourAnimations = br.ReadMDXArray<MDXColourAnimation>(this.Version);
+				this.Textures = br.ReadMDXArray<MDXTexture>();
+				this.TransparencyAnimations = br.ReadMDXArray<MDXTextureWeight>(this.Version);
+
+				if (this.Version <= WarcraftVersion.BurningCrusade)
+				{
+					// There's an array of something here, but we've no idea what type of data it is. Thus, we'll skip
+					// over it.
+					br.BaseStream.Position += 8;
+				}
+
+				this.TextureTransformations = br.ReadMDXArray<MDXTextureTransform>(this.Version);
+				this.ReplaceableTextureLookupTable = br.ReadMDXArray<short>();
+				this.Materials = br.ReadMDXArray<MDXMaterial>(this.Version);
+
+				this.BoneLookupTable = br.ReadMDXArray<short>();
+				this.TextureLookupTable = br.ReadMDXArray<short>();
+				this.TextureSlotLookupTable = br.ReadMDXArray<short>();
+				this.TransparencyLookupTable = br.ReadMDXArray<short>();
+				this.TextureTransformationLookupTable = br.ReadMDXArray<short>();
+
+				this.BoundingBox = br.ReadBox();
+				this.BoundingSphereRadius = br.ReadSingle();
+
+				this.CollisionBox = br.ReadBox();
+				this.CollisionSphereRadius = br.ReadSingle();
+
+				this.CollisionTriangles = br.ReadMDXArray<ushort>();
+				this.CollisionVertices = br.ReadMDXArray<Vector3>();
+				this.CollisionNormals = br.ReadMDXArray<Vector3>();
+
+				this.Attachments = br.ReadMDXArray<MDXAttachment>(this.Version);
+				this.AttachmentLookupTable = br.ReadMDXArray<MDXAttachmentType>();
+
+				this.AnimationEvents = br.ReadMDXArray<MDXAnimationEvent>(this.Version);
+				this.Lights = br.ReadMDXArray<MDXLight>(this.Version);
+
+				this.Cameras = br.ReadMDXArray<MDXCamera>(this.Version);
+				this.CameraTypeLookupTable = br.ReadMDXArray<MDXCameraType>();
+
+				this.RibbonEmitters = br.ReadMDXArray<MDXRibbonEmitter>(this.Version);
+
+				// TODO: Particle Emitters
+				// Skip for now
+				br.BaseStream.Position += 8;
+
+				if (this.Version >= WarcraftVersion.Wrath && this.GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
+				{
+					this.BlendMapOverrides = br.ReadMDXArray<ushort>();
+				}
+			}
 		}
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="Warcraft.MDX.MDX"/> object.
+		/// Translates a given numerical model version number into its equivalent <see cref="WarcraftVersion"/>.
 		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Warcraft.MDX.MDX"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Warcraft.MDX.MDX"/> in an unusable state. After calling
-		/// <see cref="Dispose"/>, you must release all references to the <see cref="Warcraft.MDX.MDX"/> so the garbage
-		/// collector can reclaim the memory that the <see cref="Warcraft.MDX.MDX"/> was occupying.</remarks>
-		public void Dispose()
+		/// <param name="version">The numerical model version.</param>
+		/// <returns>An equivalent Warcraft version.</returns>
+		public static WarcraftVersion GetModelVersion(uint version)
 		{
-			// TODO: Release file on disk
+			if (version <= 256)
+			{
+				return WarcraftVersion.Classic;
+			}
+
+			if (version <= 263)
+			{
+				return WarcraftVersion.BurningCrusade;
+			}
+
+			if (version == 264)
+			{
+				return WarcraftVersion.Wrath;
+			}
+
+			if (version <= 272)
+			{
+				return WarcraftVersion.Cataclysm;
+			}
+
+			if (version < 274)
+			{
+				// It should be noted that this is a guess based on the newer and older
+				// model versions. If it works, great - YMMV
+				return WarcraftVersion.Warlords;
+			}
+
+			if (version >= 274)
+			{
+				return WarcraftVersion.Legion;
+			}
+
+			return WarcraftVersion.Unknown;
 		}
 	}
 }

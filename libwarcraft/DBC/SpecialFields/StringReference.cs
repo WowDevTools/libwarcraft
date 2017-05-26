@@ -30,9 +30,9 @@ namespace Warcraft.DBC.SpecialFields
 			private set;
 		}
 
-		public StringReference(uint InStringOffset)
+		public StringReference(uint inStringOffset)
 		{
-			this.StringOffset = InStringOffset;
+			this.StringOffset = inStringOffset;
 		}
 	}
 }

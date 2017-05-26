@@ -27,7 +27,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkBakedShadows : IRIFFChunk
+	public class MapChunkBakedShadows : IIFFChunk
 	{
 		public const string Signature = "MCSH";
 

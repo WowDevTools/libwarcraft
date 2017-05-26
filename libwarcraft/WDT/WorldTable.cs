@@ -23,8 +23,8 @@
 using Warcraft.ADT.Chunks;
 using Warcraft.WDT.Chunks;
 using System.IO;
-using Warcraft.Core;
 using System.Collections.Generic;
+using Warcraft.Core.Extensions;
 
 namespace Warcraft.WDT
 {
@@ -62,16 +62,16 @@ namespace Warcraft.WDT
 		/// <returns>The loaded areas.</returns>
 		public List<AreaInfoEntry> GetLoadedAreas()
 		{
-			List<AreaInfoEntry> LoadedAreas = new List<AreaInfoEntry>();
-			foreach (AreaInfoEntry Entry in this.AreaInfo.Entries)
+			List<AreaInfoEntry> loadedAreas = new List<AreaInfoEntry>();
+			foreach (AreaInfoEntry entry in this.AreaInfo.Entries)
 			{
-				if (Entry.Flags.HasFlag(AreaInfoFlags.IsLoaded))
+				if (entry.Flags.HasFlag(AreaInfoFlags.IsLoaded))
 				{
-					LoadedAreas.Add(Entry);
+					loadedAreas.Add(entry);
 				}
 			}
 
-			return LoadedAreas;
+			return loadedAreas;
 		}
 
 		/// <summary>
@@ -80,27 +80,27 @@ namespace Warcraft.WDT
 		/// <returns>The areas with terrain.</returns>
 		public List<AreaInfoEntry> GetAreasWithTerrain()
 		{
-			List<AreaInfoEntry> TerrainAreas = new List<AreaInfoEntry>();
-			foreach (AreaInfoEntry Entry in this.AreaInfo.Entries)
+			List<AreaInfoEntry> terrainAreas = new List<AreaInfoEntry>();
+			foreach (AreaInfoEntry entry in this.AreaInfo.Entries)
 			{
-				if (Entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
+				if (entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
 				{
-					TerrainAreas.Add(Entry);
+					terrainAreas.Add(entry);
 				}
 			}
 
-			return TerrainAreas;
+			return terrainAreas;
 		}
 
 		/// <summary>
 		/// Gets the area info for the specified coordinates.
 		/// </summary>
 		/// <returns>The area info.</returns>
-		/// <param name="InTileX">In tile x.</param>
-		/// <param name="InTileY">In tile y.</param>
-		public AreaInfoEntry GetAreaInfo(uint InTileX, uint InTileY)
+		/// <param name="inTileX">In tile x.</param>
+		/// <param name="inTileY">In tile y.</param>
+		public AreaInfoEntry GetAreaInfo(uint inTileX, uint inTileY)
 		{
-			return this.AreaInfo.GetAreaInfo(InTileX, InTileY);
+			return this.AreaInfo.GetAreaInfo(inTileX, inTileY);
 		}
 
 		/// <summary>
@@ -109,9 +109,9 @@ namespace Warcraft.WDT
 		/// <returns><c>true</c> if this instance has any terrain; otherwise, <c>false</c>.</returns>
 		public bool HasAnyTerrain()
 		{
-			foreach (AreaInfoEntry Entry in this.AreaInfo.Entries)
+			foreach (AreaInfoEntry entry in this.AreaInfo.Entries)
 			{
-				if (Entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
+				if (entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
 				{
 					return true;
 				}
@@ -124,12 +124,12 @@ namespace Warcraft.WDT
 		/// Determines whether the tile at the specified coordinates is populated with terrain data or not.
 		/// </summary>
 		/// <returns><c>true</c> if the tile is populated; otherwise, <c>false</c>.</returns>
-		/// <param name="InTileX">0-based x coordinate of the tile.</param>
-		/// <param name="InTileY">0-based y coordinate of the tile.</param>
-		public bool IsTilePopulated(uint InTileX, uint InTileY)
+		/// <param name="inTileX">0-based x coordinate of the tile.</param>
+		/// <param name="inTileY">0-based y coordinate of the tile.</param>
+		public bool IsTilePopulated(uint inTileX, uint inTileY)
 		{
-			AreaInfoEntry InfoEntry = this.AreaInfo.GetAreaInfo(InTileX, InTileY);
-			return InfoEntry.Flags.HasFlag(AreaInfoFlags.HasTerrainData);
+			AreaInfoEntry infoEntry = this.AreaInfo.GetAreaInfo(inTileX, inTileY);
+			return infoEntry.Flags.HasFlag(AreaInfoFlags.HasTerrainData);
 		}
 
 		public byte[] Serialize()

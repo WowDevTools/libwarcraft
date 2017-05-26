@@ -23,15 +23,15 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Warcraft.DBC.SpecialFields;
-using Warcraft.Core;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MH2O Chunk - Contains liquid information about the ADT file, superseding the older MCLQ chunk.
 	/// </summary>
-	public class TerrainLiquid : IRIFFChunk
+	public class TerrainLiquid : IIFFChunk
 	{
 		public const string Signature = "MH2O";
 
@@ -48,7 +48,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainLiquid"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public TerrainLiquid(byte[] inData)
 		{
 			LoadBinaryData(inData);
@@ -65,24 +65,24 @@ namespace Warcraft.ADT.Chunks
 						this.LiquidChunks.Add(new TerrainLiquidChunk(br.ReadBytes(TerrainLiquidChunk.GetSize())));
 					}
 
-					foreach (TerrainLiquidChunk LiquidChunk in this.LiquidChunks)
+					foreach (TerrainLiquidChunk liquidChunk in this.LiquidChunks)
 					{
-						br.BaseStream.Position = LiquidChunk.WaterInstanceOffset;
-						for (int i = 0; i < LiquidChunk.LayerCount; ++i)
+						br.BaseStream.Position = liquidChunk.WaterInstanceOffset;
+						for (int i = 0; i < liquidChunk.LayerCount; ++i)
 						{
 							byte[] instanceData = br.ReadBytes(TerrainLiquidInstance.GetSize());
-							LiquidChunk.LiquidInstances.Add(new TerrainLiquidInstance(instanceData));
+							liquidChunk.LiquidInstances.Add(new TerrainLiquidInstance(instanceData));
 						}
 
-						br.BaseStream.Position = LiquidChunk.AttributesOffset;
-						if (LiquidChunk.LayerCount > 0)
+						br.BaseStream.Position = liquidChunk.AttributesOffset;
+						if (liquidChunk.LayerCount > 0)
 						{
 							byte[] attributeData = br.ReadBytes(TerrainLiquidAttributes.GetSize());
-							LiquidChunk.LiquidAttributes = new TerrainLiquidAttributes(attributeData);
+							liquidChunk.LiquidAttributes = new TerrainLiquidAttributes(attributeData);
 						}
 						else
 						{
-							LiquidChunk.LiquidAttributes = new TerrainLiquidAttributes();
+							liquidChunk.LiquidAttributes = new TerrainLiquidAttributes();
 						}
 					}
 				}
@@ -243,19 +243,19 @@ namespace Warcraft.ADT.Chunks
 		public List<float> Heightmap = new List<float>();
 		public List<byte> Depthmap = new List<byte>();
 
-		public HeightDepthVertexData(byte[] data, byte Width, byte Height)
+		public HeightDepthVertexData(byte[] data, byte width, byte height)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					int ArrayEntryCount = (Width + 1) * (Height + 1);
-					for (int i = 0; i < ArrayEntryCount; ++i)
+					int arrayEntryCount = (width + 1) * (height + 1);
+					for (int i = 0; i < arrayEntryCount; ++i)
 					{
 						this.Heightmap.Add(br.ReadSingle());
 					}
 
-					for (int i = 0; i < ArrayEntryCount; ++i)
+					for (int i = 0; i < arrayEntryCount; ++i)
 					{
 						this.Depthmap.Add(br.ReadByte());
 					}
@@ -263,11 +263,11 @@ namespace Warcraft.ADT.Chunks
 			}
 		}
 
-		public static int GetBlockSize(byte Width, byte Height)
+		public static int GetBlockSize(byte width, byte height)
 		{
-			int ArrayEntryCount = (Width + 1) * (Height + 1);
+			int arrayEntryCount = (width + 1) * (height + 1);
 
-			return (sizeof(float) + sizeof(byte)) * ArrayEntryCount;
+			return (sizeof(float) + sizeof(byte)) * arrayEntryCount;
 		}
 	}
 
@@ -276,32 +276,32 @@ namespace Warcraft.ADT.Chunks
 		public List<float> Heightmap = new List<float>();
 		public List<Tuple<ushort, ushort>> UVMap = new List<Tuple<ushort, ushort>>();
 
-		public HeightUVVertexData(byte[] data, byte Width, byte Height)
+		public HeightUVVertexData(byte[] data, byte width, byte height)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					int ArrayEntryCount = (Width + 1) * (Height + 1);
-					for (int i = 0; i < ArrayEntryCount; ++i)
+					int arrayEntryCount = (width + 1) * (height + 1);
+					for (int i = 0; i < arrayEntryCount; ++i)
 					{
 						this.Heightmap.Add(br.ReadSingle());
 					}
 
-					for (int i = 0; i < ArrayEntryCount; ++i)
+					for (int i = 0; i < arrayEntryCount; ++i)
 					{
-						Tuple<ushort, ushort> UVEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-						this.UVMap.Add(UVEntry);
+						Tuple<ushort, ushort> uvEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
+						this.UVMap.Add(uvEntry);
 					}
 				}
 			}
 		}
 
-		public static int GetBlockSize(byte Width, byte Height)
+		public static int GetBlockSize(byte width, byte height)
 		{
-			int ArrayEntryCount = (Width + 1) * (Height + 1);
+			int arrayEntryCount = (width + 1) * (height + 1);
 
-			return (sizeof(float) + (sizeof(ushort) * 2)) * ArrayEntryCount;
+			return (sizeof(float) + (sizeof(ushort) * 2)) * arrayEntryCount;
 		}
 	}
 
@@ -309,15 +309,15 @@ namespace Warcraft.ADT.Chunks
 	{
 		public List<byte> Depthmap = new List<byte>();
 
-		public DepthOnlyVertexData(byte[] data, byte Width, byte Height)
+		public DepthOnlyVertexData(byte[] data, byte width, byte height)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					int ArrayEntryCount = (Width + 1) * (Height + 1);
+					int arrayEntryCount = (width + 1) * (height + 1);
 
-					for (int i = 0; i < ArrayEntryCount; ++i)
+					for (int i = 0; i < arrayEntryCount; ++i)
 					{
 						this.Depthmap.Add(br.ReadByte());
 					}
@@ -325,11 +325,11 @@ namespace Warcraft.ADT.Chunks
 			}
 		}
 
-		public static int GetBlockSize(byte Width, byte Height)
+		public static int GetBlockSize(byte width, byte height)
 		{
-			int ArrayEntryCount = (Width + 1) * (Height + 1);
+			int arrayEntryCount = (width + 1) * (height + 1);
 
-			return sizeof(byte) * ArrayEntryCount;
+			return sizeof(byte) * arrayEntryCount;
 		}
 	}
 
@@ -339,25 +339,25 @@ namespace Warcraft.ADT.Chunks
 		public List<byte> Depthmap = new List<byte>();
 		public List<Tuple<ushort, ushort>> UVMap = new List<Tuple<ushort, ushort>>();
 
-		public HeightDepthUVVertexData(byte[] data, byte Width, byte Height)
+		public HeightDepthUVVertexData(byte[] data, byte width, byte height)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					int ArrayEntryCount = (Width + 1) * (Height + 1);
-					for (int i = 0; i < ArrayEntryCount; ++i)
+					int arrayEntryCount = (width + 1) * (height + 1);
+					for (int i = 0; i < arrayEntryCount; ++i)
 					{
 						this.Heightmap.Add(br.ReadSingle());
 					}
 
-					for (int i = 0; i < ArrayEntryCount; ++i)
+					for (int i = 0; i < arrayEntryCount; ++i)
 					{
-						Tuple<ushort, ushort> UVEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-						this.UVMap.Add(UVEntry);
+						Tuple<ushort, ushort> uvEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
+						this.UVMap.Add(uvEntry);
 					}
 
-					for (int i = 0; i < ArrayEntryCount; ++i)
+					for (int i = 0; i < arrayEntryCount; ++i)
 					{
 						this.Depthmap.Add(br.ReadByte());
 					}
@@ -365,11 +365,11 @@ namespace Warcraft.ADT.Chunks
 			}
 		}
 
-		public static int GetBlockSize(byte Width, byte Height)
+		public static int GetBlockSize(byte width, byte height)
 		{
-			int ArrayEntryCount = (Width + 1) * (Height + 1);
+			int arrayEntryCount = (width + 1) * (height + 1);
 
-			return (sizeof(float) + sizeof(byte) + (sizeof(ushort) * 2)) * ArrayEntryCount;
+			return (sizeof(float) + sizeof(byte) + (sizeof(ushort) * 2)) * arrayEntryCount;
 		}
 	}
 }

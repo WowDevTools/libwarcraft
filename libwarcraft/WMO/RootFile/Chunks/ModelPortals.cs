@@ -22,12 +22,13 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelPortals : IRIFFChunk, IBinarySerializable
+	public class ModelPortals : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOPT";
 

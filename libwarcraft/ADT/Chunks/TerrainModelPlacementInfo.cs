@@ -22,15 +22,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks
 {
 	/// <summary>
 	/// MMDF Chunk - Contains M2 model placement information
 	/// </summary>
-	public class TerrainModelPlacementInfo : IRIFFChunk
+	public class TerrainModelPlacementInfo : IIFFChunk
 	{
 		public const string Signature = "MMDF";
 
@@ -42,7 +44,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainModelPlacementInfo"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public TerrainModelPlacementInfo(byte[] inData)
 		{
 			LoadBinaryData(inData);
@@ -54,9 +56,9 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					long EntryCount = br.BaseStream.Length / ModelPlacementEntry.GetSize();
+					long entryCount = br.BaseStream.Length / ModelPlacementEntry.GetSize();
 
-					for (int i = 0; i < EntryCount; ++i)
+					for (int i = 0; i < entryCount; ++i)
 					{
 						this.Entries.Add(new ModelPlacementEntry(br.ReadBytes(ModelPlacementEntry.GetSize())));
 					}
@@ -88,7 +90,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Position of the model
 		/// </summary>
-		public Vector3f Position;
+		public Vector3 Position;
 		/// <summary>
 		/// Rotation of the model
 		/// </summary>
@@ -107,7 +109,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.ModelPlacementEntry"/> class.
 		/// </summary>
-		/// <param name="data">Data.</param>
+		/// <param name="data">ExtendedData.</param>
 		public ModelPlacementEntry(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
@@ -116,7 +118,7 @@ namespace Warcraft.ADT.Chunks
 				{
 					this.ModelEntryIndex = br.ReadUInt32();
 					this.UniqueID = br.ReadUInt32();
-					this.Position = br.ReadVector3f();
+					this.Position = br.ReadVector3();
 					this.Rotation = br.ReadRotator();
 
 					this.ScalingFactor = br.ReadUInt16();

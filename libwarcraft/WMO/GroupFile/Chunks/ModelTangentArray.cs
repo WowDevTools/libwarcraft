@@ -22,24 +22,25 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTangentArray : IRIFFChunk, IBinarySerializable, IPostLoad<ModelTangentArrayPostLoadParameters>
+	public class ModelTangentArray : IIFFChunk, IBinarySerializable, IPostLoad<ModelTangentArrayPostLoadParameters>
 	{
 		public const string Signature = "MOTA";
 
-		private bool hasFinishedLoading;
-		private byte[] data;
+		private bool InternalHasFinishedLoading;
+		private byte[] Data;
 
 		public List<short> FirstIndices = new List<short>();
-		public List<Vector4f> Tangents = new List<Vector4f>();
+		public List<Vector4> Tangents = new List<Vector4>();
 
 		public ModelTangentArray()
 		{
-			this.hasFinishedLoading = true;
+			this.InternalHasFinishedLoading = true;
 		}
 
 		public ModelTangentArray(byte[] inData)
@@ -49,8 +50,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
 		public void LoadBinaryData(byte[] inData)
 		{
-			this.data = inData;
-			this.hasFinishedLoading = false;
+			this.Data = inData;
+			this.InternalHasFinishedLoading = false;
 		}
 
 		public string GetSignature()
@@ -69,9 +70,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 			            bw.Write(firstIndex);
 		            }
 
-		            foreach (Vector4f tangent in this.Tangents)
+		            foreach (Vector4 tangent in this.Tangents)
 		            {
-			            bw.WriteVector4f(tangent);
+			            bw.WriteVector4(tangent);
 		            }
             	}
 
@@ -81,12 +82,12 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
 		public bool HasFinishedLoading()
 		{
-			return this.hasFinishedLoading;
+			return this.InternalHasFinishedLoading;
 		}
 
 		public void PostLoad(ModelTangentArrayPostLoadParameters loadingParameters)
 		{
-			using (MemoryStream ms = new MemoryStream(this.data))
+			using (MemoryStream ms = new MemoryStream(this.Data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -97,12 +98,12 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
 					for (int i = 0; i < loadingParameters.AccumulatedIndexCount; ++i)
 					{
-						this.Tangents.Add(br.ReadVector4f());
+						this.Tangents.Add(br.ReadVector4());
 					}
 				}
 			}
 
-			this.data = null;
+			this.Data = null;
 		}
 	}
 

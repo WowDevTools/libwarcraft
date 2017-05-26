@@ -23,7 +23,7 @@
 using System.IO;
 using System.Linq;
 using Warcraft.ADT.Chunks;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 using Warcraft.WMO.GroupFile;
 using Warcraft.WMO.RootFile.Chunks;

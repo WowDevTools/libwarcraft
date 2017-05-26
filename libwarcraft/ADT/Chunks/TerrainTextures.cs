@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MTEX Chunk - Contains a list of all referenced textures in this ADT.
 	/// </summary>
-	public class TerrainTextures : IRIFFChunk
+	public class TerrainTextures : IIFFChunk
 	{
 		public const string Signature = "MTEX";
 
@@ -47,7 +47,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainTextures"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public TerrainTextures(byte[] inData)
 		{
 			LoadBinaryData(inData);

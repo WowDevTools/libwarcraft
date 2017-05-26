@@ -22,17 +22,17 @@
 
 using System.IO;
 using System.Collections.Generic;
-using Warcraft.Core;
+using System.Numerics;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexNormals : IRIFFChunk
+	public class MapChunkVertexNormals : IIFFChunk
 	{
 		public const string Signature = "MCNR";
 
-		public List<Vector3f> HighResVertexNormals = new List<Vector3f>();
-		public List<Vector3f> LowResVertexNormals = new List<Vector3f>();
+		public List<Vector3> HighResVertexNormals = new List<Vector3>();
+		public List<Vector3> LowResVertexNormals = new List<Vector3>();
 
 		public MapChunkVertexNormals()
 		{
@@ -57,11 +57,11 @@ namespace Warcraft.ADT.Chunks.Subchunks
 							// Read a block of 9 high res normals
 							for (int x = 0; x < 9; ++x)
 							{
-								sbyte X = br.ReadSByte();
-								sbyte Z = br.ReadSByte();
-								sbyte Y = br.ReadSByte();
+								sbyte normX = br.ReadSByte();
+								sbyte normZ = br.ReadSByte();
+								sbyte normY = br.ReadSByte();
 
-								this.HighResVertexNormals.Add(new Vector3f(X, Y, Z));
+								this.HighResVertexNormals.Add(new Vector3(normX, normY, normZ));
 							}
 						}
 						else
@@ -69,11 +69,11 @@ namespace Warcraft.ADT.Chunks.Subchunks
 							// Read a block of 8 low res normals
 							for (int x = 0; x < 8; ++x)
 							{
-								sbyte X = br.ReadSByte();
-								sbyte Z = br.ReadSByte();
-								sbyte Y = br.ReadSByte();
+								sbyte normX = br.ReadSByte();
+								sbyte normZ = br.ReadSByte();
+								sbyte normY = br.ReadSByte();
 
-								this.LowResVertexNormals.Add(new Vector3f(X, Y, Z));
+								this.LowResVertexNormals.Add(new Vector3(normX, normY, normZ));
 							}
 						}
 					}

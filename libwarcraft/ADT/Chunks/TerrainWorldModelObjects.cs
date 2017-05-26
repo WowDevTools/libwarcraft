@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
@@ -30,7 +30,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MWMO Chunk - Contains a list of all referenced WMO models in this ADT.
 	/// </summary>
-	public class TerrainWorldModelObjects : IRIFFChunk, IBinarySerializable
+	public class TerrainWorldModelObjects : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MWMO";
 
@@ -47,7 +47,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldModelObjects"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public TerrainWorldModelObjects(byte[] inData)
 		{
 			LoadBinaryData(inData);

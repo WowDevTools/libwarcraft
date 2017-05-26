@@ -1,3 +1,39 @@
+libwarcraft1.0-cli (1.0.8.38347-1) xenial; urgency=medium
+
+  * And the mono pkgconfigs too.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Fri, 13 Jan 2017 21:18:15 +0100
+
+libwarcraft1.0-cli (1.0.8.38182-1) xenial; urgency=medium
+
+  * Made sure to include the test project.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Fri, 13 Jan 2017 21:12:46 +0100
+
+libwarcraft1.0-cli (1.0.8.37764-1) xenial; urgency=medium
+
+  * Fixed build script and removed obsolete dependency.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Fri, 13 Jan 2017 20:58:50 +0100
+
+libwarcraft1.0-cli (1.0.7.37541-1) xenial; urgency=medium
+
+  * TELL HIM AIR MARSHAL CARLIN SAYS GO FUCK YOURSELF
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Fri, 13 Jan 2017 20:51:23 +0100
+
+libwarcraft1.0-cli (1.0.6222.37514-1) xenial; urgency=medium
+
+  * More crap from the bogus program.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Fri, 13 Jan 2017 20:50:30 +0100
+
+libwarcraft1.0-cli (1.0.6222.37448-1) xenial; urgency=medium
+
+  * Bunch of updates, too many to list. Fixed build scripts too.
+
+ -- Jarl Gullberg <jarl.gullberg@gmail.com>  Fri, 13 Jan 2017 20:48:18 +0100
+
 libwarcraft1.0-cli (1.0.2.32949-1) xenial; urgency=medium
 
   * Changed main distro to xenial (16.04). C# 6.0 features are required.

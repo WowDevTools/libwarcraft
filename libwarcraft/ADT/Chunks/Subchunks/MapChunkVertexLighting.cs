@@ -22,12 +22,13 @@
 
 using System.IO;
 using System.Collections.Generic;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexLighting : IRIFFChunk
+	public class MapChunkVertexLighting : IIFFChunk
 	{
 		public const string Signature = "MCLV";
 

@@ -26,11 +26,11 @@ using System.Drawing;
 using System.Collections;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
-
-using Squish;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Quantization;
 using System.Drawing.Drawing2D;
+using Warcraft.Core.Compression.Squish;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.BLP
 {
@@ -70,9 +70,8 @@ namespace Warcraft.BLP
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.BLP.BLP"/> class.
-		/// This constructor reads a binary BLP file from disk.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public BLP(byte[] inData)
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
@@ -142,11 +141,11 @@ namespace Warcraft.BLP
 			long startPosition = br.BaseStream.Position;
 			string dataSignature = new string(br.ReadChars(4));
 
-			BLPFormat Format;
-			if (Enum.TryParse(dataSignature, out Format))
+			BLPFormat format;
+			if (Enum.TryParse(dataSignature, out format))
 			{
 				br.BaseStream.Position = startPosition;
-				return Format;
+				return format;
 			}
 
 			throw new FileLoadException("The provided data did not have a BLP signature.");
@@ -169,7 +168,7 @@ namespace Warcraft.BLP
 
 			if (compressionType == TextureCompressionType.Palettized)
 			{
-				this.Header.PixelFormat = BLPPixelFormat.Pixel_Palettized;
+				this.Header.PixelFormat = BLPPixelFormat.Palettized;
 				// Determine best alpha bit depth
 				if (image.HasAlpha())
 				{
@@ -220,19 +219,19 @@ namespace Warcraft.BLP
 				// Determine best DXTC type (1, 3 or 5)
 				if (image.HasAlpha())
 				{
-					this.Header.PixelFormat = BLPPixelFormat.Pixel_DXT3;
+					this.Header.PixelFormat = BLPPixelFormat.DXT3;
 				}
 				else
 				{
 					// DXT1 for no alpha
-					this.Header.PixelFormat = BLPPixelFormat.Pixel_DXT1;
+					this.Header.PixelFormat = BLPPixelFormat.DXT1;
 				}
 			}
 			else if (compressionType == TextureCompressionType.Uncompressed)
 			{
 				// The alpha will be stored as a straight ARGB texture, so set it to 8
 				this.Header.AlphaBitDepth = 8;
-				this.Header.PixelFormat = BLPPixelFormat.Pixel_PalARGB1555DitherFloydSteinberg;
+				this.Header.PixelFormat = BLPPixelFormat.PalARGB1555DitherFloydSteinberg;
 			}
 
 			// What the mip type does is currently unknown, but it's usually set to 1.
@@ -343,7 +342,7 @@ namespace Warcraft.BLP
 		/// Decompresses a mipmap in the file at the specified level from the specified data.
 		/// </summary>
 		/// <returns>The mipmap.</returns>
-		/// <param name="inData">Data containing the mipmap level.</param>
+		/// <param name="inData">ExtendedData containing the mipmap level.</param>
 		/// <param name="mipLevel">The mipmap level of the data</param>
 		private Bitmap DecompressMipMap(byte[] inData, uint mipLevel)
 		{
@@ -429,11 +428,11 @@ namespace Warcraft.BLP
 				else if (this.Header.CompressionType == TextureCompressionType.DXTC)
 				{
 					SquishOptions squishOptions = SquishOptions.DXT1;
-					if (this.Header.PixelFormat == BLPPixelFormat.Pixel_DXT3)
+					if (this.Header.PixelFormat == BLPPixelFormat.DXT3)
 					{
 						squishOptions = SquishOptions.DXT3;
 					}
-					else if (this.Header.PixelFormat == BLPPixelFormat.Pixel_DXT5)
+					else if (this.Header.PixelFormat == BLPPixelFormat.DXT5)
 					{
 						squishOptions = SquishOptions.DXT5;
 					}
@@ -589,7 +588,7 @@ namespace Warcraft.BLP
 										byte pixelAlpha = resizedImage.GetPixel(x + i, y).A;
 
 										// Map the value to a 4-bit integer
-										pixelAlpha = (byte)ExtensionMethods.Map(pixelAlpha, 0, 255, 0, 15);
+										pixelAlpha = (byte)ExtendedMath.Map(pixelAlpha, 0, 255, 0, 15);
 
 										// Shift the value to the upper bits on the first iteration, and leave it where it is
 										// on the second one
@@ -650,11 +649,11 @@ namespace Warcraft.BLP
 							byte[] rgbaBytes = rgbaStream.ToArray();
 
 							SquishOptions squishOptions = SquishOptions.DXT1;
-							if (this.Header.PixelFormat == BLPPixelFormat.Pixel_DXT3)
+							if (this.Header.PixelFormat == BLPPixelFormat.DXT3)
 							{
 								squishOptions = SquishOptions.DXT3;
 							}
-							else if (this.Header.PixelFormat == BLPPixelFormat.Pixel_DXT5)
+							else if (this.Header.PixelFormat == BLPPixelFormat.DXT5)
 							{
 								squishOptions = SquishOptions.DXT5;
 							}
@@ -747,7 +746,7 @@ namespace Warcraft.BLP
 				// The alpha value is stored per-bit in the byte (8 alpha values per byte)
 				for (byte i = 0; i < 8; ++i)
 				{
-					byte alphaBit = (byte)ExtensionMethods.Map(((dataByte >> (7 - i)) & 0x01), 0, 1, 0, 255);
+					byte alphaBit = (byte)ExtendedMath.Map(((dataByte >> (7 - i)) & 0x01), 0, 1, 0, 255);
 
 					// At this point, alphaBit will be either 0 or 1. Map this to 0 or 255.
 					if (alphaBit > 0)
@@ -777,8 +776,8 @@ namespace Warcraft.BLP
 			{
 				// The alpha value is stored as half a byte (2 alpha values per byte)
 				// Extract these two values and map them to a byte size (4 bits can hold 0 - 15 alpha)
-				byte alphaValue1 = (byte)ExtensionMethods.Map((alphaByte >> 4), 0, 15, 0, 255);
-				byte alphaValue2 = (byte)ExtensionMethods.Map((alphaByte & 0x0F), 0, 15, 0, 255);
+				byte alphaValue1 = (byte)ExtendedMath.Map((alphaByte >> 4), 0, 15, 0, 255);
+				byte alphaValue2 = (byte)ExtendedMath.Map((alphaByte & 0x0F), 0, 15, 0, 255);
 				alphaValues.Add(alphaValue1);
 				alphaValues.Add(alphaValue2);
 			}
@@ -875,12 +874,12 @@ namespace Warcraft.BLP
 					if (j == 0)
 					{
 						// Pack into the first four bits
-						packedAlphaValue |= (byte)(ExtensionMethods.Map((alphaValue), 0, 255, 0, 15) << 4);
+						packedAlphaValue |= (byte)(ExtendedMath.Map(alphaValue, 0, 255, 0, 15) << 4);
 					}
 					else
 					{
 						// Pack into the last four bits
-						packedAlphaValue |= (byte)(ExtensionMethods.Map((alphaValue & 0x0F), 0, 255, 0, 15));
+						packedAlphaValue |= (byte)ExtendedMath.Map(alphaValue & 0x0F, 0, 255, 0, 15);
 					}
 				}
 
@@ -1009,7 +1008,7 @@ namespace Warcraft.BLP
 		/// <returns>The bytes.</returns>
 		public byte[] Serialize()
 		{
-			byte[] headerBytes = this.Header.ToByteArray();
+			byte[] headerBytes = this.Header.Serialize();
 			byte[] paletteBytes = GetPaletteBytes();
 			byte[] mipBytes = GetMipMapBytes();
 

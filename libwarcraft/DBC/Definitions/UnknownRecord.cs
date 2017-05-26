@@ -43,8 +43,8 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// Loads and parses the provided data.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public override void LoadRecord(byte[] data)
+		/// <param name="data">ExtendedData.</param>
+		public override void PostLoad(byte[] data)
 		{
 			if (this.Version == WarcraftVersion.Unknown)
 			{

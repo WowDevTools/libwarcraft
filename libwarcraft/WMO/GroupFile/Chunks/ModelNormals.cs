@@ -22,16 +22,17 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelNormals : IRIFFChunk, IBinarySerializable
+	public class ModelNormals : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MONR";
 
-		public readonly List<Vector3f> Normals = new List<Vector3f>();
+		public readonly List<Vector3> Normals = new List<Vector3>();
 
 		public ModelNormals()
 		{
@@ -50,7 +51,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             	{
 		            while (ms.Position < ms.Length)
 		            {
-			            this.Normals.Add(br.ReadVector3f());
+			            this.Normals.Add(br.ReadVector3());
 		            }
             	}
             }
@@ -67,9 +68,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
             	using (BinaryWriter bw = new BinaryWriter(ms))
             	{
-		            foreach (Vector3f normal in this.Normals)
+		            foreach (Vector3 normal in this.Normals)
 		            {
-			            bw.WriteVector3f(normal);
+			            bw.WriteVector3(normal);
 		            }
             	}
 

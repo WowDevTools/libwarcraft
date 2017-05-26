@@ -28,7 +28,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MHDR Chunk - Contains offset for all major chunks in the ADT. All offsets are from the start of the MHDR + 4 bytes to compensate for the size field.
 	/// </summary>
-	public class TerrainHeader : IRIFFChunk
+	public class TerrainHeader : IIFFChunk
 	{
 		public const string Signature = "MHDR";
 
@@ -95,7 +95,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainHeader"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public TerrainHeader(byte[] inData)
 		{
 			LoadBinaryData(inData);
@@ -149,7 +149,7 @@ namespace Warcraft.ADT.Chunks
 		/// <summary>
 		/// Flag if the ADT is from Northrend. This flag is not always set.
 		/// </summary>
-		MHDR_Northrend = 2,
+		Northrend = 2,
 	}
 }
 

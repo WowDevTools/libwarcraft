@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.ADT.Chunks;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.WDT.Chunks;
 
 namespace Warcraft.ADT
@@ -101,22 +101,22 @@ namespace Warcraft.ADT
 		private readonly bool HasWorldFlags;
 		private readonly WorldTableFlags WorldFlags;
 
-		public TerrainTile(byte[] data, WorldTableFlags InWorldFlags)
+		public TerrainTile(byte[] data, WorldTableFlags inWorldFlags)
 			: this(data)
 		{
 			this.HasWorldFlags = true;
-			this.WorldFlags = InWorldFlags;
+			this.WorldFlags = inWorldFlags;
 		}
 
 		// TODO: Change to stream-based loading
 		/// <summary>
 		/// Creates a new ADT object from a file on disk
 		/// </summary>
-		/// <param name="Data">Byte array containing ADT data.</param>
+		/// <param name="data">Byte array containing ADT data.</param>
 		/// <returns>A parsed ADT file with objects for all chunks</returns>
-		public TerrainTile(byte[] Data)
+		public TerrainTile(byte[] data)
 		{
-			using (MemoryStream ms = new MemoryStream(Data))
+			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -174,9 +174,9 @@ namespace Warcraft.ADT
 					}
 
 					// Read and fill the map chunks
-					foreach (MapChunkOffsetEntry Entry in this.MapChunkOffsets.Entries)
+					foreach (MapChunkOffsetEntry entry in this.MapChunkOffsets.Entries)
 					{
-						br.BaseStream.Position = Entry.MapChunkOffset;
+						br.BaseStream.Position = entry.MapChunkOffset;
 						this.MapChunks.Add(br.ReadIFFChunk<TerrainMapChunk>());
 					}
 				}

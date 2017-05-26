@@ -30,7 +30,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 	/// Represents a list of doodad sets present in this model. Each set is stored separately in this block, and
 	/// defines a list of doodad instances to render when the set is selected.
 	/// </summary>
-	public class ModelDoodadSets : IRIFFChunk, IBinarySerializable
+	public class ModelDoodadSets : IIFFChunk, IBinarySerializable
 	{
 		/// <summary>
 		/// The static block signature of this chunk.

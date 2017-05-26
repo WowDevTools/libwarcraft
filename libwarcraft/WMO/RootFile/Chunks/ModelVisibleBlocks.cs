@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelVisibleBlocks : IRIFFChunk, IBinarySerializable
+	public class ModelVisibleBlocks : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOVB";
 

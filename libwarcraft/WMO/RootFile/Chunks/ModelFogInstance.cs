@@ -1,5 +1,6 @@
 ﻿using System.IO;
-using Warcraft.Core;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
@@ -7,7 +8,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 	public class FogInstance : IBinarySerializable
 	{
 		public FogFlags Flags;
-		public Vector3f Position;
+		public Vector3 Position;
 
 		public float GlobalStartRadius;
 		public float GlobalEndRadius;
@@ -22,7 +23,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					this.Flags = (FogFlags) br.ReadUInt32();
-					this.Position = br.ReadVector3f();
+					this.Position = br.ReadVector3();
 
 					this.GlobalStartRadius = br.ReadSingle();
 					this.GlobalEndRadius = br.ReadSingle();
@@ -45,7 +46,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
 					bw.Write((uint)this.Flags);
-					bw.WriteVector3f(this.Position);
+					bw.WriteVector3(this.Position);
 
 					bw.Write(this.GlobalStartRadius);
 					bw.Write(this.GlobalEndRadius);

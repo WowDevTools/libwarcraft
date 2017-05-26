@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelBSPNodes : IRIFFChunk, IBinarySerializable
+	public class ModelBSPNodes : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOBN";
 

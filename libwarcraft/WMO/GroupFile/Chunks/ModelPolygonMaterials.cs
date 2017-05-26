@@ -26,7 +26,7 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelPolygonMaterials : IRIFFChunk, IBinarySerializable
+	public class ModelPolygonMaterials : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOPY";
 

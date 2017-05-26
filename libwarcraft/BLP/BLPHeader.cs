@@ -21,24 +21,28 @@
 //
 
 using System.IO;
-using Warcraft.Core;
 using System.Collections.Generic;
 using System;
+using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.BLP
 {
 	/// <summary>
-	/// This class represents a file header for a binary BLP image. Its primary function is to 
+	/// This class represents a file header for a binary BLP image. Its primary function is to
 	/// map the rest of the data in a meaningful way, and describe the image format the BLP image
 	/// is stored as.
 	/// </summary>
-	public class BLPHeader
+	public class BLPHeader : IBinarySerializable
 	{
 		/// <summary>
 		/// The binary signature of a BLP file.
 		/// </summary>
 		public string Signature;
 
+		/// <summary>
+		/// The format of the BLP file.
+		/// </summary>
 		public BLPFormat Format;
 
 		/// <summary>
@@ -86,10 +90,10 @@ namespace Warcraft.BLP
 		/// This constructor creates a header from input data read from a BLP file.
 		/// Usually, this is 148 bytes.
 		/// </summary>
-		/// <param name="InData">Data.</param>
-		public BLPHeader(byte[] InData)
+		/// <param name="inData">ExtendedData.</param>
+		public BLPHeader(byte[] inData)
 		{
-			using (MemoryStream ms = new MemoryStream(InData))
+			using (MemoryStream ms = new MemoryStream(inData))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
@@ -201,7 +205,7 @@ namespace Warcraft.BLP
 		/// Gets the data in the header as a byte array, ready to be written to a file.
 		/// </summary>
 		/// <returns>The header bytes.</returns>
-		public byte[] ToByteArray()
+		public byte[] Serialize()
 		{
 			byte[] headerBytes = null;
 

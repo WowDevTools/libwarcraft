@@ -25,36 +25,120 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	/// <summary>
+	/// A database record defining properties for maps.
+	/// </summary>
 	public class MapRecord : DBCRecord
 	{
+		/// <summary>
+		/// The directory under which the map is stored.
+		/// </summary>
 		public StringReference Directory;
+
+		/// <summary>
+		/// The type of instance this map is.
+		/// </summary>
 		public uint InstanceType;
-		public uint PVP;
+
+		/// <summary>
+		/// What sort of PvP the map allows.
+		/// </summary>
+		public uint PvP;
+
+		/// <summary>
+		/// The name of the map.
+		/// </summary>
 		public LocalizedStringReference MapName;
+
+		/// <summary>
+		/// The minimum level of the map.
+		/// </summary>
 		public uint MinLevel;
+
+		/// <summary>
+		/// The maximum level of the map.
+		/// </summary>
 		public uint MaxLevel;
+
+		/// <summary>
+		/// The maximum number of players that can be in the map at any one time.
+		/// </summary>
 		public uint MaxPlayers;
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
 		public uint Unknown1;
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
 		public uint Unknown2;
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
 		public uint Unknown3;
+
+		/// <summary>
+		/// The ID of the area table entry for this map, which contains more information.
+		/// </summary>
 		public UInt32ForeignKey AreaTableID;
+
+		/// <summary>
+		/// TODO: Unknown behaviour, improve comment
+		/// The description of the map.
+		/// </summary>
 		public LocalizedStringReference MapDescription1;
+
+		/// <summary>
+		/// TODO: Unknown behaviour, improve comment
+		/// The description of the map.
+		/// </summary>
 		public LocalizedStringReference MapDescription2;
+
+		/// <summary>
+		/// The ID of the loading screen for this map.
+		/// </summary>
 		public UInt32ForeignKey LoadingScreenID;
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
 		public uint RaidOffset;
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
 		public uint Unknown4;
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
 		public uint Unknown5;
 
-		public override void LoadRecord(byte[] data)
+		/// <summary>
+		/// Loads and parses the provided data.
+		/// </summary>
+		/// <param name="data">ExtendedData.</param>
+		public override void PostLoad(byte[] data)
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Gets the field count for this record at.
+		/// </summary>
+		/// <returns>The field count.</returns>
 		public override int GetFieldCount()
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Gets the size of the record.
+		/// </summary>
+		/// <returns>The record size.</returns>
 		public override int GetRecordSize()
 		{
 			throw new NotImplementedException();

@@ -22,7 +22,8 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
@@ -34,11 +35,11 @@ namespace Warcraft.WMO.GroupFile.Chunks
 	/// to Y-up, which OpenGL traditionally uses. When developing, use Y-up with libwarcraft - the vertices are
 	/// automatically converted to WoW's system when serializing.
 	/// </summary>
-	public class ModelVertices : IRIFFChunk, IBinarySerializable
+	public class ModelVertices : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOVT";
 
-		public readonly List<Vector3f> Vertices = new List<Vector3f>();
+		public readonly List<Vector3> Vertices = new List<Vector3>();
 
 		public ModelVertices()
 		{
@@ -57,7 +58,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             	{
 		            while (ms.Position < ms.Length)
 		            {
-			            this.Vertices.Add(br.ReadVector3f());
+			            this.Vertices.Add(br.ReadVector3());
 		            }
             	}
             }
@@ -74,9 +75,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
             	using (BinaryWriter bw = new BinaryWriter(ms))
             	{
-		            foreach (Vector3f vertex in this.Vertices)
+		            foreach (Vector3 vertex in this.Vertices)
 		            {
-			            bw.WriteVector3f(vertex);
+			            bw.WriteVector3(vertex);
 		            }
             	}
 

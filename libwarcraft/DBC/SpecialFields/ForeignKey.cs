@@ -36,10 +36,10 @@ namespace Warcraft.DBC.SpecialFields
 			protected set;
 		}
 
-		public ForeignKey(string InRecord, string InField)
+		public ForeignKey(string inRecord, string inField)
 		{
-			this.Record = InRecord;
-			this.Field = InField;
+			this.Record = inRecord;
+			this.Field = inField;
 		}
 	}
 }

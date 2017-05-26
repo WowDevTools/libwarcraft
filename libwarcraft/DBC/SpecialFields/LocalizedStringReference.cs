@@ -22,18 +22,54 @@
 
 namespace Warcraft.DBC.SpecialFields
 {
+	/// <summary>
+	/// A localize (that is, translated) reference to a string in the database record.
+	/// </summary>
 	public class LocalizedStringReference
 	{
+		/// <summary>
+		/// The reference to the English version of the string.
+		/// </summary>
 		StringReference English;
+
+		/// <summary>
+		/// The reference to the Korean version of the string.
+		/// </summary>
 		StringReference Korean;
+
+		/// <summary>
+		/// The reference to the French version of the string.
+		/// </summary>
 		StringReference French;
+
+		/// <summary>
+		/// The reference to the German version of the string.
+		/// </summary>
 		StringReference German;
+
+		/// <summary>
+		/// The reference to the Chinese version of the string.
+		/// </summary>
 		StringReference Chinese;
+
+		/// <summary>
+		/// The reference to the Taiwan version of the string.
+		/// </summary>
 		StringReference Taiwan;
+
+		/// <summary>
+		/// The reference to the Spanish version of the string.
+		/// </summary>
 		StringReference Spanish;
+
+		/// <summary>
+		/// The reference to the Mexican Spanish version of the string.
+		/// </summary>
 		StringReference SpanishMexican;
+
+		/// <summary>
+		/// The reference to the Russian version of the string.
+		/// </summary>
 		StringReference Russian;
-
-
 	}
 }

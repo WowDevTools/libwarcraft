@@ -22,7 +22,8 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
@@ -35,7 +36,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 	/// This is used, for example, in transport models where it is important to know if the player should stick to the
 	/// model or not.
 	/// </summary>
-	public class ModelConvexPlanes : IRIFFChunk, IBinarySerializable
+	public class ModelConvexPlanes : IIFFChunk, IBinarySerializable
 	{
 		/// <summary>
 		/// The static block signature of the convex plane block.

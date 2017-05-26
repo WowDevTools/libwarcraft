@@ -32,7 +32,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 	/// The vertices are arranged as two distinct grids, one
 	/// inside the other.
 	/// </summary>
-	public class MapChunkHeightmap : IRIFFChunk
+	public class MapChunkHeightmap : IIFFChunk
 	{
 		public const string Signature = "MCVT";
 		/// <summary>
@@ -54,7 +54,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.Subchunks.MapChunkHeightmap"/> class.
 		/// </summary>
-		/// <param name="inData">Data.</param>
+		/// <param name="inData">ExtendedData.</param>
 		public MapChunkHeightmap(byte[] inData)
 		{
 			LoadBinaryData(inData);

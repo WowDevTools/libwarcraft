@@ -22,12 +22,13 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelRenderBatches : IRIFFChunk, IBinarySerializable
+	public class ModelRenderBatches : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOBA";
 

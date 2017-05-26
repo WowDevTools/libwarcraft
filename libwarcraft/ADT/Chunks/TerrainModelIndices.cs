@@ -29,7 +29,7 @@ namespace Warcraft.ADT.Chunks
 	/// <summary>
 	/// MMID Chunk - Contains a list of M2 model indexes
 	/// </summary>
-	public class TerrainModelIndices : IRIFFChunk
+	public class TerrainModelIndices : IIFFChunk
 	{
 		public const string Signature = "MMID";
 

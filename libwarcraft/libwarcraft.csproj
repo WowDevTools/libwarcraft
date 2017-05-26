@@ -38,27 +38,59 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745">
+      <HintPath>$(SolutionDir)\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745">
       <HintPath>..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745">
-      <HintPath>..\..\liblistfile\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745">
-      <HintPath>..\..\..\..\..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>$(SolutionDir)\packages\System.Numerics.Vectors.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\System.Numerics.Vectors.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLS\BLS.cs" />
     <Compile Include="BLS\BLSHeader.cs" />
     <Compile Include="BLS\ShaderBlock.cs" />
+    <Compile Include="Core\Extensions\ExtendedData.cs" />
+    <Compile Include="Core\Extensions\ExtendedGraphics.cs" />
+    <Compile Include="Core\Extensions\ExtendedIO.cs" />
+    <Compile Include="Core\Extensions\ExtendedMath.cs" />
+    <Compile Include="Core\Extensions\ExtendedModelIO.cs" />
+    <Compile Include="Core\FileInfoUtilities.cs" />
+    <Compile Include="Core\Interfaces\IVersionedClass.cs" />
+    <Compile Include="Core\Shading\Blending\AlphaDestination.cs" />
+    <Compile Include="Core\Shading\Blending\AlphaSource.cs" />
+    <Compile Include="Core\Shading\Blending\BlendingMode.cs" />
+    <Compile Include="Core\Shading\Blending\BlendingState.cs" />
+    <Compile Include="Core\Shading\Blending\ColourDestination.cs" />
+    <Compile Include="Core\Shading\Blending\ColourSource.cs" />
+    <Compile Include="Core\Structures\AxisConfiguration.cs" />
+    <Compile Include="Core\Structures\BGRA.cs" />
+    <Compile Include="Core\Structures\Box.cs" />
+    <Compile Include="Core\Structures\IntegerRange.cs" />
+    <Compile Include="Core\Structures\Range.cs" />
+    <Compile Include="Core\Structures\Resolution.cs" />
+    <Compile Include="Core\Structures\RGB.cs" />
+    <Compile Include="Core\Structures\RGBA.cs" />
+    <Compile Include="Core\Structures\Rotator.cs" />
+    <Compile Include="Core\Structures\ShortBox.cs" />
+    <Compile Include="Core\Structures\ShortPlane.cs" />
+    <Compile Include="Core\Structures\Sphere.cs" />
     <Compile Include="Core\Compression\Squish\SingleColourFit.cs" />
     <Compile Include="Core\Compression\Squish\SingleColourFitLookupTables.cs" />
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Interfaces\IBinarySerializable.cs" />
+    <Compile Include="Core\Interfaces\IFlattenableData.cs" />
     <Compile Include="Core\Interfaces\IPostLoad.cs" />
-    <Compile Include="Core\Interfaces\IRIFFChunk.cs" />
+    <Compile Include="Core\Interfaces\IIFFChunk.cs" />
+    <Compile Include="Core\Structures\SplineKey.cs" />
+    <Compile Include="Core\Structures\Vector3s.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SoundAmbienceRecord.cs" />
@@ -69,11 +101,36 @@
     <Compile Include="DBC\Definitions\ZoneIntroMusicTableRecord.cs" />
     <Compile Include="DBC\Definitions\ZoneMusicRecord.cs" />
     <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
+    <Compile Include="MDX\Animation\MDXAnimationEvent.cs" />
+    <Compile Include="MDX\Animation\MDXAnimationSequenceFlags.cs" />
+    <Compile Include="MDX\Animation\MDXBoneFlag.cs" />
+    <Compile Include="MDX\Animation\MDXBoneSocket.cs" />
+    <Compile Include="MDX\Animation\MDXPlayableAnimationFlags.cs" />
+    <Compile Include="MDX\Animation\MDXTextureWeight.cs" />
+    <Compile Include="MDX\Data\MDXArray.cs" />
+    <Compile Include="MDX\Gameplay\MDXAttachment.cs" />
+    <Compile Include="MDX\Gameplay\MDXAttachmentType.cs" />
+    <Compile Include="MDX\Gameplay\MDXCamera.cs" />
+    <Compile Include="MDX\Gameplay\MDXCameraType.cs" />
+    <Compile Include="MDX\Geometry\Skin\BaseSkinSectionIdentifier.cs" />
+    <Compile Include="MDX\Geometry\Skin\MDXSkin.cs" />
+    <Compile Include="MDX\Geometry\Skin\MDXSkinSection.cs" />
+    <Compile Include="MDX\Visual\EMDXTextureFlags.cs" />
+    <Compile Include="MDX\Visual\EMDXTextureType.cs" />
+    <Compile Include="MDX\Visual\EMDXRenderBatchFlags.cs" />
+    <Compile Include="MDX\Visual\EMDXRenderFlag.cs" />
+    <Compile Include="MDX\Visual\MDXLight.cs" />
+    <Compile Include="MDX\Visual\MDXLightType.cs" />
+    <Compile Include="MPQ\Attributes\AttributeTypes.cs" />
+    <Compile Include="MPQ\Attributes\FileAttributes.cs" />
+    <Compile Include="MPQ\Tables\Extended\Block\ExtendedBlockTable.cs" />
+    <Compile Include="MPQ\Tables\Extended\Block\ExtendedBlockTableHeader.cs" />
+    <Compile Include="MPQ\Tables\Extended\Common\ExtendedTableHeader.cs" />
+    <Compile Include="MPQ\Tables\Extended\Hash\ExtendedHashTable.cs" />
+    <Compile Include="MPQ\Tables\Extended\Hash\ExtendedHashTableHeader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLP\BLP.cs" />
     <Compile Include="BLP\BLPHeader.cs" />
-    <Compile Include="Core\CommonTypes.cs" />
-    <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="BLP\BLPPixelFormat.cs" />
     <Compile Include="BLP\TextureCompressionType.cs" />
     <Compile Include="MPQ\MPQ.cs" />
@@ -102,7 +159,15 @@
     <Compile Include="Core\Compression\Squish\Flags.cs" />
     <Compile Include="Core\Compression\Squish\Maths.cs" />
     <Compile Include="Core\Compression\Squish\SquishCompression.cs" />
-    <Compile Include="Core\Shading\ShaderTypes.cs" />
+    <Compile Include="Core\Shading\ShaderType.cs" />
+    <Compile Include="TEX\TextureBlob.cs" />
+    <Compile Include="TEX\TextureBlobCompressionType.cs" />
+    <Compile Include="TEX\TextureBlobData.cs" />
+    <Compile Include="TEX\TextureBlobDataEntries.cs" />
+    <Compile Include="TEX\TextureBlobFilenames.cs" />
+    <Compile Include="TEX\TextureBlobFlags.cs" />
+    <Compile Include="TEX\TextureBlobDataEntry.cs" />
+    <Compile Include="TEX\TextureBlobVersion.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelBSPFaceIndices.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelTriangleStripIndices.cs" />
     <Compile Include="WMO\GroupFile\Chunks\MPBG.cs" />
@@ -116,38 +181,28 @@
     <Compile Include="WMO\RootFile\Chunks\ModelPortalVertices.cs" />
     <Compile Include="WMO\WMO.cs" />
     <Compile Include="MDX\MDX.cs" />
-    <Compile Include="MDX\MDXHeader.cs" />
     <Compile Include="MDX\Visual\MDXTexture.cs" />
     <Compile Include="MDX\Geometry\MDXVertex.cs" />
-    <Compile Include="MDX\Geometry\MDXView.cs" />
-    <Compile Include="MDX\Geometry\MDXViewHeader.cs" />
-    <Compile Include="MDX\Geometry\MDXSkin.cs" />
-    <Compile Include="MDX\Geometry\MDXSkinHeader.cs" />
-    <Compile Include="MDX\Geometry\MDXTriangle.cs" />
     <Compile Include="MDX\Geometry\MDXVertexProperty.cs" />
-    <Compile Include="MDX\Geometry\MDXSubmesh.cs" />
-    <Compile Include="MDX\Visual\MDXTextureUnit.cs" />
+    <Compile Include="MDX\Visual\MDXRenderBatch.cs" />
     <Compile Include="MDX\Animation\MDXAnimationSequence.cs" />
     <Compile Include="MDX\Animation\MDXPlayableAnimationLookupTableEntry.cs" />
     <Compile Include="MDX\Animation\MDXBone.cs" />
     <Compile Include="MDX\Animation\MDXTrack.cs" />
-    <Compile Include="MDX\Animation\MDXArray.cs" />
     <Compile Include="Core\Interpolation\IInterpolatable.cs" />
     <Compile Include="Core\Interpolation\Interpolation.cs" />
-    <Compile Include="MDX\Visual\MDXRenderFlag.cs" />
-    <Compile Include="MDX\Animation\MDXSubmeshColourAnimation.cs" />
-    <Compile Include="MDX\Animation\MDXUVAnimation.cs" />
+    <Compile Include="MDX\Visual\MDXMaterial.cs" />
+    <Compile Include="MDX\Animation\MDXColourAnimation.cs" />
+    <Compile Include="MDX\Animation\MDXTextureTransform.cs" />
     <Compile Include="DBC\DBC.cs" />
     <Compile Include="DBC\DBCHeader.cs" />
     <Compile Include="Core\WarcraftVersion.cs" />
     <Compile Include="BLP\BLPFormat.cs" />
     <Compile Include="MDX\Visual\FX\MDXParticleEmitter.cs" />
     <Compile Include="MDX\Visual\FX\MDXRibbonEmitter.cs" />
-    <Compile Include="MPQ\Tables\BET\BETTable.cs" />
     <Compile Include="MPQ\Tables\Block\BlockFlags.cs" />
     <Compile Include="MPQ\Tables\Block\BlockTableEntry.cs" />
     <Compile Include="MPQ\Tables\Hash\HashTableEntry.cs" />
-    <Compile Include="MPQ\Tables\HET\HETTable.cs" />
     <Compile Include="WMO\GroupFile\ModelGroup.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelPolygonMaterials.cs" />
     <Compile Include="WMO\GroupFile\Chunks\ModelVertexIndices.cs" />
@@ -185,8 +240,6 @@
     <Compile Include="WMO\RootFile\Chunks\ModelGameobjectFileID.cs" />
     <Compile Include="MPQ\FileInfo\MPQFileInfo.cs" />
     <Compile Include="Core\Locale\LocaleID.cs" />
-    <Compile Include="MPQ\Tables\HET\HETTableHeader.cs" />
-    <Compile Include="MPQ\Tables\BET\BETTableHeader.cs" />
     <Compile Include="MPQ\Tables\Hash\HashTable.cs" />
     <Compile Include="MPQ\Tables\Block\BlockTable.cs" />
     <Compile Include="ADT\Chunks\TerrainVersion.cs" />
@@ -244,6 +297,7 @@
     <None Include="Core\Compression\Blast\reference-code\blast.c" />
     <None Include="Core\Compression\Blast\reference-code\blast.h" />
     <None Include="Core\Compression\Squish\README" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -271,10 +325,8 @@
     <Folder Include="DBC\" />
     <Folder Include="DBC\Definitions\" />
     <Folder Include="MPQ\Tables\" />
-    <Folder Include="MPQ\Tables\BET\" />
     <Folder Include="MPQ\Tables\Block\" />
     <Folder Include="MPQ\Tables\Hash\" />
-    <Folder Include="MPQ\Tables\HET\" />
     <Folder Include="WMO\GroupFile\" />
     <Folder Include="WMO\GroupFile\Chunks\" />
     <Folder Include="WMO\RootFile\" />

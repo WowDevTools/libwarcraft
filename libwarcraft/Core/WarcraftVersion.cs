@@ -22,16 +22,50 @@
 
 namespace Warcraft.Core
 {
+	/// <summary>
+	/// World of Warcraft versions by expansion.
+	/// </summary>
 	public enum WarcraftVersion : uint
 	{
-		Unknown = 0,
-		Classic = 1,
-		BurningCrusade = 2,
-		Wrath = 3,
-		Cataclysm = 4,
-		Mists = 5,
-		Warlords = 6,
-		Legion = 7
+		/// <summary>
+		/// It's not known what version this is.
+		/// </summary>
+		Unknown 		= 0,
+
+		/// <summary>
+		/// Classic World of Warcraft, also referred to as "Vanilla".
+		/// </summary>
+		Classic 		= 1,
+
+		/// <summary>
+		/// World of Warcraft: The Burning Crusade
+		/// </summary>
+		BurningCrusade 	= 2,
+
+		/// <summary>
+		/// World of Warcraft: Wrath of the Lich King
+		/// </summary>
+		Wrath			= 3,
+
+		/// <summary>
+		/// World of Warcraft: Cataclysm
+		/// </summary>
+		Cataclysm 		= 4,
+
+		/// <summary>
+		/// World of Warcraft: Mists of Pandaria
+		/// </summary>
+		Mists 			= 5,
+
+		/// <summary>
+		/// World of Warcraft: Warlords of Draenor
+		/// </summary>
+		Warlords 		= 6,
+
+		/// <summary>
+		/// World of Warcraft: Legion
+		/// </summary>
+		Legion 			= 7
 	}
 }
 

@@ -22,13 +22,14 @@
 
 using System;
 using System.IO;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile
 {
-	public class ModelRootHeader : IRIFFChunk, IBinarySerializable
+	public class ModelRootHeader : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOHD";
 

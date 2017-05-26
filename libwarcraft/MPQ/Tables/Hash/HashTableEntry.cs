@@ -20,18 +20,49 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System.IO;
+using Warcraft.Core.Interfaces;
 using Warcraft.Core.Locale;
 
 namespace Warcraft.MPQ.Tables.Hash
 {
-	public class HashTableEntry
+	/// <summary>
+	/// An entry in the hash table of an MPQ archive, containing data about where to
+	/// find the block entry for information about the file data.
+	/// </summary>
+	public class HashTableEntry : IBinarySerializable
 	{
+		/// <summary>
+		/// The hashed file path, using algorithm A.
+		/// </summary>
 		private readonly uint FilePathHashA;
+
+		/// <summary>
+		/// The hashed file path, using algorithm B.
+		/// </summary>
 		private readonly uint FilePathHashB;
+
+		/// <summary>
+		/// The localization (language) of the file referred to by this entry. There may exist multiple
+		/// hash table entries for the same file, but in different languages.
+		/// </summary>
 		private readonly LocaleID Localization;
+
+		/// <summary>
+		/// The platform of the file referred to by this entry. There may exist multiple
+		/// hash table entries for the same file, but for different platforms.
+		/// </summary>
 		private readonly ushort Platform;
+
+		/// <summary>
+		/// The index of the block entry which holds the offset data for the file referred to by
+		/// this entry.
+		/// </summary>
 		private readonly uint FileBlockIndex;
 
+		/// <summary>
+		/// Deserializes a new hash table entry from provided data.
+		/// </summary>
+		/// <param name="data">The serialized hash table data.</param>
 		public HashTableEntry(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
@@ -115,6 +146,9 @@ namespace Warcraft.MPQ.Tables.Hash
 			return this.FileBlockIndex;
 		}
 
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
 		public byte[] Serialize()
 		{
 			using (MemoryStream ms = new MemoryStream())

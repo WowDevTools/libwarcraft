@@ -20,8 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.Core;
 using System.IO;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
@@ -129,11 +130,11 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// <summary>
 		/// It is not yet known what predTex does.
 		/// </summary>
-		public uint predTex;
+		public uint PredTex;
 		/// <summary>
 		/// It is not yet known what noEffectDoodad does.
 		/// </summary>
-		public uint noEffectDoodad;
+		public uint NoEffectDoodad;
 
 		/// <summary>
 		/// MCNK-based Offset of the MCSE Sound Emitters Chunk
@@ -157,7 +158,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// The map tile position is a global offset that is applied to the entire heightmap to allow for
 		/// far greater height differences in the world.
 		/// </summary>
-		public Vector3f MapTilePosition;
+		public Vector3 MapTilePosition;
 
 		/// <summary>
 		/// MCNK-based Offset of the MCCV Chunk
@@ -209,15 +210,15 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					// TODO: This is a set of 8 by 8 2-bit integers. Shift and read into a byte array.
 					this.LowResTextureMap = br.ReadUInt16();
 
-					this.predTex = br.ReadUInt32();
-					this.noEffectDoodad = br.ReadUInt32();
+					this.PredTex = br.ReadUInt32();
+					this.NoEffectDoodad = br.ReadUInt32();
 
 					this.SoundEmittersOffset = br.ReadUInt32();
 					this.SoundEmitterCount = br.ReadUInt32();
 					this.LiquidOffset = br.ReadUInt32();
 					this.LiquidSize = br.ReadUInt32();
 
-					this.MapTilePosition = br.ReadVector3f();
+					this.MapTilePosition = br.ReadVector3();
 
 					if (this.Flags.HasFlag(MapChunkFlags.HasVertexShading))
 					{

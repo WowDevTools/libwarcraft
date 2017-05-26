@@ -25,6 +25,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Warcraft.Core;
 using Warcraft.Core.Hashing;
 
 namespace Warcraft.MPQ.Crypto
@@ -71,7 +73,7 @@ namespace Warcraft.MPQ.Crypto
 		/// are simply appended at the end of the data block.
 		/// </summary>
 		/// <returns>The encrypted data.</returns>
-		/// <param name="data">Data to be encrypted.</param>
+		/// <param name="data">ExtendedData to be encrypted.</param>
 		/// <param name="key">The encryption key to use.</param>
 		public static byte[] EncryptData(byte[] data, uint key)
 		{
@@ -83,7 +85,7 @@ namespace Warcraft.MPQ.Crypto
 		/// are considered not encrypted.
 		/// </summary>
 		/// <returns>The decrypted data.</returns>
-		/// <param name="data">Data to be decrypted.</param>
+		/// <param name="data">ExtendedData to be decrypted.</param>
 		/// <param name="key">The decryption key to use.</param>
 		public static byte[] DecryptData(byte[] data, uint key)
 		{
@@ -94,7 +96,7 @@ namespace Warcraft.MPQ.Crypto
 		/// Internal XOR function that encrypts and decrypts a block of data.
 		/// </summary>
 		/// <returns>The encrypted or decrypted data.</returns>
-		/// <param name="data">Data.</param>
+		/// <param name="data">ExtendedData.</param>
 		/// <param name="key">Key.</param>
 		private static byte[] InternalEncryptDecrypt(byte[] data, uint key)
 		{
@@ -199,9 +201,12 @@ namespace Warcraft.MPQ.Crypto
 		}
 
 		/// <summary>
-		/// Decrypts the sector offset table using rolling decryption - it starts where the input BinaryReader is, reads
-		/// and decrypts offsets until the decrypted offset equals the input block size.
+		/// Decrypts the sector offset table using rolling decryption - it starts where the input BinaryReader is, then
+		/// reads and decrypts offsets until the decrypted offset equals the input block size. If the table is found to
+		/// be inconsistent during the decryption (offsets are not unique, offset is less than preceding offset), then
+		/// an exception will be thrown.
 		/// </summary>
+		/// <exception cref="InvalidFileSectorTableException">Thrown if the sector table is found to be inconsistent in any way.</exception>
 		/// <param name="br">The archive's BinaryReader</param>
 		/// <param name="sectorOffsets">The output sector offsets.</param>
 		/// <param name="blockSize">The size of the block to be decrypted.</param>
@@ -225,6 +230,30 @@ namespace Warcraft.MPQ.Crypto
 				key = ((~key << 0x15) + 0x11111111) | (key >> 0x0B);
 				decryptionSeed = decryptionTarget + decryptionSeed + (decryptionSeed << 5) + 3;
 
+				// Should the resulting sector offset be less than the previous data, then the data is inconsistent
+				// and no table should be returned.
+				if (sectorOffsets.LastOrDefault() > decryptionTarget)
+				{
+					throw new InvalidFileSectorTableException(
+						"The read offset in the sector table was less than the previous offset.");
+				}
+
+				// Should the resulting sector offset be greater than the total block size, then the data is
+				// inconsistent and no file should be returned.
+				if (decryptionTarget > blockSize)
+				{
+					throw new InvalidFileSectorTableException(
+						"The read offset in the sector table was greater than the total size of the data block.");
+				}
+
+				// Should the resulting sector not be unique, something is wrong and no table should be returned.
+				if (sectorOffsets.Contains(decryptionTarget))
+				{
+					throw new InvalidFileSectorTableException(
+						"The read offset in the sector table was not unique to the whole table.");
+				}
+
+				// The offset should be valid, so add it to the table.
 				sectorOffsets.Add(decryptionTarget);
 			}
 		}
@@ -255,6 +284,29 @@ namespace Warcraft.MPQ.Crypto
 				return sectorChecksum == checksum;
 			}
 		}
+
+		/// <summary>
+		/// Creates an encryption key for the specified file path.
+		/// </summary>
+		/// <param name="filePath">The path of the file for which the encryption key is to be created.</param>
+		/// <param name="adjustKeyByOffset">Whether or not the key should be adjusted by the file offset.</param>
+		/// <param name="adjustedBlockOffset">The offset into the archive where the file data begins.</param>
+		/// <param name="fileSize">The absolute size of the file.</param>
+		/// <returns>An encryption key for the provied file path.</returns>
+		public static uint CreateFileEncryptionKey(string filePath, bool adjustKeyByOffset, long adjustedBlockOffset = 0, uint fileSize = 0)
+		{
+			uint fileKey;
+			if (adjustKeyByOffset)
+			{
+				fileKey = GetFileKey(Path.GetFileName(filePath), true, (uint) adjustedBlockOffset, fileSize);
+			}
+			else
+			{
+				fileKey = GetFileKey(Path.GetFileName(filePath));
+			}
+
+			return fileKey;
+		}
 	}
 
 	/// <summary>
@@ -262,9 +314,24 @@ namespace Warcraft.MPQ.Crypto
 	/// </summary>
 	public enum HashType : uint
 	{
+		/// <summary>
+		/// The hash algorithm used for determining the home entry of a file in the hash table.
+		/// </summary>
 		FileHashTableOffset = 0,
+
+		/// <summary>
+		/// One of the two algorithms used to generate hashes for filenames.
+		/// </summary>
 		FilePathA = 1,
+
+		/// <summary>
+		/// One of the two algorithms used to generate hashes for filenames.
+		/// </summary>
 		FilePathB = 2,
+
+		/// <summary>
+		/// The hash algorithm used for generating encryption keys.
+		/// </summary>
 		FileKey = 3
 	}
 }

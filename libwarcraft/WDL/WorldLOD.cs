@@ -24,7 +24,7 @@ using System.IO;
 using Warcraft.ADT.Chunks;
 using Warcraft.WDL.Chunks;
 using System.Collections.Generic;
-using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL

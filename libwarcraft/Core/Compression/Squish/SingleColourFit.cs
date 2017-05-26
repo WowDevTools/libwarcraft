@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Numerics;
 
-namespace Squish
+namespace Warcraft.Core.Compression.Squish
 {
 	struct SourceBlock
 	{
@@ -47,7 +48,7 @@ namespace Squish
 			this.colour[1] = (byte) FloatToInt(255.0f * values.Y, 255);
 			this.colour[2] = (byte) FloatToInt(255.0f * values.Z, 255);
 
-			this.bestError = Int32.MaxValue;
+			this.bestError = int.MaxValue;
 		}
 
 		static int FloatToInt(float a, int limit)

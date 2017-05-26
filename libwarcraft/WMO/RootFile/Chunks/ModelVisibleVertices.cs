@@ -22,16 +22,17 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
+using System.Numerics;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelVisibleVertices : IRIFFChunk, IBinarySerializable
+	public class ModelVisibleVertices : IIFFChunk, IBinarySerializable
 	{
 		public const string Signature = "MOVV";
 
-		public readonly List<Vector3f> VisibleVertices = new List<Vector3f>();
+		public readonly List<Vector3> VisibleVertices = new List<Vector3>();
 
 		public ModelVisibleVertices()
 		{
@@ -52,7 +53,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					int vertexCount = inData.Length / 12;
 					for (int i = 0; i < vertexCount; ++i)
 					{
-						this.VisibleVertices.Add(br.ReadVector3f());
+						this.VisibleVertices.Add(br.ReadVector3());
 					}
 				}
 			}
@@ -69,9 +70,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 			{
 				using (BinaryWriter bw = new BinaryWriter(ms))
 				{
-					foreach (Vector3f visibleVertex in this.VisibleVertices)
+					foreach (Vector3 visibleVertex in this.VisibleVertices)
 					{
-						bw.WriteVector3f(visibleVertex);
+						bw.WriteVector3(visibleVertex);
 					}
 				}
 

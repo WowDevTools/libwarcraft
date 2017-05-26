@@ -24,14 +24,58 @@ using System;
 
 namespace Warcraft.Core
 {
+	/// <summary>
+	/// This exception thrown when an invalid or unknown chunk signature is found during parsing of binary data which
+	/// is expected to be in valid RIFF format.
+	/// </summary>
 	public class InvalidChunkSignatureException : Exception
 	{
+		/// <summary>
+		/// Creates a new instance of the <see cref="InvalidChunkSignatureException"/> class, along with a specified
+		/// message.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
 		public InvalidChunkSignatureException(string message)
 			:base(message)
 		{
 		}
 
+		/// <summary>
+		/// Creates a new instance of the <see cref="InvalidChunkSignatureException"/> class, along with a specified
+		/// message and inner exception which caused this exception.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		/// <param name="innerException">The exception which caused this exception.</param>
 		public InvalidChunkSignatureException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
+	}
+
+	/// <summary>
+	/// This exception thrown when an invalid sector offset table is encountered during file extraction. Usually,
+	/// it means the archive that the user is trying to extract the file from is invalid, corrupted, or has been
+	/// maliciously zeroed at critical points.
+	/// </summary>
+	public class InvalidFileSectorTableException : Exception
+	{
+		/// <summary>
+		/// Creates a new instance of the <see cref="InvalidFileSectorTableException"/> class, along with a specified
+		/// message.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		public InvalidFileSectorTableException(string message)
+			:base(message)
+		{
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="InvalidFileSectorTableException"/> class, along with a specified
+		/// message and inner exception which caused this exception.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		/// <param name="innerException">The exception which caused this exception.</param>
+		public InvalidFileSectorTableException(string message, Exception innerException)
 			: base(message, innerException)
 		{
 		}

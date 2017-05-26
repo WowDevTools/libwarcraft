@@ -84,27 +84,27 @@ namespace Warcraft.MPQ.FileInfo
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.MPQ.FileInfo.MPQFileInfo"/> class.
 		/// </summary>
-		/// <param name="InPath">In path.</param>
-		/// <param name="InHashEntry">In hash entry.</param>
-		/// <param name="InBlockEntry">In block entry.</param>
-		/// <param name="InAttributes">In attributes.</param>
-		public MPQFileInfo(string InPath, HashTableEntry InHashEntry, BlockTableEntry InBlockEntry, FileAttributes InAttributes)
-			: this(InPath, InHashEntry, InBlockEntry)
+		/// <param name="inPath">In path.</param>
+		/// <param name="inHashEntry">In hash entry.</param>
+		/// <param name="inBlockEntry">In block entry.</param>
+		/// <param name="inAttributes">In attributes.</param>
+		public MPQFileInfo(string inPath, HashTableEntry inHashEntry, BlockTableEntry inBlockEntry, FileAttributes inAttributes)
+			: this(inPath, inHashEntry, inBlockEntry)
 		{
-			this.Attributes = InAttributes;
+			this.Attributes = inAttributes;
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.MPQ.FileInfo.MPQFileInfo"/> class.
 		/// </summary>
-		/// <param name="InPath">In path.</param>
-		/// <param name="InHashEntry">In hash entry.</param>
-		/// <param name="InBlockEntry">In block entry.</param>
-		public MPQFileInfo(string InPath, HashTableEntry InHashEntry, BlockTableEntry InBlockEntry)
+		/// <param name="inPath">In path.</param>
+		/// <param name="inHashEntry">In hash entry.</param>
+		/// <param name="inBlockEntry">In block entry.</param>
+		public MPQFileInfo(string inPath, HashTableEntry inHashEntry, BlockTableEntry inBlockEntry)
 		{
-			this.Path = InPath;
-			this.HashEntry = InHashEntry;
-			this.BlockEntry = InBlockEntry;
+			this.Path = inPath;
+			this.HashEntry = inHashEntry;
+			this.BlockEntry = inBlockEntry;
 		}
 
 		/// <summary>

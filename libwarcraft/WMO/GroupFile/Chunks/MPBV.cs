@@ -24,31 +24,59 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class MPBV : IRIFFChunk, IBinarySerializable
+	/// <summary>
+	/// TODO: Unknown data
+	/// </summary>
+	public class MPBV : IIFFChunk, IBinarySerializable
 	{
+		/// <summary>
+		/// The RIFF chunk signature of this chunk.
+		/// </summary>
 		public const string Signature = "MPBV";
 
-        public byte[] Data;
+		/// <summary>
+		/// Temporary placeholder for the data contained in this chunk.
+		/// </summary>
+		public byte[] Data;
 
-        public MPBV()
+		/// <summary>
+		/// Creates a new <see cref="MPBV"/> object.
+		/// </summary>
+		public MPBV()
         {
         }
 
-        public MPBV(byte[] inData)
+		/// <summary>
+		/// Deserializes a <see cref="MPBV"/> object from the provided binary data.
+		/// </summary>
+		/// <param name="inData">The binary data containing the object.</param>
+		public MPBV(byte[] inData)
         {
         	LoadBinaryData(inData);
         }
 
-        public void LoadBinaryData(byte[] inData)
+		/// <summary>
+		/// Deserialzes the provided binary data of the object. This is the full data block which follows the data
+		/// signature and data block length.
+		/// </summary>
+		/// <param name="inData">The binary data containing the object.</param>
+		public void LoadBinaryData(byte[] inData)
         {
         	this.Data = inData;
         }
 
-        public string GetSignature()
+		/// <summary>
+		/// Gets the static data signature of this data block type.
+		/// </summary>
+		/// <returns>A string representing the block signature.</returns>
+		public string GetSignature()
         {
         	return Signature;
         }
 
+		/// <summary>
+		/// Serializes the current object into a byte array.
+		/// </summary>
 		public byte[] Serialize()
 		{
 			return this.Data;

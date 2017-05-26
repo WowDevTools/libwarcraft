@@ -21,10 +21,14 @@
 //
 
 using Warcraft.Core;
+using Warcraft.Core.Interfaces;
 
 namespace Warcraft.DBC.Definitions
 {
-	public abstract class DBCRecord
+	/// <summary>
+	/// A database record which holds some type of information.
+	/// </summary>
+	public abstract class DBCRecord : IPostLoad<byte[]>
 	{
 		/// <summary>
 		/// The record ID. This is the equivalent of a primary key in an SQL database, and is unique to the record.
@@ -46,18 +50,23 @@ namespace Warcraft.DBC.Definitions
 		}
 
 		/// <summary>
+		/// Whether or not this record has had its data loaded.
+		/// </summary>
+		private bool HasLoadedRecordData = false;
+
+		/// <summary>
 		/// Sets the version this record is valid for.
 		/// </summary>
-		public virtual void SetVersion(WarcraftVersion InVersion)
+		public virtual void SetVersion(WarcraftVersion inVersion)
 		{
-			this.Version = InVersion;
+			this.Version = inVersion;
 		}
 
 		/// <summary>
 		/// Loads and parses the provided data.
 		/// </summary>
-		/// <param name="data">Data.</param>
-		public abstract void LoadRecord(byte[] data);
+		/// <param name="data">ExtendedData.</param>
+		public abstract void PostLoad(byte[] data);
 
 		/// <summary>
 		/// Gets the field count for this record at.
@@ -70,6 +79,15 @@ namespace Warcraft.DBC.Definitions
 		/// </summary>
 		/// <returns>The record size.</returns>
 		public abstract int GetRecordSize();
+
+		/// <summary>
+		/// Determines whether or not this object has finished loading.
+		/// </summary>
+		/// <returns><value>true</value> if the object has finished loading; otherwise, <value>false</value>.</returns>
+		public virtual bool HasFinishedLoading()
+		{
+			return this.HasLoadedRecordData;
+		}
 	}
 }
 

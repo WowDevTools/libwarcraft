@@ -20,34 +20,56 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+
 namespace Warcraft.Core.Interpolation
 {
 	public static class Interpolation
 	{
-		public static float InterpolateFlat(float A, float B, float Alpha)
+		/// <summary>
+		/// Interpolates linearly between <paramref name="a"/> and <paramref name="b"/> by <paramref name="alpha"/>.
+		/// </summary>
+		/// <param name="a">The first point.</param>
+		/// <param name="b">The second point.</param>
+		/// <param name="alpha">The distance to interpolate.</param>
+		/// <returns>The interpolated value.</returns>
+		public static float InterpolateLinear(float a, float b, float alpha)
 		{
-			return 0.0f;
+			return a + alpha * (b - a);
 		}
 
-		public static float InterpolateLinear(float A, float B, float Alpha)
+		/// <summary>
+		/// Interpolates using the Hermite algorithm between <paramref name="a"/> and <paramref name="b"/> by
+		/// <paramref name="alpha"/>, using the in/out tangents for a and b <paramref name="tangentA"/> and
+		/// <paramref name="tangentB"/>, respectively.
+		///
+		/// This implementation was taken from <a href="http://blog.demofox.org/2015/08/08/cubic-hermite-interpolation/"/>
+		/// </summary>
+		/// <param name="a">The first point.</param>
+		/// <param name="b">The second point.</param>
+		/// <param name="alpha">The distance to interpolate.</param>
+		/// <param name="tangentA">The in/out tangent of a.</param>
+		/// <param name="tangentB">The in/out tanget of b.</param>
+		/// <returns></returns>
+		public static float InterpolateHermite(float a, float tangentA, float b, float tangentB, float alpha)
 		{
-			return 0.0f;
+			float inter1 = -a / 2.0f + (3.0f * tangentA) / 2.0f - (3.0f * b) / 2.0f + tangentB / 2.0f;
+			float inter2 = a - (5.0f * tangentA) / 2.0f + 2.0f * b - tangentB / 2.0f;
+			float inter3 = -a / 2.0f + b / 2.0f;
+			float inter4 = tangentB;
+
+			return (float)(inter1 * Math.Pow(alpha, 3) + inter2 * Math.Pow(alpha, 2) + inter3 * alpha + inter4);
 		}
 
-		public static float InterpolateHermite(float A, float TangentA, float B, float TangentB, float Alpha)
-		{
-			return 0.0f;
-		}
-
-		public static float InterpolateBezier(float A, float TangentA, float B, float TangentB, float Alpha)
+		public static float InterpolateBezier(float a, float tangentA, float b, float tangentB, float alpha)
 		{
 			return 0.0f;
 		}
 	}
 
-	public enum InterpolationType : short
+	public enum InterpolationType : ushort
 	{
-		Flat = 0,
+		None = 0,
 		Linear = 1,
 		Hermite = 2,
 		Bezier = 3
