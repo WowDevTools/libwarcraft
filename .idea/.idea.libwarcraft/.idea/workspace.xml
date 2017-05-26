@@ -2,13 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4e054e4-09bd-4fc3-8528-fab943b613a2" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libwarcraft/Core/Interfaces/IDeferredDeserialize.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libwarcraft/DBC/IDBCRecord.cs" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/UInt16ForeignKey.cs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/UInt32ForeignKey.cs" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.idea.libwarcraft/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/.idea.libwarcraft/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/ADT/Chunks/Subchunks/MapChunkSoundEmitters.cs" afterPath="$PROJECT_DIR$/libwarcraft/ADT/Chunks/Subchunks/MapChunkSoundEmitters.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/ADT/Chunks/Subchunks/MapChunkTextureLayers.cs" afterPath="$PROJECT_DIR$/libwarcraft/ADT/Chunks/Subchunks/MapChunkTextureLayers.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/ADT/Chunks/TerrainLiquid.cs" afterPath="$PROJECT_DIR$/libwarcraft/ADT/Chunks/TerrainLiquid.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/Core/Extensions/ExtendedIO.cs" afterPath="$PROJECT_DIR$/libwarcraft/Core/Extensions/ExtendedIO.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/DBC.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/DBC.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/AnimationDataRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/AnimationDataRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/DBCRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/DBCRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidObjectRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidObjectRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidTypeRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidTypeRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/MapRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/MapRecord.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundEntriesRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundEntriesRecord.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundProviderPreferences.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundProviderPreferences.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SpellRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SpellRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/UnknownRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/UnknownRecord.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneMusicRecord.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneMusicRecord.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/ForeignKey.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/ForeignKey.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/LocalizedStringReference.cs" afterPath="$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/LocalizedStringReference.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/WMO/GroupFile/ModelGroupData.cs" afterPath="$PROJECT_DIR$/libwarcraft/WMO/GroupFile/ModelGroupData.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/WMO/RootFile/Chunks/ModelMaterials.cs" afterPath="$PROJECT_DIR$/libwarcraft/WMO/RootFile/Chunks/ModelMaterials.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/WMO/RootFile/ModelRootHeader.cs" afterPath="$PROJECT_DIR$/libwarcraft/WMO/RootFile/ModelRootHeader.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libwarcraft/libwarcraft.csproj" afterPath="$PROJECT_DIR$/libwarcraft/libwarcraft.csproj" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,112 +39,182 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_TABLE_DETAILS" value="true" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SoundAmbienceRecord.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs">
+      <file leaf-file-name="ExtendedIO.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/Core/Extensions/ExtendedIO.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
-              <caret line="34" column="23" lean-forward="false" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
+            <state relative-caret-position="350">
+              <caret line="208" column="52" lean-forward="true" selection-start-line="208" selection-start-column="52" selection-end-line="208" selection-end-column="52" />
               <folding>
-                <marker date="1495804290619" expanded="true" signature="0:794" ph="/* ZoneAmbienceRecord.cs ... */" />
-                <marker date="1495804290619" expanded="false" signature="802:850" ph="..." />
-                <marker date="1495804290619" expanded="true" signature="886:1372" ph="{...}" />
-                <marker date="1495804290619" expanded="true" signature="933:1370" ph="{...}" />
-                <marker date="1495804290619" expanded="true" signature="1124:1179" ph="{...}" />
-                <marker date="1495804290619" expanded="true" signature="1218:1273" ph="{...}" />
-                <marker date="1495804290619" expanded="true" signature="1312:1367" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="0:786" ph="/* ExtendedIO.cs ... */" />
+                <marker date="1495807514786" expanded="true" signature="794:1248" ph="..." />
+                <marker date="1495807514786" expanded="true" signature="1332:34121" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="1336:1432" ph="/// Extension methods used internally in the library for data IO. ... " />
+                <marker date="1495807514786" expanded="true" signature="1464:34119" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="1470:1515" ph="/* Generic BinaryReader read function ... */" />
+                <marker date="1495807514786" expanded="true" signature="1519:1769" ph="/// Type mapping function dictionary. All supported types of the generic reading function are listed here. ... " />
+                <marker date="1495807514786" expanded="true" signature="1910:4917" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="3720:3893" ph="/* A few very specific MDXArray types, which are used with M2Tracks. This is a dirty, dirty hack to enable ... */" />
+                <marker date="1495807514786" expanded="true" signature="4922:5087" ph="/// Versioned type mapping function dictionary. All supported types of the versioned generic reading function ... " />
+                <marker date="1495807514786" expanded="true" signature="5271:6437" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="6442:6841" ph="/// Reads a value of type &lt;typeparamref name=&quot;T&quot;/&gt; from the data stream. The generic type must be ... " />
+                <marker date="1495807514786" expanded="true" signature="6889:7160" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="6939:7115" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="7164:7568" ph="/// Reads a versioned value of type &lt;typeparamref name=&quot;T&quot;/&gt; from the data stream. The generic type must be ... " />
+                <marker date="1495807514786" expanded="true" signature="7641:7934" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="7700:7871" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="7938:7994" ph="/* BinaryReader Extensions for DBC-related types ... */" />
+                <marker date="1495807514786" expanded="true" signature="7998:8171" ph="/// Reads a &lt;see cref=&quot;LocalizedStringReference&quot;/&gt; from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="8298:9625" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="8416:9522" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="8932:9002" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="9045:9470" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="9530:9602" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="9631:9795" ph="/// Reads a &lt;see cref=&quot;StringReference&quot;/&gt; from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="9879:9945" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="9951:10005" ph="/* BinaryReader Extensions for standard typess ... */" />
+                <marker date="1495807514786" expanded="true" signature="10009:10226" ph="/// Reads a spline key with a value and in/out tangents from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="10304:10354" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="10358:10524" ph="/// Reads a 12-byte &lt;see cref=&quot;RGB&quot;/&gt; value from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="10584:10639" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="10643:10820" ph="/// Reads an 8-byte Range value from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="10884:10967" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="10971:11146" ph="/// Reads an 8-byte &lt;see cref=&quot;IntegerRange&quot;/&gt; value from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="11224:11314" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="11318:11496" ph="/// Reads a 4-byte RGBA value from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="11558:11769" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="11773:11951" ph="/// Reads a 4-byte RGBA value from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="12013:12224" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="12228:12434" ph="/// Reads a standard null-terminated string from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="12514:12677" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="12619:12647" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="12681:12827" ph="/// Reads a 4-byte RIFF chunk signature from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="12902:13235" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="12910:13022" ph="/* The signatures are stored in reverse in the file, so we'll need to read them backwards into ... */" />
+                <marker date="1495807514786" expanded="true" signature="13094:13158" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="13239:13389" ph="/// Peeks a 4-byte RIFF chunk signature from the data stream. This does not ... " />
+                <marker date="1495807514786" expanded="true" signature="13463:13623" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="13627:13887" ph="/// Reads an IFF-style chunk from the stream. The chunk must have the &lt;see cref=&quot;IIFFChunk&quot;/&gt; ... " />
+                <marker date="1495807514786" expanded="true" signature="13974:14388" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="14202:14329" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="14392:14851" ph="/// Reads a DBC record from the stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="15046:15729" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="15129:15247" ph="/* If the record is of the UnknownRecord type, ... */" />
+                <marker date="1495807514786" expanded="true" signature="15282:15670" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="15402:15513" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="15554:15665" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="15733:15944" ph="/// Reads an 16-byte &lt;see cref=&quot;Plane&quot;/&gt; from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="16008:16092" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="16096:16312" ph="/// Reads an 18-byte &lt;see cref=&quot;ShortPlane&quot;/&gt; from the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="16386:16695" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="16466:16668" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="16554:16616" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="16699:16995" ph="/// Reads a 16-byte 32-bit &lt;see cref=&quot;Quaternion&quot;/&gt; structure from the data stream, and advances the position of  ... " />
+                <marker date="1495807514786" expanded="true" signature="17071:17213" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="17217:17511" ph="/// Reads a 8-byte 16-bit &lt;see cref=&quot;Quaternion&quot;/&gt; structure from the data stream, and advances the position of t ... " />
+                <marker date="1495807514786" expanded="true" signature="17587:17933" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="17937:18209" ph="/// Reads a 12-byte &lt;see cref=&quot;Rotator&quot;/&gt; from the data stream and advances the position of the stream by ... " />
+                <marker date="1495807514786" expanded="true" signature="18277:18336" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="18340:18726" ph="/// Reads a 12-byte &lt;see cref=&quot;Vector3&quot;/&gt; structure from the data stream and advances the position of the stream  ... " />
+                <marker date="1495807514786" expanded="true" signature="18847:19572" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="18873:19568" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="19576:19962" ph="/// Reads a 16-byte &lt;see cref=&quot;Vector4&quot;/&gt; structure from the data stream and advances the position of the stream  ... " />
+                <marker date="1495807514786" expanded="true" signature="20083:20926" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="20109:20922" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="20930:21315" ph="/// Reads a 6-byte &lt;see cref=&quot;Vector3s&quot;/&gt; structure from the data stream and advances the position of the stream  ... " />
+                <marker date="1495807514786" expanded="true" signature="21438:22168" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="21464:22164" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="22172:22454" ph="/// Reads an 8-byte &lt;see cref=&quot;Vector2&quot;/&gt; structure from the data stream and advances the position of the stream  ... " />
+                <marker date="1495807514786" expanded="true" signature="22522:22607" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="22611:22885" ph="/// Reads a 24-byte &lt;see cref=&quot;Box&quot;/&gt; structure from the data stream and advances the position of the stream by ... " />
+                <marker date="1495807514786" expanded="true" signature="22945:23028" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="23032:23306" ph="/// Reads a 12-byte &lt;see cref=&quot;Box&quot;/&gt; structure from the data stream and advances the position of the stream by ... " />
+                <marker date="1495807514786" expanded="true" signature="23376:23466" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="23470:23523" ph="/* BinaryWriter extensions for standard types ... */" />
+                <marker date="1495807514786" expanded="true" signature="23527:23751" ph="/// Writes a 8-byte &lt;see cref=&quot;Range&quot;/&gt; to the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="23828:23912" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="23916:24159" ph="/// Writes a 4-byte &lt;see cref=&quot;RGBA&quot;/&gt; value to the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="24233:24365" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="24369:24612" ph="/// Writes a 4-byte &lt;see cref=&quot;RGBA&quot;/&gt; value to the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="24686:24818" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="24822:25083" ph="/// Writes the provided string to the data stream as a C-style null-terminated string. ... " />
+                <marker date="1495807514786" expanded="true" signature="25182:25295" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="25221:25258" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="25299:25529" ph="/// Writes an RIFF-style chunk signature to the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="25620:25854" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="25654:25769" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="25802:25850" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="25858:25941" ph="/// Writes an RIFF-style chunk to the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="26061:26269" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="26273:26508" ph="/// Writes a 16-byte &lt;see cref=&quot;Plane&quot;/&gt; to the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="26585:26669" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="26673:26919" ph="/// Writes an 18-byte &lt;see cref=&quot;ShortPlane&quot;/&gt; to the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="27011:27159" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="27046:27155" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="27083:27150" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="27163:27413" ph="/// Writes a 16-byte &lt;see cref=&quot;Quaternion&quot;/&gt; to the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="27507:27663" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="27667:27997" ph="/// Writes a 8-byte &lt;see cref=&quot;Quaternion&quot;/&gt; to the data stream. This is a packed format of a normal 32-bit quate ... " />
+                <marker date="1495807514786" expanded="true" signature="28091:28391" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="28395:28655" ph="/// Writes a 12-byte &lt;see cref=&quot;Rotator&quot;/&gt; value to the data stream in Pitch/Yaw/Roll order. ... " />
+                <marker date="1495807514786" expanded="true" signature="28740:28865" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="28869:29541" ph="/// Writes a 12-byte &lt;see cref=&quot;Vector3&quot;/&gt; value to the data stream. This function ... " />
+                <marker date="1495807514786" expanded="true" signature="29674:30166" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="29698:30162" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="30170:30856" ph="/// Writes a 16-byte &lt;see cref=&quot;Vector4&quot;/&gt; value to the data stream in XYZW order. This function ... " />
+                <marker date="1495807514786" expanded="true" signature="30989:31715" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="31013:31711" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="31719:32118" ph="/// Writes a 6-byte &lt;see cref=&quot;Vector3s&quot;/&gt; value to the data stream in XYZ order. This function ... " />
+                <marker date="1495807514786" expanded="true" signature="32253:32892" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="32277:32888" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="32896:33153" ph="/// Writes an 8-byte &lt;see cref=&quot;Vector2&quot;/&gt; value to the data stream in XY order. ... " />
+                <marker date="1495807514786" expanded="true" signature="33235:33309" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="33313:33532" ph="/// Writes a 24-byte &lt;see cref=&quot;Box&quot;/&gt; to the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="33603:33704" ph="{...}" />
+                <marker date="1495807514786" expanded="true" signature="33708:33932" ph="/// Writes a 12-byte &lt;see cref=&quot;ShortBox&quot;/&gt; to the data stream. ... " />
+                <marker date="1495807514786" expanded="true" signature="34013:34116" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SoundEntriesRecord.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundEntriesRecord.cs">
+      <file leaf-file-name="LocalizedStringReference.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/LocalizedStringReference.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="48" column="23" lean-forward="false" selection-start-line="48" selection-start-column="23" selection-end-line="48" selection-end-column="23" />
+            <state relative-caret-position="77">
+              <caret line="27" column="21" lean-forward="false" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
               <folding>
-                <marker date="1495804290635" expanded="true" signature="0:794" ph="/* SoundEntriesRecord.cs ... */" />
-                <marker date="1495804290635" expanded="false" signature="802:884" ph="..." />
-                <marker date="1495804290635" expanded="true" signature="920:2485" ph="{...}" />
-                <marker date="1495804290635" expanded="true" signature="967:1833" ph="{...}" />
-                <marker date="1495804290635" expanded="true" signature="1587:1642" ph="{...}" />
-                <marker date="1495804290635" expanded="true" signature="1681:1736" ph="{...}" />
-                <marker date="1495804290635" expanded="true" signature="1775:1830" ph="{...}" />
-                <marker date="1495804290635" expanded="true" signature="1864:2483" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SoundProviderPreferences.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundProviderPreferences.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
-              <caret line="57" column="37" lean-forward="false" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
-              <folding>
-                <marker date="1495804290647" expanded="true" signature="0:800" ph="/* SoundProviderPreferences.cs ... */" />
-                <marker date="1495804290647" expanded="false" signature="808:856" ph="..." />
-                <marker date="1495804290647" expanded="true" signature="892:2104" ph="{...}" />
-                <marker date="1495804290647" expanded="true" signature="951:2102" ph="{...}" />
-                <marker date="1495804290647" expanded="true" signature="1856:1911" ph="{...}" />
-                <marker date="1495804290647" expanded="true" signature="1950:2005" ph="{...}" />
-                <marker date="1495804290647" expanded="true" signature="2044:2099" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WMOAreaTableRecord.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="477">
-              <caret line="45" column="37" lean-forward="false" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
-              <folding>
-                <marker date="1495804290611" expanded="true" signature="0:794" ph="/* WMOAreaTableRecord.cs ... */" />
-                <marker date="1495804290611" expanded="true" signature="865:1705" ph="{...}" />
-                <marker date="1495804290611" expanded="true" signature="912:1703" ph="{...}" />
-                <marker date="1495804290611" expanded="true" signature="1457:1512" ph="{...}" />
-                <marker date="1495804290611" expanded="true" signature="1551:1606" ph="{...}" />
-                <marker date="1495804290611" expanded="true" signature="1645:1700" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ZoneIntroMusicTableRecord.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="36" column="37" lean-forward="false" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
-              <folding>
-                <marker date="1495804290595" expanded="true" signature="0:801" ph="/* ZoneIntroMusicTableRecord.cs ... */" />
-                <marker date="1495804290595" expanded="false" signature="809:857" ph="..." />
-                <marker date="1495804290595" expanded="true" signature="893:1431" ph="{...}" />
-                <marker date="1495804290595" expanded="true" signature="947:1429" ph="{...}" />
-                <marker date="1495804290595" expanded="true" signature="1183:1238" ph="{...}" />
-                <marker date="1495804290595" expanded="true" signature="1277:1332" ph="{...}" />
-                <marker date="1495804290595" expanded="true" signature="1371:1426" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ZoneMusicRecord.cs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneMusicRecord.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="545">
-              <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
-              <folding>
-                <marker date="1495804289451" expanded="true" signature="0:791" ph="/* ZoneMusicRecord.cs ... */" />
-                <marker date="1495804289451" expanded="false" signature="799:879" ph="..." />
-                <marker date="1495804289451" expanded="true" signature="915:1739" ph="{...}" />
-                <marker date="1495804289451" expanded="true" signature="959:1737" ph="{...}" />
-                <marker date="1495804289451" expanded="true" signature="1491:1546" ph="{...}" />
-                <marker date="1495804289451" expanded="true" signature="1585:1640" ph="{...}" />
-                <marker date="1495804289451" expanded="true" signature="1679:1734" ph="{...}" />
+                <marker date="1495807376786" expanded="true" signature="0:785" ph="/* MapRecord.cs ... */" />
+                <marker date="1495807376786" expanded="true" signature="823:3081" ph="{...}" />
+                <marker date="1495807376786" expanded="true" signature="827:940" ph="/// A localize (that is, translated) reference to a string in the database record. ... " />
+                <marker date="1495807376786" expanded="true" signature="979:3079" ph="{...}" />
+                <marker date="1495807376786" expanded="true" signature="985:1073" ph="/// The reference to the English version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="1111:1198" ph="/// The reference to the Korean version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="1235:1322" ph="/// The reference to the French version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="1359:1446" ph="/// The reference to the German version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="1483:1571" ph="/// The reference to the Chinese version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="1609:1696" ph="/// The reference to the Taiwan version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="1733:1821" ph="/// The reference to the Spanish version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="1859:1955" ph="/// The reference to the Mexican Spanish version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="2000:2088" ph="/// The reference to the Russian version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="2128:2215" ph="/// The reference to an unknown version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="2256:2346" ph="/// The reference to the Portugese version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="2388:2476" ph="/// The reference to the Italian version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="2516:2603" ph="/// The reference to an unknown version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="2644:2731" ph="/// The reference to an unknown version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="2772:2859" ph="/// The reference to an unknown version of the string. ... " />
+                <marker date="1495807376786" expanded="true" signature="2900:2979" ph="/// The reference to an unknown of the string. ... " />
               </folding>
             </state>
           </provider>
@@ -136,13 +228,31 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/libwarcraft/DBC/DBC.cs" />
-        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/IDBCRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/UnknownRecord.cs" />
         <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundEntriesRecord.cs" />
         <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundProviderPreferences.cs" />
-        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs" />
-        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs" />
         <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneMusicRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/DBC.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/Core/Interfaces/IDeferredDeserialize.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/DBCRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/ForeignKey.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SpellRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/MapRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidTypeRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/AnimationDataRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/ADT/Chunks/Subchunks/MapChunkSoundEmitters.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/ADT/Chunks/Subchunks/MapChunkTextureLayers.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/ADT/Chunks/TerrainLiquid.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidObjectRecord.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/WMO/GroupFile/ModelGroupData.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/WMO/RootFile/Chunks/ModelMaterials.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/WMO/RootFile/ModelRootHeader.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/LocalizedStringReference.cs" />
+        <option value="$PROJECT_DIR$/libwarcraft/Core/Extensions/ExtendedIO.cs" />
       </list>
     </option>
   </component>
@@ -153,9 +263,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="-1" />
-    <option name="width" value="1920" />
-    <option name="height" value="1050" />
+    <option name="width" value="1910" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectView">
     <navigator currentView="SolutionExplorer" proportions="" version="1">
@@ -235,7 +344,91 @@
               <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="SpecialFields" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DBC" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Definitions" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Core" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Core" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Interfaces" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libwarcraft" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Core" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Extensions" />
               <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
             </PATH_ELEMENT>
           </PATH>
@@ -366,7 +559,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2494000" />
+    <option name="totallyTimeSpent" value="5771000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -378,33 +571,48 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-1" width="1920" height="1050" extended-state="6" />
+    <frame x="0" y="0" width="1910" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2529349" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963374" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23712446" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="17" side_tool="true" content_ui="tabs" />
+      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25375536" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="18" side_tool="true" content_ui="tabs" />
+      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="21" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="22" side_tool="false" content_ui="tabs" />
+      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="23" side_tool="true" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15208112" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="24" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="25" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -422,27 +630,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/AnimationDataRecord.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-540">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/DBCRecord.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-340">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/DBC.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="53" column="22" lean-forward="false" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/UInt32ForeignKey.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -450,126 +637,1120 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidObjectRecord.cs">
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/IDBCRecord.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidTypeRecord.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-405">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/MapRecord.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-130">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/ForeignKey.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="9" lean-forward="true" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="34" column="23" lean-forward="false" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
+        <state relative-caret-position="435">
+          <caret line="29" column="43" lean-forward="false" selection-start-line="29" selection-start-column="43" selection-end-line="29" selection-end-column="43" />
           <folding>
-            <marker date="1495804290619" expanded="true" signature="0:794" ph="/* ZoneAmbienceRecord.cs ... */" />
-            <marker date="1495804290619" expanded="false" signature="802:850" ph="..." />
-            <marker date="1495804290619" expanded="true" signature="886:1372" ph="{...}" />
-            <marker date="1495804290619" expanded="true" signature="933:1370" ph="{...}" />
-            <marker date="1495804290619" expanded="true" signature="1124:1179" ph="{...}" />
-            <marker date="1495804290619" expanded="true" signature="1218:1273" ph="{...}" />
-            <marker date="1495804290619" expanded="true" signature="1312:1367" ph="{...}" />
+            <marker date="1495804901584" expanded="true" signature="0:786" ph="/* ForeignKey.cs ... */" />
+            <marker date="1495804901584" expanded="true" signature="832:982" ph="{...}" />
+            <marker date="1495804901584" expanded="true" signature="863:980" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/UnknownRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="86" column="23" lean-forward="false" selection-start-line="86" selection-start-column="23" selection-end-line="86" selection-end-column="23" />
+          <folding>
+            <marker date="1495805377983" expanded="true" signature="0:789" ph="/* UnknownRecord.cs ... */" />
+            <marker date="1495805377983" expanded="true" signature="796:841" ph="..." />
+            <marker date="1495805377983" expanded="true" signature="877:2731" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="881:1056" ph="/// Unknown record. This class serves as a general-purpose container for unimplemented records, and ... " />
+            <marker date="1495805377983" expanded="true" signature="1096:2729" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="1102:1176" ph="/// The record data, stored as raw bytes. ... " />
+            <marker date="1495805377983" expanded="true" signature="1208:1327" ph="/// Loads and parses the provided data. ... " />
+            <marker date="1495805377983" expanded="true" signature="1372:1982" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="1424:1546" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="1599:1784" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="1655:1779" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="1789:1912" ph="/* byte[] dataWithoutID = new byte[data.Length - 4]; ... */" />
+            <marker date="1495805377983" expanded="true" signature="1986:2093" ph="/// Gets the size of the record. ... " />
+            <marker date="1495805377983" expanded="true" signature="2126:2348" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="2137:2344" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="2191:2323" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="2352:2471" ph="/// Gets the field count for this record at. ... " />
+            <marker date="1495805377983" expanded="true" signature="2504:2726" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="2515:2722" ph="{...}" />
+            <marker date="1495805377983" expanded="true" signature="2569:2701" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/DBC.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="79" column="52" lean-forward="false" selection-start-line="79" selection-start-column="52" selection-end-line="79" selection-end-column="52" />
+          <folding>
+            <marker date="1495805592652" expanded="true" signature="0:779" ph="/* DBC.cs ... */" />
+            <marker date="1495805592652" expanded="true" signature="786:963" ph="..." />
+            <marker date="1495805592652" expanded="true" signature="987:3777" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="991:1117" ph="/// DBC file handler. Parses and presents DBC files in a statically typed, easy to use fashion. ... " />
+            <marker date="1495805592652" expanded="true" signature="1165:3775" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="1171:1309" ph="/// The header of the database file. Describes the sizes and field counts of the records in the database. ... " />
+            <marker date="1495805592652" expanded="true" signature="1340:1507" ph="/// The game version this database is valid for. This affects how the records are parsed, and is vital for ... " />
+            <marker date="1495805592652" expanded="true" signature="1540:1572" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="1576:1792" ph="/// The records contained in the database. The records are not guaranteed to be in order by ID. ... " />
+            <marker date="1495805592652" expanded="true" signature="1847:1912" ph="/// The strings in the DBC file. ... " />
+            <marker date="1495805592652" expanded="true" signature="1977:2169" ph="/// Initializes a new instance of the &lt;see cref=&quot;DBC&quot;/&gt; class. ... " />
+            <marker date="1495805592652" expanded="true" signature="2222:2769" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="2308:2765" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="2364:2760" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="2495:2624" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="2685:2754" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="2773:2947" ph="/// Gets a record from the database by its primary key ID. ... " />
+            <marker date="1495805592652" expanded="true" signature="2981:3111" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="3023:3090" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="3053:3085" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="3115:3473" ph="/// Resolves a string reference. String references are stored as offsets into the string data block ... " />
+            <marker date="1495805592652" expanded="true" signature="3539:3772" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="3615:3753" ph="{...}" />
+            <marker date="1495805592652" expanded="true" signature="3667:3704" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/Core/Interfaces/IPostLoad.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="32" column="27" lean-forward="false" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="27" />
+          <folding>
+            <marker date="1484653652827" expanded="true" signature="0:785" ph="/* IPostLoad.cs ... */" />
+            <marker date="1484653652827" expanded="true" signature="821:1796" ph="{...}" />
+            <marker date="1484653652827" expanded="true" signature="825:1203" ph="/// This interface holds that the implementing class can load all of its serialized data after it has been ... " />
+            <marker date="1484653652827" expanded="true" signature="1237:1794" ph="{...}" />
+            <marker date="1484653652827" expanded="true" signature="1243:1453" ph="/// Determines whether or not this object has finished loading. ... " />
+            <marker date="1484653652827" expanded="true" signature="1486:1753" ph="/// Loads the object's data after construction, using the provided parameters. Typically, this is a byte ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/WMO/GroupFile/Chunks/ModelTangentArray.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="30" column="69" lean-forward="false" selection-start-line="30" selection-start-column="69" selection-end-line="30" selection-end-column="69" />
+          <folding>
+            <marker date="1493228556822" expanded="true" signature="0:793" ph="/* ModelTangentArray.cs ... */" />
+            <marker date="1493228556822" expanded="false" signature="801:932" ph="..." />
+            <marker date="1493228556822" expanded="true" signature="973:3131" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="1088:2734" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="1341:1392" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="1435:1470" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="1515:1590" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="1622:1651" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="1680:2151" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="1732:2147" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="1806:2098" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="1883:1952" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="2010:2083" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="2187:2238" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="2317:2731" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="2378:2705" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="2434:2700" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="2506:2565" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="2637:2694" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="2785:3129" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="2905:2913" ph="{...}" />
+            <marker date="1493228556822" expanded="true" signature="3014:3126" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/DBCRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+          <folding>
+            <marker date="1495806339526" expanded="true" signature="0:789" ph="/* DBCDefinition.cs ... */" />
+            <marker date="1495806339526" expanded="true" signature="797:874" ph="..." />
+            <marker date="1495806339526" expanded="true" signature="910:2998" ph="{...}" />
+            <marker date="1495806339526" expanded="true" signature="914:1004" ph="/// A database record which holds some type of information. ... " />
+            <marker date="1495806339526" expanded="true" signature="1091:2996" ph="{...}" />
+            <marker date="1495806339526" expanded="true" signature="1097:1237" ph="/// The record ID. This is the equivalent of a primary key in an SQL database, and is unique to the record. ... " />
+            <marker date="1495806339526" expanded="true" signature="1254:1288" ph="{...}" />
+            <marker date="1495806339526" expanded="true" signature="1292:1405" ph="/// The game version this record is valid for. ... " />
+            <marker date="1495806339526" expanded="true" signature="1438:1462" ph="{...}" />
+            <marker date="1495806339526" expanded="true" signature="1466:1554" ph="/// Whether or not this record has had its data loaded. ... " />
+            <marker date="1495806339526" expanded="true" signature="1602:1681" ph="/// Sets the version this record is valid for. ... " />
+            <marker date="1495806339526" expanded="true" signature="1741:1778" ph="{...}" />
+            <marker date="1495806339526" expanded="true" signature="1782:1901" ph="/// Loads and parses the provided data. ... " />
+            <marker date="1495806339526" expanded="true" signature="1951:2070" ph="/// Gets the field count for this record at. ... " />
+            <marker date="1495806339526" expanded="true" signature="2113:2220" ph="/// Gets the size of the record. ... " />
+            <marker date="1495806339526" expanded="true" signature="2263:2473" ph="/// Determines whether or not this object has finished loading. ... " />
+            <marker date="1495806339526" expanded="true" signature="2516:2560" ph="{...}" />
+            <marker date="1495806339526" expanded="true" signature="2564:2719" ph="/// Deserializes the data of the object using the provided &lt;see cref=&quot;BinaryReader&quot;/&gt;. ... " />
+            <marker date="1495806339526" expanded="true" signature="2778:2993" ph="{...}" />
+            <marker date="1495806339526" expanded="true" signature="2830:2950" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/Core/Interfaces/IDeferredDeserialize.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="94" lean-forward="false" selection-start-line="10" selection-start-column="94" selection-end-line="10" selection-end-column="94" />
+          <folding>
+            <marker date="1495806037780" expanded="true" signature="52:385" ph="{...}" />
+            <marker date="1495806037780" expanded="true" signature="56:135" ph="/// Classes implementing this interface support  ... " />
+            <marker date="1495806037780" expanded="true" signature="174:383" ph="{...}" />
+            <marker date="1495806037780" expanded="true" signature="180:335" ph="/// Deserializes the data of the object using the provided &lt;see cref=&quot;BinaryReader&quot;/&gt;. ... " />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundEntriesRecord.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="48" column="23" lean-forward="false" selection-start-line="48" selection-start-column="23" selection-end-line="48" selection-end-column="23" />
+        <state relative-caret-position="222">
+          <caret line="55" column="85" lean-forward="false" selection-start-line="55" selection-start-column="85" selection-end-line="55" selection-end-column="85" />
           <folding>
-            <marker date="1495804290635" expanded="true" signature="0:794" ph="/* SoundEntriesRecord.cs ... */" />
-            <marker date="1495804290635" expanded="false" signature="802:884" ph="..." />
-            <marker date="1495804290635" expanded="true" signature="920:2485" ph="{...}" />
-            <marker date="1495804290635" expanded="true" signature="967:1833" ph="{...}" />
-            <marker date="1495804290635" expanded="true" signature="1587:1642" ph="{...}" />
-            <marker date="1495804290635" expanded="true" signature="1681:1736" ph="{...}" />
-            <marker date="1495804290635" expanded="true" signature="1775:1830" ph="{...}" />
-            <marker date="1495804290635" expanded="true" signature="1864:2483" ph="{...}" />
+            <marker date="1495805510101" expanded="true" signature="0:794" ph="/* SoundEntriesRecord.cs ... */" />
+            <marker date="1495805510101" expanded="true" signature="802:884" ph="..." />
+            <marker date="1495805510101" expanded="true" signature="920:2459" ph="{...}" />
+            <marker date="1495805510101" expanded="true" signature="967:1807" ph="{...}" />
+            <marker date="1495805510101" expanded="true" signature="1587:1642" ph="{...}" />
+            <marker date="1495805510101" expanded="true" signature="1838:2457" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundProviderPreferences.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="57" column="37" lean-forward="false" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
+        <state relative-caret-position="546">
+          <caret line="64" column="85" lean-forward="false" selection-start-line="64" selection-start-column="85" selection-end-line="64" selection-end-column="85" />
           <folding>
-            <marker date="1495804290647" expanded="true" signature="0:800" ph="/* SoundProviderPreferences.cs ... */" />
-            <marker date="1495804290647" expanded="false" signature="808:856" ph="..." />
-            <marker date="1495804290647" expanded="true" signature="892:2104" ph="{...}" />
-            <marker date="1495804290647" expanded="true" signature="951:2102" ph="{...}" />
-            <marker date="1495804290647" expanded="true" signature="1856:1911" ph="{...}" />
-            <marker date="1495804290647" expanded="true" signature="1950:2005" ph="{...}" />
-            <marker date="1495804290647" expanded="true" signature="2044:2099" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="45" column="37" lean-forward="false" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
-          <folding>
-            <marker date="1495804290611" expanded="true" signature="0:794" ph="/* WMOAreaTableRecord.cs ... */" />
-            <marker date="1495804290611" expanded="true" signature="865:1705" ph="{...}" />
-            <marker date="1495804290611" expanded="true" signature="912:1703" ph="{...}" />
-            <marker date="1495804290611" expanded="true" signature="1457:1512" ph="{...}" />
-            <marker date="1495804290611" expanded="true" signature="1551:1606" ph="{...}" />
-            <marker date="1495804290611" expanded="true" signature="1645:1700" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="36" column="37" lean-forward="false" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
-          <folding>
-            <marker date="1495804290595" expanded="true" signature="0:801" ph="/* ZoneIntroMusicTableRecord.cs ... */" />
-            <marker date="1495804290595" expanded="false" signature="809:857" ph="..." />
-            <marker date="1495804290595" expanded="true" signature="893:1431" ph="{...}" />
-            <marker date="1495804290595" expanded="true" signature="947:1429" ph="{...}" />
-            <marker date="1495804290595" expanded="true" signature="1183:1238" ph="{...}" />
-            <marker date="1495804290595" expanded="true" signature="1277:1332" ph="{...}" />
-            <marker date="1495804290595" expanded="true" signature="1371:1426" ph="{...}" />
+            <marker date="1495805525213" expanded="true" signature="0:800" ph="/* SoundProviderPreferences.cs ... */" />
+            <marker date="1495805525213" expanded="true" signature="808:856" ph="..." />
+            <marker date="1495805525213" expanded="true" signature="892:2078" ph="{...}" />
+            <marker date="1495805525213" expanded="true" signature="951:2076" ph="{...}" />
+            <marker date="1495805525213" expanded="true" signature="1856:1911" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneMusicRecord.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
-          <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+        <state relative-caret-position="472">
+          <caret line="51" column="85" lean-forward="false" selection-start-line="51" selection-start-column="85" selection-end-line="51" selection-end-column="85" />
           <folding>
-            <marker date="1495804289451" expanded="true" signature="0:791" ph="/* ZoneMusicRecord.cs ... */" />
-            <marker date="1495804289451" expanded="false" signature="799:879" ph="..." />
-            <marker date="1495804289451" expanded="true" signature="915:1739" ph="{...}" />
-            <marker date="1495804289451" expanded="true" signature="959:1737" ph="{...}" />
-            <marker date="1495804289451" expanded="true" signature="1491:1546" ph="{...}" />
-            <marker date="1495804289451" expanded="true" signature="1585:1640" ph="{...}" />
-            <marker date="1495804289451" expanded="true" signature="1679:1734" ph="{...}" />
+            <marker date="1495805541368" expanded="true" signature="0:791" ph="/* ZoneMusicRecord.cs ... */" />
+            <marker date="1495805541368" expanded="true" signature="799:879" ph="..." />
+            <marker date="1495805541368" expanded="true" signature="915:1713" ph="{...}" />
+            <marker date="1495805541368" expanded="true" signature="959:1711" ph="{...}" />
+            <marker date="1495805541368" expanded="true" signature="1491:1546" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/UInt16ForeignKey.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-114">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/ForeignKey.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="48" column="27" lean-forward="false" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
+          <folding>
+            <marker date="1495806466581" expanded="true" signature="0:786" ph="/* ForeignKey.cs ... */" />
+            <marker date="1495806466581" expanded="true" signature="824:1166" ph="{...}" />
+            <marker date="1495806466581" expanded="true" signature="854:1164" ph="{...}" />
+            <marker date="1495806466581" expanded="true" signature="880:914" ph="{...}" />
+            <marker date="1495806466581" expanded="true" signature="937:971" ph="{...}" />
+            <marker date="1495806466581" expanded="true" signature="987:1021" ph="{...}" />
+            <marker date="1495806466581" expanded="true" signature="1082:1161" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/ZoneIntroMusicTableRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="31" column="23" lean-forward="false" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+          <folding>
+            <marker date="1495806566893" expanded="true" signature="0:801" ph="/* ZoneIntroMusicTableRecord.cs ... */" />
+            <marker date="1495806566893" expanded="true" signature="809:857" ph="..." />
+            <marker date="1495806566893" expanded="true" signature="893:1405" ph="{...}" />
+            <marker date="1495806566893" expanded="true" signature="947:1403" ph="{...}" />
+            <marker date="1495806566893" expanded="true" signature="1183:1238" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/WMOAreaTableRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="36" column="21" lean-forward="false" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
+          <folding>
+            <marker date="1495806478945" expanded="true" signature="0:794" ph="/* WMOAreaTableRecord.cs ... */" />
+            <marker date="1495806478945" expanded="true" signature="865:1679" ph="{...}" />
+            <marker date="1495806478945" expanded="true" signature="912:1677" ph="{...}" />
+            <marker date="1495806478945" expanded="true" signature="1457:1512" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SpellRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-258">
+          <caret line="64" column="23" lean-forward="false" selection-start-line="64" selection-start-column="23" selection-end-line="64" selection-end-column="23" />
+          <folding>
+            <marker date="1495806566913" expanded="true" signature="0:787" ph="/* SpellRecord.cs ... */" />
+            <marker date="1495806566913" expanded="true" signature="795:836" ph="..." />
+            <marker date="1495806566913" expanded="true" signature="872:29853" ph="{...}" />
+            <marker date="1495806566913" expanded="true" signature="876:946" ph="/// A database record defining a spell. ... " />
+            <marker date="1495806566913" expanded="true" signature="984:4154" ph="{...}" />
+            <marker date="1495806566913" expanded="true" signature="990:1052" ph="/// The name of the database. ... " />
+            <marker date="1495806566913" expanded="true" signature="1100:1242" ph="/// The school of the spell (fire, destruction, etc). This is a reference to a row in another ... " />
+            <marker date="1495806566913" expanded="true" signature="1280:1434" ph="/// The category of the spell (tradeskill, passive, active, etc). This is a reference to a row in another ... " />
+            <marker date="1495806566913" expanded="true" signature="1474:1543" ph="/// The UI type to use when casting. ... " />
+            <marker date="1495806566913" expanded="true" signature="1569:1691" ph="/// The dispel type of the spell. This is a reference to a row in another ... " />
+            <marker date="1495806566913" expanded="true" signature="1733:1857" ph="/// The mechanic type of the spell. This is a reference to a row in another ... " />
+            <marker date="1495806566913" expanded="true" signature="1897:2123" ph="/// The first block of spell attributes. This is a set of flags, defining different behaviour for the spell ... " />
+            <marker date="1495806566913" expanded="true" signature="2165:2392" ph="/// The second block of spell attributes. This is a set of flags, defining different behaviour for the spell ... " />
+            <marker date="1495806566913" expanded="true" signature="2434:2660" ph="/// The third block of spell attributes. This is a set of flags, defining different behaviour for the spell ... " />
+            <marker date="1495806566913" expanded="true" signature="2702:2929" ph="/// The fourth block of spell attributes. This is a set of flags, defining different behaviour for the spell ... " />
+            <marker date="1495806566913" expanded="true" signature="2971:3197" ph="/// The fifth block of spell attributes. This is a set of flags, defining different behaviour for the spell ... " />
+            <marker date="1495806566913" expanded="true" signature="3239:3465" ph="/// The sixth block of spell attributes. This is a set of flags, defining different behaviour for the spell ... " />
+            <marker date="1495806566913" expanded="true" signature="3507:3735" ph="/// The seventh block of spell attributes. This is a set of flags, defining different behaviour for the spell ... " />
+            <marker date="1495806566913" expanded="true" signature="3777:3896" ph="/// Loads and parses the provided data. ... " />
+            <marker date="1495806566913" expanded="true" signature="3941:3989" ph="{...}" />
+            <marker date="1495806566913" expanded="true" signature="4157:4228" ph="/// The first block of spell attributes. ... " />
+            <marker date="1495806566913" expanded="true" signature="4273:8197" ph="{...}" />
+            <marker date="1495806566913" expanded="true" signature="4279:4339" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="4372:4453" ph="/// This spell requires some form of ammunition. ... " />
+            <marker date="1495806566913" expanded="true" signature="4494:4573" ph="/// This spell will trigger on the next swing. ... " />
+            <marker date="1495806566913" expanded="true" signature="4615:4690" ph="/// This spell is a form of replenishment. ... " />
+            <marker date="1495806566913" expanded="true" signature="4729:4791" ph="/// This spell is an ability. ... " />
+            <marker date="1495806566913" expanded="true" signature="4824:4942" ph="/// This spell is a tradeskill spell, that is, it is a recipe that creates something. ... " />
+            <marker date="1495806566913" expanded="true" signature="4981:5040" ph="/// This spell is passive. ... " />
+            <marker date="1495806566913" expanded="true" signature="5073:5185" ph="/// This spell is hidden for the client, and should not be displayed in the UI. ... " />
+            <marker date="1495806566913" expanded="true" signature="5224:5297" ph="/// This spell is hidden in combat logs. ... " />
+            <marker date="1495806566913" expanded="true" signature="5338:5436" ph="/// This spell always targets the item equipped in the main hand. ... " />
+            <marker date="1495806566913" expanded="true" signature="5481:5586" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="5628:5688" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="5721:5801" ph="/// This spell can only be cast during daytime. ... " />
+            <marker date="1495806566913" expanded="true" signature="5837:5919" ph="/// This spell can only be cast during nighttime. ... " />
+            <marker date="1495806566913" expanded="true" signature="5956:6029" ph="/// This spell can only be cast indoors. ... " />
+            <marker date="1495806566913" expanded="true" signature="6065:6139" ph="/// This spell can only be cast outdoors. ... " />
+            <marker date="1495806566913" expanded="true" signature="6175:6257" ph="/// This spell cannot be used while shapeshifted. ... " />
+            <marker date="1495806566913" expanded="true" signature="6305:6387" ph="/// This spell can only be cast while in stealth. ... " />
+            <marker date="1495806566913" expanded="true" signature="6426:6531" ph="/// This spell does not affect the sheath state of the caster's weapons. ... " />
+            <marker date="1495806566913" expanded="true" signature="6579:6670" ph="/// The damage of this spell scales by the caster's level. ... " />
+            <marker date="1495806566913" expanded="true" signature="6712:6807" ph="/// When cast, this spell causes the caster to stop attacking. ... " />
+            <marker date="1495806566913" expanded="true" signature="6850:6935" ph="/// This spell cannot be dodged, blocked or parried. ... " />
+            <marker date="1495806566913" expanded="true" signature="6983:7043" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="7082:7153" ph="/// This spell can be cast while dead. ... " />
+            <marker date="1495806566913" expanded="true" signature="7193:7267" ph="/// This spell can be cast while mounted. ... " />
+            <marker date="1495806566913" expanded="true" signature="7309:7431" ph="/// The cooldown of this spell will not start ticking down before the spell has finished. ... " />
+            <marker date="1495806566913" expanded="true" signature="7479:7562" ph="/// This spell is some form of detrimental effect. ... " />
+            <marker date="1495806566913" expanded="true" signature="7605:7679" ph="/// This spell can be cast while sitting. ... " />
+            <marker date="1495806566913" expanded="true" signature="7721:7800" ph="/// This spell cannot be used while in combat. ... " />
+            <marker date="1495806566913" expanded="true" signature="7840:7913" ph="/// This spell bypasses invulnerability. ... " />
+            <marker date="1495806566913" expanded="true" signature="7961:8038" ph="/// This spell can be interrupted by damage. ... " />
+            <marker date="1495806566913" expanded="true" signature="8079:8157" ph="/// This spell cannot be cancelled once cast. ... " />
+            <marker date="1495806566913" expanded="true" signature="8200:8272" ph="/// The second block of spell attributes. ... " />
+            <marker date="1495806566913" expanded="true" signature="8317:12061" ph="{...}" />
+            <marker date="1495806566913" expanded="true" signature="8323:8400" ph="/// This spell will dismiss the current pet. ... " />
+            <marker date="1495806566913" expanded="true" signature="8435:8514" ph="/// This spell will drain all available power. ... " />
+            <marker date="1495806566913" expanded="true" signature="8551:8642" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="8677:8746" ph="/// This spell cannot be redirected. ... " />
+            <marker date="1495806566913" expanded="true" signature="8788:8848" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="8881:8952" ph="/// This spell does not break stealth. ... " />
+            <marker date="1495806566913" expanded="true" signature="8992:9083" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="9118:9186" ph="/// This spell cannot be reflected. ... " />
+            <marker date="1495806566913" expanded="true" signature="9226:9305" ph="/// This spell cannot target a unit in combat. ... " />
+            <marker date="1495806566913" expanded="true" signature="9350:9445" ph="/// This spell will start melee combat after it has been cast. ... " />
+            <marker date="1495806566913" expanded="true" signature="9491:9564" ph="/// This spell does not generate threat. ... " />
+            <marker date="1495806566913" expanded="true" signature="9607:9667" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="9700:9803" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="9839:9937" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="9970:10074" ph="/// This spell is channeled, and the caster must always face the target ... " />
+            <marker date="1495806566913" expanded="true" signature="10119:10203" ph="/// This spell will dispel any auras on the target. ... " />
+            <marker date="1495806566913" expanded="true" signature="10239:10327" ph="/// This spell is unaffected by immunity to its school. ... " />
+            <marker date="1495806566913" expanded="true" signature="10372:10440" ph="/// Pets cannot autocast the spell. ... " />
+            <marker date="1495806566913" expanded="true" signature="10480:10540" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="10573:10662" ph="/// The caster cannot target themselves with this spell. ... " />
+            <marker date="1495806566913" expanded="true" signature="10701:10801" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="10843:10903" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="10936:11036" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="11078:11138" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="11171:11268" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="11302:11362" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="11395:11455" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="11488:11548" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="11581:11669" ph="/// This spell should not be displayed in the aura bar. ... " />
+            <marker date="1495806566913" expanded="true" signature="11712:11810" ph="/// The name of the spell should be displayed in the casting bar. ... " />
+            <marker date="1495806566913" expanded="true" signature="11856:11929" ph="/// This spell is enabled after dodging. ... " />
+            <marker date="1495806566913" expanded="true" signature="11968:12028" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="12064:12135" ph="/// The third block of spell attributes. ... " />
+            <marker date="1495806566913" expanded="true" signature="12180:15712" ph="{...}" />
+            <marker date="1495806566913" expanded="true" signature="12186:12256" ph="/// This spell can target dead units. ... " />
+            <marker date="1495806566913" expanded="true" signature="12293:12353" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="12387:12482" ph="/// This spell can target units that are not in line of sight. ... " />
+            <marker date="1495806566913" expanded="true" signature="12528:12588" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="12622:12708" ph="/// This spell should be displayed in the stance bar. ... " />
+            <marker date="1495806566913" expanded="true" signature="12749:12819" ph="/// This spell repeats automatically. ... " />
+            <marker date="1495806566913" expanded="true" signature="12861:12938" ph="/// This spell can only target tapped units. ... " />
+            <marker date="1495806566913" expanded="true" signature="12980:13040" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="13074:13134" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="13168:13228" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="13262:13322" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="13356:13453" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="13489:13549" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="13583:13680" ph="/// This spell is an enchantment, and it is preserved in arenas. ... " />
+            <marker date="1495806566913" expanded="true" signature="13725:13785" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="13819:13879" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="13913:14005" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="14041:14148" ph="/// The cooldown timer is not reset for automatic attacks from this spell. ... " />
+            <marker date="1495806566913" expanded="true" signature="14193:14279" ph="/// The caster's pet must be dead to cast this spell. ... " />
+            <marker date="1495806566913" expanded="true" signature="14316:14438" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="14481:14541" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="14575:14638" ph="/// This spell reduces damage. ... " />
+            <marker date="1495806566913" expanded="true" signature="14675:14735" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="14769:14871" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="14914:14974" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="15008:15068" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="15102:15162" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="15196:15256" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="15290:15350" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="15384:15460" ph="/// This spell cannot score a critical hit. ... " />
+            <marker date="1495806566913" expanded="true" signature="15495:15570" ph="/// This spell can trigger multiple times. ... " />
+            <marker date="1495806566913" expanded="true" signature="15615:15678" ph="/// This spell is a food buff. ... " />
+            <marker date="1495806566913" expanded="true" signature="15715:15787" ph="/// The fourth block of spell attributes. ... " />
+            <marker date="1495806566913" expanded="true" signature="15832:19520" ph="{...}" />
+            <marker date="1495806566913" expanded="true" signature="15838:15898" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="15932:15992" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="16026:16086" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="16120:16183" ph="/// This spell can be blocked. ... " />
+            <marker date="1495806566913" expanded="true" signature="16219:16298" ph="/// This spell ignores the resurrection timer. ... " />
+            <marker date="1495806566913" expanded="true" signature="16343:16403" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="16437:16497" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="16531:16619" ph="/// This spell tracks a separate stack for each caster. ... " />
+            <marker date="1495806566913" expanded="true" signature="16666:16738" ph="/// This spell can only target players. ... " />
+            <marker date="1495806566913" expanded="true" signature="16780:16882" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="16926:17002" ph="/// This spell requires a main hand weapon. ... " />
+            <marker date="1495806566913" expanded="true" signature="17046:17140" ph="/// To cast this spell, the caster must be in a battleground. ... " />
+            <marker date="1495806566913" expanded="true" signature="17182:17253" ph="/// This spell can only target ghosts. ... " />
+            <marker date="1495806566913" expanded="true" signature="17294:17354" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="17388:17519" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="17559:17619" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="17653:17722" ph="/// This spell cannot trigger procs. ... " />
+            <marker date="1495806566913" expanded="true" signature="17763:17835" ph="/// This spell causes no initial aggro. ... " />
+            <marker date="1495806566913" expanded="true" signature="17873:17944" ph="/// This spell ignores the hit result. ... " />
+            <marker date="1495806566913" expanded="true" signature="17983:18072" ph="/// This spell prevents all procs for its full duration. ... " />
+            <marker date="1495806566913" expanded="true" signature="18117:18188" ph="/// This spell persists through death. ... " />
+            <marker date="1495806566913" expanded="true" signature="18230:18290" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="18324:18388" ph="/// This spell requires a wand. ... " />
+            <marker date="1495806566913" expanded="true" signature="18424:18484" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="18518:18593" ph="/// This spell requires an offhand weapon. ... " />
+            <marker date="1495806566913" expanded="true" signature="18636:18696" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="18730:18848" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="18902:18994" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="19030:19122" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="19158:19253" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="19292:19383" ph="/// The spell range of this spell should not be displayed. ... " />
+            <marker date="1495806566913" expanded="true" signature="19427:19487" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="19523:19594" ph="/// The fifth block of spell attributes. ... " />
+            <marker date="1495806566913" expanded="true" signature="19639:22989" ph="{...}" />
+            <marker date="1495806566913" expanded="true" signature="19645:19732" ph="/// This spell ignores resistances against its school. ... " />
+            <marker date="1495806566913" expanded="true" signature="19772:19853" ph="/// This spell proc only triggers on the caster. ... " />
+            <marker date="1495806566913" expanded="true" signature="19898:19958" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="19992:20052" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="20086:20146" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="20180:20240" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="20274:20339" ph="/// This spell cannot be stolen. ... " />
+            <marker date="1495806566913" expanded="true" signature="20377:20477" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="20515:20578" ph="/// This spell bypasses armor. ... " />
+            <marker date="1495806566913" expanded="true" signature="20614:20684" ph="/// This spell is initially disabled. ... " />
+            <marker date="1495806566913" expanded="true" signature="20724:20784" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="20819:20879" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="20913:20973" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="21007:21067" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="21101:21182" ph="/// Damage from this spell does not break auras. ... " />
+            <marker date="1495806566913" expanded="true" signature="21227:21287" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="21321:21394" ph="/// This spell cannot be used in arenas. ... " />
+            <marker date="1495806566913" expanded="true" signature="21434:21502" ph="/// This spell is usable in arenas. ... " />
+            <marker date="1495806566913" expanded="true" signature="21540:21615" ph="/// This spell will chain between targets. ... " />
+            <marker date="1495806566913" expanded="true" signature="21657:21717" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="21751:21866" ph="/// When applied, this spell will not check for a more powerful version of itself. ... " />
+            <marker date="1495806566913" expanded="true" signature="21912:21972" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="22006:22066" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="22100:22160" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="22194:22254" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="22288:22364" ph="/// This spell scales for the caster's pet. ... " />
+            <marker date="1495806566913" expanded="true" signature="22400:22476" ph="/// This spell can only be used in Outland. ... " />
+            <marker date="1495806566913" expanded="true" signature="22520:22580" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="22614:22674" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="22708:22768" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="22802:22862" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="22896:22956" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="22992:23063" ph="/// The sixth block of spell attributes. ... " />
+            <marker date="1495806566913" expanded="true" signature="23108:26544" ph="{...}" />
+            <marker date="1495806566913" expanded="true" signature="23114:23174" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="23208:23326" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="23371:23431" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="23465:23539" ph="/// This spell can be used while stunned. ... " />
+            <marker date="1495806566913" expanded="true" signature="23580:23640" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="23674:23766" ph="/// This spell can only ever be applied to a single target. ... " />
+            <marker date="1495806566913" expanded="true" signature="23805:23865" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="23899:23959" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="23993:24053" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="24087:24207" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="24255:24344" ph="/// The duration of this spell is hidden for the client. ... " />
+            <marker date="1495806566913" expanded="true" signature="24387:24486" ph="/// The target of the target is allowed as a target for the spell. ... " />
+            <marker date="1495806566913" expanded="true" signature="24534:24594" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="24628:24719" ph="/// The caster's haste affects the duration of this spell. ... " />
+            <marker date="1495806566913" expanded="true" signature="24761:24821" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="24855:24915" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="24949:25048" ph="/// This spell will check for a special class item before casting. ... " />
+            <marker date="1495806566913" expanded="true" signature="25093:25166" ph="/// This spell can be used while feared. ... " />
+            <marker date="1495806566913" expanded="true" signature="25206:25281" ph="/// This spell can be used while confused. ... " />
+            <marker date="1495806566913" expanded="true" signature="25323:25383" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="25417:25477" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="25511:25571" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="25605:25665" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="25699:25759" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="25793:25853" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="25887:25947" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="25981:26041" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="26075:26135" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="26169:26229" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="26263:26323" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="26357:26417" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="26451:26511" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="26547:26620" ph="/// The seventh block of spell attributes. ... " />
+            <marker date="1495806566913" expanded="true" signature="26665:29851" ph="{...}" />
+            <marker date="1495806566913" expanded="true" signature="26671:26731" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="26765:26825" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="26859:26952" ph="/// This spell will reactive when the caster is resurrected. ... " />
+            <marker date="1495806566913" expanded="true" signature="26997:27062" ph="/// This spell is a cheat spell. ... " />
+            <marker date="1495806566913" expanded="true" signature="27095:27155" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="27189:27275" ph="/// This spell will summon a player-controlled totem. ... " />
+            <marker date="1495806566913" expanded="true" signature="27315:27375" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="27409:27469" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="27503:27565" ph="/// This spell is horde only. ... " />
+            <marker date="1495806566913" expanded="true" signature="27599:27664" ph="/// This spell is alliance only. ... " />
+            <marker date="1495806566913" expanded="true" signature="27700:27797" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="27833:27905" ph="/// This spell can only interrupt NPCs. ... " />
+            <marker date="1495806566913" expanded="true" signature="27949:28009" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="28043:28103" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="28137:28197" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="28231:28291" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="28325:28385" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="28419:28479" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="28513:28581" ph="/// This spell has a charge effect. ... " />
+            <marker date="1495806566913" expanded="true" signature="28620:28687" ph="/// This spell is a zone teleport. ... " />
+            <marker date="1495806566913" expanded="true" signature="28723:28783" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="28817:28877" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="28911:28971" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="29005:29065" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="29099:29159" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="29193:29253" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="29287:29347" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="29381:29441" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="29475:29535" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="29569:29629" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="29663:29723" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806566913" expanded="true" signature="29757:29817" ph="/// TODO: Unknown behaviour ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/SoundAmbienceRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="31" column="19" lean-forward="false" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+          <folding>
+            <marker date="1495806506621" expanded="true" signature="0:794" ph="/* ZoneAmbienceRecord.cs ... */" />
+            <marker date="1495806506621" expanded="true" signature="802:850" ph="..." />
+            <marker date="1495806506621" expanded="true" signature="886:1346" ph="{...}" />
+            <marker date="1495806506621" expanded="true" signature="933:1344" ph="{...}" />
+            <marker date="1495806506621" expanded="true" signature="1124:1179" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/MapRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="472">
+          <caret line="100" column="27" lean-forward="false" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
+          <folding>
+            <marker date="1495806517725" expanded="true" signature="0:785" ph="/* MapRecord.cs ... */" />
+            <marker date="1495806517725" expanded="true" signature="793:834" ph="..." />
+            <marker date="1495806517725" expanded="true" signature="870:3265" ph="{...}" />
+            <marker date="1495806517725" expanded="true" signature="874:956" ph="/// A database record defining properties for maps. ... " />
+            <marker date="1495806517725" expanded="true" signature="992:3263" ph="{...}" />
+            <marker date="1495806517725" expanded="true" signature="998:1079" ph="/// The directory under which the map is stored. ... " />
+            <marker date="1495806517725" expanded="true" signature="1119:1189" ph="/// The type of instance this map is. ... " />
+            <marker date="1495806517725" expanded="true" signature="1221:1290" ph="/// What sort of PvP the map allows. ... " />
+            <marker date="1495806517725" expanded="true" signature="1313:1370" ph="/// The name of the map. ... " />
+            <marker date="1495806517725" expanded="true" signature="1417:1483" ph="/// The minimum level of the map. ... " />
+            <marker date="1495806517725" expanded="true" signature="1511:1577" ph="/// The maximum level of the map. ... " />
+            <marker date="1495806517725" expanded="true" signature="1605:1711" ph="/// The maximum number of players that can be in the map at any one time. ... " />
+            <marker date="1495806517725" expanded="true" signature="1741:1801" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806517725" expanded="true" signature="1829:1889" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806517725" expanded="true" signature="1917:1977" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806517725" expanded="true" signature="2005:2119" ph="/// The ID of the area table entry for this map, which contains more information. ... " />
+            <marker date="1495806517725" expanded="true" signature="2162:2273" ph="/// TODO: Unknown behaviour, improve comment ... " />
+            <marker date="1495806517725" expanded="true" signature="2328:2439" ph="/// TODO: Unknown behaviour, improve comment ... " />
+            <marker date="1495806517725" expanded="true" signature="2494:2573" ph="/// The ID of the loading screen for this map. ... " />
+            <marker date="1495806517725" expanded="true" signature="2620:2680" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806517725" expanded="true" signature="2710:2770" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806517725" expanded="true" signature="2798:2858" ph="/// TODO: Unknown behaviour ... " />
+            <marker date="1495806517725" expanded="true" signature="2886:3005" ph="/// Loads and parses the provided data. ... " />
+            <marker date="1495806517725" expanded="true" signature="3050:3098" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidTypeRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="79" column="50" lean-forward="false" selection-start-line="79" selection-start-column="50" selection-end-line="79" selection-end-column="50" />
+          <folding>
+            <marker date="1495806530813" expanded="true" signature="0:792" ph="/* LiquidTypeRecord.cs ... */" />
+            <marker date="1495806530813" expanded="true" signature="799:878" ph="..." />
+            <marker date="1495806530813" expanded="true" signature="914:4398" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="959:4198" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="1015:1075" ph="/// The name of the liquid. ... " />
+            <marker date="1495806530813" expanded="true" signature="1132:1231" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="1143:1187" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="1194:1227" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="1275:1394" ph="/// Loads and parses the provided data. ... " />
+            <marker date="1495806530813" expanded="true" signature="1439:1774" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="1491:1613" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="1666:1770" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="1722:1765" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="1835:2081" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="2124:2495" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="2174:2206" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="2264:2491" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="2542:2649" ph="/// Gets the size of the record. ... " />
+            <marker date="1495806530813" expanded="true" signature="2682:3364" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="2693:3360" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="2747:2881" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="2908:3355" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="3368:3487" ph="/// Gets the field count for this record at. ... " />
+            <marker date="1495806530813" expanded="true" signature="3520:4195" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="3531:4191" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="3585:3719" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="3746:4186" ph="{...}" />
+            <marker date="1495806530813" expanded="true" signature="4223:4396" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/AnimationDataRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="61" column="22" lean-forward="false" selection-start-line="61" selection-start-column="22" selection-end-line="61" selection-end-column="22" />
+          <folding>
+            <marker date="1495806562221" expanded="true" signature="0:795" ph="/* AnimationDataRecord.cs ... */" />
+            <marker date="1495806562221" expanded="true" signature="803:882" ph="..." />
+            <marker date="1495806562221" expanded="true" signature="918:5362" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="922:1087" ph="/// Animation data record. This database defines the different animations models can have, and ... " />
+            <marker date="1495806562221" expanded="true" signature="1133:4808" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="1192:1255" ph="/// The name of the animation. ... " />
+            <marker date="1495806562221" expanded="true" signature="1290:1412" ph="/// The weapon flags. This affects how the model's weapons are held during the animation. ... " />
+            <marker date="1495806562221" expanded="true" signature="1502:1554" ph="/// The body flags. ... " />
+            <marker date="1495806562221" expanded="true" signature="1626:1687" ph="/// General animation flags. ... " />
+            <marker date="1495806562221" expanded="true" signature="1712:1795" ph="/// The fallback animation that precedes this one. ... " />
+            <marker date="1495806562221" expanded="true" signature="1844:1949" ph="/// The top-level behaviour animation that this animation is a child of. ... " />
+            <marker date="1495806562221" expanded="true" signature="1999:2168" ph="/// The behaviour tier of the animation. In most cases, this indicates whether or not the animation ... " />
+            <marker date="1495806562221" expanded="true" signature="2241:2360" ph="/// Loads and parses the provided data. ... " />
+            <marker date="1495806562221" expanded="true" signature="2405:2564" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="2461:2560" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="2517:2555" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="2621:3180" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="2761:2871" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="3124:3176" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="3184:3291" ph="/// Gets the size of the record. ... " />
+            <marker date="1495806562221" expanded="true" signature="3324:3990" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="3335:3986" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="3389:3512" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="3539:3981" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="3994:4113" ph="/// Gets the field count for this record at. ... " />
+            <marker date="1495806562221" expanded="true" signature="4146:4805" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="4157:4801" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="4211:4334" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="4361:4796" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="4811:4869" ph="/// Weapon animation flags. ... " />
+            <marker date="1495806562221" expanded="true" signature="4910:5360" ph="{...}" />
+            <marker date="1495806562221" expanded="true" signature="4916:5006" ph="/// Ignores the current state of the character's weapons. ... " />
+            <marker date="1495806562221" expanded="true" signature="5022:5114" ph="/// Sheathes the weapons for the duration of the animation. ... " />
+            <marker date="1495806562221" expanded="true" signature="5133:5225" ph="/// Sheathes the weapons for the duration of the animation. ... " />
+            <marker date="1495806562221" expanded="true" signature="5246:5340" ph="/// Unsheathes the weapons for the duration of the animation. ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/ADT/Chunks/Subchunks/MapChunkSoundEmitters.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+          <folding>
+            <marker date="1495806580029" expanded="true" signature="0:797" ph="/* MapChunkSoundEmitters.cs ... */" />
+            <marker date="1495806580029" expanded="false" signature="804:900" ph="..." />
+            <marker date="1495806580029" expanded="true" signature="941:2620" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1029:1679" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1167:1176" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1223:1258" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1303:1334" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1372:1419" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1448:1496" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1532:1580" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1628:1676" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1716:1723" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1795:1968" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="1917:1965" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="2037:2618" ph="{...}" />
+            <marker date="1495806580029" expanded="true" signature="2567:2615" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/ADT/Chunks/Subchunks/MapChunkTextureLayers.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="112" column="147" lean-forward="false" selection-start-line="112" selection-start-column="147" selection-end-line="112" selection-end-column="147" />
+          <folding>
+            <marker date="1495806774140" expanded="true" signature="0:793" ph="/* MapChunkAlphaMaps.cs ... */" />
+            <marker date="1495806774140" expanded="false" signature="800:924" ph="..." />
+            <marker date="1495806774140" expanded="true" signature="965:3721" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="969:1063" ph="/// MCLY Chunk - Contains definitions for the alpha map layers. ... " />
+            <marker date="1495806774140" expanded="true" signature="1111:1937" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="1160:1239" ph="/// An array of alpha map layers in this MCNK. ... " />
+            <marker date="1495806774140" expanded="true" signature="1346:1355" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="1402:1437" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="1482:1849" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="1552:1839" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="1608:1834" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="1725:1828" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="1887:1934" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="1940:2039" ph="/// Texture layer entry, representing a ground texture in the chunk. ... " />
+            <marker date="1495806774140" expanded="true" signature="2071:3273" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="2077:2152" ph="/// Index of the texture in the MTEX chunk ... " />
+            <marker date="1495806774140" expanded="true" signature="2181:2265" ph="/// Flags for the texture. Used for animation data. ... " />
+            <marker date="1495806774140" expanded="true" signature="2303:2384" ph="/// Offset into MCAL where the alpha map begins. ... " />
+            <marker date="1495806774140" expanded="true" signature="2418:2530" ph="/// Ground effect ID. This is a foreign key entry into GroundEffectTexture::ID. ... " />
+            <marker date="1495806774140" expanded="true" signature="2572:2634" ph="/// A currently unused value. ... " />
+            <marker date="1495806774140" expanded="true" signature="2699:3103" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="2755:3099" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="2811:3094" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="3107:3218" ph="/// Gets the size of a texture layer entry. ... " />
+            <marker date="1495806774140" expanded="true" signature="3248:3270" ph="{...}" />
+            <marker date="1495806774140" expanded="true" signature="3276:3322" ph="/// Chunk flags ... " />
+            <marker date="1495806774140" expanded="true" signature="3369:3719" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/ADT/Chunks/TerrainLiquid.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="208" column="73" lean-forward="false" selection-start-line="208" selection-start-column="73" selection-end-line="208" selection-end-column="73" />
+          <folding>
+            <marker date="1495806774156" expanded="true" signature="0:788" ph="/* TerrainWater.cs ... */" />
+            <marker date="1495806774156" expanded="true" signature="795:983" ph="..." />
+            <marker date="1495806774156" expanded="true" signature="1014:10234" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="1018:1147" ph="/// MH2O Chunk - Contains liquid information about the ADT file, superseding the older MCLQ chunk. ... " />
+            <marker date="1495806774156" expanded="true" signature="1187:2854" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="1236:1308" ph="/// The liquid chunks in this map tile. ... " />
+            <marker date="1495806774156" expanded="true" signature="1415:1424" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="1428:1602" ph="/// Initializes a new instance of the &lt;see cref=&quot;Warcraft.ADT.Chunks.TerrainLiquid&quot;/&gt; class. ... " />
+            <marker date="1495806774156" expanded="true" signature="1640:1675" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="1720:2766" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="1790:2756" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="1846:2751" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="1887:1998" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="2066:2745" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="2192:2365" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="2465:2642" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="2653:2738" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="2804:2851" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="2857:2979" ph="/// Terrain liquid chunk. Contains information about water and other liquids in a map tile. ... " />
+            <marker date="1495806774156" expanded="true" signature="3012:3716" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="3292:3560" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="3348:3556" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="3404:3551" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="3564:3661" ph="/// Gets the size of a chunk. ... " />
+            <marker date="1495806774156" expanded="true" signature="3691:3713" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="3755:4301" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="3956:4161" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="4012:4157" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="4068:4152" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="4197:4245" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="4276:4298" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="4338:6681" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="4344:4448" ph="/// The type of the liquid. Foreign key reference to LiquidTypeRec::ID. ... " />
+            <marker date="1495806774156" expanded="true" signature="4492:4593" ph="/// The liquid object. Foreign key reference to LiquidObjectRec::ID. ... " />
+            <marker date="1495806774156" expanded="true" signature="4775:4965" ph="/// Offset to an 8 by 8 map of bit boolean values that determine whether or not ... " />
+            <marker date="1495806774156" expanded="true" signature="5070:5637" ph="/// Offset to the vertex data of this liquid instance. The format of the data is determined ... " />
+            <marker date="1495806774156" expanded="true" signature="5752:6509" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="5808:6505" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="5864:6500" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="6405:6494" ph="/* TODO: Read boolean map ... */" />
+            <marker date="1495806774156" expanded="true" signature="6513:6626" ph="/// Gets the size of a liquid instance block. ... " />
+            <marker date="1495806774156" expanded="true" signature="6656:6678" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="6722:6728" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="6791:7543" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="6965:7359" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="7021:7355" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="7077:7350" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="7185:7242" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="7290:7344" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="7418:7540" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="7603:8481" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="7805:8289" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="7861:8285" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="7917:8280" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="8025:8082" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="8130:8274" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="8348:8478" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="8542:9118" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="8662:8952" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="8718:8948" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="8774:8943" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="8883:8937" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="9011:9115" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="9183:10232" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="9439:10025" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="9495:10021" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="9551:10016" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="9659:9716" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="9764:9908" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="9956:10010" ph="{...}" />
+            <marker date="1495806774156" expanded="true" signature="10084:10229" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/Definitions/LiquidObjectRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="33" column="56" lean-forward="false" selection-start-line="33" selection-start-column="56" selection-end-line="33" selection-end-column="56" />
+          <folding>
+            <marker date="1495806675644" expanded="true" signature="0:795" ph="/* AnimationDataRecord.cs ... */" />
+            <marker date="1495806675644" expanded="true" signature="803:876" ph="..." />
+            <marker date="1495806675644" expanded="true" signature="912:2096" ph="{...}" />
+            <marker date="1495806675644" expanded="true" signature="916:1009" ph="/// A database record defining how an in-world liquid behaves. ... " />
+            <marker date="1495806675644" expanded="true" signature="1054:2094" ph="{...}" />
+            <marker date="1495806675644" expanded="true" signature="1114:1191" ph="/// The direction in which the liquid flows. ... " />
+            <marker date="1495806675644" expanded="true" signature="1225:1300" ph="/// The speed with which the liquid flows. ... " />
+            <marker date="1495806675644" expanded="true" signature="1330:1432" ph="/// The type of liquid. This is a foreign reference to another table. ... " />
+            <marker date="1495806675644" expanded="true" signature="1474:1550" ph="/// Whether or not this liquid is fishable. ... " />
+            <marker date="1495806675644" expanded="true" signature="1578:1687" ph="/// TODO: Unconfirmed behaviour ... " />
+            <marker date="1495806675644" expanded="true" signature="1717:1836" ph="/// Loads and parses the provided data. ... " />
+            <marker date="1495806675644" expanded="true" signature="1881:1929" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/WMO/GroupFile/ModelGroupData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="251" column="45" lean-forward="false" selection-start-line="251" selection-start-column="45" selection-end-line="251" selection-end-column="45" />
+          <folding>
+            <marker date="1495806715392" expanded="true" signature="0:790" ph="/* ModelGroupData.cs ... */" />
+            <marker date="1495806715392" expanded="false" signature="798:1055" ph="..." />
+            <marker date="1495806715392" expanded="true" signature="1089:12888" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="1153:11707" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="1735:1927" ph="/* The chunks in a model group file are actually subchunks of this one. They are listed here ... */" />
+            <marker date="1495806715392" expanded="true" signature="2928:2937" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="2977:3012" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="3016:3268" ph="/// Deserialzes the provided binary data of the object. This is the full data block which follows the data ... " />
+            <marker date="1495806715392" expanded="true" signature="3312:7211" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="3370:7207" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="3444:7193" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="4083:4166" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="4996:5080" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="5141:5252" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="5314:5427" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="5485:5659" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="5728:5968" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="6036:6143" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="6205:6300" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="6369:6567" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="6646:6773" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="6848:6965" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="7046:7178" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="7215:7375" ph="/// Gets the static data signature of this data block type. ... " />
+            <marker date="1495806715392" expanded="true" signature="7406:7435" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="7439:7524" ph="/// Serializes the current object into a byte array. ... " />
+            <marker date="1495806715392" expanded="true" signature="7552:10571" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="7604:10567" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="7678:10518" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="8330:8397" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="9012:9088" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="9149:9209" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="9262:9323" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="9372:9470" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="9530:9684" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="9743:9801" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="9854:9906" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="9966:10076" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="10146:10219" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="10285:10353" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="10425:10503" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="10600:11704" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="10642:10692" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="10731:10782" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="10844:10891" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="10981:11039" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="11075:11132" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="11162:11213" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="11287:11345" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="11396:11464" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="11510:11574" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="11630:11700" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="11748:12886" ph="{...}" />
+            <marker date="1495806715392" expanded="true" signature="11894:11955" ph="/* Unused1&#9;&#9;&#9;&#9;&#9;&#9;= 0x00000010, ... */" />
+            <marker date="1495806715392" expanded="true" signature="12230:12291" ph="/* Unused4&#9;&#9;&#9;&#9;&#9;&#9;= 0x00004000, ... */" />
+            <marker date="1495806715392" expanded="true" signature="12440:12565" ph="/* Unused6&#9;&#9;&#9;&#9;&#9;&#9;= 0x00100000, ... */" />
+            <marker date="1495806715392" expanded="true" signature="12743:12806" ph="/* Unused10&#9;&#9;&#9;&#9;&#9;&#9;= 0x10000000, ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/WMO/RootFile/Chunks/ModelMaterials.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="183" column="0" lean-forward="false" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
+          <folding>
+            <marker date="1495806739084" expanded="true" signature="0:790" ph="/* ModelMaterials.cs ... */" />
+            <marker date="1495806739084" expanded="false" signature="798:1053" ph="..." />
+            <marker date="1495806739084" expanded="true" signature="1093:5446" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="1157:2338" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="1307:1316" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="1356:1391" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="1436:1858" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="1506:1848" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="1574:1837" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="1709:1825" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="1896:1943" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="1972:2335" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="2024:2331" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="2098:2282" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="2183:2267" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="2389:5127" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="2902:2941" ph="/* Nonserialized utility fields ... */" />
+            <marker date="1495806739084" expanded="true" signature="2967:2991" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="3017:3041" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="3067:3091" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="3130:4088" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="3188:4084" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="3244:4079" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="4119:4141" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="4170:5124" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="4222:5120" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="4296:5071" ph="{...}" />
+            <marker date="1495806739084" expanded="true" signature="5171:5444" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/WMO/RootFile/ModelRootHeader.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="732">
+          <caret line="97" column="50" lean-forward="false" selection-start-line="97" selection-start-column="50" selection-end-line="97" selection-end-column="50" />
+          <folding>
+            <marker date="1495806764056" expanded="true" signature="0:791" ph="/* ModelRootHeader.cs ... */" />
+            <marker date="1495806764056" expanded="false" signature="799:985" ph="..." />
+            <marker date="1495806764056" expanded="true" signature="1018:3201" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="1083:2934" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="1486:1495" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="1536:1571" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="1616:2288" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="1674:2284" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="1730:2279" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="2320:2349" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="2378:2931" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="2430:2927" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="2486:2896" ph="{...}" />
+            <marker date="1495806764056" expanded="true" signature="2974:3199" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/StringReference.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1493228556818" expanded="true" signature="0:791" ph="/* StringReference.cs ... */" />
+            <marker date="1493228556818" expanded="true" signature="829:1022" ph="{...}" />
+            <marker date="1493228556818" expanded="true" signature="861:1020" ph="{...}" />
+            <marker date="1493228556818" expanded="true" signature="891:923" ph="{...}" />
+            <marker date="1493228556818" expanded="true" signature="970:1017" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/DBC/SpecialFields/LocalizedStringReference.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="27" column="21" lean-forward="false" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
+          <folding>
+            <marker date="1495807376786" expanded="true" signature="0:785" ph="/* MapRecord.cs ... */" />
+            <marker date="1495807376786" expanded="true" signature="823:3081" ph="{...}" />
+            <marker date="1495807376786" expanded="true" signature="827:940" ph="/// A localize (that is, translated) reference to a string in the database record. ... " />
+            <marker date="1495807376786" expanded="true" signature="979:3079" ph="{...}" />
+            <marker date="1495807376786" expanded="true" signature="985:1073" ph="/// The reference to the English version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="1111:1198" ph="/// The reference to the Korean version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="1235:1322" ph="/// The reference to the French version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="1359:1446" ph="/// The reference to the German version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="1483:1571" ph="/// The reference to the Chinese version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="1609:1696" ph="/// The reference to the Taiwan version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="1733:1821" ph="/// The reference to the Spanish version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="1859:1955" ph="/// The reference to the Mexican Spanish version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="2000:2088" ph="/// The reference to the Russian version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="2128:2215" ph="/// The reference to an unknown version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="2256:2346" ph="/// The reference to the Portugese version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="2388:2476" ph="/// The reference to the Italian version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="2516:2603" ph="/// The reference to an unknown version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="2644:2731" ph="/// The reference to an unknown version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="2772:2859" ph="/// The reference to an unknown version of the string. ... " />
+            <marker date="1495807376786" expanded="true" signature="2900:2979" ph="/// The reference to an unknown of the string. ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libwarcraft/Core/Extensions/ExtendedIO.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="208" column="52" lean-forward="true" selection-start-line="208" selection-start-column="52" selection-end-line="208" selection-end-column="52" />
+          <folding>
+            <marker date="1495807514786" expanded="true" signature="0:786" ph="/* ExtendedIO.cs ... */" />
+            <marker date="1495807514786" expanded="true" signature="794:1248" ph="..." />
+            <marker date="1495807514786" expanded="true" signature="1332:34121" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="1336:1432" ph="/// Extension methods used internally in the library for data IO. ... " />
+            <marker date="1495807514786" expanded="true" signature="1464:34119" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="1470:1515" ph="/* Generic BinaryReader read function ... */" />
+            <marker date="1495807514786" expanded="true" signature="1519:1769" ph="/// Type mapping function dictionary. All supported types of the generic reading function are listed here. ... " />
+            <marker date="1495807514786" expanded="true" signature="1910:4917" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="3720:3893" ph="/* A few very specific MDXArray types, which are used with M2Tracks. This is a dirty, dirty hack to enable ... */" />
+            <marker date="1495807514786" expanded="true" signature="4922:5087" ph="/// Versioned type mapping function dictionary. All supported types of the versioned generic reading function ... " />
+            <marker date="1495807514786" expanded="true" signature="5271:6437" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="6442:6841" ph="/// Reads a value of type &lt;typeparamref name=&quot;T&quot;/&gt; from the data stream. The generic type must be ... " />
+            <marker date="1495807514786" expanded="true" signature="6889:7160" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="6939:7115" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="7164:7568" ph="/// Reads a versioned value of type &lt;typeparamref name=&quot;T&quot;/&gt; from the data stream. The generic type must be ... " />
+            <marker date="1495807514786" expanded="true" signature="7641:7934" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="7700:7871" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="7938:7994" ph="/* BinaryReader Extensions for DBC-related types ... */" />
+            <marker date="1495807514786" expanded="true" signature="7998:8171" ph="/// Reads a &lt;see cref=&quot;LocalizedStringReference&quot;/&gt; from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="8298:9625" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="8416:9522" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="8932:9002" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="9045:9470" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="9530:9602" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="9631:9795" ph="/// Reads a &lt;see cref=&quot;StringReference&quot;/&gt; from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="9879:9945" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="9951:10005" ph="/* BinaryReader Extensions for standard typess ... */" />
+            <marker date="1495807514786" expanded="true" signature="10009:10226" ph="/// Reads a spline key with a value and in/out tangents from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="10304:10354" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="10358:10524" ph="/// Reads a 12-byte &lt;see cref=&quot;RGB&quot;/&gt; value from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="10584:10639" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="10643:10820" ph="/// Reads an 8-byte Range value from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="10884:10967" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="10971:11146" ph="/// Reads an 8-byte &lt;see cref=&quot;IntegerRange&quot;/&gt; value from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="11224:11314" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="11318:11496" ph="/// Reads a 4-byte RGBA value from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="11558:11769" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="11773:11951" ph="/// Reads a 4-byte RGBA value from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="12013:12224" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="12228:12434" ph="/// Reads a standard null-terminated string from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="12514:12677" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="12619:12647" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="12681:12827" ph="/// Reads a 4-byte RIFF chunk signature from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="12902:13235" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="12910:13022" ph="/* The signatures are stored in reverse in the file, so we'll need to read them backwards into ... */" />
+            <marker date="1495807514786" expanded="true" signature="13094:13158" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="13239:13389" ph="/// Peeks a 4-byte RIFF chunk signature from the data stream. This does not ... " />
+            <marker date="1495807514786" expanded="true" signature="13463:13623" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="13627:13887" ph="/// Reads an IFF-style chunk from the stream. The chunk must have the &lt;see cref=&quot;IIFFChunk&quot;/&gt; ... " />
+            <marker date="1495807514786" expanded="true" signature="13974:14388" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="14202:14329" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="14392:14851" ph="/// Reads a DBC record from the stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="15046:15729" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="15129:15247" ph="/* If the record is of the UnknownRecord type, ... */" />
+            <marker date="1495807514786" expanded="true" signature="15282:15670" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="15402:15513" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="15554:15665" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="15733:15944" ph="/// Reads an 16-byte &lt;see cref=&quot;Plane&quot;/&gt; from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="16008:16092" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="16096:16312" ph="/// Reads an 18-byte &lt;see cref=&quot;ShortPlane&quot;/&gt; from the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="16386:16695" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="16466:16668" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="16554:16616" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="16699:16995" ph="/// Reads a 16-byte 32-bit &lt;see cref=&quot;Quaternion&quot;/&gt; structure from the data stream, and advances the position of  ... " />
+            <marker date="1495807514786" expanded="true" signature="17071:17213" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="17217:17511" ph="/// Reads a 8-byte 16-bit &lt;see cref=&quot;Quaternion&quot;/&gt; structure from the data stream, and advances the position of t ... " />
+            <marker date="1495807514786" expanded="true" signature="17587:17933" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="17937:18209" ph="/// Reads a 12-byte &lt;see cref=&quot;Rotator&quot;/&gt; from the data stream and advances the position of the stream by ... " />
+            <marker date="1495807514786" expanded="true" signature="18277:18336" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="18340:18726" ph="/// Reads a 12-byte &lt;see cref=&quot;Vector3&quot;/&gt; structure from the data stream and advances the position of the stream  ... " />
+            <marker date="1495807514786" expanded="true" signature="18847:19572" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="18873:19568" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="19576:19962" ph="/// Reads a 16-byte &lt;see cref=&quot;Vector4&quot;/&gt; structure from the data stream and advances the position of the stream  ... " />
+            <marker date="1495807514786" expanded="true" signature="20083:20926" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="20109:20922" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="20930:21315" ph="/// Reads a 6-byte &lt;see cref=&quot;Vector3s&quot;/&gt; structure from the data stream and advances the position of the stream  ... " />
+            <marker date="1495807514786" expanded="true" signature="21438:22168" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="21464:22164" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="22172:22454" ph="/// Reads an 8-byte &lt;see cref=&quot;Vector2&quot;/&gt; structure from the data stream and advances the position of the stream  ... " />
+            <marker date="1495807514786" expanded="true" signature="22522:22607" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="22611:22885" ph="/// Reads a 24-byte &lt;see cref=&quot;Box&quot;/&gt; structure from the data stream and advances the position of the stream by ... " />
+            <marker date="1495807514786" expanded="true" signature="22945:23028" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="23032:23306" ph="/// Reads a 12-byte &lt;see cref=&quot;Box&quot;/&gt; structure from the data stream and advances the position of the stream by ... " />
+            <marker date="1495807514786" expanded="true" signature="23376:23466" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="23470:23523" ph="/* BinaryWriter extensions for standard types ... */" />
+            <marker date="1495807514786" expanded="true" signature="23527:23751" ph="/// Writes a 8-byte &lt;see cref=&quot;Range&quot;/&gt; to the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="23828:23912" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="23916:24159" ph="/// Writes a 4-byte &lt;see cref=&quot;RGBA&quot;/&gt; value to the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="24233:24365" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="24369:24612" ph="/// Writes a 4-byte &lt;see cref=&quot;RGBA&quot;/&gt; value to the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="24686:24818" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="24822:25083" ph="/// Writes the provided string to the data stream as a C-style null-terminated string. ... " />
+            <marker date="1495807514786" expanded="true" signature="25182:25295" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="25221:25258" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="25299:25529" ph="/// Writes an RIFF-style chunk signature to the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="25620:25854" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="25654:25769" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="25802:25850" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="25858:25941" ph="/// Writes an RIFF-style chunk to the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="26061:26269" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="26273:26508" ph="/// Writes a 16-byte &lt;see cref=&quot;Plane&quot;/&gt; to the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="26585:26669" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="26673:26919" ph="/// Writes an 18-byte &lt;see cref=&quot;ShortPlane&quot;/&gt; to the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="27011:27159" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="27046:27155" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="27083:27150" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="27163:27413" ph="/// Writes a 16-byte &lt;see cref=&quot;Quaternion&quot;/&gt; to the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="27507:27663" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="27667:27997" ph="/// Writes a 8-byte &lt;see cref=&quot;Quaternion&quot;/&gt; to the data stream. This is a packed format of a normal 32-bit quate ... " />
+            <marker date="1495807514786" expanded="true" signature="28091:28391" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="28395:28655" ph="/// Writes a 12-byte &lt;see cref=&quot;Rotator&quot;/&gt; value to the data stream in Pitch/Yaw/Roll order. ... " />
+            <marker date="1495807514786" expanded="true" signature="28740:28865" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="28869:29541" ph="/// Writes a 12-byte &lt;see cref=&quot;Vector3&quot;/&gt; value to the data stream. This function ... " />
+            <marker date="1495807514786" expanded="true" signature="29674:30166" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="29698:30162" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="30170:30856" ph="/// Writes a 16-byte &lt;see cref=&quot;Vector4&quot;/&gt; value to the data stream in XYZW order. This function ... " />
+            <marker date="1495807514786" expanded="true" signature="30989:31715" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="31013:31711" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="31719:32118" ph="/// Writes a 6-byte &lt;see cref=&quot;Vector3s&quot;/&gt; value to the data stream in XYZ order. This function ... " />
+            <marker date="1495807514786" expanded="true" signature="32253:32892" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="32277:32888" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="32896:33153" ph="/// Writes an 8-byte &lt;see cref=&quot;Vector2&quot;/&gt; value to the data stream in XY order. ... " />
+            <marker date="1495807514786" expanded="true" signature="33235:33309" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="33313:33532" ph="/// Writes a 24-byte &lt;see cref=&quot;Box&quot;/&gt; to the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="33603:33704" ph="{...}" />
+            <marker date="1495807514786" expanded="true" signature="33708:33932" ph="/// Writes a 12-byte &lt;see cref=&quot;ShortBox&quot;/&gt; to the data stream. ... " />
+            <marker date="1495807514786" expanded="true" signature="34013:34116" ph="{...}" />
           </folding>
         </state>
       </provider>

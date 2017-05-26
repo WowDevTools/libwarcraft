@@ -37,7 +37,7 @@ namespace Warcraft.DBC.Definitions
 		public uint SoundProviderPrefUnderwater;
 		public uint MIDIAmbience;
 		public uint MIDIAmbienceUnderwater;
-		public UInt32ForeignKey ZoneMusic;
+		public ForeignKey<uint> ZoneMusic;
 		public uint IntroSound;
 		public uint IntroPriority;
 		public uint Flags;
@@ -48,14 +48,8 @@ namespace Warcraft.DBC.Definitions
 			throw new System.NotImplementedException();
 		}
 
-		public override int GetFieldCount()
-		{
-			throw new System.NotImplementedException();
-		}
+		public override int FieldCount => throw new System.NotImplementedException();
 
-		public override int GetRecordSize()
-		{
-			throw new System.NotImplementedException();
-		}
+		public override int RecordSize => throw new System.NotImplementedException();
 	}
 }

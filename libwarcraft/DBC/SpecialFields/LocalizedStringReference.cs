@@ -30,46 +30,85 @@ namespace Warcraft.DBC.SpecialFields
 		/// <summary>
 		/// The reference to the English version of the string.
 		/// </summary>
-		StringReference English;
+		public StringReference English;
 
 		/// <summary>
 		/// The reference to the Korean version of the string.
 		/// </summary>
-		StringReference Korean;
+		public StringReference Korean;
 
 		/// <summary>
 		/// The reference to the French version of the string.
 		/// </summary>
-		StringReference French;
+		public StringReference French;
 
 		/// <summary>
 		/// The reference to the German version of the string.
 		/// </summary>
-		StringReference German;
+		public StringReference German;
 
 		/// <summary>
 		/// The reference to the Chinese version of the string.
 		/// </summary>
-		StringReference Chinese;
+		public StringReference Chinese;
 
 		/// <summary>
 		/// The reference to the Taiwan version of the string.
 		/// </summary>
-		StringReference Taiwan;
+		public StringReference Taiwan;
 
 		/// <summary>
 		/// The reference to the Spanish version of the string.
 		/// </summary>
-		StringReference Spanish;
+		public StringReference Spanish;
 
 		/// <summary>
 		/// The reference to the Mexican Spanish version of the string.
 		/// </summary>
-		StringReference SpanishMexican;
+		public StringReference SpanishMexican;
 
 		/// <summary>
 		/// The reference to the Russian version of the string.
 		/// </summary>
-		StringReference Russian;
+		public StringReference Russian;
+		
+		/// <summary>
+		/// The reference to an unknown version of the string.
+		/// </summary>
+		public StringReference Unknown1;
+		
+		/// <summary>
+		/// The reference to the Portugese version of the string.
+		/// </summary>
+		public StringReference Portugese;
+		
+		/// <summary>
+		/// The reference to the Italian version of the string.
+		/// </summary>
+		public StringReference Italian;
+		
+		/// <summary>
+		/// The reference to an unknown version of the string.
+		/// </summary>
+		public StringReference Unknown2;
+		
+		/// <summary>
+		/// The reference to an unknown version of the string.
+		/// </summary>
+		public StringReference Unknown3;
+		
+		/// <summary>
+		/// The reference to an unknown version of the string.
+		/// </summary>
+		public StringReference Unknown4;
+		
+		/// <summary>
+		/// The reference to an unknown of the string.
+		/// </summary>
+		public StringReference Unknown5;
+
+		public uint Flags;
+
+		public StringReference ClientLocale;
 	}
 }

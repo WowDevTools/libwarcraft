@@ -29,8 +29,10 @@ namespace Warcraft.DBC.Definitions
 	/// <summary>
 	/// A database record defining how an in-world liquid behaves.
 	/// </summary>
-	public class LiquidObjectRecord : DBCRecord, IPostLoad<byte[]>
+	public class LiquidObjectRecord : DBCRecord
 	{
+		public const string RecordName = "LiquidObject";
+		
 		/// <summary>
 		/// The direction in which the liquid flows.
 		/// </summary>
@@ -44,7 +46,7 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// The type of liquid. This is a foreign reference to another table.
 		/// </summary>
-		public UInt32ForeignKey LiquidType;
+		public ForeignKey<uint> LiquidType;
 
 		/// <summary>
 		/// Whether or not this liquid is fishable.
@@ -66,22 +68,8 @@ namespace Warcraft.DBC.Definitions
 			throw new NotImplementedException();
 		}
 
-		/// <summary>
-		/// Gets the field count for this record.
-		/// </summary>
-		/// <returns>The field count.</returns>
-		public override int GetFieldCount()
-		{
-			throw new NotImplementedException();
-		}
+		public override int FieldCount => throw new System.NotImplementedException();
 
-		/// <summary>
-		/// Gets the size of the record.
-		/// </summary>
-		/// <returns>The record size.</returns>
-		public override int GetRecordSize()
-		{
-			throw new NotImplementedException();
-		}
+		public override int RecordSize => throw new System.NotImplementedException();
 	}
 }

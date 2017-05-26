@@ -76,7 +76,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
 	public class DatabaseSoundEmitter : SoundEmitter, IBinarySerializable
 	{
-		public UInt32ForeignKey SoundEntryID;
+		public ForeignKey<uint> SoundEntryID;
 		public Vector3 Position;
 		public Vector3 Size;
 

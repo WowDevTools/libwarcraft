@@ -30,7 +30,7 @@ namespace Warcraft.DBC.Definitions
 		public const string RecordName = "ZoneIntroMusicTable";
 
 		public StringReference Name;
-		public UInt32ForeignKey SoundEntries;
+		public ForeignKey<uint> SoundEntries;
 		public uint Priority;
 		public uint MinDelayMinutes;
 		
@@ -39,14 +39,8 @@ namespace Warcraft.DBC.Definitions
 			throw new System.NotImplementedException();
 		}
 
-		public override int GetFieldCount()
-		{
-			throw new System.NotImplementedException();
-		}
+		public override int FieldCount => throw new System.NotImplementedException();
 
-		public override int GetRecordSize()
-		{
-			throw new System.NotImplementedException();
-		}
+		public override int RecordSize => throw new System.NotImplementedException();
 	}
 }

@@ -1,4 +1,4 @@
-//
+﻿//
 //  UnknownRecord.cs
 //
 //  Author:
@@ -31,10 +31,6 @@ namespace Warcraft.DBC.Definitions
 	/// </summary>
 	public class UnknownRecord : DBCRecord
 	{
-		public UnknownRecord()
-		{
-		}
-
 		/// <summary>
 		/// The record data, stored as raw bytes.
 		/// </summary>
@@ -71,29 +67,34 @@ namespace Warcraft.DBC.Definitions
 		/// Gets the size of the record.
 		/// </summary>
 		/// <returns>The record size.</returns>
-		public override int GetRecordSize()
+		public override int RecordSize
 		{
-			if (this.Version == WarcraftVersion.Unknown)
+			get
 			{
-				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
-			}
+				if (this.Version == WarcraftVersion.Unknown)
+				{
+					throw new InvalidOperationException("The record information cannot be accessed before the version has been set.");
+				}
 
-			return this.RecordData.Length;
+				return -1;
+			}
 		}
 
 		/// <summary>
 		/// Gets the field count for this record at.
 		/// </summary>
 		/// <returns>The field count.</returns>
-		public override int GetFieldCount()
+		public override int FieldCount
 		{
-			if (this.Version == WarcraftVersion.Unknown)
+			get
 			{
-				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
-			}
+				if (this.Version == WarcraftVersion.Unknown)
+				{
+					throw new InvalidOperationException("The record information cannot be accessed before the version has been set.");
+				}
 
-			return -1;
+				return -1;
+			}
 		}
 	}
 }
-

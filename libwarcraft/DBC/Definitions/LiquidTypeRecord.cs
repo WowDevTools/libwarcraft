@@ -47,7 +47,7 @@ namespace Warcraft.DBC.Definitions
 			}
 		}
 
-		public UInt32ForeignKey SpellEffect;
+		public ForeignKey<uint> SpellEffect;
 
 		/// <summary>
 		/// Loads and parses the provided data.
@@ -64,14 +64,20 @@ namespace Warcraft.DBC.Definitions
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.ID = br.ReadUInt32();
-					this.Name = new StringReference(br.ReadUInt32());
-
-					this.Type = (LiquidType)br.ReadInt32();
-
-					this.SpellEffect = new UInt32ForeignKey(SpellRecord.RecordName, "ID", br.ReadUInt32());
+					DeserializeSelf(br);					
 				}
 			}
+		}
+
+		public override void DeserializeSelf(BinaryReader reader)
+		{
+			base.DeserializeSelf(reader);
+			
+			this.Name = new StringReference(reader.ReadUInt32());
+
+			this.Type = (LiquidType)reader.ReadInt32();
+
+			this.SpellEffect = new ForeignKey<uint>(SpellRecord.RecordName, "ID", reader.ReadUInt32());
 		}
 
 		public LiquidType TranslateLiquidType()
@@ -108,31 +114,34 @@ namespace Warcraft.DBC.Definitions
 		/// Gets the size of the record.
 		/// </summary>
 		/// <returns>The record size.</returns>
-		public override int GetRecordSize()
+		public override int RecordSize
 		{
-			if (this.Version == WarcraftVersion.Unknown)
+			get
 			{
-				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
-			}
+				if (this.Version == WarcraftVersion.Unknown)
+				{
+					throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
+				}
 
-			switch (this.Version)
-			{
-				case WarcraftVersion.Classic:
-					return 16;
-				case WarcraftVersion.BurningCrusade:
-					return 16;
-				case WarcraftVersion.Wrath:
-					return 180;
-				case WarcraftVersion.Cataclysm:
-					return 200;
-				case WarcraftVersion.Mists:
-					return 200;
-				case WarcraftVersion.Warlords:
-					return 200;
-				case WarcraftVersion.Legion:
-					return 200;
-				default:
-					throw new ArgumentOutOfRangeException();
+				switch (this.Version)
+				{
+					case WarcraftVersion.Classic:
+						return 16;
+					case WarcraftVersion.BurningCrusade:
+						return 16;
+					case WarcraftVersion.Wrath:
+						return 180;
+					case WarcraftVersion.Cataclysm:
+						return 200;
+					case WarcraftVersion.Mists:
+						return 200;
+					case WarcraftVersion.Warlords:
+						return 200;
+					case WarcraftVersion.Legion:
+						return 200;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
 			}
 		}
 
@@ -140,31 +149,34 @@ namespace Warcraft.DBC.Definitions
 		/// Gets the field count for this record at.
 		/// </summary>
 		/// <returns>The field count.</returns>
-		public override int GetFieldCount()
+		public override int FieldCount
 		{
-			if (this.Version == WarcraftVersion.Unknown)
+			get
 			{
-				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
-			}
+				if (this.Version == WarcraftVersion.Unknown)
+				{
+					throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
+				}
 
-			switch (this.Version)
-			{
-				case WarcraftVersion.Classic:
-					return 4;
-				case WarcraftVersion.BurningCrusade:
-					return 4;
-				case WarcraftVersion.Wrath:
-					return 45;
-				case WarcraftVersion.Cataclysm:
-					return 50;
-				case WarcraftVersion.Mists:
-					return 50;
-				case WarcraftVersion.Warlords:
-					return 50;
-				case WarcraftVersion.Legion:
-					return 50;
-				default:
-					throw new ArgumentOutOfRangeException();
+				switch (this.Version)
+				{
+					case WarcraftVersion.Classic:
+						return 4;
+					case WarcraftVersion.BurningCrusade:
+						return 4;
+					case WarcraftVersion.Wrath:
+						return 45;
+					case WarcraftVersion.Cataclysm:
+						return 50;
+					case WarcraftVersion.Mists:
+						return 50;
+					case WarcraftVersion.Warlords:
+						return 50;
+					case WarcraftVersion.Legion:
+						return 50;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
 			}
 		}
 	}

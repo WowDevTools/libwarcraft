@@ -22,7 +22,7 @@
 
 namespace Warcraft.DBC.SpecialFields
 {
-	public class ForeignKey
+	public class ForeignKey<T>
 	{
 		public string Record
 		{
@@ -36,10 +36,17 @@ namespace Warcraft.DBC.SpecialFields
 			protected set;
 		}
 
-		public ForeignKey(string inRecord, string inField)
+		public T Key
+		{
+			get;
+			protected set;
+		}
+
+		public ForeignKey(string inRecord, string inField, T key)
 		{
 			this.Record = inRecord;
 			this.Field = inField;
+			this.Key = key;
 		}
 	}
 }

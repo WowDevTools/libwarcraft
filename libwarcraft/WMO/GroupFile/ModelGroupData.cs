@@ -26,6 +26,7 @@ using System.IO;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
+using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;
 using Warcraft.WMO.GroupFile.Chunks;
 
@@ -52,7 +53,7 @@ namespace Warcraft.WMO.GroupFile
 
 		public readonly List<byte> FogIndices = new List<byte>(4);
 		public uint LiquidType;
-		public UInt32ForeignKey GroupID;
+		public ForeignKey<uint> GroupID;
 
 		public uint UnknownFlags;
 		public uint Unused;
@@ -130,7 +131,7 @@ namespace Warcraft.WMO.GroupFile
 		            }
 
 		            this.LiquidType = br.ReadUInt32();
-		            this.GroupID = new UInt32ForeignKey("WMOAreaTable", "WMOGroupID", br.ReadUInt32());
+		            this.GroupID = new ForeignKey<uint>(WMOAreaTableRecord.RecordName, "WMOGroupID", br.ReadUInt32());
 
 		            this.UnknownFlags = br.ReadUInt32();
 		            this.Unused = br.ReadUInt32();
@@ -248,7 +249,7 @@ namespace Warcraft.WMO.GroupFile
 		            }
 
 		            bw.Write(this.LiquidType);
-		            bw.Write(this.GroupID.Value);
+		            bw.Write(this.GroupID.Key);
 
 		            bw.Write(this.UnknownFlags);
 		            bw.Write(this.Unused);

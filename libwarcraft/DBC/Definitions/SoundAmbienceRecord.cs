@@ -29,22 +29,16 @@ namespace Warcraft.DBC.Definitions
 	{
 		public const string RecordName = "ZoneAmbience";
 
-		public UInt32ForeignKey SoundEntriesDay;
-		public UInt32ForeignKey SoundEntriesNight;
+		public ForeignKey<uint> SoundEntriesDay;
+		public ForeignKey<uint> SoundEntriesNight;
 		
 		public override void PostLoad(byte[] data)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public override int GetFieldCount()
-		{
-			throw new System.NotImplementedException();
-		}
+		public override int FieldCount => throw new System.NotImplementedException();
 
-		public override int GetRecordSize()
-		{
-			throw new System.NotImplementedException();
-		}
+		public override int RecordSize => throw new System.NotImplementedException();
 	}
 }

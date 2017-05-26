@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
 
@@ -28,7 +30,7 @@ namespace Warcraft.DBC.Definitions
 	/// <summary>
 	/// A database record which holds some type of information.
 	/// </summary>
-	public abstract class DBCRecord : IPostLoad<byte[]>
+	public abstract class DBCRecord : IPostLoad<byte[]>, IDBCRecord, IDeferredDeserialize
 	{
 		/// <summary>
 		/// The record ID. This is the equivalent of a primary key in an SQL database, and is unique to the record.
@@ -46,7 +48,7 @@ namespace Warcraft.DBC.Definitions
 		public WarcraftVersion Version
 		{
 			get;
-			protected set;
+			set;
 		}
 
 		/// <summary>
@@ -72,13 +74,13 @@ namespace Warcraft.DBC.Definitions
 		/// Gets the field count for this record at.
 		/// </summary>
 		/// <returns>The field count.</returns>
-		public abstract int GetFieldCount();
+		public virtual int FieldCount => -1;
 
 		/// <summary>
 		/// Gets the size of the record.
 		/// </summary>
 		/// <returns>The record size.</returns>
-		public abstract int GetRecordSize();
+		public virtual int RecordSize => -1;
 
 		/// <summary>
 		/// Determines whether or not this object has finished loading.
@@ -87,6 +89,21 @@ namespace Warcraft.DBC.Definitions
 		public virtual bool HasFinishedLoading()
 		{
 			return this.HasLoadedRecordData;
+		}
+
+		/// <summary>
+		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
+		/// </summary>
+		/// <param name="reader"></param>
+		public virtual void DeserializeSelf(BinaryReader reader)
+		{
+			if (this.Version == WarcraftVersion.Unknown)
+			{
+				throw new InvalidOperationException("The record data cannot be loaded before the version has been set.");
+			}
+
+			
+			this.ID = reader.ReadUInt32();
 		}
 	}
 }

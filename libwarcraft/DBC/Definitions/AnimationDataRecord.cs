@@ -60,12 +60,12 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// The fallback animation that precedes this one.
 		/// </summary>
-		public UInt32ForeignKey FallbackAnimation;
+		public ForeignKey<uint> FallbackAnimation;
 
 		/// <summary>
 		/// The top-level behaviour animation that this animation is a child of.
 		/// </summary>
-		public UInt32ForeignKey BehaviourAnimation;
+		public ForeignKey<uint> BehaviourAnimation;
 
 		/// <summary>
 		/// The behaviour tier of the animation. In most cases, this indicates whether or not the animation
@@ -80,34 +80,35 @@ namespace Warcraft.DBC.Definitions
 		/// <param name="data">ExtendedData.</param>
 		public override void PostLoad(byte[] data)
 		{
-			if (this.Version == WarcraftVersion.Unknown)
-			{
-				throw new InvalidOperationException("The record data cannot be loaded before SetVersion has been called.");
-			}
-
 			using (MemoryStream ms = new MemoryStream(data))
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.ID = br.ReadUInt32();
-					this.Name = new StringReference(br.ReadUInt32());
-
-					if (this.Version >= WarcraftVersion.Warlords)
-					{
-						this.WeaponFlags = (WeaponAnimationFlags)br.ReadUInt32();
-						this.BodyFlags = br.ReadUInt32();
-					}
-
-					this.Flags = br.ReadUInt32();
-
-					this.FallbackAnimation = new UInt32ForeignKey(RecordName, "ID", br.ReadUInt32());
-					this.BehaviourAnimation = new UInt32ForeignKey(RecordName, "ID", br.ReadUInt32());
-
-					if (this.Version >= WarcraftVersion.Wrath)
-					{
-						this.BehaviourTier = br.ReadUInt32();
-					}
+					DeserializeSelf(br);
 				}
+			}
+		}
+
+		public override void DeserializeSelf(BinaryReader br)
+		{
+			base.DeserializeSelf(br);
+			
+			this.Name = new StringReference(br.ReadUInt32());
+
+			if (this.Version >= WarcraftVersion.Warlords)
+			{
+				this.WeaponFlags = (WeaponAnimationFlags)br.ReadUInt32();
+				this.BodyFlags = br.ReadUInt32();
+			}
+
+			this.Flags = br.ReadUInt32();
+
+			this.FallbackAnimation = new ForeignKey<uint>(RecordName, "ID", br.ReadUInt32());
+			this.BehaviourAnimation = new ForeignKey<uint>(RecordName, "ID", br.ReadUInt32());
+
+			if (this.Version >= WarcraftVersion.Wrath)
+			{
+				this.BehaviourTier = br.ReadUInt32();
 			}
 		}
 
@@ -115,31 +116,34 @@ namespace Warcraft.DBC.Definitions
 		/// Gets the size of the record.
 		/// </summary>
 		/// <returns>The record size.</returns>
-		public override int GetRecordSize()
+		public override int RecordSize
 		{
-			if (this.Version == WarcraftVersion.Unknown)
+			get
 			{
-				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
-			}
+				if (this.Version == WarcraftVersion.Unknown)
+				{
+					throw new InvalidOperationException("The record data cannot be loaded before the version has been set.");
+				}
 
-			switch (this.Version)
-			{
-				case WarcraftVersion.Classic:
-					return 28;
-				case WarcraftVersion.BurningCrusade:
-					return 28;
-				case WarcraftVersion.Wrath:
-					return 32;
-				case WarcraftVersion.Cataclysm:
-					return 32;
-				case WarcraftVersion.Mists:
-					return 32;
-				case WarcraftVersion.Warlords:
-					return 24;
-				case WarcraftVersion.Legion:
-					return 24;
-				default:
-					throw new ArgumentOutOfRangeException();
+				switch (this.Version)
+				{
+					case WarcraftVersion.Classic:
+						return 28;
+					case WarcraftVersion.BurningCrusade:
+						return 28;
+					case WarcraftVersion.Wrath:
+						return 32;
+					case WarcraftVersion.Cataclysm:
+						return 32;
+					case WarcraftVersion.Mists:
+						return 32;
+					case WarcraftVersion.Warlords:
+						return 24;
+					case WarcraftVersion.Legion:
+						return 24;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
 			}
 		}
 
@@ -147,31 +151,34 @@ namespace Warcraft.DBC.Definitions
 		/// Gets the field count for this record at.
 		/// </summary>
 		/// <returns>The field count.</returns>
-		public override int GetFieldCount()
+		public override int FieldCount
 		{
-			if (this.Version == WarcraftVersion.Unknown)
+			get
 			{
-				throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
-			}
+				if (this.Version == WarcraftVersion.Unknown)
+				{
+					throw new InvalidOperationException("The record data cannot be loaded before the version has been set.");
+				}
 
-			switch (this.Version)
-			{
-				case WarcraftVersion.Classic:
-					return 7;
-				case WarcraftVersion.BurningCrusade:
-					return 7;
-				case WarcraftVersion.Wrath:
-					return 8;
-				case WarcraftVersion.Cataclysm:
-					return 8;
-				case WarcraftVersion.Mists:
-					return 8;
-				case WarcraftVersion.Warlords:
-					return 6;
-				case WarcraftVersion.Legion:
-					return 6;
-				default:
-					throw new ArgumentOutOfRangeException();
+				switch (this.Version)
+				{
+					case WarcraftVersion.Classic:
+						return 7;
+					case WarcraftVersion.BurningCrusade:
+						return 7;
+					case WarcraftVersion.Wrath:
+						return 8;
+					case WarcraftVersion.Cataclysm:
+						return 8;
+					case WarcraftVersion.Mists:
+						return 8;
+					case WarcraftVersion.Warlords:
+						return 6;
+					case WarcraftVersion.Legion:
+						return 6;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
 			}
 		}
 	}

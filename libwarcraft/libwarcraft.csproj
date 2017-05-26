@@ -10,7 +10,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\libwarcraft.key</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <LangVersion>6</LangVersion>
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,6 +63,7 @@
     <Compile Include="Core\Extensions\ExtendedMath.cs" />
     <Compile Include="Core\Extensions\ExtendedModelIO.cs" />
     <Compile Include="Core\FileInfoUtilities.cs" />
+    <Compile Include="Core\Interfaces\IDeferredDeserialize.cs" />
     <Compile Include="Core\Interfaces\IVersionedClass.cs" />
     <Compile Include="Core\Shading\Blending\AlphaDestination.cs" />
     <Compile Include="Core\Shading\Blending\AlphaSource.cs" />
@@ -97,9 +98,11 @@
     <Compile Include="DBC\Definitions\SoundEntriesRecord.cs" />
     <Compile Include="DBC\Definitions\SoundProviderPreferences.cs" />
     <Compile Include="DBC\Definitions\SpellRecord.cs" />
+    <Compile Include="DBC\Definitions\UnknownRecord.cs" />
     <Compile Include="DBC\Definitions\WMOAreaTableRecord.cs" />
     <Compile Include="DBC\Definitions\ZoneIntroMusicTableRecord.cs" />
     <Compile Include="DBC\Definitions\ZoneMusicRecord.cs" />
+    <Compile Include="DBC\IDBCRecord.cs" />
     <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
     <Compile Include="MDX\Animation\MDXAnimationEvent.cs" />
     <Compile Include="MDX\Animation\MDXAnimationSequenceFlags.cs" />
@@ -271,10 +274,7 @@
     <Compile Include="DBC\Definitions\AnimationDataRecord.cs" />
     <Compile Include="DBC\SpecialFields\StringReference.cs" />
     <Compile Include="DBC\SpecialFields\ForeignKey.cs" />
-    <Compile Include="DBC\SpecialFields\UInt16ForeignKey.cs" />
-    <Compile Include="DBC\SpecialFields\UInt32ForeignKey.cs" />
     <Compile Include="Core\WarcraftFileType.cs" />
-    <Compile Include="DBC\Definitions\UnknownRecord.cs" />
     <Compile Include="TRS\TRS.cs" />
     <Compile Include="MDX\ModelObjectFlags.cs" />
     <Compile Include="WDT\Chunks\WorldTableHeader.cs" />

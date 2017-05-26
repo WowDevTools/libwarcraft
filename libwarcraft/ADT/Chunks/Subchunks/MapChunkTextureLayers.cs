@@ -93,7 +93,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 		/// <summary>
 		/// Ground effect ID. This is a foreign key entry into GroundEffectTexture::ID.
 		/// </summary>
-		public UInt16ForeignKey EffectID;
+		public ForeignKey<ushort> EffectID;
 
 		/// <summary>
 		/// A currently unused value.
@@ -110,7 +110,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					this.Flags = (TextureLayerFlags)br.ReadUInt32();
 					this.AlphaMapOffset = br.ReadUInt32();
 
-					this.EffectID = new UInt16ForeignKey("GroundEffectTexture", "ID", br.ReadUInt16());
+					this.EffectID = new ForeignKey<ushort>("GroundEffectTexture", "ID", br.ReadUInt16()); // TODO: Define GroundEffectTextureRecord
 				}
 			}
 		}

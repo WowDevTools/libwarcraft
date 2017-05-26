@@ -32,7 +32,7 @@ namespace Warcraft.DBC
 	/// <summary>
 	/// DBC file handler. Parses and presents DBC files in a statically typed, easy to use fashion.
 	/// </summary>
-	public class DBC<T> where T : DBCRecord
+	public class DBC<T> where T : DBCRecord, new()
 	{
 		/// <summary>
 		/// The header of the database file. Describes the sizes and field counts of the records in the database.
@@ -77,28 +77,7 @@ namespace Warcraft.DBC
 
 					for (int i = 0; i < this.Header.RecordCount; ++i)
 					{
-						byte[] rawRecord = br.ReadBytes((int)this.Header.RecordSize);
-
-						T record = Activator.CreateInstance<T>();
-						record.SetVersion(inVersion);
-
-						// If the record is of the UnknownRecord type,
-						// this DBC file will just load the data without sanity checking it.
-						if (!(record is UnknownRecord))
-						{
-							// Make sure the provided record type is valid for this database file
-							if (record.GetRecordSize() != this.Header.RecordSize)
-							{
-								throw new ArgumentException("The provided record type is not valid for this database file.");
-							}
-							if (record.GetFieldCount() != this.Header.FieldCount)
-							{
-								throw new ArgumentException("The provided record type is not valid for this database file.");
-							}
-						}
-
-						record.PostLoad(rawRecord);	
-						this.Records.Add(record);
+						this.Records.Add(br.ReadRecord<T>((int)this.Header.FieldCount, (int)this.Header.RecordCount, this.Version));
 					}
 
 					while (br.BaseStream.Position != br.BaseStream.Length)

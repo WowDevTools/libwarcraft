@@ -98,7 +98,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 		public uint SecondTextureOffset;
 		public RGBA SecondColour;
 
-		public UInt32ForeignKey GroundType;
+		public ForeignKey<uint> GroundType;
 		public uint ThirdTextureOffset;
 		public RGBA BaseDiffuseColour;
 		public MaterialFlags ThirdFlags;
@@ -147,7 +147,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					this.SecondTextureOffset = br.ReadUInt32();
 					this.SecondColour = br.ReadRGBA();
 
-					this.GroundType = new UInt32ForeignKey("TerrainType", "ID", br.ReadUInt32());
+					this.GroundType = new ForeignKey<uint>("TerrainType", "ID", br.ReadUInt32()); // TODO: Define TerrainTypeRecord
 					this.ThirdTextureOffset = br.ReadUInt32();
 					this.BaseDiffuseColour = br.ReadRGBA();
 					this.ThirdFlags = (MaterialFlags)br.ReadUInt32();
@@ -182,7 +182,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 		            bw.Write(this.SecondTextureOffset);
 		            bw.WriteRGBA(this.SecondColour);
 
-		            bw.Write((uint)this.GroundType.Value);
+		            bw.Write((uint)this.GroundType.Key);
 		            bw.Write(this.ThirdTextureOffset);
 		            bw.WriteRGBA(this.BaseDiffuseColour);
 		            bw.Write((uint)this.ThirdFlags);

@@ -25,6 +25,7 @@ using System.IO;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
+using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile
@@ -41,7 +42,7 @@ namespace Warcraft.WMO.RootFile
 		public uint DoodadDefinitionCount;
 		public uint DoodadSetCount;
 		public RGBA BaseAmbientColour;
-		public UInt32ForeignKey AreaTableID;
+		public ForeignKey<uint> AreaTableID;
 		public Box BoundingBox;
 		public RootFlags Flags;
 
@@ -70,7 +71,7 @@ namespace Warcraft.WMO.RootFile
 					this.DoodadSetCount = br.ReadUInt32();
 
 					this.BaseAmbientColour = br.ReadRGBA();
-					this.AreaTableID = new UInt32ForeignKey("WMOAreaTable", "WMOID", br.ReadUInt32());
+					this.AreaTableID = new ForeignKey<uint>(WMOAreaTableRecord.RecordName, "WMOID", br.ReadUInt32());
 					this.BoundingBox = br.ReadBox();
 					this.Flags = (RootFlags) br.ReadUInt32();
 				}
@@ -97,7 +98,7 @@ namespace Warcraft.WMO.RootFile
 					bw.Write(this.DoodadSetCount);
 
 					bw.WriteRGBA(this.BaseAmbientColour);
-					bw.Write(this.AreaTableID.Value);
+					bw.Write(this.AreaTableID.Key);
 					bw.WriteBox(this.BoundingBox);
 					bw.Write((uint) this.Flags);
 				}

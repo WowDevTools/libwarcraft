@@ -51,15 +51,9 @@ namespace Warcraft.DBC.Definitions
 			throw new System.NotImplementedException();
 		}
 
-		public override int GetFieldCount()
-		{
-			throw new System.NotImplementedException();
-		}
+		public override int FieldCount => throw new System.NotImplementedException();
 
-		public override int GetRecordSize()
-		{
-			throw new System.NotImplementedException();
-		}
+		public override int RecordSize => throw new System.NotImplementedException();
 	}
 
 	public enum SoundType : uint

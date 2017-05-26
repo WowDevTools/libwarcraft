@@ -83,7 +83,7 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// The ID of the area table entry for this map, which contains more information.
 		/// </summary>
-		public UInt32ForeignKey AreaTableID;
+		public ForeignKey<uint> AreaTableID;
 
 		/// <summary>
 		/// TODO: Unknown behaviour, improve comment
@@ -100,7 +100,7 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// The ID of the loading screen for this map.
 		/// </summary>
-		public UInt32ForeignKey LoadingScreenID;
+		public ForeignKey<uint> LoadingScreenID;
 
 		/// <summary>
 		/// TODO: Unknown behaviour
@@ -126,22 +126,8 @@ namespace Warcraft.DBC.Definitions
 			throw new NotImplementedException();
 		}
 
-		/// <summary>
-		/// Gets the field count for this record at.
-		/// </summary>
-		/// <returns>The field count.</returns>
-		public override int GetFieldCount()
-		{
-			throw new NotImplementedException();
-		}
+		public override int FieldCount => throw new System.NotImplementedException();
 
-		/// <summary>
-		/// Gets the size of the record.
-		/// </summary>
-		/// <returns>The record size.</returns>
-		public override int GetRecordSize()
-		{
-			throw new NotImplementedException();
-		}
+		public override int RecordSize => throw new System.NotImplementedException();
 	}
 }

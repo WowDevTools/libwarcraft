@@ -39,13 +39,13 @@ namespace Warcraft.DBC.Definitions
 		/// The school of the spell (fire, destruction, etc). This is a reference to a row in another
 		/// database.
 		/// </summary>
-		public UInt32ForeignKey School;
+		public ForeignKey<uint> School;
 
 		/// <summary>
 		/// The category of the spell (tradeskill, passive, active, etc). This is a reference to a row in another
 		/// database.
 		/// </summary>
-		public UInt32ForeignKey Category;
+		public ForeignKey<uint> Category;
 
 		/// <summary>
 		/// The UI type to use when casting.
@@ -56,13 +56,13 @@ namespace Warcraft.DBC.Definitions
 		/// The dispel type of the spell. This is a reference to a row in another
 		/// database.
 		/// </summary>
-		public UInt32ForeignKey DispelType;
+		public ForeignKey<uint> DispelType;
 
 		/// <summary>
 		/// The mechanic type of the spell. This is a reference to a row in another
 		/// database.
 		/// </summary>
-		public UInt32ForeignKey Mechanic;
+		public ForeignKey<uint> Mechanic;
 
 		/// <summary>
 		/// The first block of spell attributes. This is a set of flags, defining different behaviour for the spell
@@ -115,23 +115,9 @@ namespace Warcraft.DBC.Definitions
 			throw new NotImplementedException();
 		}
 
-		/// <summary>
-		/// Gets the field count for this record at.
-		/// </summary>
-		/// <returns>The field count.</returns>
-		public override int GetFieldCount()
-		{
-			throw new NotImplementedException();
-		}
+		public override int FieldCount => throw new System.NotImplementedException();
 
-		/// <summary>
-		/// Gets the size of the record.
-		/// </summary>
-		/// <returns>The record size.</returns>
-		public override int GetRecordSize()
-		{
-			throw new NotImplementedException();
-		}
+		public override int RecordSize => throw new System.NotImplementedException();
 	}
 
 	/// <summary>

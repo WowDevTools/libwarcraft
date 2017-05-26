@@ -1,5 +1,5 @@
 //
-//  Int16ForeignKey.cs
+//  ForeignKey.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,21 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Warcraft.DBC.SpecialFields
-{
-	public class UInt16ForeignKey : ForeignKey
-	{
-		public ushort Value
-		{
-			get;
-			private set;
-		}
+using Warcraft.Core;
 
-		public UInt16ForeignKey(string inRecord, string inField, ushort inValue)
-			: base(inRecord, inField)
-		{
-			this.Value = inValue;
-		}
+namespace Warcraft.DBC
+{
+	public interface IDBCRecord
+	{
+		uint ID { get; }
+		WarcraftVersion Version { get; set; }
+		int FieldCount { get; }
+		int RecordSize { get; }
 	}
 }
-

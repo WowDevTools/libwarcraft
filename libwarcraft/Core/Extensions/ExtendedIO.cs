@@ -27,6 +27,9 @@ using System.Numerics;
 using System.Text;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
+using Warcraft.DBC;
+using Warcraft.DBC.Definitions;
+using Warcraft.DBC.SpecialFields;
 using Warcraft.MDX.Animation;
 using Warcraft.MDX.Data;
 using Warcraft.MDX.Gameplay;
@@ -115,7 +118,10 @@ namespace Warcraft.Core.Extensions
 
 			// Some spline key types
 			{ typeof(SplineKey<float>), r => r.ReadSplineKey<float>()},
-			{ typeof(SplineKey<Vector3>), r => r.ReadSplineKey<Vector3>()}
+			{ typeof(SplineKey<Vector3>), r => r.ReadSplineKey<Vector3>()},
+			
+			// DBC-related types
+			{ typeof(StringReference), r => r.ReadStringReference() },
 		};
 
 		/// <summary>
@@ -144,6 +150,9 @@ namespace Warcraft.Core.Extensions
 
 			// Specific versioned MDXArray types
 			{ typeof(MDXArray<Quaternion>), (r, v) => r.ReadMDXArray<Quaternion>(v)},
+			
+			// Some DBC types
+			{ typeof(LocalizedStringReference), (r, v) => r.ReadLocalizedStringReference(v) },
 		};
 
 		/// <summary>
@@ -184,6 +193,66 @@ namespace Warcraft.Core.Extensions
 			return VersionedTypeReaderMap[typeof(T)](br, version);
 		}
 
+		/*
+			BinaryReader Extensions for DBC-related types
+		*/
+
+		/// <summary>
+		/// Reads a <see cref="LocalizedStringReference"/> from the data stream.
+		/// </summary>
+		/// <param name="binaryReader"></param>
+		/// <returns></returns>
+		public static LocalizedStringReference ReadLocalizedStringReference(this BinaryReader binaryReader, WarcraftVersion version)
+		{
+			LocalizedStringReference locRef = new LocalizedStringReference();
+
+			if (version < WarcraftVersion.Cataclysm)
+			{
+				locRef.English = binaryReader.ReadStringReference();
+				locRef.Korean = binaryReader.ReadStringReference();
+				locRef.French = binaryReader.ReadStringReference();
+				locRef.German = binaryReader.ReadStringReference();
+				locRef.Chinese = binaryReader.ReadStringReference();
+				locRef.Taiwan = binaryReader.ReadStringReference();
+				locRef.Spanish = binaryReader.ReadStringReference();
+				locRef.SpanishMexican = binaryReader.ReadStringReference();
+
+				if (version >= WarcraftVersion.BurningCrusade)
+				{
+					locRef.Russian = binaryReader.ReadStringReference();
+				}
+
+				if (version >= WarcraftVersion.Wrath)
+				{
+					locRef.Unknown1 = binaryReader.ReadStringReference();
+					locRef.Portugese = binaryReader.ReadStringReference();
+					locRef.Italian = binaryReader.ReadStringReference();
+					locRef.Unknown2 = binaryReader.ReadStringReference();
+					locRef.Unknown3 = binaryReader.ReadStringReference();
+					locRef.Unknown4 = binaryReader.ReadStringReference();
+					locRef.Unknown5 = binaryReader.ReadStringReference();
+				}
+
+				locRef.Flags = binaryReader.ReadUInt32();
+			}
+			else
+			{
+				locRef.ClientLocale = binaryReader.ReadStringReference();
+			}
+
+			return locRef;
+		}
+		
+		/// <summary>
+		/// Reads a <see cref="StringReference"/> from the data stream.
+		/// </summary>
+		/// <param name="binaryReader"></param>
+		/// <returns></returns>
+		public static StringReference ReadStringReference(this BinaryReader binaryReader)
+		{
+			return new StringReference(binaryReader.ReadUInt32());
+		}
+		
 		/*
 			BinaryReader Extensions for standard typess
 		*/
@@ -331,6 +400,42 @@ namespace Warcraft.Core.Extensions
 			chunk.LoadBinaryData(chunkData);
 
 			return chunk;
+		}
+
+		/// <summary>
+		/// Reads a DBC record from the stream.
+		/// </summary>
+		/// <param name="reader">The current <see cref="BinaryReader"/>.</param>
+		/// <param name="fieldCount">The number of expected fields.</param>
+		/// <param name="recordSize">The expected record size.</param>
+		/// <param name="version">The version to load.</param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static T ReadRecord<T>(this BinaryReader reader, int fieldCount, int recordSize, WarcraftVersion version = WarcraftVersion.Classic) 
+			where T : IDeferredDeserialize, IDBCRecord, new()
+		{
+			T record = Activator.CreateInstance<T>();
+			record.Version = version;
+
+			// If the record is of the UnknownRecord type,
+			// this DBC file will just load the data without sanity checking it.
+			if (!(record is UnknownRecord))
+			{
+				// Make sure the provided record type is valid for this database file
+				if (record.RecordSize != recordSize)
+				{
+					throw new ArgumentException("The provided record type is not valid for this database file.");
+				}
+				if (record.FieldCount != fieldCount)
+				{
+					throw new ArgumentException("The provided record type is not valid for this database file.");
+				}
+			}
+
+			record.DeserializeSelf(reader);
+
+			return record;
 		}
 
 		/// <summary>
