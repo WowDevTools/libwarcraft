@@ -21,9 +21,11 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
+using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
@@ -54,7 +56,7 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// Whether or not this record has had its data loaded.
 		/// </summary>
-		private bool HasLoadedRecordData = false;
+		protected bool HasLoadedRecordData = false;
 
 		/// <summary>
 		/// Sets the version this record is valid for.
@@ -83,6 +85,12 @@ namespace Warcraft.DBC.Definitions
 		public virtual int RecordSize => -1;
 
 		/// <summary>
+		/// Gets a list of any string references in the record. Used for resolving them after they have been loaded.
+		/// </summary>
+		/// <returns></returns>
+		public abstract List<StringReference> GetStringReferences();
+
+		/// <summary>
 		/// Determines whether or not this object has finished loading.
 		/// </summary>
 		/// <returns><value>true</value> if the object has finished loading; otherwise, <value>false</value>.</returns>
@@ -102,7 +110,6 @@ namespace Warcraft.DBC.Definitions
 				throw new InvalidOperationException("The record data cannot be loaded before the version has been set.");
 			}
 
-			
 			this.ID = reader.ReadUInt32();
 		}
 	}

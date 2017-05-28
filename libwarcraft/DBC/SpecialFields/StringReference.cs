@@ -24,15 +24,22 @@ namespace Warcraft.DBC.SpecialFields
 {
 	public class StringReference
 	{
-		public uint StringOffset
+		public uint Offset
 		{
 			get;
 			private set;
 		}
 
-		public StringReference(uint inStringOffset)
+		public string Value { get; set; }
+
+		public StringReference(uint inOffset)
 		{
-			this.StringOffset = inStringOffset;
+			this.Offset = inOffset;
+		}
+
+		public override string ToString()
+		{
+			return this.Value;
 		}
 	}
 }

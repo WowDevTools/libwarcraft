@@ -103,6 +103,7 @@
     <Compile Include="DBC\Definitions\WMOAreaTableRecord.cs" />
     <Compile Include="DBC\Definitions\ZoneIntroMusicTableRecord.cs" />
     <Compile Include="DBC\Definitions\ZoneMusicRecord.cs" />
+    <Compile Include="DBC\IDBC.cs" />
     <Compile Include="DBC\IDBCRecord.cs" />
     <Compile Include="DBC\SpecialFields\LocalizedStringReference.cs" />
     <Compile Include="MDX\Animation\MDXAnimationEvent.cs" />

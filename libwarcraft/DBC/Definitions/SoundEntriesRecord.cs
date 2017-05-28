@@ -70,8 +70,17 @@ namespace Warcraft.DBC.Definitions
 		public override void DeserializeSelf(BinaryReader reader)
 		{
 			base.DeserializeSelf(reader);
-			
+
 			throw new NotImplementedException();
+			this.HasLoadedRecordData = true;
+		}
+
+		public override List<StringReference> GetStringReferences()
+		{
+			List<StringReference> referenceList = new List<StringReference> {this.Name, this.DirectoryBase};
+			referenceList.AddRange(this.SoundFiles);
+
+			return referenceList;
 		}
 
 		public override int FieldCount => throw new System.NotImplementedException();

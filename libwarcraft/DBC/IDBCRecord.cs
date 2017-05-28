@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using Warcraft.Core;
+using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC
 {
@@ -30,5 +32,6 @@ namespace Warcraft.DBC
 		WarcraftVersion Version { get; set; }
 		int FieldCount { get; }
 		int RecordSize { get; }
+		List<StringReference> GetStringReferences();
 	}
 }

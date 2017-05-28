@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Warcraft.Core;
 using System.IO;
 using Warcraft.DBC.SpecialFields;
@@ -89,6 +90,11 @@ namespace Warcraft.DBC.Definitions
 			}
 		}
 
+		public override List<StringReference> GetStringReferences()
+		{
+			return new List<StringReference>{ this.Name };
+		}
+
 		public override void DeserializeSelf(BinaryReader br)
 		{
 			base.DeserializeSelf(br);
@@ -110,6 +116,8 @@ namespace Warcraft.DBC.Definitions
 			{
 				this.BehaviourTier = br.ReadUInt32();
 			}
+
+			this.HasLoadedRecordData = true;
 		}
 
 		/// <summary>

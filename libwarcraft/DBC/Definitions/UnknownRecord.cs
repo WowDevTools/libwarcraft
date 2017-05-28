@@ -20,8 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.Collections.Generic;
 using Warcraft.Core;
 using System.IO;
+using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
@@ -61,6 +63,12 @@ namespace Warcraft.DBC.Definitions
 
 			//this.RecordData = dataWithoutID;
 			this.RecordData = data;
+			this.HasLoadedRecordData = true;
+		}
+		
+		public override List<StringReference> GetStringReferences()
+		{
+			return new List<StringReference>();
 		}
 
 		/// <summary>

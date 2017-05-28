@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
@@ -33,16 +34,11 @@ namespace Warcraft.DBC.Definitions
 	{
 		public const DatabaseName Database = DatabaseName.ZoneMusic;
 
-		public StringReference MusicFileDay;
-		public StringReference MusicFileNight;
+		public StringReference SetName;
 		public Range SilenceIntervalDay; // These ranges are stored as daymin/nightmin/daymax/nightmax)
 		public Range SilenceIntervalNight;
-		public uint SegmentLengthDay;
-		public uint SegmentLengthNight;
-		public Range SegmentPlayCountDay;
-		public Range SegmentPlayCountNight;
-		public ForeignKey<uint> SoundsDay;
-		public ForeignKey<uint> SoundsNight;
+		public ForeignKey<uint> DayMusic;
+		public ForeignKey<uint> NightMusic;
 
 		/// <summary>
 		/// Loads and parses the provided data.
@@ -67,8 +63,7 @@ namespace Warcraft.DBC.Definitions
 		{
 			base.DeserializeSelf(reader);
 
-			this.MusicFileDay = reader.ReadStringReference();
-			this.MusicFileNight = reader.ReadStringReference();
+			this.SetName = reader.ReadStringReference();
 
 			uint interDayMin = reader.ReadUInt32();
 			uint interNightMin = reader.ReadUInt32();
@@ -78,22 +73,18 @@ namespace Warcraft.DBC.Definitions
 			this.SilenceIntervalDay = new Range(interDayMin, interDayMax);
 			this.SilenceIntervalNight = new Range(interNightMin, interNightMax);
 
-			this.SegmentLengthDay = reader.ReadUInt32();
-			this.SegmentLengthNight = reader.ReadUInt32();
-
-			uint playDayMin = reader.ReadUInt32();
-			uint playNightMin = reader.ReadUInt32();
-			uint playDayMax = reader.ReadUInt32();
-			uint playNightMax = reader.ReadUInt32();
-
-			this.SegmentPlayCountDay = new Range(playDayMin, playDayMax);
-			this.SegmentPlayCountNight = new Range(playNightMin, playNightMax);
-
-			this.SoundsDay = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
-			this.SoundsNight = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
+			this.DayMusic = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
+			this.NightMusic = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
+			
+			this.HasLoadedRecordData = true;
 		}
 
-		public override int FieldCount => 15;
+		public override List<StringReference> GetStringReferences()
+		{
+			return new List<StringReference>{ this.SetName };
+		}
+		
+		public override int FieldCount => 8;
 
 		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}

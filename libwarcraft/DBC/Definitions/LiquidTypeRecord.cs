@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Warcraft.DBC.SpecialFields;
 using Warcraft.Core;
@@ -78,6 +79,12 @@ namespace Warcraft.DBC.Definitions
 			this.Type = (LiquidType)reader.ReadInt32();
 
 			this.SpellEffect = new ForeignKey<uint>(DatabaseName.Spell, "ID", reader.ReadUInt32());
+			this.HasLoadedRecordData = true;
+		}
+		
+		public override List<StringReference> GetStringReferences()
+		{
+			return new List<StringReference>{ this.Name };
 		}
 
 		public LiquidType TranslateLiquidType()

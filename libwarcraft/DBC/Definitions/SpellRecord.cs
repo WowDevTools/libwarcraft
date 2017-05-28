@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Warcraft.DBC.SpecialFields;
 
@@ -131,6 +132,12 @@ namespace Warcraft.DBC.Definitions
 			base.DeserializeSelf(reader);
 			
 			throw new NotImplementedException();
+			this.HasLoadedRecordData = true;
+		}
+		
+		public override List<StringReference> GetStringReferences()
+		{
+			return new List<StringReference>();
 		}
 
 		public override int FieldCount => throw new System.NotImplementedException();
