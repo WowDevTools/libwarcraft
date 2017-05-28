@@ -28,6 +28,7 @@ using Warcraft.Core.Interfaces;
 using Warcraft.Core.Shading;
 using Warcraft.Core.Shading.Blending;
 using Warcraft.Core.Structures;
+using Warcraft.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile.Chunks
@@ -147,7 +148,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 					this.SecondTextureOffset = br.ReadUInt32();
 					this.SecondColour = br.ReadRGBA();
 
-					this.GroundType = new ForeignKey<uint>("TerrainType", "ID", br.ReadUInt32()); // TODO: Define TerrainTypeRecord
+					this.GroundType = new ForeignKey<uint>(DatabaseName.TerrainType, "ID", br.ReadUInt32()); // TODO: Define TerrainTypeRecord
 					this.ThirdTextureOffset = br.ReadUInt32();
 					this.BaseDiffuseColour = br.ReadRGBA();
 					this.ThirdFlags = (MaterialFlags)br.ReadUInt32();

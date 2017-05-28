@@ -33,7 +33,7 @@ namespace Warcraft.DBC.Definitions
 	/// </summary>
 	public class AnimationDataRecord : DBCRecord
 	{
-		public const string RecordName = "AnimationData";
+		public const DatabaseName Database = DatabaseName.AnimationData;
 
 		/// <summary>
 		/// The name of the animation.
@@ -103,8 +103,8 @@ namespace Warcraft.DBC.Definitions
 
 			this.Flags = br.ReadUInt32();
 
-			this.FallbackAnimation = new ForeignKey<uint>(RecordName, "ID", br.ReadUInt32());
-			this.BehaviourAnimation = new ForeignKey<uint>(RecordName, "ID", br.ReadUInt32());
+			this.FallbackAnimation = new ForeignKey<uint>(DatabaseName.AnimationData, "ID", br.ReadUInt32());
+			this.BehaviourAnimation = new ForeignKey<uint>(DatabaseName.AnimationData, "ID", br.ReadUInt32());
 
 			if (this.Version >= WarcraftVersion.Wrath)
 			{

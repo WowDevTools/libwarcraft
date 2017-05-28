@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.IO;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -30,6 +31,8 @@ namespace Warcraft.DBC.Definitions
 	/// </summary>
 	public class MapRecord : DBCRecord
 	{
+		public const DatabaseName Database = DatabaseName.Map;
+		
 		/// <summary>
 		/// The directory under which the map is stored.
 		/// </summary>
@@ -123,6 +126,23 @@ namespace Warcraft.DBC.Definitions
 		/// <param name="data">ExtendedData.</param>
 		public override void PostLoad(byte[] data)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					DeserializeSelf(br);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
+		/// </summary>
+		/// <param name="reader"></param>
+		public override void DeserializeSelf(BinaryReader reader)
+		{
+			base.DeserializeSelf(reader);
+			
 			throw new NotImplementedException();
 		}
 

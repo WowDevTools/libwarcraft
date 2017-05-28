@@ -71,22 +71,22 @@ namespace Warcraft.DBC.SpecialFields
 		/// The reference to the Russian version of the string.
 		/// </summary>
 		public StringReference Russian;
-		
+
 		/// <summary>
 		/// The reference to an unknown version of the string.
 		/// </summary>
 		public StringReference Unknown1;
-		
+
 		/// <summary>
 		/// The reference to the Portugese version of the string.
 		/// </summary>
 		public StringReference Portugese;
-		
+
 		/// <summary>
 		/// The reference to the Italian version of the string.
 		/// </summary>
 		public StringReference Italian;
-		
+
 		/// <summary>
 		/// The reference to an unknown version of the string.
 		/// </summary>

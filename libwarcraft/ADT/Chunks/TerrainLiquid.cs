@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Warcraft.DBC.SpecialFields;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
+using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
 
 namespace Warcraft.ADT.Chunks
@@ -205,8 +206,8 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.LiquidType = new ForeignKey<ushort>(LiquidTypeRecord.RecordName, "ID", br.ReadUInt16()); 
-					this.LiquidObject = new ForeignKey<ushort>(LiquidObjectRecord.RecordName, "ID", br.ReadUInt16()); 
+					this.LiquidType = new ForeignKey<ushort>(DatabaseName.LiquidType, "ID", br.ReadUInt16()); 
+					this.LiquidObject = new ForeignKey<ushort>(DatabaseName.LiquidObject, "ID", br.ReadUInt16()); 
 
 					this.HeightLevelRange = new Range(br.ReadSingle(), br.ReadSingle());
 

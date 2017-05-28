@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.IO;
 using Warcraft.Core;
 using Warcraft.DBC.SpecialFields;
 
@@ -27,7 +29,7 @@ namespace Warcraft.DBC.Definitions
 {
 	public class SoundProviderPreferencesRecord : DBCRecord
 	{
-		public const string RecordName = "SoundProviderPreferences";
+		public const DatabaseName Database = DatabaseName.SoundProviderPreferences;
 
 		public StringReference Description;
 		public uint Flags;
@@ -55,9 +57,30 @@ namespace Warcraft.DBC.Definitions
 		public float EAX3HFReference;
 		public float EAX3LFReference;
 		
+		/// <summary>
+		/// Loads and parses the provided data.
+		/// </summary>
+		/// <param name="data">ExtendedData.</param>
 		public override void PostLoad(byte[] data)
 		{
-			throw new System.NotImplementedException();
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					DeserializeSelf(br);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
+		/// </summary>
+		/// <param name="reader"></param>
+		public override void DeserializeSelf(BinaryReader reader)
+		{
+			base.DeserializeSelf(reader);
+			
+			throw new NotImplementedException();
 		}
 
 		public override int FieldCount => throw new System.NotImplementedException();

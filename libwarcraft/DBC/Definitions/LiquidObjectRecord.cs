@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.IO;
 using Warcraft.Core.Interfaces;
 using Warcraft.DBC.SpecialFields;
 
@@ -31,8 +32,8 @@ namespace Warcraft.DBC.Definitions
 	/// </summary>
 	public class LiquidObjectRecord : DBCRecord
 	{
-		public const string RecordName = "LiquidObject";
-		
+		public const DatabaseName Database = DatabaseName.LiquidObject;
+
 		/// <summary>
 		/// The direction in which the liquid flows.
 		/// </summary>
@@ -65,6 +66,23 @@ namespace Warcraft.DBC.Definitions
 		/// <param name="data">ExtendedData.</param>
 		public override void PostLoad(byte[] data)
 		{
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					DeserializeSelf(br);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
+		/// </summary>
+		/// <param name="reader"></param>
+		public override void DeserializeSelf(BinaryReader reader)
+		{
+			base.DeserializeSelf(reader);
+
 			throw new NotImplementedException();
 		}
 

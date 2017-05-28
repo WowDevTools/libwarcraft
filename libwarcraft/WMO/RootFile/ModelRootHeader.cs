@@ -25,6 +25,7 @@ using System.IO;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
+using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;
 
@@ -71,7 +72,7 @@ namespace Warcraft.WMO.RootFile
 					this.DoodadSetCount = br.ReadUInt32();
 
 					this.BaseAmbientColour = br.ReadRGBA();
-					this.AreaTableID = new ForeignKey<uint>(WMOAreaTableRecord.RecordName, "WMOID", br.ReadUInt32());
+					this.AreaTableID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, "WMOID", br.ReadUInt32());
 					this.BoundingBox = br.ReadBox();
 					this.Flags = (RootFlags) br.ReadUInt32();
 				}

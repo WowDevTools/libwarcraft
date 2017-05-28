@@ -92,6 +92,7 @@
     <Compile Include="Core\Interfaces\IIFFChunk.cs" />
     <Compile Include="Core\Structures\SplineKey.cs" />
     <Compile Include="Core\Structures\Vector3s.cs" />
+    <Compile Include="DBC\DatabaseName.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SoundAmbienceRecord.cs" />

@@ -119,7 +119,7 @@ namespace Warcraft.Core.Extensions
 			// Some spline key types
 			{ typeof(SplineKey<float>), r => r.ReadSplineKey<float>()},
 			{ typeof(SplineKey<Vector3>), r => r.ReadSplineKey<Vector3>()},
-			
+
 			// DBC-related types
 			{ typeof(StringReference), r => r.ReadStringReference() },
 		};
@@ -150,8 +150,8 @@ namespace Warcraft.Core.Extensions
 
 			// Specific versioned MDXArray types
 			{ typeof(MDXArray<Quaternion>), (r, v) => r.ReadMDXArray<Quaternion>(v)},
-			
-			// Some DBC types
+
+			// DBC-related types
 			{ typeof(LocalizedStringReference), (r, v) => r.ReadLocalizedStringReference(v) },
 		};
 

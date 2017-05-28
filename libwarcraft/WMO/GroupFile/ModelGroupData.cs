@@ -26,6 +26,7 @@ using System.IO;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
+using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;
 using Warcraft.WMO.GroupFile.Chunks;
@@ -131,7 +132,7 @@ namespace Warcraft.WMO.GroupFile
 		            }
 
 		            this.LiquidType = br.ReadUInt32();
-		            this.GroupID = new ForeignKey<uint>(WMOAreaTableRecord.RecordName, "WMOGroupID", br.ReadUInt32());
+		            this.GroupID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, "WMOGroupID", br.ReadUInt32());
 
 		            this.UnknownFlags = br.ReadUInt32();
 		            this.Unused = br.ReadUInt32();

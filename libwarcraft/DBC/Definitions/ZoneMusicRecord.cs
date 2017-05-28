@@ -20,7 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.IO;
 using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
@@ -28,9 +31,8 @@ namespace Warcraft.DBC.Definitions
 {
 	public class ZoneMusicRecord : DBCRecord
 	{
-		public const string RecordName = "ZoneMusic";
-		
-		public float Volume;
+		public const DatabaseName Database = DatabaseName.ZoneMusic;
+
 		public StringReference MusicFileDay;
 		public StringReference MusicFileNight;
 		public Range SilenceIntervalDay; // These ranges are stored as daymin/nightmin/daymax/nightmax)
@@ -39,16 +41,60 @@ namespace Warcraft.DBC.Definitions
 		public uint SegmentLengthNight;
 		public Range SegmentPlayCountDay;
 		public Range SegmentPlayCountNight;
-		public uint SoundsDay;
-		public uint SoundsNight;
-		
+		public ForeignKey<uint> SoundsDay;
+		public ForeignKey<uint> SoundsNight;
+
+		/// <summary>
+		/// Loads and parses the provided data.
+		/// </summary>
+		/// <param name="data">ExtendedData.</param>
 		public override void PostLoad(byte[] data)
 		{
-			throw new System.NotImplementedException();
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					DeserializeSelf(br);
+				}
+			}
 		}
 
-		public override int FieldCount => throw new System.NotImplementedException();
+		/// <summary>
+		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
+		/// </summary>
+		/// <param name="reader"></param>
+		public override void DeserializeSelf(BinaryReader reader)
+		{
+			base.DeserializeSelf(reader);
 
-		public override int RecordSize => throw new System.NotImplementedException();
+			this.MusicFileDay = reader.ReadStringReference();
+			this.MusicFileNight = reader.ReadStringReference();
+
+			uint interDayMin = reader.ReadUInt32();
+			uint interNightMin = reader.ReadUInt32();
+			uint interDayMax = reader.ReadUInt32();
+			uint interNightMax = reader.ReadUInt32();
+
+			this.SilenceIntervalDay = new Range(interDayMin, interDayMax);
+			this.SilenceIntervalNight = new Range(interNightMin, interNightMax);
+
+			this.SegmentLengthDay = reader.ReadUInt32();
+			this.SegmentLengthNight = reader.ReadUInt32();
+
+			uint playDayMin = reader.ReadUInt32();
+			uint playNightMin = reader.ReadUInt32();
+			uint playDayMax = reader.ReadUInt32();
+			uint playNightMax = reader.ReadUInt32();
+
+			this.SegmentPlayCountDay = new Range(playDayMin, playDayMax);
+			this.SegmentPlayCountNight = new Range(playNightMin, playNightMax);
+
+			this.SoundsDay = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
+			this.SoundsNight = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
+		}
+
+		public override int FieldCount => 15;
+
+		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 }

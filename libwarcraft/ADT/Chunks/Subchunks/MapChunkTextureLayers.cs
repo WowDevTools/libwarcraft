@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core.Interfaces;
+using Warcraft.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.ADT.Chunks.Subchunks
@@ -110,7 +111,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 					this.Flags = (TextureLayerFlags)br.ReadUInt32();
 					this.AlphaMapOffset = br.ReadUInt32();
 
-					this.EffectID = new ForeignKey<ushort>("GroundEffectTexture", "ID", br.ReadUInt16()); // TODO: Define GroundEffectTextureRecord
+					this.EffectID = new ForeignKey<ushort>(DatabaseName.GroundEffectTexture, "ID", br.ReadUInt16()); // TODO: Define GroundEffectTextureRecord
 				}
 			}
 		}

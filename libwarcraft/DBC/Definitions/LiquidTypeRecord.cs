@@ -28,7 +28,7 @@ namespace Warcraft.DBC.Definitions
 {
 	public class LiquidTypeRecord : DBCRecord
 	{
-		public const string RecordName = "LiquidType";
+		public const DatabaseName Database = DatabaseName.LiquidType;
 
 		/// <summary>
 		/// The name of the liquid.
@@ -77,7 +77,7 @@ namespace Warcraft.DBC.Definitions
 
 			this.Type = (LiquidType)reader.ReadInt32();
 
-			this.SpellEffect = new ForeignKey<uint>(SpellRecord.RecordName, "ID", reader.ReadUInt32());
+			this.SpellEffect = new ForeignKey<uint>(DatabaseName.Spell, "ID", reader.ReadUInt32());
 		}
 
 		public LiquidType TranslateLiquidType()

@@ -20,13 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.IO;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
 	public class WMOAreaTableRecord : DBCRecord
 	{
-		public const string RecordName = "WMOAreaTable";
+		public const DatabaseName Database = DatabaseName.WMOAreaTable;
 		
 		public uint WMOID;
 		public uint NameSetID;
@@ -43,9 +45,30 @@ namespace Warcraft.DBC.Definitions
 		public uint Flags;
 		private LocalizedStringReference AreaName;
 
+		/// <summary>
+		/// Loads and parses the provided data.
+		/// </summary>
+		/// <param name="data">ExtendedData.</param>
 		public override void PostLoad(byte[] data)
 		{
-			throw new System.NotImplementedException();
+			using (MemoryStream ms = new MemoryStream(data))
+			{
+				using (BinaryReader br = new BinaryReader(ms))
+				{
+					DeserializeSelf(br);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
+		/// </summary>
+		/// <param name="reader"></param>
+		public override void DeserializeSelf(BinaryReader reader)
+		{
+			base.DeserializeSelf(reader);
+			
+			throw new NotImplementedException();
 		}
 
 		public override int FieldCount => throw new System.NotImplementedException();

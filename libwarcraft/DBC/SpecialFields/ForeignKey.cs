@@ -24,7 +24,7 @@ namespace Warcraft.DBC.SpecialFields
 {
 	public class ForeignKey<T>
 	{
-		public string Record
+		public DatabaseName Database
 		{
 			get;
 			protected set;
@@ -42,9 +42,9 @@ namespace Warcraft.DBC.SpecialFields
 			protected set;
 		}
 
-		public ForeignKey(string inRecord, string inField, T key)
+		public ForeignKey(DatabaseName inDatabase, string inField, T key)
 		{
-			this.Record = inRecord;
+			this.Database = inDatabase;
 			this.Field = inField;
 			this.Key = key;
 		}
