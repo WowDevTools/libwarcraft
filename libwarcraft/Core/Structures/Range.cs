@@ -63,16 +63,19 @@ namespace Warcraft.Core.Structures
 		/// <param name="inMin">The minimum value in the range.</param>
 		/// <param name="inMax">The maximum value in the range.</param>
 		/// <param name="inIsInclusive">Whether or not the range is inclusive.</param>
+		/// <param name="rigorous">
+		/// If true, then the minimum value must be less than or equal to the maximum value. 
+		/// If false, then no checking is performed.</param>
 		/// <returns>A new <see cref="Range"/> object.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// An <see cref="ArgumentOutOfRangeException"/> can be thrown if the minimum value is greater than the maximum
 		/// value.
 		/// </exception>
-		public Range(float inMin, float inMax, bool inIsInclusive = true)
+		public Range(float inMin, float inMax, bool inIsInclusive = true, bool rigorous = true)
 		{
-			if (!(inMin <= inMax))
+			if (!(inMin <= inMax) && rigorous)
 			{
-				throw new ArgumentOutOfRangeException(nameof(inMin), "inMin must be less than or equal to inMax");
+				throw new ArgumentOutOfRangeException(nameof(inMin), "inMin must be less than or equal to inMax"); 
 			}
 
 			this.Minimum = inMin;

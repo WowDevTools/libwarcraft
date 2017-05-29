@@ -70,12 +70,14 @@ namespace Warcraft.DBC.Definitions
 			uint interDayMax = reader.ReadUInt32();
 			uint interNightMax = reader.ReadUInt32();
 
-			this.SilenceIntervalDay = new Range(interDayMin, interDayMax);
-			this.SilenceIntervalNight = new Range(interNightMin, interNightMax);
+			// HACK: Due to some malformed data on Blizzard's part, the range error checking must be disabled
+
+			this.SilenceIntervalDay = new Range(interDayMin, interDayMax, rigorous:false);
+			this.SilenceIntervalNight = new Range(interNightMin, interNightMax, rigorous:false);
 
 			this.DayMusic = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
 			this.NightMusic = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
-			
+
 			this.HasLoadedRecordData = true;
 		}
 
