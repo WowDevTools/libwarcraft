@@ -98,7 +98,7 @@ namespace Warcraft.DBC.Definitions
 		public override void DeserializeSelf(BinaryReader br)
 		{
 			base.DeserializeSelf(br);
-			
+
 			this.Name = new StringReference(br.ReadUInt32());
 
 			if (this.Version >= WarcraftVersion.Warlords)
@@ -109,8 +109,8 @@ namespace Warcraft.DBC.Definitions
 
 			this.Flags = br.ReadUInt32();
 
-			this.FallbackAnimation = new ForeignKey<uint>(DatabaseName.AnimationData, "ID", br.ReadUInt32());
-			this.BehaviourAnimation = new ForeignKey<uint>(DatabaseName.AnimationData, "ID", br.ReadUInt32());
+			this.FallbackAnimation = new ForeignKey<uint>(DatabaseName.AnimationData, nameof(this.ID), br.ReadUInt32());
+			this.BehaviourAnimation = new ForeignKey<uint>(DatabaseName.AnimationData, nameof(this.ID), br.ReadUInt32());
 
 			if (this.Version >= WarcraftVersion.Wrath)
 			{

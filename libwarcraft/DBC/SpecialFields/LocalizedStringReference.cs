@@ -20,6 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.Linq;
+using Warcraft.Core;
+
 namespace Warcraft.DBC.SpecialFields
 {
 	/// <summary>
@@ -91,24 +95,82 @@ namespace Warcraft.DBC.SpecialFields
 		/// The reference to an unknown version of the string.
 		/// </summary>
 		public StringReference Unknown2;
-		
+
 		/// <summary>
 		/// The reference to an unknown version of the string.
 		/// </summary>
 		public StringReference Unknown3;
-		
+
 		/// <summary>
 		/// The reference to an unknown version of the string.
 		/// </summary>
 		public StringReference Unknown4;
-		
+
 		/// <summary>
-		/// The reference to an unknown of the string.
+		/// The reference to an unknown version of the string.
 		/// </summary>
 		public StringReference Unknown5;
 
 		public uint Flags;
 
 		public StringReference ClientLocale;
+
+		/// <summary>
+		/// Gets the actual localized references.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<StringReference> GetReferences()
+		{
+			return new[]
+			{
+				this.English,
+				this.Korean,
+				this.French,
+				this.German,
+				this.Chinese,
+				this.Taiwan,
+				this.Spanish,
+				this.SpanishMexican,
+				this.Russian,
+				this.Unknown1,
+				this.Portugese,
+				this.Italian,
+				this.Unknown2,
+				this.Unknown3,
+				this.Unknown4,
+				this.Unknown5,
+				this.ClientLocale
+			}.Where(s => s != null);
+		}
+
+		/// <summary>
+		/// Gets the number of fields expected to be in a reference by version. This is equal to LanguageCount + 1,
+		/// that is, including the flag field.
+		/// </summary>
+		/// <param name="version"></param>
+		/// <returns></returns>
+		public static int GetFieldCount(WarcraftVersion version)
+		{
+			if (version < WarcraftVersion.Cataclysm)
+			{
+				switch (version)
+				{
+					case WarcraftVersion.Wrath:
+					{
+						return 17;
+					}
+					case WarcraftVersion.BurningCrusade:
+					{
+						return 10;
+					}
+					case WarcraftVersion.Classic:
+					{
+						return 9;
+					}
+				}
+			}
+
+			return 1;
+		}
 	}
 }

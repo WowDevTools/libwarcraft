@@ -1,5 +1,5 @@
 //
-//  ZoneAmbienceRecord.cs
+//  SoundAmbienceRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,13 +28,26 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	public class ZoneAmbienceRecord : DBCRecord
+	public class SoundAmbienceRecord : DBCRecord
 	{
 		public const DatabaseName Database = DatabaseName.ZoneAmbience;
 
-		public ForeignKey<uint> SoundEntriesDay;
-		public ForeignKey<uint> SoundEntriesNight;
-		
+		/// <summary>
+		/// The ambience sound to play during the day.
+		/// </summary>
+		public ForeignKey<uint> AmbienceDay;
+
+		/// <summary>
+		/// The ambience sound to play during the night.
+		/// </summary>
+		public ForeignKey<uint> AmbienceNight;
+
+		/*
+			Cataclysm +
+		*/
+
+		public uint Flags;
+
 		/// <summary>
 		/// Loads and parses the provided data.
 		/// </summary>
@@ -57,18 +70,36 @@ namespace Warcraft.DBC.Definitions
 		public override void DeserializeSelf(BinaryReader reader)
 		{
 			base.DeserializeSelf(reader);
-			
-			throw new NotImplementedException();
+
+			this.AmbienceDay = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
+			this.AmbienceNight = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
+
+			if (this.Version > WarcraftVersion.Cataclysm)
+			{
+				this.Flags = reader.ReadUInt32();
+			}
+
 			this.HasLoadedRecordData = true;
 		}
-		
+
 		public override List<StringReference> GetStringReferences()
 		{
 			return new List<StringReference>();
 		}
 
-		public override int FieldCount => throw new System.NotImplementedException();
+		public override int FieldCount
+		{
+			get
+			{
+				if (this.Version > WarcraftVersion.Cataclysm)
+				{
+					return 4;
+				}
 
-		public override int RecordSize => throw new System.NotImplementedException();
+				return 3;
+			}
+		}
+
+		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 }

@@ -35,7 +35,7 @@ namespace Warcraft.DBC
 	/// <summary>
 	/// DBC file handler. Parses and presents DBC files in a statically typed, easy to use fashion.
 	/// </summary>
-	public class DBC<T> : IDBC, IReadOnlyCollection<T>, IEnumerator<T> where T : DBCRecord, new()
+	public class DBC<T> : IDBC, IReadOnlyCollection<T> where T : DBCRecord, new()
 	{
 		/// <summary>
 		/// The header of the database file. Describes the sizes and field counts of the records in the database.
@@ -75,7 +75,7 @@ namespace Warcraft.DBC
 		/// <summary>
 		/// The <see cref="BinaryReader"/> which holds the data of the database.
 		/// </summary>
-		private readonly BinaryReader DatabaseReader;
+		private readonly byte[] DatabaseContents;
 
 		private readonly long StringBlockOffset;
 
@@ -92,40 +92,20 @@ namespace Warcraft.DBC
 		public DBC(WarcraftVersion inVersion, byte[] data)
 		{
 			this.Version = inVersion;
+			this.DatabaseContents = data;
 
-			this.DatabaseReader = new BinaryReader(new MemoryStream(data));
-			this.Header = new DBCHeader(this.DatabaseReader.ReadBytes(DBCHeader.GetSize()));
-
-			// Seek to and read the string block
-			this.DatabaseReader.BaseStream.Seek(this.Header.RecordCount * this.Header.RecordSize, SeekOrigin.Current);
-			this.StringBlockOffset = this.DatabaseReader.BaseStream.Position;
-			while (this.DatabaseReader.BaseStream.Position != this.DatabaseReader.BaseStream.Length)
+			using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(this.DatabaseContents)))
 			{
-				this.Strings.Add(this.DatabaseReader.BaseStream.Position - this.StringBlockOffset, this.DatabaseReader.ReadNullTerminatedString());
+				this.Header = new DBCHeader(databaseReader.ReadBytes(DBCHeader.GetSize()));
+
+				// Seek to and read the string block
+				databaseReader.BaseStream.Seek(this.Header.RecordCount * this.Header.RecordSize, SeekOrigin.Current);
+				this.StringBlockOffset = databaseReader.BaseStream.Position;
+				while (databaseReader.BaseStream.Position != databaseReader.BaseStream.Length)
+				{
+					this.Strings.Add(databaseReader.BaseStream.Position - this.StringBlockOffset, databaseReader.ReadNullTerminatedString());
+				}
 			}
-
-			// Reset back to the first record
-			this.DatabaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
-		}
-
-		/// <summary>
-		/// Gets a record from the database by its index.
-		/// </summary>
-		/// <param name="index"></param>
-		/// <returns></returns>
-		public T GetRecordByIndex(int index)
-		{
-			long recordOffset = DBCHeader.GetSize() + this.Header.RecordSize * index;
-			this.DatabaseReader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
-
-			T record = this.DatabaseReader.ReadRecord<T>((int)this.Header.FieldCount, (int)this.Header.RecordSize, this.Version);
-
-			foreach (var stringReference in record.GetStringReferences())
-			{
-				ResolveStringReference(stringReference);
-			}
-
-			return record;
 		}
 
 		/// <summary>
@@ -160,13 +140,9 @@ namespace Warcraft.DBC
 		*/
 
 		/// <summary>
-		/// Gets the enumerator for this collection.
+		/// Gets the number of held records.
 		/// </summary>
-		/// <returns></returns>
-		public IEnumerator<T> GetEnumerator()
-		{
-			return this;
-		}
+		public int Count => this.RecordCount;
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
@@ -174,53 +150,12 @@ namespace Warcraft.DBC
 		}
 
 		/// <summary>
-		/// Gets the number of held records.
-		/// </summary>
-		public int Count => this.RecordCount;
-
-		/// <summary>
-		/// Reads the record at the current position, and moves the enumerator to the next record.
+		/// Gets the enumerator for this collection.
 		/// </summary>
 		/// <returns></returns>
-		public bool MoveNext()
+		public IEnumerator<T> GetEnumerator()
 		{
-			long recordBlockEnd = this.StringBlockOffset;
-			if (this.DatabaseReader.BaseStream.Position >= recordBlockEnd)
-			{
-				return false;
-			}
-
-			this.Current = this.DatabaseReader.ReadRecord<T>((int)this.Header.FieldCount, (int)this.Header.RecordSize, this.Version);
-			foreach (var stringReference in this.Current.GetStringReferences())
-			{
-				ResolveStringReference(stringReference);
-			}
-
-			return this.DatabaseReader.BaseStream.Position != recordBlockEnd;
-		}
-
-		/// <summary>
-		/// Resets the stream back to the first record.
-		/// </summary>
-		public void Reset()
-		{
-			this.DatabaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
-			this.Current = null;
-		}
-
-		/// <summary>
-		/// Gets the current record.
-		/// </summary>
-		public T Current { get; private set; }
-
-		object IEnumerator.Current => this.Current;
-
-		/// <summary>
-		/// Disposes the database and any underlying streams.
-		/// </summary>
-		public void Dispose()
-		{
-			this.DatabaseReader.Dispose();
+			return new DBCEnumerator<T>(this, this.DatabaseContents, this.StringBlockOffset);
 		}
 
 		/*
@@ -231,7 +166,26 @@ namespace Warcraft.DBC
 		/// Gets the record at the given index.
 		/// </summary>
 		/// <param name="i"></param>
-		public T this[int i] => GetRecordByIndex(i);
+		public T this[int i]
+		{
+			get
+			{
+				using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(this.DatabaseContents)))
+				{
+					long recordOffset = DBCHeader.GetSize() + this.Header.RecordSize * i;
+					databaseReader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
+
+					T record = databaseReader.ReadRecord<T>((int)this.Header.FieldCount, (int)this.Header.RecordSize, this.Version);
+
+					foreach (var stringReference in record.GetStringReferences())
+					{
+						ResolveStringReference(stringReference);
+					}
+
+					return record;
+				}
+			}
+		}
 	}
 }
 

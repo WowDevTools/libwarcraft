@@ -75,8 +75,8 @@ namespace Warcraft.DBC.Definitions
 			this.SilenceIntervalDay = new Range(interDayMin, interDayMax, rigorous:false);
 			this.SilenceIntervalNight = new Range(interNightMin, interNightMax, rigorous:false);
 
-			this.DayMusic = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
-			this.NightMusic = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
+			this.DayMusic = new ForeignKey<uint>(DatabaseName.SoundEntries, nameof(SoundEntriesRecord.ID), reader.ReadUInt32());
+			this.NightMusic = new ForeignKey<uint>(DatabaseName.SoundEntries, nameof(SoundEntriesRecord.ID), reader.ReadUInt32());
 
 			this.HasLoadedRecordData = true;
 		}
@@ -85,7 +85,7 @@ namespace Warcraft.DBC.Definitions
 		{
 			return new List<StringReference>{ this.SetName };
 		}
-		
+
 		public override int FieldCount => 8;
 
 		public override int RecordSize => sizeof(uint) * this.FieldCount;

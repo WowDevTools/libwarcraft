@@ -47,10 +47,7 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>$(SolutionDir)\packages\System.Numerics.Vectors.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics.Vectors, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages\System.Numerics.Vectors.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
+      <HintPath>..\..\..\..\..\packages\System.Numerics.Vectors.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +90,7 @@
     <Compile Include="Core\Structures\SplineKey.cs" />
     <Compile Include="Core\Structures\Vector3s.cs" />
     <Compile Include="DBC\DatabaseName.cs" />
+    <Compile Include="DBC\DBCEnumerator.cs" />
     <Compile Include="DBC\Definitions\LiquidObjectRecord.cs" />
     <Compile Include="DBC\Definitions\MapRecord.cs" />
     <Compile Include="DBC\Definitions\SoundAmbienceRecord.cs" />
@@ -349,6 +347,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <Target Name="AfterBuild">
+    <Copy SourceFiles="obj\x86\$(Configuration)\$(AssemblyName).pdb" DestinationFolder="$(OutputPath)" />
+  </Target>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

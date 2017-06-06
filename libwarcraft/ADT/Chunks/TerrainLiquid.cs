@@ -206,8 +206,8 @@ namespace Warcraft.ADT.Chunks
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					this.LiquidType = new ForeignKey<ushort>(DatabaseName.LiquidType, "ID", br.ReadUInt16()); 
-					this.LiquidObject = new ForeignKey<ushort>(DatabaseName.LiquidObject, "ID", br.ReadUInt16()); 
+					this.LiquidType = new ForeignKey<ushort>(DatabaseName.LiquidType, nameof(DBCRecord.ID), br.ReadUInt16());
+					this.LiquidObject = new ForeignKey<ushort>(DatabaseName.LiquidObject, nameof(DBCRecord.ID), br.ReadUInt16());
 
 					this.HeightLevelRange = new Range(br.ReadSingle(), br.ReadSingle());
 

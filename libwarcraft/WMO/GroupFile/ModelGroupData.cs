@@ -132,7 +132,7 @@ namespace Warcraft.WMO.GroupFile
 		            }
 
 		            this.LiquidType = br.ReadUInt32();
-		            this.GroupID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, "WMOGroupID", br.ReadUInt32());
+		            this.GroupID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, nameof(WMOAreaTableRecord.WMOGroupID), br.ReadUInt32());
 
 		            this.UnknownFlags = br.ReadUInt32();
 		            this.Unused = br.ReadUInt32();

@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -32,22 +33,22 @@ namespace Warcraft.DBC.Definitions
 	{
 		public const DatabaseName Database = DatabaseName.SoundEntries;
 
-		public SoundType SoundType;
+		public SoundType Type;
 		public StringReference Name;
 		public List<StringReference> SoundFiles = new List<StringReference>(10); // Up to 10 variations
 		public List<uint> PlayFrequencies = new List<uint>(10);
 		public StringReference DirectoryBase;
 		public float Volume;
-		public float Pitch;
-		public float PitchVariation;
-		public uint Priority;
-		public uint Channel;
 		public uint Flags;
 		public float MinDistance;
-		public float MaxDistance;
-		public float DistanceCutOff;
-		public uint EAXDefinition;
-		
+		public float DistanceCutoff;
+		public ForeignKey<uint> EAXDefinition;
+
+		/*
+			Wrath +
+		*/
+		public uint SoundEntriesAdvancedID;
+
 		/// <summary>
 		/// Loads and parses the provided data.
 		/// </summary>
@@ -71,7 +72,26 @@ namespace Warcraft.DBC.Definitions
 		{
 			base.DeserializeSelf(reader);
 
-			throw new NotImplementedException();
+			this.Type = (SoundType) reader.ReadUInt32();
+			this.Name = reader.ReadStringReference();
+
+			for (int i = 0; i < 10; i++)
+			{
+				this.SoundFiles.Add(reader.ReadStringReference());
+			}
+
+			for (int i = 0; i < 10; i++)
+			{
+				this.PlayFrequencies.Add(reader.ReadUInt32());
+			}
+
+			this.DirectoryBase = reader.ReadStringReference();
+			this.Volume = reader.ReadSingle();
+			this.Flags = reader.ReadUInt32();
+			this.MinDistance = reader.ReadSingle();
+			this.DistanceCutoff = reader.ReadSingle();
+			this.EAXDefinition = new ForeignKey<uint>(DatabaseName.SoundProviderPreferences, "ID", reader.ReadUInt32());
+
 			this.HasLoadedRecordData = true;
 		}
 
@@ -83,9 +103,21 @@ namespace Warcraft.DBC.Definitions
 			return referenceList;
 		}
 
-		public override int FieldCount => throw new System.NotImplementedException();
+		public override int FieldCount
+		{
+			get
+			{
+				if (this.Version > WarcraftVersion.Wrath)
+				{
+					return 30;
+				}
 
-		public override int RecordSize => throw new System.NotImplementedException();
+				return 29;
+			}
+		}
+
+		// No distinction is made between uints and singles here since they're the same size
+		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 
 	public enum SoundType : uint
@@ -122,10 +154,10 @@ namespace Warcraft.DBC.Definitions
 		Emote			= 29,
 		NarrationMusic	= 30,
 		Narration		= 31,
-		
+
 		// .. //
-		
+
 		ZoneAmbience	= 50
-		
+
 	}
 }

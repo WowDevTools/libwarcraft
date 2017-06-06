@@ -23,6 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Warcraft.Core.Extensions;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -30,21 +32,27 @@ namespace Warcraft.DBC.Definitions
 	public class WMOAreaTableRecord : DBCRecord
 	{
 		public const DatabaseName Database = DatabaseName.WMOAreaTable;
-		
+
 		public uint WMOID;
 		public uint NameSetID;
-		public uint WMOGroupID;
-		public uint DayAmbienceSoundID;
-		public uint NightAmbienceSoundID;
-		public uint SoundProviderPref;
-		public uint SoundProviderPrefUnderwater;
-		public uint MIDIAmbience;
-		public uint MIDIAmbienceUnderwater;
+		public int WMOGroupID;
+
+		public ForeignKey<uint> SoundProviderPref;
+		public ForeignKey<uint> SoundProviderPrefUnderwater;
+		public ForeignKey<uint> AmbienceID;
 		public ForeignKey<uint> ZoneMusic;
-		public uint IntroSound;
-		public uint IntroPriority;
+		public ForeignKey<uint> IntroSound;
 		public uint Flags;
+		public ForeignKey<uint> AreaTableID;
 		private LocalizedStringReference AreaName;
+
+		/*
+			Cataclysm and up
+		*/
+
+		public ForeignKey<uint> UnderwaterIntroSound;
+		public ForeignKey<uint> UnderwaterZoneMusic;
+		public ForeignKey<uint> UnderwaterAmbience;
 
 		/// <summary>
 		/// Loads and parses the provided data.
@@ -68,18 +76,30 @@ namespace Warcraft.DBC.Definitions
 		public override void DeserializeSelf(BinaryReader reader)
 		{
 			base.DeserializeSelf(reader);
-			
-			throw new NotImplementedException();
+
+			this.WMOID = reader.ReadUInt32();
+			this.NameSetID = reader.ReadUInt32();
+			this.WMOGroupID = reader.ReadInt32();
+
+			this.SoundProviderPref = new ForeignKey<uint>(DatabaseName.SoundProviderPreferences, nameof(SoundProviderPreferencesRecord.ID), reader.ReadUInt32());
+			this.SoundProviderPrefUnderwater = new ForeignKey<uint>(DatabaseName.SoundProviderPreferences, nameof(SoundProviderPreferencesRecord.ID), reader.ReadUInt32());
+			this.AmbienceID = new ForeignKey<uint>(DatabaseName.SoundAmbience, nameof(DBCRecord.ID), reader.ReadUInt32()); // TODO: Implement SoundAmbience
+			this.ZoneMusic = new ForeignKey<uint>(DatabaseName.ZoneMusic, nameof(ZoneMusicRecord.ID), reader.ReadUInt32());
+			this.IntroSound = new ForeignKey<uint>(DatabaseName.ZoneIntroMusicTable, nameof(ZoneIntroMusicTableRecord.ID), reader.ReadUInt32());
+			this.Flags = reader.ReadUInt32();
+			this.AreaTableID = new ForeignKey<uint>(DatabaseName.AreaTable, nameof(DBCRecord.ID), reader.ReadUInt32()); // TODO: Implement AreaTable
+			this.AreaName = reader.ReadLocalizedStringReference(this.Version);
+
 			this.HasLoadedRecordData = true;
 		}
-		
+
 		public override List<StringReference> GetStringReferences()
 		{
-			return new List<StringReference>(); // TODO: Localization handling
+			return this.AreaName.GetReferences().ToList();
 		}
 
-		public override int FieldCount => throw new System.NotImplementedException();
+		public override int FieldCount => 11 + LocalizedStringReference.GetFieldCount(this.Version);
 
-		public override int RecordSize => throw new System.NotImplementedException();
+		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 }

@@ -65,7 +65,7 @@ namespace Warcraft.DBC.Definitions
 			{
 				using (BinaryReader br = new BinaryReader(ms))
 				{
-					DeserializeSelf(br);					
+					DeserializeSelf(br);
 				}
 			}
 		}
@@ -73,15 +73,15 @@ namespace Warcraft.DBC.Definitions
 		public override void DeserializeSelf(BinaryReader reader)
 		{
 			base.DeserializeSelf(reader);
-			
+
 			this.Name = new StringReference(reader.ReadUInt32());
 
 			this.Type = (LiquidType)reader.ReadInt32();
 
-			this.SpellEffect = new ForeignKey<uint>(DatabaseName.Spell, "ID", reader.ReadUInt32());
+			this.SpellEffect = new ForeignKey<uint>(DatabaseName.Spell, nameof(SpellRecord.ID), reader.ReadUInt32());
 			this.HasLoadedRecordData = true;
 		}
-		
+
 		public override List<StringReference> GetStringReferences()
 		{
 			return new List<StringReference>{ this.Name };

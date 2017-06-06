@@ -36,7 +36,7 @@ namespace Warcraft.DBC.Definitions
 		public ForeignKey<uint> SoundEntries;
 		public uint Priority;
 		public uint MinDelayMinutes;
-		
+
 		/// <summary>
 		/// Loads and parses the provided data.
 		/// </summary>
@@ -59,7 +59,7 @@ namespace Warcraft.DBC.Definitions
 		public override void DeserializeSelf(BinaryReader reader)
 		{
 			base.DeserializeSelf(reader);
-			
+
 			throw new NotImplementedException();
 			this.HasLoadedRecordData = true;
 		}
@@ -68,7 +68,7 @@ namespace Warcraft.DBC.Definitions
 		{
 			return new List<StringReference>{ this.Name };
 		}
-		
+
 		public override int FieldCount => throw new System.NotImplementedException();
 
 		public override int RecordSize => throw new System.NotImplementedException();
