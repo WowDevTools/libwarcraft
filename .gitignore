@@ -493,3 +493,6 @@ $RECYCLE.BIN/
 bin/
 obj/
 .packages
+
+## Build scripts (personal)
+release/
