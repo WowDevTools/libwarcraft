@@ -18,13 +18,7 @@ namespace Warcraft.WMO
 		public ModelRoot RootInformation;
 		public List<ModelGroup> Groups = new List<ModelGroup>();
 
-		public int GroupCount
-		{
-			get
-			{
-				return (int)this.RootInformation.Header.GroupCount;
-			}
-		}
+		public int GroupCount => (int)this.RootInformation.Header.GroupCount;
 
 		public WMO(byte[] inData)
 		{
@@ -33,7 +27,7 @@ namespace Warcraft.WMO
 			PostResolveStringReferences();
 		}
 
-		private void PostResolveStringReferences()
+		private void PostResolveStringReferences() // TODO: Refactor
 		{
 			foreach (DoodadInstance doodadInstance in this.RootInformation.DoodadInstances.DoodadInstances)
 			{
@@ -109,7 +103,7 @@ namespace Warcraft.WMO
 			return this.RootInformation.GetInternalDescriptiveGroupName(modelGroup);
 		}
 
-		public List<string> GetUsedTextures()
+		public IEnumerable<string> GetTextures()
 		{
 			return this.RootInformation.Textures.Textures.Select(kvp => kvp.Value).Where(s => !string.IsNullOrEmpty(s)).ToList();
 		}
@@ -117,6 +111,15 @@ namespace Warcraft.WMO
 		public ModelMaterial GetMaterial(byte materialID)
 		{
 			return this.RootInformation.Materials.Materials[materialID];
+		}
+
+		/// <summary>
+		/// Gets the materials in this model.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<ModelMaterial> GetMaterials()
+		{
+			return this.RootInformation.Materials.Materials;
 		}
 
 		/// <summary>
