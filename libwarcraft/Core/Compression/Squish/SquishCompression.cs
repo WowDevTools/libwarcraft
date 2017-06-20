@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using ImageSharp;
 
 namespace Warcraft.Core.Compression.Squish
 {
@@ -135,14 +136,14 @@ namespace Warcraft.Core.Compression.Squish
 			return argb;
 		}
 
-		public static Image DecompressToBitmap(byte[] blocks, int width, int height, SquishOptions flags)
+		public static Image<Rgba32> DecompressToImage(byte[] blocks, int width, int height, SquishOptions flags)
 		{
-			return DecompressToBitmap(blocks, 0, width, height, flags);
+			return DecompressToImage(blocks, 0, width, height, flags);
 		}
 
-		public static unsafe Image DecompressToBitmap(byte[] blocks, int offset, int width, int height, SquishOptions flags)
+		public static Image<Rgba32> DecompressToImage(byte[] blocks, int offset, int width, int height, SquishOptions flags)
 		{
-			var fullBuffer = new byte[4 * width * height];
+			Image<Rgba32> result = new Image<Rgba32>(width, height);
 			var bufferOffset = 0;
 
 			var bytesPerBlock = flags.HasFlag(SquishOptions.DXT1) ? 8 : 16;
@@ -155,7 +156,6 @@ namespace Warcraft.Core.Compression.Squish
 					// Decompress the block.
 					var targetRgba = DecompressBlock(blocks, blockOffset, flags);
 
-
 					// Write the decompressed pixels to the correct image locations.
 					var sourcePixelOffset = 0;
 					for (int py = 0; py < 4; ++py)
@@ -167,11 +167,23 @@ namespace Warcraft.Core.Compression.Squish
 							var sy = y + py;
 							if (sx < width && sy < height)
 							{
+								Rgba32 sourceColour = new Rgba32
+								(
+									targetRgba[sourcePixelOffset + 0],
+									targetRgba[sourcePixelOffset + 1],
+									targetRgba[sourcePixelOffset + 2],
+									targetRgba[sourcePixelOffset + 3]
+								);
+
+								result[sx, sy] = sourceColour;
+
+								/*
 								var i = 4 * (sx + (sy * width));
 								fullBuffer[bufferOffset + i + 0] = targetRgba[sourcePixelOffset + 2];
 								fullBuffer[bufferOffset + i + 1] = targetRgba[sourcePixelOffset + 1];
 								fullBuffer[bufferOffset + i + 2] = targetRgba[sourcePixelOffset + 0];
 								fullBuffer[bufferOffset + i + 3] = targetRgba[sourcePixelOffset + 3];
+								*/
 							}
 
 							sourcePixelOffset += 4; // Skip this pixel as it is outside the image.
@@ -182,14 +194,8 @@ namespace Warcraft.Core.Compression.Squish
 					blockOffset += bytesPerBlock;
 				}
 			}
-			Image ret;
-			fixed (byte* p = fullBuffer)
-			{
-				var ptr = (IntPtr)p;
-				var tempImage = new Bitmap(width, height, 4 * width, System.Drawing.Imaging.PixelFormat.Format32bppArgb, ptr);
-				ret = new Bitmap(tempImage);
-			}
-			return ret;
+
+			return result;
 		}
 
 		#endregion
