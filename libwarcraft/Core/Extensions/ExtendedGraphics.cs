@@ -21,6 +21,7 @@
 //
 
 using System.Drawing;
+using ImageSharp;
 
 namespace Warcraft.Core.Extensions
 {
@@ -30,48 +31,18 @@ namespace Warcraft.Core.Extensions
 	public static class ExtendedGraphics
 	{
 		/// <summary>
-		/// Inverts colours of the specified bitmap.
-		/// </summary>
-		/// <param name="map">The bitmap to invert.</param>
-		/// <param name="keepAlpha">Whether or not the keep the alpha values, or invert them as well.</param>
-		/// <returns>The inverted bitmap.</returns>
-		public static Bitmap Invert(this Bitmap map, bool keepAlpha = true)
-		{
-			Bitmap outMap = new Bitmap(map);
-
-			for (int y = 0; y < map.Height; ++y)
-			{
-				for (int x = 0; x < map.Width; ++x)
-				{
-					Color pixel = map.GetPixel(x, y);
-					byte pixelAlpha = pixel.A;
-					if (!keepAlpha)
-					{
-						pixelAlpha = (byte)(255 - pixel.A);
-					}
-
-					Color negativePixel = Color.FromArgb(pixelAlpha, 255 - pixel.R, 255 - pixel.G, 255 - pixel.B);
-
-					outMap.SetPixel(x, y, negativePixel);
-				}
-			}
-
-			return outMap;
-		}
-
-		/// <summary>
 		/// Determines whether or not a given bitmap has any alpha values, and thus if it requires an alpha channel in
 		/// other formats.
 		/// </summary>
 		/// <param name="map">The map to inspect.</param>
 		/// <returns><value>true</value> if the bitmap has any alpha values; otherwise, <value>false</value>.</returns>
-		public static bool HasAlpha(this Bitmap map)
+		public static bool HasAlpha(this Image<Rgba32> map)
 		{
 			for (int y = 0; y < map.Height; ++y)
 			{
 				for (int x = 0; x < map.Width; ++x)
 				{
-					Color pixel = map.GetPixel(x, y);
+					Rgba32 pixel = map[x, y];
 					if (pixel.A != 255)
 					{
 						return true;
