@@ -2,6 +2,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.7.1.0" />
   </ItemGroup>
