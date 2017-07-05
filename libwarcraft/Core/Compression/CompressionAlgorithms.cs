@@ -34,9 +34,9 @@ namespace Warcraft.Core.Compression
 	public enum CompressionAlgorithms : byte
 	{
 		/// <summary>
-		/// Sparse compression.
+		/// LZMA compression.
 		/// </summary>
-		Sparse 			= 0x20,
+		LZMA 			= 0x20,
 
 		/// <summary>
 		/// IMA ADPCM Mono Audio compression.

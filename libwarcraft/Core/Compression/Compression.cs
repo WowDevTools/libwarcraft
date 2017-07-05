@@ -21,9 +21,10 @@
 //
 
 using System;
-using Ionic.Zlib;
-using Ionic.BZip2;
 using System.IO;
+using System.IO.Compression;
+using SharpCompress.Compressors.BZip2;
+using SharpCompress.Compressors.LZMA;
 using Warcraft.MPQ.Tables.Block;
 
 namespace Warcraft.Core.Compression
@@ -112,24 +113,13 @@ namespace Warcraft.Core.Compression
 				pendingSector = DecompressADPCMMono(pendingSector);
 			}
 
-			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.Sparse))
+			if (compressionAlgorithms.HasFlag(CompressionAlgorithms.LZMA))
 			{
-				// Decompress sector using Sparse
-				pendingSector = DecompressSparse(pendingSector);
+				// Decompress sector using LZMA
+				pendingSector = DecompressLZMA(pendingSector);
 			}
 
 			return pendingSector;
-		}
-
-		/// <summary>
-		/// TODO: Implement
-		/// Decompresssed a block of data using the Sparse algorithm.
-		/// </summary>
-		/// <param name="inData">The compressed data block.</param>
-		/// <returns>The decompressed data.</returns>
-		public static byte[] DecompressSparse(byte[] inData)
-		{
-			throw new NotImplementedException("Sparse decompression has not yet been implemented.");
 		}
 
 		/// <summary>
@@ -180,11 +170,11 @@ namespace Warcraft.Core.Compression
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
-				using (ZlibStream zs = new ZlibStream(ms, CompressionMode.Decompress))
+				using (DeflateStream ds = new DeflateStream(ms, CompressionMode.Decompress))
 				{
 					using (MemoryStream output = new MemoryStream())
 					{
-						zs.CopyTo(output);
+						ds.CopyTo(output);
 						return output.ToArray();
 					}
 				}
@@ -217,7 +207,7 @@ namespace Warcraft.Core.Compression
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
-				using (BZip2InputStream input = new BZip2InputStream(ms, false))
+				using (BZip2Stream input = new BZip2Stream(ms, SharpCompress.Compressors.CompressionMode.Decompress))
 				{
 					using (MemoryStream decompressedData = new MemoryStream())
 					{
@@ -235,7 +225,17 @@ namespace Warcraft.Core.Compression
 		/// <returns>The decompressed data.</returns>
 		public static byte[] DecompressLZMA(byte[] inData)
 		{
-			throw new NotImplementedException("LZMA decompression has not yet been implemented.");
+			using (MemoryStream ms = new MemoryStream(inData))
+			{
+				using (LZipStream input = new LZipStream(ms, SharpCompress.Compressors.CompressionMode.Decompress))
+				{
+					using (MemoryStream decompressedData = new MemoryStream())
+					{
+						input.CopyTo(decompressedData);
+						return decompressedData.ToArray();
+					}
+				}
+			}
 		}
 	}
 }

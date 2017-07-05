@@ -11,7 +11,4 @@
   <ItemGroup>
     <ProjectReference Include="..\libwarcraft\libwarcraft.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
 </Project>
