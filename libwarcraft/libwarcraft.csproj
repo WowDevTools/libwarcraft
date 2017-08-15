@@ -14,11 +14,11 @@
     <Copyright>Copyright Jarl Gullberg 2017</Copyright>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageVersion>2.0.1</PackageVersion>
+    <PackageVersion>2.0.2</PackageVersion>
     <PackageId>libwarcraft</PackageId>
     <PackageLicenseUrl>https://www.gnu.org/licenses/gpl-3.0.en.html</PackageLicenseUrl>
     <PackageProjectUrl>http://wowdev.tools/</PackageProjectUrl>
-    <PackageReleaseNotes>Initial release on NuGet and port to .NET Standard 2.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Dependency upgrades.</PackageReleaseNotes>
     <PackageTags>warcraft;cross-platform;file-format</PackageTags>
     <PackageOutputPath>../nuget</PackageOutputPath>
     <IncludeSymbols>true</IncludeSymbols>
