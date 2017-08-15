@@ -164,7 +164,7 @@ namespace Warcraft.Core.Compression
 		}
 
 		/// <summary>
-		/// Decompresssed a block of data using the Deflate algorithm.
+		/// Decompresssed a block of data using the ZLib Deflate algorithm.
 		/// </summary>
 		/// <param name="inData">The compressed data block.</param>
 		/// <returns>The decompressed data.</returns>
