@@ -9,7 +9,7 @@
   <PropertyGroup>
     <Title>libwarcraft</Title>
     <Authors>Jarl Gullberg</Authors>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <Description>Managed library for interacting with binary file types made by Blizzard Entertainment.</Description>
     <Copyright>Copyright Jarl Gullberg 2017</Copyright>
   </PropertyGroup>
