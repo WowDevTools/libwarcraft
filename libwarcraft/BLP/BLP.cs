@@ -26,10 +26,10 @@ using System.Collections.Generic;
 
 using ImageSharp;
 using ImageSharp.Processing;
+using SixLabors.Primitives;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Compression.Squish;
 using Warcraft.Core.Structures;
-using Size = ImageSharp.Size;
 
 namespace Warcraft.BLP
 {
