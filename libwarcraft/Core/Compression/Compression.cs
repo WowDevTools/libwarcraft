@@ -22,8 +22,9 @@
 
 using System;
 using System.IO;
-using System.IO.Compression;
+using SharpCompress.Compressors;
 using SharpCompress.Compressors.BZip2;
+using SharpCompress.Compressors.Deflate;
 using SharpCompress.Compressors.LZMA;
 using Warcraft.MPQ.Tables.Block;
 
@@ -48,7 +49,8 @@ namespace Warcraft.Core.Compression
 			{
 				return DecompressData(pendingSector);
 			}
-			else if (blockFlags.HasFlag(BlockFlags.IsImploded))
+
+			if (blockFlags.HasFlag(BlockFlags.IsImploded))
 			{
 				// This file or sector uses a single-pass PKWARE Implode algorithm.
 				// Decompress sector using PKWARE
@@ -170,7 +172,7 @@ namespace Warcraft.Core.Compression
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
-				using (DeflateStream ds = new DeflateStream(ms, CompressionMode.Decompress))
+				using (ZlibStream ds = new ZlibStream(ms, CompressionMode.Decompress))
 				{
 					using (MemoryStream output = new MemoryStream())
 					{
@@ -207,7 +209,7 @@ namespace Warcraft.Core.Compression
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
-				using (BZip2Stream input = new BZip2Stream(ms, SharpCompress.Compressors.CompressionMode.Decompress))
+				using (BZip2Stream input = new BZip2Stream(ms, CompressionMode.Decompress))
 				{
 					using (MemoryStream decompressedData = new MemoryStream())
 					{
@@ -227,7 +229,7 @@ namespace Warcraft.Core.Compression
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
-				using (LZipStream input = new LZipStream(ms, SharpCompress.Compressors.CompressionMode.Decompress))
+				using (LZipStream input = new LZipStream(ms, CompressionMode.Decompress))
 				{
 					using (MemoryStream decompressedData = new MemoryStream())
 					{
