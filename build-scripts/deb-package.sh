@@ -71,7 +71,7 @@ fi
 
 echo -e "$LOG_PREFIX Building Release configuration of $PROGRAM_NAME... $LOG_SUFFIX"
 
-BUILDSUCCESS=$(xbuild /p:Configuration="Release" "$PROGRAM_ROOT/$PROGRAM_NAME.sln"  | grep "Build succeeded.")
+BUILDSUCCESS=$(msbuild /p:Configuration="Release" "$PROGRAM_ROOT/$PROGRAM_NAME.sln"  | grep "Build succeeded.")
 
 if [[ ! -z $BUILDSUCCESS ]]; then
 	echo "Build succeeded. Copying files and building package."

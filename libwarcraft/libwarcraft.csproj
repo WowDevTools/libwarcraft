@@ -14,7 +14,7 @@
     <Copyright>Copyright Jarl Gullberg 2017</Copyright>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageVersion>2.0.1-preview1</PackageVersion>
+    <PackageVersion>2.0.1</PackageVersion>
     <PackageId>libwarcraft</PackageId>
     <PackageLicenseUrl>https://www.gnu.org/licenses/gpl-3.0.en.html</PackageLicenseUrl>
     <PackageProjectUrl>http://wowdev.tools/</PackageProjectUrl>
