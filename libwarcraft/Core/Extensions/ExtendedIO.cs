@@ -242,7 +242,7 @@ namespace Warcraft.Core.Extensions
 
 			return locRef;
 		}
-		
+
 		/// <summary>
 		/// Reads a <see cref="StringReference"/> from the data stream.
 		/// </summary>
@@ -252,7 +252,7 @@ namespace Warcraft.Core.Extensions
 		{
 			return new StringReference(binaryReader.ReadUInt32());
 		}
-		
+
 		/*
 			BinaryReader Extensions for standard typess
 		*/
@@ -412,7 +412,7 @@ namespace Warcraft.Core.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
-		public static T ReadRecord<T>(this BinaryReader reader, int fieldCount, int recordSize, WarcraftVersion version = WarcraftVersion.Classic) 
+		public static T ReadRecord<T>(this BinaryReader reader, int fieldCount, int recordSize, WarcraftVersion version = WarcraftVersion.Classic)
 			where T : IDeferredDeserialize, IDBCRecord, new()
 		{
 			T record = Activator.CreateInstance<T>();
@@ -523,17 +523,25 @@ namespace Warcraft.Core.Extensions
 				}
 				case AxisConfiguration.YUp:
 				{
-					float x = binaryReader.ReadSingle();
-					float z = binaryReader.ReadSingle();
-					float y = binaryReader.ReadSingle() * -1.0f;
+					float x1 = binaryReader.ReadSingle();
+					float y1 = binaryReader.ReadSingle();
+					float z1 = binaryReader.ReadSingle();
+
+					float x = x1;
+					float y = z1;
+					float z = -y1;
 
 					return new Vector3(x, y, z);
 				}
 				case AxisConfiguration.ZUp:
 				{
-					float x =  binaryReader.ReadSingle();
-					float z = binaryReader.ReadSingle() * -1.0f;
-					float y = binaryReader.ReadSingle();
+					float x1 =  binaryReader.ReadSingle();
+					float y1 = binaryReader.ReadSingle();
+					float z1 = binaryReader.ReadSingle();
+
+					float x = x1;
+					float y = -z1;
+					float z = y1;
 
 					return new Vector3(x, y, z);
 				}
@@ -561,9 +569,13 @@ namespace Warcraft.Core.Extensions
 				}
 				case AxisConfiguration.YUp:
 				{
-					float x = binaryReader.ReadSingle();
-					float z = binaryReader.ReadSingle();
-					float y = binaryReader.ReadSingle() * -1.0f;
+					float x1 = binaryReader.ReadSingle();
+					float y1 = binaryReader.ReadSingle();
+					float z1 = binaryReader.ReadSingle();
+
+					float x = x1;
+					float y = z1;
+					float z = -y1;
 
 					float w = binaryReader.ReadSingle();
 
@@ -571,9 +583,13 @@ namespace Warcraft.Core.Extensions
 				}
 				case AxisConfiguration.ZUp:
 				{
-					float x = binaryReader.ReadSingle();
-					float z = binaryReader.ReadSingle() * -1.0f;
-					float y = binaryReader.ReadSingle();
+					float x1 =  binaryReader.ReadSingle();
+					float y1 = binaryReader.ReadSingle();
+					float z1 = binaryReader.ReadSingle();
+
+					float x = x1;
+					float y = -z1;
+					float z = y1;
 
 					float w = binaryReader.ReadSingle();
 
@@ -603,17 +619,25 @@ namespace Warcraft.Core.Extensions
 				}
 				case AxisConfiguration.YUp:
 				{
-					short x = binaryReader.ReadInt16();
-					short z = binaryReader.ReadInt16();
-					short y = (short)(binaryReader.ReadInt16() * -1);
+					short x1 = binaryReader.ReadInt16();
+					short y1 = binaryReader.ReadInt16();
+					short z1 = binaryReader.ReadInt16();
+
+					short x = x1;
+					short y = z1;
+					short z = (short)-y1;
 
 					return new Vector3s(x, y, z);
 				}
 				case AxisConfiguration.ZUp:
 				{
-					short x = binaryReader.ReadInt16();
-					short z = (short)(binaryReader.ReadInt16() * -1);
-					short y = binaryReader.ReadInt16();
+					short x1 =  binaryReader.ReadInt16();
+					short y1 = binaryReader.ReadInt16();
+					short z1 = binaryReader.ReadInt16();
+
+					short x = x1;
+					short y = (short)-z1;
+					short z = y1;
 
 					return new Vector3s(x, y, z);
 				}
@@ -833,8 +857,8 @@ namespace Warcraft.Core.Extensions
 				case AxisConfiguration.ZUp:
 				{
 					binaryWriter.Write(vector.X);
-					binaryWriter.Write(vector.Z);
-					binaryWriter.Write(vector.Y * -1.0f);
+					binaryWriter.Write(vector.Z * -1.0f);
+					binaryWriter.Write(vector.Y);
 					break;
 				}
 				default:
@@ -856,13 +880,6 @@ namespace Warcraft.Core.Extensions
 			switch (storeAs)
 			{
 				case AxisConfiguration.Native:
-				{
-					binaryWriter.Write(vector.X);
-					binaryWriter.Write(vector.Y);
-					binaryWriter.Write(vector.Z);
-					binaryWriter.Write(vector.W);
-					break;
-				}
 				case AxisConfiguration.YUp:
 				{
 					binaryWriter.Write(vector.X);
@@ -874,8 +891,8 @@ namespace Warcraft.Core.Extensions
 				case AxisConfiguration.ZUp:
 				{
 					binaryWriter.Write(vector.X);
-					binaryWriter.Write(vector.Z);
-					binaryWriter.Write(vector.Y * -1.0f);
+					binaryWriter.Write(vector.Z * -1.0f);
+					binaryWriter.Write(vector.Y);
 					binaryWriter.Write(vector.W);
 					break;
 				}
@@ -896,12 +913,6 @@ namespace Warcraft.Core.Extensions
 			switch (storeAs)
 			{
 				case AxisConfiguration.Native:
-				{
-					binaryWriter.Write(vector.X);
-					binaryWriter.Write(vector.Y);
-					binaryWriter.Write(vector.Z);
-					break;
-				}
 				case AxisConfiguration.YUp:
 				{
 					binaryWriter.Write(vector.X);
@@ -912,8 +923,8 @@ namespace Warcraft.Core.Extensions
 				case AxisConfiguration.ZUp:
 				{
 					binaryWriter.Write(vector.X);
-					binaryWriter.Write(vector.Z);
-					binaryWriter.Write((short)(vector.Y * -1));
+					binaryWriter.Write((short)(vector.Z * -1));
+					binaryWriter.Write(vector.Y);
 					break;
 				}
 				default:
