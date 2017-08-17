@@ -9,7 +9,7 @@
   <PropertyGroup>
     <Title>libwarcraft</Title>
     <Authors>Jarl Gullberg</Authors>
-    <Version>2.2.0</Version>
+    <Version>2.3.0</Version>
     <Description>Managed library for interacting with binary file types made by Blizzard Entertainment.</Description>
     <Copyright>Copyright Jarl Gullberg 2017</Copyright>
   </PropertyGroup>
@@ -17,10 +17,11 @@
     <PackageId>libwarcraft</PackageId>
     <PackageLicenseUrl>https://www.gnu.org/licenses/gpl-3.0.en.html</PackageLicenseUrl>
     <PackageProjectUrl>http://wowdev.tools/</PackageProjectUrl>
-    <PackageReleaseNotes>Correct mismatched decompression format.</PackageReleaseNotes>
+    <PackageReleaseNotes>Correct incorrect axis conversions when reading vectors.</PackageReleaseNotes>
     <PackageTags>warcraft;cross-platform;file-format</PackageTags>
     <PackageOutputPath>../nuget</PackageOutputPath>
-    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSymbols>True</IncludeSymbols>
+    <IncludeSource>True</IncludeSource>
     <RepositoryUrl>https://github.com/WowDevTools/libwarcraft</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
