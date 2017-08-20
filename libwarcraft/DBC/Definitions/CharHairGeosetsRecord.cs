@@ -1,5 +1,5 @@
 ﻿//
-//  ZoneMusicRecord.cs
+//  CharHairGeosetsRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -29,7 +29,7 @@ namespace Warcraft.DBC.Definitions
 {
 	public class CharHairGeosetsRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.CreatureDisplayInfo;
+		public const DatabaseName Database = DatabaseName.CharHairGeosets;
 
 		public ForeignKey<uint> Race;
 		public bool IsFemale;

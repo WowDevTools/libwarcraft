@@ -1,5 +1,5 @@
 ﻿//
-//  ZoneMusicRecord.cs
+//  CharSectionsRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,7 +30,7 @@ namespace Warcraft.DBC.Definitions
 {
 	public class CharSectionsRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.CreatureDisplayInfo;
+		public const DatabaseName Database = DatabaseName.CharSections;
 
 		public ForeignKey<uint> Race;
 		public bool IsFemale;

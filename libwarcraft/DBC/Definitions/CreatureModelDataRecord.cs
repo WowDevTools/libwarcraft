@@ -1,5 +1,5 @@
 ﻿//
-//  ZoneMusicRecord.cs
+//  CreatureModelDataRecord.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
