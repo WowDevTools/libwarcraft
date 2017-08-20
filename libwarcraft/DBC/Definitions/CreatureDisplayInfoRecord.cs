@@ -38,7 +38,9 @@ namespace Warcraft.DBC.Definitions
 		public float Scale;
 		public uint Opacity;
 		public List<StringReference> TextureVariations;
+		public uint SizeClass;
 		public ForeignKey<uint> Blood;
+		public ForeignKey<uint> NPCSound;
 
 		/// <summary>
 		/// Loads and parses the provided data.
@@ -77,7 +79,9 @@ namespace Warcraft.DBC.Definitions
 				reader.ReadStringReference()
 			};
 
+			this.SizeClass = reader.ReadUInt32();
 			this.Blood = new ForeignKey<uint>(DatabaseName.UnitBlood, nameof(DBCRecord.ID), reader.ReadUInt32());
+			this.NPCSound = new ForeignKey<uint>(DatabaseName.NPCSounds, nameof(DBCRecord.ID), reader.ReadUInt32());
 
 			this.HasLoadedRecordData = true;
 		}
@@ -87,7 +91,7 @@ namespace Warcraft.DBC.Definitions
 			return this.TextureVariations;
 		}
 
-		public override int FieldCount => 10;
+		public override int FieldCount => 12;
 
 		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}

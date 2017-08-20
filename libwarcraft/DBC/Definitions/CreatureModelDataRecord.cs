@@ -40,11 +40,13 @@ namespace Warcraft.DBC.Definitions
 		public ForeignKey<uint> FootprintDecal;
 		public float FootprintDecalLength;
 		public float FootprintDecalWidth;
-		public float FootprintDecalScale;
+		public float FootprintDecalParticleScale;
 		public uint FoleyMaterialID;
 		public ForeignKey<uint> FootstepShakeSize;
 		public ForeignKey<uint> DeathThudShakeSize;
 		public ForeignKey<uint> SoundData;
+		public float CollisionWidth;
+		public float CollisionHeight;
 
 		/// <summary>
 		/// Loads and parses the provided data.
@@ -77,11 +79,13 @@ namespace Warcraft.DBC.Definitions
 			this.FootprintDecal = new ForeignKey<uint>(DatabaseName.FootprintTextures, nameof(DBCRecord.ID), reader.ReadUInt32());
 			this.FootprintDecalLength = reader.ReadSingle();
 			this.FootprintDecalWidth = reader.ReadSingle();
-			this.FootprintDecalScale = reader.ReadSingle();
+			this.FootprintDecalParticleScale = reader.ReadSingle();
 			this.FoleyMaterialID = reader.ReadUInt32();
 			this.FootstepShakeSize = new ForeignKey<uint>(DatabaseName.CameraShakes, nameof(DBCRecord.ID), reader.ReadUInt32());
 			this.DeathThudShakeSize = new ForeignKey<uint>(DatabaseName.CameraShakes, nameof(DBCRecord.ID), reader.ReadUInt32());
 			this.SoundData = new ForeignKey<uint>(DatabaseName.CreatureSoundData, nameof(DBCRecord.ID), reader.ReadUInt32());
+			this.CollisionWidth = reader.ReadSingle();
+			this.CollisionHeight = reader.ReadSingle();
 
 			this.HasLoadedRecordData = true;
 		}
@@ -91,7 +95,7 @@ namespace Warcraft.DBC.Definitions
 			yield return this.ModelPath;
 		}
 
-		public override int FieldCount => 14;
+		public override int FieldCount => 16;
 
 		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}

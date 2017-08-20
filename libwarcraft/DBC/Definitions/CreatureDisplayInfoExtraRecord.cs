@@ -48,8 +48,7 @@ namespace Warcraft.DBC.Definitions
 		public ForeignKey<uint> Boots;
 		public ForeignKey<uint> Wrist;
 		public ForeignKey<uint> Gloves;
-		public ForeignKey<uint> Tabard;
-		public ForeignKey<uint> Cape;
+		public uint Flags;
 		public StringReference BakedName;
 
 		/// <summary>
@@ -95,9 +94,8 @@ namespace Warcraft.DBC.Definitions
 			this.Boots = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
 			this.Wrist = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
 			this.Gloves = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Tabard = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Cape = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
 
+			this.Flags = reader.ReadUInt32();
 			this.BakedName = reader.ReadStringReference();
 
 			this.HasLoadedRecordData = true;

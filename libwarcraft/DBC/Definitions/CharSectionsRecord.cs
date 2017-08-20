@@ -35,10 +35,10 @@ namespace Warcraft.DBC.Definitions
 		public ForeignKey<uint> Race;
 		public bool IsFemale;
 		public CharSectionType BaseSection;
-		public List<StringReference> SectionTextures;
-		public CharSectionFlag Flags;
 		public uint Type;
 		public uint Variation;
+		public List<StringReference> SectionTextures;
+		public CharSectionFlag Flags;
 
 		/*
 			What follows are forwards into the SectionTextures list for ease of use.
@@ -87,6 +87,9 @@ namespace Warcraft.DBC.Definitions
 			this.Race = new ForeignKey<uint>(DatabaseName.ChrRaces, nameof(DBCRecord.ID), reader.ReadUInt32());
 			this.IsFemale = (reader.ReadUInt32() > 0);
 			this.BaseSection = (CharSectionType)reader.ReadUInt32();
+			this.Type = reader.ReadUInt32();
+			this.Variation = reader.ReadUInt32();
+
 			this.SectionTextures = new List<StringReference>
 			{
 				reader.ReadStringReference(),
@@ -95,8 +98,6 @@ namespace Warcraft.DBC.Definitions
 			};
 
 			this.Flags = (CharSectionFlag)reader.ReadUInt32();
-			this.Type = reader.ReadUInt32();
-			this.Variation = reader.ReadUInt32();
 
 			this.HasLoadedRecordData = true;
 		}
