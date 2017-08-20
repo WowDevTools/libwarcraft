@@ -187,7 +187,7 @@ namespace Warcraft.Core.Extensions
 			if (!VersionedTypeReaderMap.ContainsKey(typeof(T)))
 			{
 				throw new ArgumentException("The given generic type has no supported reading function associated " +
-				                            "with it.", nameof(T));
+				                            "with it.", typeof(T).Name);
 			}
 
 			return VersionedTypeReaderMap[typeof(T)](br, version);
