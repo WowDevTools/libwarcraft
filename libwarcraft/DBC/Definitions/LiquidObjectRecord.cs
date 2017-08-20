@@ -87,10 +87,10 @@ namespace Warcraft.DBC.Definitions
 			throw new NotImplementedException();
 			this.HasLoadedRecordData = true;
 		}
-		
-		public override List<StringReference> GetStringReferences()
+
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return new List<StringReference>();
+			yield break;
 		}
 
 		public override int FieldCount => throw new System.NotImplementedException();

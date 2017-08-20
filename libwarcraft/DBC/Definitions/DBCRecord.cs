@@ -88,7 +88,7 @@ namespace Warcraft.DBC.Definitions
 		/// Gets a list of any string references in the record. Used for resolving them after they have been loaded.
 		/// </summary>
 		/// <returns></returns>
-		public abstract List<StringReference> GetStringReferences();
+		public abstract IEnumerable<StringReference> GetStringReferences();
 
 		/// <summary>
 		/// Determines whether or not this object has finished loading.

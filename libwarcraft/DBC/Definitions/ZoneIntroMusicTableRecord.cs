@@ -64,9 +64,9 @@ namespace Warcraft.DBC.Definitions
 			this.HasLoadedRecordData = true;
 		}
 
-		public override List<StringReference> GetStringReferences()
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return new List<StringReference>{ this.Name };
+			yield return this.Name;
 		}
 
 		public override int FieldCount => throw new System.NotImplementedException();

@@ -103,9 +103,9 @@ namespace Warcraft.DBC.Definitions
 			this.HasLoadedRecordData = true;
 		}
 
-		public override List<StringReference> GetStringReferences()
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return new List<StringReference>{ this.BakedName };
+			yield return this.BakedName;
 		}
 
 		public override int FieldCount => 19;

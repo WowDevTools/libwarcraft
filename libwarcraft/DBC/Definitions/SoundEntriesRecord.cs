@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
 using Warcraft.DBC.SpecialFields;
@@ -95,12 +96,14 @@ namespace Warcraft.DBC.Definitions
 			this.HasLoadedRecordData = true;
 		}
 
-		public override List<StringReference> GetStringReferences()
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			List<StringReference> referenceList = new List<StringReference> {this.Name, this.DirectoryBase};
-			referenceList.AddRange(this.SoundFiles);
-
-			return referenceList;
+			yield return this.Name;
+			yield return this.DirectoryBase;
+			foreach (var soundFile in this.SoundFiles)
+			{
+				yield return soundFile;
+			}
 		}
 
 		public override int FieldCount

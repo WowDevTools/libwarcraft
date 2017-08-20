@@ -65,10 +65,10 @@ namespace Warcraft.DBC.Definitions
 			this.RecordData = data;
 			this.HasLoadedRecordData = true;
 		}
-		
-		public override List<StringReference> GetStringReferences()
+
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return new List<StringReference>();
+			yield break;
 		}
 
 		/// <summary>

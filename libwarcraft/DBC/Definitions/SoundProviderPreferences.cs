@@ -57,7 +57,7 @@ namespace Warcraft.DBC.Definitions
 		public float EAX3ModulationDepth;
 		public float EAX3HFReference;
 		public float EAX3LFReference;
-		
+
 		/// <summary>
 		/// Loads and parses the provided data.
 		/// </summary>
@@ -80,14 +80,14 @@ namespace Warcraft.DBC.Definitions
 		public override void DeserializeSelf(BinaryReader reader)
 		{
 			base.DeserializeSelf(reader);
-			
+
 			throw new NotImplementedException();
 			this.HasLoadedRecordData = true;
 		}
-		
-		public override List<StringReference> GetStringReferences()
+
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return new List<StringReference>{ this.Description };
+			yield return this.Description;
 		}
 
 		public override int FieldCount => throw new System.NotImplementedException();

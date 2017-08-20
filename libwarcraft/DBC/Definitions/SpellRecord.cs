@@ -130,14 +130,14 @@ namespace Warcraft.DBC.Definitions
 		public override void DeserializeSelf(BinaryReader reader)
 		{
 			base.DeserializeSelf(reader);
-			
+
 			throw new NotImplementedException();
 			this.HasLoadedRecordData = true;
 		}
-		
-		public override List<StringReference> GetStringReferences()
+
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return new List<StringReference>();
+			yield break;
 		}
 
 		public override int FieldCount => throw new System.NotImplementedException();

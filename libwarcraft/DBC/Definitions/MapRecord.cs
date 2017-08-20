@@ -33,7 +33,7 @@ namespace Warcraft.DBC.Definitions
 	public class MapRecord : DBCRecord
 	{
 		public const DatabaseName Database = DatabaseName.Map;
-		
+
 		/// <summary>
 		/// The directory under which the map is stored.
 		/// </summary>
@@ -143,14 +143,29 @@ namespace Warcraft.DBC.Definitions
 		public override void DeserializeSelf(BinaryReader reader)
 		{
 			base.DeserializeSelf(reader);
-			
+
 			throw new NotImplementedException();
 			this.HasLoadedRecordData = true;
 		}
-		
-		public override List<StringReference> GetStringReferences()
+
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return new List<StringReference>(); // TODO: Localization handling
+			yield return this.Directory;
+
+			foreach (var localizedMapName in this.MapName.GetReferences())
+			{
+				yield return localizedMapName;
+			}
+
+			foreach (var mapDescription in this.MapDescription1.GetReferences())
+			{
+				yield return mapDescription;
+			}
+
+			foreach (var mapDescription in this.MapDescription2.GetReferences())
+			{
+				yield return mapDescription;
+			}
 		}
 
 		public override int FieldCount => throw new System.NotImplementedException();

@@ -90,9 +90,9 @@ namespace Warcraft.DBC.Definitions
 			}
 		}
 
-		public override List<StringReference> GetStringReferences()
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return new List<StringReference>{ this.Name };
+			yield return this.Name;
 		}
 
 		public override void DeserializeSelf(BinaryReader br)

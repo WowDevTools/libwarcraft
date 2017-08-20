@@ -93,9 +93,9 @@ namespace Warcraft.DBC.Definitions
 			this.HasLoadedRecordData = true;
 		}
 
-		public override List<StringReference> GetStringReferences()
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return this.AreaName.GetReferences().ToList();
+			return this.AreaName.GetReferences();
 		}
 
 		public override int FieldCount => 11 + LocalizedStringReference.GetFieldCount(this.Version);

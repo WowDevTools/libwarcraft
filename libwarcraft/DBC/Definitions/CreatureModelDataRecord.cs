@@ -86,9 +86,9 @@ namespace Warcraft.DBC.Definitions
 			this.HasLoadedRecordData = true;
 		}
 
-		public override List<StringReference> GetStringReferences()
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return new List<StringReference>{ this.ModelPath };
+			yield return this.ModelPath;
 		}
 
 		public override int FieldCount => 14;
