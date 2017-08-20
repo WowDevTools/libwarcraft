@@ -144,6 +144,7 @@ namespace Warcraft.Core.Extensions
 			{ typeof(MDXCamera), (r, v) => r.ReadMDXCamera(v)},
 			{ typeof(MDXRibbonEmitter), (r, v) => r.ReadMDXRibbonEmitter(v)},
 			{ typeof(MDXMaterial), (r, v)=> r.ReadMDXMaterial(v) },
+			{ typeof(MDXColourAnimation), (r, v) => r.ReadMDXColourAnimation(v) },
 
 			// System.Numerics.Vectors types
 			{ typeof(Quaternion), (r, v) => v >= WarcraftVersion.BurningCrusade ? r.ReadQuaternion16() : r.ReadQuaternion32()},

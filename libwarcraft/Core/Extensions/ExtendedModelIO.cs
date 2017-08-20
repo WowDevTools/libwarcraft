@@ -130,6 +130,16 @@ namespace Warcraft.Core.Extensions
 		}
 
 		/// <summary>
+		/// Reads an <see cref="MDXColourAnimation"/> from the data stream.
+		/// </summary>
+		/// <param name="binaryReader"></param>
+		/// <returns></returns>
+		public static MDXColourAnimation ReadMDXColourAnimation(this BinaryReader binaryReader, WarcraftVersion version)
+		{
+			return new MDXColourAnimation(binaryReader, version);
+		}
+
+		/// <summary>
 		/// Reads an <see cref="MDXTextureTransform"/> from the data stream.
 		/// </summary>
 		/// <param name="binaryReader"></param>
