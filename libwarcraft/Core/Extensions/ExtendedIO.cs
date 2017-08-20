@@ -478,7 +478,7 @@ namespace Warcraft.Core.Extensions
 		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
 		public static Quaternion ReadQuaternion32(this BinaryReader binaryReader)
 		{
-			return new Quaternion(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
+			return new Quaternion(binaryReader.ReadVector3(), binaryReader.ReadSingle());
 		}
 
 		/// <summary>
@@ -489,11 +489,16 @@ namespace Warcraft.Core.Extensions
 		/// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
 		public static Quaternion ReadQuaternion16(this BinaryReader binaryReader)
 		{
-			short x = binaryReader.ReadInt16();
-			short y = binaryReader.ReadInt16();
-			short z = binaryReader.ReadInt16();
+			var vector = binaryReader.ReadVector3s();
 			short w = binaryReader.ReadInt16();
-			return new Quaternion(ExtendedData.ShortQuatValueToFloat(x), ExtendedData.ShortQuatValueToFloat(y), ExtendedData.ShortQuatValueToFloat(z), ExtendedData.ShortQuatValueToFloat(w));
+
+			return new Quaternion
+			(
+				ExtendedData.ShortQuatValueToFloat(vector.X),
+				ExtendedData.ShortQuatValueToFloat(vector.Y),
+				ExtendedData.ShortQuatValueToFloat(vector.Z),
+				ExtendedData.ShortQuatValueToFloat(w)
+			);
 		}
 
 		/// <summary>
@@ -802,9 +807,9 @@ namespace Warcraft.Core.Extensions
 		/// <param name="quaternion">The quaternion to write.</param>
 		public static void WriteQuaternion32(this BinaryWriter binaryWriter, Quaternion quaternion)
 		{
-			binaryWriter.Write(quaternion.X);
-			binaryWriter.Write(quaternion.Y);
-			binaryWriter.Write(quaternion.Z);
+			var vector = new Vector3(quaternion.X, quaternion.Y, quaternion.Z);
+			binaryWriter.WriteVector3(vector);
+
 			binaryWriter.Write(quaternion.W);
 		}
 
@@ -816,9 +821,14 @@ namespace Warcraft.Core.Extensions
 		/// <param name="quaternion">The quaternion to write.</param>
 		public static void WriteQuaternion16(this BinaryWriter binaryWriter, Quaternion quaternion)
 		{
-			binaryWriter.Write(ExtendedData.FloatQuatValueToShort(quaternion.X));
-			binaryWriter.Write(ExtendedData.FloatQuatValueToShort(quaternion.Y));
-			binaryWriter.Write(ExtendedData.FloatQuatValueToShort(quaternion.Z));
+			var vector = new Vector3s
+			(
+				ExtendedData.FloatQuatValueToShort(quaternion.X),
+				ExtendedData.FloatQuatValueToShort(quaternion.Y),
+				ExtendedData.FloatQuatValueToShort(quaternion.Z)
+			);
+
+			binaryWriter.WriteVector3s(vector);
 			binaryWriter.Write(ExtendedData.FloatQuatValueToShort(quaternion.W));
 		}
 
