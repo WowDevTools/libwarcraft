@@ -35,7 +35,6 @@ namespace Warcraft.DBC
 	public class DBCEnumerator<T> : IEnumerator<T> where T : DBCRecord, new()
 	{
 		private readonly DBC<T> ParentDatabase;
-		private readonly byte[] DatabaseContents;
 		private readonly BinaryReader DatabaseReader;
 		private readonly long StringBlockOffset;
 
@@ -49,9 +48,8 @@ namespace Warcraft.DBC
 		public DBCEnumerator(DBC<T> database, byte[] data, long stringBlockOffset)
 		{
 			this.ParentDatabase = database;
-			this.DatabaseContents = data;
 			this.StringBlockOffset = stringBlockOffset;
-			this.DatabaseReader = new BinaryReader(new MemoryStream(this.DatabaseContents));
+			this.DatabaseReader = new BinaryReader(new MemoryStream(data));
 
 			// Seek to the start of the record block
 			this.DatabaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
