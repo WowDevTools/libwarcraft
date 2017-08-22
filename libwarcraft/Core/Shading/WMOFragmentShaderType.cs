@@ -1,5 +1,5 @@
 //
-//  ShaderType.cs
+//  WMOFragmentShaderType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,9 +23,9 @@
 namespace Warcraft.Core.Shading
 {
 	/// <summary>
-	/// All of the shader types present in WoW.
+	/// All of the world object shader types present in WoW.
 	/// </summary>
-	public enum ShaderType
+	public enum WMOFragmentShaderType
 	{
 		/// <summary>
 		/// Simple diffuse shading.

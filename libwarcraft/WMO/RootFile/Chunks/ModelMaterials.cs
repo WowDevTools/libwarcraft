@@ -90,7 +90,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 	public class ModelMaterial : IBinarySerializable
 	{
 		public MaterialFlags Flags;
-		public ShaderType Shader;
+		public WMOFragmentShaderType Shader;
 		public BlendingMode BlendMode;
 
 		public uint FirstTextureOffset;
@@ -139,7 +139,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 				using (BinaryReader br = new BinaryReader(ms))
 				{
 					this.Flags = (MaterialFlags) br.ReadUInt32();
-					this.Shader = (ShaderType) br.ReadUInt32();
+					this.Shader = (WMOFragmentShaderType) br.ReadUInt32();
 					this.BlendMode = (BlendingMode) br.ReadUInt32();
 
 					this.FirstTextureOffset = br.ReadUInt32();
