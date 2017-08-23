@@ -22,6 +22,8 @@
 
 using System;
 using System.Collections.Generic;
+using static Warcraft.Core.Shading.MDX.MDXFragmentShaderType;
+using static Warcraft.Core.Shading.MDX.MDXVertexShaderType;
 
 namespace Warcraft.Core.Shading.MDX
 {
@@ -35,36 +37,36 @@ namespace Warcraft.Core.Shading.MDX
         /// </summary>
         private static readonly List<MDXShaderGroup> ShaderTable = new List<MDXShaderGroup>
         {
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_Mod2xNA_Alpha,           MDXVertexShaderType.Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_AddAlpha,                MDXVertexShaderType.Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_AddAlpha_Alpha,          MDXVertexShaderType.Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_Mod2xNA_Alpha_Add,       MDXVertexShaderType.Diffuse_T1_Env_T1,      MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_AddAlpha,                   MDXVertexShaderType.Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_AddAlpha,                MDXVertexShaderType.Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_AddAlpha,                   MDXVertexShaderType.Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_AddAlpha_Alpha,             MDXVertexShaderType.Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_Alpha_Alpha,             MDXVertexShaderType.Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_Mod2xNA_Alpha_3s,        MDXVertexShaderType.Diffuse_T1_Env_T1,      MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_AddAlpha_Wgt,            MDXVertexShaderType.Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_Add_Alpha,                  MDXVertexShaderType.Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_ModNA_Alpha,             MDXVertexShaderType.Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_AddAlpha_Wgt,               MDXVertexShaderType.Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_AddAlpha_Wgt,               MDXVertexShaderType.Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_AddAlpha_Wgt,            MDXVertexShaderType.Diffuse_T1_T2,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_Mod_Add_Wgt,             MDXVertexShaderType.Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_Mod2xNA_Alpha_UnshAlpha, MDXVertexShaderType.Diffuse_T1_Env_T1,      MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_Dual_Crossfade,             MDXVertexShaderType.Diffuse_T1_T1_T1,       MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_Depth,                      MDXVertexShaderType.Diffuse_EdgeFade_T1,    MDXControlShaderType.T1,          MDXEvaluationShaderType.T1,          0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_AddAlpha_Alpha,             MDXVertexShaderType.Diffuse_T1_Env_T2,      MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_Mod,                        MDXVertexShaderType.Diffuse_EdgeFade_T1_T2, MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_Masked_Dual_Crossfade,      MDXVertexShaderType.Diffuse_T1_T1_T1_T2,    MDXControlShaderType.T1_T2_T3_T4, MDXEvaluationShaderType.T1_T2_T3_T4, 0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_Alpha,                   MDXVertexShaderType.Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Opaque_Mod2xNA_Alpha_UnshAlpha, MDXVertexShaderType.Diffuse_T1_Env_T2,      MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 3),
-            new MDXShaderGroup(MDXFragmentShaderType.Combiners_Mod_Depth,                      MDXVertexShaderType.Diffuse_EdgeFade_Env,   MDXControlShaderType.T1,          MDXEvaluationShaderType.T1,          0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Guild,                                    MDXVertexShaderType.Diffuse_T1_T2_T1,       MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2,       0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Guild_NoBorder,                           MDXVertexShaderType.Diffuse_T1_T2,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2_T3,    0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Guild_Opaque,                             MDXVertexShaderType.Diffuse_T1_T2_T1,       MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2,       0, 0),
-            new MDXShaderGroup(MDXFragmentShaderType.Illum,                                    MDXVertexShaderType.Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
+            new MDXShaderGroup(Combiners_Opaque_Mod2xNA_Alpha,           Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Opaque_AddAlpha,                Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Opaque_AddAlpha_Alpha,          Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Opaque_Mod2xNA_Alpha_Add,       Diffuse_T1_Env_T1,      MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 3),
+            new MDXShaderGroup(Combiners_Mod_AddAlpha,                   Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
+            new MDXShaderGroup(Combiners_Opaque_AddAlpha,                Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Mod_AddAlpha,                   Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
+            new MDXShaderGroup(Combiners_Mod_AddAlpha_Alpha,             Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
+            new MDXShaderGroup(Combiners_Opaque_Alpha_Alpha,             Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Opaque_Mod2xNA_Alpha_3s,        Diffuse_T1_Env_T1,      MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 3),
+            new MDXShaderGroup(Combiners_Opaque_AddAlpha_Wgt,            Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Mod_Add_Alpha,                  Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
+            new MDXShaderGroup(Combiners_Opaque_ModNA_Alpha,             Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Mod_AddAlpha_Wgt,               Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Mod_AddAlpha_Wgt,               Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Opaque_AddAlpha_Wgt,            Diffuse_T1_T2,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Opaque_Mod_Add_Wgt,             Diffuse_T1_Env,         MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Opaque_Mod2xNA_Alpha_UnshAlpha, Diffuse_T1_Env_T1,      MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 3),
+            new MDXShaderGroup(Combiners_Mod_Dual_Crossfade,             Diffuse_T1_T1_T1,       MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 0),
+            new MDXShaderGroup(Combiners_Mod_Depth,                      Diffuse_EdgeFade_T1,    MDXControlShaderType.T1,          MDXEvaluationShaderType.T1,          0, 0),
+            new MDXShaderGroup(Combiners_Mod_AddAlpha_Alpha,             Diffuse_T1_Env_T2,      MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 3),
+            new MDXShaderGroup(Combiners_Mod_Mod,                        Diffuse_EdgeFade_T1_T2, MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
+            new MDXShaderGroup(Combiners_Mod_Masked_Dual_Crossfade,      Diffuse_T1_T1_T1_T2,    MDXControlShaderType.T1_T2_T3_T4, MDXEvaluationShaderType.T1_T2_T3_T4, 0, 0),
+            new MDXShaderGroup(Combiners_Opaque_Alpha,                   Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 3),
+            new MDXShaderGroup(Combiners_Opaque_Mod2xNA_Alpha_UnshAlpha, Diffuse_T1_Env_T2,      MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2_T3,    0, 3),
+            new MDXShaderGroup(Combiners_Mod_Depth,                      Diffuse_EdgeFade_Env,   MDXControlShaderType.T1,          MDXEvaluationShaderType.T1,          0, 0),
+            new MDXShaderGroup(Guild,                                    Diffuse_T1_T2_T1,       MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2,       0, 0),
+            new MDXShaderGroup(Guild_NoBorder,                           Diffuse_T1_T2,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2_T3,    0, 0),
+            new MDXShaderGroup(Guild_Opaque,                             Diffuse_T1_T2_T1,       MDXControlShaderType.T1_T2_T3,    MDXEvaluationShaderType.T1_T2,       0, 0),
+            new MDXShaderGroup(Illum,                                    Diffuse_T1_T1,          MDXControlShaderType.T1_T2,       MDXEvaluationShaderType.T1_T2,       0, 0),
         };
 
         /// <summary>
@@ -91,38 +93,38 @@ namespace Warcraft.Core.Shading.MDX
             {
                 if ((shaderID & 0x80) > 0)
                 {
-                    return MDXVertexShaderType.Diffuse_Env;
+                    return Diffuse_Env;
                 }
 
                 if ((shaderID & 0x4000) > 0)
                 {
-                    return MDXVertexShaderType.Diffuse_T2;
+                    return Diffuse_T2;
                 }
 
-                return MDXVertexShaderType.Diffuse_T1;
+                return Diffuse_T1;
             }
 
             if ((shaderID & 0x80) > 0)
             {
                 if ((shaderID & 0x8) > 0)
                 {
-                    return MDXVertexShaderType.Diffuse_Env_Env;
+                    return Diffuse_Env_Env;
                 }
 
-                return MDXVertexShaderType.Diffuse_Env_T1;
+                return Diffuse_Env_T1;
             }
 
             if ((shaderID & 0x8) > 0)
             {
-                return MDXVertexShaderType.Diffuse_T1_Env;
+                return Diffuse_T1_Env;
             }
 
             if ((shaderID & 0x4000) > 0)
             {
-                return MDXVertexShaderType.Diffuse_T1_T2;
+                return Diffuse_T1_T2;
             }
 
-            return MDXVertexShaderType.Diffuse_T1_T1;
+            return Diffuse_T1_T1;
         }
 
         /// <summary>
@@ -195,8 +197,8 @@ namespace Warcraft.Core.Shading.MDX
             if (operationCount == 1)
             {
                 return (shaderID & 0x70) > 0
-                    ? MDXFragmentShaderType.Combiners_Mod
-                    : MDXFragmentShaderType.Combiners_Opaque;
+                    ? Combiners_Mod
+                    : Combiners_Opaque;
             }
 
             uint lower = (uint)(shaderID & 7);
@@ -204,23 +206,23 @@ namespace Warcraft.Core.Shading.MDX
             {
                 switch (lower)
                 {
-                    case 0: return MDXFragmentShaderType.Combiners_Mod_Opaque;
-                    case 3: return MDXFragmentShaderType.Combiners_Mod_Add;
-                    case 4: return MDXFragmentShaderType.Combiners_Mod_Mod2x;
-                    case 6: return MDXFragmentShaderType.Combiners_Mod_Mod2xNA;
-                    case 7: return MDXFragmentShaderType.Combiners_Mod_AddNA;
-                    default: return MDXFragmentShaderType.Combiners_Mod_Mod;
+                    case 0: return Combiners_Mod_Opaque;
+                    case 3: return Combiners_Mod_Add;
+                    case 4: return Combiners_Mod_Mod2x;
+                    case 6: return Combiners_Mod_Mod2xNA;
+                    case 7: return Combiners_Mod_AddNA;
+                    default: return Combiners_Mod_Mod;
                 }
             }
 
             switch (lower)
             {
-                case 0: return MDXFragmentShaderType.Combiners_Opaque_Opaque;
-                case 3: return MDXFragmentShaderType.Combiners_Opaque_AddAlpha;
-                case 4: return MDXFragmentShaderType.Combiners_Opaque_Mod2x;
-                case 6: return MDXFragmentShaderType.Combiners_Opaque_Mod2xNA;
-                case 7: return MDXFragmentShaderType.Combiners_Opaque_AddAlpha;
-                default: return MDXFragmentShaderType.Combiners_Opaque_Mod;
+                case 0: return Combiners_Opaque_Opaque;
+                case 3: return Combiners_Opaque_AddAlpha;
+                case 4: return Combiners_Opaque_Mod2x;
+                case 6: return Combiners_Opaque_Mod2xNA;
+                case 7: return Combiners_Opaque_AddAlpha;
+                default: return Combiners_Opaque_Mod;
             }
         }
     }
