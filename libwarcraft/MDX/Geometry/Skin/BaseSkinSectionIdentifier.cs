@@ -47,7 +47,7 @@ namespace Warcraft.MDX.Geometry.Skin
 		{
 			if (inValue > 9999)
 			{
-				throw new ArgumentOutOfRangeException(nameof(inValue), "The input value may not exceed four digits.");
+				throw new ArgumentOutOfRangeException(nameof(inValue), $"The input value may not exceed four digits. Given value was {inValue}");
 			}
 
 			this.InternalValue = inValue;
