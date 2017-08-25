@@ -426,11 +426,11 @@ namespace Warcraft.Core.Extensions
 				// Make sure the provided record type is valid for this database file
 				if (record.RecordSize != recordSize)
 				{
-					throw new ArgumentException("The provided record type is not valid for this database file.");
+					throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}");
 				}
 				if (record.FieldCount != fieldCount)
 				{
-					throw new ArgumentException("The provided record type is not valid for this database file.");
+					throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}");
 				}
 			}
 
