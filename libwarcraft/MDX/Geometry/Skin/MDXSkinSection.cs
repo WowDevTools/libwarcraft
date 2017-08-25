@@ -156,7 +156,7 @@ namespace Warcraft.MDX.Geometry.Skin
 		/// <returns>The size of a serialized object.</returns>
 		public static int GetSize(WarcraftVersion version)
 		{
-			if (version > WarcraftVersion.Cataclysm)
+			if (version >= WarcraftVersion.BurningCrusade)
 			{
 				return 48;
 			}
