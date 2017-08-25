@@ -36,8 +36,8 @@ namespace Warcraft.MDX.Geometry.Skin
 	{
 		private readonly ushort InternalValue;
 
-		public string MajorType { get; }
-		public string MinorType { get; }
+		public string MajorType => GetMajorType();
+		public string MinorType => GetMinorType(this.MajorType);
 
 		/// <summary>
 		/// Creates a new <see cref="BaseSkinSectionIdentifier"/> object from an underlying data value.
@@ -51,9 +51,6 @@ namespace Warcraft.MDX.Geometry.Skin
 			}
 
 			this.InternalValue = inValue;
-
-			this.MajorType = GetMajorType();
-			this.MinorType = GetMinorType(this.MajorType);
 		}
 
 		/// <summary>
