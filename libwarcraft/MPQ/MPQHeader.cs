@@ -416,12 +416,13 @@ namespace Warcraft.MPQ
 					archiveSize = furthestOffset + GetBlockTableSize();
 				}
 
-				if (extendedBlockTableOffset > furthestOffset)
+				if (extendedBlockTableOffset <= furthestOffset)
 				{
-					furthestOffset = extendedBlockTableOffset;
-
-					archiveSize = furthestOffset + GetExtendedBlockTableSize();
+					return archiveSize;
 				}
+
+				furthestOffset = extendedBlockTableOffset;
+				archiveSize = furthestOffset + GetExtendedBlockTableSize();
 
 				return archiveSize;
 			}

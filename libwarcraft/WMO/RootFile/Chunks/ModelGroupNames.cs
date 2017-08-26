@@ -108,12 +108,14 @@ namespace Warcraft.WMO.RootFile.Chunks
 
 					// Then zero padding to an even 4-byte boundary at the end
 					long count = 4 - (ms.Position % 4);
-					if (count < 4)
+					if (count >= 4)
 					{
-						for (long i = 0; i < count; ++i)
-						{
-							bw.Write('\0');
-						}
+						return ms.ToArray();
+					}
+
+					for (long i = 0; i < count; ++i)
+					{
+						bw.Write('\0');
 					}
 				}
 

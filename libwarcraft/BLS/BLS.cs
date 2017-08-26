@@ -62,11 +62,13 @@ namespace Warcraft.BLS
 
 			            this.Shaders.Add(shaderBlock);
 
-			            if ((ms.Position % 4) != 0)
+			            if ((ms.Position % 4) == 0)
 			            {
-				            long padCount = 4 - (ms.Position % 4);
-				            ms.Position += padCount;
+				            continue;
 			            }
+
+			            long padCount = 4 - (ms.Position % 4);
+			            ms.Position += padCount;
 		            }
             	}
             }

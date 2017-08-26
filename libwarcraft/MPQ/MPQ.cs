@@ -175,15 +175,16 @@ namespace Warcraft.MPQ
 			if (this.Header.GetFormat() >= MPQFormat.ExtendedV1)
 			{
 				// Seek to the extended block table and load it, if neccesary
-				if (this.Header.GetExtendedBlockTableOffset() > 0)
+				if (this.Header.GetExtendedBlockTableOffset() <= 0)
 				{
-					this.ArchiveReader.BaseStream.Position = (long) this.Header.GetExtendedBlockTableOffset();
+					return;
+				}
 
-					for (int i = 0; i < this.Header.GetBlockTableEntryCount(); ++i)
-					{
+				this.ArchiveReader.BaseStream.Position = (long) this.Header.GetExtendedBlockTableOffset();
+				for (int i = 0; i < this.Header.GetBlockTableEntryCount(); ++i)
+				{
 
-						this.ExtendedBlockTable.Add(this.ArchiveReader.ReadUInt16());
-					}
+					this.ExtendedBlockTable.Add(this.ArchiveReader.ReadUInt16());
 				}
 			}
 		}
@@ -223,13 +224,15 @@ namespace Warcraft.MPQ
 		/// </summary>
 		public ExtendedAttributes GetFileAttributes()
 		{
-			if (this.FileAttributes == null)
+			if (this.FileAttributes != null)
 			{
-				if (ContainsFile(ExtendedAttributes.InternalFileName))
-				{
-					byte[] attributeData = ExtractFile(ExtendedAttributes.InternalFileName);
-					this.FileAttributes = new ExtendedAttributes(attributeData, this.Header.BlockTableEntryCount);
-				}
+				return this.FileAttributes;
+			}
+
+			if (ContainsFile(ExtendedAttributes.InternalFileName))
+			{
+				byte[] attributeData = ExtractFile(ExtendedAttributes.InternalFileName);
+				this.FileAttributes = new ExtendedAttributes(attributeData, this.Header.BlockTableEntryCount);
 			}
 
 			return this.FileAttributes;

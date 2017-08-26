@@ -141,13 +141,13 @@ namespace Warcraft.BLP
 			string dataSignature = new string(br.ReadChars(4));
 
 			BLPFormat format;
-			if (Enum.TryParse(dataSignature, out format))
+			if (!Enum.TryParse(dataSignature, out format))
 			{
-				br.BaseStream.Position = startPosition;
-				return format;
+				throw new FileLoadException("The provided data did not have a BLP signature.");
 			}
 
-			throw new FileLoadException("The provided data did not have a BLP signature.");
+			br.BaseStream.Position = startPosition;
+			return format;
 		}
 
 		/// <summary>
@@ -345,13 +345,23 @@ namespace Warcraft.BLP
 		/// <param name="mipLevel">The mipmap level of the data</param>
 		private Image<Rgba32> DecompressMipMap(byte[] inData, uint mipLevel)
 		{
+			if (inData == null || inData.Length <= 0)
+			{
+				throw new ArgumentException("No image data provided.", nameof(inData));
+			}
+
 			Image<Rgba32> map = null;
 			uint targetXRes = GetLevelAdjustedResolutionValue(GetResolution().X, mipLevel);
             uint targetYRes = GetLevelAdjustedResolutionValue(GetResolution().Y, mipLevel);
 
-			if (inData.Length > 0 && targetXRes > 0 && targetYRes > 0)
+			if (targetXRes <= 0 || targetYRes <= 0)
 			{
-				if (this.Header.CompressionType == TextureCompressionType.Palettized)
+				throw new ArgumentException($"The input mipmap level produced an invalid resolution: {mipLevel}", nameof(mipLevel));
+			}
+
+			switch (this.Header.CompressionType)
+			{
+				case TextureCompressionType.Palettized:
 				{
 					map = new Image<Rgba32>((int)targetXRes, (int)targetYRes);
 					using (MemoryStream ms = new MemoryStream(inData))
@@ -424,8 +434,9 @@ namespace Warcraft.BLP
 							}
 						}
 					}
+					break;
 				}
-				else if (this.Header.CompressionType == TextureCompressionType.DXTC)
+				case TextureCompressionType.DXTC:
 				{
 					SquishOptions squishOptions = SquishOptions.DXT1;
 					if (this.Header.PixelFormat == BLPPixelFormat.DXT3)
@@ -438,8 +449,9 @@ namespace Warcraft.BLP
 					}
 
 					map = SquishCompression.DecompressToImage(inData, (int)targetXRes, (int)targetYRes, squishOptions);
+					break;
 				}
-				else if (this.Header.CompressionType == TextureCompressionType.Uncompressed)
+				case TextureCompressionType.Uncompressed:
 				{
 					map = new Image<Rgba32>((int)targetXRes, (int)targetYRes);
 
@@ -462,8 +474,9 @@ namespace Warcraft.BLP
 							}
 						}
 					}
+					break;
 				}
-				else if (this.Header.CompressionType == TextureCompressionType.JPEG)
+				case TextureCompressionType.JPEG:
 				{
 					// Merge the JPEG header with the data in the mipmap
 					byte[] jpegImage = new byte[this.JPEGHeaderSize + inData.Length];
@@ -474,6 +487,7 @@ namespace Warcraft.BLP
 					{
 						map = Image.Load<Rgba32>(ms).Invert();
 					}
+					break;
 				}
 			}
 
@@ -751,11 +765,13 @@ namespace Warcraft.BLP
 					break;
 				}
 
-				if (distanceResult < colourDistance)
+				if (!(distanceResult < colourDistance))
 				{
-					colourDistance = distanceResult;
-					nearestColour = paletteColour;
+					continue;
 				}
+
+				colourDistance = distanceResult;
+				nearestColour = paletteColour;
 			}
 
 			return nearestColour;
@@ -954,11 +970,13 @@ namespace Warcraft.BLP
 				for (int i = 0; i < quantizedImage.Pixels.Length; ++i)
 				{
 					Rgba32 pixelColour = quantizedImage.Pixels[i];
-					if (!knownColours.Contains(pixelColour))
+					if (knownColours.Contains(pixelColour))
 					{
-						knownColours.Add(pixelColour);
-						yield return pixelColour;
+						continue;
 					}
+
+					knownColours.Add(pixelColour);
+					yield return pixelColour;
 				}
 			}
 		}

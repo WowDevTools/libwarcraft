@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Warcraft.Core;
@@ -151,26 +152,30 @@ namespace Warcraft.DBC.SpecialFields
 		/// <returns></returns>
 		public static int GetFieldCount(WarcraftVersion version)
 		{
-			if (version < WarcraftVersion.Cataclysm)
+			if (version >= WarcraftVersion.Cataclysm)
 			{
-				switch (version)
-				{
-					case WarcraftVersion.Wrath:
-					{
-						return 17;
-					}
-					case WarcraftVersion.BurningCrusade:
-					{
-						return 10;
-					}
-					case WarcraftVersion.Classic:
-					{
-						return 9;
-					}
-				}
+				return 1;
 			}
 
-			return 1;
+			switch (version)
+			{
+				case WarcraftVersion.Wrath:
+				{
+					return 17;
+				}
+				case WarcraftVersion.BurningCrusade:
+				{
+					return 10;
+				}
+				case WarcraftVersion.Classic:
+				{
+					return 9;
+				}
+				default:
+				{
+					throw new ArgumentOutOfRangeException(nameof(version));
+				}
+			}
 		}
 	}
 }

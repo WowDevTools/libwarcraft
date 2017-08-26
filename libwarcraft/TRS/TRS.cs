@@ -38,12 +38,13 @@ namespace Warcraft.TRS
 					while (ms.Position != ms.Length)
 					{
 						string mappingLine = tr.ReadLine();
-						if (!mappingLine.StartsWith("dir:"))
+						if (mappingLine.StartsWith("dir:"))
 						{
-							string[] lineParts = mappingLine.Split('\t');
-
-							this.HashMappings.Add(lineParts[0], lineParts[1]);
+							continue;
 						}
+
+						string[] lineParts = mappingLine.Split('\t');
+						this.HashMappings.Add(lineParts[0], lineParts[1]);
 					}
 				}
 			}

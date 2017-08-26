@@ -52,7 +52,7 @@ namespace Warcraft.WMO
 			}
 		}
 
-		public bool ContainsGroup(ModelGroup modelGroup)
+		public bool DoesGroupBelongToModel(ModelGroup modelGroup)
 		{
 			return this.RootInformation.ContainsGroup(modelGroup);
 		}
@@ -74,12 +74,14 @@ namespace Warcraft.WMO
 		/// <param name="modelGroup">Model group.</param>
 		public void AddModelGroup(ModelGroup modelGroup)
 		{
-			if (ContainsGroup(modelGroup))
+			if (!DoesGroupBelongToModel(modelGroup))
 			{
-				modelGroup.Name = ResolveInternalGroupName(modelGroup);
-				modelGroup.DescriptiveName = ResolveInternalDescriptiveGroupName(modelGroup);
-				this.Groups.Add(modelGroup);
+				return;
 			}
+
+			modelGroup.Name = ResolveInternalGroupName(modelGroup);
+			modelGroup.DescriptiveName = ResolveInternalDescriptiveGroupName(modelGroup);
+			this.Groups.Add(modelGroup);
 		}
 
 		/// <summary>

@@ -113,44 +113,48 @@ namespace Warcraft.MPQ.Tables.Hash
 			for (int i = (int)entryHomeIndex + 1; i < this.Entries.Count - 1; ++i)
 			{
 				currentEntry = this.Entries[i];
-				if (currentEntry.HasFileEverExisted())
+				if (!currentEntry.HasFileEverExisted())
 				{
-					if (currentEntry.GetPrimaryHash() == hashA && currentEntry.GetSecondaryHash() == hashB)
-					{
-						if (currentEntry.DoesFileExist())
-						{
-							// Found it!
-							return currentEntry;
-						}
-						else
-						{
-							// The file might have been deleted. Store it as a possible return candidate, but keep looking.
-							deletionEntry = currentEntry;
-						}
-					}
+					continue;
 				}
+
+				if (currentEntry.GetPrimaryHash() != hashA || currentEntry.GetSecondaryHash() != hashB)
+				{
+					continue;
+				}
+
+				if (currentEntry.DoesFileExist())
+				{
+					// Found it!
+					return currentEntry;
+				}
+
+				// The file might have been deleted. Store it as a possible return candidate, but keep looking.
+				deletionEntry = currentEntry;
 			}
 
 			// Still nothing? Loop around and scan the start of the table as well
 			for (int i = 0; i < entryHomeIndex; ++i)
 			{
 				currentEntry = this.Entries[i];
-				if (currentEntry.HasFileEverExisted())
+				if (!currentEntry.HasFileEverExisted())
 				{
-					if (currentEntry.GetPrimaryHash() == hashA && currentEntry.GetSecondaryHash() == hashB)
-					{
-						if (currentEntry.DoesFileExist())
-						{
-							// Found it!
-							return currentEntry;
-						}
-						else
-						{
-							// The file might have been deleted. Store it as a possible return candidate, but keep looking.
-							deletionEntry = currentEntry;
-						}
-					}
+					continue;
 				}
+
+				if (currentEntry.GetPrimaryHash() != hashA || currentEntry.GetSecondaryHash() != hashB)
+				{
+					continue;
+				}
+
+				if (currentEntry.DoesFileExist())
+				{
+					// Found it!
+					return currentEntry;
+				}
+
+				// The file might have been deleted. Store it as a possible return candidate, but keep looking.
+				deletionEntry = currentEntry;
 			}
 
 			// We found the file, but it's been deleted.
