@@ -88,12 +88,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 						if (headerByte > 0)
 						{
 							// Copy mode
-							byte[] copyBytes = br.ReadBytes(compressionCount);
-
-							for (int i = 0; i < copyBytes.Length; ++i)
-							{
-								decompressedAlphaMap.Add(copyBytes[i]);
-							}
+							decompressedAlphaMap.AddRange(br.ReadBytes(compressionCount));
 						}
 						else
 						{
