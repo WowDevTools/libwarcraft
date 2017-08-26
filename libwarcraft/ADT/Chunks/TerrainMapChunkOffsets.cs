@@ -62,12 +62,13 @@ namespace Warcraft.ADT.Chunks
 
 					for (int i = 0; i < nEntries; ++i)
 					{
-						MapChunkOffsetEntry entry = new MapChunkOffsetEntry();
-
-						entry.MapChunkOffset = br.ReadInt32();
-						entry.MapChunkSize = br.ReadInt32();
-						entry.Flags = br.ReadInt32();
-						entry.AsynchronousLoadingID = br.ReadInt32();
+						MapChunkOffsetEntry entry = new MapChunkOffsetEntry
+						{
+							MapChunkOffset = br.ReadInt32(),
+							MapChunkSize = br.ReadInt32(),
+							Flags = br.ReadInt32(),
+							AsynchronousLoadingID = br.ReadInt32()
+						};
 
 						this.Entries.Add(entry);
 					}
