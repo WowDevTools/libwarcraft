@@ -36,16 +36,11 @@ namespace Warcraft.DBC.Definitions
 		/// </summary>
 		public StringReference Name;
 
+		private LiquidType TypeInternal;
 		public LiquidType Type
 		{
-			get
-			{
-				return TranslateLiquidType();
-			}
-			set
-			{
-				this.Type = value;
-			}
+			get => TranslateLiquidType();
+			set => this.TypeInternal = value;
 		}
 
 		public ForeignKey<uint> SpellEffect;
@@ -91,10 +86,10 @@ namespace Warcraft.DBC.Definitions
 		{
 			if (this.Version >= WarcraftVersion.Wrath)
 			{
-				return this.Type;
+				return this.TypeInternal;
 			}
 
-			int baseValue = (int)this.Type;
+			int baseValue = (int)this.TypeInternal;
 			switch (baseValue)
 			{
 				case 0:
