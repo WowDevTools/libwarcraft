@@ -1,4 +1,4 @@
-namespace WarLib.MPQ.Signing
+namespace Warcraft.MPQ.Signing
 {
 	public class WeakSign
 	{
