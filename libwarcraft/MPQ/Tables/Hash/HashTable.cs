@@ -108,7 +108,7 @@ namespace Warcraft.MPQ.Tables.Hash
 			}
 
 			// If that file doesn't match (but has existed, or is occupied, let's keep looking down the table.
-			HashTableEntry currentEntry = null;
+			HashTableEntry currentEntry;
 			HashTableEntry deletionEntry = null;
 			for (int i = (int)entryHomeIndex + 1; i < this.Entries.Count - 1; ++i)
 			{

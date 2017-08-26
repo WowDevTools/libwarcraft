@@ -207,8 +207,6 @@ namespace Warcraft.BLP
 		/// <returns>The header bytes.</returns>
 		public byte[] Serialize()
 		{
-			byte[] headerBytes = null;
-
 			using (MemoryStream headerStream = new MemoryStream())
 			{
 				using (BinaryWriter bw = new BinaryWriter(headerStream))
@@ -254,11 +252,9 @@ namespace Warcraft.BLP
 					// Finished writing data
 					bw.Flush();
 
-					headerBytes = headerStream.ToArray();
+					return headerStream.ToArray();
 				}
 			}
-
-			return headerBytes;
 		}
 
 		/// <summary>
