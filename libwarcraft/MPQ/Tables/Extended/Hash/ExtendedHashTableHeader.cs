@@ -26,13 +26,7 @@ namespace Warcraft.MPQ.Tables.Extended.Hash
 {
 	public class ExtendedHashTableHeader
 	{
-		public string Signature
-		{
-			get
-			{
-				return "HET\x1A";
-			}
-		}
+		public string Signature => "HET\x1A";
 
 		public uint Version;
 		public uint DataSize;

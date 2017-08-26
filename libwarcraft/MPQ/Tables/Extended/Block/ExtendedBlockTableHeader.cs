@@ -27,13 +27,7 @@ namespace Warcraft.MPQ.Tables.Extended.Block
 {
 	public class ExtendedBlockTableHeader
 	{
-		public string Signature
-		{
-			get
-			{
-				return "BET\x1A";
-			}
-		}
+		public string Signature => "BET\x1A";
 
 		public uint Version;
 		public uint DataSize;

@@ -39,8 +39,8 @@ namespace Warcraft.Core.Structures
 		/// </summary>
 		public float Pitch
 		{
-			get { return this.Values.X; }
-			set { this.Values.X = value; }
+			get => this.Values.X;
+			set => this.Values.X = value;
 		}
 
 		/// <summary>
@@ -48,8 +48,8 @@ namespace Warcraft.Core.Structures
 		/// </summary>
 		public float Yaw
 		{
-			get { return this.Values.Y; }
-			set { this.Values.Y = value; }
+			get => this.Values.Y;
+			set => this.Values.Y = value;
 		}
 
 		/// <summary>
@@ -57,8 +57,8 @@ namespace Warcraft.Core.Structures
 		/// </summary>
 		public float Roll
 		{
-			get { return this.Values.Z; }
-			set { this.Values.Z = value; }
+			get => this.Values.Z;
+			set => this.Values.Z = value;
 		}
 
 		/// <summary>

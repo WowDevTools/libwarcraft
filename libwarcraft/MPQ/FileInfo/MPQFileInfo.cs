@@ -73,13 +73,7 @@ namespace Warcraft.MPQ.FileInfo
 		/// Gets a value indicating whether this reference is deleted in the archive.
 		/// </summary>
 		/// <value><c>true</c> if this reference is deleted; otherwise, <c>false</c>.</value>
-		public bool IsDeleted
-		{
-			get
-			{
-				return GetFlags().HasFlag(BlockFlags.IsDeletionMarker);
-			}
-		}
+		public bool IsDeleted => GetFlags().HasFlag(BlockFlags.IsDeletionMarker);
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Warcraft.MPQ.FileInfo.MPQFileInfo"/> class.
@@ -127,7 +121,7 @@ namespace Warcraft.MPQ.FileInfo
 		}
 
 		/// <summary>
-		/// Gets the size of the file as it is in the archive. This is usually smaller 
+		/// Gets the size of the file as it is in the archive. This is usually smaller
 		/// than <see cref="GetActualSize"/>.
 		/// </summary>
 		/// <returns>The stored size.</returns>

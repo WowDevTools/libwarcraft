@@ -61,13 +61,7 @@ namespace Warcraft.MPQ
 		/// <summary>
 		/// The size of the full archive in bytes.
 		/// </summary>
-		public ulong ArchiveSize
-		{
-			get
-			{
-				return GetArchiveSize();
-			}
-		}
+		public ulong ArchiveSize => GetArchiveSize();
 
 		private MPQFormat Format;
 		private ushort SectorSizeExponent;

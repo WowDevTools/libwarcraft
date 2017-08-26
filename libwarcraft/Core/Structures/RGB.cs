@@ -39,14 +39,8 @@ namespace Warcraft.Core.Structures
 		/// </summary>
 		public float R
 		{
-			get
-			{
-				return this.Values.X;
-			}
-			set
-			{
-				this.Values.X = value;
-			}
+			get => this.Values.X;
+			set => this.Values.X = value;
 		}
 
 		/// <summary>
@@ -54,14 +48,8 @@ namespace Warcraft.Core.Structures
 		/// </summary>
 		public float G
 		{
-			get
-			{
-				return this.Values.Y;
-			}
-			set
-			{
-				this.Values.Y = value;
-			}
+			get => this.Values.Y;
+			set => this.Values.Y = value;
 		}
 
 		/// <summary>
@@ -69,14 +57,8 @@ namespace Warcraft.Core.Structures
 		/// </summary>
 		public float B
 		{
-			get
-			{
-				return this.Values.Z;
-			}
-			set
-			{
-				this.Values.Z = value;
-			}
+			get => this.Values.Z;
+			set => this.Values.Z = value;
 		}
 
 		/// <summary>
