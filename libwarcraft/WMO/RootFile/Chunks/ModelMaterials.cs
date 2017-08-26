@@ -184,7 +184,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 		            bw.Write(this.SecondTextureOffset);
 		            bw.WriteRGBA(this.SecondColour);
 
-		            bw.Write((uint)this.GroundType.Key);
+		            bw.Write(this.GroundType.Key);
 		            bw.Write(this.ThirdTextureOffset);
 		            bw.WriteRGBA(this.BaseDiffuseColour);
 		            bw.Write((uint)this.ThirdFlags);

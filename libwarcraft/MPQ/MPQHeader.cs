@@ -289,7 +289,7 @@ namespace Warcraft.MPQ
 		{
 			if (this.Format == MPQFormat.Basic)
 			{
-				return (ulong)this.HashTableOffset;
+				return this.HashTableOffset;
 			}
 			else
 			{
@@ -314,7 +314,7 @@ namespace Warcraft.MPQ
 		{
 			if (this.Format == MPQFormat.Basic)
 			{
-				return (ulong)this.BlockTableOffset;
+				return this.BlockTableOffset;
 			}
 			else
 			{
@@ -393,7 +393,7 @@ namespace Warcraft.MPQ
 		{
 			if (this.Format == MPQFormat.Basic)
 			{
-				return (ulong)this.BasicArchiveSize;
+				return this.BasicArchiveSize;
 			}
 			else if (this.Format == MPQFormat.ExtendedV1)
 			{
@@ -454,7 +454,7 @@ namespace Warcraft.MPQ
 		/// <param name="highBits">High bits.</param>
 		public static ulong MergeHighBits(uint baseBits, ushort highBits)
 		{
-			ulong lower32Bits = (ulong)baseBits;
+			ulong lower32Bits = baseBits;
 			ulong high16Bits = (ulong)highBits << 32 & 0x0000FFFF00000000;
 
 			ulong mergedBits = (high16Bits + lower32Bits) & 0x0000FFFFFFFFFFFF;
