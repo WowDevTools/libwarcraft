@@ -45,12 +45,11 @@ namespace Warcraft.MPQ
 		bool HasFileList();
 
 		/// <summary>
-		/// Gets the best available listfile from the archive. If an external listfile has been provided, 
+		/// Gets the best available listfile from the archive. If an external listfile has been provided,
 		/// that one is prioritized over the one stored in the archive.
 		/// </summary>
 		/// <returns>The listfile.</returns>
-		List<string> GetFileList();
-
+		IEnumerable<string> GetFileList();
 
 		/// <summary>
 		/// Checks if the specified file path exists in the archive.

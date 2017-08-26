@@ -111,7 +111,7 @@ namespace Warcraft.MDX.Data
 		/// to a new list.
 		/// </summary>
 		/// <returns></returns>
-		public List<T> GetValues()
+		public IEnumerable<T> GetValues()
 		{
 			if (!this.IsFilled)
 			{

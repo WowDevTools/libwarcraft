@@ -60,36 +60,30 @@ namespace Warcraft.WDT
 		/// this method will never return any areas.
 		/// </summary>
 		/// <returns>The loaded areas.</returns>
-		public List<AreaInfoEntry> GetLoadedAreas()
+		public IEnumerable<AreaInfoEntry> GetLoadedAreas()
 		{
-			List<AreaInfoEntry> loadedAreas = new List<AreaInfoEntry>();
 			foreach (AreaInfoEntry entry in this.AreaInfo.Entries)
 			{
 				if (entry.Flags.HasFlag(AreaInfoFlags.IsLoaded))
 				{
-					loadedAreas.Add(entry);
+					yield return entry;
 				}
 			}
-
-			return loadedAreas;
 		}
 
 		/// <summary>
 		/// Gets a list of area information entries that have terrain tiles.
 		/// </summary>
 		/// <returns>The areas with terrain.</returns>
-		public List<AreaInfoEntry> GetAreasWithTerrain()
+		public IEnumerable<AreaInfoEntry> GetAreasWithTerrain()
 		{
-			List<AreaInfoEntry> terrainAreas = new List<AreaInfoEntry>();
 			foreach (AreaInfoEntry entry in this.AreaInfo.Entries)
 			{
 				if (entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
 				{
-					terrainAreas.Add(entry);
+					yield return entry;
 				}
 			}
-
-			return terrainAreas;
 		}
 
 		/// <summary>

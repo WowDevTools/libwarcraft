@@ -120,7 +120,7 @@ namespace Warcraft.WMO.GroupFile
 		/// Gets the vertex positions contained in this model group.
 		/// </summary>
 		/// <returns>A list of vertex positions.</returns>
-		public List<Vector3> GetVertices()
+		public IEnumerable<Vector3> GetVertices()
 		{
 			return this.GroupData.Vertices.Vertices;
 		}
@@ -129,7 +129,7 @@ namespace Warcraft.WMO.GroupFile
 		/// Gets the vertex normals contained in this model group.
 		/// </summary>
 		/// <returns>A list of vertex normals.</returns>
-		public List<Vector3> GetNormals()
+		public IEnumerable<Vector3> GetNormals()
 		{
 			return this.GroupData.Normals.Normals;
 		}
@@ -138,7 +138,7 @@ namespace Warcraft.WMO.GroupFile
 		/// Gets the texture coordinates for the vertices contained in this model group.
 		/// </summary>
 		/// <returns>A list of texture coordinates.</returns>
-		public List<Vector2> GetTextureCoordinates()
+		public IEnumerable<Vector2> GetTextureCoordinates()
 		{
 			return this.GroupData.TextureCoordinates.TextureCoordinates;
 		}
@@ -147,7 +147,7 @@ namespace Warcraft.WMO.GroupFile
 		/// Gets the vertex indices contained in this model group.
 		/// </summary>
 		/// <returns>A list of the vertex indices.</returns>
-		public List<ushort> GetVertexIndices()
+		public IEnumerable<ushort> GetVertexIndices()
 		{
 			return this.GroupData.VertexIndices.VertexIndices;
 		}
@@ -156,7 +156,7 @@ namespace Warcraft.WMO.GroupFile
 		/// Gets the render batches contained in this model group.
 		/// </summary>
 		/// <returns>A list of the render batches.</returns>
-		public List<RenderBatch> GetRenderBatches()
+		public IEnumerable<RenderBatch> GetRenderBatches()
 		{
 			return this.GroupData.RenderBatches.RenderBatches;
 		}

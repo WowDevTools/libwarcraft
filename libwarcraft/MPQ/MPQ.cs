@@ -273,7 +273,7 @@ namespace Warcraft.MPQ
 		/// that one is prioritized over the one stored in the archive.
 		/// </summary>
 		/// <returns>The listfile.</returns>
-		public List<string> GetFileList()
+		public IEnumerable<string> GetFileList()
 		{
 			if (this.IsDisposed)
 			{
@@ -295,36 +295,30 @@ namespace Warcraft.MPQ
 		/// return null.
 		/// </summary>
 		/// <returns>The internal file list.</returns>
-		public List<string> GetInternalFileList()
+		public IEnumerable<string> GetInternalFileList()
 		{
 			if (this.IsDisposed)
 			{
 				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
 			}
 
-			List<string> fileList = new List<string>();
-
 			byte[] listfileBytes = ExtractFile("(listfile)");
-			if (listfileBytes != null)
+			if (listfileBytes == null)
 			{
-				using (MemoryStream listfileStream = new MemoryStream(listfileBytes))
+				yield break;
+			}
+
+			using (MemoryStream listfileStream = new MemoryStream(listfileBytes))
+			{
+				using (TextReader tr = new StreamReader(listfileStream))
 				{
-					using (TextReader tr = new StreamReader(listfileStream))
+					string line;
+					while ((line = tr.ReadLine()) != null)
 					{
-						string line;
-						while ((line = tr.ReadLine()) != null)
-						{
-							fileList.Add(line);
-						}
+						yield return line;
 					}
 				}
 			}
-			else
-			{
-				return null;
-			}
-
-			return fileList;
 		}
 
 		/// <summary>
@@ -332,7 +326,7 @@ namespace Warcraft.MPQ
 		/// return an empty list.
 		/// </summary>
 		/// <returns>The external file list.</returns>
-		public List<string> GetExternalFileList()
+		public IEnumerable<string> GetExternalFileList()
 		{
 			if (this.IsDisposed)
 			{

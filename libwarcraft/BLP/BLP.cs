@@ -267,15 +267,12 @@ namespace Warcraft.BLP
 		/// Gets a list of formatted strings describing the mipmap levels.
 		/// </summary>
 		/// <returns>The mip map level strings.</returns>
-		public List<string> GetMipMapLevelStrings()
+		public IEnumerable<string> GetMipMapLevelStrings()
 		{
-			List<string> mipStrings = new List<string>();
 			for (uint i = 0; i < GetMipMapCount(); ++i)
 			{
-				mipStrings.Add($"{i}: {GetMipLevelResolution(i)}");
+				yield return $"{i}: {GetMipLevelResolution(i)}";
 			}
-
-			return mipStrings;
 		}
 
 		/// <summary>

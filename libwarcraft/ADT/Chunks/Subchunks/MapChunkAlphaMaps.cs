@@ -62,12 +62,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
         }
 
 
-		public List<byte> GetAlphaMap(uint mapOffset, TextureLayerFlags layerFlags, MapChunkFlags mapFlags/*, TerrainTileFlags TileFlags*/)
+		public IEnumerable<byte> GetAlphaMap(uint mapOffset, TextureLayerFlags layerFlags, MapChunkFlags mapFlags/*, TerrainTileFlags TileFlags*/)
 		{
 			return null;
 		}
 
-		private List<byte> DecompressAlphaMap(uint mapOffset)
+		private IEnumerable<byte> DecompressAlphaMap(uint mapOffset)
 		{
 			List<byte> decompressedAlphaMap = new List<byte>();
 
