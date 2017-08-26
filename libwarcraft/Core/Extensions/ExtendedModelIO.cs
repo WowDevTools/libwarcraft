@@ -90,12 +90,33 @@ namespace Warcraft.Core.Extensions
 		public static MDXArray<T> ReadMDXArray<T>(this BinaryReader binaryReader, WarcraftVersion version)
 		{
 			// Quaternion hack, since it's packed into 16 bits in some versions
-			if (!typeof(T).GetInterfaces().Contains(typeof(IVersionedClass)) && typeof(T) != typeof(Quaternion))
+			var containsQuaternion = FindInnermostGenericType(typeof(T)) == typeof(Quaternion);
+			if (!typeof(T).GetInterfaces().Contains(typeof(IVersionedClass)) && !containsQuaternion)
 			{
 				return new MDXArray<T>(binaryReader);
 			}
 
 			return new MDXArray<T>(binaryReader, version);
+		}
+
+		/// <summary>
+		/// Finds the innermost generic type of
+		/// </summary>
+		/// <param name="t"></param>
+		/// <returns></returns>
+		public static Type FindInnermostGenericType(Type t)
+		{
+			if (!t.IsGenericType)
+			{
+				return t;
+			}
+
+			foreach (var genericT in t.GenericTypeArguments)
+			{
+				return FindInnermostGenericType(genericT);
+			}
+
+			return t;
 		}
 
 		/// <summary>
