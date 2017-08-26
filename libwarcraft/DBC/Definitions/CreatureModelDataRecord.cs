@@ -135,8 +135,8 @@ namespace Warcraft.DBC.Definitions
 				switch (this.Version)
 				{
 					case WarcraftVersion.Classic: return 16;
-					case WarcraftVersion.BurningCrusade: return 19;
-					case WarcraftVersion.Wrath: return 23;
+					case WarcraftVersion.BurningCrusade: return 24;
+					case WarcraftVersion.Wrath: return 28;
 					default: throw new NotImplementedException();
 				}
 			}
