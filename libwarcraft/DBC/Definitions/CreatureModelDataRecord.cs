@@ -20,9 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
 using Warcraft.Core.Extensions;
+using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -43,9 +46,20 @@ namespace Warcraft.DBC.Definitions
 		public uint FoleyMaterialID;
 		public ForeignKey<uint> FootstepShakeSize;
 		public ForeignKey<uint> DeathThudShakeSize;
-		public ForeignKey<uint> SoundData;
+
+		public ForeignKey<uint> Sound;
+
 		public float CollisionWidth;
 		public float CollisionHeight;
+		public float MountHeight;
+
+		public Box BoundingBox;
+		public float WorldEffectScale;
+
+		public float AttachedEffectScale;
+		public float MissileCollisionRadius;
+		public float MissileCollisionPush;
+		public float MissileCollisionRaise;
 
 		/// <summary>
 		/// Loads and parses the provided data.
@@ -82,9 +96,29 @@ namespace Warcraft.DBC.Definitions
 			this.FoleyMaterialID = reader.ReadUInt32();
 			this.FootstepShakeSize = new ForeignKey<uint>(DatabaseName.CameraShakes, nameof(DBCRecord.ID), reader.ReadUInt32());
 			this.DeathThudShakeSize = new ForeignKey<uint>(DatabaseName.CameraShakes, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.SoundData = new ForeignKey<uint>(DatabaseName.CreatureSoundData, nameof(DBCRecord.ID), reader.ReadUInt32());
+
+			if (this.Version >= WarcraftVersion.BurningCrusade)
+			{
+				this.Sound = new ForeignKey<uint>(DatabaseName.CreatureSoundData, nameof(DBCRecord.ID), reader.ReadUInt32());
+			}
+
 			this.CollisionWidth = reader.ReadSingle();
 			this.CollisionHeight = reader.ReadSingle();
+			this.MountHeight = reader.ReadSingle();
+
+			if (this.Version >= WarcraftVersion.BurningCrusade)
+			{
+				this.BoundingBox = reader.ReadBox();
+				this.WorldEffectScale = reader.ReadSingle();
+			}
+
+			if (this.Version >= WarcraftVersion.Wrath)
+			{
+				this.AttachedEffectScale = reader.ReadSingle();
+				this.MissileCollisionRadius = reader.ReadSingle();
+				this.MissileCollisionPush = reader.ReadSingle();
+				this.MissileCollisionRaise = reader.ReadSingle();
+			}
 
 			this.HasLoadedRecordData = true;
 		}
@@ -94,7 +128,19 @@ namespace Warcraft.DBC.Definitions
 			yield return this.ModelPath;
 		}
 
-		public override int FieldCount => 16;
+		public override int FieldCount
+		{
+			get
+			{
+				switch (this.Version)
+				{
+					case WarcraftVersion.Classic: return 16;
+					case WarcraftVersion.BurningCrusade: return 19;
+					case WarcraftVersion.Wrath: return 23;
+					default: throw new NotImplementedException();
+				}
+			}
+		}
 
 		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}

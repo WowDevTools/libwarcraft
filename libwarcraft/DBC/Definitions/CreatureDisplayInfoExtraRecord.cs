@@ -20,8 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
 using Warcraft.Core.Extensions;
 using Warcraft.DBC.SpecialFields;
 
@@ -32,6 +34,9 @@ namespace Warcraft.DBC.Definitions
 		public const DatabaseName Database = DatabaseName.CreatureDisplayInfoExtra;
 
 		public ForeignKey<uint> Race;
+
+		public ForeignKey<uint> CreatureType;
+
 		public bool IsFemale;
 		public uint Skin;
 		public uint Face;
@@ -47,6 +52,11 @@ namespace Warcraft.DBC.Definitions
 		public ForeignKey<uint> Boots;
 		public ForeignKey<uint> Wrist;
 		public ForeignKey<uint> Gloves;
+
+		public ForeignKey<uint> Tabard;
+
+		public ForeignKey<uint> Cape;
+
 		public uint Flags;
 		public StringReference BakedName;
 
@@ -75,6 +85,11 @@ namespace Warcraft.DBC.Definitions
 
 			this.Race = new ForeignKey<uint>(DatabaseName.ChrRaces, nameof(DBCRecord.ID), reader.ReadUInt32());
 
+			if (this.Version == WarcraftVersion.BurningCrusade)
+			{
+				this.CreatureType = new ForeignKey<uint>(DatabaseName.CreatureType, nameof(DBCRecord.ID), reader.ReadUInt32());
+			}
+
 			// 0 means male, 1 means female
 			this.IsFemale = (reader.ReadUInt32() > 0);
 			this.Skin = reader.ReadUInt32();
@@ -94,6 +109,16 @@ namespace Warcraft.DBC.Definitions
 			this.Wrist = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
 			this.Gloves = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
 
+			if (this.Version >= WarcraftVersion.BurningCrusade)
+			{
+				this.Tabard = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
+			}
+
+			if (this.Version >= WarcraftVersion.Wrath)
+			{
+				this.Cape = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
+			}
+
 			this.Flags = reader.ReadUInt32();
 			this.BakedName = reader.ReadStringReference();
 
@@ -105,7 +130,19 @@ namespace Warcraft.DBC.Definitions
 			yield return this.BakedName;
 		}
 
-		public override int FieldCount => 19;
+		public override int FieldCount
+		{
+			get
+			{
+				switch (this.Version)
+				{
+					case WarcraftVersion.Classic: return 19;
+					case WarcraftVersion.BurningCrusade: return 21;
+					case WarcraftVersion.Wrath: return 21;
+					default: throw new NotImplementedException();
+				}
+			}
+		}
 
 		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
