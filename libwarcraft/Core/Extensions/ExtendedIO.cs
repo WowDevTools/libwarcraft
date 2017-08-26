@@ -103,7 +103,9 @@ namespace Warcraft.Core.Extensions
 			// A few very specific MDXArray types, which are used with M2Tracks. This is a dirty, dirty hack to enable
 			// jagged MDXArrays, since we can't cram a generic type in here
 
+			{ typeof(MDXArray<Vector4>), r => r.ReadMDXArray<Vector4>()},
 			{ typeof(MDXArray<Vector3>), r => r.ReadMDXArray<Vector3>()},
+			{ typeof(MDXArray<Vector2>), r => r.ReadMDXArray<Vector2>()},
 			{ typeof(MDXArray<byte>), r => r.ReadMDXArray<byte>()},
 			{ typeof(MDXArray<short>), r => r.ReadMDXArray<short>()},
 			{ typeof(MDXArray<ushort>), r => r.ReadMDXArray<ushort>()},
@@ -115,6 +117,9 @@ namespace Warcraft.Core.Extensions
 			{ typeof(MDXArray<BGRA>), r => r.ReadMDXArray<BGRA>()},
 			{ typeof(MDXArray<SplineKey<float>>), r => r.ReadMDXArray<SplineKey<float>>()},
 			{ typeof(MDXArray<SplineKey<Vector3>>), r => r.ReadMDXArray<SplineKey<Vector3>>()},
+			{ typeof(MDXArray<MDXArray<Vector4>>), r => r.ReadMDXArray<MDXArray<Vector4>>()},
+			{ typeof(MDXArray<MDXArray<Vector3>>), r => r.ReadMDXArray<MDXArray<Vector3>>()},
+			{ typeof(MDXArray<MDXArray<Vector2>>), r => r.ReadMDXArray<MDXArray<Vector2>>()},
 
 			// Some spline key types
 			{ typeof(SplineKey<float>), r => r.ReadSplineKey<float>()},
@@ -151,6 +156,10 @@ namespace Warcraft.Core.Extensions
 
 			// Specific versioned MDXArray types
 			{ typeof(MDXArray<Quaternion>), (r, v) => r.ReadMDXArray<Quaternion>(v)},
+
+			// A few very specific MDXArray types, which are used with M2Tracks. This is a dirty, dirty hack to enable
+			// jagged MDXArrays, since we can't cram a generic type in here
+			{ typeof(MDXArray<MDXArray<Quaternion>>), (r, v) => r.ReadMDXArray<MDXArray<Quaternion>>(v)},
 
 			// DBC-related types
 			{ typeof(LocalizedStringReference), (r, v) => r.ReadLocalizedStringReference(v) },
