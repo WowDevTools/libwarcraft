@@ -100,12 +100,12 @@ namespace Warcraft.Core.Extensions
 
 		public static float ShortQuatValueToFloat(short inShort)
 		{
-			return inShort / (float) Int16.MaxValue;
+			return inShort / (float) short.MaxValue;
 		}
 
 		public static short FloatQuatValueToShort(float inFloat)
 		{
-			return (short)((inFloat + 1.0f) * Int16.MaxValue);
+			return (short)((inFloat + 1.0f) * short.MaxValue);
 		}
 	}
 }
