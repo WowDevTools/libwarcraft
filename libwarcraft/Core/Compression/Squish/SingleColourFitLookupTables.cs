@@ -2,7 +2,7 @@
 {
 	internal partial class SingleColourFit
 	{
-		static readonly SingleColourLookup[] lookup_5_3 =
+		private static readonly SingleColourLookup[] lookup_5_3 =
         {
         	new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 0, End = 0, Error = 0 }, new SourceBlock{ Start = 0, End = 0, Error = 0 } } },
         	new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 0, End = 0, Error = 1 }, new SourceBlock{ Start = 0, End = 0, Error = 1 } } },
@@ -262,7 +262,7 @@
             new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 31, End = 0, Error = 0 }, new SourceBlock{ Start = 31, End = 31, Error = 0 } } }
         };
 
-        static readonly SingleColourLookup[] lookup_6_3 =
+		private static readonly SingleColourLookup[] lookup_6_3 =
         {
         	new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 0, End = 0, Error = 0 }, new SourceBlock{ Start = 0, End = 0, Error = 0 } } },
             new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 0, End = 0, Error = 1 }, new SourceBlock{ Start = 0, End = 1, Error = 1 } } },
@@ -522,7 +522,7 @@
             new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 63, End = 0, Error = 0 }, new SourceBlock{ Start = 63, End = 63, Error = 0 } } }
         };
 
-        static readonly  SingleColourLookup[] lookup_5_4 =
+		private static readonly  SingleColourLookup[] lookup_5_4 =
         {
         	new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 0, End = 0, Error = 0 }, new SourceBlock{ Start = 0, End = 0, Error = 0 } } },
             new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 0, End = 0, Error = 1 }, new SourceBlock{ Start = 0, End = 1, Error = 1 } } },
@@ -782,7 +782,7 @@
             new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 31, End = 0, Error = 0 }, new SourceBlock{ Start = 31, End = 31, Error = 0 } } }
         };
 
-        static readonly SingleColourLookup[] lookup_6_4 =
+		private static readonly SingleColourLookup[] lookup_6_4 =
         {
         	new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 0, End = 0, Error = 0 }, new SourceBlock{ Start = 0, End = 0, Error = 0 } } },
             new SingleColourLookup{ Sources = new [] { new SourceBlock{ Start = 0, End = 0, Error = 1 }, new SourceBlock{ Start = 0, End = 1, Error = 0 } } },

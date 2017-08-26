@@ -5,7 +5,7 @@ namespace Warcraft.Core.Compression.Squish
 {
 	internal class ClusterFit : ColourFit
 	{
-		const int MaxIterations = 8;
+		private const int MaxIterations = 8;
 
 		#region Fields
 

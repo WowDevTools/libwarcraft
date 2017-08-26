@@ -53,7 +53,7 @@ namespace Warcraft.MPQ.Tables.Extended.Block
 		public uint BETHashArraySize;
 		public uint FlagCount;
 
-		List<BlockFlags> FlagArray = new List<BlockFlags>();
+		private List<BlockFlags> FlagArray = new List<BlockFlags>();
 
 
 		public ExtendedBlockTableHeader()

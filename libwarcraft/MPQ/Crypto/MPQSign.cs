@@ -23,7 +23,7 @@
 namespace Warcraft.MPQ.Crypto
 {
 	// TODO: Implement
-	static class MPQSign
+	internal static class MPQSign
 	{
 		static MPQSign()
 		{

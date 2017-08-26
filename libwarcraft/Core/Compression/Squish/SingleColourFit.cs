@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Warcraft.Core.Compression.Squish
 {
-	struct SourceBlock
+	internal struct SourceBlock
 	{
 		public byte Start;
 		public byte End;
@@ -17,7 +17,7 @@ namespace Warcraft.Core.Compression.Squish
 		}
 	}
 
-	struct SingleColourLookup
+	internal struct SingleColourLookup
 	{
 		public SourceBlock[] Sources;
 
@@ -31,8 +31,7 @@ namespace Warcraft.Core.Compression.Squish
 
 	internal partial class SingleColourFit : ColourFit
 	{
-
-		byte[] colour = new byte[3];
+		private byte[] colour = new byte[3];
 		private Vector3 start;
 		private Vector3 end;
 		private byte index;
@@ -51,7 +50,7 @@ namespace Warcraft.Core.Compression.Squish
 			this.bestError = int.MaxValue;
 		}
 
-		static int FloatToInt(float a, int limit)
+		private static int FloatToInt(float a, int limit)
 		{
 			int i = (int) (a + 0.5f);
 

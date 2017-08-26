@@ -39,7 +39,7 @@ namespace Warcraft.MPQ.Tables.Extended.Hash
 		public uint IndexSize;
 		public uint BlockTableSize;
 
-		List<byte> TableData = new List<byte>();
+		private List<byte> TableData = new List<byte>();
 
 		public ExtendedHashTableHeader()
 		{
