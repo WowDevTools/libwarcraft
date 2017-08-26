@@ -45,7 +45,7 @@ namespace Warcraft.MDX.Visual
 
 		public MDXLight(BinaryReader br, WarcraftVersion version)
 		{
-			this.Type = (MDXLightType)br.ReadUInt32();
+			this.Type = (MDXLightType)br.ReadUInt16();
 			this.Bone = br.ReadInt16();
 			this.Position = br.ReadVector3();
 
