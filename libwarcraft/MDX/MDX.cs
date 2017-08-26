@@ -207,7 +207,7 @@ namespace Warcraft.MDX
 		/// Sets the skins used in this model.
 		/// </summary>
 		/// <param name="skins"></param>
-		public void SetModelSkins(IEnumerable<MDXSkin> skins)
+		public void SetSkins(IEnumerable<MDXSkin> skins)
 		{
 			var skinArray = new MDXArray<MDXSkin>(skins);
 			if (skinArray.Count != this.SkinCount)

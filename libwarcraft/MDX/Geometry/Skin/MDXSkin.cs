@@ -47,7 +47,7 @@ namespace Warcraft.MDX.Geometry.Skin
 
 		/// <summary>
 		/// A list of bone index quantets for the vertices in the skin. The given indices are indexed into the
-		/// <see cref="MDX.KeyedBoneLookupTable"/>.
+		/// <see cref="MDX.BoneLookupTable"/>.
 		/// </summary>
 		public MDXArray<MDXVertexProperty> VertexProperties;
 
