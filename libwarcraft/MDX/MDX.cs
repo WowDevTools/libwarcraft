@@ -214,6 +214,8 @@ namespace Warcraft.MDX
 			{
 				throw new ArgumentException("The number of skins did not match the skin count for the model.", nameof(skins));
 			}
+
+			this.Skins = skinArray;
 		}
 
 		/// <summary>
