@@ -106,6 +106,7 @@ namespace Warcraft.Core.Extensions
 			{ typeof(MDXArray<Vector4>), r => r.ReadMDXArray<Vector4>()},
 			{ typeof(MDXArray<Vector3>), r => r.ReadMDXArray<Vector3>()},
 			{ typeof(MDXArray<Vector2>), r => r.ReadMDXArray<Vector2>()},
+			{ typeof(MDXArray<bool>), r => r.ReadMDXArray<bool>()},
 			{ typeof(MDXArray<byte>), r => r.ReadMDXArray<byte>()},
 			{ typeof(MDXArray<short>), r => r.ReadMDXArray<short>()},
 			{ typeof(MDXArray<ushort>), r => r.ReadMDXArray<ushort>()},
@@ -117,9 +118,23 @@ namespace Warcraft.Core.Extensions
 			{ typeof(MDXArray<BGRA>), r => r.ReadMDXArray<BGRA>()},
 			{ typeof(MDXArray<SplineKey<float>>), r => r.ReadMDXArray<SplineKey<float>>()},
 			{ typeof(MDXArray<SplineKey<Vector3>>), r => r.ReadMDXArray<SplineKey<Vector3>>()},
+
+			// Jagged jagged arrays... hooray
 			{ typeof(MDXArray<MDXArray<Vector4>>), r => r.ReadMDXArray<MDXArray<Vector4>>()},
 			{ typeof(MDXArray<MDXArray<Vector3>>), r => r.ReadMDXArray<MDXArray<Vector3>>()},
 			{ typeof(MDXArray<MDXArray<Vector2>>), r => r.ReadMDXArray<MDXArray<Vector2>>()},
+			{ typeof(MDXArray<MDXArray<bool>>), r => r.ReadMDXArray<MDXArray<bool>>()},
+			{ typeof(MDXArray<MDXArray<byte>>), r => r.ReadMDXArray<MDXArray<byte>>()},
+			{ typeof(MDXArray<MDXArray<short>>), r => r.ReadMDXArray<MDXArray<short>>()},
+			{ typeof(MDXArray<MDXArray<ushort>>), r => r.ReadMDXArray<MDXArray<ushort>>()},
+			{ typeof(MDXArray<MDXArray<int>>), r => r.ReadMDXArray<MDXArray<int>>()},
+			{ typeof(MDXArray<MDXArray<uint>>), r => r.ReadMDXArray<MDXArray<uint>>()},
+			{ typeof(MDXArray<MDXArray<float>>), r => r.ReadMDXArray<MDXArray<float>>()},
+			{ typeof(MDXArray<MDXArray<RGB>>), r => r.ReadMDXArray<MDXArray<RGB>>()},
+			{ typeof(MDXArray<MDXArray<RGBA>>), r => r.ReadMDXArray<MDXArray<RGBA>>()},
+			{ typeof(MDXArray<MDXArray<BGRA>>), r => r.ReadMDXArray<MDXArray<BGRA>>()},
+			{ typeof(MDXArray<MDXArray<SplineKey<float>>>), r => r.ReadMDXArray<MDXArray<SplineKey<float>>>()},
+			{ typeof(MDXArray<MDXArray<SplineKey<Vector3>>>), r => r.ReadMDXArray<MDXArray<SplineKey<Vector3>>>()},
 
 			// Some spline key types
 			{ typeof(SplineKey<float>), r => r.ReadSplineKey<float>()},
