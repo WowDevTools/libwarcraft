@@ -123,6 +123,7 @@ namespace Warcraft.Core.Extensions
 		/// Reads an <see cref="MDXMaterial"/> from the data stream.
 		/// </summary>
 		/// <param name="binaryReader"></param>
+		/// <param name="version"></param>
 		/// <returns></returns>
 		public static MDXMaterial ReadMDXMaterial(this BinaryReader binaryReader, WarcraftVersion version)
 		{
@@ -133,6 +134,7 @@ namespace Warcraft.Core.Extensions
 		/// Reads an <see cref="MDXColourAnimation"/> from the data stream.
 		/// </summary>
 		/// <param name="binaryReader"></param>
+		/// <param name="version"></param>
 		/// <returns></returns>
 		public static MDXColourAnimation ReadMDXColourAnimation(this BinaryReader binaryReader, WarcraftVersion version)
 		{
