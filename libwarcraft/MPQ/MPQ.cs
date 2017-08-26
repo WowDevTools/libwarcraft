@@ -30,7 +30,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Warcraft.Core;
 using Warcraft.Core.Compression;
 using Warcraft.MPQ.Crypto;

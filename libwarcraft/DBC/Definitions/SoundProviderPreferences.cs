@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions

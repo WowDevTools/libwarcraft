@@ -1,5 +1,3 @@
-using System;
-
 namespace Warcraft.MDX.Visual
 {
 	public enum EMDXTextureType : uint
