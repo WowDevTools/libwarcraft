@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
 
@@ -55,6 +56,26 @@ namespace Warcraft.MDX.Data
 		/// Whether or not the array has been filled with its values.
 		/// </summary>
 		private bool IsFilled;
+
+		/// <summary>
+		/// Constructs a new in-memory <see cref="MDXArray{T}"/> from a given set of values. This array will not carry
+		/// any relevant information as a relative data store, and is instead considered as an abstract storage unit.
+		/// </summary>
+		/// <param name="values"></param>
+		/// <exception cref="ArgumentNullException"></exception>
+		public MDXArray(IEnumerable<T> values)
+		{
+			if (values == null)
+			{
+				throw new ArgumentNullException(nameof(values));
+			}
+
+			this.Values.AddRange(values);
+			this.Count = (uint)this.Values.Count;
+
+			this.ElementsOffset = 0;
+			this.IsFilled = true;
+		}
 
 		/// <summary>
 		/// Deserializes the information header of an <see cref="MDXArray{T}"/> without reading its values. The values

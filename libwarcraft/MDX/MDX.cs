@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -199,6 +200,19 @@ namespace Warcraft.MDX
 				{
 					this.BlendMapOverrides = br.ReadMDXArray<ushort>();
 				}
+			}
+		}
+
+		/// <summary>
+		/// Sets the skins used in this model.
+		/// </summary>
+		/// <param name="skins"></param>
+		public void SetModelSkins(IEnumerable<MDXSkin> skins)
+		{
+			var skinArray = new MDXArray<MDXSkin>(skins);
+			if (skinArray.Count != this.SkinCount)
+			{
+				throw new ArgumentException("The number of skins did not match the skin count for the model.", nameof(skins));
 			}
 		}
 
