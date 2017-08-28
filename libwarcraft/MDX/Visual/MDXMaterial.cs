@@ -79,7 +79,7 @@ namespace Warcraft.MDX.Visual
 
 			if (blendingMode > 3)
 			{
-				return (BlendingMode)(blendingMode + 1);
+				return (BlendingMode)(blendingMode - 1);
 			}
 
 			return (BlendingMode) blendingMode;
