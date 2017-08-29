@@ -158,7 +158,7 @@ namespace Warcraft.Core.Shading.MDX
         /// <param name="shaderID">The numeric ID of the shader.</param>
         /// <returns>The evaluation shader type.</returns>
         /// <exception cref="ArgumentException">Thrown if the shader ID parameter cannot be used as an indexer into the shader table.</exception>
-        public static MDXEvaluationShaderType GEvaluationShaderType(uint operationCount, ushort shaderID)
+        public static MDXEvaluationShaderType GetEvaluationShaderType(uint operationCount, ushort shaderID)
         {
             if ((shaderID & 0x8000) > 0)
             {
