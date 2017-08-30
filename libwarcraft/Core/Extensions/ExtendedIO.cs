@@ -26,6 +26,7 @@ using System.IO;
 using System.Numerics;
 using System.Text;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Shading.Blending;
 using Warcraft.Core.Structures;
 using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
@@ -142,6 +143,10 @@ namespace Warcraft.Core.Extensions
 
 			// DBC-related types
 			{ typeof(StringReference), r => r.ReadStringReference() },
+
+			// Enumeration types
+			{ typeof(BlendingMode), r => (BlendingMode)r.ReadUInt16() },
+			{ typeof(EMDXTextureMappingType), r => (EMDXTextureMappingType)r.ReadInt16() }
 		};
 
 		/// <summary>

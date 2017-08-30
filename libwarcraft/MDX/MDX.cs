@@ -30,6 +30,7 @@ using Warcraft.MDX.Geometry;
 using Warcraft.MDX.Animation;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
+using Warcraft.Core.Shading.Blending;
 using Warcraft.Core.Structures;
 using Warcraft.MDX.Data;
 using Warcraft.MDX.Gameplay;
@@ -68,7 +69,7 @@ namespace Warcraft.MDX
 
 		public MDXArray<short> BoneLookupTable;
 		public MDXArray<short> TextureLookupTable;
-		public MDXArray<short> TextureSlotLookupTable;
+		public MDXArray<EMDXTextureMappingType> TextureMappingLookupTable;
 		public MDXArray<short> TransparencyLookupTable;
 		public MDXArray<short> TextureTransformationLookupTable;
 
@@ -97,7 +98,7 @@ namespace Warcraft.MDX
 		// particle emitters
 
 		// cond: wrath & blendmap overrides
-		public MDXArray<ushort> BlendMapOverrides;
+		public MDXArray<BlendingMode> BlendMapOverrides;
 
 		public MDX(byte[] data)
 		{
@@ -167,7 +168,7 @@ namespace Warcraft.MDX
 
 				this.BoneLookupTable = br.ReadMDXArray<short>();
 				this.TextureLookupTable = br.ReadMDXArray<short>();
-				this.TextureSlotLookupTable = br.ReadMDXArray<short>();
+				this.TextureMappingLookupTable = br.ReadMDXArray<EMDXTextureMappingType>();
 				this.TransparencyLookupTable = br.ReadMDXArray<short>();
 				this.TextureTransformationLookupTable = br.ReadMDXArray<short>();
 
@@ -198,7 +199,7 @@ namespace Warcraft.MDX
 
 				if (this.Version >= WarcraftVersion.Wrath && this.GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
 				{
-					this.BlendMapOverrides = br.ReadMDXArray<ushort>();
+					this.BlendMapOverrides = br.ReadMDXArray<BlendingMode>();
 				}
 			}
 		}

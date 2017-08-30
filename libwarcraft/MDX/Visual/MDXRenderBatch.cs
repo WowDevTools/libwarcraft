@@ -88,7 +88,7 @@ namespace Warcraft.MDX.Visual
 
 		/// <summary>
 		/// The start index of the shader texture slot to attach the textures to. This is usually -1, 0 or 1. -1 denotes
-		/// environment mapping. This is an index into <see cref="MDX.TextureSlotLookupTable"/>.
+		/// environment mapping. This is an index into <see cref="MDX.TextureMappingLookupTable"/>.
 		/// </summary>
 		public ushort TextureSlotLookupTableIndex;
 

@@ -22,6 +22,8 @@
 
 using System;
 using System.Collections.Generic;
+using Warcraft.Core.Shading.Blending;
+using Warcraft.MDX.Visual;
 using static Warcraft.Core.Shading.MDX.MDXFragmentShaderType;
 using static Warcraft.Core.Shading.MDX.MDXVertexShaderType;
 
@@ -224,6 +226,81 @@ namespace Warcraft.Core.Shading.MDX
                 case 7: return Combiners_Opaque_AddAlpha;
                 default: return Combiners_Opaque_Mod;
             }
+        }
+
+        public static ushort GetRuntimeShaderID(ushort baseShaderID, MDXMaterial material, bool overrideBlending, short textureSlotIndex, short textureSlot, int operationCount, IReadOnlyList<BlendingMode> blendModeOverrides, IReadOnlyList<EMDXTextureMappingType> textureMappings)
+        {
+            // The shader ID is already "modernized", so there's nothing to do.
+            if ((baseShaderID & 0x8000) > 0)
+            {
+                return baseShaderID;
+            }
+
+            ushort newShaderID = 0;
+
+            if (!overrideBlending)
+            {
+                bool isEnvMapped = textureSlot == -1;
+                bool nonOpaqueBlendingMode = material.BlendMode != BlendingMode.Opaque;
+
+                if (nonOpaqueBlendingMode)
+                {
+                    newShaderID = 1;
+                    if (isEnvMapped)
+                    {
+                        newShaderID |= 8;
+                    }
+                }
+
+                newShaderID *= 16;
+
+                if (textureSlot == 1)
+                {
+                    newShaderID |= 0x4000;
+                }
+
+                return newShaderID;
+            }
+
+            if (operationCount == 0)
+            {
+                return baseShaderID;
+            }
+
+            var v19 = new short[]{0, 0};
+
+            for (int opIndex = 0; opIndex < operationCount; ++opIndex)
+            {
+                int blendingOverrideIndex = baseShaderID + opIndex;
+                var blendingOverride = blendModeOverrides[blendingOverrideIndex];
+
+                if (opIndex == 0 && material.BlendMode == BlendingMode.Opaque)
+                {
+                    blendingOverride = BlendingMode.Opaque;
+                }
+
+                int textureSlotOverrideIndex = textureSlotIndex + opIndex;
+                EMDXTextureMappingType textureSlotOverride = textureMappings[textureSlotOverrideIndex];
+                bool isEnvMapped = textureSlotOverride == EMDXTextureMappingType.Environment;
+
+                if (isEnvMapped)
+                {
+                    v19[opIndex] = (short)((short)blendingOverride | 8);
+                }
+                else
+                {
+                    v19[opIndex] = (short)blendingOverride;
+                }
+
+                if (textureSlotOverride == EMDXTextureMappingType.Environment && (opIndex + 1) == operationCount)
+                {
+                    newShaderID |= 0x4000;
+                }
+            }
+
+            newShaderID |= (ushort)(v19[1] | (v19[0] * 16));
+
+            return newShaderID;
         }
     }
 }
