@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Warcraft.Core.Shading.Blending;
+using Warcraft.MDX;
 using Warcraft.MDX.Visual;
 using static Warcraft.Core.Shading.MDX.MDXFragmentShaderType;
 using static Warcraft.Core.Shading.MDX.MDXVertexShaderType;
@@ -228,7 +229,7 @@ namespace Warcraft.Core.Shading.MDX
             }
         }
 
-        public static ushort GetRuntimeShaderID(ushort baseShaderID, MDXMaterial material, bool overrideBlending, short textureSlotIndex, short textureSlot, int operationCount, IReadOnlyList<BlendingMode> blendModeOverrides, IReadOnlyList<EMDXTextureMappingType> textureMappings)
+        public static ushort GetRuntimeShaderID(ushort baseShaderID, MDXMaterial material, MDXRenderBatch renderBatch, Warcraft.MDX.MDX model)
         {
             // The shader ID is already "modernized", so there's nothing to do.
             if ((baseShaderID & 0x8000) > 0)
@@ -236,11 +237,14 @@ namespace Warcraft.Core.Shading.MDX
                 return baseShaderID;
             }
 
+            var operationCount = renderBatch.TextureCount;
+
             ushort newShaderID = 0;
 
-            if (!overrideBlending)
+            if (!model.GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
             {
-                bool isEnvMapped = textureSlot == -1;
+                var textureMapping = model.TextureMappingLookupTable[renderBatch.TextureMappingLookupTableIndex];
+                bool isEnvMapped = textureMapping == EMDXTextureMappingType.Environment;
                 bool nonOpaqueBlendingMode = material.BlendMode != BlendingMode.Opaque;
 
                 if (nonOpaqueBlendingMode)
@@ -254,7 +258,7 @@ namespace Warcraft.Core.Shading.MDX
 
                 newShaderID *= 16;
 
-                if (textureSlot == 1)
+                if (textureMapping == EMDXTextureMappingType.T2)
                 {
                     newShaderID |= 0x4000;
                 }
@@ -272,15 +276,15 @@ namespace Warcraft.Core.Shading.MDX
             for (int opIndex = 0; opIndex < operationCount; ++opIndex)
             {
                 int blendingOverrideIndex = baseShaderID + opIndex;
-                var blendingOverride = blendModeOverrides[blendingOverrideIndex];
+                var blendingOverride = model.BlendMapOverrides[blendingOverrideIndex];
 
                 if (opIndex == 0 && material.BlendMode == BlendingMode.Opaque)
                 {
                     blendingOverride = BlendingMode.Opaque;
                 }
 
-                int textureSlotOverrideIndex = textureSlotIndex + opIndex;
-                EMDXTextureMappingType textureSlotOverride = textureMappings[textureSlotOverrideIndex];
+                int textureMappingOverrideIndex = renderBatch.TextureMappingLookupTableIndex + opIndex;
+                EMDXTextureMappingType textureSlotOverride = model.TextureMappingLookupTable[textureMappingOverrideIndex];
                 bool isEnvMapped = textureSlotOverride == EMDXTextureMappingType.Environment;
 
                 if (isEnvMapped)
