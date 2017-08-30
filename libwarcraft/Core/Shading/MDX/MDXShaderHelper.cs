@@ -229,6 +229,14 @@ namespace Warcraft.Core.Shading.MDX
             }
         }
 
+        /// <summary>
+        /// Calculate the shader selector value based on the original shader ID, the render batch and general
+        /// information from the model.
+        /// </summary>
+        /// <param name="baseShaderID">The original shader ID. Typically 0.</param>
+        /// <param name="renderBatch">The render batch to which the ID belongs.</param>
+        /// <param name="model">The model to which the batch belongs.</param>
+        /// <returns>A new shader selector value.</returns>
         public static ushort GetRuntimeShaderID(ushort baseShaderID, MDXRenderBatch renderBatch, Warcraft.MDX.MDX model)
         {
             // The shader ID is already "modernized", so there's nothing to do.
