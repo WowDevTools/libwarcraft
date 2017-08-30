@@ -229,7 +229,7 @@ namespace Warcraft.Core.Shading.MDX
             }
         }
 
-        public static ushort GetRuntimeShaderID(ushort baseShaderID, MDXMaterial material, MDXRenderBatch renderBatch, Warcraft.MDX.MDX model)
+        public static ushort GetRuntimeShaderID(ushort baseShaderID, MDXRenderBatch renderBatch, Warcraft.MDX.MDX model)
         {
             // The shader ID is already "modernized", so there's nothing to do.
             if ((baseShaderID & 0x8000) > 0)
@@ -238,6 +238,7 @@ namespace Warcraft.Core.Shading.MDX
             }
 
             var operationCount = renderBatch.TextureCount;
+            var material = model.Materials[renderBatch.MaterialIndex];
 
             ushort newShaderID = 0;
 
