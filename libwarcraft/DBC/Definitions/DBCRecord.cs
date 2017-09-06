@@ -37,6 +37,7 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// The record ID. This is the equivalent of a primary key in an SQL database, and is unique to the record.
 		/// </summary>
+		[RecordField(WarcraftVersion.Classic, 0)]
 		public uint ID
 		{
 			get;

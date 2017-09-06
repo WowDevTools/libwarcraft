@@ -23,9 +23,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Text;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.Core.Shading.Blending;
 using Warcraft.Core.Structures;
 using Warcraft.DBC;
@@ -201,7 +204,27 @@ namespace Warcraft.Core.Extensions
 				                            "with it.", typeof(T).Name);
 			}
 
-			return TypeReaderMap[typeof(T)](br);
+			return Read(br, typeof(T));
+		}
+
+		/// <summary>
+		/// Reads a value of type <paramref name="type"/> from the data stream. The generic type must be
+		/// explicitly implemented in <see cref="TypeReaderMap"/>. Note that strings are read as C-style null-terminated
+		/// strings, and not C#-style length-prefixed strings.
+		/// </summary>
+		/// <param name="br"></param>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static dynamic Read(this BinaryReader br, Type type)
+		{
+			if (!TypeReaderMap.ContainsKey(type))
+			{
+				throw new ArgumentException("The given type has no supported reading function associated " +
+				                            "with it.", type.Name);
+			}
+
+			return TypeReaderMap[type](br);
 		}
 
 		/// <summary>
@@ -220,7 +243,27 @@ namespace Warcraft.Core.Extensions
 				                            "with it.", typeof(T).Name);
 			}
 
-			return VersionedTypeReaderMap[typeof(T)](br, version);
+			return Read(br, typeof(T), version);
+		}
+
+		/// <summary>
+		/// Reads a versioned value of type <paramref name="type"/> from the data stream. The generic type must be
+		/// explicitly implemented in <see cref="TypeReaderMap"/>. Note that strings are read as C-style null-terminated
+		/// strings, and not C#-style length-prefixed strings.
+		/// </summary>
+		/// <param name="br"></param>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static dynamic Read(this BinaryReader br, Type type, WarcraftVersion version)
+		{
+			if (!TypeReaderMap.ContainsKey(type))
+			{
+				throw new ArgumentException("The given type has no supported reading function associated " +
+				                            "with it.", type.Name);
+			}
+
+			return VersionedTypeReaderMap[type](br, version);
 		}
 
 		/*
@@ -463,7 +506,14 @@ namespace Warcraft.Core.Extensions
 				}
 			}
 
-			record.DeserializeSelf(reader);
+			if (typeof(T).GetCustomAttributes().Any(a => a is DatabaseRecordAttribute))
+			{
+				DBCReflection.DeserializeRecord(reader, record, version);
+			}
+			else
+			{
+				record.DeserializeSelf(reader);
+			}
 
 			return record;
 		}

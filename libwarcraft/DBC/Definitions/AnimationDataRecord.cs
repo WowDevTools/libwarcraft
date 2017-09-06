@@ -44,13 +44,11 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// The weapon flags. This affects how the model's weapons are held during the animation.
 		/// </summary>
-		[FieldVersion(WarcraftVersion.Warlords)]
 		public WeaponAnimationFlags WeaponFlags;
 
 		/// <summary>
 		/// The body flags.
 		/// </summary>
-		[FieldVersion(WarcraftVersion.Warlords)]
 		public uint BodyFlags;
 
 		/// <summary>
@@ -72,7 +70,6 @@ namespace Warcraft.DBC.Definitions
 		/// The behaviour tier of the animation. In most cases, this indicates whether or not the animation
 		/// is used for flying characters.
 		/// </summary>
-		[FieldVersion(WarcraftVersion.Wrath)]
 		public uint BehaviourTier;
 
 		/// <summary>

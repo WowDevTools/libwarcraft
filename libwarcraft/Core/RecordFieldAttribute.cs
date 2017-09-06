@@ -1,5 +1,5 @@
 ﻿//
-//  FieldVersionAttribute.cs
+//  RecordField.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,17 +23,26 @@ using System;
 
 namespace Warcraft.Core
 {
-	[AttributeUsage(AttributeTargets.Field)]
-	public class FieldVersion : Attribute
+	[AttributeUsage(AttributeTargets.Property)]
+	public class RecordFieldAttribute : Attribute
 	{
-		public WarcraftVersion Version
+		public WarcraftVersion IntroducedIn { get; }
+
+		public WarcraftVersion? RemovedIn { get; }
+
+		public uint Order { get; }
+
+		public RecordFieldAttribute(WarcraftVersion introducedIn, WarcraftVersion removedIn, uint fieldOrder)
 		{
-			get;
+			this.IntroducedIn = introducedIn;
+			this.RemovedIn = removedIn;
+			this.Order = fieldOrder;
 		}
 
-		public FieldVersion(WarcraftVersion inVersion)
+		public RecordFieldAttribute(WarcraftVersion inIntroducedIn, uint fieldOrder)
 		{
-			this.Version = inVersion;
+			this.IntroducedIn = inIntroducedIn;
+			this.Order = fieldOrder;
 		}
 	}
 }

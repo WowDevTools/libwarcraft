@@ -23,6 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
+using Warcraft.Core.Extensions;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -121,10 +123,7 @@ namespace Warcraft.DBC.Definitions
 		/// </summary>
 		public uint Unknown5;
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
+		/// <inheritdoc />
 		public override void PostLoad(byte[] data)
 		{
 			using (MemoryStream ms = new MemoryStream(data))
@@ -136,18 +135,33 @@ namespace Warcraft.DBC.Definitions
 			}
 		}
 
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
+		/// <inheritdoc />
 		public override void DeserializeSelf(BinaryReader reader)
 		{
 			base.DeserializeSelf(reader);
 
-			throw new NotImplementedException();
+			this.Directory = reader.ReadStringReference();
+			this.InstanceType = reader.ReadUInt32();
+			this.PvP = reader.ReadUInt32();
+			this.MapName = reader.ReadLocalizedStringReference(this.Version);
+			this.MinLevel = reader.ReadUInt32();
+			this.MaxLevel = reader.ReadUInt32();
+			this.MaxPlayers = reader.ReadUInt32();
+			this.Unknown1 = reader.ReadUInt32();
+			this.Unknown2 = reader.ReadUInt32();
+			this.Unknown3 = reader.ReadUInt32();
+			this.AreaTableID = new ForeignKey<uint>(DatabaseName.AreaTable, nameof(DBCRecord.ID), reader.ReadUInt32());
+			this.MapDescription1 = reader.ReadLocalizedStringReference(this.Version);
+			this.MapDescription2 = reader.ReadLocalizedStringReference(this.Version);
+			this.LoadingScreenID = new ForeignKey<uint>(DatabaseName.LoadingScreens, nameof(DBCRecord.ID), reader.ReadUInt32());
+			this.RaidOffset = reader.ReadUInt32();
+			this.Unknown4 = reader.ReadUInt32();
+			this.Unknown5 = reader.ReadUInt32();
+
 			this.HasLoadedRecordData = true;
 		}
 
+		/// <inheritdoc />
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
 			yield return this.Directory;
@@ -168,8 +182,46 @@ namespace Warcraft.DBC.Definitions
 			}
 		}
 
-		public override int FieldCount => throw new System.NotImplementedException();
+		/// <inheritdoc />
+		public override int FieldCount
+		{
+			get
+			{
+				switch (this.Version)
+				{
+					case WarcraftVersion.Classic:
+					{
+						var normalFieldCount = 15;
+						var localizedFieldCount = LocalizedStringReference.GetFieldCount(this.Version) * 3;
 
-		public override int RecordSize => throw new System.NotImplementedException();
+						return normalFieldCount + localizedFieldCount;
+
+					}
+					default:
+					{
+						throw new NotImplementedException();
+					}
+				}
+			}
+		}
+
+		/// <inheritdoc />
+		public override int RecordSize
+		{
+			get
+			{
+				switch (this.Version)
+				{
+					case WarcraftVersion.Classic:
+					{
+						return this.FieldCount * sizeof(uint);
+					}
+					default:
+					{
+						throw new NotImplementedException();
+					}
+				}
+			}
+		}
 	}
 }

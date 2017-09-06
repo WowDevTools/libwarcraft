@@ -33,6 +33,11 @@ namespace Warcraft.MDX.Animation
 {
 	public class MDXTrack<T> : IVersionedClass
 	{
+		/// <summary>
+		/// Gets a value indicating whether the timelines are as one composite timeline, or as separate timelines.
+		/// </summary>
+		public bool IsComposite { get; }
+
 		public InterpolationType Interpolationtype;
 		public ushort GlobalSequenceID;
 
@@ -67,6 +72,7 @@ namespace Warcraft.MDX.Animation
 
 			if (version < WarcraftVersion.Wrath)
 			{
+				this.IsComposite = true;
 				this.CompositeTimelineInterpolationRanges = br.ReadMDXArray<IntegerRange>();
 				this.CompositeTimelineTimestamps = br.ReadMDXArray<uint>();
 
@@ -87,6 +93,7 @@ namespace Warcraft.MDX.Animation
 			}
 			else
 			{
+				this.IsComposite = false;
 				this.Timestamps = br.ReadMDXArray<MDXArray<uint>>();
 
 				if (valueless)
