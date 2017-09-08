@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Warcraft.Core;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;

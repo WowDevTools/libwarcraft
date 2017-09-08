@@ -1,7 +1,7 @@
 ﻿using System;
 using Warcraft.DBC;
 
-namespace Warcraft.Core
+namespace Warcraft.Core.Reflection.DBC
 {
 	[AttributeUsage(AttributeTargets.Property)]
 	public class ForeignKeyInfoAttribute : Attribute

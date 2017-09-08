@@ -60,13 +60,13 @@ namespace Warcraft.DBC.Definitions
 		/// Gets the field count for this record at.
 		/// </summary>
 		/// <returns>The field count.</returns>
-		public virtual int FieldCount => DBCReflection.GetPropertyCount(this.Version, GetType());
+		public virtual int FieldCount => DBCDeserializer.GetPropertyCount(this.Version, GetType());
 
 		/// <summary>
 		/// Gets the size of the record.
 		/// </summary>
 		/// <returns>The record size.</returns>
-		public virtual int RecordSize => DBCReflection.GetRecordSize(this.Version, GetType());
+		public virtual int RecordSize => DBCDeserializer.GetRecordSize(this.Version, GetType());
 
 		/// <summary>
 		/// Gets a list of any string references in the record. Used for resolving them after they have been loaded.

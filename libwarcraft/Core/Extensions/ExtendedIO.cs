@@ -504,7 +504,7 @@ namespace Warcraft.Core.Extensions
 
 			if (typeof(T).GetCustomAttributes().Any(a => a is DatabaseRecordAttribute))
 			{
-				DBCReflection.DeserializeRecord(reader, record, version);
+				DBCDeserializer.DeserializeRecord(reader, record, version);
 			}
 			else
 			{

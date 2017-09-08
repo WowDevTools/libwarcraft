@@ -1,5 +1,5 @@
 ﻿//
-//  RecordField.cs
+//  StringReference.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -19,22 +19,33 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 using System;
+using System.Collections.Generic;
 
-namespace Warcraft.Core
+namespace Warcraft.Core.Reflection.DBC
 {
-	[AttributeUsage(AttributeTargets.Property)]
-	public class RecordFieldAttribute : Attribute
+	/// <inheritdoc />
+	/// <summary>
+	/// Compares types by their inheritance chain. A subclass is considered more (that is, more derived) than a parent
+	/// class.
+	/// </summary>
+	public class InheritanceChainComparer : IComparer<Type>
 	{
-		public WarcraftVersion IntroducedIn { get; }
-
-		public WarcraftVersion RemovedIn { get; set; }
-
-		public RecordFieldAttribute(WarcraftVersion introducedIn)
+		/// <inheritdoc />
+		public int Compare(Type x, Type y)
 		{
-			this.IntroducedIn = introducedIn;
-			this.RemovedIn = WarcraftVersion.Unknown;
+			if (x.IsSubclassOf(y))
+			{
+				return 1;
+			}
+
+			if (y.IsSubclassOf(x))
+			{
+				return -1;
+			}
+
+			return 0;
 		}
 	}
 }
-

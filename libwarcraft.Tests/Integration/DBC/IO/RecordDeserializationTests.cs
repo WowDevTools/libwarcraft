@@ -47,7 +47,7 @@ namespace libwarcraft.Tests.Integration.DBC.IO
 			{
 				using (var br = new BinaryReader(ms))
 				{
-					DBCReflection.DeserializeRecord(br, record, testVersion);
+					DBCDeserializer.DeserializeRecord(br, record, testVersion);
 				}
 			}
 
@@ -69,7 +69,7 @@ namespace libwarcraft.Tests.Integration.DBC.IO
 			{
 				using (var br = new BinaryReader(ms))
 				{
-					DBCReflection.DeserializeRecord(br, record, testVersion);
+					DBCDeserializer.DeserializeRecord(br, record, testVersion);
 				}
 			}
 
@@ -92,7 +92,7 @@ namespace libwarcraft.Tests.Integration.DBC.IO
 			{
 				using (var br = new BinaryReader(ms))
 				{
-					DBCReflection.DeserializeRecord(br, record, testVersion);
+					DBCDeserializer.DeserializeRecord(br, record, testVersion);
 				}
 			}
 

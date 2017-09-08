@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Warcraft.Core;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.Definitions;
 
 namespace libwarcraft.Tests.Reflection

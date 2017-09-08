@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Warcraft.Core
+namespace Warcraft.Core.Reflection.DBC
 {
 	[AttributeUsage(AttributeTargets.Property)]
 	public class RecordFieldArrayAttribute : RecordFieldAttribute
