@@ -160,12 +160,9 @@ namespace Warcraft.DBC.SpecialFields
 			switch (version)
 			{
 				case WarcraftVersion.Wrath:
-				{
-					return 17;
-				}
 				case WarcraftVersion.BurningCrusade:
 				{
-					return 10;
+					return 17;
 				}
 				case WarcraftVersion.Classic:
 				{

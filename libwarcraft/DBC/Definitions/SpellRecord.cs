@@ -37,7 +37,7 @@ namespace Warcraft.DBC.Definitions
 		/// The school of the spell (fire, destruction, etc). This is a reference to a row in another
 		/// database.
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.BurningCrusade)]
 		public uint School { get; set; }
 
 		/// <summary>
@@ -134,11 +134,20 @@ namespace Warcraft.DBC.Definitions
 		[RecordField(WarcraftVersion.Classic)]
 		public uint RequiresSpellFocus { get; set; }
 
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint FacingCasterFlags { get; set; }
+
 		[RecordField(WarcraftVersion.Classic)]
 		public uint CasterAuraState { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
 		public uint TargetAuraState { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint ExcludeCasterAuraState { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint ExcludeTargetAuraState { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
 		public uint CastingTimeIndex { get; set; }
@@ -272,6 +281,9 @@ namespace Warcraft.DBC.Definitions
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
 		public uint[] EffectMiscValue { get; set; }
 
+		[RecordFieldArray(WarcraftVersion.BurningCrusade, Count = 3)]
+		public uint[] EffectMiscValueB { get; set; }
+
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
 		public uint[] EffectTriggerSpell { get; set; }
 
@@ -300,7 +312,7 @@ namespace Warcraft.DBC.Definitions
 		public LocalizedStringReference Description { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
-		public LocalizedStringReference AuraDescription { get; set; }
+		public LocalizedStringReference Tooltip { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
 		public uint ManaCostPCT { get; set; }
@@ -343,6 +355,15 @@ namespace Warcraft.DBC.Definitions
 
 		[RecordField(WarcraftVersion.Classic)]
 		public uint RequiredAuraVision { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.BurningCrusade, Count = 2)]
+		public uint[] RequiredTotemCategoryID { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint RequiredAreaID { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint SchoolMask { get; set; }
 	}
 
 	/// <summary>

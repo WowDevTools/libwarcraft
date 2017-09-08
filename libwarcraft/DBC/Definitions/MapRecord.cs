@@ -124,7 +124,7 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.BurningCrusade)]
 		public uint RaidOffset { get; set; }
 
 		/// <summary>
@@ -138,6 +138,42 @@ namespace Warcraft.DBC.Definitions
 		/// </summary>
 		[RecordField(WarcraftVersion.Classic)]
 		public uint Unknown5 { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public float MinimapIconScale { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public LocalizedStringReference RequirementText { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public LocalizedStringReference HeroicText { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public LocalizedStringReference EmptyText2 { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint CorpseMapID { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public float CorpseX { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public float CorpseY { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint ResetTimeRaid { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint ResetTimeHeroid { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint Unknown6 { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint TimeOfDayOveride { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint ExpansionID { get; set; }
 
 		/// <inheritdoc />
 		public override IEnumerable<StringReference> GetStringReferences()
@@ -157,6 +193,21 @@ namespace Warcraft.DBC.Definitions
 			foreach (var mapDescription in this.MapDescription2.GetReferences())
 			{
 				yield return mapDescription;
+			}
+
+			foreach (var text in this.RequirementText.GetReferences())
+			{
+				yield return text;
+			}
+
+			foreach (var text in this.EmptyText2.GetReferences())
+			{
+				yield return text;
+			}
+
+			foreach (var text in this.RequirementText.GetReferences())
+			{
+				yield return text;
 			}
 		}
 	}
