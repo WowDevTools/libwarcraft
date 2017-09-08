@@ -2,7 +2,7 @@
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.Definitions;
 
-namespace libwarcraft.Tests.Reflection
+namespace libwarcraft.Tests.Unit.Reflection.DBC.TestData
 {
 	public class TestDBCRecordWithVersionedArray : DBCRecord
 	{

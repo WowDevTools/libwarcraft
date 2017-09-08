@@ -3,14 +3,14 @@ using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.Definitions;
 
-namespace libwarcraft.Tests.Reflection
+namespace libwarcraft.Tests.Unit.Reflection.DBC.TestData
 {
-	public class TestDBCRecordWithArray : DBCRecord
+	public class TestDBCRecordWithInvalidArray : DBCRecord
 	{
 		[RecordField(WarcraftVersion.Classic)]
 		public uint SimpleField { get; set; }
 
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 4)]
-		public List<uint> ArrayField { get; set; }
+		public IEnumerable<uint> ArrayField { get; set; }
 	}
 }

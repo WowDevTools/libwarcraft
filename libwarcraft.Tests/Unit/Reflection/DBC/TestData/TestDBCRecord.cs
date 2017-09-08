@@ -5,7 +5,7 @@ using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;
 
-namespace libwarcraft.Tests.Reflection
+namespace libwarcraft.Tests.Unit.Reflection.DBC.TestData
 {
 	[DatabaseRecord]
 	public class TestDBCRecord : DBCRecord

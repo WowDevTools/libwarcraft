@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using libwarcraft.Tests.Unit.Reflection.DBC.TestData;
 using NUnit.Framework;
 using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
@@ -9,7 +10,7 @@ using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;
 
-namespace libwarcraft.Tests.Reflection
+namespace libwarcraft.Tests.Unit.Reflection.DBC
 {
 	[TestFixture]
 	public class DBCReflectionTests
@@ -124,8 +125,8 @@ namespace libwarcraft.Tests.Reflection
 			[Test]
 			public void OnAPropertyWithoutTheForeignKeyInfoAttributeThrows()
 			{
-				var invalidForeignKeyProperty = typeof(InvalidTestDBCRecord).GetProperties()
-					.First(p => p.Name == nameof(InvalidTestDBCRecord.TestForeignKeyFieldMissingInfo));
+				var invalidForeignKeyProperty = typeof(TestDBCRecordInvalidForeignKeyField).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecordInvalidForeignKeyField.TestForeignKeyFieldMissingInfo));
 
 				Assert.Throws<InvalidDataException>(() => DBCDeserializer.GetForeignKeyInfo(invalidForeignKeyProperty));
 			}

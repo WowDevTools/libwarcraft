@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using libwarcraft.Tests.Reflection;
+using libwarcraft.Tests.Unit.Reflection.DBC.TestData;
 using NUnit.Framework;
 using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
