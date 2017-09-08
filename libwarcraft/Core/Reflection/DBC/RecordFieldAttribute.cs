@@ -24,13 +24,27 @@ using System;
 
 namespace Warcraft.Core.Reflection.DBC
 {
+	/// <summary>
+	/// Declares a property to be a record field.
+	/// </summary>
 	[AttributeUsage(AttributeTargets.Property)]
 	public class RecordFieldAttribute : Attribute
 	{
+		/// <summary>
+		/// Gets the version that the field was introduced in.
+		/// </summary>
 		public WarcraftVersion IntroducedIn { get; }
 
+		/// <summary>
+		/// Gets or sets  the version that the field was removed in. If the field has not been removed, then this will
+		/// have a value of <see cref="WarcraftVersion.Unknown"/>.
+		/// </summary>
 		public WarcraftVersion RemovedIn { get; set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RecordFieldAttribute"/> class.
+		/// </summary>
+		/// <param name="introducedIn">The version that the field was introduced in.</param>
 		public RecordFieldAttribute(WarcraftVersion introducedIn)
 		{
 			this.IntroducedIn = introducedIn;
