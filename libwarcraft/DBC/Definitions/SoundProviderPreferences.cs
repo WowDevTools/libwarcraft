@@ -39,7 +39,7 @@ namespace Warcraft.DBC.Definitions
 		[RecordField(WarcraftVersion.BurningCrusade)]
 		public uint EAXEnvironmentSelection { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.BurningCrusade)]
 		public float EAXEffectVolume { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
