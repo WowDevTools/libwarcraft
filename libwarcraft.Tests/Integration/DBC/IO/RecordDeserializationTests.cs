@@ -2,7 +2,6 @@
 using libwarcraft.Tests.Reflection;
 using NUnit.Framework;
 using Warcraft.Core;
-using Warcraft.Core.Extensions;
 using Warcraft.Core.Reflection.DBC;
 
 namespace libwarcraft.Tests.Integration.DBC.IO

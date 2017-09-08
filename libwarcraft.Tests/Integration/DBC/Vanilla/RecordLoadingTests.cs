@@ -2,7 +2,6 @@
 using System.Linq;
 using NUnit.Framework;
 using Warcraft.Core;
-using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
 
 namespace libwarcraft.Tests.Integration.DBC.Vanilla

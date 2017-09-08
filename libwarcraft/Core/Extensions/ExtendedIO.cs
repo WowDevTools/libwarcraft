@@ -32,7 +32,6 @@ using Warcraft.Core.Reflection.DBC;
 using Warcraft.Core.Shading.Blending;
 using Warcraft.Core.Structures;
 using Warcraft.DBC;
-using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;
 using Warcraft.MDX.Animation;
 using Warcraft.MDX.Data;

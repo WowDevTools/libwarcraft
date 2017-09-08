@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using NUnit.Framework;
 using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;

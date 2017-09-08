@@ -21,8 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
