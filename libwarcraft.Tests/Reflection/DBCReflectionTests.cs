@@ -50,7 +50,7 @@ namespace libwarcraft.Tests.Reflection
 		public class GetVersionRelevantProperties
 		{
 			[Test]
-			public void GetVersionRelevantPropertiesGetsAValidVersionedPropertySetForAddedProperties()
+			public void GetsAValidVersionedPropertySetForAddedProperties()
 			{
 				var recordProperties = DBCDeserializer.GetVersionRelevantProperties(WarcraftVersion.Classic, typeof(TestDBCRecord));
 
@@ -60,7 +60,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetVersionRelevantPropertiesGetsAValidVersionedPropertySetForRemovedProperties()
+			public void GetsAValidVersionedPropertySetForRemovedProperties()
 			{
 				var recordProperties = DBCDeserializer.GetVersionRelevantProperties(WarcraftVersion.Cataclysm, typeof(TestDBCRecord));
 
@@ -73,7 +73,7 @@ namespace libwarcraft.Tests.Reflection
 		public class GetRecordProperties
 		{
 			[Test]
-			public void GetRecordPropertiesGetsAValidPropertySet()
+			public void GetsAValidPropertySet()
 			{
 				var recordProperties = DBCDeserializer.GetRecordProperties(typeof(TestDBCRecord));
 
@@ -83,7 +83,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetRecordPropertiesIncludesArrayFields()
+			public void IncludesArrayFields()
 			{
 				var recordProperties = DBCDeserializer.GetRecordProperties(typeof(TestDBCRecordWithArray));
 
@@ -93,7 +93,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetRecordPropertiesThrowsIfAnIncompatiblePropertyIsDecoratedWithRecordFieldArray()
+			public void ThrowsIfAnIncompatiblePropertyIsDecoratedWithRecordFieldArray()
 			{
 				Assert.Throws<IncompatibleRecordArrayTypeException>(() => DBCDeserializer.GetRecordProperties(typeof(TestDBCRecordWithInvalidArray)));
 			}
@@ -102,7 +102,7 @@ namespace libwarcraft.Tests.Reflection
 		public class GetForeignKeyInfo
 		{
 			[Test]
-			public void GetForeignKeyInfoOnAValidForeignKeyPropertyReturnsValidData()
+			public void OnAValidForeignKeyPropertyReturnsValidData()
 			{
 				var foreignKeyProperty = typeof(TestDBCRecord).GetProperties()
 					.First(p => p.Name == nameof(TestDBCRecord.TestForeignKeyField));
@@ -114,7 +114,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetForeignKeyInfoOnAPropertyThatIsNotAForeignKeyThrows()
+			public void OnAPropertyThatIsNotAForeignKeyThrows()
 			{
 				var otherProperty = typeof(TestDBCRecord).GetProperties()
 					.First(p => p.Name == nameof(TestDBCRecord.TestSimpleField));
@@ -123,7 +123,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetForeignKeyInfoOnAPropertyWithoutTheForeignKeyInfoAttributeThrows()
+			public void OnAPropertyWithoutTheForeignKeyInfoAttributeThrows()
 			{
 				var invalidForeignKeyProperty = typeof(InvalidTestDBCRecord).GetProperties()
 					.First(p => p.Name == nameof(InvalidTestDBCRecord.TestForeignKeyFieldMissingInfo));
@@ -135,7 +135,7 @@ namespace libwarcraft.Tests.Reflection
 		public class IsPropertyForeignKey
 		{
 			[Test]
-			public void IsPropertyForeignKeyReturnsTrueForForeignKeyPropertiesAndViceVersa()
+			public void ReturnsTrueForForeignKeyPropertiesAndViceVersa()
 			{
 				var foreignKeyProperty = typeof(TestDBCRecord).GetProperties()
 					.First(p => p.Name == nameof(TestDBCRecord.TestForeignKeyField));
@@ -151,7 +151,7 @@ namespace libwarcraft.Tests.Reflection
 		public class GetRecordSize
 		{
 			[Test]
-			public void GetRecordSizeReturnsCorrectSizeOnVersionedRecords()
+			public void ReturnsCorrectSizeOnVersionedRecords()
 			{
 				long recordSizeClassic = DBCDeserializer.GetRecordSize(WarcraftVersion.Classic, typeof(TestDBCRecord));
 				long recordSizeWrath = DBCDeserializer.GetRecordSize(WarcraftVersion.Wrath, typeof(TestDBCRecord));
@@ -163,7 +163,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetRecordSizeReturnsCorrectSizeOnRecordsWithArrays()
+			public void ReturnsCorrectSizeOnRecordsWithArrays()
 			{
 				Assert.AreEqual(24, DBCDeserializer.GetRecordSize(WarcraftVersion.Classic, typeof(TestDBCRecordWithArray)));
 			}
@@ -172,7 +172,7 @@ namespace libwarcraft.Tests.Reflection
 		public class GetPropertyCount
 		{
 			[Test]
-			public void GetPropertyCountReturnsCorrectCountOnRecordsOnVersionedRecords()
+			public void ReturnsCorrectCountOnRecordsOnVersionedRecords()
 			{
 				long propCountClassic = DBCDeserializer.GetPropertyCount(WarcraftVersion.Classic, typeof(TestDBCRecord));
 				long propCountWrath = DBCDeserializer.GetPropertyCount(WarcraftVersion.Wrath, typeof(TestDBCRecord));
@@ -184,37 +184,57 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetPropertyCountReturnsCorrectCountForRecordsWithArrays()
+			public void ReturnsCorrectCountForRecordsWithArrays()
 			{
 				Assert.AreEqual(6, DBCDeserializer.GetPropertyCount(WarcraftVersion.Classic, typeof(TestDBCRecordWithArray)));
 			}
 		}
 
-		public class GetPropertyFieldArrayAttribute
+		public class GetVersionRelevantPropertyFieldArrayAttribute
 		{
 			[Test]
-			public void GetPropertyFieldArrayAttributeReturnsAValidAttributeForAMarkedProperty()
+			public void ReturnsAValidAttributeForAMarkedProperty()
 			{
 				var arrayProperty = typeof(TestDBCRecordWithArray).GetProperties()
 					.First(p => p.Name == nameof(TestDBCRecordWithArray.ArrayField));
 
-				Assert.DoesNotThrow(() => DBCDeserializer.GetPropertyFieldArrayAttribute(arrayProperty));
+				Assert.DoesNotThrow(() => DBCDeserializer.GetVersionRelevantPropertyFieldArrayAttribute(WarcraftVersion.Classic, arrayProperty));
 			}
 
 			[Test]
-			public void GetPropertyFieldArrayAttributeThrowsForAnUnmarkedProperty()
+			public void ThrowsForAnUnmarkedProperty()
 			{
 				var simpleProperty = typeof(TestDBCRecordWithArray).GetProperties()
 					.First(p => p.Name == nameof(TestDBCRecordWithArray.SimpleField));
 
-				Assert.Throws<ArgumentException>(() => DBCDeserializer.GetPropertyFieldArrayAttribute(simpleProperty));
+				Assert.Throws<ArgumentException>(() => DBCDeserializer.GetVersionRelevantPropertyFieldArrayAttribute(WarcraftVersion.Classic, simpleProperty));
+			}
+
+			[Test]
+			public void ReturnsCorrectAttributeForPropertyWithMultipleAttributes()
+			{
+				var arrayProperty = typeof(TestDBCRecordWithVersionedArray).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecordWithVersionedArray.VersionedArray));
+
+				var classicAttribute =
+					DBCDeserializer.GetVersionRelevantPropertyFieldArrayAttribute(WarcraftVersion.Classic, arrayProperty);
+
+				var wrathAttribute =
+					DBCDeserializer.GetVersionRelevantPropertyFieldArrayAttribute(WarcraftVersion.Wrath, arrayProperty);
+
+				var cataAttribute =
+					DBCDeserializer.GetVersionRelevantPropertyFieldArrayAttribute(WarcraftVersion.Cataclysm, arrayProperty);
+
+				Assert.AreEqual(2, classicAttribute.Count);
+				Assert.AreEqual(4, wrathAttribute.Count);
+				Assert.AreEqual(6, cataAttribute.Count);
 			}
 		}
 
-		public class IsPropertyArray
+		public class IsPropertyFieldArray
 		{
 			[Test]
-			public void IsPropertyArrayReturnsFalseForARecordFieldProperty()
+			public void ReturnsFalseForARecordFieldProperty()
 			{
 				var arrayProperty = typeof(TestDBCRecordWithArray).GetProperties()
 					.First(p => p.Name == nameof(TestDBCRecordWithArray.SimpleField));
@@ -223,7 +243,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void IsPropertyArrayReturnsTrueForARecordFieldArrayProperty()
+			public void ReturnsTrueForARecordFieldArrayProperty()
 			{
 				var arrayProperty = typeof(TestDBCRecordWithArray).GetProperties()
 					.First(p => p.Name == nameof(TestDBCRecordWithArray.ArrayField));
@@ -232,7 +252,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void IsPropertyArrayReturnsFalseForAnUnmarkedProperty()
+			public void ReturnsFalseForAnUnmarkedProperty()
 			{
 				var arrayProperty = typeof(TestDBCRecord).GetProperties()
 					.First(p => p.Name == nameof(TestDBCRecord.TestNotRecordField));
@@ -241,10 +261,10 @@ namespace libwarcraft.Tests.Reflection
 			}
 		}
 
-		public class GetUnderlyingStoredType
+		public class GetUnderlyingStoredPrimitiveType
 		{
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForPrimitiveArrays()
+			public void ReturnsCorrectTypeForPrimitiveArrays()
 			{
 				var complexType = typeof(uint[]);
 
@@ -252,7 +272,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForForeignKeys()
+			public void ReturnsCorrectTypeForForeignKeys()
 			{
 				var complexType = typeof(ForeignKey<uint>);
 
@@ -260,7 +280,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForIListOfPrimitive()
+			public void ReturnsCorrectTypeForIListOfPrimitive()
 			{
 				var complexType = typeof(IList<uint>);
 
@@ -268,7 +288,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForArraysOfGenericType()
+			public void ReturnsCorrectTypeForArraysOfGenericType()
 			{
 				var complexType = typeof(ForeignKey<uint>[]);
 
@@ -276,7 +296,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForIListOfGenericType()
+			public void ReturnsCorrectTypeForIListOfGenericType()
 			{
 				var complexType = typeof(IList<ForeignKey<uint>>);
 
@@ -284,7 +304,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForStringReferenceSpecialType()
+			public void ReturnsCorrectTypeForStringReferenceSpecialType()
 			{
 				var complexType = typeof(StringReference);
 
@@ -292,7 +312,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForLocalizedStringReferenceSpecialType()
+			public void ReturnsCorrectTypeForLocalizedStringReferenceSpecialType()
 			{
 				var complexType = typeof(LocalizedStringReference);
 
@@ -300,7 +320,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForArrayOfStringReferenceSpecialType()
+			public void ReturnsCorrectTypeForArrayOfStringReferenceSpecialType()
 			{
 				var complexType = typeof(StringReference[]);
 
@@ -308,7 +328,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForArrayOfLocalizedStringReferenceSpecialType()
+			public void ReturnsCorrectTypeForArrayOfLocalizedStringReferenceSpecialType()
 			{
 				var complexType = typeof(LocalizedStringReference[]);
 
@@ -316,7 +336,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForIListOfStringReferenceSpecialType()
+			public void ReturnsCorrectTypeForIListOfStringReferenceSpecialType()
 			{
 				var complexType = typeof(IList<StringReference>);
 
@@ -324,7 +344,7 @@ namespace libwarcraft.Tests.Reflection
 			}
 
 			[Test]
-			public void GetUnderlyingStoredTypeWorksForIListOfLocalizedStringReferenceSpecialType()
+			public void ReturnsCorrectTypeForIListOfLocalizedStringReferenceSpecialType()
 			{
 				var complexType = typeof(IList<LocalizedStringReference>);
 

@@ -61,7 +61,7 @@ namespace Warcraft.Core.Reflection.DBC
 				if (IsPropertyFieldArray(databaseProperty))
 				{
 					var elementType = GetFieldArrayPropertyElementType(databaseProperty.PropertyType);
-					var arrayAttribute = GetPropertyFieldArrayAttribute(databaseProperty);
+					var arrayAttribute = GetVersionRelevantPropertyFieldArrayAttribute(version, databaseProperty);
 
 					List<object> values = new List<object>();
 					for (int i = 0; i < arrayAttribute.Count; ++i)
@@ -205,24 +205,29 @@ namespace Warcraft.Core.Reflection.DBC
 		}
 
 		/// <summary>
-		/// Gets the <see cref="RecordFieldArrayAttribute"/> that the given property is decorated with.
+		/// Gets the relevant <see cref="RecordFieldArrayAttribute"/> that the given property is decorated with.
 		/// </summary>
+		/// <param name="version">The version that the attribute should be relevant for.</param>
 		/// <param name="propertyInfo">The property to check.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException">
 		/// Thrown if the property is not an array type.
 		/// Thrown if the property does not have a field array attribute.
 		/// </exception>
-		public static RecordFieldArrayAttribute GetPropertyFieldArrayAttribute(PropertyInfo propertyInfo) // TODO: Write tests
+		public static RecordFieldArrayAttribute GetVersionRelevantPropertyFieldArrayAttribute(WarcraftVersion version, PropertyInfo propertyInfo) // TODO: Write tests
 		{
 			if (!IsPropertyFieldArray(propertyInfo))
 			{
 				throw new ArgumentException("The property is not an array. Use GetPropertyFieldAttribute instead, or decorate it with RecordFieldArray.", nameof(propertyInfo));
 			}
 
-			var arrayAttribute = propertyInfo.GetCustomAttributes().First(p => p is RecordFieldArrayAttribute) as RecordFieldArrayAttribute;
+			var attributes = propertyInfo
+				.GetCustomAttributes()
+				.Where(p => p is RecordFieldArrayAttribute)
+				.Cast<RecordFieldArrayAttribute>()
+				.OrderBy(a => a.IntroducedIn);
 
-			return arrayAttribute;
+			return attributes.Last(a => IsPropertyRelevantForVersion(version, a));
 		}
 
 		/// <summary>
@@ -323,20 +328,30 @@ namespace Warcraft.Core.Reflection.DBC
 			{
 				var versionAttribute = GetPropertyFieldAttribute(recordProperty);
 
-				// Field is not present in the version we're reading, skip it
-				if (versionAttribute.IntroducedIn > version)
-				{
-					continue;
-				}
-
-				// Field has been removed in the version we're reading, skip it
-				if (versionAttribute.RemovedIn <= version && versionAttribute.RemovedIn != WarcraftVersion.Unknown)
+				if (!IsPropertyRelevantForVersion(version, versionAttribute))
 				{
 					continue;
 				}
 
 				yield return recordProperty;
 			}
+		}
+
+		public static bool IsPropertyRelevantForVersion(WarcraftVersion version, RecordFieldAttribute versionAttribute)
+		{
+			// Field is not present in this version
+			if (versionAttribute.IntroducedIn > version)
+			{
+				return false;
+			}
+
+			// Field has been removed in this or a previous version
+			if (versionAttribute.RemovedIn <= version && versionAttribute.RemovedIn != WarcraftVersion.Unknown)
+			{
+				return false;
+			}
+
+			return true;
 		}
 
 		/// <summary>
@@ -403,7 +418,7 @@ namespace Warcraft.Core.Reflection.DBC
 					case Type arrayType when arrayType.IsArray:
 					{
 						var elementSize = Marshal.SizeOf(GetUnderlyingStoredPrimitiveType(recordProperty.PropertyType));
-						var arrayInfoAttribute = GetPropertyFieldArrayAttribute(recordProperty);
+						var arrayInfoAttribute = GetVersionRelevantPropertyFieldArrayAttribute(version, recordProperty);
 
 						size += (int)(elementSize * arrayInfoAttribute.Count);
 
@@ -480,7 +495,7 @@ namespace Warcraft.Core.Reflection.DBC
 				{
 					case Type _ when IsPropertyFieldArray(recordProperty):
 					{
-						var arrayInfoAttribute = GetPropertyFieldArrayAttribute(recordProperty);
+						var arrayInfoAttribute = GetVersionRelevantPropertyFieldArrayAttribute(version, recordProperty);
 						count += (int)arrayInfoAttribute.Count;
 
 						break;

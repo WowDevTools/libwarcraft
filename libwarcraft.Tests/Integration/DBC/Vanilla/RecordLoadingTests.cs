@@ -24,7 +24,7 @@ namespace libwarcraft.Tests.Integration.DBC.Vanilla
 
 			try
 			{
-				database.First();
+				var _ = database.First();
 			}
 			catch (ArgumentException e)
 			{
@@ -32,101 +32,103 @@ namespace libwarcraft.Tests.Integration.DBC.Vanilla
 			}
 		}
 
-		[Test]
-		public void TestLoadAnimationDataRecord()
+		public class LoadRecord
 		{
-			TestLoadRecord<AnimationDataRecord>(Version);
-		}
+			[Test]
+			public void AnimationDataRecord()
+			{
+				TestLoadRecord<AnimationDataRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadCharHairGeosetsRecord()
-		{
-			TestLoadRecord<CharHairGeosetsRecord>(Version);
-		}
+			[Test]
+			public void CharHairGeosetsRecord()
+			{
+				TestLoadRecord<CharHairGeosetsRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadSoundAmbienceRecord()
-		{
-			TestLoadRecord<SoundAmbienceRecord>(Version);
-		}
+			[Test]
+			public void SoundAmbienceRecord()
+			{
+				TestLoadRecord<SoundAmbienceRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadCharSectionsRecord()
-		{
-			TestLoadRecord<CharSectionsRecord>(Version);
-		}
+			[Test]
+			public void CharSectionsRecord()
+			{
+				TestLoadRecord<CharSectionsRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadSoundEntriesRecord()
-		{
-			TestLoadRecord<SoundEntriesRecord>(Version);
-		}
+			[Test]
+			public void SoundEntriesRecord()
+			{
+				TestLoadRecord<SoundEntriesRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadCreatureDisplayInfoExtraRecord()
-		{
-			TestLoadRecord<CreatureDisplayInfoExtraRecord>(Version);
-		}
+			[Test]
+			public void CreatureDisplayInfoExtraRecord()
+			{
+				TestLoadRecord<CreatureDisplayInfoExtraRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadSoundProviderPreferences()
-		{
-			TestLoadRecord<SoundProviderPreferencesRecord>(Version);
-		}
+			[Test]
+			public void SoundProviderPreferences()
+			{
+				TestLoadRecord<SoundProviderPreferencesRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadCreatureDisplayInfoRecord()
-		{
-			TestLoadRecord<CreatureDisplayInfoRecord>(Version);
-		}
+			[Test]
+			public void CreatureDisplayInfoRecord()
+			{
+				TestLoadRecord<CreatureDisplayInfoRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadSpellRecord()
-		{
-			TestLoadRecord<SpellRecord>(Version);
-		}
+			[Test]
+			public void SpellRecord()
+			{
+				TestLoadRecord<SpellRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadCreatureModelDataRecord()
-		{
-			TestLoadRecord<CreatureModelDataRecord>(Version);
-		}
+			[Test]
+			public void CreatureModelDataRecord()
+			{
+				TestLoadRecord<CreatureModelDataRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadWMOAreaTableRecord()
-		{
-			TestLoadRecord<WMOAreaTableRecord>(Version);
-		}
+			[Test]
+			public void WMOAreaTableRecord()
+			{
+				TestLoadRecord<WMOAreaTableRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadLiquidObjectRecord()
-		{
-			TestLoadRecord<LiquidObjectRecord>(Version);
-		}
+			[Test]
+			public void LiquidObjectRecord()
+			{
+				TestLoadRecord<LiquidObjectRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadZoneIntroMusicTableRecord()
-		{
-			TestLoadRecord<ZoneIntroMusicTableRecord>(Version);
-		}
+			[Test]
+			public void ZoneIntroMusicTableRecord()
+			{
+				TestLoadRecord<ZoneIntroMusicTableRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadLiquidTypeRecord()
-		{
-			TestLoadRecord<LiquidTypeRecord>(Version);
-		}
+			[Test]
+			public void LiquidTypeRecord()
+			{
+				TestLoadRecord<LiquidTypeRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadZoneMusicRecord()
-		{
-			TestLoadRecord<ZoneMusicRecord>(Version);
-		}
+			[Test]
+			public void ZoneMusicRecord()
+			{
+				TestLoadRecord<ZoneMusicRecord>(Version);
+			}
 
-		[Test]
-		public void TestLoadMapRecord()
-		{
-			TestLoadRecord<MapRecord>(Version);
+			[Test]
+			public void MapRecord()
+			{
+				TestLoadRecord<MapRecord>(Version);
+			}
 		}
-
 	}
 }

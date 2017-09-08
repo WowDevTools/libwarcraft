@@ -26,8 +26,7 @@ namespace Warcraft.Core.Reflection.DBC
 {
 	/// <summary>
 	/// Declares a property to be a record field property that is an array of elements. Multiple instances
-	/// of this attribute can be applied to a property if the field count changes. If so, then the previous
-	/// attribute should be marked as removed in the new version using <see cref="RecordFieldAttribute.RemovedIn"/>.
+	/// of this attribute can be applied to a property if the field count changes.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
 	public class RecordFieldArrayAttribute : RecordFieldAttribute
