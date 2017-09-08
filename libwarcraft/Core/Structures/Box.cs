@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -29,7 +30,7 @@ using Warcraft.Core.Interfaces;
 namespace Warcraft.Core.Structures
 {
 	/// <summary>
-	/// A structure representing an axis-aligned bounding box, comprised of two <see cref="Vector3f"/> objects
+	/// A structure representing an axis-aligned bounding box, comprised of two <see cref="Vector3"/> objects
 	/// defining the bottom and top corners of the box.
 	/// </summary>
 	public struct Box : IFlattenableData<float>
@@ -65,6 +66,7 @@ namespace Warcraft.Core.Structures
 			return (this.BottomCorner + this.TopCorner) / 2;
 		}
 
+		/// <inheritdoc />
 		public IReadOnlyCollection<float> Flatten()
 		{
 			return this.TopCorner.Flatten().Concat(this.BottomCorner.Flatten()).ToArray();

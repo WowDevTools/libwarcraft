@@ -28,6 +28,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Warcraft.Core.Extensions;
+using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.Core.Reflection.DBC
@@ -502,6 +503,11 @@ namespace Warcraft.Core.Reflection.DBC
 					case Type locStringRefType when locStringRefType == typeof(LocalizedStringReference):
 					{
 						count += LocalizedStringReference.GetFieldCount(version);
+						break;
+					}
+					case Type boxType when boxType == typeof(Box):
+					{
+						count += 6;
 						break;
 					}
 					default:
