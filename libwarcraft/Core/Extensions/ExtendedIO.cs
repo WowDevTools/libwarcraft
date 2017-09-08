@@ -257,9 +257,9 @@ namespace Warcraft.Core.Extensions
 		/// <exception cref="ArgumentException"></exception>
 		public static dynamic Read(this BinaryReader br, Type type, WarcraftVersion version)
 		{
-			if (!TypeReaderMap.ContainsKey(type))
+			if (!VersionedTypeReaderMap.ContainsKey(type))
 			{
-				throw new ArgumentException("The given type has no supported reading function associated " +
+				throw new ArgumentException("The given versioned type has no supported reading function associated " +
 				                            "with it.", type.Name);
 			}
 
@@ -486,24 +486,20 @@ namespace Warcraft.Core.Extensions
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
 		public static T ReadRecord<T>(this BinaryReader reader, int fieldCount, int recordSize, WarcraftVersion version = WarcraftVersion.Classic)
-			where T : IDeferredDeserialize, IDBCRecord, new()
+			where T : IDBCRecord, new()
 		{
 			T record = Activator.CreateInstance<T>();
 			record.Version = version;
 
-			// If the record is of the UnknownRecord type,
-			// this DBC file will just load the data without sanity checking it.
-			if (!(record is UnknownRecord))
+			// Make sure the provided record type is valid for this database file
+			if (record.FieldCount != fieldCount)
 			{
-				// Make sure the provided record type is valid for this database file
-				if (record.RecordSize != recordSize)
-				{
-					throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}. Invalid record size: Expected {recordSize}, actual {record.RecordSize}");
-				}
-				if (record.FieldCount != fieldCount)
-				{
-					throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}. Invalid field count: Expected {fieldCount}, actual {record.FieldCount}");
-				}
+				throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}. Invalid field count: DBC expected {fieldCount}, actual {record.FieldCount}");
+			}
+
+			if (record.RecordSize != recordSize)
+			{
+				throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}. Invalid record size: DBC expected {recordSize}, actual {record.RecordSize}");
 			}
 
 			if (typeof(T).GetCustomAttributes().Any(a => a is DatabaseRecordAttribute))
@@ -512,7 +508,7 @@ namespace Warcraft.Core.Extensions
 			}
 			else
 			{
-				record.DeserializeSelf(reader);
+				throw new ArgumentException($"The record type {typeof(T).Name} was not decorated with the \"DatabaseRecord\" attribute.");
 			}
 
 			return record;

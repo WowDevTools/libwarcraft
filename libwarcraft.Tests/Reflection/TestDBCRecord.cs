@@ -11,23 +11,18 @@ namespace libwarcraft.Tests.Reflection
 	{
 		public uint TestNotRecordField { get; }
 
-		[RecordField(WarcraftVersion.Classic, 1)]
+		[RecordField(WarcraftVersion.Classic)]
 		public uint TestSimpleField { get; set; }
 
-		[RecordField(WarcraftVersion.Classic, WarcraftVersion.Cataclysm, 2)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Cataclysm)]
 		public uint TestAddedAndRemovedField { get; set; }
 
-		[RecordField(WarcraftVersion.Classic, 3)]
+		[RecordField(WarcraftVersion.Classic)]
 		[ForeignKeyInfo(DatabaseName.AnimationData, nameof(AnimationDataRecord.ID))]
 		public ForeignKey<uint> TestForeignKeyField { get; set; }
 
-		[RecordField(WarcraftVersion.Wrath, 4)]
-		public uint TestNewFieldInWrath { get; set; }
-
-		public override void PostLoad(byte[] data)
-		{
-			throw new System.NotImplementedException();
-		}
+		[RecordField(WarcraftVersion.Wrath)]
+		public StringReference TestNewFieldInWrath { get; set; }
 
 		public override IEnumerable<StringReference> GetStringReferences()
 		{

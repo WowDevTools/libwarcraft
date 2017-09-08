@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using Warcraft.Core;
 using System.IO;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -32,159 +33,58 @@ namespace Warcraft.DBC.Definitions
 	/// Animation data record. This database defines the different animations models can have, and
 	/// is referenced by M2 and MDX files.
 	/// </summary>
+	[DatabaseRecord(DatabaseName.AnimationData)]
 	public class AnimationDataRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.AnimationData;
-
 		/// <summary>
 		/// The name of the animation.
 		/// </summary>
-		public StringReference Name;
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference Name { get; set; }
 
 		/// <summary>
 		/// The weapon flags. This affects how the model's weapons are held during the animation.
 		/// </summary>
-		public WeaponAnimationFlags WeaponFlags;
+		[RecordField(WarcraftVersion.Classic)]
+		public WeaponAnimationFlags WeaponFlags { get; set; }
 
 		/// <summary>
 		/// The body flags.
 		/// </summary>
-		public uint BodyFlags;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint BodyFlags { get; set; }
 
 		/// <summary>
 		/// General animation flags.
 		/// </summary>
-		public uint Flags;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Flags { get; set; }
 
 		/// <summary>
 		/// The fallback animation that precedes this one.
 		/// </summary>
-		public ForeignKey<uint> FallbackAnimation;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.AnimationData, nameof(ID))]
+		public ForeignKey<uint> FallbackAnimation { get; set; }
 
 		/// <summary>
 		/// The top-level behaviour animation that this animation is a child of.
 		/// </summary>
-		public ForeignKey<uint> BehaviourAnimation;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.AnimationData, nameof(ID))]
+		public ForeignKey<uint> BehaviourAnimation { get; set; }
 
 		/// <summary>
 		/// The behaviour tier of the animation. In most cases, this indicates whether or not the animation
 		/// is used for flying characters.
 		/// </summary>
-		public uint BehaviourTier;
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint BehaviourTier { get; set; }
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
-
+		/// <inheritdoc />
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
 			yield return this.Name;
-		}
-
-		public override void DeserializeSelf(BinaryReader br)
-		{
-			base.DeserializeSelf(br);
-
-			this.Name = new StringReference(br.ReadUInt32());
-
-			if (this.Version >= WarcraftVersion.Warlords)
-			{
-				this.WeaponFlags = (WeaponAnimationFlags)br.ReadUInt32();
-				this.BodyFlags = br.ReadUInt32();
-			}
-
-			this.Flags = br.ReadUInt32();
-
-			this.FallbackAnimation = new ForeignKey<uint>(DatabaseName.AnimationData, nameof(this.ID), br.ReadUInt32());
-			this.BehaviourAnimation = new ForeignKey<uint>(DatabaseName.AnimationData, nameof(this.ID), br.ReadUInt32());
-
-			if (this.Version >= WarcraftVersion.Wrath)
-			{
-				this.BehaviourTier = br.ReadUInt32();
-			}
-
-			this.HasLoadedRecordData = true;
-		}
-
-		/// <summary>
-		/// Gets the size of the record.
-		/// </summary>
-		/// <returns>The record size.</returns>
-		public override int RecordSize
-		{
-			get
-			{
-				if (this.Version == WarcraftVersion.Unknown)
-				{
-					throw new InvalidOperationException("The record data cannot be loaded before the version has been set.");
-				}
-
-				switch (this.Version)
-				{
-					case WarcraftVersion.Classic:
-						return 28;
-					case WarcraftVersion.BurningCrusade:
-						return 28;
-					case WarcraftVersion.Wrath:
-						return 32;
-					case WarcraftVersion.Cataclysm:
-						return 32;
-					case WarcraftVersion.Mists:
-						return 32;
-					case WarcraftVersion.Warlords:
-						return 24;
-					case WarcraftVersion.Legion:
-						return 24;
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets the field count for this record at.
-		/// </summary>
-		/// <returns>The field count.</returns>
-		public override int FieldCount
-		{
-			get
-			{
-				if (this.Version == WarcraftVersion.Unknown)
-				{
-					throw new InvalidOperationException("The record data cannot be loaded before the version has been set.");
-				}
-
-				switch (this.Version)
-				{
-					case WarcraftVersion.Classic:
-						return 7;
-					case WarcraftVersion.BurningCrusade:
-						return 7;
-					case WarcraftVersion.Wrath:
-						return 8;
-					case WarcraftVersion.Cataclysm:
-						return 8;
-					case WarcraftVersion.Mists:
-						return 8;
-					case WarcraftVersion.Warlords:
-						return 6;
-					case WarcraftVersion.Legion:
-						return 6;
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
-			}
 		}
 	}
 

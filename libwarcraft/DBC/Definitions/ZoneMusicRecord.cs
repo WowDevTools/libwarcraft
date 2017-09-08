@@ -22,70 +22,46 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	[DatabaseRecord(DatabaseName.ZoneMusic)]
 	public class ZoneMusicRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.ZoneMusic;
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference SetName { get; set; }
 
-		public StringReference SetName;
-		public Range SilenceIntervalDay; // These ranges are stored as daymin/nightmin/daymax/nightmax)
-		public Range SilenceIntervalNight;
-		public ForeignKey<uint> DayMusic;
-		public ForeignKey<uint> NightMusic;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint SilenceTimeDayMin { get; set; }
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public uint SilenceTimeNightMin { get; set; }
 
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
+		[RecordField(WarcraftVersion.Classic)]
+		public uint SilenceTimeDayMax { get; set; }
 
-			this.SetName = reader.ReadStringReference();
+		[RecordField(WarcraftVersion.Classic)]
+		public uint SilenceTimeNightMax { get; set; }
 
-			uint interDayMin = reader.ReadUInt32();
-			uint interNightMin = reader.ReadUInt32();
-			uint interDayMax = reader.ReadUInt32();
-			uint interNightMax = reader.ReadUInt32();
+		public Range SilenceIntervalDay => new Range(this.SilenceTimeDayMin, this.SilenceTimeDayMax, rigorous:false);
+		public Range SilenceIntervalNight => new Range(this.SilenceTimeNightMin, this.SilenceTimeNightMax, rigorous:false);
 
-			// HACK: Due to some malformed data on Blizzard's part, the range error checking must be disabled
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+		public ForeignKey<uint> DayMusic { get; set; }
 
-			this.SilenceIntervalDay = new Range(interDayMin, interDayMax, rigorous:false);
-			this.SilenceIntervalNight = new Range(interNightMin, interNightMax, rigorous:false);
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+		public ForeignKey<uint> NightMusic { get; set; }
 
-			this.DayMusic = new ForeignKey<uint>(DatabaseName.SoundEntries, nameof(SoundEntriesRecord.ID), reader.ReadUInt32());
-			this.NightMusic = new ForeignKey<uint>(DatabaseName.SoundEntries, nameof(SoundEntriesRecord.ID), reader.ReadUInt32());
-
-			this.HasLoadedRecordData = true;
-		}
-
+		/// <inheritdoc />
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
 			yield return this.SetName;
 		}
-
-		public override int FieldCount => 8;
-
-		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 }

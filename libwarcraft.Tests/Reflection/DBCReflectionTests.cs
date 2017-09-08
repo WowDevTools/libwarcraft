@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -7,13 +8,14 @@ using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
+using Warcraft.DBC.SpecialFields;
 
 namespace libwarcraft.Tests.Reflection
 {
 	[TestFixture]
 	public class DBCReflectionTests
 	{
-		private readonly string[] TestRecordPropertyNames =
+		private static readonly string[] TestRecordPropertyNames =
 		{
 			nameof(DBCRecord.ID),
 			nameof(TestDBCRecord.TestSimpleField),
@@ -22,7 +24,7 @@ namespace libwarcraft.Tests.Reflection
 			nameof(TestDBCRecord.TestNewFieldInWrath),
 		};
 
-		private readonly string[] TestRecordClassicPropertyNames =
+		private static readonly string[] TestRecordClassicPropertyNames =
 		{
 			nameof(DBCRecord.ID),
 			nameof(TestDBCRecord.TestSimpleField),
@@ -30,7 +32,7 @@ namespace libwarcraft.Tests.Reflection
 			nameof(TestDBCRecord.TestForeignKeyField),
 		};
 
-		private readonly string[] TestRecordCataPropertyNames =
+		private static readonly string[] TestRecordCataPropertyNames =
 		{
 			nameof(DBCRecord.ID),
 			nameof(TestDBCRecord.TestSimpleField),
@@ -38,95 +40,317 @@ namespace libwarcraft.Tests.Reflection
 			nameof(TestDBCRecord.TestNewFieldInWrath),
 		};
 
-		[Test]
-		public void GetRecordPropertiesGetsAValidPropertySet()
+		private static readonly string[] TestRecordWithArrayPropertyNames =
 		{
-			var recordProperties = DBCReflection.GetRecordProperties<TestDBCRecord>();
+			nameof(DBCRecord.ID),
+			nameof(TestDBCRecordWithArray.SimpleField),
+			nameof(TestDBCRecordWithArray.ArrayField)
+		};
 
-			var recordPropertyNames = recordProperties.Select(p => p.Name);
+		public class GetVersionRelevantProperties
+		{
+			[Test]
+			public void GetVersionRelevantPropertiesGetsAValidVersionedPropertySetForAddedProperties()
+			{
+				var recordProperties = DBCReflection.GetVersionRelevantProperties(WarcraftVersion.Classic, typeof(TestDBCRecord));
 
-			Assert.That(recordPropertyNames, Is.EquivalentTo(this.TestRecordPropertyNames));
+				var recordPropertyNames = recordProperties.Select(p => p.Name);
+
+				Assert.That(recordPropertyNames, Is.EquivalentTo(TestRecordClassicPropertyNames));
+			}
+
+			[Test]
+			public void GetVersionRelevantPropertiesGetsAValidVersionedPropertySetForRemovedProperties()
+			{
+				var recordProperties = DBCReflection.GetVersionRelevantProperties(WarcraftVersion.Cataclysm, typeof(TestDBCRecord));
+
+				var recordPropertyNames = recordProperties.Select(p => p.Name);
+
+				Assert.That(recordPropertyNames, Is.EquivalentTo(TestRecordCataPropertyNames));
+			}
 		}
 
-		[Test]
-		public void GetVersionRelevantPropertiesGetsAValidVersionedPropertySetForAddedProperties()
+		public class GetRecordProperties
 		{
-			var recordProperties = DBCReflection.GetVersionRelevantProperties<TestDBCRecord>(WarcraftVersion.Classic);
+			[Test]
+			public void GetRecordPropertiesGetsAValidPropertySet()
+			{
+				var recordProperties = DBCReflection.GetRecordProperties(typeof(TestDBCRecord));
 
-			var recordPropertyNames = recordProperties.Select(p => p.Name);
+				var recordPropertyNames = recordProperties.Select(p => p.Name);
 
-			Assert.That(recordPropertyNames, Is.EquivalentTo(this.TestRecordClassicPropertyNames));
+				Assert.That(recordPropertyNames, Is.EquivalentTo(TestRecordPropertyNames));
+			}
+
+			[Test]
+			public void GetRecordPropertiesIncludesArrayFields()
+			{
+				var recordProperties = DBCReflection.GetRecordProperties(typeof(TestDBCRecordWithArray));
+
+				var recordPropertyNames = recordProperties.Select(p => p.Name);
+
+				Assert.That(recordPropertyNames, Is.EquivalentTo(TestRecordWithArrayPropertyNames));
+			}
+
+			[Test]
+			public void GetRecordPropertiesThrowsIfAnIncompatiblePropertyIsDecoratedWithRecordFieldArray()
+			{
+				Assert.Throws<IncompatibleRecordArrayTypeException>(() => DBCReflection.GetRecordProperties(typeof(TestDBCRecordWithInvalidArray)));
+			}
 		}
 
-		[Test]
-		public void GetVersionRelevantPropertiesGetsAValidVersionedPropertySetForRemovedProperties()
+		public class GetForeignKeyInfo
 		{
-			var recordProperties = DBCReflection.GetVersionRelevantProperties<TestDBCRecord>(WarcraftVersion.Cataclysm);
+			[Test]
+			public void GetForeignKeyInfoOnAValidForeignKeyPropertyReturnsValidData()
+			{
+				var foreignKeyProperty = typeof(TestDBCRecord).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecord.TestForeignKeyField));
 
-			var recordPropertyNames = recordProperties.Select(p => p.Name);
+				var foreignKeyInfo = DBCReflection.GetForeignKeyInfo(foreignKeyProperty);
 
-			Assert.That(recordPropertyNames, Is.EquivalentTo(this.TestRecordCataPropertyNames));
+				Assert.AreEqual(DatabaseName.AnimationData, foreignKeyInfo.Database);
+				Assert.AreEqual(nameof(AnimationDataRecord.ID), foreignKeyInfo.Field);
+			}
+
+			[Test]
+			public void GetForeignKeyInfoOnAPropertyThatIsNotAForeignKeyThrows()
+			{
+				var otherProperty = typeof(TestDBCRecord).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecord.TestSimpleField));
+
+				Assert.Throws<ArgumentException>(() => DBCReflection.GetForeignKeyInfo(otherProperty));
+			}
+
+			[Test]
+			public void GetForeignKeyInfoOnAPropertyWithoutTheForeignKeyInfoAttributeThrows()
+			{
+				var invalidForeignKeyProperty = typeof(InvalidTestDBCRecord).GetProperties()
+					.First(p => p.Name == nameof(InvalidTestDBCRecord.TestForeignKeyFieldMissingInfo));
+
+				Assert.Throws<InvalidDataException>(() => DBCReflection.GetForeignKeyInfo(invalidForeignKeyProperty));
+			}
 		}
 
-		[Test]
-		public void IsPropertyForeignKeyReturnsTrueForForeignKeyPropertiesAndViceVersa()
+		public class IsPropertyForeignKey
 		{
-			var foreignKeyProperty = typeof(TestDBCRecord).GetProperties()
-				.First(p => p.Name == nameof(TestDBCRecord.TestForeignKeyField));
+			[Test]
+			public void IsPropertyForeignKeyReturnsTrueForForeignKeyPropertiesAndViceVersa()
+			{
+				var foreignKeyProperty = typeof(TestDBCRecord).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecord.TestForeignKeyField));
 
-			var otherProperty = typeof(TestDBCRecord).GetProperties()
-				.First(p => p.Name == nameof(TestDBCRecord.TestSimpleField));
+				var otherProperty = typeof(TestDBCRecord).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecord.TestSimpleField));
 
-			Assert.True(DBCReflection.IsPropertyForeignKey(foreignKeyProperty));
-			Assert.False(DBCReflection.IsPropertyForeignKey(otherProperty));
+				Assert.True(DBCReflection.IsPropertyForeignKey(foreignKeyProperty));
+				Assert.False(DBCReflection.IsPropertyForeignKey(otherProperty));
+			}
 		}
 
-		[Test]
-		public void GetForeignKeyInfoOnAValidForeignKeyPropertyReturnsValidData()
+		public class GetForeignKeyType
 		{
-			var foreignKeyProperty = typeof(TestDBCRecord).GetProperties()
-				.First(p => p.Name == nameof(TestDBCRecord.TestForeignKeyField));
+			[Test]
+			public void GetForeignKeyTypeOnAPropertyThatIsNotAForeignKeyThrows()
+			{
+				var otherProperty = typeof(TestDBCRecord).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecord.TestSimpleField));
 
-			var foreignKeyInfo = DBCReflection.GetForeignKeyInfo(foreignKeyProperty);
+				Assert.Throws<ArgumentException>(() => DBCReflection.GetForeignKeyType(otherProperty));
+			}
 
-			Assert.AreEqual(DatabaseName.AnimationData, foreignKeyInfo.Database);
-			Assert.AreEqual(nameof(AnimationDataRecord.ID), foreignKeyInfo.Field);
+			[Test]
+			public void GetForeignKeyTypeOnAForeignKeyReturnsCorrectType()
+			{
+				var foreignKeyProperty = typeof(TestDBCRecord).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecord.TestForeignKeyField));
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetForeignKeyType(foreignKeyProperty));
+			}
 		}
 
-		[Test]
-		public void GetForeignKeyInfoOnAPropertyThatIsNotAForeignKeyThrows()
+		public class GetRecordSize
 		{
-			var otherProperty = typeof(TestDBCRecord).GetProperties()
-				.First(p => p.Name == nameof(TestDBCRecord.TestSimpleField));
+			[Test]
+			public void GetRecordSizeReturnsCorrectSizeOnVersionedRecords()
+			{
+				long recordSizeClassic = DBCReflection.GetRecordSize(WarcraftVersion.Classic, typeof(TestDBCRecord));
+				long recordSizeWrath = DBCReflection.GetRecordSize(WarcraftVersion.Wrath, typeof(TestDBCRecord));
+				long recordSizeCata = DBCReflection.GetRecordSize(WarcraftVersion.Cataclysm, typeof(TestDBCRecord));
 
-			Assert.Throws<ArgumentException>(() => DBCReflection.GetForeignKeyInfo(otherProperty));
+				Assert.AreEqual(16, recordSizeClassic);
+				Assert.AreEqual(20, recordSizeWrath);
+				Assert.AreEqual(16, recordSizeCata);
+			}
+
+			[Test]
+			public void GetRecordSizeReturnsCorrectSizeOnRecordsWithArrays()
+			{
+				Assert.AreEqual(24, DBCReflection.GetRecordSize(WarcraftVersion.Classic, typeof(TestDBCRecordWithArray)));
+			}
 		}
 
-		[Test]
-		public void GetForeignKeyInfoOnAPropertyWithoutTheForeignKeyInfoAttributeThrows()
+		public class GetPropertyCount
 		{
-			var invalidForeignKeyProperty = typeof(InvalidTestDBCRecord).GetProperties()
-				.First(p => p.Name == nameof(InvalidTestDBCRecord.TestForeignKeyFieldMissingInfo));
+			[Test]
+			public void GetPropertyCountReturnsCorrectCountOnRecordsOnVersionedRecords()
+			{
+				long propCountClassic = DBCReflection.GetPropertyCount(WarcraftVersion.Classic, typeof(TestDBCRecord));
+				long propCountWrath = DBCReflection.GetPropertyCount(WarcraftVersion.Wrath, typeof(TestDBCRecord));
+				long propCountCata = DBCReflection.GetPropertyCount(WarcraftVersion.Cataclysm, typeof(TestDBCRecord));
 
-			Assert.Throws<InvalidDataException>(() => DBCReflection.GetForeignKeyInfo(invalidForeignKeyProperty));
+				Assert.AreEqual(4, propCountClassic);
+				Assert.AreEqual(5, propCountWrath);
+				Assert.AreEqual(4, propCountCata);
+			}
+
+			[Test]
+			public void GetPropertyCountReturnsCorrectCountForRecordsWithArrays()
+			{
+				Assert.AreEqual(6, DBCReflection.GetPropertyCount(WarcraftVersion.Classic, typeof(TestDBCRecordWithArray)));
+			}
 		}
 
-		[Test]
-		public void GetForeignKeyTypeOnAPropertyThatIsNotAForeignKeyThrows()
+		public class GetPropertyFieldArrayAttribute
 		{
-			var otherProperty = typeof(TestDBCRecord).GetProperties()
-				.First(p => p.Name == nameof(TestDBCRecord.TestSimpleField));
+			[Test]
+			public void GetPropertyFieldArrayAttributeReturnsAValidAttributeForAMarkedProperty()
+			{
+				var arrayProperty = typeof(TestDBCRecordWithArray).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecordWithArray.ArrayField));
 
-			Assert.Throws<ArgumentException>(() => DBCReflection.GetForeignKeyType(otherProperty));
+				Assert.DoesNotThrow(() => DBCReflection.GetPropertyFieldArrayAttribute(arrayProperty));
+			}
+
+			[Test]
+			public void GetPropertyFieldArrayAttributeThrowsForAnUnmarkedProperty()
+			{
+				var simpleProperty = typeof(TestDBCRecordWithArray).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecordWithArray.SimpleField));
+
+				Assert.Throws<ArgumentException>(() => DBCReflection.GetPropertyFieldArrayAttribute(simpleProperty));
+			}
 		}
 
-		[Test]
-		public void GetForeignKeyTypeOnAForeignKeyReturnsCorrectType()
+		public class IsPropertyArray
 		{
-			var foreignKeyProperty = typeof(TestDBCRecord).GetProperties()
-				.First(p => p.Name == nameof(TestDBCRecord.TestForeignKeyField));
+			[Test]
+			public void IsPropertyArrayReturnsFalseForARecordFieldProperty()
+			{
+				var arrayProperty = typeof(TestDBCRecordWithArray).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecordWithArray.SimpleField));
 
-			Assert.AreEqual(typeof(uint), DBCReflection.GetForeignKeyType(foreignKeyProperty));
+				Assert.False(DBCReflection.IsPropertyArray(arrayProperty));
+			}
+
+			[Test]
+			public void IsPropertyArrayReturnsTrueForARecordFieldArrayProperty()
+			{
+				var arrayProperty = typeof(TestDBCRecordWithArray).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecordWithArray.ArrayField));
+
+				Assert.True(DBCReflection.IsPropertyArray(arrayProperty));
+			}
+
+			[Test]
+			public void IsPropertyArrayReturnsFalseForAnUnmarkedProperty()
+			{
+				var arrayProperty = typeof(TestDBCRecord).GetProperties()
+					.First(p => p.Name == nameof(TestDBCRecord.TestNotRecordField));
+
+				Assert.False(DBCReflection.IsPropertyArray(arrayProperty));
+			}
+		}
+
+		public class GetUnderlyingStoredType
+		{
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForPrimitiveArrays()
+			{
+				var complexType = typeof(uint[]);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
+
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForForeignKeys()
+			{
+				var complexType = typeof(ForeignKey<uint>);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
+
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForIListOfPrimitive()
+			{
+				var complexType = typeof(IList<uint>);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
+
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForArraysOfGenericType()
+			{
+				var complexType = typeof(ForeignKey<uint>[]);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
+
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForIListOfGenericType()
+			{
+				var complexType = typeof(IList<ForeignKey<uint>>);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
+
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForStringReferenceSpecialType()
+			{
+				var complexType = typeof(StringReference);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
+
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForLocalizedStringReferenceSpecialType()
+			{
+				var complexType = typeof(LocalizedStringReference);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
+
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForArrayOfStringReferenceSpecialType()
+			{
+				var complexType = typeof(StringReference[]);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
+
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForArrayOfLocalizedStringReferenceSpecialType()
+			{
+				var complexType = typeof(LocalizedStringReference[]);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
+
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForIListOfStringReferenceSpecialType()
+			{
+				var complexType = typeof(IList<StringReference>);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
+
+			[Test]
+			public void GetUnderlyingStoredTypeWorksForIListOfLocalizedStringReferenceSpecialType()
+			{
+				var complexType = typeof(IList<LocalizedStringReference>);
+
+				Assert.AreEqual(typeof(uint), DBCReflection.GetUnderlyingStoredType(complexType));
+			}
 		}
 	}
 }

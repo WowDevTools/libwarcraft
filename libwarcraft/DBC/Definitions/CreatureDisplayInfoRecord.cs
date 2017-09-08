@@ -25,122 +25,84 @@ using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	[DatabaseRecord(DatabaseName.CreatureDisplayInfo)]
 	public class CreatureDisplayInfoRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.CreatureDisplayInfo;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.CreatureModelData, nameof(ID))]
+		public ForeignKey<uint> Model { get; set; }
 
-		public ForeignKey<uint> Model;
-		public ForeignKey<uint> Sound;
-		public ForeignKey<uint> ExtraDisplayInformation;
-		public float Scale;
-		public uint Opacity;
-		public List<StringReference> TextureVariations;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.CreatureSoundData, nameof(ID))]
+		public ForeignKey<uint> Sound { get; set; }
 
-		public StringReference PortraitTexture;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.CreatureDisplayInfoExtra, nameof(ID))]
+		public ForeignKey<uint> ExtraDisplayInformation { get; set; }
 
-		public uint SizeClass;
+		[RecordField(WarcraftVersion.Classic)]
+		public float Scale { get; set; }
 
-		public ForeignKey<uint> BloodLevel;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Opacity { get; set; }
 
-		public ForeignKey<uint> Blood;
-		public ForeignKey<uint> NPCSound;
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference TextureVariation1 { get; set; }
 
-		public uint ParticleColour;
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference TextureVariation2 { get; set; }
 
-		public uint CreatureGeosetData;
-		public uint ObjectEffectPackage;
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference TextureVariation3 { get; set; }
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public StringReference PortraitTexture { get; set; }
+
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
+		public uint SizeClass { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		[ForeignKeyInfo(DatabaseName.UnitBloodLevels, nameof(ID))]
+		public ForeignKey<uint> BloodLevel { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.UnitBlood, nameof(ID))]
+		public ForeignKey<uint> Blood { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.NPCSounds, nameof(ID))]
+		public ForeignKey<uint> NPCSound { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint ParticleColour { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint CreatureGeosetData { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint ObjectEffectPackage { get; set; }
+
+		/// <inheritdoc />
+		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			using (MemoryStream ms = new MemoryStream(data))
+			var references =  new List<StringReference>
 			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
-
-			this.Model = new ForeignKey<uint>(DatabaseName.CreatureModelData, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Sound = new ForeignKey<uint>(DatabaseName.CreatureSoundData, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.ExtraDisplayInformation = new ForeignKey<uint>(DatabaseName.CreatureDisplayInfoExtra, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Scale = reader.ReadSingle();
-			this.Opacity = reader.ReadUInt32();
-
-			// There are always three texture references, but any one of them may point to an empty string.
-			this.TextureVariations = new List<StringReference>
-			{
-				reader.ReadStringReference(),
-				reader.ReadStringReference(),
-				reader.ReadStringReference()
+				this.TextureVariation1,
+				this.TextureVariation2,
+				this.TextureVariation3
 			};
 
 			if (this.Version >= WarcraftVersion.BurningCrusade)
 			{
-				this.PortraitTexture = reader.ReadStringReference();
+				references.Add(this.PortraitTexture);
 			}
 
-			if (this.Version >= WarcraftVersion.Wrath)
-			{
-				this.BloodLevel = new ForeignKey<uint>(DatabaseName.UnitBloodLevels, nameof(DBCRecord.ID), reader.ReadUInt32());
-			}
-			else
-			{
-				this.SizeClass = reader.ReadUInt32();
-			}
-
-			this.Blood = new ForeignKey<uint>(DatabaseName.UnitBlood, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.NPCSound = new ForeignKey<uint>(DatabaseName.NPCSounds, nameof(DBCRecord.ID), reader.ReadUInt32());
-
-			if (this.Version >= WarcraftVersion.BurningCrusade)
-			{
-				this.ParticleColour = reader.ReadUInt32();
-			}
-
-			if (this.Version >= WarcraftVersion.Wrath)
-			{
-				this.CreatureGeosetData = reader.ReadUInt32();
-				this.ObjectEffectPackage = reader.ReadUInt32();
-			}
-
-			this.HasLoadedRecordData = true;
+			return references;
 		}
-
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			return this.TextureVariations;
-		}
-
-		public override int FieldCount
-		{
-			get
-			{
-				switch (this.Version)
-				{
-					case WarcraftVersion.Classic: return 12;
-					case WarcraftVersion.BurningCrusade: return 14;
-					case WarcraftVersion.Wrath: return 16;
-					default: throw new NotImplementedException();
-				}
-			}
-		}
-
-		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 }

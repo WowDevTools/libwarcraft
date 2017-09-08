@@ -23,74 +23,89 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	[DatabaseRecord(DatabaseName.SoundProviderPreferences)]
 	public class SoundProviderPreferencesRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.SoundProviderPreferences;
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference Description { get; set; }
 
-		public StringReference Description;
-		public uint Flags;
-		public uint EAXEnvironmentSelection;
-		public float EAXEffectVolume;
-		public float EAXDecayTime;
-		public float EAXDamping;
-		public float EAX2EnvironmentSize;
-		public float EAX2EvironmentDiffusion;
-		public uint EAX2Room;
-		public uint EAX2RoomHF;
-		public float EAX2DecayHFRatio;
-		public uint EAX2Reflections;
-		public float EAX2ReflectionsDelay;
-		public uint EAX2Reverb;
-		public float EAX2ReverbDelay;
-		public float EAX2RoomRolloff;
-		public float EAX2AirAbsorption;
-		public uint EAX3RoomLF;
-		public float EAX3DecayLFRatio;
-		public float EAX3EchoTime;
-		public float EAX3EchoDepth;
-		public float EAX3ModulationTime;
-		public float EAX3ModulationDepth;
-		public float EAX3HFReference;
-		public float EAX3LFReference;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Flags { get; set; }
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public uint EAXEnvironmentSelection { get; set; }
 
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAXEffectVolume { get; set; }
 
-			throw new NotImplementedException();
-			this.HasLoadedRecordData = true;
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAXDecayTime { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX2EnvironmentSize { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX2EvironmentDiffusion { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint EAX2Room { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint EAX2RoomHF { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX2DecayHFRatio { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint EAX2Reflections { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX2ReflectionsDelay { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint EAX2Reverb { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX2ReverbDelay { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX2RoomRolloff { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX2AirAbsorption { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint EAX3RoomLF { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX3DecayLFRatio { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX3EchoTime { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX3EchoDepth { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX3ModulationTime { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX3ModulationDepth { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX3HFReference { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float EAX3LFReference { get; set; }
 
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
 			yield return this.Description;
 		}
-
-		public override int FieldCount => throw new System.NotImplementedException();
-
-		public override int RecordSize => throw new System.NotImplementedException();
 	}
 }

@@ -77,7 +77,7 @@ namespace libwarcraft.Tests.Integration.DBC.IO
 			Assert.AreEqual(1, record.TestSimpleField);
 			Assert.AreEqual(2, record.TestAddedAndRemovedField);
 			Assert.AreEqual(6, record.TestForeignKeyField.Key);
-			Assert.AreEqual(4, record.TestNewFieldInWrath);
+			Assert.AreEqual(4, record.TestNewFieldInWrath.Offset);
 		}
 
 		[Test]
@@ -99,7 +99,7 @@ namespace libwarcraft.Tests.Integration.DBC.IO
 			Assert.AreEqual(1, record.ID);
 			Assert.AreEqual(1, record.TestSimpleField);
 			Assert.AreEqual(6, record.TestForeignKeyField.Key);
-			Assert.AreEqual(4, record.TestNewFieldInWrath);
+			Assert.AreEqual(4, record.TestNewFieldInWrath.Offset);
 		}
 	}
 }

@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -32,12 +33,13 @@ namespace Warcraft.DBC.Definitions
 	/// <summary>
 	/// A database record which holds some type of information.
 	/// </summary>
-	public abstract class DBCRecord : IPostLoad<byte[]>, IDBCRecord, IDeferredDeserialize
+	[DatabaseRecord]
+	public abstract class DBCRecord : IDBCRecord
 	{
 		/// <summary>
 		/// The record ID. This is the equivalent of a primary key in an SQL database, and is unique to the record.
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic, 0)]
+		[RecordField(WarcraftVersion.Classic)]
 		public uint ID
 		{
 			get;
@@ -55,63 +57,24 @@ namespace Warcraft.DBC.Definitions
 		}
 
 		/// <summary>
-		/// Whether or not this record has had its data loaded.
-		/// </summary>
-		protected bool HasLoadedRecordData = false;
-
-		/// <summary>
-		/// Sets the version this record is valid for.
-		/// </summary>
-		public virtual void SetVersion(WarcraftVersion inVersion)
-		{
-			this.Version = inVersion;
-		}
-
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public abstract void PostLoad(byte[] data);
-
-		/// <summary>
 		/// Gets the field count for this record at.
 		/// </summary>
 		/// <returns>The field count.</returns>
-		public virtual int FieldCount => -1;
+		public virtual int FieldCount => DBCReflection.GetPropertyCount(this.Version, GetType());
 
 		/// <summary>
 		/// Gets the size of the record.
 		/// </summary>
 		/// <returns>The record size.</returns>
-		public virtual int RecordSize => -1;
+		public virtual int RecordSize => DBCReflection.GetRecordSize(this.Version, GetType());
 
 		/// <summary>
 		/// Gets a list of any string references in the record. Used for resolving them after they have been loaded.
 		/// </summary>
 		/// <returns></returns>
-		public abstract IEnumerable<StringReference> GetStringReferences();
-
-		/// <summary>
-		/// Determines whether or not this object has finished loading.
-		/// </summary>
-		/// <returns><value>true</value> if the object has finished loading; otherwise, <value>false</value>.</returns>
-		public virtual bool HasFinishedLoading()
+		public virtual IEnumerable<StringReference> GetStringReferences()
 		{
-			return this.HasLoadedRecordData;
-		}
-
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public virtual void DeserializeSelf(BinaryReader reader)
-		{
-			if (this.Version == WarcraftVersion.Unknown)
-			{
-				throw new InvalidOperationException("The record data cannot be loaded before the version has been set.");
-			}
-
-			this.ID = reader.ReadUInt32();
+			yield break;
 		}
 	}
 }

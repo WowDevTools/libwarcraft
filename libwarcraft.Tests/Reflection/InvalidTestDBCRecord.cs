@@ -8,16 +8,11 @@ namespace libwarcraft.Tests.Reflection
 	[DatabaseRecord]
 	public class InvalidTestDBCRecord : DBCRecord
 	{
-		[RecordField(WarcraftVersion.Classic, 1)]
+		[RecordField(WarcraftVersion.Classic)]
 		public ForeignKey<uint> TestForeignKeyFieldMissingInfo { get; set; }
 
-		[RecordField(WarcraftVersion.Classic, 2)]
+		[RecordField(WarcraftVersion.Classic)]
 		public uint TestFieldWithoutSetter { get; }
-
-		public override void PostLoad(byte[] data)
-		{
-			throw new System.NotImplementedException();
-		}
 
 		public override IEnumerable<StringReference> GetStringReferences()
 		{

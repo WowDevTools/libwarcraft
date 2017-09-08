@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -30,119 +31,319 @@ namespace Warcraft.DBC.Definitions
 	/// <summary>
 	/// A database record defining a spell.
 	/// </summary>
+	[DatabaseRecord(DatabaseName.Spell)]
 	public class SpellRecord : DBCRecord
 	{
-		/// <summary>
-		/// The name of the database.
-		/// </summary>
-		public const DatabaseName Database = DatabaseName.Spell;
-
 		/// <summary>
 		/// The school of the spell (fire, destruction, etc). This is a reference to a row in another
 		/// database.
 		/// </summary>
-		public ForeignKey<uint> School;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint School { get; set; }
 
 		/// <summary>
 		/// The category of the spell (tradeskill, passive, active, etc). This is a reference to a row in another
 		/// database.
 		/// </summary>
-		public ForeignKey<uint> Category;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.SpellCategory, nameof(ID))]
+		public ForeignKey<uint> Category { get; set; }
 
 		/// <summary>
 		/// The UI type to use when casting.
 		/// </summary>
-		public uint CastUI;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint CastUI { get; set; }
 
 		/// <summary>
 		/// The dispel type of the spell. This is a reference to a row in another
 		/// database.
 		/// </summary>
-		public ForeignKey<uint> DispelType;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.SpellDispelType, nameof(ID))]
+		public ForeignKey<uint> DispelType { get; set; }
 
 		/// <summary>
 		/// The mechanic type of the spell. This is a reference to a row in another
 		/// database.
 		/// </summary>
-		public ForeignKey<uint> Mechanic;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.SpellMechanic, nameof(ID))]
+		public ForeignKey<uint> Mechanic { get; set; }
 
 		/// <summary>
 		/// The first block of spell attributes. This is a set of flags, defining different behaviour for the spell
 		/// under different circumstances. See <see cref="SpellAttributeA"/> for specifics.
 		/// </summary>
-		public SpellAttributeA AttributesA;
+		[RecordField(WarcraftVersion.Classic)]
+		public SpellAttributeA AttributesA { get; set; }
 
 		/// <summary>
 		/// The second block of spell attributes. This is a set of flags, defining different behaviour for the spell
 		/// under different circumstances. See <see cref="SpellAttributeB"/> for specifics.
 		/// </summary>
-		public SpellAttributeB AttributesB;
+		[RecordField(WarcraftVersion.Classic)]
+		public SpellAttributeB AttributesB { get; set; }
 
 		/// <summary>
 		/// The third block of spell attributes. This is a set of flags, defining different behaviour for the spell
 		/// under different circumstances. See <see cref="SpellAttributeC"/> for specifics.
 		/// </summary>
-		public SpellAttributeC AttributesC;
+		[RecordField(WarcraftVersion.Classic)]
+		public SpellAttributeC AttributesC { get; set; }
 
 		/// <summary>
 		/// The fourth block of spell attributes. This is a set of flags, defining different behaviour for the spell
 		/// under different circumstances. See <see cref="SpellAttributeD"/> for specifics.
 		/// </summary>
-		public SpellAttributeD AttributesD;
+		[RecordField(WarcraftVersion.Classic)]
+		public SpellAttributeD AttributesD { get; set; }
 
 		/// <summary>
 		/// The fifth block of spell attributes. This is a set of flags, defining different behaviour for the spell
 		/// under different circumstances. See <see cref="SpellAttributeE"/> for specifics.
 		/// </summary>
-		public SpellAttributeE AttributesE;
+		[RecordField(WarcraftVersion.Classic)]
+		public SpellAttributeE AttributesE { get; set; }
 
 		/// <summary>
 		/// The sixth block of spell attributes. This is a set of flags, defining different behaviour for the spell
 		/// under different circumstances. See <see cref="SpellAttributeF"/> for specifics.
 		/// </summary>
-		public SpellAttributeF AttributesF;
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public SpellAttributeF AttributesF { get; set; }
 
 		/// <summary>
 		/// The seventh block of spell attributes. This is a set of flags, defining different behaviour for the spell
 		/// under different circumstances. See <see cref="SpellAttributeG"/> for specifics.
 		/// </summary>
-		public SpellAttributeG AttributesG;
+		[RecordField(WarcraftVersion.Wrath)]
+		public SpellAttributeG AttributesG { get; set; }
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ShapeshiftMask { get; set; }
 
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ShapeshiftExclusions { get; set; }
 
-			throw new NotImplementedException();
-			this.HasLoadedRecordData = true;
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Targets { get; set; }
 
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			yield break;
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public uint TargetCreatureType { get; set; }
 
-		public override int FieldCount => throw new System.NotImplementedException();
+		[RecordField(WarcraftVersion.Classic)]
+		public uint RequiresSpellFocus { get; set; }
 
-		public override int RecordSize => throw new System.NotImplementedException();
+		[RecordField(WarcraftVersion.Classic)]
+		public uint CasterAuraState { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint TargetAuraState { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint CastingTimeIndex { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint RecoveryTime { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint CategoryRecoveryTime { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint InterruptFlags { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint AuraInterruptFlags { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ChannelInterruptFlags { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ProcTypeMask { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ProcChance { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ProcCharges { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint MaxLevel { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint BaseLevel { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint SpellLevel { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint DurationIndex { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint PowerType { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ManaCost { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ManaCostPerLevel { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ManaCostPerSecond { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ManaCostPerSecondPerLevel { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint RangeIndex { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float Speed { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ModalNextSpell { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint StackAmount { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 2)]
+		public uint[] Totem { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 8)]
+		public uint[] Reagent { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 8)]
+		public uint[] ReagentCount { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint EquippedItemClass { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint EquippedItemSubclass { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint EquippedItemInvType { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] Effect { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] EffectDieSides { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] EffectBaseDice { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public float[] EffectDicePerLevel { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public float[] EffectRealPointsPerLevel { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public float[] EffectBasePoints { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] EffectMechanic { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] ImplicitTargetA { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] ImplicitTargetB { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] EffectRadiusIndex { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] EffectAura { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public float[] EffectAmplitude { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public float[] EffectMultipleValue { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] EffectChainTarget { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] EffectItemType { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] EffectMiscValue { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public uint[] EffectTriggerSpell { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public float[] EffectPointsPerCombo { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 2)]
+		public uint[] SpellVisualID { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint SpellIconID { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ActiveIconID { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint SpellPriority { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public LocalizedStringReference Name { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public LocalizedStringReference Subtext { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public LocalizedStringReference Description { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public LocalizedStringReference AuraDescription { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint ManaCostPCT { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint StartRecoveryCategory { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint StartRecoveryTime { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint MaxTargetLevel { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint SpellClassSet { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 2)]
+		public uint[] SpellClassMask { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint MaxTargets { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint DefenseType { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint PreventionType { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint StanceBarOrder { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		public float[] DamageMultiplier { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint MinFactionID { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint MinReputation { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint RequiredAuraVision { get; set; }
 	}
 
 	/// <summary>

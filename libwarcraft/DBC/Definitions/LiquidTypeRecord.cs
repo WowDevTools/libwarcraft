@@ -24,59 +24,33 @@ using System.Collections.Generic;
 using System.IO;
 using Warcraft.DBC.SpecialFields;
 using Warcraft.Core;
+using Warcraft.Core.Reflection.DBC;
 
 namespace Warcraft.DBC.Definitions
 {
+	[DatabaseRecord(DatabaseName.LiquidType)]
 	public class LiquidTypeRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.LiquidType;
-
 		/// <summary>
 		/// The name of the liquid.
 		/// </summary>
-		public StringReference Name;
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference Name { get; set; }
 
 		private LiquidType TypeInternal;
+
+		[RecordField(WarcraftVersion.Classic)]
 		public LiquidType Type
 		{
 			get => TranslateLiquidType();
 			set => this.TypeInternal = value;
 		}
 
-		public ForeignKey<uint> SpellEffect;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.Spell, nameof(ID))]
+		public ForeignKey<uint> SpellEffect { get; set; }
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			if (this.Version == WarcraftVersion.Unknown)
-			{
-				throw new InvalidOperationException("The record data cannot be loaded before SetVersion has been called.");
-			}
-
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
-
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
-
-			this.Name = new StringReference(reader.ReadUInt32());
-
-			this.Type = (LiquidType)reader.ReadInt32();
-
-			this.SpellEffect = new ForeignKey<uint>(DatabaseName.Spell, nameof(SpellRecord.ID), reader.ReadUInt32());
-			this.HasLoadedRecordData = true;
-		}
-
+		/// <inheritdoc />
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
 			yield return this.Name;
@@ -107,77 +81,6 @@ namespace Warcraft.DBC.Definitions
 				default:
 				{
 					return LiquidType.Water;
-				}
-			}
-		}
-
-		// TODO: Implement records after Classic
-		/// <summary>
-		/// Gets the size of the record.
-		/// </summary>
-		/// <returns>The record size.</returns>
-		public override int RecordSize
-		{
-			get
-			{
-				if (this.Version == WarcraftVersion.Unknown)
-				{
-					throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
-				}
-
-				switch (this.Version)
-				{
-					case WarcraftVersion.Classic:
-						return 16;
-					case WarcraftVersion.BurningCrusade:
-						return 16;
-					case WarcraftVersion.Wrath:
-						return 180;
-					case WarcraftVersion.Cataclysm:
-						return 200;
-					case WarcraftVersion.Mists:
-						return 200;
-					case WarcraftVersion.Warlords:
-						return 200;
-					case WarcraftVersion.Legion:
-						return 200;
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets the field count for this record at.
-		/// </summary>
-		/// <returns>The field count.</returns>
-		public override int FieldCount
-		{
-			get
-			{
-				if (this.Version == WarcraftVersion.Unknown)
-				{
-					throw new InvalidOperationException("The record information cannot be accessed before SetVersion has been called.");
-				}
-
-				switch (this.Version)
-				{
-					case WarcraftVersion.Classic:
-						return 4;
-					case WarcraftVersion.BurningCrusade:
-						return 4;
-					case WarcraftVersion.Wrath:
-						return 45;
-					case WarcraftVersion.Cataclysm:
-						return 50;
-					case WarcraftVersion.Mists:
-						return 50;
-					case WarcraftVersion.Warlords:
-						return 50;
-					case WarcraftVersion.Legion:
-						return 50;
-					default:
-						throw new ArgumentOutOfRangeException();
 				}
 			}
 		}

@@ -28,21 +28,12 @@ namespace Warcraft.Core
 	{
 		public WarcraftVersion IntroducedIn { get; }
 
-		public WarcraftVersion? RemovedIn { get; }
+		public WarcraftVersion RemovedIn { get; set; }
 
-		public uint Order { get; }
-
-		public RecordFieldAttribute(WarcraftVersion introducedIn, WarcraftVersion removedIn, uint fieldOrder)
+		public RecordFieldAttribute(WarcraftVersion introducedIn)
 		{
 			this.IntroducedIn = introducedIn;
-			this.RemovedIn = removedIn;
-			this.Order = fieldOrder;
-		}
-
-		public RecordFieldAttribute(WarcraftVersion inIntroducedIn, uint fieldOrder)
-		{
-			this.IntroducedIn = inIntroducedIn;
-			this.Order = fieldOrder;
+			this.RemovedIn = WarcraftVersion.Unknown;
 		}
 	}
 }

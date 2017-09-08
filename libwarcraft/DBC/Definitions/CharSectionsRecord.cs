@@ -23,93 +23,74 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
 using Warcraft.Core.Extensions;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	[DatabaseRecord(DatabaseName.CharSections)]
 	public class CharSectionsRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.CharSections;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ChrRaces, nameof(ID))]
+		public ForeignKey<uint> Race { get; set; }
 
-		public ForeignKey<uint> Race;
-		public bool IsFemale;
-		public CharSectionType BaseSection;
-		public uint Type;
-		public uint Variation;
-		public List<StringReference> SectionTextures;
-		public CharSectionFlag Flags;
+		[RecordField(WarcraftVersion.Classic)]
+		public bool IsFemale { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public CharSectionType BaseSection { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Type { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Variation { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference SectionTexture0 { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference SectionTexture1 { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference SectionTexture2 { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public CharSectionFlag Flags { get; set; }
 
 		/*
 			What follows are forwards into the SectionTextures list for ease of use.
 			Which ones to use depend on the value of BaseSection.
 		*/
 
-		public StringReference SkinTexture => this.SectionTextures[0];
-		public StringReference ExtraSkinTexture => this.SectionTextures[1];
+		public StringReference SkinTexture => this.SectionTexture0;
+		public StringReference ExtraSkinTexture => this.SectionTexture1;
 
-		public StringReference FaceLowerTexture => this.SectionTextures[0];
-		public StringReference FaceUpperTexture => this.SectionTextures[1];
+		public StringReference FaceLowerTexture => this.SectionTexture0;
+		public StringReference FaceUpperTexture => this.SectionTexture1;
 
-		public StringReference FacialLowerTexture => this.SectionTextures[0];
-		public StringReference FacialUpperTexture => this.SectionTextures[1];
+		public StringReference FacialLowerTexture => this.SectionTexture0;
+		public StringReference FacialUpperTexture => this.SectionTexture1;
 
-		public StringReference HairTexture => this.SectionTextures[0];
-		public StringReference ScalpLowerTexture => this.SectionTextures[1];
-		public StringReference ScalpUpperTexture => this.SectionTextures[2];
+		public StringReference HairTexture => this.SectionTexture0;
+		public StringReference ScalpLowerTexture => this.SectionTexture1;
+		public StringReference ScalpUpperTexture => this.SectionTexture2;
 
-		public StringReference PelvisTexture => this.SectionTextures[0];
-		public StringReference TorsoTexture => this.SectionTextures[1];
-
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
-
-			this.Race = new ForeignKey<uint>(DatabaseName.ChrRaces, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.IsFemale = (reader.ReadUInt32() > 0);
-			this.BaseSection = (CharSectionType)reader.ReadUInt32();
-			this.Type = reader.ReadUInt32();
-			this.Variation = reader.ReadUInt32();
-
-			this.SectionTextures = new List<StringReference>
-			{
-				reader.ReadStringReference(),
-				reader.ReadStringReference(),
-				reader.ReadStringReference()
-			};
-
-			this.Flags = (CharSectionFlag)reader.ReadUInt32();
-
-			this.HasLoadedRecordData = true;
-		}
+		public StringReference PelvisTexture => this.SectionTexture0;
+		public StringReference TorsoTexture => this.SectionTexture1;
 
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
-			return this.SectionTextures;
+			return new List<StringReference>
+			{
+				this.SectionTexture0,
+				this.SectionTexture1,
+				this.SectionTexture2
+			};
 		}
-
-		public override int FieldCount => 10;
-
-		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 
 	public enum CharSectionType

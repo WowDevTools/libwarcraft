@@ -23,82 +23,26 @@
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	[DatabaseRecord(DatabaseName.ZoneAmbience)]
 	public class SoundAmbienceRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.ZoneAmbience;
-
 		/// <summary>
 		/// The ambience sound to play during the day.
 		/// </summary>
-		public ForeignKey<uint> AmbienceDay;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+		public ForeignKey<uint> AmbienceDay { get; set; }
 
 		/// <summary>
 		/// The ambience sound to play during the night.
 		/// </summary>
-		public ForeignKey<uint> AmbienceNight;
-
-		/*
-			Cataclysm +
-		*/
-
-		public uint Flags;
-
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
-
-			this.AmbienceDay = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
-			this.AmbienceNight = new ForeignKey<uint>(DatabaseName.SoundEntries, "ID", reader.ReadUInt32());
-
-			if (this.Version > WarcraftVersion.Cataclysm)
-			{
-				this.Flags = reader.ReadUInt32();
-			}
-
-			this.HasLoadedRecordData = true;
-		}
-
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			yield break;
-		}
-
-		public override int FieldCount
-		{
-			get
-			{
-				if (this.Version > WarcraftVersion.Cataclysm)
-				{
-					return 4;
-				}
-
-				return 3;
-			}
-		}
-
-		public override int RecordSize => sizeof(uint) * this.FieldCount;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+		public ForeignKey<uint> AmbienceNight { get; set; }
 	}
 }

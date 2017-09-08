@@ -28,72 +28,44 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	[DatabaseRecord(DatabaseName.SoundEntries)]
 	public class SoundEntriesRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.SoundEntries;
+		[RecordField(WarcraftVersion.Classic)]
+		public SoundType Type { get; set; }
 
-		public SoundType Type;
-		public StringReference Name;
-		public List<StringReference> SoundFiles = new List<StringReference>(10); // Up to 10 variations
-		public List<uint> PlayFrequencies = new List<uint>(10);
-		public StringReference DirectoryBase;
-		public float Volume;
-		public uint Flags;
-		public float MinDistance;
-		public float DistanceCutoff;
-		public ForeignKey<uint> EAXDefinition;
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference Name { get; set; }
 
-		/*
-			Wrath +
-		*/
-		public uint SoundEntriesAdvancedID;
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 10)]
+		public List<StringReference> SoundFiles { get; set; }
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
+		[RecordFieldArray(WarcraftVersion.Classic, Count = 10)]
+		public List<uint> PlayFrequencies { get; set; }
 
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference DirectoryBase { get; set; }
 
-			this.Type = (SoundType) reader.ReadUInt32();
-			this.Name = reader.ReadStringReference();
+		[RecordField(WarcraftVersion.Classic)]
+		public float Volume { get; set; }
 
-			for (int i = 0; i < 10; i++)
-			{
-				this.SoundFiles.Add(reader.ReadStringReference());
-			}
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Flags { get; set; }
 
-			for (int i = 0; i < 10; i++)
-			{
-				this.PlayFrequencies.Add(reader.ReadUInt32());
-			}
+		[RecordField(WarcraftVersion.Classic)]
+		public float MinDistance { get; set; }
 
-			this.DirectoryBase = reader.ReadStringReference();
-			this.Volume = reader.ReadSingle();
-			this.Flags = reader.ReadUInt32();
-			this.MinDistance = reader.ReadSingle();
-			this.DistanceCutoff = reader.ReadSingle();
-			this.EAXDefinition = new ForeignKey<uint>(DatabaseName.SoundProviderPreferences, "ID", reader.ReadUInt32());
+		[RecordField(WarcraftVersion.Classic)]
+		public float DistanceCutoff { get; set; }
 
-			this.HasLoadedRecordData = true;
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.SoundProviderPreferences, nameof(ID))]
+		public ForeignKey<uint> EAXDefinition { get; set; }
 
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint SoundEntriesAdvancedID { get; set; }
+
+		/// <inheritdoc />
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
 			yield return this.Name;
@@ -103,22 +75,6 @@ namespace Warcraft.DBC.Definitions
 				yield return soundFile;
 			}
 		}
-
-		public override int FieldCount
-		{
-			get
-			{
-				if (this.Version > WarcraftVersion.Wrath)
-				{
-					return 30;
-				}
-
-				return 29;
-			}
-		}
-
-		// No distinction is made between uints and singles here since they're the same size
-		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 
 	public enum SoundType : uint

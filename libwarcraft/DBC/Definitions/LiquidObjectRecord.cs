@@ -23,6 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -30,70 +32,39 @@ namespace Warcraft.DBC.Definitions
 	/// <summary>
 	/// A database record defining how an in-world liquid behaves.
 	/// </summary>
+	[DatabaseRecord(DatabaseName.LiquidObject)]
 	public class LiquidObjectRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.LiquidObject;
-
 		/// <summary>
 		/// The direction in which the liquid flows.
 		/// </summary>
-		public float FlowDirection;
+		[RecordField(WarcraftVersion.Cataclysm)]
+		public float FlowDirection { get; set; }
 
 		/// <summary>
 		/// The speed with which the liquid flows.
 		/// </summary>
-		public float FlowSpeed;
+		[RecordField(WarcraftVersion.Cataclysm)]
+		public float FlowSpeed { get; set; }
 
 		/// <summary>
 		/// The type of liquid. This is a foreign reference to another table.
 		/// </summary>
-		public ForeignKey<uint> LiquidType;
+		[RecordField(WarcraftVersion.Cataclysm)]
+		[ForeignKeyInfo(DatabaseName.LiquidType, nameof(ID))]
+		public ForeignKey<uint> LiquidType { get; set; }
 
 		/// <summary>
 		/// Whether or not this liquid is fishable.
 		/// </summary>
-		public uint Fishable;
+		[RecordField(WarcraftVersion.Cataclysm)]
+		public uint Fishable { get; set; }
 
 		/// <summary>
 		/// TODO: Unconfirmed behaviour
 		/// The amount light this liquid reflects.
 		/// </summary>
-		public uint Reflection;
-
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
-
-			throw new NotImplementedException();
-			this.HasLoadedRecordData = true;
-		}
-
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			yield break;
-		}
-
-		public override int FieldCount => throw new System.NotImplementedException();
-
-		public override int RecordSize => throw new System.NotImplementedException();
+		[RecordField(WarcraftVersion.Cataclysm)]
+		public uint Reflection { get; set; }
 	}
 }

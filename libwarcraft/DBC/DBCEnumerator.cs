@@ -55,10 +55,7 @@ namespace Warcraft.DBC
 			this.DatabaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
 		}
 
-		/// <summary>
-		/// Reads the record at the current position, and moves the enumerator to the next record.
-		/// </summary>
-		/// <returns></returns>
+		/// <inheritdoc />
 		public bool MoveNext()
 		{
 			long recordBlockEnd = this.StringBlockOffset;
@@ -69,22 +66,17 @@ namespace Warcraft.DBC
 
 			this.Current = this.DatabaseReader.ReadRecord<T>(this.ParentDatabase.FieldCount, this.ParentDatabase.RecordSize, this.ParentDatabase.Version);
 
-
 			return this.DatabaseReader.BaseStream.Position != recordBlockEnd;
 		}
 
-		/// <summary>
-		/// Resets the stream back to the first record.
-		/// </summary>
+		/// <inheritdoc />
 		public void Reset()
 		{
 			this.DatabaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
 			this.Current = null;
 		}
 
-		/// <summary>
-		/// Gets the current record.
-		/// </summary>
+		/// <inheritdoc />
 		public T Current
 		{
 			get
@@ -107,9 +99,7 @@ namespace Warcraft.DBC
 
 		object IEnumerator.Current => this.Current;
 
-		/// <summary>
-		/// Disposes the database and any underlying streams.
-		/// </summary>
+		/// <inheritdoc />
 		public void Dispose()
 		{
 			this.DatabaseReader.Dispose();

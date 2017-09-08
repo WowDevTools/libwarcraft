@@ -25,123 +25,90 @@ using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	[DatabaseRecord(DatabaseName.CreatureModelData)]
 	public class CreatureModelDataRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.CreatureModelData;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Flags { get; set; }
 
-		public uint Flags;
-		public StringReference ModelPath;
-		public uint SizeClass;
-		public float ModelScale;
-		public ForeignKey<uint> BloodLevel;
-		public ForeignKey<uint> FootprintDecal;
-		public float FootprintDecalLength;
-		public float FootprintDecalWidth;
-		public float FootprintDecalParticleScale;
-		public uint FoleyMaterialID;
-		public ForeignKey<uint> FootstepShakeSize;
-		public ForeignKey<uint> DeathThudShakeSize;
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference ModelPath { get; set; }
 
-		public ForeignKey<uint> Sound;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint SizeClass { get; set; }
 
-		public float CollisionWidth;
-		public float CollisionHeight;
-		public float MountHeight;
+		[RecordField(WarcraftVersion.Classic)]
+		public float ModelScale { get; set; }
 
-		public Box BoundingBox;
-		public float WorldEffectScale;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.UnitBloodLevels, nameof(ID))]
+		public ForeignKey<uint> BloodLevel { get; set; }
 
-		public float AttachedEffectScale;
-		public float MissileCollisionRadius;
-		public float MissileCollisionPush;
-		public float MissileCollisionRaise;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.FootprintTextures, nameof(ID))]
+		public ForeignKey<uint> FootprintDecal { get; set; }
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public float FootprintDecalLength { get; set; }
 
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
+		[RecordField(WarcraftVersion.Classic)]
+		public float FootprintDecalWidth { get; set; }
 
-			this.Flags = reader.ReadUInt32();
-			this.ModelPath = reader.ReadStringReference();
-			this.SizeClass = reader.ReadUInt32();
-			this.ModelScale = reader.ReadSingle();
-			this.BloodLevel = new ForeignKey<uint>(DatabaseName.UnitBloodLevels, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.FootprintDecal = new ForeignKey<uint>(DatabaseName.FootprintTextures, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.FootprintDecalLength = reader.ReadSingle();
-			this.FootprintDecalWidth = reader.ReadSingle();
-			this.FootprintDecalParticleScale = reader.ReadSingle();
-			this.FoleyMaterialID = reader.ReadUInt32();
-			this.FootstepShakeSize = new ForeignKey<uint>(DatabaseName.CameraShakes, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.DeathThudShakeSize = new ForeignKey<uint>(DatabaseName.CameraShakes, nameof(DBCRecord.ID), reader.ReadUInt32());
+		[RecordField(WarcraftVersion.Classic)]
+		public float FootprintDecalParticleScale { get; set; }
 
-			if (this.Version >= WarcraftVersion.BurningCrusade)
-			{
-				this.Sound = new ForeignKey<uint>(DatabaseName.CreatureSoundData, nameof(DBCRecord.ID), reader.ReadUInt32());
-			}
+		[RecordField(WarcraftVersion.Classic)]
+		public uint FoleyMaterialID { get; set; }
 
-			this.CollisionWidth = reader.ReadSingle();
-			this.CollisionHeight = reader.ReadSingle();
-			this.MountHeight = reader.ReadSingle();
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.CameraShakes, nameof(ID))]
+		public ForeignKey<uint> FootstepShakeSize { get; set; }
 
-			if (this.Version >= WarcraftVersion.BurningCrusade)
-			{
-				this.BoundingBox = reader.ReadBox();
-				this.WorldEffectScale = reader.ReadSingle();
-			}
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.CameraShakes, nameof(ID))]
+		public ForeignKey<uint> DeathThudShakeSize { get; set; }
 
-			if (this.Version >= WarcraftVersion.Wrath)
-			{
-				this.AttachedEffectScale = reader.ReadSingle();
-				this.MissileCollisionRadius = reader.ReadSingle();
-				this.MissileCollisionPush = reader.ReadSingle();
-				this.MissileCollisionRaise = reader.ReadSingle();
-			}
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		[ForeignKeyInfo(DatabaseName.CreatureSoundData, nameof(ID))]
+		public ForeignKey<uint> Sound { get; set; }
 
-			this.HasLoadedRecordData = true;
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public float CollisionWidth { get; set; }
 
+		[RecordField(WarcraftVersion.Classic)]
+		public float CollisionHeight { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public float MountHeight { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public Box BoundingBox { get; set; }
+
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		public float WorldEffectScale { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public float AttachedEffectScale { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public float MissileCollisionRadius { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public float MissileCollisionPush { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public float MissileCollisionRaise { get; set; }
+
+		/// <inheritdoc />
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
 			yield return this.ModelPath;
 		}
-
-		public override int FieldCount
-		{
-			get
-			{
-				switch (this.Version)
-				{
-					case WarcraftVersion.Classic: return 16;
-					case WarcraftVersion.BurningCrusade: return 24;
-					case WarcraftVersion.Wrath: return 28;
-					default: throw new NotImplementedException();
-				}
-			}
-		}
-
-		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 }

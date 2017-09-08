@@ -22,59 +22,34 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Warcraft.Core;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	[DatabaseRecord(DatabaseName.CharHairGeosets)]
 	public class CharHairGeosetsRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.CharHairGeosets;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ChrRaces, nameof(ID))]
+		public ForeignKey<uint> Race { get; set; }
 
-		public ForeignKey<uint> Race;
-		public bool IsFemale;
-		public uint VariationID;
-		public uint GeosetID;
-		public bool ShowScalp;
+		[RecordField(WarcraftVersion.Classic)]
+		public bool IsFemale { get; set; }
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public uint VariationID { get; set; }
 
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
+		[RecordField(WarcraftVersion.Classic)]
+		public uint GeosetID { get; set; }
 
-			this.Race = new ForeignKey<uint>(DatabaseName.ChrRaces, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.IsFemale = (reader.ReadUInt32() > 0);
-			this.VariationID = reader.ReadUInt32();
-			this.GeosetID = reader.ReadUInt32();
-			this.ShowScalp = (reader.ReadUInt32() > 0);
-
-			this.HasLoadedRecordData = true;
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public bool ShowScalp { get; set; }
 
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
 			yield break;
 		}
-
-		public override int FieldCount => 6;
-
-		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 }

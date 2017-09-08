@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
@@ -32,134 +33,114 @@ namespace Warcraft.DBC.Definitions
 	/// <summary>
 	/// A database record defining properties for maps.
 	/// </summary>
+	[DatabaseRecord(DatabaseName.Map)]
 	public class MapRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.Map;
-
 		/// <summary>
 		/// The directory under which the map is stored.
 		/// </summary>
-		public StringReference Directory;
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference Directory { get; set; }
 
 		/// <summary>
 		/// The type of instance this map is.
 		/// </summary>
-		public uint InstanceType;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint InstanceType { get; set; }
 
 		/// <summary>
 		/// What sort of PvP the map allows.
 		/// </summary>
-		public uint PvP;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint PvP { get; set; }
 
 		/// <summary>
 		/// The name of the map.
 		/// </summary>
-		public LocalizedStringReference MapName;
+		[RecordField(WarcraftVersion.Classic)]
+		public LocalizedStringReference MapName { get; set; }
 
 		/// <summary>
 		/// The minimum level of the map.
 		/// </summary>
-		public uint MinLevel;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint MinLevel { get; set; }
 
 		/// <summary>
 		/// The maximum level of the map.
 		/// </summary>
-		public uint MaxLevel;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint MaxLevel { get; set; }
 
 		/// <summary>
 		/// The maximum number of players that can be in the map at any one time.
 		/// </summary>
-		public uint MaxPlayers;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint MaxPlayers { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		public uint Unknown1;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Unknown1 { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		public uint Unknown2;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Unknown2 { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		public uint Unknown3;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Unknown3 { get; set; }
 
 		/// <summary>
 		/// The ID of the area table entry for this map, which contains more information.
 		/// </summary>
-		public ForeignKey<uint> AreaTableID;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.AreaTable, nameof(ID))]
+		public ForeignKey<uint> AreaTableID { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour, improve comment
 		/// The description of the map.
 		/// </summary>
-		public LocalizedStringReference MapDescription1;
+		[RecordField(WarcraftVersion.Classic)]
+		public LocalizedStringReference MapDescription1 { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour, improve comment
 		/// The description of the map.
 		/// </summary>
-		public LocalizedStringReference MapDescription2;
+		[RecordField(WarcraftVersion.Classic)]
+		public LocalizedStringReference MapDescription2 { get; set; }
 
 		/// <summary>
 		/// The ID of the loading screen for this map.
 		/// </summary>
-		public ForeignKey<uint> LoadingScreenID;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.LoadingScreens, nameof(ID))]
+		public ForeignKey<uint> LoadingScreenID { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		public uint RaidOffset;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint RaidOffset { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		public uint Unknown4;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Unknown4 { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		public uint Unknown5;
-
-		/// <inheritdoc />
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
-
-		/// <inheritdoc />
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
-
-			this.Directory = reader.ReadStringReference();
-			this.InstanceType = reader.ReadUInt32();
-			this.PvP = reader.ReadUInt32();
-			this.MapName = reader.ReadLocalizedStringReference(this.Version);
-			this.MinLevel = reader.ReadUInt32();
-			this.MaxLevel = reader.ReadUInt32();
-			this.MaxPlayers = reader.ReadUInt32();
-			this.Unknown1 = reader.ReadUInt32();
-			this.Unknown2 = reader.ReadUInt32();
-			this.Unknown3 = reader.ReadUInt32();
-			this.AreaTableID = new ForeignKey<uint>(DatabaseName.AreaTable, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.MapDescription1 = reader.ReadLocalizedStringReference(this.Version);
-			this.MapDescription2 = reader.ReadLocalizedStringReference(this.Version);
-			this.LoadingScreenID = new ForeignKey<uint>(DatabaseName.LoadingScreens, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.RaidOffset = reader.ReadUInt32();
-			this.Unknown4 = reader.ReadUInt32();
-			this.Unknown5 = reader.ReadUInt32();
-
-			this.HasLoadedRecordData = true;
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Unknown5 { get; set; }
 
 		/// <inheritdoc />
 		public override IEnumerable<StringReference> GetStringReferences()
@@ -179,48 +160,6 @@ namespace Warcraft.DBC.Definitions
 			foreach (var mapDescription in this.MapDescription2.GetReferences())
 			{
 				yield return mapDescription;
-			}
-		}
-
-		/// <inheritdoc />
-		public override int FieldCount
-		{
-			get
-			{
-				switch (this.Version)
-				{
-					case WarcraftVersion.Classic:
-					{
-						var normalFieldCount = 15;
-						var localizedFieldCount = LocalizedStringReference.GetFieldCount(this.Version) * 3;
-
-						return normalFieldCount + localizedFieldCount;
-
-					}
-					default:
-					{
-						throw new NotImplementedException();
-					}
-				}
-			}
-		}
-
-		/// <inheritdoc />
-		public override int RecordSize
-		{
-			get
-			{
-				switch (this.Version)
-				{
-					case WarcraftVersion.Classic:
-					{
-						return this.FieldCount * sizeof(uint);
-					}
-					default:
-					{
-						throw new NotImplementedException();
-					}
-				}
 			}
 		}
 	}

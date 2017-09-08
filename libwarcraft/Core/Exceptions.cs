@@ -80,4 +80,82 @@ namespace Warcraft.Core
 		{
 		}
 	}
+
+	public class InvalidFieldAttributeException : Exception
+	{
+		/// <summary>
+		/// Creates a new instance of the <see cref="InvalidFieldAttributeException"/> class, along with a specified
+		/// message.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		public InvalidFieldAttributeException(string message)
+			:base(message)
+		{
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="InvalidFieldAttributeException"/> class, along with a specified
+		/// message and inner exception which caused this exception.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		/// <param name="innerException">The exception which caused this exception.</param>
+		public InvalidFieldAttributeException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
+	}
+
+	public class IncompatibleRecordArrayTypeException : Exception
+	{
+		/// <summary>
+		/// The incompatible type.
+		/// </summary>
+		public Type IncompatibType { get; }
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="IncompatibleRecordArrayTypeException"/> class, along with a specified
+		/// message.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		public IncompatibleRecordArrayTypeException(string message)
+			:base(message)
+		{
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="IncompatibleRecordArrayTypeException"/> class, along with a specified
+		/// message.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		/// <param name="incompatibleType">The type that was incompatible.</param>
+		public IncompatibleRecordArrayTypeException(string message, Type incompatibleType)
+			:base(message)
+		{
+			this.IncompatibType = incompatibleType;
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="IncompatibleRecordArrayTypeException"/> class, along with a specified
+		/// message and inner exception which caused this exception.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		/// <param name="innerException">The exception which caused this exception.</param>
+		public IncompatibleRecordArrayTypeException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="IncompatibleRecordArrayTypeException"/> class, along with a specified
+		/// message and inner exception which caused this exception.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		/// <param name="incompatibleType">The type that was incompatible.</param>
+		/// <param name="innerException">The exception which caused this exception.</param>
+		public IncompatibleRecordArrayTypeException(string message, Type incompatibleType, Exception innerException)
+			: base(message, innerException)
+		{
+			this.IncompatibType = incompatibleType;
+		}
+	}
 }

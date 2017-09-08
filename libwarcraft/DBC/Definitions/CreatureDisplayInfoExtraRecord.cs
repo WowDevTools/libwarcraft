@@ -25,125 +25,96 @@ using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
+using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+	[DatabaseRecord(DatabaseName.CreatureDisplayInfoExtra)]
 	public class CreatureDisplayInfoExtraRecord : DBCRecord
 	{
-		public const DatabaseName Database = DatabaseName.CreatureDisplayInfoExtra;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ChrRaces, nameof(ID))]
+		public ForeignKey<uint> Race { get; set; }
 
-		public ForeignKey<uint> Race;
+		[RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
+		[ForeignKeyInfo(DatabaseName.CreatureType, nameof(ID))]
+		public ForeignKey<uint> CreatureType { get; set; }
 
-		public ForeignKey<uint> CreatureType;
+		[RecordField(WarcraftVersion.Classic)]
+		public bool IsFemale { get; set; }
 
-		public bool IsFemale;
-		public uint Skin;
-		public uint Face;
-		public ForeignKey<uint> HairType;
-		public ForeignKey<uint> HairVariation;
-		public uint BeardType;
-		public ForeignKey<uint> Helmet;
-		public ForeignKey<uint> Shoulder;
-		public ForeignKey<uint> Shirt;
-		public ForeignKey<uint> Cuirass;
-		public ForeignKey<uint> Belt;
-		public ForeignKey<uint> Legs;
-		public ForeignKey<uint> Boots;
-		public ForeignKey<uint> Wrist;
-		public ForeignKey<uint> Gloves;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Skin { get; set; }
 
-		public ForeignKey<uint> Tabard;
+		[RecordField(WarcraftVersion.Classic)]
+		public uint Face { get; set; }
 
-		public ForeignKey<uint> Cape;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.CharHairGeosets, nameof(ID))]
+		public ForeignKey<uint> HairType { get; set; }
 
-		public uint Flags;
-		public StringReference BakedName;
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.CharSections, nameof(ID))]
+		public ForeignKey<uint> HairVariation { get; set; }
 
-		/// <summary>
-		/// Loads and parses the provided data.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public override void PostLoad(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					DeserializeSelf(br);
-				}
-			}
-		}
+		[RecordField(WarcraftVersion.Classic)]
+		public uint BeardType { get; set; }
 
-		/// <summary>
-		/// Deserializes the data of the object using the provided <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="reader"></param>
-		public override void DeserializeSelf(BinaryReader reader)
-		{
-			base.DeserializeSelf(reader);
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Helmet { get; set; }
 
-			this.Race = new ForeignKey<uint>(DatabaseName.ChrRaces, nameof(DBCRecord.ID), reader.ReadUInt32());
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Shoulder { get; set; }
 
-			if (this.Version == WarcraftVersion.BurningCrusade)
-			{
-				this.CreatureType = new ForeignKey<uint>(DatabaseName.CreatureType, nameof(DBCRecord.ID), reader.ReadUInt32());
-			}
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Shirt { get; set; }
 
-			// 0 means male, 1 means female
-			this.IsFemale = (reader.ReadUInt32() > 0);
-			this.Skin = reader.ReadUInt32();
-			this.Face = reader.ReadUInt32();
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Cuirass { get; set; }
 
-			this.HairType = new ForeignKey<uint>(DatabaseName.CharHairGeosets, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.HairVariation = new ForeignKey<uint>(DatabaseName.CharSections, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.BeardType = reader.ReadUInt32();
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Belt { get; set; }
 
-			this.Helmet = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Shoulder = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Shirt = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Cuirass = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Belt = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Legs = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Boots = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Wrist = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			this.Gloves = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Legs { get; set; }
 
-			if (this.Version >= WarcraftVersion.BurningCrusade)
-			{
-				this.Tabard = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			}
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Boots { get; set; }
 
-			if (this.Version >= WarcraftVersion.Wrath)
-			{
-				this.Cape = new ForeignKey<uint>(DatabaseName.ItemDisplayInfo, nameof(DBCRecord.ID), reader.ReadUInt32());
-			}
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Wrist { get; set; }
 
-			this.Flags = reader.ReadUInt32();
-			this.BakedName = reader.ReadStringReference();
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Gloves { get; set; }
 
-			this.HasLoadedRecordData = true;
-		}
+		[RecordField(WarcraftVersion.BurningCrusade)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Tabard { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public ForeignKey<uint> Cape { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		[ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
+		public uint Flags { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public StringReference BakedName { get; set; }
 
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
 			yield return this.BakedName;
 		}
-
-		public override int FieldCount
-		{
-			get
-			{
-				switch (this.Version)
-				{
-					case WarcraftVersion.Classic: return 19;
-					case WarcraftVersion.BurningCrusade: return 21;
-					case WarcraftVersion.Wrath: return 21;
-					default: throw new NotImplementedException();
-				}
-			}
-		}
-
-		public override int RecordSize => sizeof(uint) * this.FieldCount;
 	}
 }
