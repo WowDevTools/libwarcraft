@@ -195,19 +195,28 @@ namespace Warcraft.DBC.Definitions
 				yield return mapDescription;
 			}
 
-			foreach (var text in this.RequirementText.GetReferences())
+			if (this.RequirementText != null)
 			{
-				yield return text;
+				foreach (var text in this.RequirementText.GetReferences())
+				{
+					yield return text;
+				}
 			}
 
-			foreach (var text in this.EmptyText2.GetReferences())
+			if (this.HeroicText != null)
 			{
-				yield return text;
+				foreach (var text in this.HeroicText.GetReferences())
+				{
+					yield return text;
+				}
 			}
 
-			foreach (var text in this.RequirementText.GetReferences())
+			if (this.EmptyText2 != null)
 			{
-				yield return text;
+				foreach (var text in this.EmptyText2.GetReferences())
+				{
+					yield return text;
+				}
 			}
 		}
 	}

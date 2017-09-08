@@ -116,7 +116,7 @@ namespace Warcraft.DBC.Definitions
 		/// The seventh block of spell attributes. This is a set of flags, defining different behaviour for the spell
 		/// under different circumstances. See <see cref="SpellAttributeG"/> for specifics.
 		/// </summary>
-		[RecordField(WarcraftVersion.Wrath)]
+		[RecordField(WarcraftVersion.BurningCrusade)]
 		public SpellAttributeG AttributesG { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
