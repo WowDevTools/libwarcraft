@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Warcraft.Core.Structures;
@@ -9,8 +10,68 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.Core.Reflection.DBC
 {
-	public class DBCInspector
+	/// <summary>
+	/// Holds functions for inspecting DBC records at runtime to deduce layout, types, storage size requirements and
+	/// field counts.
+	/// </summary>
+	public static class DBCInspector
 	{
+		/// <summary>
+		/// Contains field count information about custom registered record field types, allowing for field types like
+		/// Box, Vector3, etc.
+		/// </summary>
+		private static readonly Dictionary<Type, int> CustomFieldTypeFieldCounts = new Dictionary<Type, int>
+		{
+			{ typeof(Vector2), 2},
+			{ typeof(Vector3), 3},
+			{ typeof(Vector4), 4},
+			{ typeof(Box), 6},
+			{ typeof(BGRA), 1},
+			{ typeof(ARGB), 1}
+		};
+
+		/// <summary>
+		/// Contains byte size information about custom registered record field types, allowing for field types like
+		/// Box, Vector3, etc. There's no need to register a struct type here, unless the marshaller is reporting an
+		/// incorrect value.
+		/// </summary>
+		private static readonly Dictionary<Type, int> CustomFieldTypeStorageSizes = new Dictionary<Type, int>
+		{
+		};
+
+		/// <summary>
+		/// Register a custom type with the inspector, such that it properly recognizes it and can use it to determine
+		/// the layout of records. If the type is not a marshallable struct, then a storage size must be supplied.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="fieldCount"></param>
+		/// <param name="storageSize"></param>
+		public static void RegisterFieldType(Type type, int fieldCount, int? storageSize = null)
+		{
+			if (!type.IsValueType && !storageSize.HasValue)
+			{
+				throw new ArgumentException("A storage size must be specified for types that are not value types.", nameof(type));
+			}
+
+			if (fieldCount <= 0)
+			{
+				throw new ArgumentException("The type must have at least one field.", nameof(fieldCount));
+			}
+
+			if (storageSize <= 0)
+			{
+				throw new ArgumentException("The type must be at least one byte.", nameof(storageSize));
+			}
+
+			// Register the type
+			CustomFieldTypeFieldCounts.Add(type, fieldCount);
+
+			if (storageSize.HasValue)
+			{
+				CustomFieldTypeStorageSizes.Add(type, fieldCount);
+			}
+		}
+
 		/// <summary>
 		/// Gets the underlying element type of a field array property.
 		/// </summary>
@@ -341,6 +402,11 @@ namespace Warcraft.Core.Reflection.DBC
 						size += LocalizedStringReference.GetFieldCount(version) * sizeof(uint);
 						break;
 					}
+					case Type registeredType when CustomFieldTypeStorageSizes.ContainsKey(registeredType):
+					{
+						size += CustomFieldTypeStorageSizes[registeredType];
+						break;
+					}
 					default:
 					{
 						size += Marshal.SizeOf(recordProperty.PropertyType);
@@ -379,9 +445,9 @@ namespace Warcraft.Core.Reflection.DBC
 						count += LocalizedStringReference.GetFieldCount(version);
 						break;
 					}
-					case Type boxType when boxType == typeof(Box):
+					case Type registeredType when CustomFieldTypeFieldCounts.ContainsKey(registeredType):
 					{
-						count += 6;
+						count += CustomFieldTypeFieldCounts[registeredType];
 						break;
 					}
 					default:

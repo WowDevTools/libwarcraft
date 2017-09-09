@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.Numerics;
 using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
@@ -160,13 +161,11 @@ namespace Warcraft.DBC.Definitions
 		public LocalizedStringReference EmptyText2 { get; set; }
 
 		[RecordField(WarcraftVersion.BurningCrusade)]
-		public uint CorpseMapID { get; set; }
+		[ForeignKeyInfo(DatabaseName.Map, nameof(ID))]
+		public ForeignKey<int> ParentMap { get; set; }
 
 		[RecordField(WarcraftVersion.BurningCrusade)]
-		public float CorpseX { get; set; }
-
-		[RecordField(WarcraftVersion.BurningCrusade)]
-		public float CorpseY { get; set; }
+		public Vector2 MapEntranceCoordinates { get; set; }
 
 		[RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
 		public uint ResetTimeRaid { get; set; }

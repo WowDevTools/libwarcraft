@@ -82,6 +82,7 @@ namespace Warcraft.Core.Extensions
 			{ typeof(RGB), r => r.ReadRGB() },
 			{ typeof(RGBA), r => r.ReadRGBA() },
 			{ typeof(BGRA), r => r.ReadBGRA() },
+			{ typeof(ARGB), r => r.ReadARGB() },
 			{ typeof(Plane), r => r.ReadPlane() },
 			{ typeof(ShortPlane), r => r.ReadShortPlane() },
 			{ typeof(Rotator), r => r.ReadRotator() },
@@ -186,6 +187,58 @@ namespace Warcraft.Core.Extensions
 			// DBC-related types
 			{ typeof(LocalizedStringReference), (r, v) => r.ReadLocalizedStringReference(v) },
 		};
+
+		/// <summary>
+		/// Registers a custom type with the dynamic deserialization system. A valid reading function must be provided.
+		/// </summary>
+		/// <param name="readingFunction">A function that will read a value of the given type from the data stream.</param>
+		/// <param name="type">The type to register.</param>
+		/// <exception cref="ArgumentNullException">Thrown if the type or function are null.</exception>
+		public static void RegisterTypeReader(Type type, Func<BinaryReader, dynamic> readingFunction)
+		{
+			if (type == null)
+			{
+				throw new ArgumentNullException(nameof(type));
+			}
+
+			if (readingFunction == null)
+			{
+				throw new ArgumentNullException(nameof(readingFunction));
+			}
+
+			if (TypeReaderMap.ContainsKey(type))
+			{
+				return;
+			}
+
+			TypeReaderMap.Add(type, readingFunction);
+		}
+
+		/// <summary>
+		/// Registers a custom versioned type with the dynamic deserialization system. A valid reading function must be provided.
+		/// </summary>
+		/// <param name="readingFunction">A function that will read a value of the given type from the data stream.</param>
+		/// <param name="type">The type to register.</param>
+		/// <exception cref="ArgumentNullException">Thrown if the type or function are null.</exception>
+		public static void RegisterVersionedTypeReader(Type type, Func<BinaryReader, WarcraftVersion, dynamic> readingFunction)
+		{
+			if (type == null)
+			{
+				throw new ArgumentNullException(nameof(type));
+			}
+
+			if (readingFunction == null)
+			{
+				throw new ArgumentNullException(nameof(readingFunction));
+			}
+
+			if (VersionedTypeReaderMap.ContainsKey(type))
+			{
+				return;
+			}
+
+			VersionedTypeReaderMap.Add(type, readingFunction);
+		}
 
 		/// <summary>
 		/// Reads a value of type <typeparamref name="T"/> from the data stream. The generic type must be
@@ -388,7 +441,7 @@ namespace Warcraft.Core.Extensions
 		}
 
 		/// <summary>
-		/// Reads a 4-byte RGBA value from the data stream.
+		/// Reads a 4-byte BGRA value from the data stream.
 		/// </summary>
 		/// <returns>The argument.</returns>
 		/// <param name="binaryReader">binaryReader.</param>
@@ -402,6 +455,23 @@ namespace Warcraft.Core.Extensions
 			BGRA bgra = new BGRA(b, g, r, a);
 
 			return bgra;
+		}
+
+		/// <summary>
+		/// Reads a 4-byte RGBA value from the data stream.
+		/// </summary>
+		/// <returns>The argument.</returns>
+		/// <param name="binaryReader">binaryReader.</param>
+		public static ARGB ReadARGB(this BinaryReader binaryReader)
+		{
+			byte a = binaryReader.ReadByte();
+			byte r = binaryReader.ReadByte();
+			byte g = binaryReader.ReadByte();
+			byte b = binaryReader.ReadByte();
+
+			ARGB argb = new ARGB(b, g, r, a);
+
+			return argb;
 		}
 
 		/// <summary>
@@ -790,16 +860,29 @@ namespace Warcraft.Core.Extensions
 		}
 
 		/// <summary>
-		/// Writes a 4-byte <see cref="RGBA"/> value to the data stream.
+		/// Writes a 4-byte <see cref="BGRA"/> value to the data stream.
 		/// </summary>
 		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
-		/// <param name="bgra">The RGBA value to write.</param>
+		/// <param name="bgra">The BGRA value to write.</param>
 		public static void WriteBGRA(this BinaryWriter binaryWriter, BGRA bgra)
 		{
 			binaryWriter.Write(bgra.B);
 			binaryWriter.Write(bgra.G);
 			binaryWriter.Write(bgra.R);
 			binaryWriter.Write(bgra.A);
+		}
+
+		/// <summary>
+		/// Writes a 4-byte <see cref="ARGB"/> value to the data stream.
+		/// </summary>
+		/// <param name="binaryWriter">The current <see cref="BinaryWriter"/> object.</param>
+		/// <param name="argb">The ARGB value to write.</param>
+		public static void WriteARGB(this BinaryWriter binaryWriter, BGRA argb)
+		{
+			binaryWriter.Write(argb.A);
+			binaryWriter.Write(argb.R);
+			binaryWriter.Write(argb.G);
+			binaryWriter.Write(argb.B);
 		}
 
 		/// <summary>
