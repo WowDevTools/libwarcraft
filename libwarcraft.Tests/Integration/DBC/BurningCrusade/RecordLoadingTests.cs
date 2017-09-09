@@ -7,7 +7,7 @@ using Warcraft.DBC.Definitions;
 namespace libwarcraft.Tests.Integration.DBC.BurningCrusade
 {
 	[TestFixture]
-	public class BurningCrusadeLoadingTests : RecordLoadingTests
+	public class BurningCrusadeDefinitionTests : RecordDefinitionTests
 	{
 		[SetUp]
 		public override void Setup()

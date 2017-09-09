@@ -7,7 +7,7 @@ using Warcraft.DBC.Definitions;
 namespace libwarcraft.Tests.Integration.DBC
 {
 	[TestFixture]
-	public abstract class RecordLoadingTests
+	public abstract class RecordDefinitionTests
 	{
 		protected WarcraftVersion Version;
 

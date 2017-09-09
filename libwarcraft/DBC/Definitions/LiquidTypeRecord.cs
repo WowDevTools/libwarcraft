@@ -36,7 +36,8 @@ namespace Warcraft.DBC.Definitions
 		[RecordField(WarcraftVersion.Classic)]
 		public StringReference Name { get; set; }
 
-		private LiquidType TypeInternal;
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint Flags { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
 		public LiquidType Type
@@ -44,10 +45,54 @@ namespace Warcraft.DBC.Definitions
 			get => TranslateLiquidType();
 			set => this.TypeInternal = value;
 		}
+		private LiquidType TypeInternal;
+
+		[RecordField(WarcraftVersion.Wrath)]
+		[ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+		public ForeignKey<uint> Sound { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
 		[ForeignKeyInfo(DatabaseName.Spell, nameof(ID))]
 		public ForeignKey<uint> SpellEffect { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public float MaxDarkenDepth { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public float FogDarkenIntensity { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public float AmbientDarkenIntensity { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public float DirectDarkenIntensity { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint LightID { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public float ParticleScale { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint ParticleMovement { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint ParticleTextureSlots { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint MaterialID { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Wrath, Count = 6)]
+		public StringReference[] Textures { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Wrath, Count = 2)]
+		public int[] Colour { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Wrath, Count = 18)]
+		public float[] Unknown1 { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Wrath, Count = 4)]
+		public int[] Unknown2 { get; set; }
 
 		/// <inheritdoc />
 		public override IEnumerable<StringReference> GetStringReferences()

@@ -7,7 +7,7 @@ using Warcraft.DBC.Definitions;
 namespace libwarcraft.Tests.Integration.DBC.Vanilla
 {
 	[TestFixture]
-	public class VanillaLoadingTests : RecordLoadingTests
+	public class VanillaDefinitionTests : RecordDefinitionTests
 	{
 		[SetUp]
 		public override void Setup()

@@ -45,6 +45,9 @@ namespace Warcraft.DBC.Definitions
 		[RecordField(WarcraftVersion.Classic)]
 		public uint InstanceType { get; set; }
 
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint Flags { get; set; }
+
 		/// <summary>
 		/// What sort of PvP the map allows.
 		/// </summary>
@@ -60,37 +63,38 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// The minimum level of the map.
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
 		public uint MinLevel { get; set; }
 
 		/// <summary>
 		/// The maximum level of the map.
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
 		public uint MaxLevel { get; set; }
 
 		/// <summary>
 		/// The maximum number of players that can be in the map at any one time.
 		/// </summary>
 		[RecordField(WarcraftVersion.Classic)]
+		[RecordFieldOrder(WarcraftVersion.Wrath, ComesAfter = nameof(RaidOffset))]
 		public uint MaxPlayers { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
 		public uint Unknown1 { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
 		public uint Unknown2 { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
 		public uint Unknown3 { get; set; }
 
 		/// <summary>
@@ -124,31 +128,32 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.BurningCrusade)]
+		[RecordField(WarcraftVersion.Classic)]
+		[RecordFieldOrder(WarcraftVersion.Wrath, ComesAfter = nameof(ExpansionID))]
 		public uint RaidOffset { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
 		public uint Unknown4 { get; set; }
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
 		public uint Unknown5 { get; set; }
 
 		[RecordField(WarcraftVersion.BurningCrusade)]
 		public float MinimapIconScale { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
+		[RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
 		public LocalizedStringReference RequirementText { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
+		[RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
 		public LocalizedStringReference HeroicText { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
+		[RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
 		public LocalizedStringReference EmptyText2 { get; set; }
 
 		[RecordField(WarcraftVersion.BurningCrusade)]
@@ -160,13 +165,13 @@ namespace Warcraft.DBC.Definitions
 		[RecordField(WarcraftVersion.BurningCrusade)]
 		public float CorpseY { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
+		[RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
 		public uint ResetTimeRaid { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
+		[RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
 		public uint ResetTimeHeroid { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
+		[RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
 		public uint Unknown6 { get; set; }
 
 		[RecordField(WarcraftVersion.BurningCrusade)]

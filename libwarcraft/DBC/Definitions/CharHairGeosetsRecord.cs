@@ -45,10 +45,5 @@ namespace Warcraft.DBC.Definitions
 
 		[RecordField(WarcraftVersion.Classic)]
 		public bool ShowScalp { get; set; }
-
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			yield break;
-		}
 	}
 }

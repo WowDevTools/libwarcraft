@@ -1,5 +1,5 @@
 ﻿//
-//  RecordField.cs
+//  RecordFieldOrderAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,31 +25,28 @@ using System;
 namespace Warcraft.Core.Reflection.DBC
 {
 	/// <summary>
-	/// Declares a property to be a record field.
+	/// Represents an information tag, describing relative movement of a record field in a particular version.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Property)]
-	public class RecordFieldAttribute : Attribute
+	[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+	public class RecordFieldOrderAttribute : Attribute
 	{
 		/// <summary>
-		/// Gets the version that the field was introduced in.
+		/// Gets or sets the version that the associated field was moved in.
 		/// </summary>
-		public WarcraftVersion IntroducedIn { get; }
+		public WarcraftVersion MovedIn { get; set; }
 
 		/// <summary>
-		/// Gets or sets the version that the field was removed in. If the field has not been removed, then this will
-		/// have a value of <see cref="WarcraftVersion.Unknown"/>.
+		/// Gets or sets the name of the previous field in the record, which the associated field should come after.
 		/// </summary>
-		public WarcraftVersion RemovedIn { get; set; }
+		public string ComesAfter { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="RecordFieldAttribute"/> class.
+		/// Initializes a new instance of the <see cref="RecordFieldOrderAttribute"/> class.
 		/// </summary>
-		/// <param name="introducedIn">The version that the field was introduced in.</param>
-		public RecordFieldAttribute(WarcraftVersion introducedIn)
+		/// <param name="movedIn">The version that the field moved in.</param>
+		public RecordFieldOrderAttribute(WarcraftVersion movedIn)
 		{
-			this.IntroducedIn = introducedIn;
-			this.RemovedIn = WarcraftVersion.Unknown;
+			this.MovedIn = movedIn;
 		}
 	}
 }
-

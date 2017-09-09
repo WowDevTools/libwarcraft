@@ -49,8 +49,12 @@ namespace Warcraft.Core.Reflection.DBC
 		/// <exception cref="ArgumentException">Thrown if the record contains field properties without setters.</exception>
 		public static void DeserializeRecord<T>(BinaryReader reader, T record, WarcraftVersion version)
 		{
-			var databaseProperties = GetVersionRelevantProperties(version, typeof(T));
-			foreach (var databaseProperty in databaseProperties)
+			var databaseProperties = DBCInspector.GetVersionRelevantProperties(version, typeof(T));
+			var orderer = new FieldOrderer(version, databaseProperties.ToList());
+
+			var orderedProperties = orderer.ReorderProperties();
+
+			foreach (var databaseProperty in orderedProperties)
 			{
 				if (!databaseProperty.CanWrite)
 				{
@@ -58,10 +62,10 @@ namespace Warcraft.Core.Reflection.DBC
 				}
 
 				object propertyValue;
-				if (IsPropertyFieldArray(databaseProperty))
+				if (DBCInspector.IsPropertyFieldArray(databaseProperty))
 				{
-					var elementType = GetFieldArrayPropertyElementType(databaseProperty.PropertyType);
-					var arrayAttribute = GetVersionRelevantPropertyFieldArrayAttribute(version, databaseProperty);
+					var elementType = DBCInspector.GetFieldArrayPropertyElementType(databaseProperty.PropertyType);
+					var arrayAttribute = DBCInspector.GetVersionRelevantPropertyFieldArrayAttribute(version, databaseProperty);
 
 					List<object> values = new List<object>();
 					for (int i = 0; i < arrayAttribute.Count; ++i)
@@ -78,27 +82,6 @@ namespace Warcraft.Core.Reflection.DBC
 
 				databaseProperty.SetValue(record, propertyValue);
 			}
-		}
-
-		/// <summary>
-		/// Gets the underlying element type of a field array property.
-		/// </summary>
-		/// <param name="propertyType">The type to get the underlying type of</param>
-		/// <returns>The underlying type.</returns>
-		/// <exception cref="ArgumentException">Thrown if no underlying type could be deduced.</exception>
-		public static Type GetFieldArrayPropertyElementType(Type propertyType)
-		{
-			if (propertyType.IsArray)
-			{
-				return propertyType.GetElementType();
-			}
-
-			if (propertyType.IsGenericType)
-			{
-				return propertyType.GetGenericArguments().First();
-			}
-
-			throw new ArgumentException($"No inner type could be deduced for a property of type {propertyType}", nameof(propertyType));
 		}
 
 		/// <summary>
@@ -151,10 +134,10 @@ namespace Warcraft.Core.Reflection.DBC
 		public static object ReadPropertyValue(BinaryReader reader, PropertyInfo property, Type elementType, WarcraftVersion version)
 		{
 			object fieldValue;
-			if (IsPropertyForeignKey(property))
+			if (DBCInspector.IsPropertyForeignKey(property))
 			{
 				// Get the foreign key information
-				var foreignKeyAttribute = GetForeignKeyInfo(property);
+				var foreignKeyAttribute = DBCInspector.GetForeignKeyInfo(property);
 
 				// Get the inner type
 				var keyType = GetUnderlyingStoredPrimitiveType(elementType);
@@ -194,107 +177,6 @@ namespace Warcraft.Core.Reflection.DBC
 		}
 
 		/// <summary>
-		/// Determines whether or not the given property is a field array. This is done by checking for an instance of
-		/// <see cref="RecordFieldArrayAttribute"/>.
-		/// </summary>
-		/// <param name="propertyInfo">The property to check.</param>
-		/// <returns>true if the property is a field array; otherwise, false.</returns>
-		public static bool IsPropertyFieldArray(PropertyInfo propertyInfo)
-		{
-			return propertyInfo.GetCustomAttributes().Any(p => p is RecordFieldArrayAttribute);
-		}
-
-		/// <summary>
-		/// Gets the relevant <see cref="RecordFieldArrayAttribute"/> that the given property is decorated with.
-		/// </summary>
-		/// <param name="version">The version that the attribute should be relevant for.</param>
-		/// <param name="propertyInfo">The property to check.</param>
-		/// <returns></returns>
-		/// <exception cref="ArgumentException">
-		/// Thrown if the property is not an array type.
-		/// Thrown if the property does not have a field array attribute.
-		/// </exception>
-		public static RecordFieldArrayAttribute GetVersionRelevantPropertyFieldArrayAttribute(WarcraftVersion version, PropertyInfo propertyInfo) // TODO: Write tests
-		{
-			if (!IsPropertyFieldArray(propertyInfo))
-			{
-				throw new ArgumentException("The property is not an array. Use GetPropertyFieldAttribute instead, or decorate it with RecordFieldArray.", nameof(propertyInfo));
-			}
-
-			var attributes = propertyInfo
-				.GetCustomAttributes()
-				.Where(p => p is RecordFieldArrayAttribute)
-				.Cast<RecordFieldArrayAttribute>()
-				.OrderBy(a => a.IntroducedIn);
-
-			return attributes.Last(a => IsPropertyRelevantForVersion(version, a));
-		}
-
-		/// <summary>
-		/// Gets the <see cref="RecordFieldAttribute"/> that the given property is decorated with.
-		/// </summary>
-		/// <param name="propertyInfo">The property to check.</param>
-		/// <returns></returns>
-		/// <exception cref="InvalidDataException">Thrown if the property does not have a field attribute.</exception>
-		public static RecordFieldAttribute GetPropertyFieldAttribute(PropertyInfo propertyInfo) // TODO: Write tests
-		{
-			var fieldAttribute = propertyInfo.GetCustomAttributes().FirstOrDefault(a => a is RecordFieldAttribute) as RecordFieldAttribute;
-
-			if (fieldAttribute == null)
-			{
-				throw new ArgumentException("The property did not have a RecordField attribute attached to it.");
-			}
-
-			return fieldAttribute;
-		}
-
-		/// <summary>
-		/// Gets all properties decorated with <see cref="RecordFieldAttribute"/> from the given type.
-		/// </summary>
-		/// <param name="recordType">The type to get the properties from.</param>
-		/// <returns>An unordered set of properties.</returns>
-		/// <exception cref="IncompatibleRecordArrayTypeException">
-		/// Thrown if a property which does not support a <see cref="RecordFieldArrayAttribute"/> is decorated with one.
-		/// </exception>
-		/// <exception cref="InvalidFieldAttributeException">
-		/// Thrown if a property is decorated with an invalid <see cref="RecordFieldAttribute"/>.
-		/// </exception>
-		public static IEnumerable<PropertyInfo> GetRecordProperties(Type recordType)
-		{
-			var recordProperties = recordType.GetProperties
-			(
-				BindingFlags.Instance |
-				BindingFlags.Public |
-				BindingFlags.FlattenHierarchy
-			)
-			.Where(p => p.IsDefined(typeof(RecordFieldAttribute)))
-			.ToList();
-
-			// Do a bit of error checking
-			foreach (var property in recordProperties)
-			{
-				if (property.GetCustomAttributes().Any(a => a is RecordFieldArrayAttribute))
-				{
-					if (!IsPropertyTypeCompatibleWithArrayAttribute(property.PropertyType))
-					{
-						throw new IncompatibleRecordArrayTypeException
-						(
-							"Incompatible property definition decorated with RecordFieldArray. Use an array or something that implements IList<T>.", property.PropertyType
-						);
-					}
-				}
-
-				var versionAttribute = GetPropertyFieldAttribute(property);
-				if ((versionAttribute.RemovedIn < versionAttribute.IntroducedIn) && versionAttribute.RemovedIn != WarcraftVersion.Unknown)
-				{
-					throw new InvalidFieldAttributeException("The field was marked as having been removed before it was introduced.");
-				}
-			}
-
-			return recordProperties;
-		}
-
-		/// <summary>
 		/// Determines if the given property type is compatible with a <see cref="RecordFieldArrayAttribute"/>. At
 		/// present, this is limited to array types and types implementing <see cref="IList{T}"/>.
 		/// </summary>
@@ -308,137 +190,6 @@ namespace Warcraft.Core.Reflection.DBC
 
 
 			return isArray || implementsGenericIList;
-		}
-
-		/// <summary>
-		/// Gets the record field properties that are relevant for the given version, that is, those that exist in the
-		/// given version. The properties are guaranteed to be ordered by inheritance and declaration order.
-		/// </summary>
-		/// <param name="version">The version which the property should be relevant for.</param>
-		/// <param name="recordType">The type where the properties are.</param>
-		/// <returns>An ordered set of properties.</returns>
-		public static IEnumerable<PropertyInfo> GetVersionRelevantProperties(WarcraftVersion version, Type recordType)
-		{
-			// Order the properties by their field order.
-			var orderedProperties = GetRecordProperties(recordType)
-				.OrderBy(p => p.DeclaringType, new InheritanceChainComparer())
-				.ThenBy(p => p.MetadataToken).ToList();
-
-			foreach (var recordProperty in orderedProperties)
-			{
-				var versionAttribute = GetPropertyFieldAttribute(recordProperty);
-
-				if (!IsPropertyRelevantForVersion(version, versionAttribute))
-				{
-					continue;
-				}
-
-				yield return recordProperty;
-			}
-		}
-
-		public static bool IsPropertyRelevantForVersion(WarcraftVersion version, RecordFieldAttribute versionAttribute)
-		{
-			// Field is not present in this version
-			if (versionAttribute.IntroducedIn > version)
-			{
-				return false;
-			}
-
-			// Field has been removed in this or a previous version
-			if (versionAttribute.RemovedIn <= version && versionAttribute.RemovedIn != WarcraftVersion.Unknown)
-			{
-				return false;
-			}
-
-			return true;
-		}
-
-		/// <summary>
-		/// Determines whether or not the given property is a foreign key.
-		/// </summary>
-		/// <param name="propertyInfo">The property to check.</param>
-		/// <returns>true if the property is a foreign key; otherwise, false.</returns>
-		public static bool IsPropertyForeignKey(PropertyInfo propertyInfo)
-		{
-			return
-				propertyInfo.PropertyType.IsGenericType &&
-				propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(ForeignKey<>);
-		}
-
-		/// <summary>
-		/// Gets the <see cref="ForeignKeyInfoAttribute"/> attached to the given property.
-		/// </summary>
-		/// <param name="foreignKey">The foreign key property.</param>
-		/// <returns></returns>
-		/// <exception cref="ArgumentException">Thrown if the property is not a foreign key.</exception>
-		/// <exception cref="InvalidDataException">Thrown if the property is not decorated with a <see cref="ForeignKeyInfoAttribute"/>.</exception>
-		public static ForeignKeyInfoAttribute GetForeignKeyInfo(PropertyInfo foreignKey)
-		{
-			if (!IsPropertyForeignKey(foreignKey))
-			{
-				throw new ArgumentException("The given property was not a foreign key.", nameof(foreignKey));
-			}
-
-			var foreignKeyAttribute = foreignKey.GetCustomAttributes().FirstOrDefault(a => a is ForeignKeyInfoAttribute) as ForeignKeyInfoAttribute;
-
-			if (foreignKeyAttribute == null)
-			{
-				throw new InvalidDataException("ForeignKey properties must be decorated with the ForeignKeyInfo attribute.");
-			}
-
-			return foreignKeyAttribute;
-		}
-
-		/// <summary>
-		/// Gets the absolute size in bytes of the given record type.
-		/// </summary>
-		/// <param name="version">The version of the record.</param>
-		/// <param name="recordType">The type to get the size of.</param>
-		/// <returns>The absolute size in bytes of the record.</returns>
-		public static int GetRecordSize(WarcraftVersion version, Type recordType)
-		{
-			int size = 0;
-			foreach (var recordProperty in GetVersionRelevantProperties(version, recordType))
-			{
-				switch (recordProperty.PropertyType)
-				{
-					// Single-field types
-					case Type foreignKeyType when foreignKeyType.IsGenericType && foreignKeyType.GetGenericTypeDefinition() == typeof(ForeignKey<>):
-					case Type stringRefType when stringRefType == typeof(StringReference):
-					case Type enumType when enumType.IsEnum:
-					{
-						var underlyingType = GetUnderlyingStoredPrimitiveType(recordProperty.PropertyType);
-
-						size += Marshal.SizeOf(underlyingType);
-						break;
-					}
-					// Multi-field types
-					case Type genericListType when genericListType.IsGenericType && genericListType.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IList<>)):
-					case Type arrayType when arrayType.IsArray:
-					{
-						var elementSize = Marshal.SizeOf(GetUnderlyingStoredPrimitiveType(recordProperty.PropertyType));
-						var arrayInfoAttribute = GetVersionRelevantPropertyFieldArrayAttribute(version, recordProperty);
-
-						size += (int)(elementSize * arrayInfoAttribute.Count);
-
-						break;
-					}
-					// Special version-variant length handling
-					case Type locStringRefType when locStringRefType == typeof(LocalizedStringReference):
-					{
-						size += LocalizedStringReference.GetFieldCount(version) * sizeof(uint);
-						break;
-					}
-					default:
-					{
-						size += Marshal.SizeOf(recordProperty.PropertyType);
-						break;
-					}
-				}
-			}
-
-			return size;
 		}
 
 		/// <summary>
@@ -477,48 +228,6 @@ namespace Warcraft.Core.Reflection.DBC
 			}
 
 			return GetUnderlyingStoredPrimitiveType(innerType);
-		}
-
-		/// <summary>
-		/// Gets the number of properties marked with <see cref="RecordFieldAttribute"/> (or subclasses of it) in the
-		/// given type.
-		/// </summary>
-		/// <param name="version">The version of the record.</param>
-		/// <param name="recordType">The type with properties.</param>
-		/// <returns>The number of properties in the type.</returns>
-		public static int GetPropertyCount(WarcraftVersion version, Type recordType)
-		{
-			int count = 0;
-			foreach (var recordProperty in GetVersionRelevantProperties(version, recordType))
-			{
-				switch (recordProperty.PropertyType)
-				{
-					case Type _ when IsPropertyFieldArray(recordProperty):
-					{
-						var arrayInfoAttribute = GetVersionRelevantPropertyFieldArrayAttribute(version, recordProperty);
-						count += (int)arrayInfoAttribute.Count;
-
-						break;
-					}
-					case Type locStringRefType when locStringRefType == typeof(LocalizedStringReference):
-					{
-						count += LocalizedStringReference.GetFieldCount(version);
-						break;
-					}
-					case Type boxType when boxType == typeof(Box):
-					{
-						count += 6;
-						break;
-					}
-					default:
-					{
-						++count;
-						break;
-					}
-				}
-			}
-
-			return count;
 		}
 	}
 }

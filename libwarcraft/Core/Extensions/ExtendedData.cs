@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using Warcraft.Core.Interfaces;
@@ -105,6 +106,20 @@ namespace Warcraft.Core.Extensions
 		public static short FloatQuatValueToShort(float inFloat)
 		{
 			return (short)((inFloat + 1.0f) * short.MaxValue);
+		}
+
+		/// <summary>
+		/// Deconstructs a key-value pair into a tuple.
+		/// </summary>
+		/// <param name="keyValuePair">The key-value pair.</param>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		/// <typeparam name="T1">The type of the key.</typeparam>
+		/// <typeparam name="T2">The type of the value.</typeparam>
+		public static void Deconstruct<T1, T2>(this KeyValuePair<T1, T2> keyValuePair, out T1 key, out T2 value)
+		{
+			key = keyValuePair.Key;
+			value = keyValuePair.Value;
 		}
 	}
 }

@@ -24,10 +24,5 @@ namespace libwarcraft.Tests.Unit.Reflection.DBC.TestData
 
 		[RecordField(WarcraftVersion.Wrath)]
 		public StringReference TestNewFieldInWrath { get; set; }
-
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			throw new System.NotImplementedException();
-		}
 	}
 }

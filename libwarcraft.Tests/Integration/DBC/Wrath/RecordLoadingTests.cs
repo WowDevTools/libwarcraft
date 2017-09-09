@@ -4,7 +4,7 @@ using Warcraft.Core;
 namespace libwarcraft.Tests.Integration.DBC.Wrath
 {
 	[TestFixture]
-	public class WrathLoadingTests : RecordLoadingTests
+	public class WrathDefinitionTests : RecordDefinitionTests
 	{
 		[SetUp]
 		public override void Setup()
