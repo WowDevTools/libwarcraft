@@ -117,14 +117,27 @@ namespace Warcraft.DBC.Definitions
 		/// The seventh block of spell attributes. This is a set of flags, defining different behaviour for the spell
 		/// under different circumstances. See <see cref="SpellAttributeG"/> for specifics.
 		/// </summary>
-		[RecordField(WarcraftVersion.Wrath)]
+		[RecordField(WarcraftVersion.BurningCrusade)]
 		public SpellAttributeG AttributesG { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint StanceWhitelist { get; set; }
+		/// <summary>
+		/// The eighth block of spell attributes. This is a set of flags, defining different behaviour for the spell
+		/// under different circumstances. See <see cref="SpellAttributeH"/> for specifics.
+		/// </summary>
+		[RecordField(WarcraftVersion.Wrath)]
+		public SpellAttributeH AttributesH { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
-		public uint StanceBlacklist { get; set; }
+		public uint StanceWhitelistA { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint StanceWhitelistB { get; set; }
+
+		[RecordField(WarcraftVersion.Classic)]
+		public uint StanceBlacklistA { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint StanceBlacklistB { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
 		public uint Targets { get; set; }
@@ -133,7 +146,7 @@ namespace Warcraft.DBC.Definitions
 		public uint TargetCreatureType { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
-		public uint RequiresSpellFocus { get; set; }
+		public uint SpellFocusObject { get; set; }
 
 		[RecordField(WarcraftVersion.BurningCrusade)]
 		public uint FacingCasterFlags { get; set; }
@@ -282,7 +295,7 @@ namespace Warcraft.DBC.Definitions
 		[RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
 		public uint[] EffectAuraPeriod { get; set; }
 
-		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		[RecordFieldArray(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath, Count = 3)]
 		public float[] EffectAmplitude { get; set; }
 
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
@@ -1442,12 +1455,179 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown78					= 0x00000001,
+		DoNotDisplayCooldown		= 0x00000001,
+
+		/// <summary>
+		/// This spell can only be cast in arenas.
+		/// </summary>
+		OnlyInArena					= 0x00000002,
+
+		/// <summary>
+		/// This spell ignores any auras on the caster.
+		/// </summary>
+		IgnoreCasterAuras			= 0x00000004,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown79					= 0x00000002,
+		Unknown78					= 0x00000008,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown79					= 0x00000010,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown80					= 0x00000020,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown81					= 0x00000040,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown82					= 0x00000080,
+
+		/// <summary>
+		/// This spell cannot target crowd controlled units.
+		/// </summary>
+		CannotTargetCrowdControlled = 0x00000100,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown83					= 0x00000200,
+
+		/// <summary>
+		/// This spell can target possessed friendlies.
+		/// </summary>
+		CanTargetPossessedFriend	= 0x00000400,
+
+		/// <summary>
+		/// This spell cannot be cast in raids.
+		/// </summary>
+		NotInRaidInstance			= 0x00000800,
+
+		/// <summary>
+		/// This spell can be cast while on a vehicle.
+		/// </summary>
+		CastableWhileOnVehicle		= 0x00001000,
+
+		/// <summary>
+		/// This spell can target invisible units.
+		/// </summary>
+		CanTargetInvisible			= 0x00002000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown84					= 0x00004000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown85					= 0x00008000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown86					= 0x00010000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown87					= 0x00020000,
+
+		/// <summary>
+		/// This spell will not be allowed if the unit is not possessed, and the charmer of the caster will be the original caster.
+		/// </summary>
+		CastByCharmer				= 0x00040000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown88					= 0x00080000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown89					= 0x00100000,
+
+		/// <summary>
+		/// A client-side attribute.
+		/// </summary>
+		ClientUITargetEffects		= 0x00200000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown90					= 0x00400000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown91					= 0x00800000,
+
+		/// <summary>
+		/// This spell can target otherwise untargetable units.
+		/// </summary>
+		CanTargetUntargetable		= 0x01000000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown92					= 0x02000000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown93					= 0x04000000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown94					= 0x08000000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknow95					= 0x10000000,
+
+		/// <summary>
+		/// This spell ignores percentile damage modifiers.
+		/// </summary>
+		IgnorePercentDamageMods		= 0x20000000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown96					= 0x40000000,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown97					= 0x80000000,
+	}
+
+	/// <summary>
+	/// The eighth block of spell attributes.
+	/// </summary>
+	[Flags]
+	public enum SpellAttributeH : uint
+	{
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown98					= 0x00000001,
+
+		/// <summary>
+		/// TODO: Unknown behaviour
+		/// </summary>
+		Unknown99					= 0x00000002,
 
 		/// <summary>
 		/// This spell will reactive when the caster is resurrected.
@@ -1462,7 +1642,7 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown80					= 0x00000010,
+		Unknown100					= 0x00000010,
 
 		/// <summary>
 		/// This spell will summon a player-controlled totem.
@@ -1472,12 +1652,12 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown81					= 0x00000040,
+		Unknown101					= 0x00000040,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown82					= 0x00000080,
+		Unknown102					= 0x00000080,
 
 		/// <summary>
 		/// This spell is horde only.
@@ -1490,8 +1670,7 @@ namespace Warcraft.DBC.Definitions
 		AllianceOnly				= 0x00000200,
 
 		/// <summary>
-		/// TODO: Unknown behaviour
-		/// This spell will dispel charge.
+		/// This spell will dispel a single charge.
 		/// </summary>
 		DispelCharge				= 0x00000400,
 
@@ -1503,32 +1682,32 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown83					= 0x00001000,
+		Unknown103					= 0x00001000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown84					= 0x00002000,
+		Unknown104					= 0x00002000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown85					= 0x00004000,
+		Unknown105					= 0x00004000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown86					= 0x00008000,
+		Unknown106					= 0x00008000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown87					= 0x00010000,
+		Unknown107					= 0x00010000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown88					= 0x00020000,
+		Unknown108					= 0x00020000,
 
 		/// <summary>
 		/// This spell has a charge effect.
@@ -1543,61 +1722,61 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown89					= 0x00100000,
+		Unknown109					= 0x00100000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown90					= 0x00200000,
+		Unknown110					= 0x00200000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown91					= 0x00400000,
+		Unknown111					= 0x00400000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown92					= 0x00800000,
+		Unknown112					= 0x00800000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown93					= 0x01000000,
+		Unknown113					= 0x01000000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown94					= 0x02000000,
+		Unknown114					= 0x02000000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown95					= 0x04000000,
+		Unknown115					= 0x04000000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown96					= 0x08000000,
+		Unknown116					= 0x08000000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown97					= 0x10000000,
+		Unknown117					= 0x10000000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown98					= 0x20000000,
+		Unknown118					= 0x20000000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown99					= 0x40000000,
+		Unknown119					= 0x40000000,
 
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		Unknown100					= 0x80000000,
+		Unknown120					= 0x80000000,
 	}
 }
