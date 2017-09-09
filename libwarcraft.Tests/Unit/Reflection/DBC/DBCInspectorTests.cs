@@ -9,64 +9,12 @@ using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
 using Warcraft.DBC.SpecialFields;
-
+using static libwarcraft.Tests.Unit.Reflection.DBC.TestData.FieldNameLists;
 namespace libwarcraft.Tests.Unit.Reflection.DBC
 {
 	[TestFixture]
 	public class DBCInspectorTests
 	{
-		private static readonly string[] TestRecordPropertyNames =
-		{
-			nameof(DBCRecord.ID),
-			nameof(TestDBCRecord.TestSimpleField),
-			nameof(TestDBCRecord.TestAddedAndRemovedField),
-			nameof(TestDBCRecord.TestForeignKeyField),
-			nameof(TestDBCRecord.TestNewFieldInWrath),
-		};
-
-		private static readonly string[] TestRecordClassicPropertyNames =
-		{
-			nameof(DBCRecord.ID),
-			nameof(TestDBCRecord.TestSimpleField),
-			nameof(TestDBCRecord.TestAddedAndRemovedField),
-			nameof(TestDBCRecord.TestForeignKeyField),
-		};
-
-		private static readonly string[] TestRecordCataPropertyNames =
-		{
-			nameof(DBCRecord.ID),
-			nameof(TestDBCRecord.TestSimpleField),
-			nameof(TestDBCRecord.TestForeignKeyField),
-			nameof(TestDBCRecord.TestNewFieldInWrath),
-		};
-
-		private static readonly string[] TestRecordWithArrayPropertyNames =
-		{
-			nameof(DBCRecord.ID),
-			nameof(TestDBCRecordWithArray.SimpleField),
-			nameof(TestDBCRecordWithArray.ArrayField)
-		};
-
-		private static readonly string[] SingleMovedFieldRecordNamesMovingFields =
-		{
-			nameof(TestDBCRecordWithSingleMovedField.FieldC)
-		};
-
-		private static readonly string[] MultipleMovedFieldRecordNamesMovingFieldsBC =
-		{
-			nameof(TestDBCRecordWithMultipleMovedFields.FieldA),
-			nameof(TestDBCRecordWithMultipleMovedFields.FieldC),
-			nameof(TestDBCRecordWithMultipleMovedFields.FieldE),
-		};
-
-		private static readonly string[] MultipleMovedFieldRecordNamesMovingFieldsWrath =
-		{
-			nameof(TestDBCRecordWithMultipleMovedFields.FieldA),
-			nameof(TestDBCRecordWithMultipleMovedFields.FieldC),
-			nameof(TestDBCRecordWithMultipleMovedFields.FieldD),
-			nameof(TestDBCRecordWithMultipleMovedFields.FieldE)
-		};
-
 		public class GetMovedProperties
 		{
 			[Test]
@@ -186,6 +134,16 @@ namespace libwarcraft.Tests.Unit.Reflection.DBC
 				var recordPropertyNames = recordProperties.Select(p => p.Name);
 
 				Assert.That(recordPropertyNames, Is.EquivalentTo(TestRecordCataPropertyNames));
+			}
+
+			[Test]
+			public void IncludesArrayFieldsWhenMultipleVersionsArePresent()
+			{
+				var recordProperties = DBCInspector.GetVersionRelevantProperties(WarcraftVersion.Classic, typeof(TestDBCRecordWithVersionedArray));
+
+				var recordPropertyNames = recordProperties.Select(p => p.Name);
+
+				Assert.That(recordPropertyNames, Is.EquivalentTo(VersionedArrayRecordNames));
 			}
 		}
 
@@ -307,6 +265,14 @@ namespace libwarcraft.Tests.Unit.Reflection.DBC
 			{
 				Assert.AreEqual(6, DBCInspector.GetPropertyCount(WarcraftVersion.Classic, typeof(TestDBCRecordWithArray)));
 			}
+
+			[Test]
+			public void ReturnsCorrectCountForRecordsWithVersionedArrays()
+			{
+				Assert.AreEqual(3, DBCInspector.GetPropertyCount(WarcraftVersion.Classic, typeof(TestDBCRecordWithVersionedArray)));
+				Assert.AreEqual(5, DBCInspector.GetPropertyCount(WarcraftVersion.Wrath, typeof(TestDBCRecordWithVersionedArray)));
+				Assert.AreEqual(7, DBCInspector.GetPropertyCount(WarcraftVersion.Cataclysm, typeof(TestDBCRecordWithVersionedArray)));
+			}
 		}
 
 		public class GetVersionRelevantPropertyFieldArrayAttribute
@@ -317,7 +283,10 @@ namespace libwarcraft.Tests.Unit.Reflection.DBC
 				var arrayProperty = typeof(TestDBCRecordWithArray).GetProperties()
 					.First(p => p.Name == nameof(TestDBCRecordWithArray.ArrayField));
 
-				Assert.DoesNotThrow(() => DBCInspector.GetVersionRelevantPropertyFieldArrayAttribute(WarcraftVersion.Classic, arrayProperty));
+				RecordFieldAttribute attribute = null;
+				Assert.DoesNotThrow(() => attribute = DBCInspector.GetVersionRelevantPropertyFieldArrayAttribute(WarcraftVersion.Classic, arrayProperty));
+
+				Assert.AreEqual(WarcraftVersion.Classic, attribute.IntroducedIn);
 			}
 
 			[Test]

@@ -66,7 +66,7 @@ namespace Warcraft.Core.Reflection.DBC
 				.Cast<RecordFieldArrayAttribute>()
 				.OrderBy(a => a.IntroducedIn);
 
-			return attributes.Last(a => IsPropertyRelevantForVersion(version, a));
+			return attributes.LastOrDefault(a => IsPropertyRelevantForVersion(version, a));
 		}
 
 		/// <summary>
@@ -144,7 +144,21 @@ namespace Warcraft.Core.Reflection.DBC
 		{
 			foreach (var recordProperty in GetRecordProperties(recordType))
 			{
-				var versionAttribute = GetPropertyFieldAttribute(recordProperty);
+				RecordFieldAttribute versionAttribute;
+				if (IsPropertyFieldArray(recordProperty))
+				{
+					versionAttribute = GetVersionRelevantPropertyFieldArrayAttribute(version, recordProperty);
+
+					if (versionAttribute == null)
+					{
+						// There was no property defined for the version.
+						continue;
+					}
+				}
+				else
+				{
+					versionAttribute = GetPropertyFieldAttribute(recordProperty);
+				}
 
 				if (!IsPropertyRelevantForVersion(version, versionAttribute))
 				{
@@ -348,7 +362,8 @@ namespace Warcraft.Core.Reflection.DBC
 		public static int GetPropertyCount(WarcraftVersion version, Type recordType)
 		{
 			int count = 0;
-			foreach (var recordProperty in GetVersionRelevantProperties(version, recordType))
+			var properties = GetVersionRelevantProperties(version, recordType);
+			foreach (var recordProperty in properties)
 			{
 				switch (recordProperty.PropertyType)
 				{

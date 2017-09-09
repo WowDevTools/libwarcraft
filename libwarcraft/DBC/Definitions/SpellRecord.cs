@@ -24,6 +24,7 @@ using System;
 using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
+// ReSharper disable UnusedMember.Global
 
 namespace Warcraft.DBC.Definitions
 {
@@ -51,7 +52,7 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// The UI type to use when casting.
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
 		public uint CastUI { get; set; }
 
 		/// <summary>
@@ -116,14 +117,14 @@ namespace Warcraft.DBC.Definitions
 		/// The seventh block of spell attributes. This is a set of flags, defining different behaviour for the spell
 		/// under different circumstances. See <see cref="SpellAttributeG"/> for specifics.
 		/// </summary>
-		[RecordField(WarcraftVersion.BurningCrusade)]
+		[RecordField(WarcraftVersion.Wrath)]
 		public SpellAttributeG AttributesG { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
-		public uint ShapeshiftMask { get; set; }
+		public uint StanceWhitelist { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
-		public uint ShapeshiftExclusions { get; set; }
+		public uint StanceBlacklist { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
 		public uint Targets { get; set; }
@@ -148,6 +149,18 @@ namespace Warcraft.DBC.Definitions
 
 		[RecordField(WarcraftVersion.BurningCrusade)]
 		public uint ExcludeTargetAuraState { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint CasterAuraSpell { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint TargetAuraSpell { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint ExcludeCasterAuraSpell { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint ExcludeTargetAuraSpell { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
 		public uint CastingTimeIndex { get; set; }
@@ -239,10 +252,10 @@ namespace Warcraft.DBC.Definitions
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
 		public uint[] EffectDieSides { get; set; }
 
-		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		[RecordFieldArray(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath, Count = 3)]
 		public uint[] EffectBaseDice { get; set; }
 
-		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
+		[RecordFieldArray(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath, Count = 3)]
 		public float[] EffectDicePerLevel { get; set; }
 
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
@@ -265,6 +278,9 @@ namespace Warcraft.DBC.Definitions
 
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
 		public uint[] EffectAura { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
+		public uint[] EffectAuraPeriod { get; set; }
 
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
 		public float[] EffectAmplitude { get; set; }
@@ -289,6 +305,15 @@ namespace Warcraft.DBC.Definitions
 
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
 		public float[] EffectPointsPerCombo { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
+		public uint[] EffectClassMaskA { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
+		public uint[] EffectClassMaskB { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
+		public uint[] EffectClassMaskC { get; set; }
 
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 2)]
 		public uint[] SpellVisualID { get; set; }
@@ -315,7 +340,7 @@ namespace Warcraft.DBC.Definitions
 		public LocalizedStringReference Tooltip { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
-		public uint ManaCostPCT { get; set; }
+		public uint ManaCostPercentage { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
 		public uint StartRecoveryCategory { get; set; }
@@ -330,6 +355,7 @@ namespace Warcraft.DBC.Definitions
 		public uint SpellClassSet { get; set; }
 
 		[RecordFieldArray(WarcraftVersion.Classic, Count = 2)]
+		[RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
 		public uint[] SpellClassMask { get; set; }
 
 		[RecordField(WarcraftVersion.Classic)]
@@ -364,6 +390,24 @@ namespace Warcraft.DBC.Definitions
 
 		[RecordField(WarcraftVersion.BurningCrusade)]
 		public uint SchoolMask { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint RuneCostID { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint SpellMissileID { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public int PowerDisplayID { get; set; }
+
+		[RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
+		public float[] EffectBonusMultiplier { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint DescriptionVariableID { get; set; }
+
+		[RecordField(WarcraftVersion.Wrath)]
+		public uint DifficultyID { get; set; }
 	}
 
 	/// <summary>

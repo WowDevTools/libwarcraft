@@ -45,6 +45,9 @@ namespace Warcraft.DBC.Definitions
 		[RecordField(WarcraftVersion.Classic)]
 		public uint InstanceType { get; set; }
 
+		/// <summary>
+		/// Gets or sets the flags for this map record.
+		/// </summary>
 		[RecordField(WarcraftVersion.Wrath)]
 		public uint Flags { get; set; }
 
@@ -141,7 +144,7 @@ namespace Warcraft.DBC.Definitions
 		/// <summary>
 		/// TODO: Unknown behaviour
 		/// </summary>
-		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
+		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.BurningCrusade)]
 		public uint Unknown5 { get; set; }
 
 		[RecordField(WarcraftVersion.BurningCrusade)]
@@ -169,7 +172,7 @@ namespace Warcraft.DBC.Definitions
 		public uint ResetTimeRaid { get; set; }
 
 		[RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
-		public uint ResetTimeHeroid { get; set; }
+		public uint ResetTimeHeroic { get; set; }
 
 		[RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
 		public uint Unknown6 { get; set; }

@@ -96,5 +96,58 @@ namespace libwarcraft.Tests.Unit.Reflection.DBC.TestData
 		{
 			nameof(DBCRecord.ID)
 		};
+
+		public static readonly string[] VersionedArrayRecordNames =
+		{
+			nameof(DBCRecord.ID),
+			nameof(TestDBCRecordWithVersionedArray.VersionedArray)
+		};
+
+		public static readonly string[] TestRecordPropertyNames =
+		{
+			nameof(DBCRecord.ID),
+			nameof(TestDBCRecord.TestSimpleField),
+			nameof(TestDBCRecord.TestAddedAndRemovedField),
+			nameof(TestDBCRecord.TestForeignKeyField),
+			nameof(TestDBCRecord.TestNewFieldInWrath),
+		};
+
+		public static readonly string[] TestRecordClassicPropertyNames =
+		{
+			nameof(DBCRecord.ID),
+			nameof(TestDBCRecord.TestSimpleField),
+			nameof(TestDBCRecord.TestAddedAndRemovedField),
+			nameof(TestDBCRecord.TestForeignKeyField),
+		};
+
+		public static readonly string[] TestRecordCataPropertyNames =
+		{
+			nameof(DBCRecord.ID),
+			nameof(TestDBCRecord.TestSimpleField),
+			nameof(TestDBCRecord.TestForeignKeyField),
+			nameof(TestDBCRecord.TestNewFieldInWrath),
+		};
+
+		public static readonly string[] TestRecordWithArrayPropertyNames =
+		{
+			nameof(DBCRecord.ID),
+			nameof(TestDBCRecordWithArray.SimpleField),
+			nameof(TestDBCRecordWithArray.ArrayField)
+		};
+
+		public static readonly string[] MultipleMovedFieldRecordNamesMovingFieldsBC =
+		{
+			nameof(TestDBCRecordWithMultipleMovedFields.FieldA),
+			nameof(TestDBCRecordWithMultipleMovedFields.FieldC),
+			nameof(TestDBCRecordWithMultipleMovedFields.FieldE),
+		};
+
+		public static readonly string[] MultipleMovedFieldRecordNamesMovingFieldsWrath =
+		{
+			nameof(TestDBCRecordWithMultipleMovedFields.FieldA),
+			nameof(TestDBCRecordWithMultipleMovedFields.FieldC),
+			nameof(TestDBCRecordWithMultipleMovedFields.FieldD),
+			nameof(TestDBCRecordWithMultipleMovedFields.FieldE)
+		};
 	}
 }
