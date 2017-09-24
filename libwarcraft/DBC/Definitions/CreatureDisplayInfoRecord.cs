@@ -84,6 +84,8 @@ namespace Warcraft.DBC.Definitions
 		[RecordField(WarcraftVersion.Wrath)]
 		public uint ObjectEffectPackage { get; set; }
 
+		public IReadOnlyList<StringReference> TextureVariations => new[] { this.TextureVariation1, this.TextureVariation2, this.TextureVariation3 };
+
 		/// <inheritdoc />
 		public override IEnumerable<StringReference> GetStringReferences()
 		{
