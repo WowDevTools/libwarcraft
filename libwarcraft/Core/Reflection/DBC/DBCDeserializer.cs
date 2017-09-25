@@ -49,7 +49,7 @@ namespace Warcraft.Core.Reflection.DBC
 		/// <exception cref="ArgumentException">Thrown if the record contains field properties without setters.</exception>
 		public static void DeserializeRecord<T>(BinaryReader reader, T record, WarcraftVersion version)
 		{
-			var reflectionInfo = FieldInformationCache.Instance.GetRecordInformation(typeof(T), version);
+			var reflectionInfo = RecordInformationCache.Instance.GetRecordInformation(typeof(T), version);
 
 			foreach (var databaseProperty in reflectionInfo.VersionRelevantProperties)
 			{

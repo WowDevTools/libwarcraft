@@ -560,15 +560,17 @@ namespace Warcraft.Core.Extensions
 			T record = Activator.CreateInstance<T>();
 			record.Version = version;
 
+			var reflectionInfo = RecordInformationCache.Instance.GetRecordInformation(typeof(T), version);
+
 			// Make sure the provided record type is valid for this database file
-			if (record.FieldCount != fieldCount)
+			if (reflectionInfo.FieldCount != fieldCount)
 			{
-				throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}. Invalid field count: DBC expected {fieldCount}, actual {record.FieldCount}");
+				throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}. Invalid field count: DBC expected {fieldCount}, actual {reflectionInfo.FieldCount}");
 			}
 
-			if (record.RecordSize != recordSize)
+			if (reflectionInfo.Size != recordSize)
 			{
-				throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}. Invalid record size: DBC expected {recordSize}, actual {record.RecordSize}");
+				throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}. Invalid record size: DBC expected {recordSize}, actual {reflectionInfo.Size}");
 			}
 
 			DBCDeserializer.DeserializeRecord(reader, record, version);

@@ -69,6 +69,16 @@ namespace Warcraft.Core.Reflection.DBC
 		public Dictionary<PropertyInfo, ForeignKeyInfoAttribute> PropertyForeignKeyAttributes { get; }
 
 		/// <summary>
+		/// Gets the field count of the record.
+		/// </summary>
+		public int FieldCount { get; }
+
+		/// <summary>
+		/// Gets the size of the record.
+		/// </summary>
+		public int Size { get; }
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="RecordFieldInformation"/> class.
 		/// </summary>
 		/// <param name="recordType">The type of record to build the reflection data for.</param>
@@ -118,6 +128,9 @@ namespace Warcraft.Core.Reflection.DBC
 					this.PropertyForeignKeyAttributes.Add(property, DBCInspector.GetForeignKeyInfo(property));
 				}
 			}
+
+			this.FieldCount = DBCInspector.GetPropertyCount(this.Version, this.Type);
+			this.Size = DBCInspector.GetRecordSize(this.Version, this.Type);
 		}
 
 		/// <summary>

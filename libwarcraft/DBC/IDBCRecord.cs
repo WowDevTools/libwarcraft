@@ -30,8 +30,6 @@ namespace Warcraft.DBC
 	{
 		uint ID { get; }
 		WarcraftVersion Version { get; set; }
-		int FieldCount { get; }
-		int RecordSize { get; }
 		IEnumerable<StringReference> GetStringReferences();
 	}
 }

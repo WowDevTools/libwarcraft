@@ -28,22 +28,22 @@ namespace Warcraft.Core.Reflection.DBC
 	/// <summary>
 	/// Caches reflection information about DBC records.
 	/// </summary>
-	public class FieldInformationCache
+	public class RecordInformationCache
 	{
-		private static readonly Lazy<FieldInformationCache> LazyInstance =
-			new Lazy<FieldInformationCache>(() => new FieldInformationCache());
+		private static readonly Lazy<RecordInformationCache> LazyInstance =
+			new Lazy<RecordInformationCache>(() => new RecordInformationCache());
 
 		/// <summary>
 		/// Gets the singleton instance of the information cache.
 		/// </summary>
-		public static FieldInformationCache Instance => LazyInstance.Value;
+		public static RecordInformationCache Instance => LazyInstance.Value;
 
 		/// <summary>
 		/// The cache dictionary containing the reflection information.
 		/// </summary>
 		private readonly Dictionary<RecordInformationIdentifier, RecordFieldInformation> InformationCache;
 
-		private FieldInformationCache()
+		private RecordInformationCache()
 		{
 			this.InformationCache = new Dictionary<RecordInformationIdentifier, RecordFieldInformation>();
 		}
