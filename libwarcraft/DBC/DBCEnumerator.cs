@@ -1,4 +1,4 @@
-//
+﻿//
 //  DBCEnumerator.cs
 //
 //  Author:
@@ -20,11 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.DBC.Definitions;
 using Warcraft.Core.Extensions;
+using Warcraft.DBC.Definitions;
 
 namespace Warcraft.DBC
 {
@@ -34,9 +35,16 @@ namespace Warcraft.DBC
 	/// <typeparam name="T"></typeparam>
 	public class DBCEnumerator<T> : IEnumerator<T> where T : DBCRecord, new()
 	{
+		/// <summary>
+		/// Raised whenever a new record is read.
+		/// </summary>
+		public event Action<int, T> RecordRead;
+
 		private readonly DBC<T> ParentDatabase;
 		private readonly BinaryReader DatabaseReader;
 		private readonly long StringBlockOffset;
+
+		private int RecordIndex;
 
 		/// <summary>
 		/// Initialize a new <see cref="DBCEnumerator{T}"/> from a given database, its data, and where the string block
@@ -50,6 +58,7 @@ namespace Warcraft.DBC
 			this.ParentDatabase = database;
 			this.StringBlockOffset = stringBlockOffset;
 			this.DatabaseReader = new BinaryReader(new MemoryStream(data));
+			this.RecordIndex = 0;
 
 			// Seek to the start of the record block
 			this.DatabaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
@@ -64,7 +73,24 @@ namespace Warcraft.DBC
 				return false;
 			}
 
-			this.Current = this.DatabaseReader.ReadRecord<T>(this.ParentDatabase.FieldCount, this.ParentDatabase.RecordSize, this.ParentDatabase.Version);
+			if (this.ParentDatabase.HasCachedRecordAtIndex(this.RecordIndex))
+			{
+				this.Current = this.ParentDatabase[this.RecordIndex];
+				this.DatabaseReader.BaseStream.Position += this.ParentDatabase.RecordSize;
+			}
+			else
+			{
+				this.Current = this.DatabaseReader.ReadRecord<T>(this.ParentDatabase.FieldCount, this.ParentDatabase.RecordSize, this.ParentDatabase.Version);
+
+				foreach (var stringReference in this.Current.GetStringReferences())
+				{
+					this.ParentDatabase.ResolveStringReference(stringReference);
+				}
+
+				this.ParentDatabase.CacheRecordAtIndex(this.Current, this.RecordIndex);
+			}
+
+			++this.RecordIndex;
 
 			return this.DatabaseReader.BaseStream.Position != recordBlockEnd;
 		}
@@ -73,29 +99,12 @@ namespace Warcraft.DBC
 		public void Reset()
 		{
 			this.DatabaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
+			this.RecordIndex = 0;
 			this.Current = null;
 		}
 
 		/// <inheritdoc />
-		public T Current
-		{
-			get
-			{
-				if (this.CurrentInternal == null)
-				{
-					return null;
-				}
-
-				foreach (var stringReference in this.CurrentInternal.GetStringReferences())
-				{
-					this.ParentDatabase.ResolveStringReference(stringReference);
-				}
-				return this.CurrentInternal;
-			}
-			private set => this.CurrentInternal = value;
-		}
-
-		private T CurrentInternal;
+		public T Current { get; private set; }
 
 		object IEnumerator.Current => this.Current;
 

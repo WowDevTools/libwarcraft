@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -84,6 +85,11 @@ namespace Warcraft.DBC
 		public readonly Dictionary<long, string> Strings = new Dictionary<long, string>();
 
 		/// <summary>
+		/// The records in the database. Used as a procedural cache.
+		/// </summary>
+		private readonly List<T> Records;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="DBC"/> class.
 		/// </summary>
 		/// <param name="inVersion">In version.</param>
@@ -104,6 +110,14 @@ namespace Warcraft.DBC
 				{
 					this.Strings.Add(databaseReader.BaseStream.Position - this.StringBlockOffset, databaseReader.ReadNullTerminatedString());
 				}
+			}
+
+			this.Records = new List<T>(this.Count);
+
+			// Initialize the record list with null values
+			for (int i = 0; i < this.Count; ++i)
+			{
+				this.Records.Add(null);
 			}
 		}
 
@@ -134,6 +148,32 @@ namespace Warcraft.DBC
 			reference.Value = "";
 		}
 
+		/// <summary>
+		/// Determines whether or not the record at the given index has been cached.
+		/// </summary>
+		/// <param name="index">The index of the record.</param>
+		/// <returns>true if the record has been cached; otherwise, false.</returns>
+		internal bool HasCachedRecordAtIndex(int index)
+		{
+			return this.Records[index] != null;
+		}
+
+		/// <summary>
+		/// Caches the given record at the given index.
+		/// </summary>
+		/// <param name="record">The record to cache.</param>
+		/// <param name="index">The index where to cache the record.</param>
+		/// <exception cref="InvalidOperationException">Thrown if there is already a record cached at the given index.</exception>
+		internal void CacheRecordAtIndex(T record, int index)
+		{
+			if (HasCachedRecordAtIndex(index))
+			{
+				throw new InvalidOperationException("A record was already cached at the given index.");
+			}
+
+			this.Records[index] = record;
+		}
+
 		/*
 			Enumeration implementation
 		*/
@@ -162,6 +202,11 @@ namespace Warcraft.DBC
 		{
 			get
 			{
+				if (HasCachedRecordAtIndex(i))
+				{
+					return this.Records[i];
+				}
+
 				using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(this.DatabaseContents)))
 				{
 					long recordOffset = DBCHeader.GetSize() + this.Header.RecordSize * i;
@@ -173,6 +218,8 @@ namespace Warcraft.DBC
 					{
 						ResolveStringReference(stringReference);
 					}
+
+					this.Records[i] = record;
 
 					return record;
 				}

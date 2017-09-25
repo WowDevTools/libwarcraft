@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using libwarcraft.Tests.Unit.Reflection.DBC.TestData;
 using NUnit.Framework;
 using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
+using Warcraft.DBC.Definitions;
 using static libwarcraft.Tests.Unit.Reflection.DBC.TestData.RecordValues;
 
 namespace libwarcraft.Tests.Integration.DBC.IO
@@ -10,6 +12,33 @@ namespace libwarcraft.Tests.Integration.DBC.IO
 	[TestFixture]
 	public class RecordDeserializationTests
 	{
+		public class Enumeration
+		{
+			[Test]
+			public void CanEnumerateDatabase()
+			{
+				var databaseName = DBCTestHelper.GetDatabaseNameFromRecordType(typeof(AnimationDataRecord));
+				if (!DBCTestHelper.HasDatabaseFile(WarcraftVersion.Classic, databaseName))
+				{
+					Assert.Ignore("Database file not present. Skipping.");
+				}
+
+				var database = DBCTestHelper.LoadDatabase<AnimationDataRecord>(WarcraftVersion.Classic, databaseName);
+
+				try
+				{
+					foreach (var record in database)
+					{
+						Assert.That(record, Is.Not.Null);
+					}
+				}
+				catch (Exception)
+				{
+					Assert.Fail("Exception thrown during full enumeration.");
+				}
+			}
+		}
+
 		public class DeserializeRecord
 		{
 			[Test]
