@@ -59,6 +59,11 @@ namespace Warcraft.Core.Reflection.DBC
 		public Dictionary<PropertyInfo, RecordFieldArrayAttribute> PropertyFieldArrayAttributes { get; }
 
 		/// <summary>
+		/// Gets the record field array element type of a given array property.
+		/// </summary>
+		public Dictionary<PropertyInfo, Type> PropertyFieldArrayElementTypes { get; }
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="RecordFieldInformation"/> class.
 		/// </summary>
 		/// <param name="recordType">The type of record to build the reflection data for.</param>
@@ -79,6 +84,8 @@ namespace Warcraft.Core.Reflection.DBC
 
 			this.PropertyFieldAttributes = new Dictionary<PropertyInfo, RecordFieldAttribute>();
 			this.PropertyFieldArrayAttributes = new Dictionary<PropertyInfo, RecordFieldArrayAttribute>();
+			this.PropertyFieldArrayElementTypes = new Dictionary<PropertyInfo, Type>();
+
 			foreach (var property in this.VersionRelevantProperties)
 			{
 				if (!property.CanWrite)
@@ -92,6 +99,7 @@ namespace Warcraft.Core.Reflection.DBC
 				if (DBCInspector.IsPropertyFieldArray(property))
 				{
 					this.PropertyFieldArrayAttributes.Add(property, DBCInspector.GetVersionRelevantPropertyFieldArrayAttribute(this.Version, property));
+					this.PropertyFieldArrayElementTypes.Add(property, DBCInspector.GetFieldArrayPropertyElementType(property.PropertyType));
 				}
 			}
 		}

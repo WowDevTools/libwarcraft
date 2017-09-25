@@ -56,7 +56,7 @@ namespace Warcraft.Core.Reflection.DBC
 				object propertyValue;
 				if (reflectionInfo.IsPropertyFieldArray(databaseProperty))
 				{
-					var elementType = DBCInspector.GetFieldArrayPropertyElementType(databaseProperty.PropertyType);
+					var elementType = reflectionInfo.PropertyFieldArrayElementTypes[databaseProperty];
 					var arrayAttribute = reflectionInfo.PropertyFieldArrayAttributes[databaseProperty];
 
 					List<object> values = new List<object>();
