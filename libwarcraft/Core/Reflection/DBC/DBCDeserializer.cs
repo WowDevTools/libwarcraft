@@ -62,14 +62,14 @@ namespace Warcraft.Core.Reflection.DBC
 					List<object> values = new List<object>();
 					for (int i = 0; i < arrayAttribute.Count; ++i)
 					{
-						values.Add(ReadPropertyValue(reader, databaseProperty, elementType, version));
+						values.Add(ReadPropertyValue(reader, reflectionInfo, databaseProperty, elementType, version));
 					}
 
 					propertyValue = GetAssignableCollectionObject(values, databaseProperty.PropertyType, elementType);
 				}
 				else
 				{
-					propertyValue = ReadPropertyValue(reader, databaseProperty, databaseProperty.PropertyType, version);
+					propertyValue = ReadPropertyValue(reader, reflectionInfo, databaseProperty, databaseProperty.PropertyType, version);
 				}
 
 				databaseProperty.SetValue(record, propertyValue);
@@ -123,13 +123,13 @@ namespace Warcraft.Core.Reflection.DBC
 		/// <param name="elementType">The element type of the field. This is primarily used for reading arrays.</param>
 		/// <param name="version">The version of the record.</param>
 		/// <returns>The value that should be assigned to the property.</returns>
-		public static object ReadPropertyValue(BinaryReader reader, PropertyInfo property, Type elementType, WarcraftVersion version)
+		public static object ReadPropertyValue(BinaryReader reader, RecordFieldInformation recordInfo, PropertyInfo property, Type elementType, WarcraftVersion version)
 		{
 			object fieldValue;
 			if (DBCInspector.IsPropertyForeignKey(property))
 			{
 				// Get the foreign key information
-				var foreignKeyAttribute = DBCInspector.GetForeignKeyInfo(property);
+				var foreignKeyAttribute = recordInfo.PropertyForeignKeyAttributes[property];
 
 				// Get the inner type
 				var keyType = GetUnderlyingStoredPrimitiveType(elementType);

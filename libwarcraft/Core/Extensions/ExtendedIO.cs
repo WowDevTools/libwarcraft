@@ -571,14 +571,7 @@ namespace Warcraft.Core.Extensions
 				throw new ArgumentException($"The provided record type is not valid for this database file. Type: {typeof(T).Name}, Version: {version}. Invalid record size: DBC expected {recordSize}, actual {record.RecordSize}");
 			}
 
-			if (typeof(T).GetCustomAttributes().Any(a => a is DatabaseRecordAttribute))
-			{
-				DBCDeserializer.DeserializeRecord(reader, record, version);
-			}
-			else
-			{
-				throw new ArgumentException($"The record type {typeof(T).Name} was not decorated with the \"DatabaseRecord\" attribute.");
-			}
+			DBCDeserializer.DeserializeRecord(reader, record, version);
 
 			return record;
 		}

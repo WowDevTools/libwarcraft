@@ -64,6 +64,11 @@ namespace Warcraft.Core.Reflection.DBC
 		public Dictionary<PropertyInfo, Type> PropertyFieldArrayElementTypes { get; }
 
 		/// <summary>
+		/// Gets the foreign key information of a given property.
+		/// </summary>
+		public Dictionary<PropertyInfo, ForeignKeyInfoAttribute> PropertyForeignKeyAttributes { get; }
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="RecordFieldInformation"/> class.
 		/// </summary>
 		/// <param name="recordType">The type of record to build the reflection data for.</param>
@@ -76,6 +81,11 @@ namespace Warcraft.Core.Reflection.DBC
 				throw new ArgumentException("The specified type was not a record type.", nameof(recordType));
 			}
 
+			if (!recordType.GetCustomAttributes().Any(a => a is DatabaseRecordAttribute))
+			{
+				throw new ArgumentException($"The record type {recordType.Name} was not decorated with the \"DatabaseRecord\" attribute.");
+			}
+
 			this.Type = recordType;
 			this.Version = version;
 			var orderer = new FieldOrderer(this.Version, DBCInspector.GetVersionRelevantProperties(this.Version, this.Type).ToList());
@@ -85,6 +95,7 @@ namespace Warcraft.Core.Reflection.DBC
 			this.PropertyFieldAttributes = new Dictionary<PropertyInfo, RecordFieldAttribute>();
 			this.PropertyFieldArrayAttributes = new Dictionary<PropertyInfo, RecordFieldArrayAttribute>();
 			this.PropertyFieldArrayElementTypes = new Dictionary<PropertyInfo, Type>();
+			this.PropertyForeignKeyAttributes = new Dictionary<PropertyInfo, ForeignKeyInfoAttribute>();
 
 			foreach (var property in this.VersionRelevantProperties)
 			{
@@ -100,6 +111,11 @@ namespace Warcraft.Core.Reflection.DBC
 				{
 					this.PropertyFieldArrayAttributes.Add(property, DBCInspector.GetVersionRelevantPropertyFieldArrayAttribute(this.Version, property));
 					this.PropertyFieldArrayElementTypes.Add(property, DBCInspector.GetFieldArrayPropertyElementType(property.PropertyType));
+				}
+
+				if (DBCInspector.IsPropertyForeignKey(property))
+				{
+					this.PropertyForeignKeyAttributes.Add(property, DBCInspector.GetForeignKeyInfo(property));
 				}
 			}
 		}
