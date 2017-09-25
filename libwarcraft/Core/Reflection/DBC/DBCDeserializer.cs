@@ -49,23 +49,15 @@ namespace Warcraft.Core.Reflection.DBC
 		/// <exception cref="ArgumentException">Thrown if the record contains field properties without setters.</exception>
 		public static void DeserializeRecord<T>(BinaryReader reader, T record, WarcraftVersion version)
 		{
-			var databaseProperties = DBCInspector.GetVersionRelevantProperties(version, typeof(T));
-			var orderer = new FieldOrderer(version, databaseProperties.ToList());
+			var reflectionInfo = FieldInformationCache.Instance.GetRecordInformation(typeof(T), version);
 
-			var orderedProperties = orderer.ReorderProperties();
-
-			foreach (var databaseProperty in orderedProperties)
+			foreach (var databaseProperty in reflectionInfo.VersionRelevantProperties)
 			{
-				if (!databaseProperty.CanWrite)
-				{
-					throw new ArgumentException("Property setter not found. Record properties must have a setter.");
-				}
-
 				object propertyValue;
-				if (DBCInspector.IsPropertyFieldArray(databaseProperty))
+				if (reflectionInfo.IsPropertyFieldArray(databaseProperty))
 				{
 					var elementType = DBCInspector.GetFieldArrayPropertyElementType(databaseProperty.PropertyType);
-					var arrayAttribute = DBCInspector.GetVersionRelevantPropertyFieldArrayAttribute(version, databaseProperty);
+					var arrayAttribute = reflectionInfo.PropertyFieldArrayAttributes[databaseProperty];
 
 					List<object> values = new List<object>();
 					for (int i = 0; i < arrayAttribute.Count; ++i)
