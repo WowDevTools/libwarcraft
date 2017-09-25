@@ -35,11 +35,6 @@ namespace Warcraft.DBC
 	/// <typeparam name="T"></typeparam>
 	public class DBCEnumerator<T> : IEnumerator<T> where T : DBCRecord, new()
 	{
-		/// <summary>
-		/// Raised whenever a new record is read.
-		/// </summary>
-		public event Action<int, T> RecordRead;
-
 		private readonly DBC<T> ParentDatabase;
 		private readonly BinaryReader DatabaseReader;
 		private readonly long StringBlockOffset;
