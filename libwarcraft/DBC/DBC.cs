@@ -34,7 +34,7 @@ namespace Warcraft.DBC
 	/// <summary>
 	/// DBC file handler. Parses and presents DBC files in a statically typed, easy to use fashion.
 	/// </summary>
-	public class DBC<T> : IDBC, IReadOnlyCollection<T> where T : DBCRecord, new()
+	public class DBC<T> : IDBC, IReadOnlyList<T> where T : DBCRecord, new()
 	{
 		/// <summary>
 		/// The header of the database file. Describes the sizes and field counts of the records in the database.
@@ -138,20 +138,16 @@ namespace Warcraft.DBC
 			Enumeration implementation
 		*/
 
-		/// <summary>
-		/// Gets the number of held records.
-		/// </summary>
+		/// <inheritdoc />
 		public int Count => this.RecordCount;
 
+		/// <inheritdoc />
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
 		}
 
-		/// <summary>
-		/// Gets the enumerator for this collection.
-		/// </summary>
-		/// <returns></returns>
+		/// <inheritdoc />
 		public IEnumerator<T> GetEnumerator()
 		{
 			return new DBCEnumerator<T>(this, this.DatabaseContents, this.StringBlockOffset);
@@ -161,10 +157,7 @@ namespace Warcraft.DBC
 			Indexing implementation
 		*/
 
-		/// <summary>
-		/// Gets the record at the given index.
-		/// </summary>
-		/// <param name="i"></param>
+		/// <inheritdoc />
 		public T this[int i]
 		{
 			get

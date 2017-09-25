@@ -41,11 +41,11 @@ namespace Warcraft.Core.Reflection.DBC
 		/// <summary>
 		/// The cache dictionary containing the reflection information.
 		/// </summary>
-		private readonly Dictionary<(Type Type, WarcraftVersion Version), RecordFieldInformation> InformationCache;
+		private readonly Dictionary<RecordInformationIdentifier, RecordFieldInformation> InformationCache;
 
 		private FieldInformationCache()
 		{
-			this.InformationCache = new Dictionary<(Type Type, WarcraftVersion Version), RecordFieldInformation>();
+			this.InformationCache = new Dictionary<RecordInformationIdentifier, RecordFieldInformation>();
 		}
 
 		/// <summary>
@@ -57,7 +57,7 @@ namespace Warcraft.Core.Reflection.DBC
 		/// <returns>A <see cref="RecordFieldInformation"/> relevant for the given version.</returns>
 		public RecordFieldInformation GetRecordInformation(Type recordType, WarcraftVersion version)
 		{
-			var infoKey = (recordType, version);
+			var infoKey = new RecordInformationIdentifier(recordType, version);
 			if (!this.InformationCache.ContainsKey(infoKey))
 			{
 				var recordInfo = new RecordFieldInformation(recordType, version);
