@@ -211,10 +211,7 @@ namespace Warcraft.MPQ
 		/// <returns><c>true</c> if this archive has file attributes; otherwise, <c>false</c>.</returns>
 		public bool HasFileAttributes()
 		{
-			if (this.IsDisposed)
-			{
-				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
-			}
+			ThrowIfDisposed();
 
 			return ContainsFile(ExtendedAttributes.InternalFileName);
 		}
@@ -224,6 +221,8 @@ namespace Warcraft.MPQ
 		/// </summary>
 		public ExtendedAttributes GetFileAttributes()
 		{
+			ThrowIfDisposed();
+
 			if (this.FileAttributes != null)
 			{
 				return this.FileAttributes;
@@ -244,14 +243,9 @@ namespace Warcraft.MPQ
 		/// <returns>The weak signature.</returns>
 		public WeakPackageSignature GetWeakSignature()
 		{
-			if (ContainsFile(WeakPackageSignature.InternalFilename))
-			{
-				return new WeakPackageSignature(ExtractFile(WeakPackageSignature.InternalFilename));
-			}
-			else
-			{
-				return null;
-			}
+			ThrowIfDisposed();
+
+			return new WeakPackageSignature(ExtractFile(WeakPackageSignature.InternalFilename));
 		}
 
 		/// <summary>
@@ -260,10 +254,7 @@ namespace Warcraft.MPQ
 		/// <returns><c>true</c> if this archive has a listfile; otherwise, <c>false</c>.</returns>
 		public bool HasFileList()
 		{
-			if (this.IsDisposed)
-			{
-				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
-			}
+			ThrowIfDisposed();
 
 			return ContainsFile("(listfile)") || this.ExternalListfile.Count > 0;
 		}
@@ -275,38 +266,30 @@ namespace Warcraft.MPQ
 		/// <returns>The listfile.</returns>
 		public IEnumerable<string> GetFileList()
 		{
-			if (this.IsDisposed)
-			{
-				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
-			}
+			ThrowIfDisposed();
 
 			if (this.ExternalListfile.Count > 0)
 			{
 				return GetExternalFileList();
 			}
-			else
-			{
-				return GetInternalFileList();
-			}
+
+			return GetInternalFileList();
 		}
 
 		/// <summary>
-		/// Gets the internal file list. If no listfile is stored in the archive, this may
-		/// return null.
+		/// Gets the internal file list. If no listfile is stored in the archive, this may not return anything.
 		/// </summary>
 		/// <returns>The internal file list.</returns>
 		public IEnumerable<string> GetInternalFileList()
 		{
-			if (this.IsDisposed)
-			{
-				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
-			}
+			ThrowIfDisposed();
 
-			byte[] listfileBytes = ExtractFile("(listfile)");
-			if (listfileBytes == null)
+			if (!ContainsFile("(listfile)"))
 			{
 				yield break;
 			}
+
+			byte[] listfileBytes = ExtractFile("(listfile)");
 
 			using (MemoryStream listfileStream = new MemoryStream(listfileBytes))
 			{
@@ -328,10 +311,7 @@ namespace Warcraft.MPQ
 		/// <returns>The external file list.</returns>
 		public IEnumerable<string> GetExternalFileList()
 		{
-			if (this.IsDisposed)
-			{
-				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
-			}
+			ThrowIfDisposed();
 
 			return this.ExternalListfile;
 		}
@@ -342,10 +322,7 @@ namespace Warcraft.MPQ
 		/// <param name="inExternalListfile">In external listfile.</param>
 		public void SetFileList(List<string> inExternalListfile)
 		{
-			if (this.IsDisposed)
-			{
-				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
-			}
+			ThrowIfDisposed();
 
 			this.ExternalListfile = inExternalListfile;
 		}
@@ -356,90 +333,73 @@ namespace Warcraft.MPQ
 		/// </summary>
 		public void ResetExternalFileList()
 		{
-			if (this.IsDisposed)
-			{
-				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
-			}
+			ThrowIfDisposed();
 
 			this.ExternalListfile.Clear();
 		}
 
-		/// <summary>
-		/// Checks if the specified file path exists in the archive.
-		/// </summary>
-		/// <returns><c>true</c>, if the file exists, <c>false</c> otherwise.</returns>
-		/// <param name="filePath">File path.</param>
+		/// <inheritdoc />
 		public bool ContainsFile(string filePath)
 		{
-			if (this.IsDisposed)
+			ThrowIfDisposed();
+
+			try
 			{
-				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
+				this.ArchiveHashTable.FindEntry(filePath.ToUpperInvariant());
+			}
+			catch (FileNotFoundException)
+			{
+				return false;
 			}
 
-			HashTableEntry fileHashEntry = this.ArchiveHashTable.FindEntry(filePath.ToUpperInvariant());
-			return fileHashEntry != null;
+			return true;
 		}
 
-		/// <summary>
-		/// Gets the file info of the provided path.
-		/// </summary>
-		/// <returns>The file info, or null if the file doesn't exist in the archive.</returns>
-		/// <param name="filePath">File path.</param>
+		/// <inheritdoc />
 		public MPQFileInfo GetFileInfo(string filePath)
 		{
-			if (this.IsDisposed)
+			ThrowIfDisposed();
+
+			if (!ContainsFile(filePath))
 			{
-				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
+				throw new FileNotFoundException("The given file was not present in the archive.", filePath);
 			}
 
-			if (ContainsFile(filePath))
-			{
-				HashTableEntry hashEntry = this.ArchiveHashTable.FindEntry(filePath);
-				BlockTableEntry blockEntry = this.ArchiveBlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
+			HashTableEntry hashEntry = this.ArchiveHashTable.FindEntry(filePath);
+			BlockTableEntry blockEntry = this.ArchiveBlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
 
-				if (HasFileAttributes())
-				{
-					return new MPQFileInfo(filePath, hashEntry, blockEntry);
-				}
-				else
-				{
-					return new MPQFileInfo(filePath, hashEntry, blockEntry, this.FileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]);
-				}
-			}
-			else
+			if (HasFileAttributes())
 			{
-				return null;
+				return new MPQFileInfo(filePath, hashEntry, blockEntry);
 			}
+
+			return new MPQFileInfo(filePath, hashEntry, blockEntry, this.FileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]);
 		}
 
-		// TODO: Filter files based on language and platform
-		/// <summary>
-		/// Extract the file at <paramref name="filePath"/> from the archive.
-		/// </summary>
-		/// <returns>The file as a byte array, or null if the file could not be found.</returns>
-		/// <param name="filePath">Path to the file in the archive.</param>
+		/// <inheritdoc />
 		public byte[] ExtractFile(string filePath)
 		{
-			if (this.IsDisposed)
-			{
-				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
-			}
+			ThrowIfDisposed();
 
 			// Reset all positions to be safe
 			this.ArchiveReader.BaseStream.Position = 0;
 
-			HashTableEntry fileHashEntry = this.ArchiveHashTable.FindEntry(filePath);
-			if (fileHashEntry == null)
+			HashTableEntry fileHashEntry;
+			try
 			{
-				return null;
+				fileHashEntry = this.ArchiveHashTable.FindEntry(filePath);
+			}
+			catch (FileNotFoundException fex)
+			{
+				throw new FileNotFoundException("No file found at the given path.", filePath, fex);
 			}
 
 			BlockTableEntry fileBlockEntry = this.ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
 
-			// Drop out if the file is not actually a file
-			if (!fileBlockEntry.HasData())
+			// Drop out if the file has been deleted
+			if (fileBlockEntry.IsDeleted())
 			{
-				return null;
+				throw new FileDeletedException("The given file is deleted.", filePath);
 			}
 
 			// Seek to the beginning of the file's sectors
@@ -766,13 +726,15 @@ namespace Warcraft.MPQ
 			return (uint)(512 * Math.Pow(2, this.Header.GetSectorSizeExponent()));
 		}
 
-		/// <summary>
-		/// Releases all resource used by the <see cref="Warcraft.MPQ.MPQ"/> object.
-		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Warcraft.MPQ.MPQ"/>. The <see cref="Dispose"/>
-		/// method leaves the <see cref="Warcraft.MPQ.MPQ"/> in an unusable state. After calling <see cref="Dispose"/>, you must
-		/// release all references to the <see cref="Warcraft.MPQ.MPQ"/> so the garbage collector can reclaim the memory that
-		/// the <see cref="Warcraft.MPQ.MPQ"/> was occupying.</remarks>
+		private void ThrowIfDisposed()
+		{
+			if (this.IsDisposed)
+			{
+				throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
+			}
+		}
+
+		/// <inheritdoc />
 		public void Dispose()
 		{
 			this.Header = null;

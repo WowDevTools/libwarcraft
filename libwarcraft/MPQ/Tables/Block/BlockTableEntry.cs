@@ -180,6 +180,15 @@ namespace Warcraft.MPQ.Tables.Block
 		}
 
 		/// <summary>
+		/// Determines whether or not this block entry is pointing to a deleted file.
+		/// </summary>
+		/// <returns></returns>
+		public bool IsDeleted()
+		{
+			return this.Flags.HasFlag(BlockFlags.IsDeletionMarker);
+		}
+
+		/// <summary>
 		/// Determines whether or not the file data is stored as a single unit. If not, it's in sectors.
 		/// </summary>
 		/// <returns><value>true</value> if the block is stored as a single unit; otherwise, <value>false</value>.</returns>

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -76,7 +77,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 				return this.GroupNames[internalNameOffset];
 			}
 
-			return null;
+			throw new ArgumentException("Group name not found.", nameof(modelGroup));
 		}
 
 		public string GetInternalDescriptiveGroupName(ModelGroup modelGroup)
@@ -87,7 +88,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 				return this.GroupNames[internalDescriptiveNameOffset];
 			}
 
-			return null;
+			throw new ArgumentException("Descriptive group name not found.", nameof(modelGroup));
 		}
 
 		public byte[] Serialize()

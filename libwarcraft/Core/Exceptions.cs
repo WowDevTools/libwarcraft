@@ -24,6 +24,57 @@ using System;
 
 namespace Warcraft.Core
 {
+	public class FileDeletedException : Exception
+	{
+		public string FilePath { get; }
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="FileDeletedException"/> class, along with a specified
+		/// message.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		public FileDeletedException(string message)
+			: base(message)
+		{
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="FileDeletedException"/> class, along with a specified
+		/// message and file path.
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="filePath"></param>
+		public FileDeletedException(string message, string filePath)
+			: base(message)
+		{
+			this.FilePath = filePath;
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="FileDeletedException"/> class, along with a specified
+		/// message and inner exception which caused this exception.
+		/// </summary>
+		/// <param name="message">The message included in the exception.</param>
+		/// <param name="innerException">The exception which caused this exception.</param>
+		public FileDeletedException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="FileDeletedException"/> class, along with a specified
+		/// message, file path, and inner exception which caused this exception.
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="filePath"></param>
+		/// <param name="innerException"></param>
+		public FileDeletedException(string message, string filePath, Exception innerException)
+			: base(message, innerException)
+		{
+			this.FilePath = filePath;
+		}
+	}
+
 	/// <summary>
 	/// This exception thrown when an invalid or unknown chunk signature is found during parsing of binary data which
 	/// is expected to be in valid RIFF format.

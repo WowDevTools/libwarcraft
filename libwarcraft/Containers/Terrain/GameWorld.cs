@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using Warcraft.WDT;
 using Warcraft.ADT;
@@ -73,7 +74,7 @@ namespace Warcraft.Containers.Terrain
 
 			if (!this.Package.ContainsFile(tilePath))
 			{
-				return null;
+				throw new ArgumentException("No tile found for the given coordinates.");
 			}
 
 			byte[] terrainTileData = this.Package.ExtractFile(tilePath);

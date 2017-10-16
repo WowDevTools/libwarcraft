@@ -104,7 +104,7 @@ namespace Warcraft.MPQ.Tables.Hash
 			}
 			else
 			{
-				return null;
+				throw new FileNotFoundException($"No file has ever existed at the home index {entryHomeIndex}.");
 			}
 
 			// If that file doesn't match (but has existed, or is occupied, let's keep looking down the table.
