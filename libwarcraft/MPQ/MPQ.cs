@@ -309,6 +309,7 @@ namespace Warcraft.MPQ
 		/// return an empty list.
 		/// </summary>
 		/// <returns>The external file list.</returns>
+		/// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
 		public IEnumerable<string> GetExternalFileList()
 		{
 			ThrowIfDisposed();
@@ -320,6 +321,7 @@ namespace Warcraft.MPQ
 		/// Sets the file list to the provided listfile.
 		/// </summary>
 		/// <param name="inExternalListfile">In external listfile.</param>
+		/// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
 		public void SetFileList(List<string> inExternalListfile)
 		{
 			ThrowIfDisposed();
@@ -331,6 +333,7 @@ namespace Warcraft.MPQ
 		/// Resets the external file list, clearing it of any entries. The internal list file (if there is one)
 		/// will be used instead.
 		/// </summary>
+		/// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
 		public void ResetExternalFileList()
 		{
 			ThrowIfDisposed();
@@ -339,6 +342,7 @@ namespace Warcraft.MPQ
 		}
 
 		/// <inheritdoc />
+		/// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
 		public bool ContainsFile(string filePath)
 		{
 			ThrowIfDisposed();
@@ -356,6 +360,8 @@ namespace Warcraft.MPQ
 		}
 
 		/// <inheritdoc />
+		/// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
+		/// <exception cref="FileNotFoundException">Thrown if the archive does not contain a file at the given path.</exception>
 		public MPQFileInfo GetFileInfo(string filePath)
 		{
 			ThrowIfDisposed();
@@ -377,6 +383,9 @@ namespace Warcraft.MPQ
 		}
 
 		/// <inheritdoc />
+		/// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
+		/// <exception cref="FileNotFoundException">Thrown if the archive does not contain a file at the given path.</exception>
+		/// <exception cref="FileDeletedException">Thrown if the file is deleted in the archive.</exception>
 		public byte[] ExtractFile(string filePath)
 		{
 			ThrowIfDisposed();
