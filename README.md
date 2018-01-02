@@ -2,6 +2,8 @@
 [![DoxygenDoc](https://img.shields.io/badge/Docs-Doxygen-red.svg)](http://libwarcraftdocs.wowdev.info/)
 [![Bountysource](https://www.bountysource.com/badge/tracker?tracker_id=28623364)](https://www.bountysource.com/trackers/28623364-wowdevtools-libwarcraft?utm_source=44433103&utm_medium=shield&utm_campaign=TRACKER_BADGE)
 
+<a href='https://ko-fi.com/H2H176VD' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
 ## Build Status
 
 CI | Build | Defects
