@@ -9,7 +9,7 @@
   <PropertyGroup>
     <Title>libwarcraft</Title>
     <Authors>Jarl Gullberg</Authors>
-    <Version>2.7.0</Version>
+    <Version>2.8.0</Version>
     <Description>Managed library for interacting with binary file types made by Blizzard Entertainment.</Description>
     <Copyright>Copyright Jarl Gullberg 2017</Copyright>
   </PropertyGroup>
@@ -25,10 +25,10 @@
     <RepositoryUrl>https://github.com/WowDevTools/libwarcraft</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ImageSharp" Version="1.0.0-alpha9-00182" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.4.0" />
-    <PackageReference Include="SharpCompress" Version="0.18.0" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.4.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="SharpCompress" Version="0.22.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.config" />

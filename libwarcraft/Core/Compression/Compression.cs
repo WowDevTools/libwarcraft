@@ -209,7 +209,7 @@ namespace Warcraft.Core.Compression
 		{
 			using (MemoryStream ms = new MemoryStream(inData))
 			{
-				using (BZip2Stream input = new BZip2Stream(ms, CompressionMode.Decompress))
+				using (BZip2Stream input = new BZip2Stream(ms, CompressionMode.Decompress, false))
 				{
 					using (MemoryStream decompressedData = new MemoryStream())
 					{

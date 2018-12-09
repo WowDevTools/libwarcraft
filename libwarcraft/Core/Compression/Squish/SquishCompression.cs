@@ -1,6 +1,7 @@
 using System;
 using System.IO;
-using ImageSharp;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Warcraft.Core.Compression.Squish
 {

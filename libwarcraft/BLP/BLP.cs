@@ -24,8 +24,11 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-using ImageSharp;
-using ImageSharp.Processing;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Advanced;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Processing.Processors.Transforms;
 using SixLabors.Primitives;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Compression.Squish;
@@ -482,7 +485,7 @@ namespace Warcraft.BLP
 
 					using (MemoryStream ms = new MemoryStream(jpegImage))
 					{
-						map = Image.Load<Rgba32>(ms).Invert();
+						map = Image.Load<Rgba32>(ms).Clone(cx => cx.Invert());
 					}
 					break;
 				}
@@ -728,7 +731,7 @@ namespace Warcraft.BLP
 				Size = new Size(imageHeight, imageWidth),
 			};
 
-			Image<Rgba32> resizedImage = inImage.Resize(resizeOptions);
+			Image<Rgba32> resizedImage = inImage.Clone(cx => cx.Resize(resizeOptions));
 			return resizedImage;
 		}
 
@@ -962,11 +965,13 @@ namespace Warcraft.BLP
 		{
 			List<Rgba32> knownColours = new List<Rgba32>();
 
-			using (Image<Rgba32> quantizedImage = inImage.Quantize())
+			using (Image<Rgba32> quantizedImage = inImage.Clone(cx => cx.Quantize()))
 			{
-				for (int i = 0; i < quantizedImage.Pixels.Length; ++i)
+				var pixels = quantizedImage.GetPixelSpan();
+
+				for (int i = 0; i < pixels.Length; ++i)
 				{
-					Rgba32 pixelColour = quantizedImage.Pixels[i];
+					Rgba32 pixelColour = pixels[i];
 					if (knownColours.Contains(pixelColour))
 					{
 						continue;
