@@ -1,6 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "metadata", ".\", "{F1A57014-71CE-4032-A652-01B7E35E14DB}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		stylecop.json = stylecop.json
+		stylecop.ruleset = stylecop.ruleset
+	EndProjectSection
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", ".\props", "{47E747E8-1D9C-447A-BBA8-EFA5E38E948C}"
+	ProjectSection(SolutionItems) = preProject
+		props\common.props = props\common.props
+		props\jetbrains.props = props\jetbrains.props
+		props\nuget-common.props = props\nuget-common.props
+		props\netfx-mono.props = props\netfx-mono.props
+		props\stylecop.props = props\stylecop.props
+	EndProjectSection
+EndProject
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libwarcraft", "libwarcraft\libwarcraft.csproj", "{DA06A44E-A67B-46C7-B07D-E90AEBED0502}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libwarcraft.Tests", "libwarcraft.Tests\libwarcraft.Tests.csproj", "{268F010D-F38E-45B3-A4BC-DF986841D2FA}"

@@ -978,9 +978,10 @@ namespace Warcraft.BLP
 					}
 
 					knownColours.Add(pixelColour);
-					yield return pixelColour;
 				}
 			}
+
+			return knownColours;
 		}
 
 		/// <summary>
