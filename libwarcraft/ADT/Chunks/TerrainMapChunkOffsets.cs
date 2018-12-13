@@ -67,7 +67,7 @@ namespace Warcraft.ADT.Chunks
                             AsynchronousLoadingID = br.ReadInt32()
                         };
 
-                        this.Entries.Add(entry);
+                        Entries.Add(entry);
                     }
                 }
             }

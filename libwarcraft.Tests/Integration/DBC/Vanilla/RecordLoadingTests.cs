@@ -9,7 +9,7 @@ namespace libwarcraft.Tests.Integration.DBC.Vanilla
         [SetUp]
         public override void Setup()
         {
-            this.Version = WarcraftVersion.Classic;
+            Version = WarcraftVersion.Classic;
         }
     }
 }

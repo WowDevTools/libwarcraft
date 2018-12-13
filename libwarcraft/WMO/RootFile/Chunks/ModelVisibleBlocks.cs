@@ -48,7 +48,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int visibleBlockCount = inData.Length / VisibleBlock.GetSize();
                     for (int i = 0; i < visibleBlockCount; ++i)
                     {
-                        this.VisibleBlocks.Add(new VisibleBlock(br.ReadBytes(VisibleBlock.GetSize())));
+                        VisibleBlocks.Add(new VisibleBlock(br.ReadBytes(VisibleBlock.GetSize())));
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (VisibleBlock visibleBlock in this.VisibleBlocks)
+                    foreach (VisibleBlock visibleBlock in VisibleBlocks)
                     {
                         bw.Write(visibleBlock.Serialize());
                     }
@@ -87,8 +87,8 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.FirstVertexIndex = br.ReadUInt16();
-                    this.VertexCount = br.ReadUInt16();
+                    FirstVertexIndex = br.ReadUInt16();
+                    VertexCount = br.ReadUInt16();
                 }
             }
         }
@@ -104,8 +104,8 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.FirstVertexIndex);
-                    bw.Write(this.VertexCount);
+                    bw.Write(FirstVertexIndex);
+                    bw.Write(VertexCount);
                 }
 
                 return ms.ToArray();

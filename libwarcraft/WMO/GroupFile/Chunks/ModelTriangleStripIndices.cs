@@ -67,7 +67,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.TriangleStripIndices.Add(br.ReadUInt16());
+                        TriangleStripIndices.Add(br.ReadUInt16());
                     }
                 }
             }
@@ -91,7 +91,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (ushort triangleStripIndex in this.TriangleStripIndices)
+                    foreach (ushort triangleStripIndex in TriangleStripIndices)
                     {
                         bw.Write(triangleStripIndex);
                     }

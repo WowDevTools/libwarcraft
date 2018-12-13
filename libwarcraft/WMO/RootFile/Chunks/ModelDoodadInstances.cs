@@ -48,7 +48,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int instanceCount = inData.Length / DoodadInstance.GetSize();
                     for (int i = 0; i < instanceCount; ++i)
                     {
-                        this.DoodadInstances.Add(new DoodadInstance(br.ReadBytes(DoodadInstance.GetSize())));
+                        DoodadInstances.Add(new DoodadInstance(br.ReadBytes(DoodadInstance.GetSize())));
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (DoodadInstance doodadInstance in this.DoodadInstances)
+                    foreach (DoodadInstance doodadInstance in DoodadInstances)
                     {
                         bw.Write(doodadInstance.Serialize());
                     }

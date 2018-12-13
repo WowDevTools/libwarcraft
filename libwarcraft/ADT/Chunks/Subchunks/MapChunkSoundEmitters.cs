@@ -42,7 +42,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
         public void LoadBinaryData(byte[] inData)
         {
-            this.Data = inData;
+            Data = inData;
         }
 
         public string GetSignature()

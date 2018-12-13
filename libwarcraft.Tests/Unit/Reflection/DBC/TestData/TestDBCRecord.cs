@@ -18,7 +18,7 @@ namespace libwarcraft.Tests.Unit.Reflection.DBC.TestData
         public uint TestAddedAndRemovedField { get; set; }
 
         [RecordField(WarcraftVersion.Classic)]
-        [ForeignKeyInfo(DatabaseName.AnimationData, nameof(AnimationDataRecord.ID))]
+        [ForeignKeyInfo(DatabaseName.AnimationData, nameof(ID))]
         public ForeignKey<uint> TestForeignKeyField { get; set; }
 
         [RecordField(WarcraftVersion.Wrath)]

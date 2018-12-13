@@ -53,32 +53,32 @@ namespace Warcraft.MDX.Visual.FX
 
         public MDXRibbonEmitter(BinaryReader br, WarcraftVersion version)
         {
-            this.RibbonID = br.ReadUInt32();
-            this.BoneIndex = br.ReadUInt32();
-            this.RelativePosition = br.ReadVector3();
+            RibbonID = br.ReadUInt32();
+            BoneIndex = br.ReadUInt32();
+            RelativePosition = br.ReadVector3();
 
-            this.Textures = br.ReadMDXArray<ushort>();
-            this.Materials = br.ReadMDXArray<ushort>();
+            Textures = br.ReadMDXArray<ushort>();
+            Materials = br.ReadMDXArray<ushort>();
 
-            this.Colour = br.ReadMDXTrack<RGB>(version);
-            this.Alpha = br.ReadMDXTrack<short>(version);
-            this.HeightAbove = br.ReadMDXTrack<float>(version);
-            this.HeightBelow = br.ReadMDXTrack<float>(version);
+            Colour = br.ReadMDXTrack<RGB>(version);
+            Alpha = br.ReadMDXTrack<short>(version);
+            HeightAbove = br.ReadMDXTrack<float>(version);
+            HeightBelow = br.ReadMDXTrack<float>(version);
 
-            this.EdgesPerSecond = br.ReadSingle();
-            this.EdgeLifetime = br.ReadSingle();
-            this.Gravity = br.ReadSingle();
+            EdgesPerSecond = br.ReadSingle();
+            EdgeLifetime = br.ReadSingle();
+            Gravity = br.ReadSingle();
 
-            this.TextureTileX = br.ReadUInt16();
-            this.TextureTileY = br.ReadUInt16();
+            TextureTileX = br.ReadUInt16();
+            TextureTileY = br.ReadUInt16();
 
-            this.TextureSlot = br.ReadMDXTrack<ushort>(version);
-            this.Visibility = br.ReadMDXTrack<bool>(version);
+            TextureSlot = br.ReadMDXTrack<ushort>(version);
+            Visibility = br.ReadMDXTrack<bool>(version);
 
             if (version >= WarcraftVersion.Wrath)
             {
-                this.PriorityPlane = br.ReadInt16();
-                this.Unknown = br.ReadInt16();
+                PriorityPlane = br.ReadInt16();
+                Unknown = br.ReadInt16();
             }
         }
     }

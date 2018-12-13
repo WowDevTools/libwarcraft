@@ -105,23 +105,23 @@ namespace Warcraft.ADT.Chunks
                 using (BinaryReader br = new BinaryReader(ms))
                 {
                     //read values
-                    this.Flags = (TerrainHeaderFlags)br.ReadInt32();
+                    Flags = (TerrainHeaderFlags)br.ReadInt32();
 
-                    this.MapChunkOffsetsOffset = br.ReadInt32();
-                    this.TexturesOffset = br.ReadInt32();
+                    MapChunkOffsetsOffset = br.ReadInt32();
+                    TexturesOffset = br.ReadInt32();
 
-                    this.ModelsOffset = br.ReadInt32();
-                    this.ModelIndicesOffset = br.ReadInt32();
+                    ModelsOffset = br.ReadInt32();
+                    ModelIndicesOffset = br.ReadInt32();
 
-                    this.WorldModelObjectsOffset = br.ReadInt32();
-                    this.WorldModelObjectIndicesOffset = br.ReadInt32();
+                    WorldModelObjectsOffset = br.ReadInt32();
+                    WorldModelObjectIndicesOffset = br.ReadInt32();
 
-                    this.ModelPlacementInformationOffset = br.ReadInt32();
-                    this.WorldModelObjectPlacementInformationOffset = br.ReadInt32();
+                    ModelPlacementInformationOffset = br.ReadInt32();
+                    WorldModelObjectPlacementInformationOffset = br.ReadInt32();
 
-                    this.BoundingBoxOffset = br.ReadInt32();
-                    this.LiquidOffset = br.ReadInt32();
-                    this.TextureFlagsOffset = br.ReadInt32();
+                    BoundingBoxOffset = br.ReadInt32();
+                    LiquidOffset = br.ReadInt32();
+                    TextureFlagsOffset = br.ReadInt32();
                 }
             }
         }

@@ -42,22 +42,22 @@ namespace Warcraft.DBC
         /// <summary>
         /// The number of held records.
         /// </summary>
-        public int RecordCount => (int)this.Header.RecordCount;
+        public int RecordCount => (int)Header.RecordCount;
 
         /// <summary>
         /// The number of fields in each record.
         /// </summary>
-        public int FieldCount => (int)this.Header.FieldCount;
+        public int FieldCount => (int)Header.FieldCount;
 
         /// <summary>
         /// The absolute size of each record.
         /// </summary>
-        public int RecordSize => (int)this.Header.RecordSize;
+        public int RecordSize => (int)Header.RecordSize;
 
         /// <summary>
         /// The absolute size of the string block.
         /// </summary>
-        public int StringBlockSize => (int)this.Header.StringBlockSize;
+        public int StringBlockSize => (int)Header.StringBlockSize;
 
         /// <summary>
         /// The game version this database is valid for. This affects how the records are parsed, and is vital for
@@ -93,28 +93,28 @@ namespace Warcraft.DBC
         /// <param name="data">ExtendedData.</param>
         public DBC(WarcraftVersion inVersion, byte[] data)
         {
-            this.Version = inVersion;
-            this.DatabaseContents = data;
+            Version = inVersion;
+            DatabaseContents = data;
 
-            using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(this.DatabaseContents)))
+            using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(DatabaseContents)))
             {
-                this.Header = new DBCHeader(databaseReader.ReadBytes(DBCHeader.GetSize()));
+                Header = new DBCHeader(databaseReader.ReadBytes(DBCHeader.GetSize()));
 
                 // Seek to and read the string block
-                databaseReader.BaseStream.Seek(this.Header.RecordCount * this.Header.RecordSize, SeekOrigin.Current);
-                this.StringBlockOffset = databaseReader.BaseStream.Position;
+                databaseReader.BaseStream.Seek(Header.RecordCount * Header.RecordSize, SeekOrigin.Current);
+                StringBlockOffset = databaseReader.BaseStream.Position;
                 while (databaseReader.BaseStream.Position != databaseReader.BaseStream.Length)
                 {
-                    this.Strings.Add(databaseReader.BaseStream.Position - this.StringBlockOffset, databaseReader.ReadNullTerminatedString());
+                    Strings.Add(databaseReader.BaseStream.Position - StringBlockOffset, databaseReader.ReadNullTerminatedString());
                 }
             }
 
-            this.Records = new List<T>(this.Count);
+            Records = new List<T>(Count);
 
             // Initialize the record list with null values
-            for (int i = 0; i < this.Count; ++i)
+            for (int i = 0; i < Count; ++i)
             {
-                this.Records.Add(null);
+                Records.Add(null);
             }
         }
 
@@ -136,9 +136,9 @@ namespace Warcraft.DBC
         /// <param name="reference">Reference.</param>
         public void ResolveStringReference(StringReference reference)
         {
-            if (this.Strings.ContainsKey(reference.Offset))
+            if (Strings.ContainsKey(reference.Offset))
             {
-                reference.Value = this.Strings[reference.Offset];
+                reference.Value = Strings[reference.Offset];
                 return;
             }
 
@@ -152,7 +152,7 @@ namespace Warcraft.DBC
         /// <returns>true if the record has been cached; otherwise, false.</returns>
         internal bool HasCachedRecordAtIndex(int index)
         {
-            return this.Records[index] != null;
+            return Records[index] != null;
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Warcraft.DBC
                 throw new InvalidOperationException("A record was already cached at the given index.");
             }
 
-            this.Records[index] = record;
+            Records[index] = record;
         }
 
         /*
@@ -176,7 +176,7 @@ namespace Warcraft.DBC
         */
 
         /// <inheritdoc />
-        public int Count => this.RecordCount;
+        public int Count => RecordCount;
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator()
@@ -187,7 +187,7 @@ namespace Warcraft.DBC
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator()
         {
-            return new DBCEnumerator<T>(this, this.DatabaseContents, this.StringBlockOffset);
+            return new DBCEnumerator<T>(this, DatabaseContents, StringBlockOffset);
         }
 
         /*
@@ -201,22 +201,22 @@ namespace Warcraft.DBC
             {
                 if (HasCachedRecordAtIndex(i))
                 {
-                    return this.Records[i];
+                    return Records[i];
                 }
 
-                using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(this.DatabaseContents)))
+                using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(DatabaseContents)))
                 {
-                    long recordOffset = DBCHeader.GetSize() + this.Header.RecordSize * i;
+                    long recordOffset = DBCHeader.GetSize() + Header.RecordSize * i;
                     databaseReader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
 
-                    T record = databaseReader.ReadRecord<T>((int)this.Header.FieldCount, (int)this.Header.RecordSize, this.Version);
+                    T record = databaseReader.ReadRecord<T>((int)Header.FieldCount, (int)Header.RecordSize, Version);
 
                     foreach (var stringReference in record.GetStringReferences())
                     {
                         ResolveStringReference(stringReference);
                     }
 
-                    this.Records[i] = record;
+                    Records[i] = record;
 
                     return record;
                 }

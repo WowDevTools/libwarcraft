@@ -101,8 +101,8 @@ namespace Warcraft.ADT
         public TerrainTile(byte[] data, WorldTableFlags inWorldFlags)
             : this(data)
         {
-            this.HasWorldFlags = true;
-            this.WorldFlags = inWorldFlags;
+            HasWorldFlags = true;
+            WorldFlags = inWorldFlags;
         }
 
         // TODO: Change to stream-based loading
@@ -122,59 +122,59 @@ namespace Warcraft.ADT
                     // seeked to and read.
 
                     // Read Version Chunk
-                    this.Version = br.ReadIFFChunk<TerrainVersion>();
+                    Version = br.ReadIFFChunk<TerrainVersion>();
 
                     // Read the header chunk
-                    this.Header = br.ReadIFFChunk<TerrainHeader>();
+                    Header = br.ReadIFFChunk<TerrainHeader>();
 
-                    if (this.Header.MapChunkOffsetsOffset > 0)
+                    if (Header.MapChunkOffsetsOffset > 0)
                     {
-                        br.BaseStream.Position = this.Header.MapChunkOffsetsOffset;
-                        this.MapChunkOffsets = br.ReadIFFChunk<TerrainMapChunkOffsets>();
+                        br.BaseStream.Position = Header.MapChunkOffsetsOffset;
+                        MapChunkOffsets = br.ReadIFFChunk<TerrainMapChunkOffsets>();
                     }
 
-                    if (this.Header.TexturesOffset > 0)
+                    if (Header.TexturesOffset > 0)
                     {
-                        br.BaseStream.Position = this.Header.TexturesOffset;
-                        this.Textures = br.ReadIFFChunk<TerrainTextures>();
+                        br.BaseStream.Position = Header.TexturesOffset;
+                        Textures = br.ReadIFFChunk<TerrainTextures>();
                     }
 
-                    if (this.Header.ModelsOffset > 0)
+                    if (Header.ModelsOffset > 0)
                     {
-                        br.BaseStream.Position = this.Header.ModelsOffset;
-                        this.Models = br.ReadIFFChunk<TerrainModels>();
+                        br.BaseStream.Position = Header.ModelsOffset;
+                        Models = br.ReadIFFChunk<TerrainModels>();
                     }
 
-                    if (this.Header.ModelIndicesOffset > 0)
+                    if (Header.ModelIndicesOffset > 0)
                     {
-                        br.BaseStream.Position = this.Header.ModelIndicesOffset;
-                        this.ModelIndices = br.ReadIFFChunk<TerrainModelIndices>();
+                        br.BaseStream.Position = Header.ModelIndicesOffset;
+                        ModelIndices = br.ReadIFFChunk<TerrainModelIndices>();
                     }
 
-                    if (this.Header.WorldModelObjectsOffset > 0)
+                    if (Header.WorldModelObjectsOffset > 0)
                     {
-                        br.BaseStream.Position = this.Header.WorldModelObjectsOffset;
-                        this.WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
+                        br.BaseStream.Position = Header.WorldModelObjectsOffset;
+                        WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
                     }
 
-                    if (this.Header.WorldModelObjectIndicesOffset > 0)
+                    if (Header.WorldModelObjectIndicesOffset > 0)
                     {
-                        br.BaseStream.Position = this.Header.WorldModelObjectIndicesOffset;
-                        this.WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldObjectModelIndices>();
+                        br.BaseStream.Position = Header.WorldModelObjectIndicesOffset;
+                        WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldObjectModelIndices>();
                     }
 
-                    if (this.Header.LiquidOffset > 0)
+                    if (Header.LiquidOffset > 0)
                     {
-                        br.BaseStream.Position = this.Header.LiquidOffset;
-                        this.Liquids = br.ReadIFFChunk<TerrainLiquid>();
+                        br.BaseStream.Position = Header.LiquidOffset;
+                        Liquids = br.ReadIFFChunk<TerrainLiquid>();
                         // TODO: [#9] Pass in DBC liquid type to load the vertex data
                     }
 
                     // Read and fill the map chunks
-                    foreach (MapChunkOffsetEntry entry in this.MapChunkOffsets.Entries)
+                    foreach (MapChunkOffsetEntry entry in MapChunkOffsets.Entries)
                     {
                         br.BaseStream.Position = entry.MapChunkOffset;
-                        this.MapChunks.Add(br.ReadIFFChunk<TerrainMapChunk>());
+                        MapChunks.Add(br.ReadIFFChunk<TerrainMapChunk>());
                     }
                 }
             }

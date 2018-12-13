@@ -46,7 +46,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.BSPNodes.Add(new BSPNode(br.ReadBytes(BSPNode.GetSize())));
+                        BSPNodes.Add(new BSPNode(br.ReadBytes(BSPNode.GetSize())));
                     }
                 }
             }
@@ -63,7 +63,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (BSPNode bspNode in this.BSPNodes)
+                    foreach (BSPNode bspNode in BSPNodes)
                     {
                         bw.Write(bspNode.Serialize());
                     }
@@ -89,12 +89,12 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Type = (PlaneType) br.ReadUInt16();
-                    this.FirstChildIndex = br.ReadInt16();
-                    this.SecondChildIndex = br.ReadInt16();
-                    this.FaceCount = br.ReadUInt16();
-                    this.FirstFaceIndex = br.ReadUInt32();
-                    this.DistanceFromCenter = br.ReadSingle();
+                    Type = (PlaneType) br.ReadUInt16();
+                    FirstChildIndex = br.ReadInt16();
+                    SecondChildIndex = br.ReadInt16();
+                    FaceCount = br.ReadUInt16();
+                    FirstFaceIndex = br.ReadUInt32();
+                    DistanceFromCenter = br.ReadSingle();
                 }
             }
         }
@@ -110,12 +110,12 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write((ushort)this.Type);
-                    bw.Write(this.FirstChildIndex);
-                    bw.Write(this.SecondChildIndex);
-                    bw.Write(this.FaceCount);
-                    bw.Write(this.FirstFaceIndex);
-                    bw.Write(this.DistanceFromCenter);
+                    bw.Write((ushort)Type);
+                    bw.Write(FirstChildIndex);
+                    bw.Write(SecondChildIndex);
+                    bw.Write(FaceCount);
+                    bw.Write(FirstFaceIndex);
+                    bw.Write(DistanceFromCenter);
                 }
 
                 return ms.ToArray();

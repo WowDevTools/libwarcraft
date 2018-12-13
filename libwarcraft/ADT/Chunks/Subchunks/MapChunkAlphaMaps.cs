@@ -50,7 +50,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
         public void LoadBinaryData(byte[] inData)
         {
-            this.Data = inData;
+            Data = inData;
         }
 
         public string GetSignature()
@@ -68,7 +68,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         {
             List<byte> decompressedAlphaMap = new List<byte>();
 
-            using (MemoryStream ms = new MemoryStream(this.Data))
+            using (MemoryStream ms = new MemoryStream(Data))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {

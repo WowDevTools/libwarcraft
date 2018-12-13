@@ -37,15 +37,15 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <exception cref="ArgumentException">Thrown if the assigned name is longer than 20 characters.</exception>
         public string Name
         {
-            get { return this.InternalName; }
+            get { return InternalName; }
             set
             {
                 if (value.Length > 20)
                 {
-                    throw new ArgumentException("Doodad set names may not be longer than 20 characters.", nameof(this.Name));
+                    throw new ArgumentException("Doodad set names may not be longer than 20 characters.", nameof(Name));
                 }
 
-                this.InternalName = value;
+                InternalName = value;
             }
         }
 
@@ -78,11 +78,11 @@ namespace Warcraft.WMO.RootFile.Chunks
                     // The name of the doodad set can be up to 20 bytes, and is always padded to this length.
                     // Therefore, we read 20 bytes, convert it to a string and trim the end of any null characters.
                     byte[] nameBytes = br.ReadBytes(20);
-                    this.Name = Encoding.UTF8.GetString(nameBytes).TrimEnd('\0');
+                    Name = Encoding.UTF8.GetString(nameBytes).TrimEnd('\0');
 
-                    this.FirstDoodadInstanceIndex = br.ReadUInt32();
-                    this.DoodadInstanceCount = br.ReadUInt32();
-                    this.Unused = br.ReadUInt32();
+                    FirstDoodadInstanceIndex = br.ReadUInt32();
+                    DoodadInstanceCount = br.ReadUInt32();
+                    Unused = br.ReadUInt32();
                 }
             }
         }
@@ -105,10 +105,10 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.Name.PadRight(20, '\0').ToCharArray());
-                    bw.Write(this.FirstDoodadInstanceIndex);
-                    bw.Write(this.DoodadInstanceCount);
-                    bw.Write(this.Unused);
+                    bw.Write(Name.PadRight(20, '\0').ToCharArray());
+                    bw.Write(FirstDoodadInstanceIndex);
+                    bw.Write(DoodadInstanceCount);
+                    bw.Write(Unused);
                 }
 
                 return ms.ToArray();

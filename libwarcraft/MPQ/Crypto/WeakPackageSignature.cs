@@ -44,7 +44,7 @@ namespace Warcraft.MPQ.Crypto
                         throw new InvalidDataException("The signature did not begin with 0.");
                     }
 
-                    this.PackageSignature = br.ReadBytes(64);
+                    PackageSignature = br.ReadBytes(64);
                 }
             }
         }

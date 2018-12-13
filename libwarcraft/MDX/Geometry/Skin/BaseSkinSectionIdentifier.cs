@@ -34,7 +34,7 @@ namespace Warcraft.MDX.Geometry.Skin
         private readonly ushort InternalValue;
 
         public string MajorType => GetMajorType();
-        public string MinorType => GetMinorType(this.MajorType);
+        public string MinorType => GetMinorType(MajorType);
 
         /// <summary>
         /// Creates a new <see cref="BaseSkinSectionIdentifier"/> object from an underlying data value.
@@ -47,7 +47,7 @@ namespace Warcraft.MDX.Geometry.Skin
                 throw new ArgumentOutOfRangeException(nameof(inValue), $"The input value may not exceed four digits. Given value was {inValue}");
             }
 
-            this.InternalValue = inValue;
+            InternalValue = inValue;
         }
 
         /// <summary>
@@ -56,103 +56,103 @@ namespace Warcraft.MDX.Geometry.Skin
         /// <returns>The major type.</returns>
         protected virtual string GetMajorType()
         {
-            if (this.InternalValue == 0)
+            if (InternalValue == 0)
             {
                 return "Skin";
             }
-            if (this.InternalValue > 0 && this.InternalValue < 100)
+            if (InternalValue > 0 && InternalValue < 100)
             {
                 return "Hair";
             }
-            if (this.InternalValue >= 100 && this.InternalValue < 200)
+            if (InternalValue >= 100 && InternalValue < 200)
             {
                 return "Beard";
             }
-            if (this.InternalValue >= 200 && this.InternalValue < 300)
+            if (InternalValue >= 200 && InternalValue < 300)
             {
                 return "Moustache";
             }
-            if (this.InternalValue >= 300 && this.InternalValue < 400)
+            if (InternalValue >= 300 && InternalValue < 400)
             {
                 return "Sideburns";
             }
-            if (this.InternalValue >= 400 && this.InternalValue < 500)
+            if (InternalValue >= 400 && InternalValue < 500)
             {
                 return "Glove";
             }
-            if (this.InternalValue >= 500 && this.InternalValue < 600)
+            if (InternalValue >= 500 && InternalValue < 600)
             {
                 return "Boots";
             }
-            if (this.InternalValue >= 600 && this.InternalValue < 700)
+            if (InternalValue >= 600 && InternalValue < 700)
             {
                 return "None";
             }
-            if (this.InternalValue >= 700 && this.InternalValue < 800)
+            if (InternalValue >= 700 && InternalValue < 800)
             {
                 return "Ears";
             }
-            if (this.InternalValue >= 800 && this.InternalValue < 900)
+            if (InternalValue >= 800 && InternalValue < 900)
             {
                 return "Wristbands";
             }
-            if (this.InternalValue >= 900 && this.InternalValue < 1000)
+            if (InternalValue >= 900 && InternalValue < 1000)
             {
                 return "Kneepads";
             }
-            if (this.InternalValue >= 1000 && this.InternalValue < 1100)
+            if (InternalValue >= 1000 && InternalValue < 1100)
             {
                 return "Chest";
             }
-            if (this.InternalValue >= 1100 && this.InternalValue < 1200)
+            if (InternalValue >= 1100 && InternalValue < 1200)
             {
                 return "Pants";
             }
-            if (this.InternalValue >= 1200 && this.InternalValue < 1300)
+            if (InternalValue >= 1200 && InternalValue < 1300)
             {
                 return "Tabard";
             }
-            if (this.InternalValue >= 1300 && this.InternalValue < 1400)
+            if (InternalValue >= 1300 && InternalValue < 1400)
             {
                 return "Trousers";
             }
-            if (this.InternalValue >= 1400 && this.InternalValue < 1500)
+            if (InternalValue >= 1400 && InternalValue < 1500)
             {
                 return "None";
             }
-            if (this.InternalValue >= 1500 && this.InternalValue < 1600)
+            if (InternalValue >= 1500 && InternalValue < 1600)
             {
                 return "Cloak";
             }
-            if (this.InternalValue >= 1600 && this.InternalValue < 1700)
+            if (InternalValue >= 1600 && InternalValue < 1700)
             {
                 return "None";
             }
-            if (this.InternalValue >= 1700 && this.InternalValue < 1800)
+            if (InternalValue >= 1700 && InternalValue < 1800)
             {
                 return "Eyeglow";
             }
-            if (this.InternalValue >= 1800 && this.InternalValue < 1900)
+            if (InternalValue >= 1800 && InternalValue < 1900)
             {
                 return "Belt";
             }
-            if (this.InternalValue >= 1900 && this.InternalValue < 2000)
+            if (InternalValue >= 1900 && InternalValue < 2000)
             {
                 return "Tail";
             }
-            if (this.InternalValue >= 2000 && this.InternalValue < 2100)
+            if (InternalValue >= 2000 && InternalValue < 2100)
             {
                 return "Feet";
             }
-            if (this.InternalValue >= 2100 && this.InternalValue < 2200)
+            if (InternalValue >= 2100 && InternalValue < 2200)
             {
                 return "None";
             }
-            if (this.InternalValue >= 2200 && this.InternalValue < 2300)
+            if (InternalValue >= 2200 && InternalValue < 2300)
             {
                 return "None";
             }
-            if (this.InternalValue >= 2300 && this.InternalValue < 2400)
+            if (InternalValue >= 2300 && InternalValue < 2400)
             {
                 return "Elf Hands";
             }
@@ -166,7 +166,7 @@ namespace Warcraft.MDX.Geometry.Skin
         /// <returns>The minor type.</returns>
         protected virtual string GetMinorType(string majorType)
         {
-            int minorTypeValue = int.Parse(this.InternalValue.ToString("D4").Substring(2));
+            int minorTypeValue = int.Parse(InternalValue.ToString("D4").Substring(2));
 
             switch (majorType)
             {
@@ -342,7 +342,7 @@ namespace Warcraft.MDX.Geometry.Skin
         /// <returns></returns>
         public override string ToString()
         {
-            return $"{this.MajorType} - {this.MinorType}";
+            return $"{MajorType} - {MinorType}";
         }
     }
 }

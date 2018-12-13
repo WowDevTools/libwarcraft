@@ -22,14 +22,14 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Flags = (FogFlags) br.ReadUInt32();
-                    this.Position = br.ReadVector3();
+                    Flags = (FogFlags) br.ReadUInt32();
+                    Position = br.ReadVector3();
 
-                    this.GlobalStartRadius = br.ReadSingle();
-                    this.GlobalEndRadius = br.ReadSingle();
+                    GlobalStartRadius = br.ReadSingle();
+                    GlobalEndRadius = br.ReadSingle();
 
-                    this.LandFog = new FogDefinition(br.ReadBytes(FogDefinition.GetSize()));
-                    this.UnderwaterFog = new FogDefinition(br.ReadBytes(FogDefinition.GetSize()));
+                    LandFog = new FogDefinition(br.ReadBytes(FogDefinition.GetSize()));
+                    UnderwaterFog = new FogDefinition(br.ReadBytes(FogDefinition.GetSize()));
                 }
             }
         }
@@ -45,14 +45,14 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write((uint)this.Flags);
-                    bw.WriteVector3(this.Position);
+                    bw.Write((uint)Flags);
+                    bw.WriteVector3(Position);
 
-                    bw.Write(this.GlobalStartRadius);
-                    bw.Write(this.GlobalEndRadius);
+                    bw.Write(GlobalStartRadius);
+                    bw.Write(GlobalEndRadius);
 
-                    bw.Write(this.LandFog.Serialize());
-                    bw.Write(this.UnderwaterFog.Serialize());
+                    bw.Write(LandFog.Serialize());
+                    bw.Write(UnderwaterFog.Serialize());
                 }
 
                 return ms.ToArray();

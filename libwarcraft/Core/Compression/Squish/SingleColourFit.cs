@@ -23,9 +23,9 @@ namespace Warcraft.Core.Compression.Squish
 
         public SingleColourLookup(SourceBlock one, SourceBlock two)
         {
-            this.Sources = new SourceBlock[2];
-            this.Sources[0] = one;
-            this.Sources[1] = two;
+            Sources = new SourceBlock[2];
+            Sources[0] = one;
+            Sources[1] = two;
         }
     }
 
@@ -41,13 +41,13 @@ namespace Warcraft.Core.Compression.Squish
         private SingleColourFit(ColourSet colours, SquishOptions flags)
             : base(colours, flags)
         {
-            Vector3 values = this._Colours.Points[0];
+            Vector3 values = _Colours.Points[0];
 
-            this.colour[0] = (byte) FloatToInt(255.0f * values.X, 255);
-            this.colour[1] = (byte) FloatToInt(255.0f * values.Y, 255);
-            this.colour[2] = (byte) FloatToInt(255.0f * values.Z, 255);
+            colour[0] = (byte) FloatToInt(255.0f * values.X, 255);
+            colour[1] = (byte) FloatToInt(255.0f * values.Y, 255);
+            colour[2] = (byte) FloatToInt(255.0f * values.Z, 255);
 
-            this.bestError = int.MaxValue;
+            bestError = int.MaxValue;
         }
 
         private static int FloatToInt(float a, int limit)

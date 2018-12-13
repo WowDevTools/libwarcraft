@@ -43,7 +43,7 @@ namespace Warcraft.Core.Compression
 
         public BitStream(Stream sourceStream)
         {
-            this._baseStream = sourceStream;
+            _baseStream = sourceStream;
         }
 
         public int ReadBits(int bitCount)
@@ -56,7 +56,7 @@ namespace Warcraft.Core.Compression
             {
                 return -1;
             }
-            int result = this._current & (0xffff >> (16 - bitCount));
+            int result = _current & (0xffff >> (16 - bitCount));
             WasteBits(bitCount);
             return result;
         }
@@ -67,30 +67,30 @@ namespace Warcraft.Core.Compression
             {
                 return -1;
             }
-            return this._current & 0xff;
+            return _current & 0xff;
         }
 
         public bool EnsureBits(int bitCount)
         {
-            if (bitCount <= this._bitCount)
+            if (bitCount <= _bitCount)
             {
                 return true;
             }
 
-            if (this._baseStream.Position >= this._baseStream.Length)
+            if (_baseStream.Position >= _baseStream.Length)
             {
                 return false;
             }
-            int nextvalue = this._baseStream.ReadByte();
-            this._current |= nextvalue << this._bitCount;
-            this._bitCount += 8;
+            int nextvalue = _baseStream.ReadByte();
+            _current |= nextvalue << _bitCount;
+            _bitCount += 8;
             return true;
         }
 
         private bool WasteBits(int bitCount)
         {
-            this._current >>= bitCount;
-            this._bitCount -= bitCount;
+            _current >>= bitCount;
+            _bitCount -= bitCount;
             return true;
         }
     }

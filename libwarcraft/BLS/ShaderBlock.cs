@@ -40,11 +40,11 @@ namespace Warcraft.BLS
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Flags1 = (ShaderFlags1) br.ReadUInt32();
-                    this.Flags2 = (ShaderFlags2) br.ReadUInt32();
-                    this.Unknown = br.ReadUInt32();
+                    Flags1 = (ShaderFlags1) br.ReadUInt32();
+                    Flags2 = (ShaderFlags2) br.ReadUInt32();
+                    Unknown = br.ReadUInt32();
 
-                    this.DataSize = br.ReadUInt32();
+                    DataSize = br.ReadUInt32();
 
                     // The data is postloaded into the shader block structure outside
                     // of the constructor.
@@ -58,12 +58,12 @@ namespace Warcraft.BLS
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write((uint)this.Flags1);
-                    bw.Write((uint)this.Flags2);
-                    bw.Write(this.Unknown);
+                    bw.Write((uint)Flags1);
+                    bw.Write((uint)Flags2);
+                    bw.Write(Unknown);
 
-                    bw.Write((uint)this.Data.Length);
-                    bw.Write(this.Data);
+                    bw.Write((uint)Data.Length);
+                    bw.Write(Data);
                 }
 
                 return ms.ToArray();

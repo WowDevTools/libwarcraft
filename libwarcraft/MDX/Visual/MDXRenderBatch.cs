@@ -111,22 +111,22 @@ namespace Warcraft.MDX.Visual
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Flags = (EMDXRenderBatchFlags)br.ReadByte();
-                    this.PriorityPlane = br.ReadSByte();
+                    Flags = (EMDXRenderBatchFlags)br.ReadByte();
+                    PriorityPlane = br.ReadSByte();
 
-                    this.ShaderID = br.ReadUInt16();
+                    ShaderID = br.ReadUInt16();
 
-                    this.SkinSectionIndex = br.ReadUInt16();
-                    this.GeosetIndex = br.ReadUInt16();
-                    this.ColorIndex = br.ReadInt16();
-                    this.MaterialIndex = br.ReadUInt16();
-                    this.MaterialLayer = br.ReadUInt16();
-                    this.TextureCount = br.ReadUInt16();
+                    SkinSectionIndex = br.ReadUInt16();
+                    GeosetIndex = br.ReadUInt16();
+                    ColorIndex = br.ReadInt16();
+                    MaterialIndex = br.ReadUInt16();
+                    MaterialLayer = br.ReadUInt16();
+                    TextureCount = br.ReadUInt16();
 
-                    this.TextureLookupTableIndex = br.ReadUInt16();
-                    this.TextureMappingLookupTableIndex = br.ReadUInt16();
-                    this.TransparencyLookupTableIndex = br.ReadUInt16();
-                    this.TextureTransformLookupTableIndex = br.ReadUInt16();
+                    TextureLookupTableIndex = br.ReadUInt16();
+                    TextureMappingLookupTableIndex = br.ReadUInt16();
+                    TransparencyLookupTableIndex = br.ReadUInt16();
+                    TextureTransformLookupTableIndex = br.ReadUInt16();
                 }
             }
         }

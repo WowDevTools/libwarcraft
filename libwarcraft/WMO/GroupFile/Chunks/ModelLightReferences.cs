@@ -46,7 +46,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.LightReferences.Add(br.ReadUInt16());
+                        LightReferences.Add(br.ReadUInt16());
                     }
                 }
             }
@@ -63,7 +63,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (ushort lightReference in this.LightReferences)
+                    foreach (ushort lightReference in LightReferences)
                     {
                         bw.Write(lightReference);
                     }

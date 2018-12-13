@@ -48,7 +48,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.Normals.Add(br.ReadVector3());
+                        Normals.Add(br.ReadVector3());
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Vector3 normal in this.Normals)
+                    foreach (Vector3 normal in Normals)
                     {
                         bw.WriteVector3(normal);
                     }

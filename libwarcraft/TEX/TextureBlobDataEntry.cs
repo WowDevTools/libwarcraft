@@ -58,7 +58,7 @@ namespace Warcraft.TEX
         {
             get
             {
-                return this.InternalMipMapCount;
+                return InternalMipMapCount;
             }
             set
             {
@@ -68,7 +68,7 @@ namespace Warcraft.TEX
                         "The mip level count must be below 127, since it is packed into a single byte when serialized.");
                 }
 
-                this.InternalMipMapCount = value;
+                InternalMipMapCount = value;
             }
         }
 
@@ -98,20 +98,20 @@ namespace Warcraft.TEX
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.FilenameOffset = br.ReadUInt32();
-                    this.TextureDataOffset = br.ReadUInt32();
-                    this.TextureWidth = br.ReadByte();
-                    this.TextureHeight = br.ReadByte();
+                    FilenameOffset = br.ReadUInt32();
+                    TextureDataOffset = br.ReadUInt32();
+                    TextureWidth = br.ReadByte();
+                    TextureHeight = br.ReadByte();
 
                     // Explode the first packed byte into mip levels and whether or not the blob is loaded
                     byte mipsAndIsLoadedCombined = br.ReadByte();
-                    this.MipMapCount = (byte)(mipsAndIsLoadedCombined & 0xFE);
-                    this.IsLoaded = (mipsAndIsLoadedCombined & 0x01) > 0;
+                    MipMapCount = (byte)(mipsAndIsLoadedCombined & 0xFE);
+                    IsLoaded = (mipsAndIsLoadedCombined & 0x01) > 0;
 
                     // Explode the next packed byte into the compression type and the flags.
                     byte compressionAndFlagsCombined = br.ReadByte();
-                    this.CompressionType = (TextureBlobCompressionType) (compressionAndFlagsCombined & 0xF0);
-                    this.Flags = (TextureBlobFlags) (compressionAndFlagsCombined & 0x0F);
+                    CompressionType = (TextureBlobCompressionType) (compressionAndFlagsCombined & 0xF0);
+                    Flags = (TextureBlobFlags) (compressionAndFlagsCombined & 0x0F);
                 }
             }
         }
@@ -134,18 +134,18 @@ namespace Warcraft.TEX
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.FilenameOffset);
-                    bw.Write(this.TextureDataOffset);
-                    bw.Write(this.TextureWidth);
-                    bw.Write(this.TextureHeight);
+                    bw.Write(FilenameOffset);
+                    bw.Write(TextureDataOffset);
+                    bw.Write(TextureWidth);
+                    bw.Write(TextureHeight);
 
                     // Pack the mip count and isLoaded state
-                    byte mipCount = (byte)(this.MipMapCount << 1);
-                    byte packedMipCountAndState = (byte)(mipCount & (this.IsLoaded ? 1 : 0));
+                    byte mipCount = (byte)(MipMapCount << 1);
+                    byte packedMipCountAndState = (byte)(mipCount & (IsLoaded ? 1 : 0));
                     bw.Write(packedMipCountAndState);
 
                     // Pack the compression type and flags
-                    byte packedCompressionAndFlags = (byte) ((byte)this.CompressionType & (byte)this.Flags);
+                    byte packedCompressionAndFlags = (byte) ((byte)CompressionType & (byte)Flags);
                     bw.Write(packedCompressionAndFlags);
                 }
 

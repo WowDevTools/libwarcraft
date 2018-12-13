@@ -67,7 +67,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.BSPFaceIndices.Add(br.ReadUInt16());
+                        BSPFaceIndices.Add(br.ReadUInt16());
                     }
                 }
             }
@@ -91,7 +91,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (ushort bspFaceIndex in this.BSPFaceIndices)
+                    foreach (ushort bspFaceIndex in BSPFaceIndices)
                     {
                         bw.Write(bspFaceIndex);
                     }

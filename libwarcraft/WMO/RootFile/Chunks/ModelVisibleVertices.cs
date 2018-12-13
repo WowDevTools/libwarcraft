@@ -50,7 +50,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int vertexCount = inData.Length / 12;
                     for (int i = 0; i < vertexCount; ++i)
                     {
-                        this.VisibleVertices.Add(br.ReadVector3());
+                        VisibleVertices.Add(br.ReadVector3());
                     }
                 }
             }
@@ -67,7 +67,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Vector3 visibleVertex in this.VisibleVertices)
+                    foreach (Vector3 visibleVertex in VisibleVertices)
                     {
                         bw.WriteVector3(visibleVertex);
                     }

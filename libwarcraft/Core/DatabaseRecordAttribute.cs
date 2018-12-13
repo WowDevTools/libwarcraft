@@ -14,7 +14,7 @@ namespace Warcraft.Core
 
         public DatabaseRecordAttribute(DatabaseName database)
         {
-            this.Database = database;
+            Database = database;
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.TextureCoordinates.Add(br.ReadVector2());
+                        TextureCoordinates.Add(br.ReadVector2());
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Vector2 textureCoordinate in this.TextureCoordinates)
+                    foreach (Vector2 textureCoordinate in TextureCoordinates)
                     {
                         bw.WriteVector2(textureCoordinate);
                     }

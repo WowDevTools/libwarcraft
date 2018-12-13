@@ -70,7 +70,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int setCount = inData.Length / DoodadSet.GetSize();
                     for (uint i = 0; i < setCount; ++i)
                     {
-                        this.DoodadSets.Add(new DoodadSet(br.ReadBytes(DoodadSet.GetSize())));
+                        DoodadSets.Add(new DoodadSet(br.ReadBytes(DoodadSet.GetSize())));
                     }
                 }
             }
@@ -94,7 +94,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (DoodadSet doodadSet in this.DoodadSets)
+                    foreach (DoodadSet doodadSet in DoodadSets)
                     {
                         bw.Write(doodadSet.Serialize());
                     }

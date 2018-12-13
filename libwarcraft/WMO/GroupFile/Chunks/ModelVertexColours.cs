@@ -48,7 +48,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.VertexColours.Add(br.ReadBGRA());
+                        VertexColours.Add(br.ReadBGRA());
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (BGRA vertexColour in this.VertexColours)
+                    foreach (BGRA vertexColour in VertexColours)
                     {
                         bw.WriteBGRA(vertexColour);
                     }

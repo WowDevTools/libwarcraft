@@ -41,15 +41,15 @@ namespace Warcraft.Core.Compression
         public LinkedNode Child0;
 
         public LinkedNode Child1
-                { get { return this.Child0.Prev; } }
+                { get { return Child0.Prev; } }
 
         public LinkedNode Next;
         public LinkedNode Prev;
 
         public LinkedNode(int decompVal, int weight)
         {
-            this.DecompressedValue = decompVal;
-            this.Weight = weight;
+            DecompressedValue = decompVal;
+            Weight = weight;
         }
 
         // TODO: This would be more efficient as a member of the other class
@@ -58,30 +58,30 @@ namespace Warcraft.Core.Compression
         {
             // 'Next' should have a lower weight
             // we should return the lower weight
-            if (other.Weight <= this.Weight)
+            if (other.Weight <= Weight)
             {
                 // insert before
-                if (this.Next != null)
+                if (Next != null)
                 {
-                    this.Next.Prev = other;
-                    other.Next = this.Next;
+                    Next.Prev = other;
+                    other.Next = Next;
                 }
-                this.Next = other;
+                Next = other;
                 other.Prev = this;
                 return other;
             }
             else
             {
-                if (this.Prev == null)
+                if (Prev == null)
                 {
                     // Insert after
                     other.Prev = null;
-                    this.Prev = other;
+                    Prev = other;
                     other.Next = this;
                 }
                 else
                 {
-                    this.Prev.Insert(other);
+                    Prev.Insert(other);
                 }
             }
             return this;

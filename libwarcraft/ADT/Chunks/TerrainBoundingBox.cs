@@ -43,8 +43,8 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Maximum = br.ReadShortPlane();
-                    this.Minimum = br.ReadShortPlane();
+                    Maximum = br.ReadShortPlane();
+                    Minimum = br.ReadShortPlane();
                 }
             }
         }
@@ -60,8 +60,8 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.WriteShortPlane(this.Maximum);
-                    bw.WriteShortPlane(this.Minimum);
+                    bw.WriteShortPlane(Maximum);
+                    bw.WriteShortPlane(Minimum);
                 }
 
                 return ms.ToArray();

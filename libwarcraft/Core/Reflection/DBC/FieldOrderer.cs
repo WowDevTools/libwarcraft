@@ -16,22 +16,22 @@ namespace Warcraft.Core.Reflection.DBC
 
         public FieldOrderer(WarcraftVersion version, IReadOnlyList<PropertyInfo> originalProperties)
         {
-            this.Version = version;
-            this.OriginalProperties = originalProperties;
+            Version = version;
+            OriginalProperties = originalProperties;
 
             // Get the properties that should move, and their movement information
-            this.MovingProperties = DBCInspector.GetMovedProperties(this.Version, originalProperties);
+            MovingProperties = DBCInspector.GetMovedProperties(Version, originalProperties);
 
             // Build the precedence chains for the moving properties
-            this.PrecedenceChains = BuildPrecedenceChains();
+            PrecedenceChains = BuildPrecedenceChains();
         }
 
         public IEnumerable<PropertyInfo> ReorderProperties()
         {
-            var originalProperties = new List<PropertyInfo>(this.OriginalProperties);
+            var originalProperties = new List<PropertyInfo>(OriginalProperties);
 
             // Check if any property exists in the precedence chain of any of its precedents
-            if (this.MovingProperties.Any(p => HasCyclicMoveDependency(p.Key)))
+            if (MovingProperties.Any(p => HasCyclicMoveDependency(p.Key)))
             {
                 throw new InvalidOperationException("A cyclical dependency was detected in the field move set. Verify that no fields are requesting invalid moves.");
             }
@@ -45,11 +45,11 @@ namespace Warcraft.Core.Reflection.DBC
             // Then, we'll move the fields which need special handling. Order them by the length of their dependency
             // chains such that we are working our way down the chains.
 
-            var movingPropertiesByDepth = this.PrecedenceChains.OrderBy(kvp => kvp.Value.Count);
+            var movingPropertiesByDepth = PrecedenceChains.OrderBy(kvp => kvp.Value.Count);
             foreach (var propertyPair in movingPropertiesByDepth)
             {
                 var property = propertyPair.Key;
-                var propertyThatComesBeforeName = this.MovingProperties[property].ComesAfter;
+                var propertyThatComesBeforeName = MovingProperties[property].ComesAfter;
                 var propertyBefore = orderedProperties.First(p => p.Name == propertyThatComesBeforeName);
 
                 // Find the original property in the list and remove it
@@ -73,7 +73,7 @@ namespace Warcraft.Core.Reflection.DBC
         {
             // Build field precendence chains
             var precedenceChains = new Dictionary<PropertyInfo, List<PropertyInfo>>();
-            foreach ((var property, var order) in this.MovingProperties)
+            foreach ((var property, var order) in MovingProperties)
             {
                 var precedenceChain = GetPrecendenceChain(order, new List<PropertyInfo>()).ToList();
                 precedenceChains.Add(property, precedenceChain);
@@ -89,12 +89,12 @@ namespace Warcraft.Core.Reflection.DBC
         /// <returns>true if the property has a cyclic dependency; otherwise, false.</returns>
         public bool HasCyclicMoveDependency(PropertyInfo property)
         {
-            if (!this.PrecedenceChains.ContainsKey(property))
+            if (!PrecedenceChains.ContainsKey(property))
             {
                 return false;
             }
 
-            var precedenceChain = this.PrecedenceChains[property];
+            var precedenceChain = PrecedenceChains[property];
             return precedenceChain.Contains(property);
         }
 
@@ -108,13 +108,13 @@ namespace Warcraft.Core.Reflection.DBC
         /// <returns>The chain of preceding properties that will move, terminating with the first one that will not.</returns>
         public IEnumerable<PropertyInfo> GetPrecendenceChain(RecordFieldOrderAttribute order, List<PropertyInfo> yieldedProperties)
         {
-            var precedingProperty = this.OriginalProperties.First(p => p.Name == order.ComesAfter);
+            var precedingProperty = OriginalProperties.First(p => p.Name == order.ComesAfter);
 
-            bool willPropertyMove = this.MovingProperties.ContainsKey(precedingProperty);
+            bool willPropertyMove = MovingProperties.ContainsKey(precedingProperty);
             if (willPropertyMove && !yieldedProperties.Contains(precedingProperty))
             {
                 yieldedProperties.Add(precedingProperty);
-                foreach (var value in GetPrecendenceChain(this.MovingProperties[precedingProperty], yieldedProperties))
+                foreach (var value in GetPrecendenceChain(MovingProperties[precedingProperty], yieldedProperties))
                 {
                     yieldedProperties.Add(value);
                     yield return value;

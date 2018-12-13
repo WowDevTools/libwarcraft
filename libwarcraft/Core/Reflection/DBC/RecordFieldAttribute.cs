@@ -44,8 +44,8 @@ namespace Warcraft.Core.Reflection.DBC
         /// <param name="introducedIn">The version that the field was introduced in.</param>
         public RecordFieldAttribute(WarcraftVersion introducedIn)
         {
-            this.IntroducedIn = introducedIn;
-            this.RemovedIn = WarcraftVersion.Unknown;
+            IntroducedIn = introducedIn;
+            RemovedIn = WarcraftVersion.Unknown;
         }
     }
 }

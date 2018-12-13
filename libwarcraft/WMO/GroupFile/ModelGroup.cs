@@ -71,8 +71,8 @@ namespace Warcraft.WMO.GroupFile
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Version = br.ReadIFFChunk<TerrainVersion>();
-                    this.GroupData = br.ReadIFFChunk<ModelGroupData>();
+                    Version = br.ReadIFFChunk<TerrainVersion>();
+                    GroupData = br.ReadIFFChunk<ModelGroupData>();
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>The bounding box of the group.</returns>
         public Box GetBoundingBox()
         {
-            return this.GroupData.BoundingBox;
+            return GroupData.BoundingBox;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>An offset into the name block.</returns>
         public uint GetInternalNameOffset()
         {
-            return this.GroupData.GroupNameOffset;
+            return GroupData.GroupNameOffset;
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>An offset into the name block.</returns>
         public uint GetInternalDescriptiveNameOffset()
         {
-            return this.GroupData.DescriptiveGroupNameOffset;
+            return GroupData.DescriptiveGroupNameOffset;
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>A list of vertex positions.</returns>
         public IEnumerable<Vector3> GetVertices()
         {
-            return this.GroupData.Vertices.Vertices;
+            return GroupData.Vertices.Vertices;
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>A list of vertex normals.</returns>
         public IEnumerable<Vector3> GetNormals()
         {
-            return this.GroupData.Normals.Normals;
+            return GroupData.Normals.Normals;
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>A list of texture coordinates.</returns>
         public IEnumerable<Vector2> GetTextureCoordinates()
         {
-            return this.GroupData.TextureCoordinates.TextureCoordinates;
+            return GroupData.TextureCoordinates.TextureCoordinates;
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>A list of the vertex indices.</returns>
         public IEnumerable<ushort> GetVertexIndices()
         {
-            return this.GroupData.VertexIndices.VertexIndices;
+            return GroupData.VertexIndices.VertexIndices;
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>A list of the render batches.</returns>
         public IEnumerable<RenderBatch> GetRenderBatches()
         {
-            return this.GroupData.RenderBatches.RenderBatches;
+            return GroupData.RenderBatches.RenderBatches;
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Warcraft.WMO.GroupFile
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.WriteIFFChunk(this.Version);
-                    bw.WriteIFFChunk(this.GroupData);
+                    bw.WriteIFFChunk(Version);
+                    bw.WriteIFFChunk(GroupData);
                 }
 
                 return ms.ToArray();

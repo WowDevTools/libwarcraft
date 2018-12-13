@@ -82,7 +82,7 @@ namespace Warcraft.MPQ.FileInfo
         public MPQFileInfo(string inPath, HashTableEntry inHashEntry, BlockTableEntry inBlockEntry, FileAttributes inAttributes)
             : this(inPath, inHashEntry, inBlockEntry)
         {
-            this.Attributes = inAttributes;
+            Attributes = inAttributes;
         }
 
         /// <summary>
@@ -93,9 +93,9 @@ namespace Warcraft.MPQ.FileInfo
         /// <param name="inBlockEntry">In block entry.</param>
         public MPQFileInfo(string inPath, HashTableEntry inHashEntry, BlockTableEntry inBlockEntry)
         {
-            this.Path = inPath;
-            this.HashEntry = inHashEntry;
-            this.BlockEntry = inBlockEntry;
+            Path = inPath;
+            HashEntry = inHashEntry;
+            BlockEntry = inBlockEntry;
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Warcraft.MPQ.FileInfo
         /// <returns>The locale.</returns>
         public LocaleID GetLocale()
         {
-            return this.HashEntry.GetLocalizationID();
+            return HashEntry.GetLocalizationID();
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Warcraft.MPQ.FileInfo
         /// <returns>The platform.</returns>
         public ushort GetPlatform()
         {
-            return this.HashEntry.GetPlatformID();
+            return HashEntry.GetPlatformID();
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Warcraft.MPQ.FileInfo
         /// <returns>The stored size.</returns>
         public long GetStoredSize()
         {
-            return this.BlockEntry.GetBlockSize();
+            return BlockEntry.GetBlockSize();
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Warcraft.MPQ.FileInfo
         /// <returns>The actual size.</returns>
         public long GetActualSize()
         {
-            return this.BlockEntry.GetFileSize();
+            return BlockEntry.GetFileSize();
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Warcraft.MPQ.FileInfo
         /// <returns>The flags.</returns>
         public BlockFlags GetFlags()
         {
-            return this.BlockEntry.GetFlags();
+            return BlockEntry.GetFlags();
         }
     }
 }

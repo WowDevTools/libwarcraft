@@ -51,7 +51,7 @@ namespace Warcraft.WDL.Chunks
                     {
                         for (int x = 0; x < 17; ++x)
                         {
-                            this.HighResVertices.Add(br.ReadInt16());
+                            HighResVertices.Add(br.ReadInt16());
                         }
                     }
 
@@ -59,7 +59,7 @@ namespace Warcraft.WDL.Chunks
                     {
                         for (int x = 0; x < 16; ++x)
                         {
-                            this.LowResVertices.Add(br.ReadInt16());
+                            LowResVertices.Add(br.ReadInt16());
                         }
                     }
                 }
@@ -82,12 +82,12 @@ namespace Warcraft.WDL.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (short lodVertex in this.HighResVertices)
+                    foreach (short lodVertex in HighResVertices)
                     {
                         bw.Write(lodVertex);
                     }
 
-                    foreach (short lodVertex in this.LowResVertices)
+                    foreach (short lodVertex in LowResVertices)
                     {
                         bw.Write(lodVertex);
                     }

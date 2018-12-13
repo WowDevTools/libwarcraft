@@ -42,7 +42,7 @@ namespace Warcraft.MPQ.Tables.Block
                     for (long i = 0; i < data.Length; i += BlockTableEntry.GetSize())
                     {
                         byte[] entryBytes = br.ReadBytes((int)BlockTableEntry.GetSize());
-                        this.Entries.Add(new BlockTableEntry(entryBytes));
+                        Entries.Add(new BlockTableEntry(entryBytes));
                     }
                 }
             }
@@ -54,7 +54,7 @@ namespace Warcraft.MPQ.Tables.Block
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (BlockTableEntry entry in this.Entries)
+                    foreach (BlockTableEntry entry in Entries)
                     {
                         bw.Write(entry.Serialize());
                     }
@@ -67,12 +67,12 @@ namespace Warcraft.MPQ.Tables.Block
 
         public BlockTableEntry GetEntry(int index)
         {
-            return this.Entries[index];
+            return Entries[index];
         }
 
         public ulong GetSize()
         {
-            return (ulong)(this.Entries.Count * BlockTableEntry.GetSize());
+            return (ulong)(Entries.Count * BlockTableEntry.GetSize());
         }
     }
 }

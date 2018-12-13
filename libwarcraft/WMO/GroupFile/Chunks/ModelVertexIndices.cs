@@ -47,7 +47,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                     long indexCount = ms.Length / sizeof(ushort);
                     for (int i = 0; i < indexCount; ++i)
                     {
-                        this.VertexIndices.Add(br.ReadUInt16());
+                        VertexIndices.Add(br.ReadUInt16());
                     }
                 }
             }
@@ -64,7 +64,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (ushort vertexIndex in this.VertexIndices)
+                    foreach (ushort vertexIndex in VertexIndices)
                     {
                         bw.Write(vertexIndex);
                     }

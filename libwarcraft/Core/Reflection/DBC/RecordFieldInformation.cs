@@ -93,18 +93,18 @@ namespace Warcraft.Core.Reflection.DBC
                 throw new ArgumentException($"The record type {recordType.Name} was not decorated with the \"DatabaseRecord\" attribute.");
             }
 
-            this.Type = recordType;
-            this.Version = version;
-            var orderer = new FieldOrderer(this.Version, DBCInspector.GetVersionRelevantProperties(this.Version, this.Type).ToList());
+            Type = recordType;
+            Version = version;
+            var orderer = new FieldOrderer(Version, DBCInspector.GetVersionRelevantProperties(Version, Type).ToList());
 
-            this.VersionRelevantProperties = orderer.ReorderProperties().ToList();
+            VersionRelevantProperties = orderer.ReorderProperties().ToList();
 
-            this.PropertyFieldAttributes = new Dictionary<PropertyInfo, RecordFieldAttribute>();
-            this.PropertyFieldArrayAttributes = new Dictionary<PropertyInfo, RecordFieldArrayAttribute>();
-            this.PropertyFieldArrayElementTypes = new Dictionary<PropertyInfo, Type>();
-            this.PropertyForeignKeyAttributes = new Dictionary<PropertyInfo, ForeignKeyInfoAttribute>();
+            PropertyFieldAttributes = new Dictionary<PropertyInfo, RecordFieldAttribute>();
+            PropertyFieldArrayAttributes = new Dictionary<PropertyInfo, RecordFieldArrayAttribute>();
+            PropertyFieldArrayElementTypes = new Dictionary<PropertyInfo, Type>();
+            PropertyForeignKeyAttributes = new Dictionary<PropertyInfo, ForeignKeyInfoAttribute>();
 
-            foreach (var property in this.VersionRelevantProperties)
+            foreach (var property in VersionRelevantProperties)
             {
                 if (!property.CanWrite)
                 {
@@ -112,22 +112,22 @@ namespace Warcraft.Core.Reflection.DBC
                 }
 
                 var fieldInfoAttribute = DBCInspector.GetPropertyFieldAttribute(property);
-                this.PropertyFieldAttributes.Add(property, fieldInfoAttribute);
+                PropertyFieldAttributes.Add(property, fieldInfoAttribute);
 
                 if (DBCInspector.IsPropertyFieldArray(property))
                 {
-                    this.PropertyFieldArrayAttributes.Add(property, DBCInspector.GetVersionRelevantPropertyFieldArrayAttribute(this.Version, property));
-                    this.PropertyFieldArrayElementTypes.Add(property, DBCInspector.GetFieldArrayPropertyElementType(property.PropertyType));
+                    PropertyFieldArrayAttributes.Add(property, DBCInspector.GetVersionRelevantPropertyFieldArrayAttribute(Version, property));
+                    PropertyFieldArrayElementTypes.Add(property, DBCInspector.GetFieldArrayPropertyElementType(property.PropertyType));
                 }
 
                 if (DBCInspector.IsPropertyForeignKey(property))
                 {
-                    this.PropertyForeignKeyAttributes.Add(property, DBCInspector.GetForeignKeyInfo(property));
+                    PropertyForeignKeyAttributes.Add(property, DBCInspector.GetForeignKeyInfo(property));
                 }
             }
 
-            this.FieldCount = DBCInspector.GetPropertyCount(this.Version, this.Type);
-            this.Size = DBCInspector.GetRecordSize(this.Version, this.Type);
+            FieldCount = DBCInspector.GetPropertyCount(Version, Type);
+            Size = DBCInspector.GetRecordSize(Version, Type);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Warcraft.Core.Reflection.DBC
         /// <returns>true if the property is a field array; otherwise, false.</returns>
         public bool IsPropertyFieldArray(PropertyInfo property)
         {
-            return this.PropertyFieldArrayAttributes.ContainsKey(property);
+            return PropertyFieldArrayAttributes.ContainsKey(property);
         }
 
         /// <inheritdoc />
@@ -153,7 +153,7 @@ namespace Warcraft.Core.Reflection.DBC
                 return true;
             }
 
-            return Equals(this.Type, other.Type) && this.Version == other.Version;
+            return Equals(Type, other.Type) && Version == other.Version;
         }
 
         /// <inheritdoc />
@@ -169,7 +169,7 @@ namespace Warcraft.Core.Reflection.DBC
                 return true;
             }
 
-            if (obj.GetType() != this.GetType())
+            if (obj.GetType() != GetType())
             {
                 return false;
             }
@@ -182,7 +182,7 @@ namespace Warcraft.Core.Reflection.DBC
         {
             unchecked
             {
-                return ((this.Type != null ? this.Type.GetHashCode() : 0) * 397) ^ (int)this.Version;
+                return ((Type != null ? Type.GetHashCode() : 0) * 397) ^ (int)Version;
             }
         }
     }

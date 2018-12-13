@@ -66,15 +66,15 @@ namespace Warcraft.MPQ.Tables.Hash
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.FilePathHashA = br.ReadUInt32();
-                    this.FilePathHashB = br.ReadUInt32();
-                    this.Localization = (LocaleID)br.ReadUInt16();
+                    FilePathHashA = br.ReadUInt32();
+                    FilePathHashB = br.ReadUInt32();
+                    Localization = (LocaleID)br.ReadUInt16();
 
                     // Read the platform as an int8 and skip the next byte
-                    this.Platform = br.ReadByte();
+                    Platform = br.ReadByte();
                     br.BaseStream.Position += 1;
 
-                    this.FileBlockIndex = br.ReadUInt32();
+                    FileBlockIndex = br.ReadUInt32();
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <returns><c>true</c> if this file ever existed; otherwise, <c>false</c>.</returns>
         public bool HasFileEverExisted()
         {
-            return this.FileBlockIndex != 0xFFFFFFFF;
+            return FileBlockIndex != 0xFFFFFFFF;
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <returns><c>true</c>, if the file exists, <c>false</c> otherwise.</returns>
         public bool DoesFileExist()
         {
-            return this.FileBlockIndex != 0xFFFFFFFE || this.FileBlockIndex != 0xFFFFFFFF;
+            return FileBlockIndex != 0xFFFFFFFE || FileBlockIndex != 0xFFFFFFFF;
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <returns>The primary hash.</returns>
         public uint GetPrimaryHash()
         {
-            return this.FilePathHashA;
+            return FilePathHashA;
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <returns>The secondary hash.</returns>
         public uint GetSecondaryHash()
         {
-            return this.FilePathHashB;
+            return FilePathHashB;
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <returns>The localization ID.</returns>
         public LocaleID GetLocalizationID()
         {
-            return this.Localization;
+            return Localization;
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <returns>The platform ID.</returns>
         public ushort GetPlatformID()
         {
-            return this.Platform;
+            return Platform;
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <returns>The block entry index.</returns>
         public uint GetBlockEntryIndex()
         {
-            return this.FileBlockIndex;
+            return FileBlockIndex;
         }
 
         /// <summary>
@@ -152,11 +152,11 @@ namespace Warcraft.MPQ.Tables.Hash
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.FilePathHashA);
-                    bw.Write(this.FilePathHashB);
-                    bw.Write((ushort)this.Localization);
-                    bw.Write(this.Platform);
-                    bw.Write(this.FileBlockIndex);
+                    bw.Write(FilePathHashA);
+                    bw.Write(FilePathHashB);
+                    bw.Write((ushort)Localization);
+                    bw.Write(Platform);
+                    bw.Write(FileBlockIndex);
                 }
 
                 return ms.ToArray();

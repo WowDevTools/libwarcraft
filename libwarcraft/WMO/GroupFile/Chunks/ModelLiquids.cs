@@ -56,25 +56,25 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.WidthVertices = br.ReadUInt32();
-                    this.HeightVertices = br.ReadUInt32();
+                    WidthVertices = br.ReadUInt32();
+                    HeightVertices = br.ReadUInt32();
 
-                    this.WidthTileFlags = br.ReadUInt32();
-                    this.HeightTileFlags = br.ReadUInt32();
+                    WidthTileFlags = br.ReadUInt32();
+                    HeightTileFlags = br.ReadUInt32();
 
-                    this.Location = br.ReadVector3();
-                    this.MaterialIndex = br.ReadUInt16();
+                    Location = br.ReadVector3();
+                    MaterialIndex = br.ReadUInt16();
 
-                    uint vertexCount = this.WidthVertices * this.HeightVertices;
+                    uint vertexCount = WidthVertices * HeightVertices;
                     for (int i = 0; i < vertexCount; ++i)
                     {
-                        this.LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
+                        LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
                     }
 
-                    uint tileFlagCount = this.WidthTileFlags * this.HeightTileFlags;
+                    uint tileFlagCount = WidthTileFlags * HeightTileFlags;
                     for (int i = 0; i < tileFlagCount; ++i)
                     {
-                        this.LiquidTileFlags.Add((LiquidFlags)br.ReadByte());
+                        LiquidTileFlags.Add((LiquidFlags)br.ReadByte());
                     }
                 }
             }
@@ -91,21 +91,21 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.WidthVertices);
-                    bw.Write(this.HeightVertices);
+                    bw.Write(WidthVertices);
+                    bw.Write(HeightVertices);
 
-                    bw.Write(this.WidthTileFlags);
-                    bw.Write(this.HeightTileFlags);
+                    bw.Write(WidthTileFlags);
+                    bw.Write(HeightTileFlags);
 
-                    bw.WriteVector3(this.Location);
-                    bw.Write(this.MaterialIndex);
+                    bw.WriteVector3(Location);
+                    bw.Write(MaterialIndex);
 
-                    foreach (LiquidVertex liquidVertex in this.LiquidVertices)
+                    foreach (LiquidVertex liquidVertex in LiquidVertices)
                     {
                         bw.Write(liquidVertex.Serialize());
                     }
 
-                    foreach (LiquidFlags liquidFlag in this.LiquidTileFlags)
+                    foreach (LiquidFlags liquidFlag in LiquidTileFlags)
                     {
                         bw.Write((byte)liquidFlag);
                     }

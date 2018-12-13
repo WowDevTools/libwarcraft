@@ -43,7 +43,7 @@ namespace Warcraft.Core.Reflection.DBC
         /// <param name="movedIn">The version that the field moved in.</param>
         public RecordFieldOrderAttribute(WarcraftVersion movedIn)
         {
-            this.MovedIn = movedIn;
+            MovedIn = movedIn;
         }
     }
 }

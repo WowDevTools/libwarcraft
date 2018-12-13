@@ -13,8 +13,8 @@ namespace Warcraft.Core.Compression.Squish
 
         protected ColourFit(ColourSet colours, SquishOptions flags)
         {
-            this._Colours = colours;
-            this._Flags = flags;
+            _Colours = colours;
+            _Flags = flags;
         }
 
         #endregion
@@ -23,10 +23,10 @@ namespace Warcraft.Core.Compression.Squish
 
         public void Compress(ref byte[] block)
         {
-            if (this._Flags.HasFlag(SquishOptions.DXT1))
+            if (_Flags.HasFlag(SquishOptions.DXT1))
             {
                 Compress3(block);
-                if (!this._Colours.IsTransparent)
+                if (!_Colours.IsTransparent)
                 {
                     Compress4(block);
                 }

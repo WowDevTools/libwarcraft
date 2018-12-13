@@ -62,7 +62,7 @@ namespace Warcraft.MPQ.Tables.Hash
                     {
                         byte[] entryBytes = br.ReadBytes((int)HashTableEntry.GetSize());
                         HashTableEntry newEntry = new HashTableEntry(entryBytes);
-                        this.Entries.Add(newEntry);
+                        Entries.Add(newEntry);
                     }
                 }
             }
@@ -75,7 +75,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <param name="fileName">File name.</param>
         public HashTableEntry FindEntry(string fileName)
         {
-            uint entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint) this.Entries.Count - 1;
+            uint entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint) Entries.Count - 1;
             uint hashA = MPQCrypt.Hash(fileName, HashType.FilePathA);
             uint hashB = MPQCrypt.Hash(fileName, HashType.FilePathB);
 
@@ -92,11 +92,11 @@ namespace Warcraft.MPQ.Tables.Hash
         public HashTableEntry FindEntry(uint hashA, uint hashB, uint entryHomeIndex)
         {
             // First, see if the file has ever existed. If it has and matches, return it.
-            if (this.Entries[(int)entryHomeIndex].HasFileEverExisted())
+            if (Entries[(int)entryHomeIndex].HasFileEverExisted())
             {
-                if (this.Entries[(int)entryHomeIndex].GetPrimaryHash() == hashA && this.Entries[(int)entryHomeIndex].GetSecondaryHash() == hashB)
+                if (Entries[(int)entryHomeIndex].GetPrimaryHash() == hashA && Entries[(int)entryHomeIndex].GetSecondaryHash() == hashB)
                 {
-                    return this.Entries[(int)entryHomeIndex];
+                    return Entries[(int)entryHomeIndex];
                 }
             }
             else
@@ -107,9 +107,9 @@ namespace Warcraft.MPQ.Tables.Hash
             // If that file doesn't match (but has existed, or is occupied, let's keep looking down the table.
             HashTableEntry currentEntry;
             HashTableEntry deletionEntry = null;
-            for (int i = (int)entryHomeIndex + 1; i < this.Entries.Count - 1; ++i)
+            for (int i = (int)entryHomeIndex + 1; i < Entries.Count - 1; ++i)
             {
-                currentEntry = this.Entries[i];
+                currentEntry = Entries[i];
                 if (!currentEntry.HasFileEverExisted())
                 {
                     continue;
@@ -133,7 +133,7 @@ namespace Warcraft.MPQ.Tables.Hash
             // Still nothing? Loop around and scan the start of the table as well
             for (int i = 0; i < entryHomeIndex; ++i)
             {
-                currentEntry = this.Entries[i];
+                currentEntry = Entries[i];
                 if (!currentEntry.HasFileEverExisted())
                 {
                     continue;
@@ -167,7 +167,7 @@ namespace Warcraft.MPQ.Tables.Hash
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (HashTableEntry entry in this.Entries)
+                    foreach (HashTableEntry entry in Entries)
                     {
                         bw.Write(entry.Serialize());
                     }
@@ -184,7 +184,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <returns>The size.</returns>
         public ulong GetSize()
         {
-            return (ulong)(this.Entries.Count * HashTableEntry.GetSize());
+            return (ulong)(Entries.Count * HashTableEntry.GetSize());
         }
     }
 }

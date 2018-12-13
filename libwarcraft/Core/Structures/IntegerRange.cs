@@ -72,9 +72,9 @@ namespace Warcraft.Core.Structures
                 throw new ArgumentOutOfRangeException(nameof(inMin), "inMin must be less than or equal to inMax");
             }
 
-            this.Minimum = inMin;
-            this.Maximum = inMax;
-            this.IsInclusive = inIsInclusive;
+            Minimum = inMin;
+            Maximum = inMax;
+            IsInclusive = inIsInclusive;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Warcraft.Core.Structures
         /// <returns>A string representation of the current instance.</returns>
         public override string ToString()
         {
-            return $"Integer Range: {this.Minimum} to {this.Maximum}";
+            return $"Integer Range: {Minimum} to {Maximum}";
         }
     }
 }

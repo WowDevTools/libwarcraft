@@ -56,7 +56,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int materialCount = inData.Length / ModelMaterial.GetSize();
                     for (int i = 0; i < materialCount; ++i)
                     {
-                        this.Materials.Add(new ModelMaterial(br.ReadBytes(ModelMaterial.GetSize())));
+                        Materials.Add(new ModelMaterial(br.ReadBytes(ModelMaterial.GetSize())));
                     }
                 }
             }
@@ -73,7 +73,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (ModelMaterial modelMaterial in this.Materials)
+                    foreach (ModelMaterial modelMaterial in Materials)
                     {
                         bw.Write(modelMaterial.Serialize());
                     }
@@ -135,26 +135,26 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Flags = (MaterialFlags) br.ReadUInt32();
-                    this.Shader = (WMOFragmentShaderType) br.ReadUInt32();
-                    this.BlendMode = (BlendingMode) br.ReadUInt32();
+                    Flags = (MaterialFlags) br.ReadUInt32();
+                    Shader = (WMOFragmentShaderType) br.ReadUInt32();
+                    BlendMode = (BlendingMode) br.ReadUInt32();
 
-                    this.FirstTextureOffset = br.ReadUInt32();
-                    this.FirstColour = br.ReadRGBA();
-                    this.FirstFlags  = (MaterialFlags)br.ReadUInt32();
+                    FirstTextureOffset = br.ReadUInt32();
+                    FirstColour = br.ReadRGBA();
+                    FirstFlags  = (MaterialFlags)br.ReadUInt32();
 
-                    this.SecondTextureOffset = br.ReadUInt32();
-                    this.SecondColour = br.ReadRGBA();
+                    SecondTextureOffset = br.ReadUInt32();
+                    SecondColour = br.ReadRGBA();
 
-                    this.GroundType = new ForeignKey<uint>(DatabaseName.TerrainType, nameof(DBCRecord.ID), br.ReadUInt32()); // TODO: Implement TerrainTypeRecord
-                    this.ThirdTextureOffset = br.ReadUInt32();
-                    this.BaseDiffuseColour = br.ReadRGBA();
-                    this.ThirdFlags = (MaterialFlags)br.ReadUInt32();
+                    GroundType = new ForeignKey<uint>(DatabaseName.TerrainType, nameof(DBCRecord.ID), br.ReadUInt32()); // TODO: Implement TerrainTypeRecord
+                    ThirdTextureOffset = br.ReadUInt32();
+                    BaseDiffuseColour = br.ReadRGBA();
+                    ThirdFlags = (MaterialFlags)br.ReadUInt32();
 
-                    this.RuntimeData1 = br.ReadUInt32();
-                    this.RuntimeData2 = br.ReadUInt32();
-                    this.RuntimeData3 = br.ReadUInt32();
-                    this.RuntimeData4 = br.ReadUInt32();
+                    RuntimeData1 = br.ReadUInt32();
+                    RuntimeData2 = br.ReadUInt32();
+                    RuntimeData3 = br.ReadUInt32();
+                    RuntimeData4 = br.ReadUInt32();
                 }
             }
         }
@@ -170,26 +170,26 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write((uint)this.Flags);
-                    bw.Write((uint)this.Shader);
-                    bw.Write((uint)this.BlendMode);
+                    bw.Write((uint)Flags);
+                    bw.Write((uint)Shader);
+                    bw.Write((uint)BlendMode);
 
-                    bw.Write(this.FirstTextureOffset);
-                    bw.WriteRGBA(this.FirstColour);
-                    bw.Write((uint)this.FirstFlags);
+                    bw.Write(FirstTextureOffset);
+                    bw.WriteRGBA(FirstColour);
+                    bw.Write((uint)FirstFlags);
 
-                    bw.Write(this.SecondTextureOffset);
-                    bw.WriteRGBA(this.SecondColour);
+                    bw.Write(SecondTextureOffset);
+                    bw.WriteRGBA(SecondColour);
 
-                    bw.Write(this.GroundType.Key);
-                    bw.Write(this.ThirdTextureOffset);
-                    bw.WriteRGBA(this.BaseDiffuseColour);
-                    bw.Write((uint)this.ThirdFlags);
+                    bw.Write(GroundType.Key);
+                    bw.Write(ThirdTextureOffset);
+                    bw.WriteRGBA(BaseDiffuseColour);
+                    bw.Write((uint)ThirdFlags);
 
-                    bw.Write(this.RuntimeData1);
-                    bw.Write(this.RuntimeData2);
-                    bw.Write(this.RuntimeData3);
-                    bw.Write(this.RuntimeData4);
+                    bw.Write(RuntimeData1);
+                    bw.Write(RuntimeData2);
+                    bw.Write(RuntimeData3);
+                    bw.Write(RuntimeData4);
                 }
 
                 return ms.ToArray();

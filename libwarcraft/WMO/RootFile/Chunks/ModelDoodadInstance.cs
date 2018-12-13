@@ -49,17 +49,17 @@ namespace Warcraft.WMO.RootFile.Chunks
                     byte[] nameOffsetBytes = br.ReadBytes(3);
                     Buffer.BlockCopy(nameOffsetBytes, 0, finalNameBytes, 0, 3);
 
-                    this.NameOffset= BitConverter.ToUInt32(finalNameBytes, 0);
+                    NameOffset= BitConverter.ToUInt32(finalNameBytes, 0);
 
-                    this.Flags = (DoodadInstanceFlags) br.ReadByte();
+                    Flags = (DoodadInstanceFlags) br.ReadByte();
 
-                    this.Position = br.ReadVector3();
+                    Position = br.ReadVector3();
 
                     // TODO: Investigate whether or not this is a Quat16 in >= BC
-                    this.Orientation = br.ReadQuaternion32();
+                    Orientation = br.ReadQuaternion32();
 
-                    this.Scale = br.ReadSingle();
-                    this.StaticLightingColour = br.ReadBGRA();
+                    Scale = br.ReadSingle();
+                    StaticLightingColour = br.ReadBGRA();
                 }
             }
         }
@@ -75,19 +75,19 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    byte[] nameOffsetBytes = BitConverter.GetBytes(this.NameOffset);
+                    byte[] nameOffsetBytes = BitConverter.GetBytes(NameOffset);
                     byte[] finalNameOffsetBytes = new byte[3];
                     Buffer.BlockCopy(nameOffsetBytes, 0, finalNameOffsetBytes, 0, 3);
 
                     bw.Write(finalNameOffsetBytes);
-                    bw.Write((byte)this.Flags);
+                    bw.Write((byte)Flags);
 
-                    bw.WriteVector3(this.Position);
+                    bw.WriteVector3(Position);
 
                     // TODO: Investigate whether or not this is a Quat16 in >= BC
-                    bw.WriteQuaternion32(this.Orientation);
-                    bw.Write(this.Scale);
-                    bw.WriteBGRA(this.StaticLightingColour);
+                    bw.WriteQuaternion32(Orientation);
+                    bw.Write(Scale);
+                    bw.WriteBGRA(StaticLightingColour);
                 }
 
                 return ms.ToArray();

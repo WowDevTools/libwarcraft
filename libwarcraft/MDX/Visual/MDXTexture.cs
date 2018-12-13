@@ -32,11 +32,11 @@ namespace Warcraft.MDX.Visual
 
         public MDXTexture(BinaryReader br)
         {
-            this.TextureType = (EMDXTextureType)br.ReadUInt32();
-            this.Flags = (EMDXTextureFlags)br.ReadUInt32();
+            TextureType = (EMDXTextureType)br.ReadUInt32();
+            Flags = (EMDXTextureFlags)br.ReadUInt32();
 
             // This points off to a null-terminated string, so we'll pop off the null byte when deserializing it
-            this.Filename = new string(br.ReadMDXArray<char>().ToArray()).TrimEnd('\0');
+            Filename = new string(br.ReadMDXArray<char>().ToArray()).TrimEnd('\0');
         }
     }
 }

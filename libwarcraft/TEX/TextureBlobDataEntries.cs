@@ -51,7 +51,7 @@ namespace Warcraft.TEX
                 {
                     while (br.BaseStream.Position < br.BaseStream.Length)
                     {
-                        this.BlobDataEntries.Add(new TextureBlobDataEntry(br.ReadBytes(TextureBlobDataEntry.GetSize())));
+                        BlobDataEntries.Add(new TextureBlobDataEntry(br.ReadBytes(TextureBlobDataEntry.GetSize())));
                     }
                 }
             }
@@ -75,7 +75,7 @@ namespace Warcraft.TEX
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (TextureBlobDataEntry blobDataEntry in this.BlobDataEntries)
+                    foreach (TextureBlobDataEntry blobDataEntry in BlobDataEntries)
                     {
                         bw.Write(blobDataEntry.Serialize());
                     }

@@ -5,15 +5,15 @@ namespace Warcraft.Core.Compression.Squish {
     internal class Sym3x3 {
         private float[] _X = new float[6];
         public float this[int index] {
-            get { return this._X[index]; }
-            set { this._X[index] = value; }
+            get { return _X[index]; }
+            set { _X[index] = value; }
         }
 
         public Sym3x3() { }
         public Sym3x3(float s) {
             for (int i = 0; i < 6; ++i)
             {
-                this._X[i] = s;
+                _X[i] = s;
             }
         }
 

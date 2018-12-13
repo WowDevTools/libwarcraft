@@ -141,8 +141,8 @@ namespace Warcraft.Core.Compression.Blast
         /// </summary>
         public Blast(Stream inputStream, Stream outputStream)
         {
-            this._inputStream = inputStream;
-            this._outputStream = outputStream;
+            _inputStream = inputStream;
+            _outputStream = outputStream;
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Warcraft.Core.Compression.Blast
                         copyDist++;
 
                         // malformed input - you can't go back that far
-                        if (copyDist > this._outputBufferPos)
+                        if (copyDist > _outputBufferPos)
                         {
                             throw new BlastException(BlastException.DistanceMessage);
                         }
@@ -257,7 +257,7 @@ namespace Warcraft.Core.Compression.Blast
                         // copy copyDist bytes up to a count of copyLength.
                         do
                         {
-                            fromIndex = this._outputBufferPos - copyDist;
+                            fromIndex = _outputBufferPos - copyDist;
 
                             copyCount = copyDist;
 
@@ -324,8 +324,8 @@ namespace Warcraft.Core.Compression.Blast
             int left;           // bits left in next or left to process
             int next = 1;           // next number of codes
 
-            bitbuf = this._bitBuffer;
-            left = this._bitBufferCount;
+            bitbuf = _bitBuffer;
+            left = _bitBufferCount;
 
             while (true)
             {
@@ -336,8 +336,8 @@ namespace Warcraft.Core.Compression.Blast
                     count = h.count[next++];
                     if (code < first + count)
                     {
-                        this._bitBuffer = bitbuf;
-                        this._bitBufferCount = (this._bitBufferCount - len) & 7;
+                        _bitBuffer = bitbuf;
+                        _bitBufferCount = (_bitBufferCount - len) & 7;
 
                         return h.symbol[index + (code - first)];
                     }
@@ -368,47 +368,47 @@ namespace Warcraft.Core.Compression.Blast
 
         private int GetBits(int need)
         {
-            int val = this._bitBuffer;
+            int val = _bitBuffer;
 
-            while (this._bitBufferCount < need)
+            while (_bitBufferCount < need)
             {
-                val |= ((int)ConsumeByte()) << this._bitBufferCount;
-                this._bitBufferCount += 8;
+                val |= ((int)ConsumeByte()) << _bitBufferCount;
+                _bitBufferCount += 8;
             }
 
-            this._bitBuffer = val >> need;
-            this._bitBufferCount -= need;
+            _bitBuffer = val >> need;
+            _bitBufferCount -= need;
 
             return val & ((1 << need) - 1);
         }
 
         private void FlushBits()
         {
-            this._bitBufferCount = 0;
+            _bitBufferCount = 0;
         }
 
         private byte ConsumeByte()
         {
-            if (this._inputBufferRemaining == 0)
+            if (_inputBufferRemaining == 0)
             {
                 DoReadBuffer();
 
-                if (this._inputBufferRemaining == 0)
+                if (_inputBufferRemaining == 0)
                 {
                     throw new BlastException(BlastException.OutOfInputMessage);
                 }
             }
 
-            byte b = this._inputBuffer[this._inputBufferPos++];
-            this._inputBufferRemaining--;
+            byte b = _inputBuffer[_inputBufferPos++];
+            _inputBufferRemaining--;
 
             return b;
         }
 
         private void DoReadBuffer()
         {
-            this._inputBufferRemaining = this._inputStream.Read(this._inputBuffer, 0, this._inputBuffer.Length);
-            this._inputBufferPos = 0;
+            _inputBufferRemaining = _inputStream.Read(_inputBuffer, 0, _inputBuffer.Length);
+            _inputBufferPos = 0;
         }
 
         /// <summary>
@@ -419,7 +419,7 @@ namespace Warcraft.Core.Compression.Blast
         private bool IsInputRemaining()
         {
             // is there any input in the buffer?
-            if (this._inputBufferRemaining > 0)
+            if (_inputBufferRemaining > 0)
             {
                 return true;
             }
@@ -428,7 +428,7 @@ namespace Warcraft.Core.Compression.Blast
             DoReadBuffer();
 
             // true if input now available
-            return this._inputBufferRemaining > 0;
+            return _inputBufferRemaining > 0;
         }
 
 
@@ -440,44 +440,44 @@ namespace Warcraft.Core.Compression.Blast
         {
             EnsureBufferSpace(1);
             //log("lit: {0}", (char)b);
-            this._outputBuffer[this._outputBufferPos++] = b;
+            _outputBuffer[_outputBufferPos++] = b;
         }
 
         private void CopyBufferSection(int fromIndex, int copyCount)
         {
             EnsureBufferSpace(copyCount);
 
-            Buffer.BlockCopy(this._outputBuffer, fromIndex, this._outputBuffer, this._outputBufferPos, copyCount);
-            this._outputBufferPos += copyCount;
+            Buffer.BlockCopy(_outputBuffer, fromIndex, _outputBuffer, _outputBufferPos, copyCount);
+            _outputBufferPos += copyCount;
         }
 
         private void EnsureBufferSpace(int required)
         {
             // is there room in the buffer?
-            if (this._outputBufferPos + required >= this._outputBuffer.Length)
+            if (_outputBufferPos + required >= _outputBuffer.Length)
             {
                 // flush the initial section
-                int startWindowOffset = this._outputBufferPos - MAX_WIN;
+                int startWindowOffset = _outputBufferPos - MAX_WIN;
 
                 FlushOutputBufferSection(startWindowOffset); // only flush the section that's not part of the window
 
                 // position the stream further back
-                Buffer.BlockCopy(this._outputBuffer, startWindowOffset, this._outputBuffer, 0, MAX_WIN);
-                this._outputBufferPos = MAX_WIN;
+                Buffer.BlockCopy(_outputBuffer, startWindowOffset, _outputBuffer, 0, MAX_WIN);
+                _outputBufferPos = MAX_WIN;
             }
         }
 
         private void FlushOutputBufferSection(int count)
         {
-            this._outputStream.Write(this._outputBuffer, 0, count);
+            _outputStream.Write(_outputBuffer, 0, count);
         }
 
         private void FlushOutputBuffer()
         {
-            if (this._outputBufferPos > 0)
+            if (_outputBufferPos > 0)
             {
-                FlushOutputBufferSection(this._outputBufferPos);
-                this._outputBufferPos = 0;
+                FlushOutputBufferSection(_outputBufferPos);
+                _outputBufferPos = 0;
             }
         }
 
@@ -525,8 +525,8 @@ namespace Warcraft.Core.Compression.Blast
 
             public HuffmanTable(int symbolSize, byte[] compacted)
             {
-                this.count = new short[MAX_BITS + 1];
-                this.symbol = new short[symbolSize];
+                count = new short[MAX_BITS + 1];
+                symbol = new short[symbolSize];
 
                 Construct(compacted);
             }
@@ -575,15 +575,15 @@ namespace Warcraft.Core.Compression.Blast
                 n = symbol;
                 for (len = 0; len <= MAX_BITS; len++)
                 {
-                    this.count[len] = 0;
+                    count[len] = 0;
                 }
 
                 for (symbol = 0; symbol < n; symbol++)
                 {
-                    (this.count[length[symbol]])++;// assumes lengths are within bounds
+                    (count[length[symbol]])++;// assumes lengths are within bounds
                 }
 
-                if (this.count[0] == n)// no codes!
+                if (count[0] == n)// no codes!
                 {
                     return 0;   // complete, but decode() will fail
                 }
@@ -593,7 +593,7 @@ namespace Warcraft.Core.Compression.Blast
                 for (len = 1; len <= MAX_BITS; len++)
                 {
                     left <<= 1; // one more bit, double codes left
-                    left -= this.count[len]; // deduct count from possible codes
+                    left -= count[len]; // deduct count from possible codes
                     if (left < 0)
                     {
                         return left; // over-subscribed--return negative
@@ -605,7 +605,7 @@ namespace Warcraft.Core.Compression.Blast
 
                 for (len = 1; len < MAX_BITS; len++)
                 {
-                    offs[len + 1] = (short)(offs[len] + this.count[len]);
+                    offs[len + 1] = (short)(offs[len] + count[len]);
                 }
 
                 //

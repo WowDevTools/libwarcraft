@@ -17,13 +17,13 @@ namespace Warcraft.Core.Compression.Squish
 
         #region Properties
 
-        public int Count { get { return this._Count; } }
+        public int Count { get { return _Count; } }
 
-        public Vector3[] Points { get { return this._Points; } }
+        public Vector3[] Points { get { return _Points; } }
 
-        public float[] Weights { get { return this._Weights; } }
+        public float[] Weights { get { return _Weights; } }
 
-        public bool IsTransparent { get { return this._IsTransparent; } }
+        public bool IsTransparent { get { return _IsTransparent; } }
 
         #endregion
 
@@ -42,15 +42,15 @@ namespace Warcraft.Core.Compression.Squish
                 int bit = 1 << i;
                 if ((mask & bit) == 0)
                 {
-                    this._Remap[i] = -1;
+                    _Remap[i] = -1;
                     continue;
                 }
 
                 // Check for transparent pixels when using DXT1.
                 if (isDxt1 && rgba[4 * i + 3] < 128)
                 {
-                    this._Remap[i] = -1;
-                    this._IsTransparent = true;
+                    _Remap[i] = -1;
+                    _IsTransparent = true;
                 }
 
                 // Loop over previous points for a match.
@@ -68,12 +68,12 @@ namespace Warcraft.Core.Compression.Squish
                         var w = (rgba[4 * i + 3] + 1) / 256f;
 
                         // Add the point.
-                        this._Points[this._Count] = new Vector3(x, y, z);
-                        this._Weights[this._Count] = w;
-                        this._Remap[i] = this._Count;
+                        _Points[_Count] = new Vector3(x, y, z);
+                        _Weights[_Count] = w;
+                        _Remap[i] = _Count;
 
                         // Advance.
-                        ++this._Count;
+                        ++_Count;
                         break;
                     }
 
@@ -87,23 +87,23 @@ namespace Warcraft.Core.Compression.Squish
                     if (match)
                     {
                         // Get index of the match.
-                        var index = this._Remap[j];
+                        var index = _Remap[j];
 
                         // Ensure there is always a non-zero weight even for zero alpha.
                         var w = (rgba[4 * i + 3] + 1) / 256f;
 
                         // Map this point and increase the weight.
-                        this._Weights[index] += (weightByAlpha ? w : 1f);
-                        this._Remap[i] = index;
+                        _Weights[index] += (weightByAlpha ? w : 1f);
+                        _Remap[i] = index;
                         break;
                     }
                 }
             }
 
             // Square root the weights.
-            for (int i = 0; i < this._Count; ++i)
+            for (int i = 0; i < _Count; ++i)
             {
-                this._Weights[i] = (float)Math.Sqrt(this._Weights[i]);
+                _Weights[i] = (float)Math.Sqrt(_Weights[i]);
             }
         }
 
@@ -115,7 +115,7 @@ namespace Warcraft.Core.Compression.Squish
         {
             for (int i = 0; i < 16; ++i)
             {
-                var j = this._Remap[i];
+                var j = _Remap[i];
                 if (j == -1)
                 {
                     target[i + targetOffset] = 3;

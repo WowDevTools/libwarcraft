@@ -68,43 +68,43 @@ namespace Warcraft.WMO.RootFile
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Version = br.ReadIFFChunk<TerrainVersion>();
+                    Version = br.ReadIFFChunk<TerrainVersion>();
 
-                    this.Header = br.ReadIFFChunk<ModelRootHeader>();
+                    Header = br.ReadIFFChunk<ModelRootHeader>();
 
-                    this.Textures = br.ReadIFFChunk<ModelTextures>();
-                    this.Materials = br.ReadIFFChunk<ModelMaterials>();
+                    Textures = br.ReadIFFChunk<ModelTextures>();
+                    Materials = br.ReadIFFChunk<ModelMaterials>();
 
-                    this.GroupNames = br.ReadIFFChunk<ModelGroupNames>();
-                    this.GroupInformation = br.ReadIFFChunk<ModelGroupInformation>();
+                    GroupNames = br.ReadIFFChunk<ModelGroupNames>();
+                    GroupInformation = br.ReadIFFChunk<ModelGroupInformation>();
 
-                    this.Skybox = br.ReadIFFChunk<ModelSkybox>();
+                    Skybox = br.ReadIFFChunk<ModelSkybox>();
 
-                    this.PortalVertices = br.ReadIFFChunk<ModelPortalVertices>();
-                    this.Portals = br.ReadIFFChunk<ModelPortals>();
-                    this.PortalReferences = br.ReadIFFChunk<ModelPortalReferences>();
+                    PortalVertices = br.ReadIFFChunk<ModelPortalVertices>();
+                    Portals = br.ReadIFFChunk<ModelPortals>();
+                    PortalReferences = br.ReadIFFChunk<ModelPortalReferences>();
 
-                    this.VisibleVertices = br.ReadIFFChunk<ModelVisibleVertices>();
-                    this.VisibleBlocks = br.ReadIFFChunk<ModelVisibleBlocks>();
+                    VisibleVertices = br.ReadIFFChunk<ModelVisibleVertices>();
+                    VisibleBlocks = br.ReadIFFChunk<ModelVisibleBlocks>();
 
-                    this.StaticLighting = br.ReadIFFChunk<ModelStaticLighting>();
+                    StaticLighting = br.ReadIFFChunk<ModelStaticLighting>();
 
-                    this.DoodadSets = br.ReadIFFChunk<ModelDoodadSets>();
-                    this.DoodadPaths = br.ReadIFFChunk<ModelDoodadPaths>();
-                    this.DoodadInstances = br.ReadIFFChunk<ModelDoodadInstances>();
+                    DoodadSets = br.ReadIFFChunk<ModelDoodadSets>();
+                    DoodadPaths = br.ReadIFFChunk<ModelDoodadPaths>();
+                    DoodadInstances = br.ReadIFFChunk<ModelDoodadInstances>();
 
-                    this.Fog = br.ReadIFFChunk<ModelFog>();
+                    Fog = br.ReadIFFChunk<ModelFog>();
 
                     // Optional chunk
                     if ((br.BaseStream.Position != br.BaseStream.Length) && br.PeekChunkSignature() == ModelConvexPlanes.Signature)
                     {
-                        this.ConvexPlanes = br.ReadIFFChunk<ModelConvexPlanes>();
+                        ConvexPlanes = br.ReadIFFChunk<ModelConvexPlanes>();
                     }
 
                     // Version-dependent chunk
                     if ((br.BaseStream.Position != br.BaseStream.Length) && br.PeekChunkSignature() == ModelGameObjectFileID.Signature)
                     {
-                        this.GameObjectFileID = br.ReadIFFChunk<ModelGameObjectFileID>();
+                        GameObjectFileID = br.ReadIFFChunk<ModelGameObjectFileID>();
                     }
                 }
             }
@@ -112,8 +112,8 @@ namespace Warcraft.WMO.RootFile
 
         public bool ContainsGroup(ModelGroup modelGroup)
         {
-            bool containsGroupName = this.GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalNameOffset()) > 0;
-            bool containsDescriptiveGroupName = this.GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalDescriptiveNameOffset()) > 0;
+            bool containsGroupName = GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalNameOffset()) > 0;
+            bool containsDescriptiveGroupName = GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalDescriptiveNameOffset()) > 0;
 
             // sometimes, model groups don't contain a descriptive name.
             if (modelGroup.GetInternalDescriptiveNameOffset() > 0)
@@ -126,12 +126,12 @@ namespace Warcraft.WMO.RootFile
 
         public string GetInternalGroupName(ModelGroup modelGroup)
         {
-            return this.GroupNames.GetInternalGroupName(modelGroup);
+            return GroupNames.GetInternalGroupName(modelGroup);
         }
 
         public string GetInternalDescriptiveGroupName(ModelGroup modelGroup)
         {
-            return this.GroupNames.GetInternalDescriptiveGroupName(modelGroup);
+            return GroupNames.GetInternalDescriptiveGroupName(modelGroup);
         }
 
         public byte[] Serialize()
@@ -140,40 +140,40 @@ namespace Warcraft.WMO.RootFile
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.WriteIFFChunk(this.Version);
-                    bw.WriteIFFChunk(this.Header);
+                    bw.WriteIFFChunk(Version);
+                    bw.WriteIFFChunk(Header);
 
-                    bw.WriteIFFChunk(this.Textures);
-                    bw.WriteIFFChunk(this.Materials);
+                    bw.WriteIFFChunk(Textures);
+                    bw.WriteIFFChunk(Materials);
 
-                    bw.WriteIFFChunk(this.GroupNames);
-                    bw.WriteIFFChunk(this.GroupInformation);
+                    bw.WriteIFFChunk(GroupNames);
+                    bw.WriteIFFChunk(GroupInformation);
 
-                    bw.WriteIFFChunk(this.Skybox);
+                    bw.WriteIFFChunk(Skybox);
 
-                    bw.WriteIFFChunk(this.PortalVertices);
-                    bw.WriteIFFChunk(this.Portals);
-                    bw.WriteIFFChunk(this.PortalReferences);
+                    bw.WriteIFFChunk(PortalVertices);
+                    bw.WriteIFFChunk(Portals);
+                    bw.WriteIFFChunk(PortalReferences);
 
-                    bw.WriteIFFChunk(this.VisibleVertices);
-                    bw.WriteIFFChunk(this.VisibleBlocks);
+                    bw.WriteIFFChunk(VisibleVertices);
+                    bw.WriteIFFChunk(VisibleBlocks);
 
-                    bw.WriteIFFChunk(this.StaticLighting);
+                    bw.WriteIFFChunk(StaticLighting);
 
-                    bw.WriteIFFChunk(this.DoodadSets);
-                    bw.WriteIFFChunk(this.DoodadPaths);
-                    bw.WriteIFFChunk(this.DoodadInstances);
+                    bw.WriteIFFChunk(DoodadSets);
+                    bw.WriteIFFChunk(DoodadPaths);
+                    bw.WriteIFFChunk(DoodadInstances);
 
-                    bw.WriteIFFChunk(this.Fog);
+                    bw.WriteIFFChunk(Fog);
 
-                    if (this.ConvexPlanes != null)
+                    if (ConvexPlanes != null)
                     {
-                        bw.WriteIFFChunk(this.ConvexPlanes);
+                        bw.WriteIFFChunk(ConvexPlanes);
                     }
 
-                    if (this.GameObjectFileID != null)
+                    if (GameObjectFileID != null)
                     {
-                        bw.WriteIFFChunk(this.GameObjectFileID);
+                        bw.WriteIFFChunk(GameObjectFileID);
                     }
                 }
 

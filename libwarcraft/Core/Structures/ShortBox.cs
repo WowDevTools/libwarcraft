@@ -47,13 +47,13 @@ namespace Warcraft.Core.Structures
         /// <returns>A new <see cref="Box"/> object.</returns>
         public ShortBox(Vector3s inBottomCorner, Vector3s inTopCorner)
         {
-            this.BottomCorner = inBottomCorner;
-            this.TopCorner = inTopCorner;
+            BottomCorner = inBottomCorner;
+            TopCorner = inTopCorner;
         }
 
         public IReadOnlyCollection<short> Flatten()
         {
-            return this.BottomCorner.Flatten().Concat(this.TopCorner.Flatten()).ToArray();
+            return BottomCorner.Flatten().Concat(TopCorner.Flatten()).ToArray();
         }
     }
 }

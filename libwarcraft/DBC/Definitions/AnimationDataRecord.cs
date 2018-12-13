@@ -79,7 +79,7 @@ namespace Warcraft.DBC.Definitions
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()
         {
-            yield return this.Name;
+            yield return Name;
         }
     }
 

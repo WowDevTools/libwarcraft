@@ -47,8 +47,8 @@ namespace Warcraft.WDT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Flags = (WorldTableFlags)br.ReadUInt32();
-                    this.Unknown = br.ReadUInt32();
+                    Flags = (WorldTableFlags)br.ReadUInt32();
+                    Unknown = br.ReadUInt32();
                 }
             }
         }
@@ -73,8 +73,8 @@ namespace Warcraft.WDT.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write((uint)this.Flags);
-                    bw.Write(this.Unknown);
+                    bw.Write((uint)Flags);
+                    bw.Write(Unknown);
 
                     // Write the six unused fields
                     for (int i = 0; i < 6; ++i)

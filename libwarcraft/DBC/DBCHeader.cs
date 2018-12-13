@@ -67,10 +67,10 @@ namespace Warcraft.DBC
                         throw new FileLoadException("The loaded data did not have a valid DBC signature.");
                     }
 
-                    this.RecordCount = br.ReadUInt32();
-                    this.FieldCount = br.ReadUInt32();
-                    this.RecordSize = br.ReadUInt32();
-                    this.StringBlockSize = br.ReadUInt32();
+                    RecordCount = br.ReadUInt32();
+                    FieldCount = br.ReadUInt32();
+                    RecordSize = br.ReadUInt32();
+                    StringBlockSize = br.ReadUInt32();
                 }
             }
         }

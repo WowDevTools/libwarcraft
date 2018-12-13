@@ -182,42 +182,42 @@ namespace Warcraft.DBC.Definitions
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()
         {
-            yield return this.Directory;
+            yield return Directory;
 
-            foreach (var localizedMapName in this.MapName.GetReferences())
+            foreach (var localizedMapName in MapName.GetReferences())
             {
                 yield return localizedMapName;
             }
 
-            foreach (var mapDescription in this.MapDescription1.GetReferences())
+            foreach (var mapDescription in MapDescription1.GetReferences())
             {
                 yield return mapDescription;
             }
 
-            foreach (var mapDescription in this.MapDescription2.GetReferences())
+            foreach (var mapDescription in MapDescription2.GetReferences())
             {
                 yield return mapDescription;
             }
 
-            if (this.RequirementText != null)
+            if (RequirementText != null)
             {
-                foreach (var text in this.RequirementText.GetReferences())
+                foreach (var text in RequirementText.GetReferences())
                 {
                     yield return text;
                 }
             }
 
-            if (this.HeroicText != null)
+            if (HeroicText != null)
             {
-                foreach (var text in this.HeroicText.GetReferences())
+                foreach (var text in HeroicText.GetReferences())
                 {
                     yield return text;
                 }
             }
 
-            if (this.EmptyText2 != null)
+            if (EmptyText2 != null)
             {
-                foreach (var text in this.EmptyText2.GetReferences())
+                foreach (var text in EmptyText2.GetReferences())
                 {
                     yield return text;
                 }

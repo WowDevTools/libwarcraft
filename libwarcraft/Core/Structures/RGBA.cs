@@ -53,10 +53,10 @@ namespace Warcraft.Core.Structures
         /// <param name="inA">The input alpha component.</param>
         public RGBA(byte inR, byte inG, byte inB, byte inA)
         {
-            this.R = inR;
-            this.G = inG;
-            this.B = inB;
-            this.A = inA;
+            R = inR;
+            G = inG;
+            B = inB;
+            A = inA;
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Warcraft.Core.Structures
         /// <returns>A string representation of the current instance.</returns>
         public override string ToString()
         {
-            return $"rgba({this.R}, {this.G}, {this.B}, {this.A})";
+            return $"rgba({R}, {G}, {B}, {A})";
         }
     }
 }

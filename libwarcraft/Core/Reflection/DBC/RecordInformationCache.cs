@@ -42,7 +42,7 @@ namespace Warcraft.Core.Reflection.DBC
 
         private RecordInformationCache()
         {
-            this.InformationCache = new Dictionary<RecordInformationIdentifier, RecordFieldInformation>();
+            InformationCache = new Dictionary<RecordInformationIdentifier, RecordFieldInformation>();
         }
 
         /// <summary>
@@ -55,13 +55,13 @@ namespace Warcraft.Core.Reflection.DBC
         public RecordFieldInformation GetRecordInformation(Type recordType, WarcraftVersion version)
         {
             var infoKey = new RecordInformationIdentifier(recordType, version);
-            if (!this.InformationCache.ContainsKey(infoKey))
+            if (!InformationCache.ContainsKey(infoKey))
             {
                 var recordInfo = new RecordFieldInformation(recordType, version);
-                this.InformationCache.Add(infoKey, recordInfo);
+                InformationCache.Add(infoKey, recordInfo);
             }
 
-            return this.InformationCache[infoKey];
+            return InformationCache[infoKey];
         }
     }
 }

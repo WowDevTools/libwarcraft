@@ -9,7 +9,7 @@ namespace libwarcraft.Tests.Integration.DBC.BurningCrusade
         [SetUp]
         public override void Setup()
         {
-            this.Version = WarcraftVersion.BurningCrusade;
+            Version = WarcraftVersion.BurningCrusade;
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Filenames.Add(br.ReadNullTerminatedString());
+                    Filenames.Add(br.ReadNullTerminatedString());
                 }
             }
         }

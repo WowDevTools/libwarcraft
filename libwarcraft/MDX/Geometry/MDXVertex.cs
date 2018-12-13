@@ -72,12 +72,12 @@ namespace Warcraft.MDX.Geometry
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Position = br.ReadVector3();
-                    this.BoneWeights = new List<byte>(br.ReadBytes(4));
-                    this.BoneIndices = new List<byte>(br.ReadBytes(4));
-                    this.Normal = br.ReadVector3();
-                    this.UV1 = br.ReadVector2();
-                    this.UV2 = br.ReadVector2();
+                    Position = br.ReadVector3();
+                    BoneWeights = new List<byte>(br.ReadBytes(4));
+                    BoneIndices = new List<byte>(br.ReadBytes(4));
+                    Normal = br.ReadVector3();
+                    UV1 = br.ReadVector2();
+                    UV2 = br.ReadVector2();
                 }
             }
         }

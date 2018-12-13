@@ -49,7 +49,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.Vertices.Add(br.ReadVector3());
+                        Vertices.Add(br.ReadVector3());
                     }
                 }
             }
@@ -66,7 +66,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Vector3 portalVertex in this.Vertices)
+                    foreach (Vector3 portalVertex in Vertices)
                     {
                         bw.WriteVector3(portalVertex);
                     }

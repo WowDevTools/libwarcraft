@@ -54,13 +54,13 @@ namespace Warcraft.Containers.Terrain
 
         public GameWorld(string inWorldPath, string inWorldName, WarcraftVersion inGameVersion, IPackage inPackage, byte[] inWorldData)
         {
-            this.WorldPath = inWorldPath;
-            this.WorldName = inWorldName;
-            this.GameVersion = inGameVersion;
-            this.Package = inPackage;
+            WorldPath = inWorldPath;
+            WorldName = inWorldName;
+            GameVersion = inGameVersion;
+            Package = inPackage;
 
             // Load the world metadata
-            this.WorldDataTable = new WorldTable(inWorldData);
+            WorldDataTable = new WorldTable(inWorldData);
 
             // Load all ADTs here? Bad for memory, perhaps better to leave it to the user to lazy load as needed
         }
@@ -69,12 +69,12 @@ namespace Warcraft.Containers.Terrain
         {
             string tilePath = CreateTilePath(tileXPosition, tileYPosition);
 
-            if (!this.Package.ContainsFile(tilePath))
+            if (!Package.ContainsFile(tilePath))
             {
                 throw new ArgumentException("No tile found for the given coordinates.");
             }
 
-            byte[] terrainTileData = this.Package.ExtractFile(tilePath);
+            byte[] terrainTileData = Package.ExtractFile(tilePath);
             if (terrainTileData != null)
             {
                 // TODO: [#9] Pass in DBC entry to allow loading of liquid vertex data
@@ -88,7 +88,7 @@ namespace Warcraft.Containers.Terrain
 
         private string CreateTilePath(uint tileXPosition, uint tileYPosition)
         {
-            return $"{this.WorldPath}\\{this.WorldName}_{tileXPosition}_{tileYPosition}.adt";
+            return $"{WorldPath}\\{WorldName}_{tileXPosition}_{tileYPosition}.adt";
         }
     }
 }

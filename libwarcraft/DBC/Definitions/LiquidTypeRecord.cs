@@ -40,7 +40,7 @@ namespace Warcraft.DBC.Definitions
         public LiquidType Type
         {
             get => TranslateLiquidType();
-            set => this.TypeInternal = value;
+            set => TypeInternal = value;
         }
         private LiquidType TypeInternal;
 
@@ -94,17 +94,17 @@ namespace Warcraft.DBC.Definitions
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()
         {
-            yield return this.Name;
+            yield return Name;
         }
 
         public LiquidType TranslateLiquidType()
         {
-            if (this.Version >= WarcraftVersion.Wrath)
+            if (Version >= WarcraftVersion.Wrath)
             {
-                return this.TypeInternal;
+                return TypeInternal;
             }
 
-            int baseValue = (int)this.TypeInternal;
+            int baseValue = (int)TypeInternal;
             switch (baseValue)
             {
                 case 0:

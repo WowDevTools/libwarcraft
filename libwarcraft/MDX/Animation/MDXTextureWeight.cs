@@ -30,7 +30,7 @@ namespace Warcraft.MDX.Animation
 
         public MDXTextureWeight(BinaryReader br, WarcraftVersion version)
         {
-            this.Weight = br.ReadMDXTrack<short>(version);
+            Weight = br.ReadMDXTrack<short>(version);
         }
     }
 }

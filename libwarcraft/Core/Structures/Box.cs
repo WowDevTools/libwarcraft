@@ -49,8 +49,8 @@ namespace Warcraft.Core.Structures
         /// <returns>A new <see cref="Box"/> object.</returns>
         public Box(Vector3 inBottomCorner, Vector3 inTopCorner)
         {
-            this.BottomCorner = inBottomCorner;
-            this.TopCorner = inTopCorner;
+            BottomCorner = inBottomCorner;
+            TopCorner = inTopCorner;
         }
 
         /// <summary>
@@ -59,13 +59,13 @@ namespace Warcraft.Core.Structures
         /// <returns>A vector with the coordinates of the center of the box.</returns>
         public Vector3 GetCenterCoordinates()
         {
-            return (this.BottomCorner + this.TopCorner) / 2;
+            return (BottomCorner + TopCorner) / 2;
         }
 
         /// <inheritdoc />
         public IReadOnlyCollection<float> Flatten()
         {
-            return this.TopCorner.Flatten().Concat(this.BottomCorner.Flatten()).ToArray();
+            return TopCorner.Flatten().Concat(BottomCorner.Flatten()).ToArray();
         }
     }
 }

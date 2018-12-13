@@ -18,28 +18,28 @@ namespace Warcraft.WMO
         public ModelRoot RootInformation;
         public List<ModelGroup> Groups = new List<ModelGroup>();
 
-        public int GroupCount => (int)this.RootInformation.Header.GroupCount;
+        public int GroupCount => (int)RootInformation.Header.GroupCount;
 
         public WMO(byte[] inData)
         {
-            this.RootInformation = new ModelRoot(inData);
+            RootInformation = new ModelRoot(inData);
 
             PostResolveStringReferences();
         }
 
         private void PostResolveStringReferences() // TODO: Refactor
         {
-            foreach (DoodadInstance doodadInstance in this.RootInformation.DoodadInstances.DoodadInstances)
+            foreach (DoodadInstance doodadInstance in RootInformation.DoodadInstances.DoodadInstances)
             {
-                string doodadPath = this.RootInformation.DoodadPaths.GetNameByOffset(doodadInstance.NameOffset);
+                string doodadPath = RootInformation.DoodadPaths.GetNameByOffset(doodadInstance.NameOffset);
                 doodadInstance.Name = doodadPath;
             }
 
-            foreach (ModelMaterial modelMaterial in this.RootInformation.Materials.Materials)
+            foreach (ModelMaterial modelMaterial in RootInformation.Materials.Materials)
             {
-                string texturePath0 = this.RootInformation.Textures.GetTexturePathByOffset(modelMaterial.FirstTextureOffset);
-                string texturePath1 = this.RootInformation.Textures.GetTexturePathByOffset(modelMaterial.SecondTextureOffset);
-                string texturePath2 = this.RootInformation.Textures.GetTexturePathByOffset(modelMaterial.ThirdTextureOffset);
+                string texturePath0 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.FirstTextureOffset);
+                string texturePath1 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.SecondTextureOffset);
+                string texturePath2 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.ThirdTextureOffset);
 
                 if (string.IsNullOrEmpty(texturePath0))
                 {
@@ -54,7 +54,7 @@ namespace Warcraft.WMO
 
         public bool DoesGroupBelongToModel(ModelGroup modelGroup)
         {
-            return this.RootInformation.ContainsGroup(modelGroup);
+            return RootInformation.ContainsGroup(modelGroup);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Warcraft.WMO
 
             modelGroup.Name = ResolveInternalGroupName(modelGroup);
             modelGroup.DescriptiveName = ResolveInternalDescriptiveGroupName(modelGroup);
-            this.Groups.Add(modelGroup);
+            Groups.Add(modelGroup);
         }
 
         /// <summary>
@@ -97,22 +97,22 @@ namespace Warcraft.WMO
 
         public string ResolveInternalGroupName(ModelGroup modelGroup)
         {
-            return this.RootInformation.GetInternalGroupName(modelGroup);
+            return RootInformation.GetInternalGroupName(modelGroup);
         }
 
         private string ResolveInternalDescriptiveGroupName(ModelGroup modelGroup)
         {
-            return this.RootInformation.GetInternalDescriptiveGroupName(modelGroup);
+            return RootInformation.GetInternalDescriptiveGroupName(modelGroup);
         }
 
         public IEnumerable<string> GetTextures()
         {
-            return this.RootInformation.Textures.Textures.Select(kvp => kvp.Value).Where(s => !string.IsNullOrEmpty(s)).ToList();
+            return RootInformation.Textures.Textures.Select(kvp => kvp.Value).Where(s => !string.IsNullOrEmpty(s)).ToList();
         }
 
         public ModelMaterial GetMaterial(byte materialID)
         {
-            return this.RootInformation.Materials.Materials[materialID];
+            return RootInformation.Materials.Materials[materialID];
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Warcraft.WMO
         /// <returns></returns>
         public IEnumerable<ModelMaterial> GetMaterials()
         {
-            return this.RootInformation.Materials.Materials;
+            return RootInformation.Materials.Materials;
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int portalCount = inData.Length / Portal.GetSize();
                     for (uint i = 0; i < portalCount; ++i)
                     {
-                        this.Portals.Add(new Portal(br.ReadBytes(Portal.GetSize())));
+                        Portals.Add(new Portal(br.ReadBytes(Portal.GetSize())));
                     }
                 }
             }
@@ -67,7 +67,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Portal portal in this.Portals)
+                    foreach (Portal portal in Portals)
                     {
                         bw.Write(portal.Serialize());
                     }
@@ -90,9 +90,9 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.BaseVertexIndex = br.ReadUInt16();
-                    this.VertexCount = br.ReadUInt16();
-                    this.PortalPlane = br.ReadPlane();
+                    BaseVertexIndex = br.ReadUInt16();
+                    VertexCount = br.ReadUInt16();
+                    PortalPlane = br.ReadPlane();
                 }
             }
         }
@@ -108,9 +108,9 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.BaseVertexIndex);
-                    bw.Write(this.VertexCount);
-                    bw.WritePlane(this.PortalPlane);
+                    bw.Write(BaseVertexIndex);
+                    bw.Write(VertexCount);
+                    bw.WritePlane(PortalPlane);
                 }
 
                 return ms.ToArray();

@@ -57,7 +57,7 @@ namespace Warcraft.ADT.Chunks
 
                     for (int i = 0; i < entryCount; ++i)
                     {
-                        this.Entries.Add(new ModelPlacementEntry(br.ReadBytes(ModelPlacementEntry.GetSize())));
+                        Entries.Add(new ModelPlacementEntry(br.ReadBytes(ModelPlacementEntry.GetSize())));
                     }
                 }
             }
@@ -113,13 +113,13 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.ModelEntryIndex = br.ReadUInt32();
-                    this.UniqueID = br.ReadUInt32();
-                    this.Position = br.ReadVector3();
-                    this.Rotation = br.ReadRotator();
+                    ModelEntryIndex = br.ReadUInt32();
+                    UniqueID = br.ReadUInt32();
+                    Position = br.ReadVector3();
+                    Rotation = br.ReadRotator();
 
-                    this.ScalingFactor = br.ReadUInt16();
-                    this.Flags = (ModelPlacementFlags)br.ReadUInt16();
+                    ScalingFactor = br.ReadUInt16();
+                    Flags = (ModelPlacementFlags)br.ReadUInt16();
                 }
             }
         }

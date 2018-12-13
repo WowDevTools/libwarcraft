@@ -73,13 +73,13 @@ namespace Warcraft.WMO.RootFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.DoodadNames.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
+                        DoodadNames.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
                     }
                 }
             }
 
             // Remove null entries from the doodad list
-            this.DoodadNames.RemoveAll(s => s.Value.Equals("\0"));
+            DoodadNames.RemoveAll(s => s.Value.Equals("\0"));
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <returns>The doodad path.</returns>
         public string GetNameByOffset(uint nameOffset)
         {
-            foreach (KeyValuePair<long, string> doodadName in this.DoodadNames)
+            foreach (KeyValuePair<long, string> doodadName in DoodadNames)
             {
                 if (doodadName.Key == nameOffset)
                 {
@@ -118,7 +118,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (KeyValuePair<long, string> doodadName in this.DoodadNames)
+                    foreach (KeyValuePair<long, string> doodadName in DoodadNames)
                     {
                         bw.WriteNullTerminatedString(doodadName.Value);
                     }

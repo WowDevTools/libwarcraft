@@ -48,7 +48,7 @@ namespace Warcraft.TEX
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Version = br.ReadUInt32();
+                    Version = br.ReadUInt32();
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace Warcraft.TEX
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.Version);
+                    bw.Write(Version);
                 }
 
                 return ms.ToArray();

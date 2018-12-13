@@ -42,8 +42,8 @@ namespace Warcraft.Core.Reflection.DBC
         /// <param name="version">The version identifying the field information set.</param>
         public RecordInformationIdentifier(Type type, WarcraftVersion version)
         {
-            this.Type = type;
-            this.Version = version;
+            Type = type;
+            Version = version;
         }
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Warcraft.Core.Reflection.DBC
                 return true;
             }
 
-            return Equals(this.Type, other.Type) && this.Version == other.Version;
+            return Equals(Type, other.Type) && Version == other.Version;
         }
 
         /// <inheritdoc />
@@ -75,7 +75,7 @@ namespace Warcraft.Core.Reflection.DBC
                 return true;
             }
 
-            if (obj.GetType() != this.GetType())
+            if (obj.GetType() != GetType())
             {
                 return false;
             }
@@ -88,7 +88,7 @@ namespace Warcraft.Core.Reflection.DBC
         {
             unchecked
             {
-                return ((this.Type != null ? this.Type.GetHashCode() : 0) * 397) ^ (int)this.Version;
+                return ((Type != null ? Type.GetHashCode() : 0) * 397) ^ (int)Version;
             }
         }
     }

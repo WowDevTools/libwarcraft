@@ -36,11 +36,11 @@ namespace Warcraft.MDX.Gameplay
 
         public MDXAttachment(BinaryReader br, WarcraftVersion version)
         {
-            this.AttachmentIDLookupIndex = br.ReadUInt32();
-            this.Bone = br.ReadUInt16();
-            this.Unknown = br.ReadUInt16();
-            this.Position = br.ReadVector3();
-            this.AnimateAttached = br.ReadMDXTrack<bool>(version);
+            AttachmentIDLookupIndex = br.ReadUInt32();
+            Bone = br.ReadUInt16();
+            Unknown = br.ReadUInt16();
+            Position = br.ReadVector3();
+            AnimateAttached = br.ReadMDXTrack<bool>(version);
         }
     }
 }

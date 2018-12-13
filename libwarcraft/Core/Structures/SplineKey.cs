@@ -30,9 +30,9 @@ namespace Warcraft.Core.Structures
 
         public SplineKey(BinaryReader br)
         {
-            this.Value = br.Read<T>();
-            this.InTangent = br.Read<T>();
-            this.OutTangent = br.Read<T>();
+            Value = br.Read<T>();
+            InTangent = br.Read<T>();
+            OutTangent = br.Read<T>();
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int portalReferenceCount = inData.Length / PortalReference.GetSize();
                     for (int i = 0; i < portalReferenceCount; ++i)
                     {
-                        this.PortalReferences.Add(new PortalReference(br.ReadBytes(PortalReference.GetSize())));
+                        PortalReferences.Add(new PortalReference(br.ReadBytes(PortalReference.GetSize())));
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (PortalReference portalReference in this.PortalReferences)
+                    foreach (PortalReference portalReference in PortalReferences)
                     {
                         bw.Write(portalReference.Serialize());
                     }
@@ -89,10 +89,10 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.PortalIndex = br.ReadUInt16();
-                    this.GroupIndex = br.ReadUInt16();
-                    this.Side = br.ReadInt16();
-                    this.Unknown = br.ReadUInt16();
+                    PortalIndex = br.ReadUInt16();
+                    GroupIndex = br.ReadUInt16();
+                    Side = br.ReadInt16();
+                    Unknown = br.ReadUInt16();
                 }
             }
         }
@@ -108,10 +108,10 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.PortalIndex);
-                    bw.Write(this.GroupIndex);
-                    bw.Write(this.Side);
-                    bw.Write(this.Unknown);
+                    bw.Write(PortalIndex);
+                    bw.Write(GroupIndex);
+                    bw.Write(Side);
+                    bw.Write(Unknown);
                 }
 
                 return ms.ToArray();

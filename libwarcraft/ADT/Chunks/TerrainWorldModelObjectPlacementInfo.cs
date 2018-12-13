@@ -61,7 +61,7 @@ namespace Warcraft.ADT.Chunks
                     long entryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
                     for (int i = 0; i < entryCount; ++i)
                     {
-                        this.Entries.Add(new WorldModelObjectPlacementEntry(br.ReadBytes(WorldModelObjectPlacementEntry.GetSize())));
+                        Entries.Add(new WorldModelObjectPlacementEntry(br.ReadBytes(WorldModelObjectPlacementEntry.GetSize())));
                     }
                 }
             }
@@ -78,7 +78,7 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (WorldModelObjectPlacementEntry entry in this.Entries)
+                    foreach (WorldModelObjectPlacementEntry entry in Entries)
                     {
                         bw.Write(entry.Serialize());
                     }
@@ -149,17 +149,17 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.WorldModelObjectEntryIndex = br.ReadUInt32();
-                    this.UniqueID = br.ReadInt32();
+                    WorldModelObjectEntryIndex = br.ReadUInt32();
+                    UniqueID = br.ReadInt32();
 
-                    this.Position = br.ReadVector3();
-                    this.Rotation = br.ReadRotator();
-                    this.BoundingBox = br.ReadBox();
+                    Position = br.ReadVector3();
+                    Rotation = br.ReadRotator();
+                    BoundingBox = br.ReadBox();
 
-                    this.Flags = (WorldModelObjectFlags)br.ReadUInt16();
-                    this.DoodadSet = br.ReadUInt16();
-                    this.NameSet = br.ReadUInt16();
-                    this.Unused = br.ReadUInt16();
+                    Flags = (WorldModelObjectFlags)br.ReadUInt16();
+                    DoodadSet = br.ReadUInt16();
+                    NameSet = br.ReadUInt16();
+                    Unused = br.ReadUInt16();
                 }
             }
         }
@@ -179,17 +179,17 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.WorldModelObjectEntryIndex);
-                    bw.Write(this.UniqueID);
+                    bw.Write(WorldModelObjectEntryIndex);
+                    bw.Write(UniqueID);
 
-                    bw.WriteVector3(this.Position);
-                    bw.WriteRotator(this.Rotation);
-                    bw.WriteBox(this.BoundingBox);
+                    bw.WriteVector3(Position);
+                    bw.WriteRotator(Rotation);
+                    bw.WriteBox(BoundingBox);
 
-                    bw.Write((ushort)this.Flags);
-                    bw.Write(this.DoodadSet);
-                    bw.Write(this.NameSet);
-                    bw.Write(this.Unused);
+                    bw.Write((ushort)Flags);
+                    bw.Write(DoodadSet);
+                    bw.Write(NameSet);
+                    bw.Write(Unused);
                 }
 
                 return ms.ToArray();

@@ -94,80 +94,80 @@ namespace Warcraft.BLP
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Signature = new string(br.ReadChars(4));
+                    Signature = new string(br.ReadChars(4));
 
-                    if (Enum.TryParse(this.Signature, out this.Format))
+                    if (Enum.TryParse(Signature, out Format))
                     {
-                        if (this.Format == BLPFormat.BLP2)
+                        if (Format == BLPFormat.BLP2)
                         {
-                            this.Version = (uint)br.ReadInt32();
+                            Version = (uint)br.ReadInt32();
                         }
 
-                        if (this.Format == BLPFormat.BLP2)
+                        if (Format == BLPFormat.BLP2)
                         {
-                            this.CompressionType = (TextureCompressionType)br.ReadByte();
+                            CompressionType = (TextureCompressionType)br.ReadByte();
                         }
                         else
                         {
-                            this.CompressionType = (TextureCompressionType)br.ReadUInt32();
+                            CompressionType = (TextureCompressionType)br.ReadUInt32();
                         }
 
-                        if (this.Format == BLPFormat.BLP2)
+                        if (Format == BLPFormat.BLP2)
                         {
-                            this.AlphaBitDepth = br.ReadByte();
+                            AlphaBitDepth = br.ReadByte();
                         }
                         else
                         {
-                            this.AlphaBitDepth = br.ReadUInt32();
+                            AlphaBitDepth = br.ReadUInt32();
                         }
 
                         // BLP0 & BLP1 stores the resolution here
-                        if (this.Format < BLPFormat.BLP2)
+                        if (Format < BLPFormat.BLP2)
                         {
-                            this.Resolution = new Resolution(br.ReadUInt32(), br.ReadUInt32());
+                            Resolution = new Resolution(br.ReadUInt32(), br.ReadUInt32());
                         }
 
-                        if (this.Format == BLPFormat.BLP2)
+                        if (Format == BLPFormat.BLP2)
                         {
-                            this.PixelFormat = (BLPPixelFormat)br.ReadByte();
+                            PixelFormat = (BLPPixelFormat)br.ReadByte();
                         }
                         else
                         {
-                            this.PixelFormat = (BLPPixelFormat)br.ReadUInt32();
+                            PixelFormat = (BLPPixelFormat)br.ReadUInt32();
                         }
 
-                        if (this.Format == BLPFormat.BLP2)
+                        if (Format == BLPFormat.BLP2)
                         {
-                            this.MipMapType = br.ReadByte();
+                            MipMapType = br.ReadByte();
                         }
                         else
                         {
-                            this.MipMapType = br.ReadUInt32();
+                            MipMapType = br.ReadUInt32();
                         }
 
                         // BLP2 stores the resolution here
-                        if (this.Format == BLPFormat.BLP2)
+                        if (Format == BLPFormat.BLP2)
                         {
-                            this.Resolution = new Resolution(br.ReadUInt32(), br.ReadUInt32());
+                            Resolution = new Resolution(br.ReadUInt32(), br.ReadUInt32());
                         }
 
-                        this.MipMapOffsets = new List<uint>();
+                        MipMapOffsets = new List<uint>();
                         for (int i = 0; i < 16; ++i)
                         {
                             uint offset = br.ReadUInt32();
                             if (offset > 0)
                             {
-                                this.MipMapOffsets.Add(offset);
+                                MipMapOffsets.Add(offset);
                             }
                         }
 
-                        this.MipMapSizes = new List<uint>();
+                        MipMapSizes = new List<uint>();
                         for (int i = 0; i < 16; ++i)
                         {
                             uint size = br.ReadUInt32();
                             if (size > 0)
                             {
-                                this.MipMapSizes.Add(size);
+                                MipMapSizes.Add(size);
                             }
                         }
                     }
@@ -185,8 +185,8 @@ namespace Warcraft.BLP
         /// </summary>
         public BLPHeader()
         {
-            this.Signature = "BLP2";
-            this.Version = 1;
+            Signature = "BLP2";
+            Version = 1;
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Warcraft.BLP
         /// <returns>The number of mipmaps.</returns>
         public int GetNumMipMaps()
         {
-            return this.MipMapOffsets.Count;
+            return MipMapOffsets.Count;
         }
 
         /// <summary>
@@ -208,22 +208,22 @@ namespace Warcraft.BLP
             {
                 using (BinaryWriter bw = new BinaryWriter(headerStream))
                 {
-                    bw.Write(this.Signature.ToCharArray());
-                    bw.Write(this.Version);
-                    bw.Write((byte)this.CompressionType);
-                    bw.Write((byte)this.AlphaBitDepth);
-                    bw.Write((byte)this.PixelFormat);
-                    bw.Write((byte)this.MipMapType);
+                    bw.Write(Signature.ToCharArray());
+                    bw.Write(Version);
+                    bw.Write((byte)CompressionType);
+                    bw.Write((byte)AlphaBitDepth);
+                    bw.Write((byte)PixelFormat);
+                    bw.Write((byte)MipMapType);
 
-                    bw.Write(this.Resolution.X);
-                    bw.Write(this.Resolution.Y);
+                    bw.Write(Resolution.X);
+                    bw.Write(Resolution.Y);
 
                     for (int i = 0; i < 16; ++i)
                     {
-                        if (i < this.MipMapOffsets.Count)
+                        if (i < MipMapOffsets.Count)
                         {
                             // Write a value
-                            bw.Write(this.MipMapOffsets[i]);
+                            bw.Write(MipMapOffsets[i]);
                         }
                         else
                         {
@@ -234,10 +234,10 @@ namespace Warcraft.BLP
 
                     for (int i = 0; i < 16; ++i)
                     {
-                        if (i < this.MipMapSizes.Count)
+                        if (i < MipMapSizes.Count)
                         {
                             // Write a value
-                            bw.Write(this.MipMapSizes[i]);
+                            bw.Write(MipMapSizes[i]);
                         }
                         else
                         {
@@ -260,11 +260,11 @@ namespace Warcraft.BLP
         /// <returns>The size.</returns>
         public uint GetSize()
         {
-            if (this.Signature == "BLP2")
+            if (Signature == "BLP2")
             {
                 return 148;
             }
-            else if (this.Signature == "BLP1")
+            else if (Signature == "BLP1")
             {
                 return 156;
             }

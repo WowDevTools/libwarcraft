@@ -48,14 +48,14 @@ namespace Warcraft.ADT.Chunks.Subchunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.MinimumLiquidLevel = br.ReadSingle();
-                    this.MaxiumLiquidLevel = br.ReadSingle();
+                    MinimumLiquidLevel = br.ReadSingle();
+                    MaxiumLiquidLevel = br.ReadSingle();
 
                     for (int y = 0; y < 9; ++y)
                     {
                         for (int x = 0; x < 9; ++x)
                         {
-                            this.LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
+                            LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
                         }
                     }
 
@@ -63,7 +63,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
                     {
                         for (int x = 0; x < 8; ++x)
                         {
-                            this.LiquidTileFlags.Add(((LiquidFlags)br.ReadByte()));
+                            LiquidTileFlags.Add(((LiquidFlags)br.ReadByte()));
                         }
                     }
                 }
@@ -87,8 +87,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.TextureCoordinates = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-                    this.Height = br.ReadSingle();
+                    TextureCoordinates = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
+                    Height = br.ReadSingle();
                 }
             }
         }
@@ -104,10 +104,10 @@ namespace Warcraft.ADT.Chunks.Subchunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.TextureCoordinates.Item1);
-                    bw.Write(this.TextureCoordinates.Item2);
+                    bw.Write(TextureCoordinates.Item1);
+                    bw.Write(TextureCoordinates.Item2);
 
-                    bw.Write(this.Height);
+                    bw.Write(Height);
                 }
 
                 return ms.ToArray();

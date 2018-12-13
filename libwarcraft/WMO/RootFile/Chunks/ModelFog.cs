@@ -51,7 +51,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int fogInstanceCount = inData.Length / FogInstance.GetSize();
                     for (int i = 0; i < fogInstanceCount; ++i)
                     {
-                        this.FogInstances.Add(new FogInstance(br.ReadBytes(FogInstance.GetSize())));
+                        FogInstances.Add(new FogInstance(br.ReadBytes(FogInstance.GetSize())));
                     }
                 }
             }
@@ -68,7 +68,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (FogInstance fogInstance in this.FogInstances)
+                    foreach (FogInstance fogInstance in FogInstances)
                     {
                         bw.Write(fogInstance.Serialize());
                     }
@@ -91,9 +91,9 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.EndRadius = br.ReadSingle();
-                    this.StartMultiplier = br.ReadSingle();
-                    this.Colour = br.ReadBGRA();
+                    EndRadius = br.ReadSingle();
+                    StartMultiplier = br.ReadSingle();
+                    Colour = br.ReadBGRA();
                 }
             }
         }
@@ -109,9 +109,9 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.EndRadius);
-                    bw.Write(this.StartMultiplier);
-                    bw.WriteBGRA(this.Colour);
+                    bw.Write(EndRadius);
+                    bw.Write(StartMultiplier);
+                    bw.WriteBGRA(Colour);
                 }
 
                 return ms.ToArray();

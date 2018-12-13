@@ -37,7 +37,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public ModelTangentArray()
         {
-            this.InternalHasFinishedLoading = true;
+            InternalHasFinishedLoading = true;
         }
 
         public ModelTangentArray(byte[] inData)
@@ -47,8 +47,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public void LoadBinaryData(byte[] inData)
         {
-            this.Data = inData;
-            this.InternalHasFinishedLoading = false;
+            Data = inData;
+            InternalHasFinishedLoading = false;
         }
 
         public string GetSignature()
@@ -62,12 +62,12 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (short firstIndex in this.FirstIndices)
+                    foreach (short firstIndex in FirstIndices)
                     {
                         bw.Write(firstIndex);
                     }
 
-                    foreach (Vector4 tangent in this.Tangents)
+                    foreach (Vector4 tangent in Tangents)
                     {
                         bw.WriteVector4(tangent);
                     }
@@ -79,28 +79,28 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public bool HasFinishedLoading()
         {
-            return this.InternalHasFinishedLoading;
+            return InternalHasFinishedLoading;
         }
 
         public void PostLoad(ModelTangentArrayPostLoadParameters loadingParameters)
         {
-            using (MemoryStream ms = new MemoryStream(this.Data))
+            using (MemoryStream ms = new MemoryStream(Data))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
                     for (int i = 0; i < loadingParameters.RenderBatchCount; ++i)
                     {
-                        this.FirstIndices.Add(br.ReadInt16());
+                        FirstIndices.Add(br.ReadInt16());
                     }
 
                     for (int i = 0; i < loadingParameters.AccumulatedIndexCount; ++i)
                     {
-                        this.Tangents.Add(br.ReadVector4());
+                        Tangents.Add(br.ReadVector4());
                     }
                 }
             }
 
-            this.Data = null;
+            Data = null;
         }
     }
 
@@ -115,8 +115,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public ModelTangentArrayPostLoadParameters(uint inRenderBatchCount, uint inAccumulatedIndexCount)
         {
-            this.RenderBatchCount = inRenderBatchCount;
-            this.AccumulatedIndexCount = inAccumulatedIndexCount;
+            RenderBatchCount = inRenderBatchCount;
+            AccumulatedIndexCount = inAccumulatedIndexCount;
         }
     }
 }

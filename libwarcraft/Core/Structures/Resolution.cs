@@ -41,8 +41,8 @@ namespace Warcraft.Core.Structures
         /// <param name="inY">The input height component.</param>
         public Resolution(uint inX, uint inY)
         {
-            this.X = inX;
-            this.Y = inY;
+            X = inX;
+            Y = inY;
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Warcraft.Core.Structures
         /// <returns>A string representation of the current object.</returns>
         public override string ToString()
         {
-            return $"{this.X}x{this.Y}";
+            return $"{X}x{Y}";
         }
     }
 }

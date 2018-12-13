@@ -66,11 +66,11 @@ namespace Warcraft.MDX.Data
                 throw new ArgumentNullException(nameof(values));
             }
 
-            this.Values.AddRange(values);
-            this.Count = (uint)this.Values.Count;
+            Values.AddRange(values);
+            Count = (uint)Values.Count;
 
-            this.ElementsOffset = 0;
-            this.IsFilled = true;
+            ElementsOffset = 0;
+            IsFilled = true;
         }
 
         /// <summary>
@@ -81,13 +81,13 @@ namespace Warcraft.MDX.Data
         /// <param name="data"></param>
         public MDXArray(byte[] data)
         {
-            this.IsFilled = false;
+            IsFilled = false;
             using (MemoryStream ms = new MemoryStream(data))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Count = br.ReadUInt32();
-                    this.ElementsOffset = br.ReadUInt32();
+                    Count = br.ReadUInt32();
+                    ElementsOffset = br.ReadUInt32();
                 }
             }
         }
@@ -99,12 +99,12 @@ namespace Warcraft.MDX.Data
         /// <param name="br">The reader to use.</param>
         public MDXArray(BinaryReader br)
         {
-            this.Count = br.ReadUInt32();
-            this.ElementsOffset = br.ReadUInt32();
+            Count = br.ReadUInt32();
+            ElementsOffset = br.ReadUInt32();
 
             Fill(br);
 
-            this.IsFilled = true;
+            IsFilled = true;
         }
 
         /// <summary>
@@ -115,12 +115,12 @@ namespace Warcraft.MDX.Data
         /// <param name="version">The contextually version for the stored objects.</param>
         public MDXArray(BinaryReader br, WarcraftVersion version)
         {
-            this.Count = br.ReadUInt32();
-            this.ElementsOffset = br.ReadUInt32();
+            Count = br.ReadUInt32();
+            ElementsOffset = br.ReadUInt32();
 
             Fill(br, version);
 
-            this.IsFilled = true;
+            IsFilled = true;
         }
 
         /// <summary>
@@ -130,13 +130,13 @@ namespace Warcraft.MDX.Data
         /// <returns></returns>
         public IEnumerable<T> GetValues()
         {
-            if (!this.IsFilled)
+            if (!IsFilled)
             {
                 throw new InvalidOperationException("The values of the array cannot be accessed before it has been " +
                                                     "filled with its values.");
             }
 
-            return new List<T>(this.Values);
+            return new List<T>(Values);
         }
 
         /// <summary>
@@ -147,13 +147,13 @@ namespace Warcraft.MDX.Data
         /// <exception cref="ArgumentException"></exception>
         public void Fill(ICollection<T> values)
         {
-            if (values.Count != this.Count)
+            if (values.Count != Count)
             {
                 throw new ArgumentException("The number of elements in the filling collection must be equal to the " +
                                             "stored number of elements in the information header.");
             }
 
-            this.Values.AddRange(values);
+            Values.AddRange(values);
         }
 
         /// <summary>
@@ -164,16 +164,16 @@ namespace Warcraft.MDX.Data
         public void Fill(BinaryReader br)
         {
             long initialPositionBeforeJumpToData = br.BaseStream.Position;
-            br.BaseStream.Position = this.ElementsOffset;
+            br.BaseStream.Position = ElementsOffset;
 
-            for (int i = 0; i < this.Count; ++i)
+            for (int i = 0; i < Count; ++i)
             {
-                this.Values.Add(br.Read<T>());
+                Values.Add(br.Read<T>());
             }
 
             br.BaseStream.Position = initialPositionBeforeJumpToData;
 
-            this.IsFilled = true;
+            IsFilled = true;
         }
 
         /// <summary>
@@ -185,16 +185,16 @@ namespace Warcraft.MDX.Data
         public void Fill(BinaryReader br, WarcraftVersion version)
         {
             long initialPositionBeforeJumpToData = br.BaseStream.Position;
-            br.BaseStream.Position = this.ElementsOffset;
+            br.BaseStream.Position = ElementsOffset;
 
-            for (int i = 0; i < this.Count; ++i)
+            for (int i = 0; i < Count; ++i)
             {
-                this.Values.Add(br.Read<T>(version));
+                Values.Add(br.Read<T>(version));
             }
 
             br.BaseStream.Position = initialPositionBeforeJumpToData;
 
-            this.IsFilled = true;
+            IsFilled = true;
         }
 
         /// <summary>
@@ -205,23 +205,23 @@ namespace Warcraft.MDX.Data
         {
             get
             {
-                if (!this.IsFilled)
+                if (!IsFilled)
                 {
                     throw new InvalidOperationException("The values of the array cannot be accessed before it has been " +
                                                         "filled with its values.");
                 }
 
-                return this.Values[index];
+                return Values[index];
             }
             set
             {
-                if (!this.IsFilled)
+                if (!IsFilled)
                 {
                     throw new InvalidOperationException("The values of the array cannot be accessed before it has been " +
                                                         "filled with its values.");
                 }
 
-                this.Values[index] = value;
+                Values[index] = value;
             }
         }
 
@@ -231,12 +231,12 @@ namespace Warcraft.MDX.Data
         /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
         {
-            if (!this.IsFilled)
+            if (!IsFilled)
             {
                 throw new InvalidOperationException("The enumerator of the array cannot be accessed before it has been " +
                                                     "filled with its values.");
             }
-            return this.Values.GetEnumerator();
+            return Values.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

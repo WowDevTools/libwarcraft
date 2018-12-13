@@ -67,15 +67,15 @@ namespace Warcraft.TEX
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Version = br.ReadIFFChunk<TextureBlobVersion>();
-                    this.BlobDataEntries = br.ReadIFFChunk<TextureBlobDataEntries>();
-                    this.Filenames = br.ReadIFFChunk<TextureBlobFilenames>();
+                    Version = br.ReadIFFChunk<TextureBlobVersion>();
+                    BlobDataEntries = br.ReadIFFChunk<TextureBlobDataEntries>();
+                    Filenames = br.ReadIFFChunk<TextureBlobFilenames>();
 
                     long dataBlockStartingPosition = br.BaseStream.Position;
-                    foreach (TextureBlobDataEntry blobDataEntry in this.BlobDataEntries.BlobDataEntries)
+                    foreach (TextureBlobDataEntry blobDataEntry in BlobDataEntries.BlobDataEntries)
                     {
                         br.BaseStream.Position = dataBlockStartingPosition + blobDataEntry.TextureDataOffset;
-                        this.TextureData.Add(br.ReadIFFChunk<TextureBlobData>());
+                        TextureData.Add(br.ReadIFFChunk<TextureBlobData>());
                     }
                 }
             }
@@ -90,11 +90,11 @@ namespace Warcraft.TEX
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.WriteIFFChunk(this.Version);
-                    bw.WriteIFFChunk(this.BlobDataEntries);
-                    bw.WriteIFFChunk(this.Filenames);
+                    bw.WriteIFFChunk(Version);
+                    bw.WriteIFFChunk(BlobDataEntries);
+                    bw.WriteIFFChunk(Filenames);
 
-                    foreach (TextureBlobData textureData in this.TextureData)
+                    foreach (TextureBlobData textureData in TextureData)
                     {
                         bw.WriteIFFChunk(textureData);
                     }

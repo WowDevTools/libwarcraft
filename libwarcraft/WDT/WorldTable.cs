@@ -39,14 +39,14 @@ namespace Warcraft.WDT
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Version = br.ReadIFFChunk<TerrainVersion>();
-                    this.Header = br.ReadIFFChunk<WorldTableHeader>();
-                    this.AreaInfo = br.ReadIFFChunk<WorldTableAreaInfo>();
-                    this.WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
+                    Version = br.ReadIFFChunk<TerrainVersion>();
+                    Header = br.ReadIFFChunk<WorldTableHeader>();
+                    AreaInfo = br.ReadIFFChunk<WorldTableAreaInfo>();
+                    WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
 
-                    if (this.WorldModelObjects.Filenames.Count > 0)
+                    if (WorldModelObjects.Filenames.Count > 0)
                     {
-                        this.WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
+                        WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
                     }
                 }
             }
@@ -59,7 +59,7 @@ namespace Warcraft.WDT
         /// <returns>The loaded areas.</returns>
         public IEnumerable<AreaInfoEntry> GetLoadedAreas()
         {
-            foreach (AreaInfoEntry entry in this.AreaInfo.Entries)
+            foreach (AreaInfoEntry entry in AreaInfo.Entries)
             {
                 if (entry.Flags.HasFlag(AreaInfoFlags.IsLoaded))
                 {
@@ -74,7 +74,7 @@ namespace Warcraft.WDT
         /// <returns>The areas with terrain.</returns>
         public IEnumerable<AreaInfoEntry> GetAreasWithTerrain()
         {
-            foreach (AreaInfoEntry entry in this.AreaInfo.Entries)
+            foreach (AreaInfoEntry entry in AreaInfo.Entries)
             {
                 if (entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
                 {
@@ -91,7 +91,7 @@ namespace Warcraft.WDT
         /// <param name="inTileY">In tile y.</param>
         public AreaInfoEntry GetAreaInfo(uint inTileX, uint inTileY)
         {
-            return this.AreaInfo.GetAreaInfo(inTileX, inTileY);
+            return AreaInfo.GetAreaInfo(inTileX, inTileY);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Warcraft.WDT
         /// <returns><c>true</c> if this instance has any terrain; otherwise, <c>false</c>.</returns>
         public bool HasAnyTerrain()
         {
-            foreach (AreaInfoEntry entry in this.AreaInfo.Entries)
+            foreach (AreaInfoEntry entry in AreaInfo.Entries)
             {
                 if (entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
                 {
@@ -119,7 +119,7 @@ namespace Warcraft.WDT
         /// <param name="inTileY">0-based y coordinate of the tile.</param>
         public bool IsTilePopulated(uint inTileX, uint inTileY)
         {
-            AreaInfoEntry infoEntry = this.AreaInfo.GetAreaInfo(inTileX, inTileY);
+            AreaInfoEntry infoEntry = AreaInfo.GetAreaInfo(inTileX, inTileY);
             return infoEntry.Flags.HasFlag(AreaInfoFlags.HasTerrainData);
         }
 
@@ -129,14 +129,14 @@ namespace Warcraft.WDT
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.WriteIFFChunk(this.Version);
-                    bw.WriteIFFChunk(this.Header);
-                    bw.WriteIFFChunk(this.AreaInfo);
-                    bw.WriteIFFChunk(this.WorldModelObjects);
+                    bw.WriteIFFChunk(Version);
+                    bw.WriteIFFChunk(Header);
+                    bw.WriteIFFChunk(AreaInfo);
+                    bw.WriteIFFChunk(WorldModelObjects);
 
-                    if (this.WorldModelObjects.Filenames.Count > 0 && this.WorldModelObjectPlacementInfo != null)
+                    if (WorldModelObjects.Filenames.Count > 0 && WorldModelObjectPlacementInfo != null)
                     {
-                        bw.WriteIFFChunk(this.WorldModelObjectPlacementInfo);
+                        bw.WriteIFFChunk(WorldModelObjectPlacementInfo);
                     }
                 }
 

@@ -53,7 +53,7 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Version = br.ReadUInt32();
+                    Version = br.ReadUInt32();
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.Version);
+                    bw.Write(Version);
                 }
 
                 return ms.ToArray();

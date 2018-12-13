@@ -47,14 +47,14 @@ namespace Warcraft.MDX.Visual
         /// <param name="version"></param>
         public MDXMaterial(BinaryReader br, WarcraftVersion version)
         {
-            this.Flags = (EMDXRenderFlag)br.ReadUInt16();
+            Flags = (EMDXRenderFlag)br.ReadUInt16();
             if (version >= WarcraftVersion.Cataclysm)
             {
-                this.BlendMode = (BlendingMode) br.ReadUInt16();
+                BlendMode = (BlendingMode) br.ReadUInt16();
             }
             else
             {
-                this.BlendMode = RemapBlendingMode(br.ReadUInt16());
+                BlendMode = RemapBlendingMode(br.ReadUInt16());
             }
         }
 

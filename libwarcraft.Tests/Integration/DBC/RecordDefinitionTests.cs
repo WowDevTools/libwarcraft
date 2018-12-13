@@ -37,97 +37,97 @@ namespace libwarcraft.Tests.Integration.DBC
         [Test]
         public void AnimationDataRecord()
         {
-            TestLoadRecord<AnimationDataRecord>(this.Version);
+            TestLoadRecord<AnimationDataRecord>(Version);
         }
 
         [Test]
         public void CharHairGeosetsRecord()
         {
-            TestLoadRecord<CharHairGeosetsRecord>(this.Version);
+            TestLoadRecord<CharHairGeosetsRecord>(Version);
         }
 
         [Test]
         public void SoundAmbienceRecord()
         {
-            TestLoadRecord<SoundAmbienceRecord>(this.Version);
+            TestLoadRecord<SoundAmbienceRecord>(Version);
         }
 
         [Test]
         public void CharSectionsRecord()
         {
-            TestLoadRecord<CharSectionsRecord>(this.Version);
+            TestLoadRecord<CharSectionsRecord>(Version);
         }
 
         [Test]
         public void SoundEntriesRecord()
         {
-            TestLoadRecord<SoundEntriesRecord>(this.Version);
+            TestLoadRecord<SoundEntriesRecord>(Version);
         }
 
         [Test]
         public void CreatureDisplayInfoExtraRecord()
         {
-            TestLoadRecord<CreatureDisplayInfoExtraRecord>(this.Version);
+            TestLoadRecord<CreatureDisplayInfoExtraRecord>(Version);
         }
 
         [Test]
         public void SoundProviderPreferences()
         {
-            TestLoadRecord<SoundProviderPreferencesRecord>(this.Version);
+            TestLoadRecord<SoundProviderPreferencesRecord>(Version);
         }
 
         [Test]
         public void CreatureDisplayInfoRecord()
         {
-            TestLoadRecord<CreatureDisplayInfoRecord>(this.Version);
+            TestLoadRecord<CreatureDisplayInfoRecord>(Version);
         }
 
         [Test]
         public void SpellRecord()
         {
-            TestLoadRecord<SpellRecord>(this.Version);
+            TestLoadRecord<SpellRecord>(Version);
         }
 
         [Test]
         public void CreatureModelDataRecord()
         {
-            TestLoadRecord<CreatureModelDataRecord>(this.Version);
+            TestLoadRecord<CreatureModelDataRecord>(Version);
         }
 
         [Test]
         public void WMOAreaTableRecord()
         {
-            TestLoadRecord<WMOAreaTableRecord>(this.Version);
+            TestLoadRecord<WMOAreaTableRecord>(Version);
         }
 
         [Test]
         public void LiquidObjectRecord()
         {
-            TestLoadRecord<LiquidObjectRecord>(this.Version);
+            TestLoadRecord<LiquidObjectRecord>(Version);
         }
 
         [Test]
         public void ZoneIntroMusicTableRecord()
         {
-            TestLoadRecord<ZoneIntroMusicTableRecord>(this.Version);
+            TestLoadRecord<ZoneIntroMusicTableRecord>(Version);
         }
 
         [Test]
         public void LiquidTypeRecord()
         {
-            TestLoadRecord<LiquidTypeRecord>(this.Version);
+            TestLoadRecord<LiquidTypeRecord>(Version);
         }
 
         [Test]
         public void ZoneMusicRecord()
         {
-            TestLoadRecord<ZoneMusicRecord>(this.Version);
+            TestLoadRecord<ZoneMusicRecord>(Version);
         }
 
         [Test]
         public void MapRecord()
         {
-            TestLoadRecord<MapRecord>(this.Version);
+            TestLoadRecord<MapRecord>(Version);
         }
     }
 }

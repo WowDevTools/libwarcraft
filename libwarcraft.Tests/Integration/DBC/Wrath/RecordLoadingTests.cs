@@ -9,7 +9,7 @@ namespace libwarcraft.Tests.Integration.DBC.Wrath
         [SetUp]
         public override void Setup()
         {
-            this.Version = WarcraftVersion.Wrath;
+            Version = WarcraftVersion.Wrath;
         }
     }
 }

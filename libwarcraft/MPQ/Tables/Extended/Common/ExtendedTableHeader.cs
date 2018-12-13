@@ -56,9 +56,9 @@ namespace Warcraft.MPQ.Tables.Extended.Common
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Signature = BitConverter.ToString(br.ReadBytes(4));
-                    this.Version = br.ReadUInt32();
-                    this.DataSize = br.ReadUInt32();
+                    Signature = BitConverter.ToString(br.ReadBytes(4));
+                    Version = br.ReadUInt32();
+                    DataSize = br.ReadUInt32();
                 }
             }
         }
@@ -72,9 +72,9 @@ namespace Warcraft.MPQ.Tables.Extended.Common
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(BitConverter.ToUInt32(Encoding.ASCII.GetBytes(this.Signature), 0));
-                    bw.Write(this.Version);
-                    bw.Write(this.DataSize);
+                    bw.Write(BitConverter.ToUInt32(Encoding.ASCII.GetBytes(Signature), 0));
+                    bw.Write(Version);
+                    bw.Write(DataSize);
                 }
 
                 return ms.ToArray();

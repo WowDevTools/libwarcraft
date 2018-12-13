@@ -46,8 +46,8 @@ namespace Warcraft.Core.Reflection.DBC
         /// <param name="field">The name of the field that the key points to in the database.</param>
         public ForeignKeyInfoAttribute(DatabaseName databaseName, string field)
         {
-            this.Database = databaseName;
-            this.Field = field;
+            Database = databaseName;
+            Field = field;
         }
     }
 }

@@ -121,23 +121,23 @@ namespace Warcraft.DBC.SpecialFields
         {
             return new[]
             {
-                this.English,
-                this.Korean,
-                this.French,
-                this.German,
-                this.Chinese,
-                this.Taiwan,
-                this.Spanish,
-                this.SpanishMexican,
-                this.Russian,
-                this.Unknown1,
-                this.Portugese,
-                this.Italian,
-                this.Unknown2,
-                this.Unknown3,
-                this.Unknown4,
-                this.Unknown5,
-                this.ClientLocale
+                English,
+                Korean,
+                French,
+                German,
+                Chinese,
+                Taiwan,
+                Spanish,
+                SpanishMexican,
+                Russian,
+                Unknown1,
+                Portugese,
+                Italian,
+                Unknown2,
+                Unknown3,
+                Unknown4,
+                Unknown5,
+                ClientLocale
             }.Where(s => s != null);
         }
 

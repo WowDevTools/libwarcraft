@@ -61,10 +61,10 @@ namespace Warcraft.ADT.Chunks
                 {
                     for (int i = 0; i < 256; ++i)
                     {
-                        this.LiquidChunks.Add(new TerrainLiquidChunk(br.ReadBytes(TerrainLiquidChunk.GetSize())));
+                        LiquidChunks.Add(new TerrainLiquidChunk(br.ReadBytes(TerrainLiquidChunk.GetSize())));
                     }
 
-                    foreach (TerrainLiquidChunk liquidChunk in this.LiquidChunks)
+                    foreach (TerrainLiquidChunk liquidChunk in LiquidChunks)
                     {
                         br.BaseStream.Position = liquidChunk.WaterInstanceOffset;
                         for (int i = 0; i < liquidChunk.LayerCount; ++i)
@@ -112,9 +112,9 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.WaterInstanceOffset = br.ReadUInt32();
-                    this.LayerCount = br.ReadUInt32();
-                    this.AttributesOffset = br.ReadUInt32();
+                    WaterInstanceOffset = br.ReadUInt32();
+                    LayerCount = br.ReadUInt32();
+                    AttributesOffset = br.ReadUInt32();
                 }
             }
         }
@@ -141,16 +141,16 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Fishable = br.ReadUInt64();
-                    this.Deep = br.ReadUInt64();
+                    Fishable = br.ReadUInt64();
+                    Deep = br.ReadUInt64();
                 }
             }
         }
 
         public TerrainLiquidAttributes()
         {
-            this.Fishable = 0;
-            this.Deep = 0;
+            Fishable = 0;
+            Deep = 0;
         }
 
         public static int GetSize()
@@ -203,18 +203,18 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.LiquidType = new ForeignKey<ushort>(DatabaseName.LiquidType, nameof(DBCRecord.ID), br.ReadUInt16());
-                    this.LiquidObject = new ForeignKey<ushort>(DatabaseName.LiquidObject, nameof(DBCRecord.ID), br.ReadUInt16());
+                    LiquidType = new ForeignKey<ushort>(DatabaseName.LiquidType, nameof(DBCRecord.ID), br.ReadUInt16());
+                    LiquidObject = new ForeignKey<ushort>(DatabaseName.LiquidObject, nameof(DBCRecord.ID), br.ReadUInt16());
 
-                    this.HeightLevelRange = new Range(br.ReadSingle(), br.ReadSingle());
+                    HeightLevelRange = new Range(br.ReadSingle(), br.ReadSingle());
 
-                    this.XLiquidOffset = br.ReadByte();
-                    this.YLiquidOffset = br.ReadByte();
-                    this.Width = br.ReadByte();
-                    this.Height = br.ReadByte();
+                    XLiquidOffset = br.ReadByte();
+                    YLiquidOffset = br.ReadByte();
+                    Width = br.ReadByte();
+                    Height = br.ReadByte();
 
-                    this.LiquidBooleanMapOffset = br.ReadUInt32();
-                    this.VertexDataOffset = br.ReadUInt32();
+                    LiquidBooleanMapOffset = br.ReadUInt32();
+                    VertexDataOffset = br.ReadUInt32();
 
                     // TODO: Read boolean map
 
@@ -251,12 +251,12 @@ namespace Warcraft.ADT.Chunks
                     int arrayEntryCount = (width + 1) * (height + 1);
                     for (int i = 0; i < arrayEntryCount; ++i)
                     {
-                        this.Heightmap.Add(br.ReadSingle());
+                        Heightmap.Add(br.ReadSingle());
                     }
 
                     for (int i = 0; i < arrayEntryCount; ++i)
                     {
-                        this.Depthmap.Add(br.ReadByte());
+                        Depthmap.Add(br.ReadByte());
                     }
                 }
             }
@@ -284,13 +284,13 @@ namespace Warcraft.ADT.Chunks
                     int arrayEntryCount = (width + 1) * (height + 1);
                     for (int i = 0; i < arrayEntryCount; ++i)
                     {
-                        this.Heightmap.Add(br.ReadSingle());
+                        Heightmap.Add(br.ReadSingle());
                     }
 
                     for (int i = 0; i < arrayEntryCount; ++i)
                     {
                         Tuple<ushort, ushort> uvEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-                        this.UVMap.Add(uvEntry);
+                        UVMap.Add(uvEntry);
                     }
                 }
             }
@@ -318,7 +318,7 @@ namespace Warcraft.ADT.Chunks
 
                     for (int i = 0; i < arrayEntryCount; ++i)
                     {
-                        this.Depthmap.Add(br.ReadByte());
+                        Depthmap.Add(br.ReadByte());
                     }
                 }
             }
@@ -347,18 +347,18 @@ namespace Warcraft.ADT.Chunks
                     int arrayEntryCount = (width + 1) * (height + 1);
                     for (int i = 0; i < arrayEntryCount; ++i)
                     {
-                        this.Heightmap.Add(br.ReadSingle());
+                        Heightmap.Add(br.ReadSingle());
                     }
 
                     for (int i = 0; i < arrayEntryCount; ++i)
                     {
                         Tuple<ushort, ushort> uvEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-                        this.UVMap.Add(uvEntry);
+                        UVMap.Add(uvEntry);
                     }
 
                     for (int i = 0; i < arrayEntryCount; ++i)
                     {
-                        this.Depthmap.Add(br.ReadByte());
+                        Depthmap.Add(br.ReadByte());
                     }
                 }
             }

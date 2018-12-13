@@ -64,9 +64,9 @@ namespace Warcraft.DBC.Definitions
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()
         {
-            yield return this.Name;
-            yield return this.DirectoryBase;
-            foreach (var soundFile in this.SoundFiles)
+            yield return Name;
+            yield return DirectoryBase;
+            foreach (var soundFile in SoundFiles)
             {
                 yield return soundFile;
             }

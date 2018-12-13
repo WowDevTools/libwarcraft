@@ -51,28 +51,28 @@ namespace Warcraft.WDL
                     // Set up the two area lists with default values
                     for (int i = 0; i < 4096; ++i)
                     {
-                        this.MapAreas.Add(null);
-                        this.MapAreaHoles.Add(null);
+                        MapAreas.Add(null);
+                        MapAreaHoles.Add(null);
                     }
 
-                    this.Version = br.ReadIFFChunk<TerrainVersion>();
+                    Version = br.ReadIFFChunk<TerrainVersion>();
 
                     if (br.PeekChunkSignature() == TerrainWorldModelObjects.Signature)
                     {
-                        this.WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
+                        WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
                     }
 
                     if (br.PeekChunkSignature() == TerrainWorldObjectModelIndices.Signature)
                     {
-                        this.WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldObjectModelIndices>();
+                        WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldObjectModelIndices>();
                     }
 
                     if (br.PeekChunkSignature() == TerrainWorldModelObjectPlacementInfo.Signature)
                     {
-                        this.WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
+                        WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
                     }
 
-                    this.MapAreaOffsets = br.ReadIFFChunk<WorldLODMapAreaOffsets>();
+                    MapAreaOffsets = br.ReadIFFChunk<WorldLODMapAreaOffsets>();
 
                     // Read the map areas and their holes
                     for (int y = 0; y < 64; ++y)
@@ -80,26 +80,26 @@ namespace Warcraft.WDL
                         for (int x = 0; x < 64; ++x)
                         {
                             int mapAreaOffsetIndex = (y * 64) + x;
-                            uint mapAreaOffset = this.MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex];
+                            uint mapAreaOffset = MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex];
 
                             if (mapAreaOffset > 0)
                             {
                                 br.BaseStream.Position = mapAreaOffset;
-                                this.MapAreas[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapArea>();
+                                MapAreas[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapArea>();
 
                                 if (br.PeekChunkSignature() == WorldLODMapAreaHoles.Signature)
                                 {
-                                    this.MapAreaHoles[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapAreaHoles>();
+                                    MapAreaHoles[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapAreaHoles>();
                                 }
                                 else
                                 {
-                                    this.MapAreaHoles[mapAreaOffsetIndex] = WorldLODMapAreaHoles.CreateEmpty();
+                                    MapAreaHoles[mapAreaOffsetIndex] = WorldLODMapAreaHoles.CreateEmpty();
                                 }
                             }
                             else
                             {
-                                this.MapAreas[mapAreaOffsetIndex] = null;
-                                this.MapAreaHoles[mapAreaOffsetIndex] = null;
+                                MapAreas[mapAreaOffsetIndex] = null;
+                                MapAreaHoles[mapAreaOffsetIndex] = null;
                             }
                         }
                     }
@@ -115,7 +115,7 @@ namespace Warcraft.WDL
             }
 
             var index = x + y * 64;
-            return this.MapAreas[index] != null;
+            return MapAreas[index] != null;
         }
 
         public WorldLODMapArea GetEntry(int x, int y)
@@ -126,7 +126,7 @@ namespace Warcraft.WDL
             }
 
             var index = x + y * 64;
-            return this.MapAreas[index];
+            return MapAreas[index];
         }
 
         public byte[] Serialize()
@@ -135,22 +135,22 @@ namespace Warcraft.WDL
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.WriteIFFChunk(this.Version);
+                    bw.WriteIFFChunk(Version);
 
                     // >= Wrath stores WMO data here as well
-                    if (this.WorldModelObjects != null)
+                    if (WorldModelObjects != null)
                     {
-                        bw.WriteIFFChunk(this.WorldModelObjects);
+                        bw.WriteIFFChunk(WorldModelObjects);
                     }
 
-                    if (this.WorldModelObjectIndices != null)
+                    if (WorldModelObjectIndices != null)
                     {
-                        bw.WriteIFFChunk(this.WorldModelObjectIndices);
+                        bw.WriteIFFChunk(WorldModelObjectIndices);
                     }
 
-                    if (this.WorldModelObjectPlacementInfo != null)
+                    if (WorldModelObjectPlacementInfo != null)
                     {
-                        bw.WriteIFFChunk(this.WorldModelObjectPlacementInfo);
+                        bw.WriteIFFChunk(WorldModelObjectPlacementInfo);
                     }
 
                     // Populate the offset table
@@ -162,16 +162,16 @@ namespace Warcraft.WDL
                             int mapAreaOffsetIndex = (y * 64) + x;
                             const uint offsetChunkHeaderSize = 8;
 
-                            if (this.MapAreas[mapAreaOffsetIndex] != null)
+                            if (MapAreas[mapAreaOffsetIndex] != null)
                             {
                                 // This tile is populated, so we update the offset table
                                 uint newOffset = (uint) (ms.Position + offsetChunkHeaderSize + WorldLODMapAreaOffsets.GetSize() + writtenMapAreaSize);
-                                this.MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex] = newOffset;
+                                MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex] = newOffset;
 
                                 writtenMapAreaSize += WorldLODMapArea.GetSize() + offsetChunkHeaderSize;
                             }
 
-                            if (this.MapAreaHoles[mapAreaOffsetIndex] != null)
+                            if (MapAreaHoles[mapAreaOffsetIndex] != null)
                             {
                                 writtenMapAreaSize += WorldLODMapAreaHoles.GetSize() + offsetChunkHeaderSize;
                             }
@@ -179,7 +179,7 @@ namespace Warcraft.WDL
                     }
 
                     // Write the offset table
-                    bw.WriteIFFChunk(this.MapAreaOffsets);
+                    bw.WriteIFFChunk(MapAreaOffsets);
 
                     // Write the valid entries
                     for (int y = 0; y < 64; ++y)
@@ -188,14 +188,14 @@ namespace Warcraft.WDL
                         {
                             int mapAreaOffsetIndex = (y * 64) + x;
 
-                            if (this.MapAreas[mapAreaOffsetIndex] != null)
+                            if (MapAreas[mapAreaOffsetIndex] != null)
                             {
-                                bw.WriteIFFChunk(this.MapAreas[mapAreaOffsetIndex]);
+                                bw.WriteIFFChunk(MapAreas[mapAreaOffsetIndex]);
                             }
 
-                            if (this.MapAreaHoles[mapAreaOffsetIndex] != null)
+                            if (MapAreaHoles[mapAreaOffsetIndex] != null)
                             {
-                                bw.WriteIFFChunk(this.MapAreaHoles[mapAreaOffsetIndex]);
+                                bw.WriteIFFChunk(MapAreaHoles[mapAreaOffsetIndex]);
                             }
                         }
                     }

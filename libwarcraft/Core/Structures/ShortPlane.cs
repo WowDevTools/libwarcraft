@@ -54,7 +54,7 @@ namespace Warcraft.Core.Structures
                 }
             }
 
-            this.Coordinates = inCoordinates;
+            Coordinates = inCoordinates;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Warcraft.Core.Structures
         /// <param name="inAllCoordinates">The short to use for all coordinates.</param>
         public ShortPlane(short inAllCoordinates)
         {
-            this.Coordinates = new List<List<short>>();
+            Coordinates = new List<List<short>>();
 
             for (int y = 0; y < 3; ++y)
             {
@@ -72,7 +72,7 @@ namespace Warcraft.Core.Structures
                 {
                     coordinateRow.Add(inAllCoordinates);
                 }
-                this.Coordinates.Add(coordinateRow);
+                Coordinates.Add(coordinateRow);
             }
         }
     }

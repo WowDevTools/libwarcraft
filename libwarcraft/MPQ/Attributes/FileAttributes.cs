@@ -47,9 +47,9 @@ namespace Warcraft.MPQ.Attributes
         /// <param name="md5">The MD5 hash of the file. </param>
         public FileAttributes(uint crc32, ulong timestamp, string md5)
         {
-            this.CRC32 = crc32;
-            this.Timestamp = timestamp;
-            this.MD5 = md5;
+            CRC32 = crc32;
+            Timestamp = timestamp;
+            MD5 = md5;
         }
     }
 }

@@ -73,15 +73,15 @@ namespace Warcraft.BLS
 
                     if (dataSignature == VertexShaderSignature)
                     {
-                        this.ContainerType = ShaderContainerType.Vertex;
+                        ContainerType = ShaderContainerType.Vertex;
                     }
                     else
                     {
-                        this.ContainerType = ShaderContainerType.Fragment;
+                        ContainerType = ShaderContainerType.Fragment;
                     }
 
-                    this.Version = br.ReadUInt32();
-                    this.ShaderBlockCount = br.ReadUInt32();
+                    Version = br.ReadUInt32();
+                    ShaderBlockCount = br.ReadUInt32();
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace Warcraft.BLS
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    if (this.ContainerType == ShaderContainerType.Vertex)
+                    if (ContainerType == ShaderContainerType.Vertex)
                     {
                         bw.WriteChunkSignature(VertexShaderSignature);
                     }
@@ -104,8 +104,8 @@ namespace Warcraft.BLS
                         bw.WriteChunkSignature(FragmentShaderSignature);
                     }
 
-                    bw.Write(this.Version);
-                    bw.Write(this.ShaderBlockCount);
+                    bw.Write(Version);
+                    bw.Write(ShaderBlockCount);
                 }
 
                 return ms.ToArray();

@@ -49,7 +49,7 @@ namespace Warcraft.WDT.Chunks
                     {
                         for (uint x = 0; x < 64; ++x)
                         {
-                            this.Entries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize()), x, y));
+                            Entries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize()), x, y));
                         }
                     }
                 }
@@ -74,7 +74,7 @@ namespace Warcraft.WDT.Chunks
             }
 
             int tileIndex = (int)((inTileY * 64) + inTileX);
-            return this.Entries[tileIndex];
+            return Entries[tileIndex];
         }
 
         public byte[] Serialize()
@@ -83,7 +83,7 @@ namespace Warcraft.WDT.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (AreaInfoEntry entry in this.Entries)
+                    foreach (AreaInfoEntry entry in Entries)
                     {
                         bw.Write(entry.Serialize());
                     }
@@ -111,14 +111,14 @@ namespace Warcraft.WDT.Chunks
 
         public AreaInfoEntry(byte[] data, uint inTileX, uint inTileY)
         {
-            this.TileX = inTileX;
-            this.TileY = inTileY;
+            TileX = inTileX;
+            TileY = inTileY;
             using (MemoryStream ms = new MemoryStream(data))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Flags = (AreaInfoFlags)br.ReadUInt32();
-                    this.AreaID = br.ReadUInt32();
+                    Flags = (AreaInfoFlags)br.ReadUInt32();
+                    AreaID = br.ReadUInt32();
                 }
             }
         }
@@ -129,8 +129,8 @@ namespace Warcraft.WDT.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write((uint)this.Flags);
-                    bw.Write(this.AreaID);
+                    bw.Write((uint)Flags);
+                    bw.Write(AreaID);
 
                     bw.Flush();
                 }
