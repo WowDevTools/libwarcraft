@@ -17,7 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;

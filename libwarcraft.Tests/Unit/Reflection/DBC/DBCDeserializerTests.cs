@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
 

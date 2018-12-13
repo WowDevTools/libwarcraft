@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using libwarcraft.Tests.Unit.Reflection.DBC.TestData;
@@ -8,7 +7,6 @@ using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC;
 using Warcraft.DBC.Definitions;
-using Warcraft.DBC.SpecialFields;
 using static libwarcraft.Tests.Unit.Reflection.DBC.TestData.FieldNameLists;
 namespace libwarcraft.Tests.Unit.Reflection.DBC
 {

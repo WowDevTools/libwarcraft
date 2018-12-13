@@ -5,7 +5,6 @@ using libwarcraft.Tests.Unit.Reflection.DBC.TestData;
 using NUnit.Framework;
 using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
-using Warcraft.DBC.Definitions;
 using static libwarcraft.Tests.Unit.Reflection.DBC.TestData.FieldNameLists;
 
 namespace libwarcraft.Tests.Unit.Reflection.DBC
