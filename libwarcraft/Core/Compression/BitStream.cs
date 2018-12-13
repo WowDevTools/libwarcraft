@@ -15,10 +15,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -32,67 +32,67 @@ using System.IO;
 
 namespace Warcraft.Core.Compression
 {
-	/// <summary>
-	/// A utility class for reading groups of bits from a stream
-	/// </summary>
-	internal class BitStream
-	{
-		private Stream _baseStream;
-		private int _current;
-		private int _bitCount;
+    /// <summary>
+    /// A utility class for reading groups of bits from a stream
+    /// </summary>
+    internal class BitStream
+    {
+        private Stream _baseStream;
+        private int _current;
+        private int _bitCount;
 
-		public BitStream(Stream sourceStream)
-		{
-			this._baseStream = sourceStream;
-		}
+        public BitStream(Stream sourceStream)
+        {
+            this._baseStream = sourceStream;
+        }
 
-		public int ReadBits(int bitCount)
-		{
-			if (bitCount > 16)
-			{
-				throw new ArgumentOutOfRangeException("BitCount", "Maximum BitCount is 16");
-			}
-			if (EnsureBits(bitCount) == false)
-			{
-				return -1;
-			}
-			int result = this._current & (0xffff >> (16 - bitCount));
-			WasteBits(bitCount);
-			return result;
-		}
+        public int ReadBits(int bitCount)
+        {
+            if (bitCount > 16)
+            {
+                throw new ArgumentOutOfRangeException("BitCount", "Maximum BitCount is 16");
+            }
+            if (EnsureBits(bitCount) == false)
+            {
+                return -1;
+            }
+            int result = this._current & (0xffff >> (16 - bitCount));
+            WasteBits(bitCount);
+            return result;
+        }
 
-		public int PeekByte()
-		{
-			if (EnsureBits(8) == false)
-			{
-				return -1;
-			}
-			return this._current & 0xff;
-		}
+        public int PeekByte()
+        {
+            if (EnsureBits(8) == false)
+            {
+                return -1;
+            }
+            return this._current & 0xff;
+        }
 
-		public bool EnsureBits(int bitCount)
-		{
-			if (bitCount <= this._bitCount)
-			{
-				return true;
-			}
+        public bool EnsureBits(int bitCount)
+        {
+            if (bitCount <= this._bitCount)
+            {
+                return true;
+            }
 
-			if (this._baseStream.Position >= this._baseStream.Length)
-			{
-				return false;
-			}
-			int nextvalue = this._baseStream.ReadByte();
-			this._current |= nextvalue << this._bitCount;
-			this._bitCount += 8;
-			return true;
-		}
+            if (this._baseStream.Position >= this._baseStream.Length)
+            {
+                return false;
+            }
+            int nextvalue = this._baseStream.ReadByte();
+            this._current |= nextvalue << this._bitCount;
+            this._bitCount += 8;
+            return true;
+        }
 
-		private bool WasteBits(int bitCount)
-		{
-			this._current >>= bitCount;
-			this._bitCount -= bitCount;
-			return true;
-		}
-	}
+        private bool WasteBits(int bitCount)
+        {
+            this._current >>= bitCount;
+            this._bitCount -= bitCount;
+            return true;
+        }
+    }
 }
 

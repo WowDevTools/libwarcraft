@@ -28,55 +28,55 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTerrainCuttingPlanes : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOPL";
+    public class ModelTerrainCuttingPlanes : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOPL";
 
-		public List<Plane> CuttingPlanes = new List<Plane>();
+        public List<Plane> CuttingPlanes = new List<Plane>();
 
-		public ModelTerrainCuttingPlanes()
-		{
-		}
+        public ModelTerrainCuttingPlanes()
+        {
+        }
 
-		public ModelTerrainCuttingPlanes(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelTerrainCuttingPlanes(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-            	{
-		            while (ms.Position < ms.Length)
-		            {
-			            this.CuttingPlanes.Add(br.ReadPlane());
-		            }
-            	}
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.CuttingPlanes.Add(br.ReadPlane());
+                    }
+                }
             }
-		}
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (Plane cuttingPlane in this.CuttingPlanes)
-		            {
-			            bw.WritePlane(cuttingPlane);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (Plane cuttingPlane in this.CuttingPlanes)
+                    {
+                        bw.WritePlane(cuttingPlane);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

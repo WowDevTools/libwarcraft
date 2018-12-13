@@ -27,63 +27,63 @@ using Warcraft.Core.Shading.Blending;
 
 namespace Warcraft.MDX.Visual
 {
-	/// <summary>
-	/// An <see cref="MDXMaterial"/> corresponds to a set of graphics states which should be enabled for a draw call,
-	/// most commonly occlusion culling, Z buffering, blending, etc.
-	/// </summary>
-	public class MDXMaterial : IVersionedClass
-	{
-		/// <summary>
-		/// General set of flags, that is, actions to apply to this material.
-		/// </summary>
-		public EMDXRenderFlag Flags;
+    /// <summary>
+    /// An <see cref="MDXMaterial"/> corresponds to a set of graphics states which should be enabled for a draw call,
+    /// most commonly occlusion culling, Z buffering, blending, etc.
+    /// </summary>
+    public class MDXMaterial : IVersionedClass
+    {
+        /// <summary>
+        /// General set of flags, that is, actions to apply to this material.
+        /// </summary>
+        public EMDXRenderFlag Flags;
 
-		/// <summary>
-		/// The framebuffer blending mode to apply with this material.
-		/// </summary>
-		public BlendingMode BlendMode;
+        /// <summary>
+        /// The framebuffer blending mode to apply with this material.
+        /// </summary>
+        public BlendingMode BlendMode;
 
-		/// <summary>
-		/// Deserializes an <see cref="MDXMaterial"/> using a given <see cref="BinaryReader"/>.
-		/// </summary>
-		/// <param name="br"></param>
-		/// <param name="version"></param>
-		public MDXMaterial(BinaryReader br, WarcraftVersion version)
-		{
-			this.Flags = (EMDXRenderFlag)br.ReadUInt16();
-			if (version >= WarcraftVersion.Cataclysm)
-			{
-				this.BlendMode = (BlendingMode) br.ReadUInt16();
-			}
-			else
-			{
-				this.BlendMode = RemapBlendingMode(br.ReadUInt16());
-			}
-		}
+        /// <summary>
+        /// Deserializes an <see cref="MDXMaterial"/> using a given <see cref="BinaryReader"/>.
+        /// </summary>
+        /// <param name="br"></param>
+        /// <param name="version"></param>
+        public MDXMaterial(BinaryReader br, WarcraftVersion version)
+        {
+            this.Flags = (EMDXRenderFlag)br.ReadUInt16();
+            if (version >= WarcraftVersion.Cataclysm)
+            {
+                this.BlendMode = (BlendingMode) br.ReadUInt16();
+            }
+            else
+            {
+                this.BlendMode = RemapBlendingMode(br.ReadUInt16());
+            }
+        }
 
-		/// <summary>
-		/// Remaps the blending mode according to the following table:
-		/// [0, 1, 2, 10, 5, 6, ...]
-		///
-		/// This is required before Cataclysm, probably due to a mismatch between the enumerations used in the
-		/// client and the exporter.
-		/// </summary>
-		/// <param name="blendingMode"></param>
-		/// <returns></returns>
-		private static BlendingMode RemapBlendingMode(uint blendingMode)
-		{
-			if (blendingMode == 3)
-			{
-				return BlendingMode.NoAlphaAdditive;
-			}
+        /// <summary>
+        /// Remaps the blending mode according to the following table:
+        /// [0, 1, 2, 10, 5, 6, ...]
+        ///
+        /// This is required before Cataclysm, probably due to a mismatch between the enumerations used in the
+        /// client and the exporter.
+        /// </summary>
+        /// <param name="blendingMode"></param>
+        /// <returns></returns>
+        private static BlendingMode RemapBlendingMode(uint blendingMode)
+        {
+            if (blendingMode == 3)
+            {
+                return BlendingMode.NoAlphaAdditive;
+            }
 
-			if (blendingMode > 3)
-			{
-				return (BlendingMode)(blendingMode - 1);
-			}
+            if (blendingMode > 3)
+            {
+                return (BlendingMode)(blendingMode - 1);
+            }
 
-			return (BlendingMode) blendingMode;
-		}
-	}
+            return (BlendingMode) blendingMode;
+        }
+    }
 }
 

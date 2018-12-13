@@ -26,106 +26,106 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkLiquids : IIFFChunk
-	{
-		public const string Signature = "MCLQ";
+    public class MapChunkLiquids : IIFFChunk
+    {
+        public const string Signature = "MCLQ";
 
-		public float MinimumLiquidLevel;
-		public float MaxiumLiquidLevel;
+        public float MinimumLiquidLevel;
+        public float MaxiumLiquidLevel;
 
-		public List<LiquidVertex> LiquidVertices = new List<LiquidVertex>();
-		public List<LiquidFlags> LiquidTileFlags = new List<LiquidFlags>();
+        public List<LiquidVertex> LiquidVertices = new List<LiquidVertex>();
+        public List<LiquidFlags> LiquidTileFlags = new List<LiquidFlags>();
 
-		public MapChunkLiquids(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public MapChunkLiquids()
-		{
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public MapChunkLiquids(byte[] inData)
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.MinimumLiquidLevel = br.ReadSingle();
-					this.MaxiumLiquidLevel = br.ReadSingle();
+            LoadBinaryData(inData);
+        }
 
-					for (int y = 0; y < 9; ++y)
-					{
-						for (int x = 0; x < 9; ++x)
-						{
-							this.LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
-						}
-					}
+        public MapChunkLiquids()
+        {
+        }
 
-					for (int y = 0; y < 8; ++y)
-					{
-						for (int x = 0; x < 8; ++x)
-						{
-							this.LiquidTileFlags.Add(((LiquidFlags)br.ReadByte()));
-						}
-					}
-				}
-			}
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.MinimumLiquidLevel = br.ReadSingle();
+                    this.MaxiumLiquidLevel = br.ReadSingle();
+
+                    for (int y = 0; y < 9; ++y)
+                    {
+                        for (int x = 0; x < 9; ++x)
+                        {
+                            this.LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
+                        }
+                    }
+
+                    for (int y = 0; y < 8; ++y)
+                    {
+                        for (int x = 0; x < 8; ++x)
+                        {
+                            this.LiquidTileFlags.Add(((LiquidFlags)br.ReadByte()));
+                        }
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
-	}
+    }
 
-	public class LiquidVertex : IBinarySerializable
-	{
-		public Tuple<ushort, ushort> TextureCoordinates;
-		public float Height;
+    public class LiquidVertex : IBinarySerializable
+    {
+        public Tuple<ushort, ushort> TextureCoordinates;
+        public float Height;
 
-		public LiquidVertex(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.TextureCoordinates = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-					this.Height = br.ReadSingle();
-				}
-			}
-		}
-
-		public static int GetSize()
-		{
-			return 8;
-		}
-
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public LiquidVertex(byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-            		bw.Write(this.TextureCoordinates.Item1);
-            		bw.Write(this.TextureCoordinates.Item2);
-
-		            bw.Write(this.Height);
-            	}
-
-            	return ms.ToArray();
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.TextureCoordinates = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
+                    this.Height = br.ReadSingle();
+                }
             }
-		}
-	}
+        }
 
-	[Flags]
-	public enum LiquidFlags : byte
-	{
-		Hidden 		= 0x08,
-		// Unknown1 = 0x10,
-		// Unknown2 = 0x20,
-		Fishable 	= 0x40,
-		Shared 		= 0x80
-	}
+        public static int GetSize()
+        {
+            return 8;
+        }
+
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write(this.TextureCoordinates.Item1);
+                    bw.Write(this.TextureCoordinates.Item2);
+
+                    bw.Write(this.Height);
+                }
+
+                return ms.ToArray();
+            }
+        }
+    }
+
+    [Flags]
+    public enum LiquidFlags : byte
+    {
+        Hidden         = 0x08,
+        // Unknown1 = 0x10,
+        // Unknown2 = 0x20,
+        Fishable     = 0x40,
+        Shared         = 0x80
+    }
 }
 

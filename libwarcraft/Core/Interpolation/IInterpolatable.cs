@@ -22,21 +22,21 @@
 
 namespace Warcraft.Core.Interpolation
 {
-	/// <summary>
-	/// Specifies that the type which implements this interface can be interpolated between itself and a target point.
-	/// </summary>
-	/// <typeparam name="T">The type to interpolate.</typeparam>
-	public interface IInterpolatable<T>
-	{
-		/// <summary>
-		/// Interpolates the instance between itself and the <paramref name="target"/> object by an alpha factor,
-		/// using the interpolation algorithm specified in <paramref name="interpolationType"/>.
-		/// </summary>
-		/// <param name="target">The target point.</param>
-		/// <param name="alpha">The alpha factor.</param>
-		/// <param name="interpolationType">The interpolation algorithm to use.</param>
-		/// <returns>An interpolated object.</returns>
-		T Interpolate(T target, float alpha, InterpolationType interpolationType);
-	}
+    /// <summary>
+    /// Specifies that the type which implements this interface can be interpolated between itself and a target point.
+    /// </summary>
+    /// <typeparam name="T">The type to interpolate.</typeparam>
+    public interface IInterpolatable<T>
+    {
+        /// <summary>
+        /// Interpolates the instance between itself and the <paramref name="target"/> object by an alpha factor,
+        /// using the interpolation algorithm specified in <paramref name="interpolationType"/>.
+        /// </summary>
+        /// <param name="target">The target point.</param>
+        /// <param name="alpha">The alpha factor.</param>
+        /// <param name="interpolationType">The interpolation algorithm to use.</param>
+        /// <returns>An interpolated object.</returns>
+        T Interpolate(T target, float alpha, InterpolationType interpolationType);
+    }
 }
 

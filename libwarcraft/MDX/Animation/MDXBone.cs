@@ -28,45 +28,45 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXBone : IVersionedClass
-	{
-		public int SocketLookupTableIndex;
-		public MDXBoneFlag Flags;
-		public short ParentBone;
-		public ushort SkinSectionID; // Likely not the correct name
+    public class MDXBone : IVersionedClass
+    {
+        public int SocketLookupTableIndex;
+        public MDXBoneFlag Flags;
+        public short ParentBone;
+        public ushort SkinSectionID; // Likely not the correct name
 
-		/*
-			Only present in Version >= BC. Naming is most likely incorrect.
-		*/
-		public ushort DistanceToFurtherDesc;
-		public ushort ZRationOfBoneChain;
+        /*
+            Only present in Version >= BC. Naming is most likely incorrect.
+        */
+        public ushort DistanceToFurtherDesc;
+        public ushort ZRationOfBoneChain;
 
-		// ...
-		public MDXTrack<Vector3> Translation;
-		public MDXTrack<Quaternion> Rotation;
-		public MDXTrack<Vector3> Scale;
+        // ...
+        public MDXTrack<Vector3> Translation;
+        public MDXTrack<Quaternion> Rotation;
+        public MDXTrack<Vector3> Scale;
 
-		public Vector3 PivotPoint;
+        public Vector3 PivotPoint;
 
-		public MDXBone(BinaryReader br, WarcraftVersion version)
-		{
-			this.SocketLookupTableIndex = br.ReadInt32();
-			this.Flags = (MDXBoneFlag) br.ReadUInt32();
-			this.ParentBone = br.ReadInt16();
-			this.SkinSectionID = br.ReadUInt16();
+        public MDXBone(BinaryReader br, WarcraftVersion version)
+        {
+            this.SocketLookupTableIndex = br.ReadInt32();
+            this.Flags = (MDXBoneFlag) br.ReadUInt32();
+            this.ParentBone = br.ReadInt16();
+            this.SkinSectionID = br.ReadUInt16();
 
-			if (version >= WarcraftVersion.BurningCrusade)
-			{
-				this.DistanceToFurtherDesc = br.ReadUInt16();
-				this.ZRationOfBoneChain = br.ReadUInt16();
-			}
+            if (version >= WarcraftVersion.BurningCrusade)
+            {
+                this.DistanceToFurtherDesc = br.ReadUInt16();
+                this.ZRationOfBoneChain = br.ReadUInt16();
+            }
 
-			this.Translation = br.ReadMDXTrack<Vector3>(version);
-			this.Rotation = br.ReadMDXTrack<Quaternion>(version);
-			this.Scale = br.ReadMDXTrack<Vector3>(version);
+            this.Translation = br.ReadMDXTrack<Vector3>(version);
+            this.Rotation = br.ReadMDXTrack<Quaternion>(version);
+            this.Scale = br.ReadMDXTrack<Vector3>(version);
 
-			this.PivotPoint = br.ReadVector3();
-		}
-	}
+            this.PivotPoint = br.ReadVector3();
+        }
+    }
 }
 

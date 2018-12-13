@@ -26,57 +26,57 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelSkybox : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOSB";
+    public class ModelSkybox : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOSB";
 
-		public string SkyboxName;
+        public string SkyboxName;
 
-		public ModelSkybox()
-		{
-
-		}
-
-		public ModelSkybox(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public ModelSkybox()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.SkyboxName = br.ReadNullTerminatedString();
-				}
-			}
+
+        }
+
+        public ModelSkybox(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.SkyboxName = br.ReadNullTerminatedString();
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            if (string.IsNullOrEmpty(this.SkyboxName))
-		            {
-			            bw.Write(new byte[4]);
-		            }
-		            else
-		            {
-			            bw.WriteNullTerminatedString(this.SkyboxName);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    if (string.IsNullOrEmpty(this.SkyboxName))
+                    {
+                        bw.Write(new byte[4]);
+                    }
+                    else
+                    {
+                        bw.WriteNullTerminatedString(this.SkyboxName);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

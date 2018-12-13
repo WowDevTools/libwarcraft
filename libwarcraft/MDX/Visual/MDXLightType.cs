@@ -22,9 +22,9 @@
 
 namespace Warcraft.MDX.Visual
 {
-	public enum MDXLightType : ushort
-	{
-		Directional		= 0,
-		Point			= 1
-	}
+    public enum MDXLightType : ushort
+    {
+        Directional        = 0,
+        Point            = 1
+    }
 }

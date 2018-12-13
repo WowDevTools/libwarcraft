@@ -26,78 +26,78 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
-	public class WorldLODMapAreaHoles : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MAHO";
+    public class WorldLODMapAreaHoles : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MAHO";
 
-		public readonly List<short> HoleMasks = new List<short>();
+        public readonly List<short> HoleMasks = new List<short>();
 
-		public bool IsEmpty
-		{
-			get
-			{
-				return this.HoleMasks.TrueForAll(sh => sh == 0);
-			}
-		}
-
-		public WorldLODMapAreaHoles()
-		{
-
-		}
-
-		public WorldLODMapAreaHoles(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public bool IsEmpty
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					for (int i = 0; i < 16; ++i)
-					{
-						this.HoleMasks.Add(br.ReadInt16());
-					}
-				}
-			}
+            get
+            {
+                return this.HoleMasks.TrueForAll(sh => sh == 0);
+            }
         }
 
-		public static int GetSize()
-		{
-			return 16 * sizeof(short);
-		}
+        public WorldLODMapAreaHoles()
+        {
+
+        }
+
+        public WorldLODMapAreaHoles(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        this.HoleMasks.Add(br.ReadInt16());
+                    }
+                }
+            }
+        }
+
+        public static int GetSize()
+        {
+            return 16 * sizeof(short);
+        }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		/// <summary>
-		/// Creates an empty hole chunk, where all values are set to 0.
-		/// </summary>
-		/// <returns>An empty chunk.</returns>
-		public static WorldLODMapAreaHoles CreateEmpty()
-		{
-			return new WorldLODMapAreaHoles(new byte[32]);
-		}
+        /// <summary>
+        /// Creates an empty hole chunk, where all values are set to 0.
+        /// </summary>
+        /// <returns>An empty chunk.</returns>
+        public static WorldLODMapAreaHoles CreateEmpty()
+        {
+            return new WorldLODMapAreaHoles(new byte[32]);
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (short holeMask in this.HoleMasks)
-		            {
-			            bw.Write(holeMask);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (short holeMask in this.HoleMasks)
+                    {
+                        bw.Write(holeMask);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

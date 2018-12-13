@@ -28,16 +28,16 @@ using Warcraft.Core.Structures;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXColourAnimation : IVersionedClass
-	{
-		public MDXTrack<RGB> ColourTrack;
-		public MDXTrack<short> OpacityTrack;
+    public class MDXColourAnimation : IVersionedClass
+    {
+        public MDXTrack<RGB> ColourTrack;
+        public MDXTrack<short> OpacityTrack;
 
-		public MDXColourAnimation(BinaryReader br, WarcraftVersion version)
-		{
-			this.ColourTrack = br.ReadMDXTrack<RGB>(version);
-			this.OpacityTrack = br.ReadMDXTrack<short>(version);
-		}
-	}
+        public MDXColourAnimation(BinaryReader br, WarcraftVersion version)
+        {
+            this.ColourTrack = br.ReadMDXTrack<RGB>(version);
+            this.OpacityTrack = br.ReadMDXTrack<short>(version);
+        }
+    }
 }
 

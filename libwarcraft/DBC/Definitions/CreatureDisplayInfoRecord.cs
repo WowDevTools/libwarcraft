@@ -27,81 +27,81 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	[DatabaseRecord(DatabaseName.CreatureDisplayInfo)]
-	public class CreatureDisplayInfoRecord : DBCRecord
-	{
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.CreatureModelData, nameof(ID))]
-		public ForeignKey<uint> Model { get; set; }
+    [DatabaseRecord(DatabaseName.CreatureDisplayInfo)]
+    public class CreatureDisplayInfoRecord : DBCRecord
+    {
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.CreatureModelData, nameof(ID))]
+        public ForeignKey<uint> Model { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.CreatureSoundData, nameof(ID))]
-		public ForeignKey<uint> Sound { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.CreatureSoundData, nameof(ID))]
+        public ForeignKey<uint> Sound { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.CreatureDisplayInfoExtra, nameof(ID))]
-		public ForeignKey<uint> ExtraDisplayInformation { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.CreatureDisplayInfoExtra, nameof(ID))]
+        public ForeignKey<uint> ExtraDisplayInformation { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float Scale { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float Scale { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint Opacity { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint Opacity { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference TextureVariation1 { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference TextureVariation1 { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference TextureVariation2 { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference TextureVariation2 { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference TextureVariation3 { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference TextureVariation3 { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
-		public StringReference PortraitTexture { get; set; }
+        [RecordField(WarcraftVersion.BurningCrusade)]
+        public StringReference PortraitTexture { get; set; }
 
-		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
-		public uint SizeClass { get; set; }
+        [RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath)]
+        public uint SizeClass { get; set; }
 
-		[RecordField(WarcraftVersion.Wrath)]
-		[ForeignKeyInfo(DatabaseName.UnitBloodLevels, nameof(ID))]
-		public ForeignKey<uint> BloodLevel { get; set; }
+        [RecordField(WarcraftVersion.Wrath)]
+        [ForeignKeyInfo(DatabaseName.UnitBloodLevels, nameof(ID))]
+        public ForeignKey<uint> BloodLevel { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.UnitBlood, nameof(ID))]
-		public ForeignKey<uint> Blood { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.UnitBlood, nameof(ID))]
+        public ForeignKey<uint> Blood { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.NPCSounds, nameof(ID))]
-		public ForeignKey<uint> NPCSound { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.NPCSounds, nameof(ID))]
+        public ForeignKey<uint> NPCSound { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
-		public uint ParticleColour { get; set; }
+        [RecordField(WarcraftVersion.BurningCrusade)]
+        public uint ParticleColour { get; set; }
 
-		[RecordField(WarcraftVersion.Wrath)]
-		public uint CreatureGeosetData { get; set; }
+        [RecordField(WarcraftVersion.Wrath)]
+        public uint CreatureGeosetData { get; set; }
 
-		[RecordField(WarcraftVersion.Wrath)]
-		public uint ObjectEffectPackage { get; set; }
+        [RecordField(WarcraftVersion.Wrath)]
+        public uint ObjectEffectPackage { get; set; }
 
-		public IReadOnlyList<StringReference> TextureVariations => new[] { this.TextureVariation1, this.TextureVariation2, this.TextureVariation3 };
+        public IReadOnlyList<StringReference> TextureVariations => new[] { this.TextureVariation1, this.TextureVariation2, this.TextureVariation3 };
 
-		/// <inheritdoc />
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			var references =  new List<StringReference>
-			{
-				this.TextureVariation1,
-				this.TextureVariation2,
-				this.TextureVariation3
-			};
+        /// <inheritdoc />
+        public override IEnumerable<StringReference> GetStringReferences()
+        {
+            var references =  new List<StringReference>
+            {
+                this.TextureVariation1,
+                this.TextureVariation2,
+                this.TextureVariation3
+            };
 
-			if (this.Version >= WarcraftVersion.BurningCrusade)
-			{
-				references.Add(this.PortraitTexture);
-			}
+            if (this.Version >= WarcraftVersion.BurningCrusade)
+            {
+                references.Add(this.PortraitTexture);
+            }
 
-			return references;
-		}
-	}
+            return references;
+        }
+    }
 }

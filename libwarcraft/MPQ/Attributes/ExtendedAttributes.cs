@@ -26,157 +26,157 @@ using System.Collections.Generic;
 
 namespace Warcraft.MPQ.Attributes
 {
-	/// <summary>
-	/// Container class for the extended file attributes contained in an MPQ archive.
-	/// </summary>
-	public class ExtendedAttributes
-	{
-		/// <summary>
-		/// The internal filename of the attributes.
-		/// </summary>
-		public const string InternalFileName = "(attributes)";
+    /// <summary>
+    /// Container class for the extended file attributes contained in an MPQ archive.
+    /// </summary>
+    public class ExtendedAttributes
+    {
+        /// <summary>
+        /// The internal filename of the attributes.
+        /// </summary>
+        public const string InternalFileName = "(attributes)";
 
-		/// <summary>
-		/// The version of the attribute file format.
-		/// </summary>
-		public uint Version;
+        /// <summary>
+        /// The version of the attribute file format.
+        /// </summary>
+        public uint Version;
 
-		/// <summary>
-		/// The attributes present in the attribute file.
-		/// </summary>
-		public AttributeTypes AttributesPresent;
+        /// <summary>
+        /// The attributes present in the attribute file.
+        /// </summary>
+        public AttributeTypes AttributesPresent;
 
-		/// <summary>
-		/// The list of file attributes.
-		/// </summary>
-		public List<FileAttributes> FileAttributes;
+        /// <summary>
+        /// The list of file attributes.
+        /// </summary>
+        public List<FileAttributes> FileAttributes;
 
-		/// <summary>
-		/// Deserializes a <see cref="ExtendedAttributes"/> object from the provided binary data, and an expected
-		/// file block count.
-		/// </summary>
-		/// <param name="data"></param>
-		/// <param name="fileBlockCount"></param>
-		/// <exception cref="ArgumentNullException"></exception>
-		public ExtendedAttributes(byte[] data, uint fileBlockCount)
-		{
-			if (data == null)
-			{
-				throw new ArgumentNullException(nameof(data));
-			}
+        /// <summary>
+        /// Deserializes a <see cref="ExtendedAttributes"/> object from the provided binary data, and an expected
+        /// file block count.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="fileBlockCount"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public ExtendedAttributes(byte[] data, uint fileBlockCount)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					// Initial length (without any attributes) should be at least 8 bytes
-					uint expectedDataLength = 8;
-					if (data.Length < expectedDataLength)
-					{
-						this.Version = 0;
-						this.AttributesPresent = 0;
-						this.FileAttributes = null;
-					}
-					else
-					{
-						this.Version = br.ReadUInt32();
-						this.AttributesPresent = (AttributeTypes)br.ReadUInt32();
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    // Initial length (without any attributes) should be at least 8 bytes
+                    uint expectedDataLength = 8;
+                    if (data.Length < expectedDataLength)
+                    {
+                        this.Version = 0;
+                        this.AttributesPresent = 0;
+                        this.FileAttributes = null;
+                    }
+                    else
+                    {
+                        this.Version = br.ReadUInt32();
+                        this.AttributesPresent = (AttributeTypes)br.ReadUInt32();
 
-						List<uint> crcHashes = new List<uint>();
-						if (this.AttributesPresent.HasFlag(AttributeTypes.CRC32))
-						{
-							expectedDataLength += sizeof(uint) * fileBlockCount;
+                        List<uint> crcHashes = new List<uint>();
+                        if (this.AttributesPresent.HasFlag(AttributeTypes.CRC32))
+                        {
+                            expectedDataLength += sizeof(uint) * fileBlockCount;
 
-							for (int i = 0; i < fileBlockCount; ++i)
-							{
-								if (data.Length >= expectedDataLength)
-								{
-									crcHashes.Add(br.ReadUInt32());
-								}
-								else
-								{
-									crcHashes.Add(0);
-								}
-							}
-						}
-						else
-						{
-							for (int i = 0; i < fileBlockCount; ++i)
-							{
-								crcHashes.Add(0);
-							}
-						}
+                            for (int i = 0; i < fileBlockCount; ++i)
+                            {
+                                if (data.Length >= expectedDataLength)
+                                {
+                                    crcHashes.Add(br.ReadUInt32());
+                                }
+                                else
+                                {
+                                    crcHashes.Add(0);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < fileBlockCount; ++i)
+                            {
+                                crcHashes.Add(0);
+                            }
+                        }
 
-						List<ulong> timestamps = new List<ulong>();
-						if (this.AttributesPresent.HasFlag(AttributeTypes.Timestamp))
-						{
-							expectedDataLength += sizeof(ulong) * fileBlockCount;
+                        List<ulong> timestamps = new List<ulong>();
+                        if (this.AttributesPresent.HasFlag(AttributeTypes.Timestamp))
+                        {
+                            expectedDataLength += sizeof(ulong) * fileBlockCount;
 
-							for (int i = 0; i < fileBlockCount; ++i)
-							{
-								if (data.Length >= expectedDataLength)
-								{
-									timestamps.Add(br.ReadUInt64());
-								}
-								else
-								{
-									timestamps.Add(0);
-								}
-							}
-						}
-						else
-						{
-							for (int i = 0; i < fileBlockCount; ++i)
-							{
-								timestamps.Add(0);
-							}
-						}
+                            for (int i = 0; i < fileBlockCount; ++i)
+                            {
+                                if (data.Length >= expectedDataLength)
+                                {
+                                    timestamps.Add(br.ReadUInt64());
+                                }
+                                else
+                                {
+                                    timestamps.Add(0);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < fileBlockCount; ++i)
+                            {
+                                timestamps.Add(0);
+                            }
+                        }
 
-						List<string> md5Hashes = new List<string>();
-						if (this.AttributesPresent.HasFlag(AttributeTypes.MD5))
-						{
-							expectedDataLength += 16 * fileBlockCount;
+                        List<string> md5Hashes = new List<string>();
+                        if (this.AttributesPresent.HasFlag(AttributeTypes.MD5))
+                        {
+                            expectedDataLength += 16 * fileBlockCount;
 
-							for (int i = 0; i < fileBlockCount; ++i)
-							{
-								if (data.Length >= expectedDataLength)
-								{
-									byte[] md5Data = br.ReadBytes(16);
-									string md5 = BitConverter.ToString(md5Data).Replace("-", "");
-									md5Hashes.Add(md5);
-								}
-								else
-								{
-									md5Hashes.Add("");
-								}
-							}
-						}
-						else
-						{
-							for (int i = 0; i < fileBlockCount; ++i)
-							{
-								md5Hashes.Add("");
-							}
-						}
+                            for (int i = 0; i < fileBlockCount; ++i)
+                            {
+                                if (data.Length >= expectedDataLength)
+                                {
+                                    byte[] md5Data = br.ReadBytes(16);
+                                    string md5 = BitConverter.ToString(md5Data).Replace("-", "");
+                                    md5Hashes.Add(md5);
+                                }
+                                else
+                                {
+                                    md5Hashes.Add("");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < fileBlockCount; ++i)
+                            {
+                                md5Hashes.Add("");
+                            }
+                        }
 
-						this.FileAttributes = new List<FileAttributes>();
-						for (int i = 0; i < fileBlockCount; ++i)
-						{
-							this.FileAttributes.Add(new FileAttributes(crcHashes[i], timestamps[i], md5Hashes[i]));
-						}
-					}
-				}
-			}
-		}
+                        this.FileAttributes = new List<FileAttributes>();
+                        for (int i = 0; i < fileBlockCount; ++i)
+                        {
+                            this.FileAttributes.Add(new FileAttributes(crcHashes[i], timestamps[i], md5Hashes[i]));
+                        }
+                    }
+                }
+            }
+        }
 
-		/// <summary>
-		/// Determines whether or not the stored attributes are valid.
-		/// </summary>
-		/// <returns></returns>
-		public bool AreAttributesValid()
-		{
-			return this.Version == 100 && this.AttributesPresent > 0;
-		}
-	}
+        /// <summary>
+        /// Determines whether or not the stored attributes are valid.
+        /// </summary>
+        /// <returns></returns>
+        public bool AreAttributesValid()
+        {
+            return this.Version == 100 && this.AttributesPresent > 0;
+        }
+    }
 }
 

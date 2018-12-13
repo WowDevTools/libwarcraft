@@ -26,57 +26,57 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelGameObjectFileID : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "GFID";
+    public class ModelGameObjectFileID : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "GFID";
 
-		public List<uint> IDFlags = new List<uint>();
+        public List<uint> IDFlags = new List<uint>();
 
-		public ModelGameObjectFileID()
-		{
-
-		}
-
-		public ModelGameObjectFileID(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public ModelGameObjectFileID()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					int groupCount = inData.Length / sizeof(uint);
-					for (int i = 0; i < groupCount; ++i)
-					{
-						this.IDFlags.Add(br.ReadUInt32());
-					}
-				}
-			}
+
+        }
+
+        public ModelGameObjectFileID(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    int groupCount = inData.Length / sizeof(uint);
+                    for (int i = 0; i < groupCount; ++i)
+                    {
+                        this.IDFlags.Add(br.ReadUInt32());
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (int idFlag in this.IDFlags)
-		            {
-			            bw.Write(idFlag);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (int idFlag in this.IDFlags)
+                    {
+                        bw.Write(idFlag);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

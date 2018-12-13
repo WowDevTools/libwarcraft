@@ -28,99 +28,99 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTangentArray : IIFFChunk, IBinarySerializable, IPostLoad<ModelTangentArrayPostLoadParameters>
-	{
-		public const string Signature = "MOTA";
+    public class ModelTangentArray : IIFFChunk, IBinarySerializable, IPostLoad<ModelTangentArrayPostLoadParameters>
+    {
+        public const string Signature = "MOTA";
 
-		private bool InternalHasFinishedLoading;
-		private byte[] Data;
+        private bool InternalHasFinishedLoading;
+        private byte[] Data;
 
-		public List<short> FirstIndices = new List<short>();
-		public List<Vector4> Tangents = new List<Vector4>();
+        public List<short> FirstIndices = new List<short>();
+        public List<Vector4> Tangents = new List<Vector4>();
 
-		public ModelTangentArray()
-		{
-			this.InternalHasFinishedLoading = true;
-		}
+        public ModelTangentArray()
+        {
+            this.InternalHasFinishedLoading = true;
+        }
 
-		public ModelTangentArray(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelTangentArray(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			this.Data = inData;
-			this.InternalHasFinishedLoading = false;
-		}
+        public void LoadBinaryData(byte[] inData)
+        {
+            this.Data = inData;
+            this.InternalHasFinishedLoading = false;
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (short firstIndex in this.FirstIndices)
-		            {
-			            bw.Write(firstIndex);
-		            }
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (short firstIndex in this.FirstIndices)
+                    {
+                        bw.Write(firstIndex);
+                    }
 
-		            foreach (Vector4 tangent in this.Tangents)
-		            {
-			            bw.WriteVector4(tangent);
-		            }
-            	}
+                    foreach (Vector4 tangent in this.Tangents)
+                    {
+                        bw.WriteVector4(tangent);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
+        }
 
-		public bool HasFinishedLoading()
-		{
-			return this.InternalHasFinishedLoading;
-		}
+        public bool HasFinishedLoading()
+        {
+            return this.InternalHasFinishedLoading;
+        }
 
-		public void PostLoad(ModelTangentArrayPostLoadParameters loadingParameters)
-		{
-			using (MemoryStream ms = new MemoryStream(this.Data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					for (int i = 0; i < loadingParameters.RenderBatchCount; ++i)
-					{
-						this.FirstIndices.Add(br.ReadInt16());
-					}
+        public void PostLoad(ModelTangentArrayPostLoadParameters loadingParameters)
+        {
+            using (MemoryStream ms = new MemoryStream(this.Data))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    for (int i = 0; i < loadingParameters.RenderBatchCount; ++i)
+                    {
+                        this.FirstIndices.Add(br.ReadInt16());
+                    }
 
-					for (int i = 0; i < loadingParameters.AccumulatedIndexCount; ++i)
-					{
-						this.Tangents.Add(br.ReadVector4());
-					}
-				}
-			}
+                    for (int i = 0; i < loadingParameters.AccumulatedIndexCount; ++i)
+                    {
+                        this.Tangents.Add(br.ReadVector4());
+                    }
+                }
+            }
 
-			this.Data = null;
-		}
-	}
+            this.Data = null;
+        }
+    }
 
-	public class ModelTangentArrayPostLoadParameters
-	{
-		public uint RenderBatchCount;
-		public uint AccumulatedIndexCount;
+    public class ModelTangentArrayPostLoadParameters
+    {
+        public uint RenderBatchCount;
+        public uint AccumulatedIndexCount;
 
-		public ModelTangentArrayPostLoadParameters()
-		{
-		}
+        public ModelTangentArrayPostLoadParameters()
+        {
+        }
 
-		public ModelTangentArrayPostLoadParameters(uint inRenderBatchCount, uint inAccumulatedIndexCount)
-		{
-			this.RenderBatchCount = inRenderBatchCount;
-			this.AccumulatedIndexCount = inAccumulatedIndexCount;
-		}
-	}
+        public ModelTangentArrayPostLoadParameters(uint inRenderBatchCount, uint inAccumulatedIndexCount)
+        {
+            this.RenderBatchCount = inRenderBatchCount;
+            this.AccumulatedIndexCount = inAccumulatedIndexCount;
+        }
+    }
 }
 

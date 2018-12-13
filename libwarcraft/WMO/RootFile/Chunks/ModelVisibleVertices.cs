@@ -28,57 +28,57 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelVisibleVertices : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOVV";
+    public class ModelVisibleVertices : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOVV";
 
-		public readonly List<Vector3> VisibleVertices = new List<Vector3>();
+        public readonly List<Vector3> VisibleVertices = new List<Vector3>();
 
-		public ModelVisibleVertices()
-		{
-
-		}
-
-		public ModelVisibleVertices(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public ModelVisibleVertices()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					int vertexCount = inData.Length / 12;
-					for (int i = 0; i < vertexCount; ++i)
-					{
-						this.VisibleVertices.Add(br.ReadVector3());
-					}
-				}
-			}
+
+        }
+
+        public ModelVisibleVertices(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    int vertexCount = inData.Length / 12;
+                    for (int i = 0; i < vertexCount; ++i)
+                    {
+                        this.VisibleVertices.Add(br.ReadVector3());
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					foreach (Vector3 visibleVertex in this.VisibleVertices)
-					{
-						bw.WriteVector3(visibleVertex);
-					}
-				}
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (Vector3 visibleVertex in this.VisibleVertices)
+                    {
+                        bw.WriteVector3(visibleVertex);
+                    }
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 }
 

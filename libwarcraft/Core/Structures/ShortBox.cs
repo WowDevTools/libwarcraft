@@ -26,37 +26,37 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.Core.Structures
 {
-	/// <summary>
-	/// A structure representing an axis-aligned bounding box, comprised of two <see cref="Vector3s"/> objects
-	/// defining the bottom and top corners of the box.
-	/// </summary>
-	public struct ShortBox : IFlattenableData<short>
-	{
-		/// <summary>
-		/// The bottom corner of the bounding box.
-		/// </summary>
-		public Vector3s BottomCorner;
+    /// <summary>
+    /// A structure representing an axis-aligned bounding box, comprised of two <see cref="Vector3s"/> objects
+    /// defining the bottom and top corners of the box.
+    /// </summary>
+    public struct ShortBox : IFlattenableData<short>
+    {
+        /// <summary>
+        /// The bottom corner of the bounding box.
+        /// </summary>
+        public Vector3s BottomCorner;
 
-		/// <summary>
-		/// The top corner of the bounding box.
-		/// </summary>
-		public Vector3s TopCorner;
+        /// <summary>
+        /// The top corner of the bounding box.
+        /// </summary>
+        public Vector3s TopCorner;
 
-		/// <summary>
-		/// Creates a new <see cref="Box"/> object from a top and bottom corner.
-		/// </summary>
-		/// <param name="inBottomCorner">The bottom corner of the box.</param>
-		/// <param name="inTopCorner">The top corner of the box.</param>
-		/// <returns>A new <see cref="Box"/> object.</returns>
-		public ShortBox(Vector3s inBottomCorner, Vector3s inTopCorner)
-		{
-			this.BottomCorner = inBottomCorner;
-			this.TopCorner = inTopCorner;
-		}
+        /// <summary>
+        /// Creates a new <see cref="Box"/> object from a top and bottom corner.
+        /// </summary>
+        /// <param name="inBottomCorner">The bottom corner of the box.</param>
+        /// <param name="inTopCorner">The top corner of the box.</param>
+        /// <returns>A new <see cref="Box"/> object.</returns>
+        public ShortBox(Vector3s inBottomCorner, Vector3s inTopCorner)
+        {
+            this.BottomCorner = inBottomCorner;
+            this.TopCorner = inTopCorner;
+        }
 
-		public IReadOnlyCollection<short> Flatten()
-		{
-			return this.BottomCorner.Flatten().Concat(this.TopCorner.Flatten()).ToArray();
-		}
-	}
+        public IReadOnlyCollection<short> Flatten()
+        {
+            return this.BottomCorner.Flatten().Concat(this.TopCorner.Flatten()).ToArray();
+        }
+    }
 }

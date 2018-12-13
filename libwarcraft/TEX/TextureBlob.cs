@@ -27,84 +27,84 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.TEX
 {
-	/// <summary>
-	/// A texture blob file. This file stores a set of extremely low-resolution textures for use as
-	/// placeholder textures if the real texture has not yet been streamed in or loaded.
-	/// </summary>
-	public class TextureBlob : IBinarySerializable
-	{
-		/// <summary>
-		/// The version chunk of the texture blob.
-		/// </summary>
-		public TextureBlobVersion Version;
+    /// <summary>
+    /// A texture blob file. This file stores a set of extremely low-resolution textures for use as
+    /// placeholder textures if the real texture has not yet been streamed in or loaded.
+    /// </summary>
+    public class TextureBlob : IBinarySerializable
+    {
+        /// <summary>
+        /// The version chunk of the texture blob.
+        /// </summary>
+        public TextureBlobVersion Version;
 
-		/// <summary>
-		/// A list of all the header chunks of the texture data chunks. These headers contain all the information neccesary to
-		/// read the rest of the data contained in the file.
-		/// </summary>
-		public TextureBlobDataEntries BlobDataEntries;
+        /// <summary>
+        /// A list of all the header chunks of the texture data chunks. These headers contain all the information neccesary to
+        /// read the rest of the data contained in the file.
+        /// </summary>
+        public TextureBlobDataEntries BlobDataEntries;
 
-		/// <summary>
-		/// The filename chunk of the texture blob. Contains all of the filenames for which this blob provides
-		/// a fallback texture.
-		/// </summary>
-		public TextureBlobFilenames Filenames;
+        /// <summary>
+        /// The filename chunk of the texture blob. Contains all of the filenames for which this blob provides
+        /// a fallback texture.
+        /// </summary>
+        public TextureBlobFilenames Filenames;
 
-		/// <summary>
-		/// A list of all the texture data chunks in this texture blob.
-		/// </summary>
-		public readonly List<TextureBlobData> TextureData = new List<TextureBlobData>();
+        /// <summary>
+        /// A list of all the texture data chunks in this texture blob.
+        /// </summary>
+        public readonly List<TextureBlobData> TextureData = new List<TextureBlobData>();
 
-		/// <summary>
-		/// Deserializes a <see cref="TextureBlob"/> object from binary data.
-		/// </summary>
-		/// <param name="inData"></param>
-		public TextureBlob(byte[] inData)
-		{
-			if (inData == null)
-			{
-				throw new InvalidDataException("The input data may not be null.");
-			}
+        /// <summary>
+        /// Deserializes a <see cref="TextureBlob"/> object from binary data.
+        /// </summary>
+        /// <param name="inData"></param>
+        public TextureBlob(byte[] inData)
+        {
+            if (inData == null)
+            {
+                throw new InvalidDataException("The input data may not be null.");
+            }
 
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Version = br.ReadIFFChunk<TextureBlobVersion>();
-					this.BlobDataEntries = br.ReadIFFChunk<TextureBlobDataEntries>();
-					this.Filenames = br.ReadIFFChunk<TextureBlobFilenames>();
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Version = br.ReadIFFChunk<TextureBlobVersion>();
+                    this.BlobDataEntries = br.ReadIFFChunk<TextureBlobDataEntries>();
+                    this.Filenames = br.ReadIFFChunk<TextureBlobFilenames>();
 
-					long dataBlockStartingPosition = br.BaseStream.Position;
-					foreach (TextureBlobDataEntry blobDataEntry in this.BlobDataEntries.BlobDataEntries)
-					{
-						br.BaseStream.Position = dataBlockStartingPosition + blobDataEntry.TextureDataOffset;
-						this.TextureData.Add(br.ReadIFFChunk<TextureBlobData>());
-					}
-				}
-			}
-		}
+                    long dataBlockStartingPosition = br.BaseStream.Position;
+                    foreach (TextureBlobDataEntry blobDataEntry in this.BlobDataEntries.BlobDataEntries)
+                    {
+                        br.BaseStream.Position = dataBlockStartingPosition + blobDataEntry.TextureDataOffset;
+                        this.TextureData.Add(br.ReadIFFChunk<TextureBlobData>());
+                    }
+                }
+            }
+        }
 
-		/// <summary>
-		/// Serializes the current object into a byte array.
-		/// </summary>
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					bw.WriteIFFChunk(this.Version);
-					bw.WriteIFFChunk(this.BlobDataEntries);
-					bw.WriteIFFChunk(this.Filenames);
+        /// <summary>
+        /// Serializes the current object into a byte array.
+        /// </summary>
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.WriteIFFChunk(this.Version);
+                    bw.WriteIFFChunk(this.BlobDataEntries);
+                    bw.WriteIFFChunk(this.Filenames);
 
-					foreach (TextureBlobData textureData in this.TextureData)
-					{
-						bw.WriteIFFChunk(textureData);
-					}
-				}
+                    foreach (TextureBlobData textureData in this.TextureData)
+                    {
+                        bw.WriteIFFChunk(textureData);
+                    }
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 }

@@ -27,13 +27,13 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXTextureWeight : IVersionedClass
-	{
-		public MDXTrack<short> Weight;
+    public class MDXTextureWeight : IVersionedClass
+    {
+        public MDXTrack<short> Weight;
 
-		public MDXTextureWeight(BinaryReader br, WarcraftVersion version)
-		{
-			this.Weight = br.ReadMDXTrack<short>(version);
-		}
-	}
+        public MDXTextureWeight(BinaryReader br, WarcraftVersion version)
+        {
+            this.Weight = br.ReadMDXTrack<short>(version);
+        }
+    }
 }

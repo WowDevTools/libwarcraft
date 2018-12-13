@@ -26,67 +26,67 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	/// <summary>
-	/// MMID Chunk - Contains a list of WMO model indexes
-	/// </summary>
-	public class TerrainWorldObjectModelIndices : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MWID";
+    /// <summary>
+    /// MMID Chunk - Contains a list of WMO model indexes
+    /// </summary>
+    public class TerrainWorldObjectModelIndices : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MWID";
 
-		/// <summary>
-		/// List indexes for WMO models in an MWMO chunk
-		/// </summary>
-		public List<uint> WorldModelObjectFilenameOffsets = new List<uint>();
+        /// <summary>
+        /// List indexes for WMO models in an MWMO chunk
+        /// </summary>
+        public List<uint> WorldModelObjectFilenameOffsets = new List<uint>();
 
-		public TerrainWorldObjectModelIndices()
-		{
-
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldObjectModelIndices"/> class.
-		/// </summary>
-		/// <param name="inData">ExtendedData.</param>
-		public TerrainWorldObjectModelIndices(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public TerrainWorldObjectModelIndices()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					int offsetCount = inData.Length / 4;
-					for (int i = 0; i < offsetCount; ++i)
-					{
-						this.WorldModelObjectFilenameOffsets.Add(br.ReadUInt32());
-					}
-				}
-			}
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldObjectModelIndices"/> class.
+        /// </summary>
+        /// <param name="inData">ExtendedData.</param>
+        public TerrainWorldObjectModelIndices(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    int offsetCount = inData.Length / 4;
+                    for (int i = 0; i < offsetCount; ++i)
+                    {
+                        this.WorldModelObjectFilenameOffsets.Add(br.ReadUInt32());
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (uint filenameOffset in this.WorldModelObjectFilenameOffsets)
-		            {
-			            bw.Write(filenameOffset);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (uint filenameOffset in this.WorldModelObjectFilenameOffsets)
+                    {
+                        bw.Write(filenameOffset);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

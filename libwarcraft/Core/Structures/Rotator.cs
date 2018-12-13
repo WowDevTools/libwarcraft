@@ -27,73 +27,73 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.Core.Structures
 {
-	/// <summary>
-	/// A structure representing a three-dimensional collection of euler angles.
-	/// </summary>
-	public struct Rotator : IFlattenableData<float>
-	{
-		private Vector3 Values;
+    /// <summary>
+    /// A structure representing a three-dimensional collection of euler angles.
+    /// </summary>
+    public struct Rotator : IFlattenableData<float>
+    {
+        private Vector3 Values;
 
-		/// <summary>
-		/// Pitch of the rotator
-		/// </summary>
-		public float Pitch
-		{
-			get => this.Values.X;
-			set => this.Values.X = value;
-		}
+        /// <summary>
+        /// Pitch of the rotator
+        /// </summary>
+        public float Pitch
+        {
+            get => this.Values.X;
+            set => this.Values.X = value;
+        }
 
-		/// <summary>
-		/// Yaw of the rotator
-		/// </summary>
-		public float Yaw
-		{
-			get => this.Values.Y;
-			set => this.Values.Y = value;
-		}
+        /// <summary>
+        /// Yaw of the rotator
+        /// </summary>
+        public float Yaw
+        {
+            get => this.Values.Y;
+            set => this.Values.Y = value;
+        }
 
-		/// <summary>
-		/// Roll of the rotator
-		/// </summary>
-		public float Roll
-		{
-			get => this.Values.Z;
-			set => this.Values.Z = value;
-		}
+        /// <summary>
+        /// Roll of the rotator
+        /// </summary>
+        public float Roll
+        {
+            get => this.Values.Z;
+            set => this.Values.Z = value;
+        }
 
-		/// <summary>
-		/// Creates a new rotator object from three floats.
-		/// </summary>
-		/// <param name="inPitch">Pitch</param>
-		/// <param name="inYaw">Yaw</param>
-		/// <param name="inRoll">Roll</param>
-		public Rotator(float inPitch, float inYaw, float inRoll)
-		{
-			this.Values = new Vector3(inPitch, inYaw, inRoll);
-		}
+        /// <summary>
+        /// Creates a new rotator object from three floats.
+        /// </summary>
+        /// <param name="inPitch">Pitch</param>
+        /// <param name="inYaw">Yaw</param>
+        /// <param name="inRoll">Roll</param>
+        public Rotator(float inPitch, float inYaw, float inRoll)
+        {
+            this.Values = new Vector3(inPitch, inYaw, inRoll);
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Rotator"/> struct.
-		/// </summary>
-		/// <param name="inVector">In vector.</param>
-		public Rotator(Vector3 inVector)
-			:this(inVector.X, inVector.Y, inVector.Z)
-		{
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Rotator"/> struct.
+        /// </summary>
+        /// <param name="inVector">In vector.</param>
+        public Rotator(Vector3 inVector)
+            :this(inVector.X, inVector.Y, inVector.Z)
+        {
 
-		}
+        }
 
-		/// <summary>
-		/// Creates a string representation of the current instance.
-		/// </summary>
-		/// <returns>A string representation of the current instance.</returns>
-		public override string ToString()
-		{
-			return $"Pitch: {this.Pitch}, Yaw: {this.Yaw}, Roll: {this.Roll}";
-		}
+        /// <summary>
+        /// Creates a string representation of the current instance.
+        /// </summary>
+        /// <returns>A string representation of the current instance.</returns>
+        public override string ToString()
+        {
+            return $"Pitch: {this.Pitch}, Yaw: {this.Yaw}, Roll: {this.Roll}";
+        }
 
-		public IReadOnlyCollection<float> Flatten()
-		{
-			return this.Values.Flatten();
-		}
-	}
+        public IReadOnlyCollection<float> Flatten()
+        {
+            return this.Values.Flatten();
+        }
+    }
 }

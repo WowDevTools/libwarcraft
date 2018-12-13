@@ -22,32 +22,32 @@
 
 namespace Warcraft.DBC.SpecialFields
 {
-	public class ForeignKey<T>
-	{
-		public DatabaseName Database
-		{
-			get;
-			protected set;
-		}
+    public class ForeignKey<T>
+    {
+        public DatabaseName Database
+        {
+            get;
+            protected set;
+        }
 
-		public string Field
-		{
-			get;
-			protected set;
-		}
+        public string Field
+        {
+            get;
+            protected set;
+        }
 
-		public T Key
-		{
-			get;
-			protected set;
-		}
+        public T Key
+        {
+            get;
+            protected set;
+        }
 
-		public ForeignKey(DatabaseName inDatabase, string inField, T key)
-		{
-			this.Database = inDatabase;
-			this.Field = inField;
-			this.Key = key;
-		}
-	}
+        public ForeignKey(DatabaseName inDatabase, string inField, T key)
+        {
+            this.Database = inDatabase;
+            this.Field = inField;
+            this.Key = key;
+        }
+    }
 }
 

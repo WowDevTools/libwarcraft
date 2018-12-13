@@ -9,14 +9,14 @@ namespace Warcraft.Core.Compression.Squish {
 
             if (i < 0)
             {
-	            i = 0;
+                i = 0;
             }
             else if (i > limit)
             {
-	            i = limit;
+                i = limit;
             }
 
-	        return i;
+            return i;
         }
         public static void CompressAlphaDxt3(byte[] rgba, byte[] target, int targetOffset, int mask) {
             // Quantise and pack alpha values pairwise.
@@ -32,14 +32,14 @@ namespace Warcraft.Core.Compression.Squish {
                 var bit2 = 1 << (2 * i + 1);
                 if ((mask & bit1) == 0)
                 {
-	                quant1 = 0;
+                    quant1 = 0;
                 }
-	            if ((mask & bit2) == 0)
-	            {
-		            quant2 = 0;
-	            }
+                if ((mask & bit2) == 0)
+                {
+                    quant2 = 0;
+                }
 
-	            // Pack into the byte.
+                // Pack into the byte.
                 target[targetOffset + i] = (byte)(quant1 | (quant2 << 4));
             }
         }
@@ -64,12 +64,12 @@ namespace Warcraft.Core.Compression.Squish {
         private static void FixRange(ref int min, ref int max, int steps) {
             if (max - min < steps)
             {
-	            max = Math.Min(min + steps, 255);
+                max = Math.Min(min + steps, 255);
             }
-	        if (max - min < steps)
-	        {
-		        min = Math.Max(0, max - steps);
-	        }
+            if (max - min < steps)
+            {
+                min = Math.Max(0, max - steps);
+            }
         }
         private static int FitCodes(byte[] rgba, int mask, byte[] codes, out byte[] indices) {
             indices = new byte[16];
@@ -139,19 +139,19 @@ namespace Warcraft.Core.Compression.Squish {
                     var index = indices[i];
                     if (index == 0)
                     {
-	                    swapped[i] = 1;
+                        swapped[i] = 1;
                     }
                     else if (index == 1)
                     {
-	                    swapped[i] = 0;
+                        swapped[i] = 0;
                     }
                     else if (index <= 5)
                     {
-	                    swapped[i] = (byte)(7 - index);
+                        swapped[i] = (byte)(7 - index);
                     }
                     else
                     {
-	                    swapped[i] = index;
+                        swapped[i] = index;
                     }
                 }
 
@@ -170,15 +170,15 @@ namespace Warcraft.Core.Compression.Squish {
                     var index = indices[i];
                     if (index == 0)
                     {
-	                    swapped[i] = 1;
+                        swapped[i] = 1;
                     }
                     else if (index == 1)
                     {
-	                    swapped[i] = 0;
+                        swapped[i] = 0;
                     }
                     else
                     {
-	                    swapped[i] = (byte)(9 - index);
+                        swapped[i] = (byte)(9 - index);
                     }
                 }
 
@@ -198,40 +198,40 @@ namespace Warcraft.Core.Compression.Squish {
                 var bit = 1 << i;
                 if ((mask & bit) == 0)
                 {
-	                continue;
+                    continue;
                 }
 
-	            // Incorporate into the min/max.
+                // Incorporate into the min/max.
                 int value = rgba[4 * i + 3];
                 if (value < min7)
                 {
-	                min7 = value;
+                    min7 = value;
                 }
-	            if (value > max7)
-	            {
-		            max7 = value;
-	            }
-	            if (value != 0 && value < min5)
-	            {
-		            min5 = value;
-	            }
-	            if (value != 255 && value > max5)
-	            {
-		            max5 = value;
-	            }
+                if (value > max7)
+                {
+                    max7 = value;
+                }
+                if (value != 0 && value < min5)
+                {
+                    min5 = value;
+                }
+                if (value != 255 && value > max5)
+                {
+                    max5 = value;
+                }
             }
 
             // Handle the case that no valid range was found.
             if (min5 > max5)
             {
-	            min5 = max5;
+                min5 = max5;
             }
-	        if (min7 > max7)
-	        {
-		        min7 = max7;
-	        }
+            if (min7 > max7)
+            {
+                min7 = max7;
+            }
 
-	        // Fix the range to be the minimum in each case.
+            // Fix the range to be the minimum in each case.
             FixRange(ref min5, ref max5, 5);
             FixRange(ref min7, ref max7, 7);
 
@@ -241,9 +241,9 @@ namespace Warcraft.Core.Compression.Squish {
             codes5[1] = (byte)max5;
             for (int i = 1; i < 5; ++i)
             {
-	            codes5[i + 1] = (byte)(((5 - i) * min5 + i * max5) / 5);
+                codes5[i + 1] = (byte)(((5 - i) * min5 + i * max5) / 5);
             }
-	        codes5[6] = 0;
+            codes5[6] = 0;
             codes5[7] = 255;
 
             // Set up the 7-alpha code book.
@@ -252,10 +252,10 @@ namespace Warcraft.Core.Compression.Squish {
             codes7[1] = (byte)max7;
             for (int i = 1; i < 7; ++i)
             {
-	            codes7[i + 1] = (byte)(((7 - i) * min7 + i * max7) / 7);
+                codes7[i + 1] = (byte)(((7 - i) * min7 + i * max7) / 7);
             }
 
-	        // Fit the data to both code books.
+            // Fit the data to both code books.
             byte[] indices5, indices7;
             var err5 = FitCodes(rgba, mask, codes5, out indices5);
             var err7 = FitCodes(rgba, mask, codes7, out indices7);
@@ -263,11 +263,11 @@ namespace Warcraft.Core.Compression.Squish {
             // Save the block with least error.
             if (err5 <= err7)
             {
-	            WriteAlphaBlock5(min5, max5, indices5, target, targetOffset);
+                WriteAlphaBlock5(min5, max5, indices5, target, targetOffset);
             }
             else
             {
-	            WriteAlphaBlock7(min7, max7, indices7, target, targetOffset);
+                WriteAlphaBlock7(min7, max7, indices7, target, targetOffset);
             }
         }
         public static void DecompressAlphaDxt5(byte[] block, int blockOffset, byte[] target, int targetOffset) {
@@ -283,15 +283,15 @@ namespace Warcraft.Core.Compression.Squish {
                 // Use the 5-alpha codebook.
                 for (int i = 1; i < 5; ++i)
                 {
-	                codes[1 + i] = (byte)(((5 - i) * alpha0 + i * alpha1) / 5);
+                    codes[1 + i] = (byte)(((5 - i) * alpha0 + i * alpha1) / 5);
                 }
-	            codes[6] = 0;
+                codes[6] = 0;
                 codes[7] = 255;
             } else {
                 // Use the 7-alpha codebook.
                 for (int i = 1; i < 7; ++i)
                 {
-	                codes[1 + i] = (byte)(((7 - i) * alpha0 + i * alpha1) / 7);
+                    codes[1 + i] = (byte)(((7 - i) * alpha0 + i * alpha1) / 7);
                 }
             }
 
@@ -317,7 +317,7 @@ namespace Warcraft.Core.Compression.Squish {
             // Write out the index codebook values.
             for (int i = 0; i < 16; ++i)
             {
-	            target[targetOffset + 4 * i + 3] = codes[indices[i]];
+                target[targetOffset + 4 * i + 3] = codes[indices[i]];
             }
         }
         #endregion

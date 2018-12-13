@@ -26,47 +26,47 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	/// <summary>
-	/// MMID Chunk - Contains a list of M2 model indexes
-	/// </summary>
-	public class TerrainModelIndices : IIFFChunk
-	{
-		public const string Signature = "MMID";
+    /// <summary>
+    /// MMID Chunk - Contains a list of M2 model indexes
+    /// </summary>
+    public class TerrainModelIndices : IIFFChunk
+    {
+        public const string Signature = "MMID";
 
-		/// <summary>
-		/// List indexes for models in an MMID chunk
-		/// </summary>
-		public List<uint> ModelFilenameOffsets = new List<uint>();
+        /// <summary>
+        /// List indexes for models in an MMID chunk
+        /// </summary>
+        public List<uint> ModelFilenameOffsets = new List<uint>();
 
-		public TerrainModelIndices()
-		{
-
-		}
-
-		public TerrainModelIndices(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public TerrainModelIndices()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					int offsetCount = inData.Length / 4;
-					for (int i = 0; i < offsetCount; ++i)
-					{
-						this.ModelFilenameOffsets.Add(br.ReadUInt32());
-					}
-				}
-			}
+
+        }
+
+        public TerrainModelIndices(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    int offsetCount = inData.Length / 4;
+                    for (int i = 0; i < offsetCount; ++i)
+                    {
+                        this.ModelFilenameOffsets.Add(br.ReadUInt32());
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
-	}
+    }
 }
 

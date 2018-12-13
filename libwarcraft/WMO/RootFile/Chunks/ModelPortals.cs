@@ -28,97 +28,97 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelPortals : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOPT";
+    public class ModelPortals : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOPT";
 
-		public readonly List<Portal> Portals = new List<Portal>();
+        public readonly List<Portal> Portals = new List<Portal>();
 
-		public ModelPortals()
-		{
-
-		}
-
-		public ModelPortals(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public ModelPortals()
         {
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					int portalCount = inData.Length / Portal.GetSize();
-					for (uint i = 0; i < portalCount; ++i)
-					{
-						this.Portals.Add(new Portal(br.ReadBytes(Portal.GetSize())));
-					}
-				}
-			}
+
+        }
+
+        public ModelPortals(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    int portalCount = inData.Length / Portal.GetSize();
+                    for (uint i = 0; i < portalCount; ++i)
+                    {
+                        this.Portals.Add(new Portal(br.ReadBytes(Portal.GetSize())));
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (Portal portal in this.Portals)
-		            {
-			            bw.Write(portal.Serialize());
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (Portal portal in this.Portals)
+                    {
+                        bw.Write(portal.Serialize());
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 
-	public class Portal : IBinarySerializable
-	{
-		public ushort BaseVertexIndex;
-		public ushort VertexCount;
-		public Plane PortalPlane;
+    public class Portal : IBinarySerializable
+    {
+        public ushort BaseVertexIndex;
+        public ushort VertexCount;
+        public Plane PortalPlane;
 
-		public Portal(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.BaseVertexIndex = br.ReadUInt16();
-					this.VertexCount = br.ReadUInt16();
-					this.PortalPlane = br.ReadPlane();
-				}
-			}
-		}
-
-		public static int GetSize()
-		{
-			return 20;
-		}
-
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public Portal(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-            		bw.Write(this.BaseVertexIndex);
-		            bw.Write(this.VertexCount);
-		            bw.WritePlane(this.PortalPlane);
-            	}
-
-            	return ms.ToArray();
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.BaseVertexIndex = br.ReadUInt16();
+                    this.VertexCount = br.ReadUInt16();
+                    this.PortalPlane = br.ReadPlane();
+                }
             }
-		}
-	}
+        }
+
+        public static int GetSize()
+        {
+            return 20;
+        }
+
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write(this.BaseVertexIndex);
+                    bw.Write(this.VertexCount);
+                    bw.WritePlane(this.PortalPlane);
+                }
+
+                return ms.ToArray();
+            }
+        }
+    }
 }
 

@@ -31,59 +31,59 @@ using Warcraft.MDX.Data;
 
 namespace Warcraft.MDX.Visual.FX
 {
-	public class MDXRibbonEmitter : IVersionedClass
-	{
-		public uint RibbonID;
-		public uint BoneIndex;
-		public Vector3 RelativePosition;
-		public MDXArray<ushort> Textures;
-		public MDXArray<ushort> Materials;
-		public MDXTrack<RGB> Colour;
-		public MDXTrack<short> Alpha;
-		public MDXTrack<float> HeightAbove;
-		public MDXTrack<float> HeightBelow;
-		public float EdgesPerSecond;
-		public float EdgeLifetime;
-		public float Gravity;
-		public ushort TextureTileX;
-		public ushort TextureTileY;
-		public MDXTrack<ushort> TextureSlot;
-		public MDXTrack<bool> Visibility;
+    public class MDXRibbonEmitter : IVersionedClass
+    {
+        public uint RibbonID;
+        public uint BoneIndex;
+        public Vector3 RelativePosition;
+        public MDXArray<ushort> Textures;
+        public MDXArray<ushort> Materials;
+        public MDXTrack<RGB> Colour;
+        public MDXTrack<short> Alpha;
+        public MDXTrack<float> HeightAbove;
+        public MDXTrack<float> HeightBelow;
+        public float EdgesPerSecond;
+        public float EdgeLifetime;
+        public float Gravity;
+        public ushort TextureTileX;
+        public ushort TextureTileY;
+        public MDXTrack<ushort> TextureSlot;
+        public MDXTrack<bool> Visibility;
 
-		// >= Wrath (probably, needs verification)
-		public short PriorityPlane;
-		public short Unknown;
+        // >= Wrath (probably, needs verification)
+        public short PriorityPlane;
+        public short Unknown;
 
-		public MDXRibbonEmitter(BinaryReader br, WarcraftVersion version)
-		{
-			this.RibbonID = br.ReadUInt32();
-			this.BoneIndex = br.ReadUInt32();
-			this.RelativePosition = br.ReadVector3();
+        public MDXRibbonEmitter(BinaryReader br, WarcraftVersion version)
+        {
+            this.RibbonID = br.ReadUInt32();
+            this.BoneIndex = br.ReadUInt32();
+            this.RelativePosition = br.ReadVector3();
 
-			this.Textures = br.ReadMDXArray<ushort>();
-			this.Materials = br.ReadMDXArray<ushort>();
+            this.Textures = br.ReadMDXArray<ushort>();
+            this.Materials = br.ReadMDXArray<ushort>();
 
-			this.Colour = br.ReadMDXTrack<RGB>(version);
-			this.Alpha = br.ReadMDXTrack<short>(version);
-			this.HeightAbove = br.ReadMDXTrack<float>(version);
-			this.HeightBelow = br.ReadMDXTrack<float>(version);
+            this.Colour = br.ReadMDXTrack<RGB>(version);
+            this.Alpha = br.ReadMDXTrack<short>(version);
+            this.HeightAbove = br.ReadMDXTrack<float>(version);
+            this.HeightBelow = br.ReadMDXTrack<float>(version);
 
-			this.EdgesPerSecond = br.ReadSingle();
-			this.EdgeLifetime = br.ReadSingle();
-			this.Gravity = br.ReadSingle();
+            this.EdgesPerSecond = br.ReadSingle();
+            this.EdgeLifetime = br.ReadSingle();
+            this.Gravity = br.ReadSingle();
 
-			this.TextureTileX = br.ReadUInt16();
-			this.TextureTileY = br.ReadUInt16();
+            this.TextureTileX = br.ReadUInt16();
+            this.TextureTileY = br.ReadUInt16();
 
-			this.TextureSlot = br.ReadMDXTrack<ushort>(version);
-			this.Visibility = br.ReadMDXTrack<bool>(version);
+            this.TextureSlot = br.ReadMDXTrack<ushort>(version);
+            this.Visibility = br.ReadMDXTrack<bool>(version);
 
-			if (version >= WarcraftVersion.Wrath)
-			{
-				this.PriorityPlane = br.ReadInt16();
-				this.Unknown = br.ReadInt16();
-			}
-		}
-	}
+            if (version >= WarcraftVersion.Wrath)
+            {
+                this.PriorityPlane = br.ReadInt16();
+                this.Unknown = br.ReadInt16();
+            }
+        }
+    }
 }
 

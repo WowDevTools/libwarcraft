@@ -25,17 +25,17 @@ using System;
 
 namespace Warcraft.MDX.Animation
 {
-	[Flags]
-	public enum MDXAnimationSequenceFlags : uint
-	{
-		SetBlendAnimation = 0x01,
-		Unknown1 = 0x02,
-		Unknown2 = 0x04,
-		Unknown3 = 0x08,
-		LoadedAsLowPrioritySequence = 0x10,
-		Looping = 0x20,
-		IsAliasedAndHasFollowupAnimation = 0x40,
-		IsBlended = 0x80,
-		LocallyStoredSequence = 0x100
-	}
+    [Flags]
+    public enum MDXAnimationSequenceFlags : uint
+    {
+        SetBlendAnimation = 0x01,
+        Unknown1 = 0x02,
+        Unknown2 = 0x04,
+        Unknown3 = 0x08,
+        LoadedAsLowPrioritySequence = 0x10,
+        Looping = 0x20,
+        IsAliasedAndHasFollowupAnimation = 0x40,
+        IsBlended = 0x80,
+        LocallyStoredSequence = 0x100
+    }
 }

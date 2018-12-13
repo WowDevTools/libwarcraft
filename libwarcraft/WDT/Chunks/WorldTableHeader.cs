@@ -25,85 +25,85 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class WorldTableHeader : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MPHD";
+    public class WorldTableHeader : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MPHD";
 
-		public WorldTableFlags Flags;
-		public uint Unknown;
+        public WorldTableFlags Flags;
+        public uint Unknown;
 
-		// Six unused fields
+        // Six unused fields
 
-		public WorldTableHeader()
-		{
-
-		}
-
-		public WorldTableHeader(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public WorldTableHeader()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Flags = (WorldTableFlags)br.ReadUInt32();
-					this.Unknown = br.ReadUInt32();
-				}
-			}
+
+        }
+
+        public WorldTableHeader(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Flags = (WorldTableFlags)br.ReadUInt32();
+                    this.Unknown = br.ReadUInt32();
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		/// <summary>
-		/// Gets the size of the data contained in this chunk.
-		/// </summary>
-		/// <returns>The size.</returns>
-		public static uint GetSize()
-		{
-			return 32;
-		}
+        /// <summary>
+        /// Gets the size of the data contained in this chunk.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public static uint GetSize()
+        {
+            return 32;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					bw.Write((uint)this.Flags);
-					bw.Write(this.Unknown);
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write((uint)this.Flags);
+                    bw.Write(this.Unknown);
 
-					// Write the six unused fields
-					for (int i = 0; i < 6; ++i)
-					{
-						bw.Write((uint)0);
-					}
-				}
+                    // Write the six unused fields
+                    for (int i = 0; i < 6; ++i)
+                    {
+                        bw.Write((uint)0);
+                    }
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 
-	[Flags]
-	public enum WorldTableFlags : uint
-	{
-		UsesGlobalModels 				= 0x01,
-		UsesVertexShading 				= 0x02,
-		UsesEnvironmentMapping 			= 0x04,
-		DisableUnknownRenderingFlag 	= 0x08,
-		UsesVertexLighting 				= 0x10,
-		FlipGroundNormals 				= 0x20,
-		Unknown 						= 0x40,
-		UsesHardAlphaFalloff 			= 0x80,
-		UnknownHardAlphaRelated 		= 0x100,
-		UnknownContinentRelated 		= 0x8000
-	}
+    [Flags]
+    public enum WorldTableFlags : uint
+    {
+        UsesGlobalModels                 = 0x01,
+        UsesVertexShading                 = 0x02,
+        UsesEnvironmentMapping             = 0x04,
+        DisableUnknownRenderingFlag     = 0x08,
+        UsesVertexLighting                 = 0x10,
+        FlipGroundNormals                 = 0x20,
+        Unknown                         = 0x40,
+        UsesHardAlphaFalloff             = 0x80,
+        UnknownHardAlphaRelated         = 0x100,
+        UnknownContinentRelated         = 0x8000
+    }
 }
 

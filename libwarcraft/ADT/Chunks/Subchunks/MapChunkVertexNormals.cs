@@ -27,64 +27,64 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexNormals : IIFFChunk
-	{
-		public const string Signature = "MCNR";
+    public class MapChunkVertexNormals : IIFFChunk
+    {
+        public const string Signature = "MCNR";
 
-		public List<Vector3> HighResVertexNormals = new List<Vector3>();
-		public List<Vector3> LowResVertexNormals = new List<Vector3>();
+        public List<Vector3> HighResVertexNormals = new List<Vector3>();
+        public List<Vector3> LowResVertexNormals = new List<Vector3>();
 
-		public MapChunkVertexNormals()
-		{
-
-		}
-
-		public MapChunkVertexNormals(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public MapChunkVertexNormals()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					for (int y = 0; y < 16; ++y)
-					{
-						if (y % 2 == 0)
-						{
-							// Read a block of 9 high res normals
-							for (int x = 0; x < 9; ++x)
-							{
-								sbyte normX = br.ReadSByte();
-								sbyte normZ = br.ReadSByte();
-								sbyte normY = br.ReadSByte();
 
-								this.HighResVertexNormals.Add(new Vector3(normX, normY, normZ));
-							}
-						}
-						else
-						{
-							// Read a block of 8 low res normals
-							for (int x = 0; x < 8; ++x)
-							{
-								sbyte normX = br.ReadSByte();
-								sbyte normZ = br.ReadSByte();
-								sbyte normY = br.ReadSByte();
+        }
 
-								this.LowResVertexNormals.Add(new Vector3(normX, normY, normZ));
-							}
-						}
-					}
-				}
-			}
+        public MapChunkVertexNormals(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    for (int y = 0; y < 16; ++y)
+                    {
+                        if (y % 2 == 0)
+                        {
+                            // Read a block of 9 high res normals
+                            for (int x = 0; x < 9; ++x)
+                            {
+                                sbyte normX = br.ReadSByte();
+                                sbyte normZ = br.ReadSByte();
+                                sbyte normY = br.ReadSByte();
+
+                                this.HighResVertexNormals.Add(new Vector3(normX, normY, normZ));
+                            }
+                        }
+                        else
+                        {
+                            // Read a block of 8 low res normals
+                            for (int x = 0; x < 8; ++x)
+                            {
+                                sbyte normX = br.ReadSByte();
+                                sbyte normZ = br.ReadSByte();
+                                sbyte normY = br.ReadSByte();
+
+                                this.LowResVertexNormals.Add(new Vector3(normX, normY, normZ));
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
-	}
+    }
 }
 

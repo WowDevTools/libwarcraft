@@ -30,33 +30,33 @@ using Warcraft.MDX.Animation;
 
 namespace Warcraft.MDX.Visual
 {
-	public class MDXLight : IVersionedClass
-	{
-		public MDXLightType Type;
-		public short Bone; // -1 if not attached to bone
-		public Vector3 Position;
-		public MDXTrack<RGB> AmbientColour;
-		public MDXTrack<float> AmbientIntensity;
-		public MDXTrack<RGB> DiffuseColour;
-		public MDXTrack<float> DiffuseIntensity;
-		public MDXTrack<float> AttenuationStart;
-		public MDXTrack<float> AttenuationEnd;
-		public MDXTrack<bool> Visibility;
+    public class MDXLight : IVersionedClass
+    {
+        public MDXLightType Type;
+        public short Bone; // -1 if not attached to bone
+        public Vector3 Position;
+        public MDXTrack<RGB> AmbientColour;
+        public MDXTrack<float> AmbientIntensity;
+        public MDXTrack<RGB> DiffuseColour;
+        public MDXTrack<float> DiffuseIntensity;
+        public MDXTrack<float> AttenuationStart;
+        public MDXTrack<float> AttenuationEnd;
+        public MDXTrack<bool> Visibility;
 
-		public MDXLight(BinaryReader br, WarcraftVersion version)
-		{
-			this.Type = (MDXLightType)br.ReadUInt16();
-			this.Bone = br.ReadInt16();
-			this.Position = br.ReadVector3();
+        public MDXLight(BinaryReader br, WarcraftVersion version)
+        {
+            this.Type = (MDXLightType)br.ReadUInt16();
+            this.Bone = br.ReadInt16();
+            this.Position = br.ReadVector3();
 
-			this.AmbientColour = br.ReadMDXTrack<RGB>(version);
-			this.AmbientIntensity = br.ReadMDXTrack<float>(version);
-			this.DiffuseColour = br.ReadMDXTrack<RGB>(version);
-			this.DiffuseIntensity = br.ReadMDXTrack<float>(version);
-			this.AttenuationStart = br.ReadMDXTrack<float>(version);
-			this.AttenuationEnd = br.ReadMDXTrack<float>(version);
+            this.AmbientColour = br.ReadMDXTrack<RGB>(version);
+            this.AmbientIntensity = br.ReadMDXTrack<float>(version);
+            this.DiffuseColour = br.ReadMDXTrack<RGB>(version);
+            this.DiffuseIntensity = br.ReadMDXTrack<float>(version);
+            this.AttenuationStart = br.ReadMDXTrack<float>(version);
+            this.AttenuationEnd = br.ReadMDXTrack<float>(version);
 
-			this.Visibility = br.ReadMDXTrack<bool>(version);
-		}
-	}
+            this.Visibility = br.ReadMDXTrack<bool>(version);
+        }
+    }
 }

@@ -29,21 +29,21 @@ using Warcraft.MDX.Animation;
 
 namespace Warcraft.MDX.Gameplay
 {
-	public class MDXAttachment : IVersionedClass
-	{
-		public uint AttachmentIDLookupIndex;
-		public ushort Bone;
-		public ushort Unknown;
-		public Vector3 Position;
-		public MDXTrack<bool> AnimateAttached;
+    public class MDXAttachment : IVersionedClass
+    {
+        public uint AttachmentIDLookupIndex;
+        public ushort Bone;
+        public ushort Unknown;
+        public Vector3 Position;
+        public MDXTrack<bool> AnimateAttached;
 
-		public MDXAttachment(BinaryReader br, WarcraftVersion version)
-		{
-			this.AttachmentIDLookupIndex = br.ReadUInt32();
-			this.Bone = br.ReadUInt16();
-			this.Unknown = br.ReadUInt16();
-			this.Position = br.ReadVector3();
-			this.AnimateAttached = br.ReadMDXTrack<bool>(version);
-		}
-	}
+        public MDXAttachment(BinaryReader br, WarcraftVersion version)
+        {
+            this.AttachmentIDLookupIndex = br.ReadUInt32();
+            this.Bone = br.ReadUInt16();
+            this.Unknown = br.ReadUInt16();
+            this.Position = br.ReadVector3();
+            this.AnimateAttached = br.ReadMDXTrack<bool>(version);
+        }
+    }
 }

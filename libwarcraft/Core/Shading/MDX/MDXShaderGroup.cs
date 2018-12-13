@@ -22,38 +22,38 @@
 
 namespace Warcraft.Core.Shading.MDX
 {
-	/// <summary>
-	/// Used as a grouping class for an internal shader lookup table.
-	/// </summary>
-	internal class MDXShaderGroup
-	{
-		public MDXVertexShaderType VertexShader { get; set; }
-		public MDXControlShaderType ControlShader { get; set; }
-		public MDXEvaluationShaderType EvaluationShader { get; set; }
-		public MDXFragmentShaderType FragmentShader { get; set; }
-		public uint ColourOperations { get; set; }
-		public uint AlphaOperations { get; set; }
+    /// <summary>
+    /// Used as a grouping class for an internal shader lookup table.
+    /// </summary>
+    internal class MDXShaderGroup
+    {
+        public MDXVertexShaderType VertexShader { get; set; }
+        public MDXControlShaderType ControlShader { get; set; }
+        public MDXEvaluationShaderType EvaluationShader { get; set; }
+        public MDXFragmentShaderType FragmentShader { get; set; }
+        public uint ColourOperations { get; set; }
+        public uint AlphaOperations { get; set; }
 
-		public MDXShaderGroup(MDXVertexShaderType vertex, MDXControlShaderType control, MDXEvaluationShaderType eval,
-			MDXFragmentShaderType frag, uint colourOp, uint alphaOp)
-		{
-			this.VertexShader = vertex;
-			this.ControlShader = control;
-			this.EvaluationShader = eval;
-			this.FragmentShader = frag;
-			this.ColourOperations = colourOp;
-			this.AlphaOperations = alphaOp;
-		}
+        public MDXShaderGroup(MDXVertexShaderType vertex, MDXControlShaderType control, MDXEvaluationShaderType eval,
+            MDXFragmentShaderType frag, uint colourOp, uint alphaOp)
+        {
+            this.VertexShader = vertex;
+            this.ControlShader = control;
+            this.EvaluationShader = eval;
+            this.FragmentShader = frag;
+            this.ColourOperations = colourOp;
+            this.AlphaOperations = alphaOp;
+        }
 
-		public MDXShaderGroup(MDXFragmentShaderType frag, MDXVertexShaderType vertex, MDXControlShaderType control,
-			MDXEvaluationShaderType eval, uint colourOp, uint alphaOp)
-		{
-			this.VertexShader = vertex;
-			this.ControlShader = control;
-			this.EvaluationShader = eval;
-			this.FragmentShader = frag;
-			this.ColourOperations = colourOp;
-			this.AlphaOperations = alphaOp;
-		}
-	}
+        public MDXShaderGroup(MDXFragmentShaderType frag, MDXVertexShaderType vertex, MDXControlShaderType control,
+            MDXEvaluationShaderType eval, uint colourOp, uint alphaOp)
+        {
+            this.VertexShader = vertex;
+            this.ControlShader = control;
+            this.EvaluationShader = eval;
+            this.FragmentShader = frag;
+            this.ColourOperations = colourOp;
+            this.AlphaOperations = alphaOp;
+        }
+    }
 }

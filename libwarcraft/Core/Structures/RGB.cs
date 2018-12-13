@@ -24,71 +24,71 @@ using System.Numerics;
 
 namespace Warcraft.Core.Structures
 {
-	/// <summary>
-	/// A structure representing an RGB colour value.
-	/// </summary>
-	public struct RGB
-	{
-		/// <summary>
-		/// The values in the structure.
-		/// </summary>
-		private Vector3 Values;
+    /// <summary>
+    /// A structure representing an RGB colour value.
+    /// </summary>
+    public struct RGB
+    {
+        /// <summary>
+        /// The values in the structure.
+        /// </summary>
+        private Vector3 Values;
 
-		/// <summary>
-		/// The red component.
-		/// </summary>
-		public float R
-		{
-			get => this.Values.X;
-			set => this.Values.X = value;
-		}
+        /// <summary>
+        /// The red component.
+        /// </summary>
+        public float R
+        {
+            get => this.Values.X;
+            set => this.Values.X = value;
+        }
 
-		/// <summary>
-		/// The green component.
-		/// </summary>
-		public float G
-		{
-			get => this.Values.Y;
-			set => this.Values.Y = value;
-		}
+        /// <summary>
+        /// The green component.
+        /// </summary>
+        public float G
+        {
+            get => this.Values.Y;
+            set => this.Values.Y = value;
+        }
 
-		/// <summary>
-		/// The blue component.
-		/// </summary>
-		public float B
-		{
-			get => this.Values.Z;
-			set => this.Values.Z = value;
-		}
+        /// <summary>
+        /// The blue component.
+        /// </summary>
+        public float B
+        {
+            get => this.Values.Z;
+            set => this.Values.Z = value;
+        }
 
-		/// <summary>
-		/// Creates a new <see cref="RGB"/> object from a set of floating point colour component
-		/// values.
-		/// </summary>
-		/// <param name="inR">The input red component.</param>
-		/// <param name="inG">The input blue component.</param>
-		/// <param name="inB">The input green component.</param>
-		public RGB(float inR, float inG, float inB)
-		{
-			this.Values = new Vector3(inR, inG, inB);
-		}
+        /// <summary>
+        /// Creates a new <see cref="RGB"/> object from a set of floating point colour component
+        /// values.
+        /// </summary>
+        /// <param name="inR">The input red component.</param>
+        /// <param name="inG">The input blue component.</param>
+        /// <param name="inB">The input green component.</param>
+        public RGB(float inR, float inG, float inB)
+        {
+            this.Values = new Vector3(inR, inG, inB);
+        }
 
-		/// <summary>
-		/// Creates a new <see cref="RGB"/> object from a <see cref="Vector3"/> colour vector.
-		/// </summary>
-		/// <param name="inVector">The input colour vector.</param>
-		public RGB(Vector3 inVector)
-		{
-			this.Values = inVector;
-		}
+        /// <summary>
+        /// Creates a new <see cref="RGB"/> object from a <see cref="Vector3"/> colour vector.
+        /// </summary>
+        /// <param name="inVector">The input colour vector.</param>
+        public RGB(Vector3 inVector)
+        {
+            this.Values = inVector;
+        }
 
-		/// <summary>
-		/// Creates a string representation of the current instance.
-		/// </summary>
-		/// <returns>A string representation of the current instance.</returns>
-		public override string ToString()
-		{
-			return $"rgb({this.R}, {this.G}, {this.B})";
-		}
-	}
+        /// <summary>
+        /// Creates a string representation of the current instance.
+        /// </summary>
+        /// <returns>A string representation of the current instance.</returns>
+        public override string ToString()
+        {
+            return $"rgb({this.R}, {this.G}, {this.B})";
+        }
+    }
 }

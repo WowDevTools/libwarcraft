@@ -28,55 +28,55 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelNormals : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MONR";
+    public class ModelNormals : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MONR";
 
-		public readonly List<Vector3> Normals = new List<Vector3>();
+        public readonly List<Vector3> Normals = new List<Vector3>();
 
-		public ModelNormals()
-		{
-		}
+        public ModelNormals()
+        {
+        }
 
-		public ModelNormals(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelNormals(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-            	{
-		            while (ms.Position < ms.Length)
-		            {
-			            this.Normals.Add(br.ReadVector3());
-		            }
-            	}
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.Normals.Add(br.ReadVector3());
+                    }
+                }
             }
-		}
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (Vector3 normal in this.Normals)
-		            {
-			            bw.WriteVector3(normal);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (Vector3 normal in this.Normals)
+                    {
+                        bw.WriteVector3(normal);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

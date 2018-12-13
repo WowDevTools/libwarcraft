@@ -26,57 +26,57 @@ using Warcraft.MPQ.Crypto;
 
 namespace Warcraft.MPQ.Tables.Block
 {
-	public class BlockTable
-	{
-		public static readonly uint TableKey = MPQCrypt.Hash("(block table)", HashType.FileKey);
-		private readonly List<BlockTableEntry> Entries = new List<BlockTableEntry>();
+    public class BlockTable
+    {
+        public static readonly uint TableKey = MPQCrypt.Hash("(block table)", HashType.FileKey);
+        private readonly List<BlockTableEntry> Entries = new List<BlockTableEntry>();
 
-		public BlockTable()
-		{
+        public BlockTable()
+        {
 
-		}
+        }
 
-		public BlockTable(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					for (long i = 0; i < data.Length; i += BlockTableEntry.GetSize())
-					{
-						byte[] entryBytes = br.ReadBytes((int)BlockTableEntry.GetSize());
-						this.Entries.Add(new BlockTableEntry(entryBytes));
-					}
-				}
-			}
-		}
+        public BlockTable(byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    for (long i = 0; i < data.Length; i += BlockTableEntry.GetSize())
+                    {
+                        byte[] entryBytes = br.ReadBytes((int)BlockTableEntry.GetSize());
+                        this.Entries.Add(new BlockTableEntry(entryBytes));
+                    }
+                }
+            }
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					foreach (BlockTableEntry entry in this.Entries)
-					{
-						bw.Write(entry.Serialize());
-					}
-				}
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (BlockTableEntry entry in this.Entries)
+                    {
+                        bw.Write(entry.Serialize());
+                    }
+                }
 
-				byte[] encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), TableKey);
-				return encryptedTable;
-			}
-		}
+                byte[] encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), TableKey);
+                return encryptedTable;
+            }
+        }
 
-		public BlockTableEntry GetEntry(int index)
-		{
-			return this.Entries[index];
-		}
+        public BlockTableEntry GetEntry(int index)
+        {
+            return this.Entries[index];
+        }
 
-		public ulong GetSize()
-		{
-			return (ulong)(this.Entries.Count * BlockTableEntry.GetSize());
-		}
-	}
+        public ulong GetSize()
+        {
+            return (ulong)(this.Entries.Count * BlockTableEntry.GetSize());
+        }
+    }
 }
 

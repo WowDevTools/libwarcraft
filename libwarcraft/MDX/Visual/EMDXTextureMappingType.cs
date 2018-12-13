@@ -22,10 +22,10 @@
 
 namespace Warcraft.MDX.Visual
 {
-	public enum EMDXTextureMappingType : short
-	{
-		T1 = 0,
-		T2 = 1,
-		Environment = -1
-	}
+    public enum EMDXTextureMappingType : short
+    {
+        T1 = 0,
+        T2 = 1,
+        Environment = -1
+    }
 }

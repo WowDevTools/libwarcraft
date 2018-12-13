@@ -28,55 +28,55 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelTextureCoordinates : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOTV";
+    public class ModelTextureCoordinates : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOTV";
 
-		public readonly List<Vector2> TextureCoordinates = new List<Vector2>();
+        public readonly List<Vector2> TextureCoordinates = new List<Vector2>();
 
-		public ModelTextureCoordinates()
-		{
-		}
+        public ModelTextureCoordinates()
+        {
+        }
 
-		public ModelTextureCoordinates(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelTextureCoordinates(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-            	{
-		            while (ms.Position < ms.Length)
-		            {
-			            this.TextureCoordinates.Add(br.ReadVector2());
-		            }
-            	}
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.TextureCoordinates.Add(br.ReadVector2());
+                    }
+                }
             }
-		}
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (Vector2 textureCoordinate in this.TextureCoordinates)
-		            {
-			            bw.WriteVector2(textureCoordinate);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (Vector2 textureCoordinate in this.TextureCoordinates)
+                    {
+                        bw.WriteVector2(textureCoordinate);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

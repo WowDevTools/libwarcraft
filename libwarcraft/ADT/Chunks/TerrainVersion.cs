@@ -24,70 +24,70 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	/// <summary>
-	/// MVER Chunk - Contains the ADT version
-	/// </summary>
-	public class TerrainVersion : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MVER";
+    /// <summary>
+    /// MVER Chunk - Contains the ADT version
+    /// </summary>
+    public class TerrainVersion : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MVER";
 
-		/// <summary>
-		/// ADT version from MVER
-		/// </summary>
-		public uint Version;
+        /// <summary>
+        /// ADT version from MVER
+        /// </summary>
+        public uint Version;
 
-		public TerrainVersion()
-		{
-
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainVersion"/> class.
-		/// </summary>
-		/// <param name="inData">ExtendedData.</param>
-		public TerrainVersion(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public TerrainVersion()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Version = br.ReadUInt32();
-				}
-			}
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainVersion"/> class.
+        /// </summary>
+        /// <param name="inData">ExtendedData.</param>
+        public TerrainVersion(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Version = br.ReadUInt32();
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		/// <summary>
-		/// Gets the size of the data contained in this chunk.
-		/// </summary>
-		/// <returns>The size.</returns>
-		public static uint GetSize()
-		{
-			return 4;
-		}
+        /// <summary>
+        /// Gets the size of the data contained in this chunk.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public static uint GetSize()
+        {
+            return 4;
+        }
 
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					bw.Write(this.Version);
-				}
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write(this.Version);
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 }
 

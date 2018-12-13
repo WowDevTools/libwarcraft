@@ -24,17 +24,17 @@ using System;
 
 namespace Warcraft.TEX
 {
-	/// <summary>
-	/// A set of flags, which describe alternate behaviour of the compression in the texture blob.
-	/// </summary>
-	[Flags]
-	public enum TextureBlobFlags : byte
-	{
-		/// <summary>
-		/// Tells the compression algorithm to prefer ARGB1555 textures, if DXT1 compression
-		/// is not available. This flag is only valid if <see cref="TextureBlobCompressionType"/> is
-		/// <see cref="TextureBlobCompressionType.DXT1"/>.
-		/// </summary>
-		PreferARGB1555IfDXT1IsNotAvailable = 1 << 0
-	}
+    /// <summary>
+    /// A set of flags, which describe alternate behaviour of the compression in the texture blob.
+    /// </summary>
+    [Flags]
+    public enum TextureBlobFlags : byte
+    {
+        /// <summary>
+        /// Tells the compression algorithm to prefer ARGB1555 textures, if DXT1 compression
+        /// is not available. This flag is only valid if <see cref="TextureBlobCompressionType"/> is
+        /// <see cref="TextureBlobCompressionType.DXT1"/>.
+        /// </summary>
+        PreferARGB1555IfDXT1IsNotAvailable = 1 << 0
+    }
 }

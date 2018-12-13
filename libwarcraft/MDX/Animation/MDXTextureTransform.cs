@@ -28,18 +28,18 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXTextureTransform : IVersionedClass
-	{
-		public MDXTrack<Vector3> Translation;
-		public MDXTrack<Quaternion> Rotation;
-		public MDXTrack<Vector3> Scale;
+    public class MDXTextureTransform : IVersionedClass
+    {
+        public MDXTrack<Vector3> Translation;
+        public MDXTrack<Quaternion> Rotation;
+        public MDXTrack<Vector3> Scale;
 
-		public MDXTextureTransform(BinaryReader br, WarcraftVersion version)
-		{
-			this.Translation = br.ReadMDXTrack<Vector3>(version);
-			this.Rotation = br.ReadMDXTrack<Quaternion>(version);
-			this.Scale = br.ReadMDXTrack<Vector3>(version);
-		}
-	}
+        public MDXTextureTransform(BinaryReader br, WarcraftVersion version)
+        {
+            this.Translation = br.ReadMDXTrack<Vector3>(version);
+            this.Rotation = br.ReadMDXTrack<Quaternion>(version);
+            this.Scale = br.ReadMDXTrack<Vector3>(version);
+        }
+    }
 }
 

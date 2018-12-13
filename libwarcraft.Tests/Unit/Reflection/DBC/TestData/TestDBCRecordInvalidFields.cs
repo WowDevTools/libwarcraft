@@ -5,13 +5,13 @@ using Warcraft.DBC.SpecialFields;
 
 namespace libwarcraft.Tests.Unit.Reflection.DBC.TestData
 {
-	[DatabaseRecord]
-	public class TestDBCRecordInvalidForeignKeyField : DBCRecord
-	{
-		[RecordField(WarcraftVersion.Classic)]
-		public ForeignKey<uint> TestForeignKeyFieldMissingInfo { get; set; }
+    [DatabaseRecord]
+    public class TestDBCRecordInvalidForeignKeyField : DBCRecord
+    {
+        [RecordField(WarcraftVersion.Classic)]
+        public ForeignKey<uint> TestForeignKeyFieldMissingInfo { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint TestFieldWithoutSetter { get; }
-	}
+        [RecordField(WarcraftVersion.Classic)]
+        public uint TestFieldWithoutSetter { get; }
+    }
 }

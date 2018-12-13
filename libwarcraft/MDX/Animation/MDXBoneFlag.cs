@@ -22,14 +22,14 @@
 
 namespace Warcraft.MDX.Animation
 {
-	public enum MDXBoneFlag : uint
-	{
-		SphericalBillboard			= 0x8,
-		CylindricalBillboardLockedX	= 0x10,
-		CylindricalBillboardLockedY	= 0x20,
-		CylindricalBillboardLockedZ	= 0x40,
-		Transformed					= 0x200,
-		KinematicBone				= 0x400,
-		ScaledAnimation				= 0x1000
-	}
+    public enum MDXBoneFlag : uint
+    {
+        SphericalBillboard            = 0x8,
+        CylindricalBillboardLockedX    = 0x10,
+        CylindricalBillboardLockedY    = 0x20,
+        CylindricalBillboardLockedZ    = 0x40,
+        Transformed                    = 0x200,
+        KinematicBone                = 0x400,
+        ScaledAnimation                = 0x1000
+    }
 }

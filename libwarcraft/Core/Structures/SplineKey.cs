@@ -25,17 +25,17 @@ using Warcraft.Core.Extensions;
 
 namespace Warcraft.Core.Structures
 {
-	public class SplineKey<T>
-	{
-		public T Value;
-		public T InTangent;
-		public T OutTangent;
+    public class SplineKey<T>
+    {
+        public T Value;
+        public T InTangent;
+        public T OutTangent;
 
-		public SplineKey(BinaryReader br)
-		{
-			this.Value = br.Read<T>();
-			this.InTangent = br.Read<T>();
-			this.OutTangent = br.Read<T>();
-		}
-	}
+        public SplineKey(BinaryReader br)
+        {
+            this.Value = br.Read<T>();
+            this.InTangent = br.Read<T>();
+            this.OutTangent = br.Read<T>();
+        }
+    }
 }

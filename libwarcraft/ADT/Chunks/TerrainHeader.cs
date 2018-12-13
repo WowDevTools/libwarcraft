@@ -25,131 +25,131 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	/// <summary>
-	/// MHDR Chunk - Contains offset for all major chunks in the ADT. All offsets are from the start of the MHDR + 4 bytes to compensate for the size field.
-	/// </summary>
-	public class TerrainHeader : IIFFChunk
-	{
-		public const string Signature = "MHDR";
+    /// <summary>
+    /// MHDR Chunk - Contains offset for all major chunks in the ADT. All offsets are from the start of the MHDR + 4 bytes to compensate for the size field.
+    /// </summary>
+    public class TerrainHeader : IIFFChunk
+    {
+        public const string Signature = "MHDR";
 
-		/// <summary>
-		/// Flags for this ADT
-		/// </summary>
-		public TerrainHeaderFlags Flags;
+        /// <summary>
+        /// Flags for this ADT
+        /// </summary>
+        public TerrainHeaderFlags Flags;
 
-		/// <summary>
-		/// Offset into the file where the MCIN Chunk can be found.
-		/// </summary>
-		public int MapChunkOffsetsOffset;
-		/// <summary>
-		/// Offset into the file where the MTEX Chunk can be found.
-		/// </summary>
-		public int TexturesOffset;
+        /// <summary>
+        /// Offset into the file where the MCIN Chunk can be found.
+        /// </summary>
+        public int MapChunkOffsetsOffset;
+        /// <summary>
+        /// Offset into the file where the MTEX Chunk can be found.
+        /// </summary>
+        public int TexturesOffset;
 
-		/// <summary>
-		/// Offset into the file where the MMDX Chunk can be found.
-		/// </summary>
-		public int ModelsOffset;
-		/// <summary>
-		/// Offset into the file where the MMID Chunk can be found.
-		/// </summary>
-		public int ModelIndicesOffset;
+        /// <summary>
+        /// Offset into the file where the MMDX Chunk can be found.
+        /// </summary>
+        public int ModelsOffset;
+        /// <summary>
+        /// Offset into the file where the MMID Chunk can be found.
+        /// </summary>
+        public int ModelIndicesOffset;
 
-		/// <summary>
-		/// Offset into the file where the MWMO Chunk can be found.
-		/// </summary>
-		public int WorldModelObjectsOffset;
-		/// <summary>
-		/// Offset into the file where the MWID Chunk can be found.
-		/// </summary>
-		public int WorldModelObjectIndicesOffset;
+        /// <summary>
+        /// Offset into the file where the MWMO Chunk can be found.
+        /// </summary>
+        public int WorldModelObjectsOffset;
+        /// <summary>
+        /// Offset into the file where the MWID Chunk can be found.
+        /// </summary>
+        public int WorldModelObjectIndicesOffset;
 
-		/// <summary>
-		/// Offset into the file where the MMDF Chunk can be found.
-		/// </summary>
-		public int ModelPlacementInformationOffset;
-		/// <summary>
-		/// Offset into the file where the MODF Chunk can be found.
-		/// </summary>
-		public int WorldModelObjectPlacementInformationOffset;
+        /// <summary>
+        /// Offset into the file where the MMDF Chunk can be found.
+        /// </summary>
+        public int ModelPlacementInformationOffset;
+        /// <summary>
+        /// Offset into the file where the MODF Chunk can be found.
+        /// </summary>
+        public int WorldModelObjectPlacementInformationOffset;
 
-		/// <summary>
-		/// Offset into the file where the MFBO Chunk can be found. This is only set if the Flags contains MDHR_MFBO.
-		/// </summary>
-		public int BoundingBoxOffset;
+        /// <summary>
+        /// Offset into the file where the MFBO Chunk can be found. This is only set if the Flags contains MDHR_MFBO.
+        /// </summary>
+        public int BoundingBoxOffset;
 
-		/// <summary>
-		/// Offset into the file where the MH2O Chunk can be found.
-		/// </summary>
-		public int LiquidOffset;
-		/// <summary>
-		/// Offset into the file where the MTXF Chunk can be found.
-		/// </summary>
-		public int TextureFlagsOffset;
+        /// <summary>
+        /// Offset into the file where the MH2O Chunk can be found.
+        /// </summary>
+        public int LiquidOffset;
+        /// <summary>
+        /// Offset into the file where the MTXF Chunk can be found.
+        /// </summary>
+        public int TextureFlagsOffset;
 
-		public TerrainHeader()
-		{
-
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainHeader"/> class.
-		/// </summary>
-		/// <param name="inData">ExtendedData.</param>
-		public TerrainHeader(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public TerrainHeader()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					//read values
-					this.Flags = (TerrainHeaderFlags)br.ReadInt32();
 
-					this.MapChunkOffsetsOffset = br.ReadInt32();
-					this.TexturesOffset = br.ReadInt32();
+        }
 
-					this.ModelsOffset = br.ReadInt32();
-					this.ModelIndicesOffset = br.ReadInt32();
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainHeader"/> class.
+        /// </summary>
+        /// <param name="inData">ExtendedData.</param>
+        public TerrainHeader(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-					this.WorldModelObjectsOffset = br.ReadInt32();
-					this.WorldModelObjectIndicesOffset = br.ReadInt32();
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    //read values
+                    this.Flags = (TerrainHeaderFlags)br.ReadInt32();
 
-					this.ModelPlacementInformationOffset = br.ReadInt32();
-					this.WorldModelObjectPlacementInformationOffset = br.ReadInt32();
+                    this.MapChunkOffsetsOffset = br.ReadInt32();
+                    this.TexturesOffset = br.ReadInt32();
 
-					this.BoundingBoxOffset = br.ReadInt32();
-					this.LiquidOffset = br.ReadInt32();
-					this.TextureFlagsOffset = br.ReadInt32();
-				}
-			}
+                    this.ModelsOffset = br.ReadInt32();
+                    this.ModelIndicesOffset = br.ReadInt32();
+
+                    this.WorldModelObjectsOffset = br.ReadInt32();
+                    this.WorldModelObjectIndicesOffset = br.ReadInt32();
+
+                    this.ModelPlacementInformationOffset = br.ReadInt32();
+                    this.WorldModelObjectPlacementInformationOffset = br.ReadInt32();
+
+                    this.BoundingBoxOffset = br.ReadInt32();
+                    this.LiquidOffset = br.ReadInt32();
+                    this.TextureFlagsOffset = br.ReadInt32();
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
-	}
+    }
 
-	/// <summary>
-	/// Flags for the ADT.
-	/// </summary>
-	[Flags]
-	public enum TerrainHeaderFlags
-	{
-		/// <summary>
-		/// This terrain file contains a bounding box.
-		/// </summary>
-		HasBoundingBox = 1,
+    /// <summary>
+    /// Flags for the ADT.
+    /// </summary>
+    [Flags]
+    public enum TerrainHeaderFlags
+    {
+        /// <summary>
+        /// This terrain file contains a bounding box.
+        /// </summary>
+        HasBoundingBox = 1,
 
-		/// <summary>
-		/// Flag if the ADT is from Northrend. This flag is not always set.
-		/// </summary>
-		Northrend = 2,
-	}
+        /// <summary>
+        /// Flag if the ADT is from Northrend. This flag is not always set.
+        /// </summary>
+        Northrend = 2,
+    }
 }
 

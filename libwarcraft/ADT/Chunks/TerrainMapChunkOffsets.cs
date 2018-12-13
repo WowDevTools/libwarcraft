@@ -26,86 +26,86 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	/// <summary>
-	/// MCIN Chunk - Contains a list of all MCNKs with associated information in the ADT file.
-	/// </summary>
-	public class TerrainMapChunkOffsets : IIFFChunk
-	{
-		public const string Signature = "MCIN";
+    /// <summary>
+    /// MCIN Chunk - Contains a list of all MCNKs with associated information in the ADT file.
+    /// </summary>
+    public class TerrainMapChunkOffsets : IIFFChunk
+    {
+        public const string Signature = "MCIN";
 
-		/// <summary>
-		/// An array of 256 MCIN entries, containing map chunk offsets and sizes.
-		/// </summary>
-		public List<MapChunkOffsetEntry> Entries = new List<MapChunkOffsetEntry>();
+        /// <summary>
+        /// An array of 256 MCIN entries, containing map chunk offsets and sizes.
+        /// </summary>
+        public List<MapChunkOffsetEntry> Entries = new List<MapChunkOffsetEntry>();
 
-		public TerrainMapChunkOffsets()
-		{
-
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainMapChunkOffsets"/> class.
-		/// </summary>
-		public TerrainMapChunkOffsets(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public TerrainMapChunkOffsets()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					//read size, n of entries is size / 16
-					long nEntries = br.BaseStream.Length / 16;
 
-					for (int i = 0; i < nEntries; ++i)
-					{
-						MapChunkOffsetEntry entry = new MapChunkOffsetEntry
-						{
-							MapChunkOffset = br.ReadInt32(),
-							MapChunkSize = br.ReadInt32(),
-							Flags = br.ReadInt32(),
-							AsynchronousLoadingID = br.ReadInt32()
-						};
+        }
 
-						this.Entries.Add(entry);
-					}
-				}
-			}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainMapChunkOffsets"/> class.
+        /// </summary>
+        public TerrainMapChunkOffsets(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    //read size, n of entries is size / 16
+                    long nEntries = br.BaseStream.Length / 16;
+
+                    for (int i = 0; i < nEntries; ++i)
+                    {
+                        MapChunkOffsetEntry entry = new MapChunkOffsetEntry
+                        {
+                            MapChunkOffset = br.ReadInt32(),
+                            MapChunkSize = br.ReadInt32(),
+                            Flags = br.ReadInt32(),
+                            AsynchronousLoadingID = br.ReadInt32()
+                        };
+
+                        this.Entries.Add(entry);
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
-	}
+    }
 
-	/// <summary>
-	/// A struct containing information about the referenced MCNK
-	/// </summary>
-	public class MapChunkOffsetEntry
-	{
-		/// <summary>
-		/// Absolute offset of the MCNK
-		/// </summary>
-		public int MapChunkOffset;
+    /// <summary>
+    /// A struct containing information about the referenced MCNK
+    /// </summary>
+    public class MapChunkOffsetEntry
+    {
+        /// <summary>
+        /// Absolute offset of the MCNK
+        /// </summary>
+        public int MapChunkOffset;
 
-		/// <summary>
-		/// Size of the MCNK
-		/// </summary>
-		public int MapChunkSize;
+        /// <summary>
+        /// Size of the MCNK
+        /// </summary>
+        public int MapChunkSize;
 
-		/// <summary>
-		/// Flags of the MCNK. This is only set on the client, and is as such always 0.
-		/// </summary>
-		public int Flags;
+        /// <summary>
+        /// Flags of the MCNK. This is only set on the client, and is as such always 0.
+        /// </summary>
+        public int Flags;
 
-		/// <summary>
-		/// Async loading ID of the MCNK. This is only set on the client, and is as such always 0.
-		/// </summary>
-		public int AsynchronousLoadingID;
-	}
+        /// <summary>
+        /// Async loading ID of the MCNK. This is only set on the client, and is as such always 0.
+        /// </summary>
+        public int AsynchronousLoadingID;
+    }
 }
 

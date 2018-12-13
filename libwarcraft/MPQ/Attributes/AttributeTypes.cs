@@ -24,25 +24,25 @@ using System;
 
 namespace Warcraft.MPQ.Attributes
 {
-	/// <summary>
-	/// The types of attributes which a file might have.
-	/// </summary>
-	[Flags]
-	public enum AttributeTypes : uint
-	{
-		/// <summary>
-		/// The file has a CRC32 hash.
-		/// </summary>
-		CRC32 		= 0x00000001,
+    /// <summary>
+    /// The types of attributes which a file might have.
+    /// </summary>
+    [Flags]
+    public enum AttributeTypes : uint
+    {
+        /// <summary>
+        /// The file has a CRC32 hash.
+        /// </summary>
+        CRC32         = 0x00000001,
 
-		/// <summary>
-		/// The file has a timestamp.
-		/// </summary>
-		Timestamp 	= 0x00000002,
+        /// <summary>
+        /// The file has a timestamp.
+        /// </summary>
+        Timestamp     = 0x00000002,
 
-		/// <summary>
-		/// This file has an MD5 hash.
-		/// </summary>
-		MD5 		= 0x00000004
-	}
+        /// <summary>
+        /// This file has an MD5 hash.
+        /// </summary>
+        MD5         = 0x00000004
+    }
 }

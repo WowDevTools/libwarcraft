@@ -26,82 +26,82 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	/// <summary>
-	/// ExtendedData chunk for triangle strip indices.
-	/// </summary>
-	public class ModelTriangleStripIndices : IIFFChunk, IBinarySerializable
-	{
-		/// <summary>
-		/// The RIFF chunk signature of this chunk.
-		/// </summary>
-		public const string Signature = "ModelTriangleStripIndices";
+    /// <summary>
+    /// ExtendedData chunk for triangle strip indices.
+    /// </summary>
+    public class ModelTriangleStripIndices : IIFFChunk, IBinarySerializable
+    {
+        /// <summary>
+        /// The RIFF chunk signature of this chunk.
+        /// </summary>
+        public const string Signature = "ModelTriangleStripIndices";
 
-		/// <summary>
-		/// The vertex indices for the triangle strip data.
-		/// </summary>
+        /// <summary>
+        /// The vertex indices for the triangle strip data.
+        /// </summary>
         public readonly List<ushort> TriangleStripIndices = new List<ushort>();
 
-		/// <summary>
-		/// Creates a new <see cref="ModelTriangleStripIndices"/> object.
-		/// </summary>
-		public ModelTriangleStripIndices()
+        /// <summary>
+        /// Creates a new <see cref="ModelTriangleStripIndices"/> object.
+        /// </summary>
+        public ModelTriangleStripIndices()
         {
         }
 
-		/// <summary>
-		/// Deserializes a <see cref="ModelTriangleStripIndices"/> object from the provided binary data.
-		/// </summary>
-		/// <param name="inData">The binary data containing the object.</param>
-		public ModelTriangleStripIndices(byte[] inData)
+        /// <summary>
+        /// Deserializes a <see cref="ModelTriangleStripIndices"/> object from the provided binary data.
+        /// </summary>
+        /// <param name="inData">The binary data containing the object.</param>
+        public ModelTriangleStripIndices(byte[] inData)
         {
-        	LoadBinaryData(inData);
+            LoadBinaryData(inData);
         }
 
-		/// <summary>
-		/// Deserialzes the provided binary data of the object. This is the full data block which follows the data
-		/// signature and data block length.
-		/// </summary>
-		/// <param name="inData">The binary data containing the object.</param>
-		public void LoadBinaryData(byte[] inData)
+        /// <summary>
+        /// Deserialzes the provided binary data of the object. This is the full data block which follows the data
+        /// signature and data block length.
+        /// </summary>
+        /// <param name="inData">The binary data containing the object.</param>
+        public void LoadBinaryData(byte[] inData)
         {
-			using (MemoryStream ms = new MemoryStream(inData))
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-            	{
-		            while (ms.Position < ms.Length)
-		            {
-			            this.TriangleStripIndices.Add(br.ReadUInt16());
-		            }
-            	}
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.TriangleStripIndices.Add(br.ReadUInt16());
+                    }
+                }
             }
         }
 
-		/// <summary>
-		/// Gets the static data signature of this data block type.
-		/// </summary>
-		/// <returns>A string representing the block signature.</returns>
-		public string GetSignature()
+        /// <summary>
+        /// Gets the static data signature of this data block type.
+        /// </summary>
+        /// <returns>A string representing the block signature.</returns>
+        public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		/// <summary>
-		/// Serializes the current object into a byte array.
-		/// </summary>
-		public byte[] Serialize()
+        /// <summary>
+        /// Serializes the current object into a byte array.
+        /// </summary>
+        public byte[] Serialize()
         {
-        	using (MemoryStream ms = new MemoryStream())
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (ushort triangleStripIndex in this.TriangleStripIndices)
-		            {
-			            bw.Write(triangleStripIndex);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (ushort triangleStripIndex in this.TriangleStripIndices)
+                    {
+                        bw.Write(triangleStripIndex);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
         }
-	}
+    }
 }

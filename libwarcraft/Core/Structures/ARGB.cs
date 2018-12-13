@@ -22,63 +22,63 @@
 
 namespace Warcraft.Core.Structures
 {
-	/// <summary>
-	/// A structure representing an ARGB colour value.
-	/// </summary>
-	public struct ARGB
-	{
-		/// <summary>
-		/// The red component.
-		/// </summary>
-		public byte R;
+    /// <summary>
+    /// A structure representing an ARGB colour value.
+    /// </summary>
+    public struct ARGB
+    {
+        /// <summary>
+        /// The red component.
+        /// </summary>
+        public byte R;
 
-		/// <summary>
-		/// The green component.
-		/// </summary>
-		public byte G;
+        /// <summary>
+        /// The green component.
+        /// </summary>
+        public byte G;
 
-		/// <summary>
-		/// The blue component.
-		/// </summary>
-		public byte B;
+        /// <summary>
+        /// The blue component.
+        /// </summary>
+        public byte B;
 
-		/// <summary>
-		/// The alpha component.
-		/// </summary>
-		public byte A;
+        /// <summary>
+        /// The alpha component.
+        /// </summary>
+        public byte A;
 
-		/// <summary>
-		/// Creates a new <see cref="ARGB"/> object from a set of byte component values.
-		/// </summary>
-		/// <param name="inR">The input red component.</param>
-		/// <param name="inG">The input blue component.</param>
-		/// <param name="inB">The input green component.</param>
-		/// <param name="inA">The input alpha component.</param>
-		public ARGB(byte inR, byte inG, byte inB, byte inA)
-		{
-			this.R = inR;
-			this.G = inG;
-			this.B = inB;
-			this.A = inA;
-		}
+        /// <summary>
+        /// Creates a new <see cref="ARGB"/> object from a set of byte component values.
+        /// </summary>
+        /// <param name="inR">The input red component.</param>
+        /// <param name="inG">The input blue component.</param>
+        /// <param name="inB">The input green component.</param>
+        /// <param name="inA">The input alpha component.</param>
+        public ARGB(byte inR, byte inG, byte inB, byte inA)
+        {
+            this.R = inR;
+            this.G = inG;
+            this.B = inB;
+            this.A = inA;
+        }
 
-		/// <summary>
-		/// Creates a new <see cref="ARGB"/> object from a byte that fills all components.
-		/// </summary>
-		/// <param name="all">The input byte component.</param>
-		public ARGB(byte all)
-			:this(all, all, all, all)
-		{
+        /// <summary>
+        /// Creates a new <see cref="ARGB"/> object from a byte that fills all components.
+        /// </summary>
+        /// <param name="all">The input byte component.</param>
+        public ARGB(byte all)
+            :this(all, all, all, all)
+        {
 
-		}
+        }
 
-		/// <summary>
-		/// Creates a string representation of the current instance.
-		/// </summary>
-		/// <returns>A string representation of the current instance.</returns>
-		public override string ToString()
-		{
-			return $"ARGB({this.R}, {this.G}, {this.B}, {this.A})";
-		}
-	}
+        /// <summary>
+        /// Creates a string representation of the current instance.
+        /// </summary>
+        /// <returns>A string representation of the current instance.</returns>
+        public override string ToString()
+        {
+            return $"ARGB({this.R}, {this.G}, {this.B}, {this.A})";
+        }
+    }
 }

@@ -25,40 +25,40 @@ using Warcraft.MPQ.Tables.Block;
 
 namespace Warcraft.MPQ.Tables.Extended.Block
 {
-	public class ExtendedBlockTableHeader
-	{
-		public string Signature => "BET\x1A";
+    public class ExtendedBlockTableHeader
+    {
+        public string Signature => "BET\x1A";
 
-		public uint Version;
-		public uint DataSize;
+        public uint Version;
+        public uint DataSize;
 
-		public uint TableSize;
-		public uint FileCount;
-		public uint UnknownFlag;
-		public uint TableEntrySize;
-		public uint BitIndexFilePosition;
-		public uint BitIndexFileSize;
-		public uint BitIndexCompressedSize;
-		public uint BitIndexFlagIndex;
-		public uint BitIndexUnknown;
-		public uint BitCountFilePosition;
-		public uint BitCountFileSize;
-		public uint BitCountCompressedSize;
-		public uint BitCountFlagIndex;
-		public uint BitCountUnknown;
+        public uint TableSize;
+        public uint FileCount;
+        public uint UnknownFlag;
+        public uint TableEntrySize;
+        public uint BitIndexFilePosition;
+        public uint BitIndexFileSize;
+        public uint BitIndexCompressedSize;
+        public uint BitIndexFlagIndex;
+        public uint BitIndexUnknown;
+        public uint BitCountFilePosition;
+        public uint BitCountFileSize;
+        public uint BitCountCompressedSize;
+        public uint BitCountFlagIndex;
+        public uint BitCountUnknown;
 
-		public uint BETHashSizeTotal;
-		public uint BETHashSizeExtra;
-		public uint BETHashSize;
-		public uint BETHashArraySize;
-		public uint FlagCount;
+        public uint BETHashSizeTotal;
+        public uint BETHashSizeExtra;
+        public uint BETHashSize;
+        public uint BETHashArraySize;
+        public uint FlagCount;
 
-		private List<BlockFlags> FlagArray = new List<BlockFlags>();
+        private List<BlockFlags> FlagArray = new List<BlockFlags>();
 
 
-		public ExtendedBlockTableHeader()
-		{
-		}
-	}
+        public ExtendedBlockTableHeader()
+        {
+        }
+    }
 }
 

@@ -26,11 +26,11 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelPolygonMaterials : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOPY";
+    public class ModelPolygonMaterials : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOPY";
 
-		public List<PolygonMaterial> PolygonMaterials = new List<PolygonMaterial>();
+        public List<PolygonMaterial> PolygonMaterials = new List<PolygonMaterial>();
 
         public ModelPolygonMaterials()
         {
@@ -38,93 +38,93 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public ModelPolygonMaterials(byte[] inData)
         {
-        	LoadBinaryData(inData);
+            LoadBinaryData(inData);
         }
 
         public void LoadBinaryData(byte[] inData)
         {
-			using (MemoryStream ms = new MemoryStream(inData))
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-	            {
-		            while (ms.Position < ms.Length)
-		            {
-			            this.PolygonMaterials.Add(new PolygonMaterial(br.ReadBytes(PolygonMaterial.GetSize())));
-		            }
-	            }
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.PolygonMaterials.Add(new PolygonMaterial(br.ReadBytes(PolygonMaterial.GetSize())));
+                    }
+                }
             }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (PolygonMaterial polygonMaterial in this.PolygonMaterials)
-		            {
-						bw.Write(polygonMaterial.Serialize());
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (PolygonMaterial polygonMaterial in this.PolygonMaterials)
+                    {
+                        bw.Write(polygonMaterial.Serialize());
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 
-	public class PolygonMaterial : IBinarySerializable
-	{
-		public PolygonMaterialFlags Flags;
-		public byte MaterialIndex;
+    public class PolygonMaterial : IBinarySerializable
+    {
+        public PolygonMaterialFlags Flags;
+        public byte MaterialIndex;
 
-		public PolygonMaterial(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Flags = (PolygonMaterialFlags)br.ReadByte();
-					this.MaterialIndex = br.ReadByte();
-				}
-			}
-		}
+        public PolygonMaterial(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Flags = (PolygonMaterialFlags)br.ReadByte();
+                    this.MaterialIndex = br.ReadByte();
+                }
+            }
+        }
 
-		public static int GetSize()
-		{
-			return 2;
-		}
+        public static int GetSize()
+        {
+            return 2;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					bw.Write((byte)this.Flags);
-					bw.Write(this.MaterialIndex);
-				}
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write((byte)this.Flags);
+                    bw.Write(this.MaterialIndex);
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 
-	public enum PolygonMaterialFlags : byte
-	{
-		Unknown1 			= 0x01,
-		NoCameraCollide 	= 0x02,
-		Detail				= 0x04,
-		HasCollision		= 0x08,
-		Hint				= 0x10,
-		Render				= 0x20,
-		Unknown2			= 0x40,
-		CollideHit			= 0x80
-	}
+    public enum PolygonMaterialFlags : byte
+    {
+        Unknown1             = 0x01,
+        NoCameraCollide     = 0x02,
+        Detail                = 0x04,
+        HasCollision        = 0x08,
+        Hint                = 0x10,
+        Render                = 0x20,
+        Unknown2            = 0x40,
+        CollideHit            = 0x80
+    }
 }
 

@@ -27,25 +27,25 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	[DatabaseRecord(DatabaseName.ZoneIntroMusicTable)]
-	public class ZoneIntroMusicTableRecord : DBCRecord
-	{
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference Name { get; set; }
+    [DatabaseRecord(DatabaseName.ZoneIntroMusicTable)]
+    public class ZoneIntroMusicTableRecord : DBCRecord
+    {
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference Name { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-		public ForeignKey<uint> Sound { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+        public ForeignKey<uint> Sound { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint Priority { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint Priority { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint MinDelayMinutes { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint MinDelayMinutes { get; set; }
 
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			yield return this.Name;
-		}
-	}
+        public override IEnumerable<StringReference> GetStringReferences()
+        {
+            yield return this.Name;
+        }
+    }
 }

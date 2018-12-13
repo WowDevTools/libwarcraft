@@ -3,78 +3,78 @@ using System.Numerics;
 
 namespace Warcraft.Core.Compression.Squish
 {
-	internal struct SourceBlock
-	{
-		public byte Start;
-		public byte End;
-		public byte Error;
+    internal struct SourceBlock
+    {
+        public byte Start;
+        public byte End;
+        public byte Error;
 
-		public SourceBlock(byte Start, byte End, byte Error)
-		{
-			this.Start = Start;
-			this.End = End;
-			this.Error = Error;
-		}
-	}
+        public SourceBlock(byte Start, byte End, byte Error)
+        {
+            this.Start = Start;
+            this.End = End;
+            this.Error = Error;
+        }
+    }
 
-	internal struct SingleColourLookup
-	{
-		public SourceBlock[] Sources;
+    internal struct SingleColourLookup
+    {
+        public SourceBlock[] Sources;
 
-		public SingleColourLookup(SourceBlock one, SourceBlock two)
-		{
-			this.Sources = new SourceBlock[2];
-			this.Sources[0] = one;
-			this.Sources[1] = two;
-		}
-	}
+        public SingleColourLookup(SourceBlock one, SourceBlock two)
+        {
+            this.Sources = new SourceBlock[2];
+            this.Sources[0] = one;
+            this.Sources[1] = two;
+        }
+    }
 
-	internal partial class SingleColourFit : ColourFit
-	{
-		private byte[] colour = new byte[3];
-		private Vector3 start;
-		private Vector3 end;
-		private byte index;
-		private int error;
-		private int bestError;
+    internal partial class SingleColourFit : ColourFit
+    {
+        private byte[] colour = new byte[3];
+        private Vector3 start;
+        private Vector3 end;
+        private byte index;
+        private int error;
+        private int bestError;
 
-		private SingleColourFit(ColourSet colours, SquishOptions flags)
-			: base(colours, flags)
-		{
-			Vector3 values = this._Colours.Points[0];
+        private SingleColourFit(ColourSet colours, SquishOptions flags)
+            : base(colours, flags)
+        {
+            Vector3 values = this._Colours.Points[0];
 
-			this.colour[0] = (byte) FloatToInt(255.0f * values.X, 255);
-			this.colour[1] = (byte) FloatToInt(255.0f * values.Y, 255);
-			this.colour[2] = (byte) FloatToInt(255.0f * values.Z, 255);
+            this.colour[0] = (byte) FloatToInt(255.0f * values.X, 255);
+            this.colour[1] = (byte) FloatToInt(255.0f * values.Y, 255);
+            this.colour[2] = (byte) FloatToInt(255.0f * values.Z, 255);
 
-			this.bestError = int.MaxValue;
-		}
+            this.bestError = int.MaxValue;
+        }
 
-		private static int FloatToInt(float a, int limit)
-		{
-			int i = (int) (a + 0.5f);
+        private static int FloatToInt(float a, int limit)
+        {
+            int i = (int) (a + 0.5f);
 
-			// clamp to limit
-			if (i < 0)
-			{
-				i = 0;
-			}
-			else if (i > limit)
-			{
-				i = limit;
-			}
+            // clamp to limit
+            if (i < 0)
+            {
+                i = 0;
+            }
+            else if (i > limit)
+            {
+                i = limit;
+            }
 
-			return i;
-		}
+            return i;
+        }
 
-		protected override void Compress3(byte[] block)
-		{
-			throw new NotImplementedException();
-		}
+        protected override void Compress3(byte[] block)
+        {
+            throw new NotImplementedException();
+        }
 
-		protected override void Compress4(byte[] block)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        protected override void Compress4(byte[] block)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

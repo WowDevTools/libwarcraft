@@ -24,25 +24,25 @@ using System;
 
 namespace Warcraft.Core.Reflection.DBC
 {
-	/// <summary>
-	/// Declares a property to be a record field property that is an array of elements. Multiple instances
-	/// of this attribute can be applied to a property if the field count changes.
-	/// </summary>
-	[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-	public class RecordFieldArrayAttribute : RecordFieldAttribute
-	{
-		/// <summary>
-		/// Gets or sets the number of elements in the array.
-		/// </summary>
-		public uint Count { get; set; }
+    /// <summary>
+    /// Declares a property to be a record field property that is an array of elements. Multiple instances
+    /// of this attribute can be applied to a property if the field count changes.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public class RecordFieldArrayAttribute : RecordFieldAttribute
+    {
+        /// <summary>
+        /// Gets or sets the number of elements in the array.
+        /// </summary>
+        public uint Count { get; set; }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="RecordFieldArrayAttribute"/> class.
-		/// </summary>
-		/// <param name="introducedIn">The version that the field was introduced in.</param>
-		public RecordFieldArrayAttribute(WarcraftVersion introducedIn)
-			: base(introducedIn)
-		{
-		}
-	}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecordFieldArrayAttribute"/> class.
+        /// </summary>
+        /// <param name="introducedIn">The version that the field was introduced in.</param>
+        public RecordFieldArrayAttribute(WarcraftVersion introducedIn)
+            : base(introducedIn)
+        {
+        }
+    }
 }

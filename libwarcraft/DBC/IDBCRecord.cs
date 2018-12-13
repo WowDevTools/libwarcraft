@@ -26,10 +26,10 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC
 {
-	public interface IDBCRecord
-	{
-		uint ID { get; }
-		WarcraftVersion Version { get; set; }
-		IEnumerable<StringReference> GetStringReferences();
-	}
+    public interface IDBCRecord
+    {
+        uint ID { get; }
+        WarcraftVersion Version { get; set; }
+        IEnumerable<StringReference> GetStringReferences();
+    }
 }

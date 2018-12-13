@@ -28,39 +28,39 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	[DatabaseRecord(DatabaseName.ZoneMusic)]
-	public class ZoneMusicRecord : DBCRecord
-	{
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference SetName { get; set; }
+    [DatabaseRecord(DatabaseName.ZoneMusic)]
+    public class ZoneMusicRecord : DBCRecord
+    {
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference SetName { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint SilenceTimeDayMin { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint SilenceTimeDayMin { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint SilenceTimeNightMin { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint SilenceTimeNightMin { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint SilenceTimeDayMax { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint SilenceTimeDayMax { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint SilenceTimeNightMax { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint SilenceTimeNightMax { get; set; }
 
-		public Range SilenceIntervalDay => new Range(this.SilenceTimeDayMin, this.SilenceTimeDayMax, rigorous:false);
-		public Range SilenceIntervalNight => new Range(this.SilenceTimeNightMin, this.SilenceTimeNightMax, rigorous:false);
+        public Range SilenceIntervalDay => new Range(this.SilenceTimeDayMin, this.SilenceTimeDayMax, rigorous:false);
+        public Range SilenceIntervalNight => new Range(this.SilenceTimeNightMin, this.SilenceTimeNightMax, rigorous:false);
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-		public ForeignKey<uint> DayMusic { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+        public ForeignKey<uint> DayMusic { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-		public ForeignKey<uint> NightMusic { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+        public ForeignKey<uint> NightMusic { get; set; }
 
-		/// <inheritdoc />
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			yield return this.SetName;
-		}
-	}
+        /// <inheritdoc />
+        public override IEnumerable<StringReference> GetStringReferences()
+        {
+            yield return this.SetName;
+        }
+    }
 }

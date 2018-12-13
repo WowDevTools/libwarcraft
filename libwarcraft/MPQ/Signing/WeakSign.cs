@@ -1,10 +1,10 @@
 namespace Warcraft.MPQ.Signing
 {
-	public class WeakSign
-	{
-		public WeakSign()
-		{
-		}
-	}
+    public class WeakSign
+    {
+        public WeakSign()
+        {
+        }
+    }
 }
 

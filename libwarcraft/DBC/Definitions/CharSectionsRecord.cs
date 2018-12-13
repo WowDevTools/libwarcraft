@@ -28,92 +28,92 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	[DatabaseRecord(DatabaseName.CharSections)]
-	public class CharSectionsRecord : DBCRecord
-	{
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.ChrRaces, nameof(ID))]
-		public ForeignKey<uint> Race { get; set; }
+    [DatabaseRecord(DatabaseName.CharSections)]
+    public class CharSectionsRecord : DBCRecord
+    {
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.ChrRaces, nameof(ID))]
+        public ForeignKey<uint> Race { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public bool IsFemale { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public bool IsFemale { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public CharSectionType BaseSection { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public CharSectionType BaseSection { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint Type { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint Type { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint Variation { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint Variation { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference SectionTexture0 { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference SectionTexture0 { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference SectionTexture1 { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference SectionTexture1 { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference SectionTexture2 { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference SectionTexture2 { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public CharSectionFlag Flags { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public CharSectionFlag Flags { get; set; }
 
-		/*
-			What follows are forwards into the SectionTextures list for ease of use.
-			Which ones to use depend on the value of BaseSection.
-		*/
+        /*
+            What follows are forwards into the SectionTextures list for ease of use.
+            Which ones to use depend on the value of BaseSection.
+        */
 
-		public StringReference SkinTexture => this.SectionTexture0;
-		public StringReference ExtraSkinTexture => this.SectionTexture1;
+        public StringReference SkinTexture => this.SectionTexture0;
+        public StringReference ExtraSkinTexture => this.SectionTexture1;
 
-		public StringReference FaceLowerTexture => this.SectionTexture0;
-		public StringReference FaceUpperTexture => this.SectionTexture1;
+        public StringReference FaceLowerTexture => this.SectionTexture0;
+        public StringReference FaceUpperTexture => this.SectionTexture1;
 
-		public StringReference FacialLowerTexture => this.SectionTexture0;
-		public StringReference FacialUpperTexture => this.SectionTexture1;
+        public StringReference FacialLowerTexture => this.SectionTexture0;
+        public StringReference FacialUpperTexture => this.SectionTexture1;
 
-		public StringReference HairTexture => this.SectionTexture0;
-		public StringReference ScalpLowerTexture => this.SectionTexture1;
-		public StringReference ScalpUpperTexture => this.SectionTexture2;
+        public StringReference HairTexture => this.SectionTexture0;
+        public StringReference ScalpLowerTexture => this.SectionTexture1;
+        public StringReference ScalpUpperTexture => this.SectionTexture2;
 
-		public StringReference PelvisTexture => this.SectionTexture0;
-		public StringReference TorsoTexture => this.SectionTexture1;
+        public StringReference PelvisTexture => this.SectionTexture0;
+        public StringReference TorsoTexture => this.SectionTexture1;
 
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			return new List<StringReference>
-			{
-				this.SectionTexture0,
-				this.SectionTexture1,
-				this.SectionTexture2
-			};
-		}
-	}
+        public override IEnumerable<StringReference> GetStringReferences()
+        {
+            return new List<StringReference>
+            {
+                this.SectionTexture0,
+                this.SectionTexture1,
+                this.SectionTexture2
+            };
+        }
+    }
 
-	public enum CharSectionType
-	{
-		BaseSkin,
-		Face,
-		FacialHair,
-		Hair,
-		Underwear,
-		BaseSkinHiDef,
-		FaceHiDef,
-		FacialHairHiDef,
-		HairHiDef,
-		UnderwearHiDef,
-		Unknown1,
-		DemonHunterTattoo
-	}
+    public enum CharSectionType
+    {
+        BaseSkin,
+        Face,
+        FacialHair,
+        Hair,
+        Underwear,
+        BaseSkinHiDef,
+        FaceHiDef,
+        FacialHairHiDef,
+        HairHiDef,
+        UnderwearHiDef,
+        Unknown1,
+        DemonHunterTattoo
+    }
 
-	[Flags]
-	public enum CharSectionFlag
-	{
-		CharacterCreate = 0x1,
-		BarberShop      = 0x2,
-		DeathKnight     = 0x4,
-		NPC             = 0x8,
-		Unknown         = 0x10
-	}
+    [Flags]
+    public enum CharSectionFlag
+    {
+        CharacterCreate = 0x1,
+        BarberShop      = 0x2,
+        DeathKnight     = 0x4,
+        NPC             = 0x8,
+        Unknown         = 0x10
+    }
 }

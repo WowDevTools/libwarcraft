@@ -26,64 +26,64 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
-	public class WorldLODMapAreaOffsets : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MAOF";
+    public class WorldLODMapAreaOffsets : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MAOF";
 
-		public readonly List<uint> MapAreaOffsets = new List<uint>();
+        public readonly List<uint> MapAreaOffsets = new List<uint>();
 
-		public WorldLODMapAreaOffsets()
-		{
-
-		}
-
-		public WorldLODMapAreaOffsets(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public WorldLODMapAreaOffsets()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					for (int y = 0; y < 64; ++y)
-					{
-						for (int x = 0; x < 64; ++x)
-						{
-							this.MapAreaOffsets.Add(br.ReadUInt32());
-						}
-					}
-				}
-			}
+
         }
 
-		public static int GetSize()
-		{
-			return (64 * 64) * sizeof(uint);
-		}
+        public WorldLODMapAreaOffsets(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    for (int y = 0; y < 64; ++y)
+                    {
+                        for (int x = 0; x < 64; ++x)
+                        {
+                            this.MapAreaOffsets.Add(br.ReadUInt32());
+                        }
+                    }
+                }
+            }
+        }
+
+        public static int GetSize()
+        {
+            return (64 * 64) * sizeof(uint);
+        }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (uint mapAreaOffset in this.MapAreaOffsets)
-		            {
-			            bw.Write(mapAreaOffset);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (uint mapAreaOffset in this.MapAreaOffsets)
+                    {
+                        bw.Write(mapAreaOffset);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

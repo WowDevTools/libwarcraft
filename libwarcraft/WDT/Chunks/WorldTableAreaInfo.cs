@@ -26,132 +26,132 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
-	public class WorldTableAreaInfo : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MAIN";
+    public class WorldTableAreaInfo : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MAIN";
 
-		public List<AreaInfoEntry> Entries = new List<AreaInfoEntry>();
+        public List<AreaInfoEntry> Entries = new List<AreaInfoEntry>();
 
-		public WorldTableAreaInfo()
-		{
-
-		}
-
-		public WorldTableAreaInfo(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public WorldTableAreaInfo()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					for (uint y = 0; y < 64; ++y)
-					{
-						for (uint x = 0; x < 64; ++x)
-						{
-							this.Entries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize()), x, y));
-						}
-					}
-				}
-			}
+
+        }
+
+        public WorldTableAreaInfo(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    for (uint y = 0; y < 64; ++y)
+                    {
+                        for (uint x = 0; x < 64; ++x)
+                        {
+                            this.Entries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize()), x, y));
+                        }
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public AreaInfoEntry GetAreaInfo(uint inTileX, uint inTileY)
-		{
-			if (inTileX > 63)
-			{
-				throw new ArgumentOutOfRangeException(nameof(inTileX), "The tile coordinate may not be more than 63 in either dimension.");
-			}
+        public AreaInfoEntry GetAreaInfo(uint inTileX, uint inTileY)
+        {
+            if (inTileX > 63)
+            {
+                throw new ArgumentOutOfRangeException(nameof(inTileX), "The tile coordinate may not be more than 63 in either dimension.");
+            }
 
-			if (inTileY > 63)
-			{
-				throw new ArgumentOutOfRangeException(nameof(inTileY), "The tile coordinate may not be more than 63 in either dimension.");
-			}
+            if (inTileY > 63)
+            {
+                throw new ArgumentOutOfRangeException(nameof(inTileY), "The tile coordinate may not be more than 63 in either dimension.");
+            }
 
-			int tileIndex = (int)((inTileY * 64) + inTileX);
-			return this.Entries[tileIndex];
-		}
+            int tileIndex = (int)((inTileY * 64) + inTileX);
+            return this.Entries[tileIndex];
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					foreach (AreaInfoEntry entry in this.Entries)
-					{
-						bw.Write(entry.Serialize());
-					}
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (AreaInfoEntry entry in this.Entries)
+                    {
+                        bw.Write(entry.Serialize());
+                    }
 
-					bw.Flush();
-				}
+                    bw.Flush();
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 
-	public class AreaInfoEntry : IBinarySerializable
-	{
-		public AreaInfoFlags Flags;
-		public uint AreaID;
+    public class AreaInfoEntry : IBinarySerializable
+    {
+        public AreaInfoFlags Flags;
+        public uint AreaID;
 
-		/*
-			The following fields are not serialized, and are provided as
-			helper fields for programmers.
-		*/
+        /*
+            The following fields are not serialized, and are provided as
+            helper fields for programmers.
+        */
 
-		public readonly uint TileX;
-		public readonly uint TileY;
+        public readonly uint TileX;
+        public readonly uint TileY;
 
-		public AreaInfoEntry(byte[] data, uint inTileX, uint inTileY)
-		{
-			this.TileX = inTileX;
-			this.TileY = inTileY;
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Flags = (AreaInfoFlags)br.ReadUInt32();
-					this.AreaID = br.ReadUInt32();
-				}
-			}
-		}
+        public AreaInfoEntry(byte[] data, uint inTileX, uint inTileY)
+        {
+            this.TileX = inTileX;
+            this.TileY = inTileY;
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Flags = (AreaInfoFlags)br.ReadUInt32();
+                    this.AreaID = br.ReadUInt32();
+                }
+            }
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream(8))
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					bw.Write((uint)this.Flags);
-					bw.Write(this.AreaID);
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream(8))
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write((uint)this.Flags);
+                    bw.Write(this.AreaID);
 
-					bw.Flush();
-				}
+                    bw.Flush();
+                }
 
-				return ms.ToArray();
-			}
-		}
+                return ms.ToArray();
+            }
+        }
 
-		public static uint GetSize()
-		{
-			return 8;
-		}
-	}
+        public static uint GetSize()
+        {
+            return 8;
+        }
+    }
 
-	public enum AreaInfoFlags : uint
-	{
-		HasTerrainData = 1,
-		IsLoaded = 2,
-	}
+    public enum AreaInfoFlags : uint
+    {
+        HasTerrainData = 1,
+        IsLoaded = 2,
+    }
 }
 

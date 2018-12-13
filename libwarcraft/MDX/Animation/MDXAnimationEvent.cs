@@ -28,21 +28,21 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXAnimationEvent : IVersionedClass
-	{
-		public string EventName;
-		public uint Data;
-		public uint Bone;
-		public Vector3 RelativePosition;
-		public MDXTrack<bool> RaiseEvent;
+    public class MDXAnimationEvent : IVersionedClass
+    {
+        public string EventName;
+        public uint Data;
+        public uint Bone;
+        public Vector3 RelativePosition;
+        public MDXTrack<bool> RaiseEvent;
 
-		public MDXAnimationEvent(BinaryReader br, WarcraftVersion version)
-		{
-			this.EventName = new string(br.ReadChars(4));
-			this.Data = br.ReadUInt32();
-			this.Bone = br.ReadUInt32();
-			this.RelativePosition = br.ReadVector3();
-			this.RaiseEvent = br.ReadMDXTrack<bool>(version, true);
-		}
-	}
+        public MDXAnimationEvent(BinaryReader br, WarcraftVersion version)
+        {
+            this.EventName = new string(br.ReadChars(4));
+            this.Data = br.ReadUInt32();
+            this.Bone = br.ReadUInt32();
+            this.RelativePosition = br.ReadVector3();
+            this.RaiseEvent = br.ReadMDXTrack<bool>(version, true);
+        }
+    }
 }

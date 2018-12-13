@@ -28,48 +28,48 @@ using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks
 {
-	public class TerrainBoundingBox : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MFBO";
+    public class TerrainBoundingBox : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MFBO";
 
-		public ShortPlane Maximum;
-		public ShortPlane Minimum;
+        public ShortPlane Maximum;
+        public ShortPlane Minimum;
 
-		public TerrainBoundingBox(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public TerrainBoundingBox(byte[] inData)
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Maximum = br.ReadShortPlane();
-					this.Minimum = br.ReadShortPlane();
-				}
-			}
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Maximum = br.ReadShortPlane();
+                    this.Minimum = br.ReadShortPlane();
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-            		bw.WriteShortPlane(this.Maximum);
-            		bw.WriteShortPlane(this.Minimum);
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.WriteShortPlane(this.Maximum);
+                    bw.WriteShortPlane(this.Minimum);
+                }
 
-	            return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

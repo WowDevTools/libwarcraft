@@ -23,15 +23,15 @@ using System;
 
 namespace Warcraft.MDX
 {
-	[Flags]
-	public enum ModelObjectFlags : uint
-	{
-		TiltX						= 0x1,
-		TiltY						= 0x2,
-		HasBlendModeOverrides		= 0x8,
-		HasPhysicsData				= 0x20,
-		HasSkinLODs					= 0x80,
-		UnknownCameraFlag			= 0x100
-	}
+    [Flags]
+    public enum ModelObjectFlags : uint
+    {
+        TiltX                        = 0x1,
+        TiltY                        = 0x2,
+        HasBlendModeOverrides        = 0x8,
+        HasPhysicsData                = 0x20,
+        HasSkinLODs                    = 0x80,
+        UnknownCameraFlag            = 0x100
+    }
 }
 

@@ -26,21 +26,21 @@ using Warcraft.Core.Extensions;
 
 namespace Warcraft.MDX.Visual
 {
-	public class MDXTexture
-	{
-		public EMDXTextureType TextureType;
-		public EMDXTextureFlags Flags;
+    public class MDXTexture
+    {
+        public EMDXTextureType TextureType;
+        public EMDXTextureFlags Flags;
 
-		public string Filename;
+        public string Filename;
 
-		public MDXTexture(BinaryReader br)
-		{
-			this.TextureType = (EMDXTextureType)br.ReadUInt32();
-			this.Flags = (EMDXTextureFlags)br.ReadUInt32();
+        public MDXTexture(BinaryReader br)
+        {
+            this.TextureType = (EMDXTextureType)br.ReadUInt32();
+            this.Flags = (EMDXTextureFlags)br.ReadUInt32();
 
-			// This points off to a null-terminated string, so we'll pop off the null byte when deserializing it
-			this.Filename = new string(br.ReadMDXArray<char>().ToArray()).TrimEnd('\0');
-		}
-	}
+            // This points off to a null-terminated string, so we'll pop off the null byte when deserializing it
+            this.Filename = new string(br.ReadMDXArray<char>().ToArray()).TrimEnd('\0');
+        }
+    }
 }
 

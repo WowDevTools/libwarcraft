@@ -27,93 +27,93 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	[DatabaseRecord(DatabaseName.SoundEntries)]
-	public class SoundEntriesRecord : DBCRecord
-	{
-		[RecordField(WarcraftVersion.Classic)]
-		public SoundType Type { get; set; }
+    [DatabaseRecord(DatabaseName.SoundEntries)]
+    public class SoundEntriesRecord : DBCRecord
+    {
+        [RecordField(WarcraftVersion.Classic)]
+        public SoundType Type { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference Name { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference Name { get; set; }
 
-		[RecordFieldArray(WarcraftVersion.Classic, Count = 10)]
-		public List<StringReference> SoundFiles { get; set; }
+        [RecordFieldArray(WarcraftVersion.Classic, Count = 10)]
+        public List<StringReference> SoundFiles { get; set; }
 
-		[RecordFieldArray(WarcraftVersion.Classic, Count = 10)]
-		public List<uint> PlayFrequencies { get; set; }
+        [RecordFieldArray(WarcraftVersion.Classic, Count = 10)]
+        public List<uint> PlayFrequencies { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference DirectoryBase { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference DirectoryBase { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float Volume { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float Volume { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint Flags { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint Flags { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float MinDistance { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float MinDistance { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float DistanceCutoff { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float DistanceCutoff { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.SoundProviderPreferences, nameof(ID))]
-		public ForeignKey<uint> EAXDefinition { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.SoundProviderPreferences, nameof(ID))]
+        public ForeignKey<uint> EAXDefinition { get; set; }
 
-		[RecordField(WarcraftVersion.Wrath)]
-		public uint SoundEntriesAdvancedID { get; set; }
+        [RecordField(WarcraftVersion.Wrath)]
+        public uint SoundEntriesAdvancedID { get; set; }
 
-		/// <inheritdoc />
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			yield return this.Name;
-			yield return this.DirectoryBase;
-			foreach (var soundFile in this.SoundFiles)
-			{
-				yield return soundFile;
-			}
-		}
-	}
+        /// <inheritdoc />
+        public override IEnumerable<StringReference> GetStringReferences()
+        {
+            yield return this.Name;
+            yield return this.DirectoryBase;
+            foreach (var soundFile in this.SoundFiles)
+            {
+                yield return soundFile;
+            }
+        }
+    }
 
-	public enum SoundType : uint
-	{
-		Unused			= 0,
-		Spell			= 1,
-		UI				= 2,
-		Footstep1		= 3,
-		WeaponImpact	= 4,
-		Unknown1		= 5,
-		WeaponMiss		= 6,
-		Greeting		= 7,
-		Cast			= 8,
-		PickUpDown		= 9,
-		NPCCombat		= 10,
-		Unknown2		= 11,
-		Error			= 12,
-		Bird			= 13,
-		Object			= 14,
-		Unknown3		= 15,
-		Death			= 16,
-		NPCGreeting		= 17,
-		Test			= 18,
-		Armor			= 19,
-		Footstep2		= 20,
-		CharacterWater	= 21,
-		LiquidWater		= 22,
-		Tradeskill		= 23,
-		Unknown4		= 24,
-		Doodad			= 25,
-		SpellFizzle		= 26,
-		NPCLoop			= 27,
-		ZoneMusic		= 28,
-		Emote			= 29,
-		NarrationMusic	= 30,
-		Narration		= 31,
+    public enum SoundType : uint
+    {
+        Unused            = 0,
+        Spell            = 1,
+        UI                = 2,
+        Footstep1        = 3,
+        WeaponImpact    = 4,
+        Unknown1        = 5,
+        WeaponMiss        = 6,
+        Greeting        = 7,
+        Cast            = 8,
+        PickUpDown        = 9,
+        NPCCombat        = 10,
+        Unknown2        = 11,
+        Error            = 12,
+        Bird            = 13,
+        Object            = 14,
+        Unknown3        = 15,
+        Death            = 16,
+        NPCGreeting        = 17,
+        Test            = 18,
+        Armor            = 19,
+        Footstep2        = 20,
+        CharacterWater    = 21,
+        LiquidWater        = 22,
+        Tradeskill        = 23,
+        Unknown4        = 24,
+        Doodad            = 25,
+        SpellFizzle        = 26,
+        NPCLoop            = 27,
+        ZoneMusic        = 28,
+        Emote            = 29,
+        NarrationMusic    = 30,
+        Narration        = 31,
 
-		// .. //
+        // .. //
 
-		ZoneAmbience	= 50
+        ZoneAmbience    = 50
 
-	}
+    }
 }

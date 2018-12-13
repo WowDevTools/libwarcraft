@@ -31,87 +31,87 @@ using Warcraft.MDX.Data;
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXTrack<T> : IVersionedClass
-	{
-		/// <summary>
-		/// Gets a value indicating whether the timelines are as one composite timeline, or as separate timelines.
-		/// </summary>
-		public bool IsComposite { get; }
+    public class MDXTrack<T> : IVersionedClass
+    {
+        /// <summary>
+        /// Gets a value indicating whether the timelines are as one composite timeline, or as separate timelines.
+        /// </summary>
+        public bool IsComposite { get; }
 
-		public InterpolationType Interpolationtype;
-		public ushort GlobalSequenceID;
+        public InterpolationType Interpolationtype;
+        public ushort GlobalSequenceID;
 
-		/*
-			<= BC
-		*/
+        /*
+            <= BC
+        */
 
-		public readonly MDXArray<IntegerRange> CompositeTimelineInterpolationRanges;
-		public readonly MDXArray<uint> CompositeTimelineTimestamps;
-		public readonly MDXArray<T> CompositeTimelineValues;
+        public readonly MDXArray<IntegerRange> CompositeTimelineInterpolationRanges;
+        public readonly MDXArray<uint> CompositeTimelineTimestamps;
+        public readonly MDXArray<T> CompositeTimelineValues;
 
-		/*
-			>= Wrath
-		*/
+        /*
+            >= Wrath
+        */
 
-		public readonly MDXArray<MDXArray<uint>> Timestamps;
-		public readonly MDXArray<MDXArray<T>> Values;
+        public readonly MDXArray<MDXArray<uint>> Timestamps;
+        public readonly MDXArray<MDXArray<T>> Values;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.MDX.Animation.MDXTrack{T}"/> class.
-		/// </summary>
-		/// <param name="br"></param>
-		/// <param name="version">Format.</param>
-		/// <param name="valueless">
-		/// If this value is true, it indicates that no values are associated with
-		/// this track, and any value-related reading should be skipped.
-		/// </param>
-		public MDXTrack(BinaryReader br, WarcraftVersion version, bool valueless = false)
-		{
-			this.Interpolationtype = (InterpolationType)br.ReadUInt16();
-			this.GlobalSequenceID = br.ReadUInt16();
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.MDX.Animation.MDXTrack{T}"/> class.
+        /// </summary>
+        /// <param name="br"></param>
+        /// <param name="version">Format.</param>
+        /// <param name="valueless">
+        /// If this value is true, it indicates that no values are associated with
+        /// this track, and any value-related reading should be skipped.
+        /// </param>
+        public MDXTrack(BinaryReader br, WarcraftVersion version, bool valueless = false)
+        {
+            this.Interpolationtype = (InterpolationType)br.ReadUInt16();
+            this.GlobalSequenceID = br.ReadUInt16();
 
-			if (version < WarcraftVersion.Wrath)
-			{
-				this.IsComposite = true;
-				this.CompositeTimelineInterpolationRanges = br.ReadMDXArray<IntegerRange>();
-				this.CompositeTimelineTimestamps = br.ReadMDXArray<uint>();
+            if (version < WarcraftVersion.Wrath)
+            {
+                this.IsComposite = true;
+                this.CompositeTimelineInterpolationRanges = br.ReadMDXArray<IntegerRange>();
+                this.CompositeTimelineTimestamps = br.ReadMDXArray<uint>();
 
-				if (valueless)
-				{
-					return;
-				}
+                if (valueless)
+                {
+                    return;
+                }
 
-				// HACK: MDXTracks with quaternions need to have the version passed along
-				if (typeof(T) == typeof(Quaternion))
-				{
-					this.CompositeTimelineValues = br.ReadMDXArray<T>(version);
-				}
-				else
-				{
-					this.CompositeTimelineValues = br.ReadMDXArray<T>();
-				}
-			}
-			else
-			{
-				this.IsComposite = false;
-				this.Timestamps = br.ReadMDXArray<MDXArray<uint>>();
+                // HACK: MDXTracks with quaternions need to have the version passed along
+                if (typeof(T) == typeof(Quaternion))
+                {
+                    this.CompositeTimelineValues = br.ReadMDXArray<T>(version);
+                }
+                else
+                {
+                    this.CompositeTimelineValues = br.ReadMDXArray<T>();
+                }
+            }
+            else
+            {
+                this.IsComposite = false;
+                this.Timestamps = br.ReadMDXArray<MDXArray<uint>>();
 
-				if (valueless)
-				{
-					return;
-				}
+                if (valueless)
+                {
+                    return;
+                }
 
-				// HACK: MDXTracks with quaternions need to have the version passed along
-				if (typeof(T) == typeof(Quaternion))
-				{
-					this.Values = br.ReadMDXArray<MDXArray<T>>(version);
-				}
-				else
-				{
-					this.Values = br.ReadMDXArray<MDXArray<T>>();
-				}
-			}
-		}
-	}
+                // HACK: MDXTracks with quaternions need to have the version passed along
+                if (typeof(T) == typeof(Quaternion))
+                {
+                    this.Values = br.ReadMDXArray<MDXArray<T>>(version);
+                }
+                else
+                {
+                    this.Values = br.ReadMDXArray<MDXArray<T>>();
+                }
+            }
+        }
+    }
 }
 

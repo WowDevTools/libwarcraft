@@ -24,35 +24,35 @@ using System.Collections.Generic;
 
 namespace Warcraft.MPQ.Tables.Extended.Block
 {
-	public class ExtendedBlockTable
-	{
-		private uint TableSize;
-		private uint FileCount;
-		private uint Unknown;
-		private uint TableEntrySize;
-		private uint BitIndexFilePosition;
-		private uint BitIndexFileSize;
-		private uint BitIndexCompressedSize;
-		private uint BitIndexFlagIndex;
-		private uint BitIndexUnknown;
-		private uint BitCountFilePosition;
-		private uint BitCountFileSize;
-		private uint BitCountCompressedSize;
-		private uint BitCountFlagIndex;
-		private uint BitCountUnknown;
-		private uint TotalHashSize;
-		private uint HashSizeExtraBits;
-		private uint EffectiveHashSize;
-		private uint HashArraySize;
-		private uint FlagCount;
+    public class ExtendedBlockTable
+    {
+        private uint TableSize;
+        private uint FileCount;
+        private uint Unknown;
+        private uint TableEntrySize;
+        private uint BitIndexFilePosition;
+        private uint BitIndexFileSize;
+        private uint BitIndexCompressedSize;
+        private uint BitIndexFlagIndex;
+        private uint BitIndexUnknown;
+        private uint BitCountFilePosition;
+        private uint BitCountFileSize;
+        private uint BitCountCompressedSize;
+        private uint BitCountFlagIndex;
+        private uint BitCountUnknown;
+        private uint TotalHashSize;
+        private uint HashSizeExtraBits;
+        private uint EffectiveHashSize;
+        private uint HashArraySize;
+        private uint FlagCount;
 
-		private List<uint> FileFlags;
-		private List<byte[]> FileTable;
-		private List<byte[]> HashTable;
+        private List<uint> FileFlags;
+        private List<byte[]> FileTable;
+        private List<byte[]> HashTable;
 
-		public ExtendedBlockTable(byte[] data)
-		{
-		}
-	}
+        public ExtendedBlockTable(byte[] data)
+        {
+        }
+    }
 }
 

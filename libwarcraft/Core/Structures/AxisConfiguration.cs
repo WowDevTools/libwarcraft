@@ -22,24 +22,24 @@
 
 namespace Warcraft.Core.Structures
 {
-	/// <summary>
-	/// An axis configuration, that is, how vector data should be interpreted.
-	/// </summary>
-	public enum AxisConfiguration
-	{
-		/// <summary>
-		/// No assumptions should be made about the vector storage format, and should be read as XYZ.
-		/// </summary>
-		Native,
+    /// <summary>
+    /// An axis configuration, that is, how vector data should be interpreted.
+    /// </summary>
+    public enum AxisConfiguration
+    {
+        /// <summary>
+        /// No assumptions should be made about the vector storage format, and should be read as XYZ.
+        /// </summary>
+        Native,
 
-		/// <summary>
-		/// Assume that the data is stored as Y-up.
-		/// </summary>
-		YUp,
+        /// <summary>
+        /// Assume that the data is stored as Y-up.
+        /// </summary>
+        YUp,
 
-		/// <summary>
-		/// Assume that the data is stored as Z-up.
-		/// </summary>
-		ZUp
-	}
+        /// <summary>
+        /// Assume that the data is stored as Z-up.
+        /// </summary>
+        ZUp
+    }
 }

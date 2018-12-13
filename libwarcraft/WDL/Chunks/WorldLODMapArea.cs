@@ -26,79 +26,79 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
-	public class WorldLODMapArea : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MARE";
+    public class WorldLODMapArea : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MARE";
 
-		public readonly List<short> HighResVertices = new List<short>();
-		public readonly List<short> LowResVertices = new List<short>();
+        public readonly List<short> HighResVertices = new List<short>();
+        public readonly List<short> LowResVertices = new List<short>();
 
-		public WorldLODMapArea()
-		{
-
-		}
-
-		public WorldLODMapArea(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public WorldLODMapArea()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					// TODO: Verify if this isn't mapped the same way as ADT.Chunks.MapChunkHeightmap
-					for (int y = 0; y < 17; ++y)
-					{
-						for (int x = 0; x < 17; ++x)
-						{
-							this.HighResVertices.Add(br.ReadInt16());
-						}
-					}
 
-					for (int y = 0; y < 16; ++y)
-					{
-						for (int x = 0; x < 16; ++x)
-						{
-							this.LowResVertices.Add(br.ReadInt16());
-						}
-					}
-				}
-			}
         }
 
-		public static int GetSize()
-		{
-			return (17 * 17) * sizeof(short) + (16 * 16) * sizeof(short);
-		}
+        public WorldLODMapArea(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    // TODO: Verify if this isn't mapped the same way as ADT.Chunks.MapChunkHeightmap
+                    for (int y = 0; y < 17; ++y)
+                    {
+                        for (int x = 0; x < 17; ++x)
+                        {
+                            this.HighResVertices.Add(br.ReadInt16());
+                        }
+                    }
+
+                    for (int y = 0; y < 16; ++y)
+                    {
+                        for (int x = 0; x < 16; ++x)
+                        {
+                            this.LowResVertices.Add(br.ReadInt16());
+                        }
+                    }
+                }
+            }
+        }
+
+        public static int GetSize()
+        {
+            return (17 * 17) * sizeof(short) + (16 * 16) * sizeof(short);
+        }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (short lodVertex in this.HighResVertices)
-		            {
-						bw.Write(lodVertex);
-		            }
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (short lodVertex in this.HighResVertices)
+                    {
+                        bw.Write(lodVertex);
+                    }
 
-		            foreach (short lodVertex in this.LowResVertices)
-					{
-						bw.Write(lodVertex);
-					}
-            	}
+                    foreach (short lodVertex in this.LowResVertices)
+                    {
+                        bw.Write(lodVertex);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

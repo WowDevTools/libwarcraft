@@ -31,93 +31,93 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile
 {
-	public class ModelRootHeader : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOHD";
+    public class ModelRootHeader : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOHD";
 
-		public uint TextureCount;
-		public uint GroupCount;
-		public uint PortalCount;
-		public uint LightCount;
-		public uint DoodadNameCount;
-		public uint DoodadDefinitionCount;
-		public uint DoodadSetCount;
-		public RGBA BaseAmbientColour;
-		public ForeignKey<uint> WMOID;
-		public Box BoundingBox;
-		public RootFlags Flags;
+        public uint TextureCount;
+        public uint GroupCount;
+        public uint PortalCount;
+        public uint LightCount;
+        public uint DoodadNameCount;
+        public uint DoodadDefinitionCount;
+        public uint DoodadSetCount;
+        public RGBA BaseAmbientColour;
+        public ForeignKey<uint> WMOID;
+        public Box BoundingBox;
+        public RootFlags Flags;
 
-		public ModelRootHeader()
-		{
+        public ModelRootHeader()
+        {
 
-		}
+        }
 
-		public ModelRootHeader(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelRootHeader(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.TextureCount = br.ReadUInt32();
-					this.GroupCount = br.ReadUInt32();
-					this.PortalCount = br.ReadUInt32();
-					this.LightCount = br.ReadUInt32();
-					this.DoodadNameCount = br.ReadUInt32();
-					this.DoodadDefinitionCount = br.ReadUInt32();
-					this.DoodadSetCount = br.ReadUInt32();
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.TextureCount = br.ReadUInt32();
+                    this.GroupCount = br.ReadUInt32();
+                    this.PortalCount = br.ReadUInt32();
+                    this.LightCount = br.ReadUInt32();
+                    this.DoodadNameCount = br.ReadUInt32();
+                    this.DoodadDefinitionCount = br.ReadUInt32();
+                    this.DoodadSetCount = br.ReadUInt32();
 
-					this.BaseAmbientColour = br.ReadRGBA();
-					this.WMOID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, nameof(WMOAreaTableRecord.WMOID), br.ReadUInt32());
-					this.BoundingBox = br.ReadBox();
-					this.Flags = (RootFlags) br.ReadUInt32();
-				}
-			}
-		}
+                    this.BaseAmbientColour = br.ReadRGBA();
+                    this.WMOID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, nameof(WMOAreaTableRecord.WMOID), br.ReadUInt32());
+                    this.BoundingBox = br.ReadBox();
+                    this.Flags = (RootFlags) br.ReadUInt32();
+                }
+            }
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					bw.Write(this.TextureCount);
-					bw.Write(this.GroupCount);
-					bw.Write(this.PortalCount);
-					bw.Write(this.LightCount);
-					bw.Write(this.DoodadNameCount);
-					bw.Write(this.DoodadDefinitionCount);
-					bw.Write(this.DoodadSetCount);
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write(this.TextureCount);
+                    bw.Write(this.GroupCount);
+                    bw.Write(this.PortalCount);
+                    bw.Write(this.LightCount);
+                    bw.Write(this.DoodadNameCount);
+                    bw.Write(this.DoodadDefinitionCount);
+                    bw.Write(this.DoodadSetCount);
 
-					bw.WriteRGBA(this.BaseAmbientColour);
-					bw.Write(this.WMOID.Key);
-					bw.WriteBox(this.BoundingBox);
-					bw.Write((uint) this.Flags);
-				}
+                    bw.WriteRGBA(this.BaseAmbientColour);
+                    bw.Write(this.WMOID.Key);
+                    bw.WriteBox(this.BoundingBox);
+                    bw.Write((uint) this.Flags);
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 
-	[Flags]
-	public enum RootFlags : uint
-	{
-		AttenuateVerticesBasedOnPortalDistance 	= 0x01,
-		SkipAddingBaseAmbientColour 			= 0x02,
-		LiquidFilled 							= 0x04,
-		HasOutdoorGroups 						= 0x08,
-		HasLevelsOfDetail						= 0x10
-		// Followed by 27 unused flags
-	}
+    [Flags]
+    public enum RootFlags : uint
+    {
+        AttenuateVerticesBasedOnPortalDistance     = 0x01,
+        SkipAddingBaseAmbientColour             = 0x02,
+        LiquidFilled                             = 0x04,
+        HasOutdoorGroups                         = 0x08,
+        HasLevelsOfDetail                        = 0x10
+        // Followed by 27 unused flags
+    }
 }
 

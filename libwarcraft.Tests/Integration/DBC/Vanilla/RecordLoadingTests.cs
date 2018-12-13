@@ -6,13 +6,13 @@ using Warcraft.DBC.Definitions;
 
 namespace libwarcraft.Tests.Integration.DBC.Vanilla
 {
-	[TestFixture]
-	public class VanillaDefinitionTests : RecordDefinitionTests
-	{
-		[SetUp]
-		public override void Setup()
-		{
-			this.Version = WarcraftVersion.Classic;
-		}
-	}
+    [TestFixture]
+    public class VanillaDefinitionTests : RecordDefinitionTests
+    {
+        [SetUp]
+        public override void Setup()
+        {
+            this.Version = WarcraftVersion.Classic;
+        }
+    }
 }

@@ -22,37 +22,37 @@
 
 namespace Warcraft.MPQ.Attributes
 {
-	/// <summary>
-	/// A set of file attributes for a file in an MPQ archive.
-	/// </summary>
-	public class FileAttributes
-	{
-		/// <summary>
-		/// A CRC32 hash of the file.
-		/// </summary>
-		public uint CRC32;
+    /// <summary>
+    /// A set of file attributes for a file in an MPQ archive.
+    /// </summary>
+    public class FileAttributes
+    {
+        /// <summary>
+        /// A CRC32 hash of the file.
+        /// </summary>
+        public uint CRC32;
 
-		/// <summary>
-		/// A last modified timestamp of the file.
-		/// </summary>
-		public ulong Timestamp;
+        /// <summary>
+        /// A last modified timestamp of the file.
+        /// </summary>
+        public ulong Timestamp;
 
-		/// <summary>
-		/// An MD5 hash of the file.
-		/// </summary>
-		public string MD5;
+        /// <summary>
+        /// An MD5 hash of the file.
+        /// </summary>
+        public string MD5;
 
-		/// <summary>
-		/// Creates a new <see cref="FileAttributes"/> object from two given hashes and a timestamp.
-		/// </summary>
-		/// <param name="crc32">The CRC32 hash of the file.</param>
-		/// <param name="timestamp">The last modified timestamp of the file.</param>
-		/// <param name="md5">The MD5 hash of the file. </param>
-		public FileAttributes(uint crc32, ulong timestamp, string md5)
-		{
-			this.CRC32 = crc32;
-			this.Timestamp = timestamp;
-			this.MD5 = md5;
-		}
-	}
+        /// <summary>
+        /// Creates a new <see cref="FileAttributes"/> object from two given hashes and a timestamp.
+        /// </summary>
+        /// <param name="crc32">The CRC32 hash of the file.</param>
+        /// <param name="timestamp">The last modified timestamp of the file.</param>
+        /// <param name="md5">The MD5 hash of the file. </param>
+        public FileAttributes(uint crc32, ulong timestamp, string md5)
+        {
+            this.CRC32 = crc32;
+            this.Timestamp = timestamp;
+            this.MD5 = md5;
+        }
+    }
 }

@@ -26,89 +26,89 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkSoundEmitters : IIFFChunk, IBinarySerializable, IPostLoad<uint>
-	{
-		public const string Signature = "MCSE";
-		private bool hasFinishedLoading;
-		private byte[] Data;
+    public class MapChunkSoundEmitters : IIFFChunk, IBinarySerializable, IPostLoad<uint>
+    {
+        public const string Signature = "MCSE";
+        private bool hasFinishedLoading;
+        private byte[] Data;
 
 
-		public MapChunkSoundEmitters()
-		{
+        public MapChunkSoundEmitters()
+        {
 
-		}
+        }
 
-		public MapChunkSoundEmitters(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public MapChunkSoundEmitters(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			this.Data = inData;
-		}
+        public void LoadBinaryData(byte[] inData)
+        {
+            this.Data = inData;
+        }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			throw new NotImplementedException();
-		}
+        public byte[] Serialize()
+        {
+            throw new NotImplementedException();
+        }
 
-		public bool HasFinishedLoading()
-		{
-			throw new NotImplementedException();
-		}
+        public bool HasFinishedLoading()
+        {
+            throw new NotImplementedException();
+        }
 
-		public void PostLoad(uint loadingParameters)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public void PostLoad(uint loadingParameters)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
-	public abstract class SoundEmitter
-	{
+    public abstract class SoundEmitter
+    {
 
-	}
+    }
 
-	public class DatabaseSoundEmitter : SoundEmitter, IBinarySerializable
-	{
-		public ForeignKey<uint> SoundEntryID;
-		public Vector3 Position;
-		public Vector3 Size;
+    public class DatabaseSoundEmitter : SoundEmitter, IBinarySerializable
+    {
+        public ForeignKey<uint> SoundEntryID;
+        public Vector3 Position;
+        public Vector3 Size;
 
-		public byte[] Serialize()
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public byte[] Serialize()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
-	public class PlainSoundEmitter : SoundEmitter, IBinarySerializable
-	{
-		public uint SoundID;
-		public uint SoundNameID;
-		public Vector3 Position;
-		public float AttenuationRadiusStart;
-		public float AttenuationRadiusEnd;
-		public float CutoffDistance;
-		public ushort StartTime;
-		public ushort EndTime;
-		public ushort GroupSilenceMin;
-		public ushort GroupSilenceMax;
-		public ushort PlayInstancesMin;
-		public ushort PlayInstancesMax;
-		public ushort LoopCountMin;
-		public ushort LoopCountMax;
-		public ushort InterSoundGapMin;
-		public ushort InterSoundMapMax;
+    public class PlainSoundEmitter : SoundEmitter, IBinarySerializable
+    {
+        public uint SoundID;
+        public uint SoundNameID;
+        public Vector3 Position;
+        public float AttenuationRadiusStart;
+        public float AttenuationRadiusEnd;
+        public float CutoffDistance;
+        public ushort StartTime;
+        public ushort EndTime;
+        public ushort GroupSilenceMin;
+        public ushort GroupSilenceMax;
+        public ushort PlayInstancesMin;
+        public ushort PlayInstancesMax;
+        public ushort LoopCountMin;
+        public ushort LoopCountMax;
+        public ushort InterSoundGapMin;
+        public ushort InterSoundMapMax;
 
-		public byte[] Serialize()
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public byte[] Serialize()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 

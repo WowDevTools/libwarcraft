@@ -25,30 +25,30 @@ using System.IO;
 
 namespace Warcraft.TRS
 {
-	public class TRS
-	{
-		public Dictionary<string, string> HashMappings = new Dictionary<string, string>();
+    public class TRS
+    {
+        public Dictionary<string, string> HashMappings = new Dictionary<string, string>();
 
-		public TRS(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (TextReader tr = new StreamReader(ms))
-				{
-					while (ms.Position != ms.Length)
-					{
-						string mappingLine = tr.ReadLine();
-						if (mappingLine.StartsWith("dir:"))
-						{
-							continue;
-						}
+        public TRS(byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                using (TextReader tr = new StreamReader(ms))
+                {
+                    while (ms.Position != ms.Length)
+                    {
+                        string mappingLine = tr.ReadLine();
+                        if (mappingLine.StartsWith("dir:"))
+                        {
+                            continue;
+                        }
 
-						string[] lineParts = mappingLine.Split('\t');
-						this.HashMappings.Add(lineParts[0], lineParts[1]);
-					}
-				}
-			}
-		}
-	}
+                        string[] lineParts = mappingLine.Split('\t');
+                        this.HashMappings.Add(lineParts[0], lineParts[1]);
+                    }
+                }
+            }
+        }
+    }
 }
 

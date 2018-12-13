@@ -3,18 +3,18 @@ using Warcraft.DBC;
 
 namespace Warcraft.Core
 {
-	public class DatabaseRecordAttribute : Attribute
-	{
-		public DatabaseName Database { get; }
+    public class DatabaseRecordAttribute : Attribute
+    {
+        public DatabaseName Database { get; }
 
-		public DatabaseRecordAttribute()
-		{
+        public DatabaseRecordAttribute()
+        {
 
-		}
+        }
 
-		public DatabaseRecordAttribute(DatabaseName database)
-		{
-			this.Database = database;
-		}
-	}
+        public DatabaseRecordAttribute(DatabaseName database)
+        {
+            this.Database = database;
+        }
+    }
 }

@@ -26,21 +26,21 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	[DatabaseRecord(DatabaseName.ZoneAmbience)]
-	public class SoundAmbienceRecord : DBCRecord
-	{
-		/// <summary>
-		/// The ambience sound to play during the day.
-		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-		public ForeignKey<uint> AmbienceDay { get; set; }
+    [DatabaseRecord(DatabaseName.ZoneAmbience)]
+    public class SoundAmbienceRecord : DBCRecord
+    {
+        /// <summary>
+        /// The ambience sound to play during the day.
+        /// </summary>
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+        public ForeignKey<uint> AmbienceDay { get; set; }
 
-		/// <summary>
-		/// The ambience sound to play during the night.
-		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-		public ForeignKey<uint> AmbienceNight { get; set; }
-	}
+        /// <summary>
+        /// The ambience sound to play during the night.
+        /// </summary>
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+        public ForeignKey<uint> AmbienceNight { get; set; }
+    }
 }

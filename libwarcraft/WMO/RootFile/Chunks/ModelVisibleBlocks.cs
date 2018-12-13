@@ -26,94 +26,94 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelVisibleBlocks : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOVB";
+    public class ModelVisibleBlocks : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOVB";
 
-		public readonly List<VisibleBlock> VisibleBlocks = new List<VisibleBlock>();
+        public readonly List<VisibleBlock> VisibleBlocks = new List<VisibleBlock>();
 
-		public ModelVisibleBlocks()
-		{
-
-		}
-
-		public ModelVisibleBlocks(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public ModelVisibleBlocks()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					int visibleBlockCount = inData.Length / VisibleBlock.GetSize();
-					for (int i = 0; i < visibleBlockCount; ++i)
-					{
-						this.VisibleBlocks.Add(new VisibleBlock(br.ReadBytes(VisibleBlock.GetSize())));
-					}
-				}
-			}
+
+        }
+
+        public ModelVisibleBlocks(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    int visibleBlockCount = inData.Length / VisibleBlock.GetSize();
+                    for (int i = 0; i < visibleBlockCount; ++i)
+                    {
+                        this.VisibleBlocks.Add(new VisibleBlock(br.ReadBytes(VisibleBlock.GetSize())));
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (VisibleBlock visibleBlock in this.VisibleBlocks)
-		            {
-						bw.Write(visibleBlock.Serialize());
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (VisibleBlock visibleBlock in this.VisibleBlocks)
+                    {
+                        bw.Write(visibleBlock.Serialize());
+                    }
+                }
 
-	            return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 
-	public class VisibleBlock : IBinarySerializable
-	{
-		public ushort FirstVertexIndex;
-		public ushort VertexCount;
+    public class VisibleBlock : IBinarySerializable
+    {
+        public ushort FirstVertexIndex;
+        public ushort VertexCount;
 
-		public VisibleBlock(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.FirstVertexIndex = br.ReadUInt16();
-					this.VertexCount = br.ReadUInt16();
-				}
-			}
-		}
-
-		public static int GetSize()
-		{
-			return 4;
-		}
-
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public VisibleBlock(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-	            {
-		            bw.Write(this.FirstVertexIndex);
-		            bw.Write(this.VertexCount);
-	            }
-
-	            return ms.ToArray();
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.FirstVertexIndex = br.ReadUInt16();
+                    this.VertexCount = br.ReadUInt16();
+                }
             }
-		}
-	}
+        }
+
+        public static int GetSize()
+        {
+            return 4;
+        }
+
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write(this.FirstVertexIndex);
+                    bw.Write(this.VertexCount);
+                }
+
+                return ms.ToArray();
+            }
+        }
+    }
 }
 

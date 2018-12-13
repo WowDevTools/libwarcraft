@@ -22,17 +22,17 @@
 
 namespace Warcraft.Core.Shading.Blending
 {
-	/// <summary>
-	/// Different algorithms to use for source alpha blending factors.
-	/// The given values are taken from OpenGL for ease of use.
-	/// </summary>
-	public enum AlphaSource
-	{
-		Zero					= 0,
-		One						= 1,
-		SourceAlpha				= 770,
-		OneMinusSourceAlpha		= 771,
-		DestinationAlpha		= 772,
-		ConstantAlpha			= 32771
-	}
+    /// <summary>
+    /// Different algorithms to use for source alpha blending factors.
+    /// The given values are taken from OpenGL for ease of use.
+    /// </summary>
+    public enum AlphaSource
+    {
+        Zero                    = 0,
+        One                        = 1,
+        SourceAlpha                = 770,
+        OneMinusSourceAlpha        = 771,
+        DestinationAlpha        = 772,
+        ConstantAlpha            = 32771
+    }
 }

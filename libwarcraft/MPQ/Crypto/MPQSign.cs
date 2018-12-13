@@ -22,39 +22,39 @@
 
 namespace Warcraft.MPQ.Crypto
 {
-	// TODO: Implement
-	internal static class MPQSign
-	{
-		static MPQSign()
-		{
+    // TODO: Implement
+    internal static class MPQSign
+    {
+        static MPQSign()
+        {
 
-		}
+        }
 
-		public static void SignArchive(MPQ archive, Strength signingStrength)
-		{
+        public static void SignArchive(MPQ archive, Strength signingStrength)
+        {
 
-		}
+        }
 
-		private static void InternalSignWeak(MPQ archive)
-		{
+        private static void InternalSignWeak(MPQ archive)
+        {
 
-		}
+        }
 
-		private static void InternalSignString(MPQ archive)
-		{
+        private static void InternalSignString(MPQ archive)
+        {
 
-		}
+        }
 
-		public static bool VerifyArchiveIntegrity(MPQ archive)
-		{
-			return true;
-		}
-	}
+        public static bool VerifyArchiveIntegrity(MPQ archive)
+        {
+            return true;
+        }
+    }
 
-	public enum Strength : byte
-	{
-		Weak,
-		Strong
-	}
+    public enum Strength : byte
+    {
+        Weak,
+        Strong
+    }
 }
 

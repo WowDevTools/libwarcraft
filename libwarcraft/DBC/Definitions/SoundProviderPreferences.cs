@@ -27,84 +27,84 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	[DatabaseRecord(DatabaseName.SoundProviderPreferences)]
-	public class SoundProviderPreferencesRecord : DBCRecord
-	{
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference Description { get; set; }
+    [DatabaseRecord(DatabaseName.SoundProviderPreferences)]
+    public class SoundProviderPreferencesRecord : DBCRecord
+    {
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference Description { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint Flags { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint Flags { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
-		public uint EAXEnvironmentSelection { get; set; }
+        [RecordField(WarcraftVersion.BurningCrusade)]
+        public uint EAXEnvironmentSelection { get; set; }
 
-		[RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.BurningCrusade)]
-		public float EAXEffectVolume { get; set; }
+        [RecordField(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.BurningCrusade)]
+        public float EAXEffectVolume { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAXDecayTime { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAXDecayTime { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX2EnvironmentSize { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX2EnvironmentSize { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX2EvironmentDiffusion { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX2EvironmentDiffusion { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint EAX2Room { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint EAX2Room { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint EAX2RoomHF { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint EAX2RoomHF { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX2DecayHFRatio { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX2DecayHFRatio { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint EAX2Reflections { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint EAX2Reflections { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX2ReflectionsDelay { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX2ReflectionsDelay { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint EAX2Reverb { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint EAX2Reverb { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX2ReverbDelay { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX2ReverbDelay { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX2RoomRolloff { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX2RoomRolloff { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX2AirAbsorption { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX2AirAbsorption { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint EAX3RoomLF { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint EAX3RoomLF { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX3DecayLFRatio { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX3DecayLFRatio { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX3EchoTime { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX3EchoTime { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX3EchoDepth { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX3EchoDepth { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX3ModulationTime { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX3ModulationTime { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX3ModulationDepth { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX3ModulationDepth { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX3HFReference { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX3HFReference { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float EAX3LFReference { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float EAX3LFReference { get; set; }
 
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			yield return this.Description;
-		}
-	}
+        public override IEnumerable<StringReference> GetStringReferences()
+        {
+            yield return this.Description;
+        }
+    }
 }

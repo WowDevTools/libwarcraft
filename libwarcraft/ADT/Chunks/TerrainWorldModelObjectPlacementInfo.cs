@@ -29,186 +29,186 @@ using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks
 {
-	/// <summary>
-	/// MODF Chunk - Contains WMO model placement information
-	/// </summary>
-	public class TerrainWorldModelObjectPlacementInfo : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MODF";
+    /// <summary>
+    /// MODF Chunk - Contains WMO model placement information
+    /// </summary>
+    public class TerrainWorldModelObjectPlacementInfo : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MODF";
 
-		/// <summary>
-		/// An array of WMO model information entries
-		/// </summary>
-		public List<WorldModelObjectPlacementEntry> Entries = new List<WorldModelObjectPlacementEntry>();
+        /// <summary>
+        /// An array of WMO model information entries
+        /// </summary>
+        public List<WorldModelObjectPlacementEntry> Entries = new List<WorldModelObjectPlacementEntry>();
 
-		public TerrainWorldModelObjectPlacementInfo()
-		{
-
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldModelObjectPlacementInfo"/> class.
-		/// </summary>
-		/// <param name="inData">ExtendedData.</param>
-		public TerrainWorldModelObjectPlacementInfo(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public TerrainWorldModelObjectPlacementInfo()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					long entryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
-					for (int i = 0; i < entryCount; ++i)
-					{
-						this.Entries.Add(new WorldModelObjectPlacementEntry(br.ReadBytes(WorldModelObjectPlacementEntry.GetSize())));
-					}
-				}
-			}
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldModelObjectPlacementInfo"/> class.
+        /// </summary>
+        /// <param name="inData">ExtendedData.</param>
+        public TerrainWorldModelObjectPlacementInfo(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    long entryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
+                    for (int i = 0; i < entryCount; ++i)
+                    {
+                        this.Entries.Add(new WorldModelObjectPlacementEntry(br.ReadBytes(WorldModelObjectPlacementEntry.GetSize())));
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					foreach (WorldModelObjectPlacementEntry entry in this.Entries)
-					{
-						bw.Write(entry.Serialize());
-					}
-				}
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (WorldModelObjectPlacementEntry entry in this.Entries)
+                    {
+                        bw.Write(entry.Serialize());
+                    }
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 
-	/// <summary>
-	/// An entry struct containing information about the WMO
-	/// </summary>
-	public class WorldModelObjectPlacementEntry : IBinarySerializable
-	{
-		/// <summary>
-		/// Specifies which WHO to use via the MMID chunk
-		/// </summary>
-		public uint WorldModelObjectEntryIndex;
+    /// <summary>
+    /// An entry struct containing information about the WMO
+    /// </summary>
+    public class WorldModelObjectPlacementEntry : IBinarySerializable
+    {
+        /// <summary>
+        /// Specifies which WHO to use via the MMID chunk
+        /// </summary>
+        public uint WorldModelObjectEntryIndex;
 
-		/// <summary>
-		/// A unique actor ID for the model. Blizzard implements this as game global, but it's only checked in loaded tiles.
-		/// When not in use, it's set to -1.
-		/// </summary>
-		public int UniqueID;
+        /// <summary>
+        /// A unique actor ID for the model. Blizzard implements this as game global, but it's only checked in loaded tiles.
+        /// When not in use, it's set to -1.
+        /// </summary>
+        public int UniqueID;
 
-		/// <summary>
-		/// Position of the WMO
-		/// </summary>
-		public Vector3 Position;
-		/// <summary>
-		/// Rotation of the model
-		/// </summary>
-		public Rotator Rotation;
+        /// <summary>
+        /// Position of the WMO
+        /// </summary>
+        public Vector3 Position;
+        /// <summary>
+        /// Rotation of the model
+        /// </summary>
+        public Rotator Rotation;
 
-		/// <summary>
-		/// The bounding box of the model.
-		/// </summary>
-		public Box BoundingBox;
+        /// <summary>
+        /// The bounding box of the model.
+        /// </summary>
+        public Box BoundingBox;
 
-		/// <summary>
-		/// Flags of the model
-		/// </summary>
-		public WorldModelObjectFlags Flags;
+        /// <summary>
+        /// Flags of the model
+        /// </summary>
+        public WorldModelObjectFlags Flags;
 
-		/// <summary>
-		/// Doodadset of the model
-		/// </summary>
-		public ushort DoodadSet;
+        /// <summary>
+        /// Doodadset of the model
+        /// </summary>
+        public ushort DoodadSet;
 
-		/// <summary>
-		/// Nameset of the model
-		/// </summary>
-		public ushort NameSet;
+        /// <summary>
+        /// Nameset of the model
+        /// </summary>
+        public ushort NameSet;
 
-		/// <summary>
-		/// An unused value. Seems to have data in Legion tiles.
-		/// </summary>
-		public ushort Unused;
+        /// <summary>
+        /// An unused value. Seems to have data in Legion tiles.
+        /// </summary>
+        public ushort Unused;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.WorldModelObjectPlacementEntry"/> class.
-		/// </summary>
-		/// <param name="data">ExtendedData.</param>
-		public WorldModelObjectPlacementEntry(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.WorldModelObjectEntryIndex = br.ReadUInt32();
-					this.UniqueID = br.ReadInt32();
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.WorldModelObjectPlacementEntry"/> class.
+        /// </summary>
+        /// <param name="data">ExtendedData.</param>
+        public WorldModelObjectPlacementEntry(byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.WorldModelObjectEntryIndex = br.ReadUInt32();
+                    this.UniqueID = br.ReadInt32();
 
-					this.Position = br.ReadVector3();
-					this.Rotation = br.ReadRotator();
-					this.BoundingBox = br.ReadBox();
+                    this.Position = br.ReadVector3();
+                    this.Rotation = br.ReadRotator();
+                    this.BoundingBox = br.ReadBox();
 
-					this.Flags = (WorldModelObjectFlags)br.ReadUInt16();
-					this.DoodadSet = br.ReadUInt16();
-					this.NameSet = br.ReadUInt16();
-					this.Unused = br.ReadUInt16();
-				}
-			}
-		}
+                    this.Flags = (WorldModelObjectFlags)br.ReadUInt16();
+                    this.DoodadSet = br.ReadUInt16();
+                    this.NameSet = br.ReadUInt16();
+                    this.Unused = br.ReadUInt16();
+                }
+            }
+        }
 
-		/// <summary>
-		/// Gets the size of a placement entry.
-		/// </summary>
-		/// <returns>The size.</returns>
-		public static int GetSize()
-		{
-			return 64;
-		}
+        /// <summary>
+        /// Gets the size of a placement entry.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public static int GetSize()
+        {
+            return 64;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					bw.Write(this.WorldModelObjectEntryIndex);
-					bw.Write(this.UniqueID);
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write(this.WorldModelObjectEntryIndex);
+                    bw.Write(this.UniqueID);
 
-					bw.WriteVector3(this.Position);
-					bw.WriteRotator(this.Rotation);
-					bw.WriteBox(this.BoundingBox);
+                    bw.WriteVector3(this.Position);
+                    bw.WriteRotator(this.Rotation);
+                    bw.WriteBox(this.BoundingBox);
 
-					bw.Write((ushort)this.Flags);
-					bw.Write(this.DoodadSet);
-					bw.Write(this.NameSet);
-					bw.Write(this.Unused);
-				}
+                    bw.Write((ushort)this.Flags);
+                    bw.Write(this.DoodadSet);
+                    bw.Write(this.NameSet);
+                    bw.Write(this.Unused);
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 
-	/// <summary>
-	/// Flags for the WMO
-	/// </summary>
-	[Flags]
-	public enum WorldModelObjectFlags : ushort
-	{
-		Destructible = 1,
-		UseLOD = 2,
-		Unknown = 4
-	}
+    /// <summary>
+    /// Flags for the WMO
+    /// </summary>
+    [Flags]
+    public enum WorldModelObjectFlags : ushort
+    {
+        Destructible = 1,
+        UseLOD = 2,
+        Unknown = 4
+    }
 }
 

@@ -29,70 +29,70 @@ using Warcraft.Core;
 
 namespace Warcraft.Containers.Terrain
 {
-	public class GameWorld
-	{
-		public string WorldPath
-		{
-			get;
-			private set;
-		}
+    public class GameWorld
+    {
+        public string WorldPath
+        {
+            get;
+            private set;
+        }
 
-		public string WorldName
-		{
-			get;
-			private set;
-		}
+        public string WorldName
+        {
+            get;
+            private set;
+        }
 
-		public WarcraftVersion GameVersion
-		{
-			get;
-			private set;
-		}
+        public WarcraftVersion GameVersion
+        {
+            get;
+            private set;
+        }
 
-		private readonly IPackage Package;
+        private readonly IPackage Package;
 
-		public readonly WorldTable WorldDataTable;
+        public readonly WorldTable WorldDataTable;
 
-		public readonly List<TerrainTile> LoadedTerrainTiles = new List<TerrainTile>();
+        public readonly List<TerrainTile> LoadedTerrainTiles = new List<TerrainTile>();
 
-		public GameWorld(string inWorldPath, string inWorldName, WarcraftVersion inGameVersion, IPackage inPackage, byte[] inWorldData)
-		{
-			this.WorldPath = inWorldPath;
-			this.WorldName = inWorldName;
-			this.GameVersion = inGameVersion;
-			this.Package = inPackage;
+        public GameWorld(string inWorldPath, string inWorldName, WarcraftVersion inGameVersion, IPackage inPackage, byte[] inWorldData)
+        {
+            this.WorldPath = inWorldPath;
+            this.WorldName = inWorldName;
+            this.GameVersion = inGameVersion;
+            this.Package = inPackage;
 
-			// Load the world metadata
-			this.WorldDataTable = new WorldTable(inWorldData);
+            // Load the world metadata
+            this.WorldDataTable = new WorldTable(inWorldData);
 
-			// Load all ADTs here? Bad for memory, perhaps better to leave it to the user to lazy load as needed
-		}
+            // Load all ADTs here? Bad for memory, perhaps better to leave it to the user to lazy load as needed
+        }
 
-		public TerrainTile LoadTile(uint tileXPosition, uint tileYPosition)
-		{
-			string tilePath = CreateTilePath(tileXPosition, tileYPosition);
+        public TerrainTile LoadTile(uint tileXPosition, uint tileYPosition)
+        {
+            string tilePath = CreateTilePath(tileXPosition, tileYPosition);
 
-			if (!this.Package.ContainsFile(tilePath))
-			{
-				throw new ArgumentException("No tile found for the given coordinates.");
-			}
+            if (!this.Package.ContainsFile(tilePath))
+            {
+                throw new ArgumentException("No tile found for the given coordinates.");
+            }
 
-			byte[] terrainTileData = this.Package.ExtractFile(tilePath);
-			if (terrainTileData != null)
-			{
-				// TODO: [#9] Pass in DBC entry to allow loading of liquid vertex data
-				//TerrainTile terrainTile = new TerrainTile(terrainTileData);
+            byte[] terrainTileData = this.Package.ExtractFile(tilePath);
+            if (terrainTileData != null)
+            {
+                // TODO: [#9] Pass in DBC entry to allow loading of liquid vertex data
+                //TerrainTile terrainTile = new TerrainTile(terrainTileData);
 
-				return null;
-			}
+                return null;
+            }
 
-			return null;
-		}
+            return null;
+        }
 
-		private string CreateTilePath(uint tileXPosition, uint tileYPosition)
-		{
-			return $"{this.WorldPath}\\{this.WorldName}_{tileXPosition}_{tileYPosition}.adt";
-		}
-	}
+        private string CreateTilePath(uint tileXPosition, uint tileYPosition)
+        {
+            return $"{this.WorldPath}\\{this.WorldName}_{tileXPosition}_{tileYPosition}.adt";
+        }
+    }
 }
 

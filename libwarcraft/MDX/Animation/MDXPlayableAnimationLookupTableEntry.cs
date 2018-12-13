@@ -22,16 +22,16 @@
 
 namespace Warcraft.MDX.Animation
 {
-	public class MDXPlayableAnimationLookupTableEntry
-	{
-		public short FallbackAnimationID;
-		public MDXPlayableAnimationFlags Flags;
+    public class MDXPlayableAnimationLookupTableEntry
+    {
+        public short FallbackAnimationID;
+        public MDXPlayableAnimationFlags Flags;
 
-		public MDXPlayableAnimationLookupTableEntry(short inFallbackAnimationID, MDXPlayableAnimationFlags inFlags)
-		{
-			this.FallbackAnimationID = inFallbackAnimationID;
-			this.Flags = inFlags;
-		}
-	}
+        public MDXPlayableAnimationLookupTableEntry(short inFallbackAnimationID, MDXPlayableAnimationFlags inFlags)
+        {
+            this.FallbackAnimationID = inFallbackAnimationID;
+            this.Flags = inFlags;
+        }
+    }
 }
 

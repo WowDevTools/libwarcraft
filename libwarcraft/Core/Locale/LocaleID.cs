@@ -22,37 +22,37 @@
 
 namespace Warcraft.Core.Locale
 {
-	public enum LocaleID : ushort
-	{
-		Default = 0,
-		Arabic = 1025,
-		Basque = 1069,
-		Catalan = 1027,
-		ChineseSimplified = 2052,
-		ChineseTraditional = 1028,
-		Czech = 1029,
-		Danish = 1030,
-		Dutch = 1043,
-		EnglishUS = 1033,
-		Finnish = 1035,
-		French = 1036,
-		German = 1031,
-		Greek = 1032,
-		Hebrew = 1037,
-		Hungarian = 1038,
-		Italian = 1040,
-		Japanese = 1041,
-		Korean = 1042,
-		Norwegian = 1044,
-		Polish = 1045,
-		Portuguese = 2070,
-		PortugueseBrazil = 1046,
-		Russian = 1049,
-		Slovakian = 1051,
-		Slovenian = 1060,
-		Spanish = 3082,
-		Swedish = 1053,
-		Turkisk = 1055
-	}
+    public enum LocaleID : ushort
+    {
+        Default = 0,
+        Arabic = 1025,
+        Basque = 1069,
+        Catalan = 1027,
+        ChineseSimplified = 2052,
+        ChineseTraditional = 1028,
+        Czech = 1029,
+        Danish = 1030,
+        Dutch = 1043,
+        EnglishUS = 1033,
+        Finnish = 1035,
+        French = 1036,
+        German = 1031,
+        Greek = 1032,
+        Hebrew = 1037,
+        Hungarian = 1038,
+        Italian = 1040,
+        Japanese = 1041,
+        Korean = 1042,
+        Norwegian = 1044,
+        Polish = 1045,
+        Portuguese = 2070,
+        PortugueseBrazil = 1046,
+        Russian = 1049,
+        Slovakian = 1051,
+        Slovenian = 1060,
+        Spanish = 3082,
+        Swedish = 1053,
+        Turkisk = 1055
+    }
 }
 

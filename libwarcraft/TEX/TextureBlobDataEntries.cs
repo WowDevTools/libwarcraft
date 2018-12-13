@@ -26,66 +26,66 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.TEX
 {
-	/// <summary>
-	/// Holds a set of <see cref="TextureBlobDataEntry"/> objects. This acts as a reference table.
-	/// </summary>
-	public class TextureBlobDataEntries : IIFFChunk, IBinarySerializable
-	{
-		/// <summary>
-		/// The RIFF chunk signature of this data chunk.
-		/// </summary>
-		public const string Signature = "TXBT";
+    /// <summary>
+    /// Holds a set of <see cref="TextureBlobDataEntry"/> objects. This acts as a reference table.
+    /// </summary>
+    public class TextureBlobDataEntries : IIFFChunk, IBinarySerializable
+    {
+        /// <summary>
+        /// The RIFF chunk signature of this data chunk.
+        /// </summary>
+        public const string Signature = "TXBT";
 
-		/// <summary>
-		/// A list of all blob data headers contained in the texture blob.
-		/// </summary>
-		public readonly List<TextureBlobDataEntry> BlobDataEntries = new List<TextureBlobDataEntry>();
+        /// <summary>
+        /// A list of all blob data headers contained in the texture blob.
+        /// </summary>
+        public readonly List<TextureBlobDataEntry> BlobDataEntries = new List<TextureBlobDataEntry>();
 
-		/// <summary>
-		/// Deserialzes the provided binary data of the object. This is the full data block which follows the data
-		/// signature and data block length.
-		/// </summary>
-		/// <param name="inData">The binary data containing the object.</param>
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					while (br.BaseStream.Position < br.BaseStream.Length)
-					{
-						this.BlobDataEntries.Add(new TextureBlobDataEntry(br.ReadBytes(TextureBlobDataEntry.GetSize())));
-					}
-				}
-			}
-		}
+        /// <summary>
+        /// Deserialzes the provided binary data of the object. This is the full data block which follows the data
+        /// signature and data block length.
+        /// </summary>
+        /// <param name="inData">The binary data containing the object.</param>
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (br.BaseStream.Position < br.BaseStream.Length)
+                    {
+                        this.BlobDataEntries.Add(new TextureBlobDataEntry(br.ReadBytes(TextureBlobDataEntry.GetSize())));
+                    }
+                }
+            }
+        }
 
-		/// <summary>
-		/// Gets the static data signature of this data block type.
-		/// </summary>
-		/// <returns>A string representing the block signature.</returns>
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        /// <summary>
+        /// Gets the static data signature of this data block type.
+        /// </summary>
+        /// <returns>A string representing the block signature.</returns>
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		/// <summary>
-		/// Serializes the current object into a byte array.
-		/// </summary>
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					foreach (TextureBlobDataEntry blobDataEntry in this.BlobDataEntries)
-					{
-						bw.Write(blobDataEntry.Serialize());
-					}
-				}
+        /// <summary>
+        /// Serializes the current object into a byte array.
+        /// </summary>
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (TextureBlobDataEntry blobDataEntry in this.BlobDataEntries)
+                    {
+                        bw.Write(blobDataEntry.Serialize());
+                    }
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 }

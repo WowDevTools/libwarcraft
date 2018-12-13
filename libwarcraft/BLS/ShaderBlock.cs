@@ -25,67 +25,67 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.BLS
 {
-	/// <summary>
-	/// A data block containing shader data in compiled or source form.
-	/// </summary>
-	public class ShaderBlock : IBinarySerializable
-	{
-		public ShaderFlags1 Flags1;
-		public ShaderFlags2 Flags2;
-		public uint Unknown;
+    /// <summary>
+    /// A data block containing shader data in compiled or source form.
+    /// </summary>
+    public class ShaderBlock : IBinarySerializable
+    {
+        public ShaderFlags1 Flags1;
+        public ShaderFlags2 Flags2;
+        public uint Unknown;
 
-		public uint DataSize;
-		public char[] Data;
+        public uint DataSize;
+        public char[] Data;
 
-		public ShaderBlock(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Flags1 = (ShaderFlags1) br.ReadUInt32();
-					this.Flags2 = (ShaderFlags2) br.ReadUInt32();
-					this.Unknown = br.ReadUInt32();
+        public ShaderBlock(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Flags1 = (ShaderFlags1) br.ReadUInt32();
+                    this.Flags2 = (ShaderFlags2) br.ReadUInt32();
+                    this.Unknown = br.ReadUInt32();
 
-					this.DataSize = br.ReadUInt32();
+                    this.DataSize = br.ReadUInt32();
 
-					// The data is postloaded into the shader block structure outside
-					// of the constructor.
-				}
-			}
-		}
+                    // The data is postloaded into the shader block structure outside
+                    // of the constructor.
+                }
+            }
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					bw.Write((uint)this.Flags1);
-					bw.Write((uint)this.Flags2);
-					bw.Write(this.Unknown);
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write((uint)this.Flags1);
+                    bw.Write((uint)this.Flags2);
+                    bw.Write(this.Unknown);
 
-					bw.Write((uint)this.Data.Length);
-					bw.Write(this.Data);
-				}
+                    bw.Write((uint)this.Data.Length);
+                    bw.Write(this.Data);
+                }
 
-				return ms.ToArray();
-			}
-		}
+                return ms.ToArray();
+            }
+        }
 
-		public static int GetSize()
-		{
-			return 16;
-		}
-	}
+        public static int GetSize()
+        {
+            return 16;
+        }
+    }
 
-	public enum ShaderFlags1 : uint
-	{
+    public enum ShaderFlags1 : uint
+    {
 
-	}
+    }
 
-	public enum ShaderFlags2 : uint
-	{
+    public enum ShaderFlags2 : uint
+    {
 
-	}
+    }
 }

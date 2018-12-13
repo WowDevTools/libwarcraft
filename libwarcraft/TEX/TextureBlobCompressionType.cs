@@ -22,24 +22,24 @@
 
 namespace Warcraft.TEX
 {
-	/// <summary>
-	/// Specifies the type of texture compression for the texture blob.
-	/// </summary>
-	public enum TextureBlobCompressionType : byte
-	{
-		/// <summary>
-		/// DXT1-type compression.
-		/// </summary>
-		DXT1 = 0,
+    /// <summary>
+    /// Specifies the type of texture compression for the texture blob.
+    /// </summary>
+    public enum TextureBlobCompressionType : byte
+    {
+        /// <summary>
+        /// DXT1-type compression.
+        /// </summary>
+        DXT1 = 0,
 
-		/// <summary>
-		/// DXT3-type compression.
-		/// </summary>
-		DXT3 = 1 << 4,
+        /// <summary>
+        /// DXT3-type compression.
+        /// </summary>
+        DXT3 = 1 << 4,
 
-		/// <summary>
-		/// DXT5-type compression.
-		/// </summary>
-		DXT5 = 1 << 5,
-	}
+        /// <summary>
+        /// DXT5-type compression.
+        /// </summary>
+        DXT5 = 1 << 5,
+    }
 }

@@ -24,11 +24,11 @@ using System;
 
 namespace Warcraft.MDX.Animation
 {
-	[Flags]
-	public enum MDXPlayableAnimationFlags : short
-	{
-		PlayNormally = 0,
-		PlayReversed = 1,
-		Freeze = 3
-	}
+    [Flags]
+    public enum MDXPlayableAnimationFlags : short
+    {
+        PlayNormally = 0,
+        PlayReversed = 1,
+        Freeze = 3
+    }
 }

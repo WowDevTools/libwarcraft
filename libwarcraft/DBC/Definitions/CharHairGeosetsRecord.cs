@@ -27,23 +27,23 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	[DatabaseRecord(DatabaseName.CharHairGeosets)]
-	public class CharHairGeosetsRecord : DBCRecord
-	{
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.ChrRaces, nameof(ID))]
-		public ForeignKey<uint> Race { get; set; }
+    [DatabaseRecord(DatabaseName.CharHairGeosets)]
+    public class CharHairGeosetsRecord : DBCRecord
+    {
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.ChrRaces, nameof(ID))]
+        public ForeignKey<uint> Race { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public bool IsFemale { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public bool IsFemale { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint VariationID { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint VariationID { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint GeosetID { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint GeosetID { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public bool ShowScalp { get; set; }
-	}
+        [RecordField(WarcraftVersion.Classic)]
+        public bool ShowScalp { get; set; }
+    }
 }

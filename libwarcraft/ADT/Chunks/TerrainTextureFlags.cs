@@ -26,49 +26,49 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	public class TerrainTextureFlags : IIFFChunk
-	{
-		public const string Signature = "MTXF";
+    public class TerrainTextureFlags : IIFFChunk
+    {
+        public const string Signature = "MTXF";
 
-		private List<TerrainTextureFlag> TextureFlags = new List<TerrainTextureFlag>();
+        private List<TerrainTextureFlag> TextureFlags = new List<TerrainTextureFlag>();
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainTextureFlags"/> class.
-		/// </summary>
-		/// <param name="inData">ExtendedData.</param>
-		public TerrainTextureFlags(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainTextureFlags"/> class.
+        /// </summary>
+        /// <param name="inData">ExtendedData.</param>
+        public TerrainTextureFlags(byte[] inData)
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					long entryCount = br.BaseStream.Length / 4;
+            LoadBinaryData(inData);
+        }
 
-					for (int i = 0; i < entryCount; ++i)
-					{
-						this.TextureFlags.Add((TerrainTextureFlag)br.ReadUInt32());
-					}
-				}
-			}
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    long entryCount = br.BaseStream.Length / 4;
+
+                    for (int i = 0; i < entryCount; ++i)
+                    {
+                        this.TextureFlags.Add((TerrainTextureFlag)br.ReadUInt32());
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
-	}
+    }
 
-	public enum TerrainTextureFlag : uint
-	{
-		FlatShading = 1,
-		Unknown = 3,
-		ScaledTexture = 4,
-		Unknown2 = 24
-	}
+    public enum TerrainTextureFlag : uint
+    {
+        FlatShading = 1,
+        Unknown = 3,
+        ScaledTexture = 4,
+        Unknown2 = 24
+    }
 }
 

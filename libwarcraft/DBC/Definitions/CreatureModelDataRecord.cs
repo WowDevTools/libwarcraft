@@ -28,84 +28,84 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	[DatabaseRecord(DatabaseName.CreatureModelData)]
-	public class CreatureModelDataRecord : DBCRecord
-	{
-		[RecordField(WarcraftVersion.Classic)]
-		public uint Flags { get; set; }
+    [DatabaseRecord(DatabaseName.CreatureModelData)]
+    public class CreatureModelDataRecord : DBCRecord
+    {
+        [RecordField(WarcraftVersion.Classic)]
+        public uint Flags { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public StringReference ModelPath { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public StringReference ModelPath { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint SizeClass { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint SizeClass { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float ModelScale { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float ModelScale { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.UnitBloodLevels, nameof(ID))]
-		public ForeignKey<uint> BloodLevel { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.UnitBloodLevels, nameof(ID))]
+        public ForeignKey<uint> BloodLevel { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.FootprintTextures, nameof(ID))]
-		public ForeignKey<uint> FootprintDecal { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.FootprintTextures, nameof(ID))]
+        public ForeignKey<uint> FootprintDecal { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float FootprintDecalLength { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float FootprintDecalLength { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float FootprintDecalWidth { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float FootprintDecalWidth { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float FootprintDecalParticleScale { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float FootprintDecalParticleScale { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public uint FoleyMaterialID { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public uint FoleyMaterialID { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.CameraShakes, nameof(ID))]
-		public ForeignKey<uint> FootstepShakeSize { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.CameraShakes, nameof(ID))]
+        public ForeignKey<uint> FootstepShakeSize { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		[ForeignKeyInfo(DatabaseName.CameraShakes, nameof(ID))]
-		public ForeignKey<uint> DeathThudShakeSize { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        [ForeignKeyInfo(DatabaseName.CameraShakes, nameof(ID))]
+        public ForeignKey<uint> DeathThudShakeSize { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
-		[ForeignKeyInfo(DatabaseName.CreatureSoundData, nameof(ID))]
-		public ForeignKey<uint> Sound { get; set; }
+        [RecordField(WarcraftVersion.BurningCrusade)]
+        [ForeignKeyInfo(DatabaseName.CreatureSoundData, nameof(ID))]
+        public ForeignKey<uint> Sound { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float CollisionWidth { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float CollisionWidth { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float CollisionHeight { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float CollisionHeight { get; set; }
 
-		[RecordField(WarcraftVersion.Classic)]
-		public float MountHeight { get; set; }
+        [RecordField(WarcraftVersion.Classic)]
+        public float MountHeight { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
-		public Box BoundingBox { get; set; }
+        [RecordField(WarcraftVersion.BurningCrusade)]
+        public Box BoundingBox { get; set; }
 
-		[RecordField(WarcraftVersion.BurningCrusade)]
-		public float WorldEffectScale { get; set; }
+        [RecordField(WarcraftVersion.BurningCrusade)]
+        public float WorldEffectScale { get; set; }
 
-		[RecordField(WarcraftVersion.Wrath)]
-		public float AttachedEffectScale { get; set; }
+        [RecordField(WarcraftVersion.Wrath)]
+        public float AttachedEffectScale { get; set; }
 
-		[RecordField(WarcraftVersion.Wrath)]
-		public float MissileCollisionRadius { get; set; }
+        [RecordField(WarcraftVersion.Wrath)]
+        public float MissileCollisionRadius { get; set; }
 
-		[RecordField(WarcraftVersion.Wrath)]
-		public float MissileCollisionPush { get; set; }
+        [RecordField(WarcraftVersion.Wrath)]
+        public float MissileCollisionPush { get; set; }
 
-		[RecordField(WarcraftVersion.Wrath)]
-		public float MissileCollisionRaise { get; set; }
+        [RecordField(WarcraftVersion.Wrath)]
+        public float MissileCollisionRaise { get; set; }
 
-		/// <inheritdoc />
-		public override IEnumerable<StringReference> GetStringReferences()
-		{
-			yield return this.ModelPath;
-		}
-	}
+        /// <inheritdoc />
+        public override IEnumerable<StringReference> GetStringReferences()
+        {
+            yield return this.ModelPath;
+        }
+    }
 }

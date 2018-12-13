@@ -64,26 +64,26 @@ namespace Warcraft.Core.Compression.Squish {
             return (self & (SquishOptions.WeightColourByAlpha));
         }
 
-	    public static SquishOptions FixFlags(this SquishOptions flags)
-	    {
-		    // grab the flag bits
-		    int method = (int)(flags & (SquishOptions.DXT1 | SquishOptions.DXT3 | SquishOptions.DXT5));
-		    int fit = (int) (flags & (SquishOptions.ColourIterativeClusterFit | SquishOptions.ColourClusterFit | SquishOptions.ColourRangeFit));
-		    int extra = (int) (flags & SquishOptions.WeightColourByAlpha);
+        public static SquishOptions FixFlags(this SquishOptions flags)
+        {
+            // grab the flag bits
+            int method = (int)(flags & (SquishOptions.DXT1 | SquishOptions.DXT3 | SquishOptions.DXT5));
+            int fit = (int) (flags & (SquishOptions.ColourIterativeClusterFit | SquishOptions.ColourClusterFit | SquishOptions.ColourRangeFit));
+            int extra = (int) (flags & SquishOptions.WeightColourByAlpha);
 
-		    // set defaults
-		    if (method != (int)SquishOptions.DXT3 && method != (int)SquishOptions.DXT5)
-		    {
-			    method = (int) SquishOptions.DXT5;
-		    }
+            // set defaults
+            if (method != (int)SquishOptions.DXT3 && method != (int)SquishOptions.DXT5)
+            {
+                method = (int) SquishOptions.DXT5;
+            }
 
-		    if (fit != (int) SquishOptions.ColourRangeFit && fit != (int)SquishOptions.ColourIterativeClusterFit)
-		    {
-			    fit = (int) SquishOptions.ColourClusterFit;
-		    }
+            if (fit != (int) SquishOptions.ColourRangeFit && fit != (int)SquishOptions.ColourIterativeClusterFit)
+            {
+                fit = (int) SquishOptions.ColourClusterFit;
+            }
 
-		    // done
-		    return (SquishOptions) (method | fit | extra);
-	    }
+            // done
+            return (SquishOptions) (method | fit | extra);
+        }
     }
 }

@@ -28,56 +28,56 @@ using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkVertexLighting : IIFFChunk
-	{
-		public const string Signature = "MCLV";
+    public class MapChunkVertexLighting : IIFFChunk
+    {
+        public const string Signature = "MCLV";
 
-		public List<RGBA> HighResVertexLights = new List<RGBA>();
-		public List<RGBA> LowResVertexLights = new List<RGBA>();
+        public List<RGBA> HighResVertexLights = new List<RGBA>();
+        public List<RGBA> LowResVertexLights = new List<RGBA>();
 
-		public MapChunkVertexLighting()
-		{
-
-		}
-
-		public MapChunkVertexLighting(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public MapChunkVertexLighting()
         {
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					for (int y = 0; y < 16; ++y)
-					{
-						if (y % 2 == 0)
-						{
-							// Read a block of 9 high res vertices
-							for (int x = 0; x < 9; ++x)
-							{
-								this.HighResVertexLights.Add(br.ReadRGBA());
-							}
-						}
-						else
-						{
-							// Read a block of 8 low res vertices
-							for (int x = 0; x < 8; ++x)
-							{
-								this.LowResVertexLights.Add(br.ReadRGBA());
-							}
-						}
-					}
-				}
-			}
+
+        }
+
+        public MapChunkVertexLighting(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    for (int y = 0; y < 16; ++y)
+                    {
+                        if (y % 2 == 0)
+                        {
+                            // Read a block of 9 high res vertices
+                            for (int x = 0; x < 9; ++x)
+                            {
+                                this.HighResVertexLights.Add(br.ReadRGBA());
+                            }
+                        }
+                        else
+                        {
+                            // Read a block of 8 low res vertices
+                            for (int x = 0; x < 8; ++x)
+                            {
+                                this.LowResVertexLights.Add(br.ReadRGBA());
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
-	}
+    }
 }
 

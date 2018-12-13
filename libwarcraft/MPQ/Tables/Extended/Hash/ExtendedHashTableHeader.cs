@@ -24,26 +24,26 @@ using System.Collections.Generic;
 
 namespace Warcraft.MPQ.Tables.Extended.Hash
 {
-	public class ExtendedHashTableHeader
-	{
-		public string Signature => "HET\x1A";
+    public class ExtendedHashTableHeader
+    {
+        public string Signature => "HET\x1A";
 
-		public uint Version;
-		public uint DataSize;
+        public uint Version;
+        public uint DataSize;
 
-		public uint TableSize;
-		public uint MaxFileCount;
-		public uint HashTableSize;
-		public uint HashEntrySize;
-		public uint IndexSizeExtra;
-		public uint IndexSize;
-		public uint BlockTableSize;
+        public uint TableSize;
+        public uint MaxFileCount;
+        public uint HashTableSize;
+        public uint HashEntrySize;
+        public uint IndexSizeExtra;
+        public uint IndexSize;
+        public uint BlockTableSize;
 
-		private List<byte> TableData = new List<byte>();
+        private List<byte> TableData = new List<byte>();
 
-		public ExtendedHashTableHeader()
-		{
-		}
-	}
+        public ExtendedHashTableHeader()
+        {
+        }
+    }
 }
 

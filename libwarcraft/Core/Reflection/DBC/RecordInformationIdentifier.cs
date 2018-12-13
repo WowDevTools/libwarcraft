@@ -23,76 +23,76 @@ using System;
 
 namespace Warcraft.Core.Reflection.DBC
 {
-	/// <summary>
-	/// Used as a singular identifier for a <see cref="RecordFieldInformation"/> instance.
-	/// </summary>
-	public class RecordInformationIdentifier : IEquatable<RecordInformationIdentifier>
-	{
-		/// <summary>
-		/// Gets the type identifying the field information set.
-		/// </summary>
-		public Type Type { get; }
+    /// <summary>
+    /// Used as a singular identifier for a <see cref="RecordFieldInformation"/> instance.
+    /// </summary>
+    public class RecordInformationIdentifier : IEquatable<RecordInformationIdentifier>
+    {
+        /// <summary>
+        /// Gets the type identifying the field information set.
+        /// </summary>
+        public Type Type { get; }
 
-		/// <summary>
-		/// Gets the version identifying the field information set.
-		/// </summary>
-		public WarcraftVersion Version { get; }
+        /// <summary>
+        /// Gets the version identifying the field information set.
+        /// </summary>
+        public WarcraftVersion Version { get; }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="RecordInformationIdentifier"/> class.
-		/// </summary>
-		/// <param name="type">The type identifying the field information set.</param>
-		/// <param name="version">The version identifying the field information set.</param>
-		public RecordInformationIdentifier(Type type, WarcraftVersion version)
-		{
-			this.Type = type;
-			this.Version = version;
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecordInformationIdentifier"/> class.
+        /// </summary>
+        /// <param name="type">The type identifying the field information set.</param>
+        /// <param name="version">The version identifying the field information set.</param>
+        public RecordInformationIdentifier(Type type, WarcraftVersion version)
+        {
+            this.Type = type;
+            this.Version = version;
+        }
 
-		/// <inheritdoc />
-		public bool Equals(RecordInformationIdentifier other)
-		{
-			if (ReferenceEquals(null, other))
-			{
-				return false;
-			}
+        /// <inheritdoc />
+        public bool Equals(RecordInformationIdentifier other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
 
-			if (ReferenceEquals(this, other))
-			{
-				return true;
-			}
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
 
-			return Equals(this.Type, other.Type) && this.Version == other.Version;
-		}
+            return Equals(this.Type, other.Type) && this.Version == other.Version;
+        }
 
-		/// <inheritdoc />
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj))
-			{
-				return false;
-			}
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
 
-			if (ReferenceEquals(this, obj))
-			{
-				return true;
-			}
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
-			if (obj.GetType() != this.GetType())
-			{
-				return false;
-			}
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
 
-			return Equals((RecordInformationIdentifier)obj);
-		}
+            return Equals((RecordInformationIdentifier)obj);
+        }
 
-		/// <inheritdoc />
-		public override int GetHashCode()
-		{
-			unchecked
-			{
-				return ((this.Type != null ? this.Type.GetHashCode() : 0) * 397) ^ (int)this.Version;
-			}
-		}
-	}
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((this.Type != null ? this.Type.GetHashCode() : 0) * 397) ^ (int)this.Version;
+            }
+        }
+    }
 }

@@ -24,33 +24,33 @@ using System.IO;
 
 namespace Warcraft.MPQ.Crypto
 {
-	public class WeakPackageSignature
-	{
-		public const string InternalFilename = "(signature)";
-		public readonly byte[] PackageSignature;
+    public class WeakPackageSignature
+    {
+        public const string InternalFilename = "(signature)";
+        public readonly byte[] PackageSignature;
 
-		public WeakPackageSignature(byte[] data)
-		{
-			if (data.Length != 72)
-			{
-				throw new InvalidDataException("The provided data had an invalid length.");
-			}
+        public WeakPackageSignature(byte[] data)
+        {
+            if (data.Length != 72)
+            {
+                throw new InvalidDataException("The provided data had an invalid length.");
+            }
 
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					long identifier = br.ReadInt64();
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    long identifier = br.ReadInt64();
 
-					if (identifier != 0)
-					{
-						throw new InvalidDataException("The signature did not begin with 0.");
-					}
+                    if (identifier != 0)
+                    {
+                        throw new InvalidDataException("The signature did not begin with 0.");
+                    }
 
-					this.PackageSignature = br.ReadBytes(64);
-				}
-			}
-		}
-	}
+                    this.PackageSignature = br.ReadBytes(64);
+                }
+            }
+        }
+    }
 }
 

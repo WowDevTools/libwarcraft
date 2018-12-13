@@ -26,56 +26,56 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelVertexIndices : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOVI";
+    public class ModelVertexIndices : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOVI";
 
-		public List<ushort> VertexIndices = new List<ushort>();
+        public List<ushort> VertexIndices = new List<ushort>();
 
-		public ModelVertexIndices()
-		{
-		}
+        public ModelVertexIndices()
+        {
+        }
 
-		public ModelVertexIndices(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelVertexIndices(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-	            {
-		            long indexCount = ms.Length / sizeof(ushort);
-		            for (int i = 0; i < indexCount; ++i)
-		            {
-			            this.VertexIndices.Add(br.ReadUInt16());
-		            }
-	            }
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    long indexCount = ms.Length / sizeof(ushort);
+                    for (int i = 0; i < indexCount; ++i)
+                    {
+                        this.VertexIndices.Add(br.ReadUInt16());
+                    }
+                }
             }
-		}
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (ushort vertexIndex in this.VertexIndices)
-		            {
-			            bw.Write(vertexIndex);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (ushort vertexIndex in this.VertexIndices)
+                    {
+                        bw.Write(vertexIndex);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

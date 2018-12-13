@@ -27,45 +27,45 @@ using Warcraft.MDX.Visual;
 
 namespace Warcraft.MDX.Geometry.Skin
 {
-	/// <summary>
-	/// An <see cref="MDXSkin"/> is a container object for a complete model configuration inside an <see cref="MDX"/>
-	/// model. Each skin acts as a LOD (level of detail) instance. Skins, due to the way MDX files are serialized,
-	/// are read using an extension to the builtin <see cref="BinaryReader"/>.
-	/// </summary>
-	public class MDXSkin : IVersionedClass
-	{
-		/// <summary>
-		/// A list of vertices from the global vertex list which are used in this skin.
-		/// </summary>
-		public MDXArray<ushort> VertexIndices;
+    /// <summary>
+    /// An <see cref="MDXSkin"/> is a container object for a complete model configuration inside an <see cref="MDX"/>
+    /// model. Each skin acts as a LOD (level of detail) instance. Skins, due to the way MDX files are serialized,
+    /// are read using an extension to the builtin <see cref="BinaryReader"/>.
+    /// </summary>
+    public class MDXSkin : IVersionedClass
+    {
+        /// <summary>
+        /// A list of vertices from the global vertex list which are used in this skin.
+        /// </summary>
+        public MDXArray<ushort> VertexIndices;
 
-		/// <summary>
-		/// A list of indices into the <see cref="VertexIndices"/> list, which constitute the triangles in the skin.
-		/// Each triplet of indices in this list corresponds to one triangle.
-		/// </summary>
-		public MDXArray<ushort> Triangles;
+        /// <summary>
+        /// A list of indices into the <see cref="VertexIndices"/> list, which constitute the triangles in the skin.
+        /// Each triplet of indices in this list corresponds to one triangle.
+        /// </summary>
+        public MDXArray<ushort> Triangles;
 
-		/// <summary>
-		/// A list of bone index quantets for the vertices in the skin. The given indices are indexed into the
-		/// <see cref="MDX.BoneLookupTable"/>.
-		/// </summary>
-		public MDXArray<MDXVertexProperty> VertexProperties;
+        /// <summary>
+        /// A list of bone index quantets for the vertices in the skin. The given indices are indexed into the
+        /// <see cref="MDX.BoneLookupTable"/>.
+        /// </summary>
+        public MDXArray<MDXVertexProperty> VertexProperties;
 
-		/// <summary>
-		/// A list of <see cref="MDXSkinSection"/> objects, which constitute the parts of the whole skin. These
-		/// separations act to divide the skin into different shading zones.
-		/// </summary>
-		public MDXArray<MDXSkinSection> Sections;
+        /// <summary>
+        /// A list of <see cref="MDXSkinSection"/> objects, which constitute the parts of the whole skin. These
+        /// separations act to divide the skin into different shading zones.
+        /// </summary>
+        public MDXArray<MDXSkinSection> Sections;
 
-		/// <summary>
-		/// A list of <see cref="MDXRenderBatch"/> objects. These render batches act as shader layers for skin sections.
-		/// </summary>
-		public MDXArray<MDXRenderBatch> RenderBatches;
+        /// <summary>
+        /// A list of <see cref="MDXRenderBatch"/> objects. These render batches act as shader layers for skin sections.
+        /// </summary>
+        public MDXArray<MDXRenderBatch> RenderBatches;
 
-		/// <summary>
-		/// The maximum number of bones in each draw call.
-		/// </summary>
-		public uint BoneCountMax;
-	}
+        /// <summary>
+        /// The maximum number of bones in each draw call.
+        /// </summary>
+        public uint BoneCountMax;
+    }
 }
 

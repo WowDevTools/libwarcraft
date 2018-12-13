@@ -28,62 +28,62 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	/// <summary>
-	/// The vertices of the model.
-	///
-	/// The vertices are stored in a Z-up, -Y-forward system in the files. Internally, this is converted
-	/// to Y-up, which OpenGL traditionally uses. When developing, use Y-up with libwarcraft - the vertices are
-	/// automatically converted to WoW's system when serializing.
-	/// </summary>
-	public class ModelVertices : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOVT";
+    /// <summary>
+    /// The vertices of the model.
+    ///
+    /// The vertices are stored in a Z-up, -Y-forward system in the files. Internally, this is converted
+    /// to Y-up, which OpenGL traditionally uses. When developing, use Y-up with libwarcraft - the vertices are
+    /// automatically converted to WoW's system when serializing.
+    /// </summary>
+    public class ModelVertices : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOVT";
 
-		public readonly List<Vector3> Vertices = new List<Vector3>();
+        public readonly List<Vector3> Vertices = new List<Vector3>();
 
-		public ModelVertices()
-		{
-		}
+        public ModelVertices()
+        {
+        }
 
-		public ModelVertices(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelVertices(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-            	{
-		            while (ms.Position < ms.Length)
-		            {
-			            this.Vertices.Add(br.ReadVector3());
-		            }
-            	}
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.Vertices.Add(br.ReadVector3());
+                    }
+                }
             }
-		}
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (Vector3 vertex in this.Vertices)
-		            {
-			            bw.WriteVector3(vertex);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (Vector3 vertex in this.Vertices)
+                    {
+                        bw.WriteVector3(vertex);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

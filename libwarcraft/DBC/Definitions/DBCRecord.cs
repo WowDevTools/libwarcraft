@@ -27,40 +27,40 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
-	/// <summary>
-	/// A database record which holds some type of information.
-	/// </summary>
-	[DatabaseRecord]
-	public abstract class DBCRecord : IDBCRecord
-	{
-		/// <summary>
-		/// The record ID. This is the equivalent of a primary key in an SQL database, and is unique to the record.
-		/// </summary>
-		[RecordField(WarcraftVersion.Classic)]
-		public uint ID
-		{
-			get;
-			protected set;
-		}
+    /// <summary>
+    /// A database record which holds some type of information.
+    /// </summary>
+    [DatabaseRecord]
+    public abstract class DBCRecord : IDBCRecord
+    {
+        /// <summary>
+        /// The record ID. This is the equivalent of a primary key in an SQL database, and is unique to the record.
+        /// </summary>
+        [RecordField(WarcraftVersion.Classic)]
+        public uint ID
+        {
+            get;
+            protected set;
+        }
 
-		/// <summary>
-		/// The game version this record is valid for.
-		/// </summary>
-		/// <value>The version.</value>
-		public WarcraftVersion Version
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// The game version this record is valid for.
+        /// </summary>
+        /// <value>The version.</value>
+        public WarcraftVersion Version
+        {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// Gets a list of any string references in the record. Used for resolving them after they have been loaded.
-		/// </summary>
-		/// <returns></returns>
-		public virtual IEnumerable<StringReference> GetStringReferences()
-		{
-			yield break;
-		}
-	}
+        /// <summary>
+        /// Gets a list of any string references in the record. Used for resolving them after they have been loaded.
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<StringReference> GetStringReferences()
+        {
+            yield break;
+        }
+    }
 }
 

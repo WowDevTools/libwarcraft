@@ -28,114 +28,114 @@ using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelRenderBatches : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOBA";
+    public class ModelRenderBatches : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOBA";
 
-		public readonly List<RenderBatch> RenderBatches = new List<RenderBatch>();
+        public readonly List<RenderBatch> RenderBatches = new List<RenderBatch>();
 
-		public ModelRenderBatches()
-		{
-		}
+        public ModelRenderBatches()
+        {
+        }
 
-		public ModelRenderBatches(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelRenderBatches(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-            	{
-		            while (ms.Position < ms.Length)
-		            {
-			            this.RenderBatches.Add(new RenderBatch(br.ReadBytes(RenderBatch.GetSize())));
-		            }
-            	}
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.RenderBatches.Add(new RenderBatch(br.ReadBytes(RenderBatch.GetSize())));
+                    }
+                }
             }
-		}
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (RenderBatch renderBatch in this.RenderBatches)
-		            {
-			            bw.Write(renderBatch.Serialize());
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (RenderBatch renderBatch in this.RenderBatches)
+                    {
+                        bw.Write(renderBatch.Serialize());
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 
-	public class RenderBatch : IBinarySerializable
-	{
-		public ShortBox BoundingBox;
+    public class RenderBatch : IBinarySerializable
+    {
+        public ShortBox BoundingBox;
 
-		public uint FirstPolygonIndex;
-		public ushort PolygonIndexCount;
+        public uint FirstPolygonIndex;
+        public ushort PolygonIndexCount;
 
-		public ushort FirstVertexIndex;
-		public ushort LastVertexIndex;
+        public ushort FirstVertexIndex;
+        public ushort LastVertexIndex;
 
-		public byte UnknownFlags;
-		public byte MaterialIndex;
+        public byte UnknownFlags;
+        public byte MaterialIndex;
 
-		public RenderBatch(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
+        public RenderBatch(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-	            {
-		            this.BoundingBox = br.ReadShortBox();
-		            this.FirstPolygonIndex = br.ReadUInt32();
-		            this.PolygonIndexCount = br.ReadUInt16();
-		            this.FirstVertexIndex = br.ReadUInt16();
-		            this.LastVertexIndex = br.ReadUInt16();
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.BoundingBox = br.ReadShortBox();
+                    this.FirstPolygonIndex = br.ReadUInt32();
+                    this.PolygonIndexCount = br.ReadUInt16();
+                    this.FirstVertexIndex = br.ReadUInt16();
+                    this.LastVertexIndex = br.ReadUInt16();
 
-		            this.UnknownFlags = br.ReadByte();
-		            this.MaterialIndex = br.ReadByte();
-	            }
+                    this.UnknownFlags = br.ReadByte();
+                    this.MaterialIndex = br.ReadByte();
+                }
             }
-		}
+        }
 
-		public static int GetSize()
-		{
-			return 24;
-		}
+        public static int GetSize()
+        {
+            return 24;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-	            {
-		            bw.WriteShortBox(this.BoundingBox);
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.WriteShortBox(this.BoundingBox);
 
-		            bw.Write(this.FirstPolygonIndex);
-		            bw.Write(this.PolygonIndexCount);
+                    bw.Write(this.FirstPolygonIndex);
+                    bw.Write(this.PolygonIndexCount);
 
-		            bw.Write(this.FirstVertexIndex);
-		            bw.Write(this.LastVertexIndex);
+                    bw.Write(this.FirstVertexIndex);
+                    bw.Write(this.LastVertexIndex);
 
-		            bw.Write(this.UnknownFlags);
-		            bw.Write(this.MaterialIndex);
-	            }
+                    bw.Write(this.UnknownFlags);
+                    bw.Write(this.MaterialIndex);
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

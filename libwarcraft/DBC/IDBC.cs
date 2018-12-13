@@ -22,29 +22,29 @@
 
 namespace Warcraft.DBC
 {
-	/// <summary>
-	/// Database file interface. Defines accessors to header values.
-	/// </summary>
-	public interface IDBC
-	{
-		/// <summary>
-		/// The number of held records.
-		/// </summary>
-		int RecordCount { get; }
+    /// <summary>
+    /// Database file interface. Defines accessors to header values.
+    /// </summary>
+    public interface IDBC
+    {
+        /// <summary>
+        /// The number of held records.
+        /// </summary>
+        int RecordCount { get; }
 
-		/// <summary>
-		/// The number of fields in each record.
-		/// </summary>
-		int FieldCount { get; }
+        /// <summary>
+        /// The number of fields in each record.
+        /// </summary>
+        int FieldCount { get; }
 
-		/// <summary>
-		/// The absolute size of each record.
-		/// </summary>
-		int RecordSize { get; }
+        /// <summary>
+        /// The absolute size of each record.
+        /// </summary>
+        int RecordSize { get; }
 
-		/// <summary>
-		/// The absolute size of the string block.
-		/// </summary>
-		int StringBlockSize { get; }
-	}
+        /// <summary>
+        /// The absolute size of the string block.
+        /// </summary>
+        int StringBlockSize { get; }
+    }
 }

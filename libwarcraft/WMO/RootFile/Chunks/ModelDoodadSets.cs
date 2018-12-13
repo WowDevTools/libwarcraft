@@ -26,86 +26,86 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	/// <summary>
-	/// Represents a list of doodad sets present in this model. Each set is stored separately in this block, and
-	/// defines a list of doodad instances to render when the set is selected.
-	/// </summary>
-	public class ModelDoodadSets : IIFFChunk, IBinarySerializable
-	{
-		/// <summary>
-		/// The static block signature of this chunk.
-		/// </summary>
-		public const string Signature = "MODS";
+    /// <summary>
+    /// Represents a list of doodad sets present in this model. Each set is stored separately in this block, and
+    /// defines a list of doodad instances to render when the set is selected.
+    /// </summary>
+    public class ModelDoodadSets : IIFFChunk, IBinarySerializable
+    {
+        /// <summary>
+        /// The static block signature of this chunk.
+        /// </summary>
+        public const string Signature = "MODS";
 
-		/// <summary>
-		/// A list of the doodad sets contained in this chunk.
-		/// </summary>
-		public readonly List<DoodadSet> DoodadSets = new List<DoodadSet>();
+        /// <summary>
+        /// A list of the doodad sets contained in this chunk.
+        /// </summary>
+        public readonly List<DoodadSet> DoodadSets = new List<DoodadSet>();
 
-		/// <summary>
-		/// Creates a new, empty doodad set block.
-		/// </summary>
-		public ModelDoodadSets()
-		{
-
-		}
-
-		/// <summary>
-		/// Deserializes a doodad set block from binary data.
-		/// </summary>
-		/// <param name="inData">The binary data containing the doodad set object.</param>
-		public ModelDoodadSets(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		/// <summary>
-		/// Deserialzes the provided binary data of the object. This is the full data block which follows the data
-		/// signature and data block length.
-		/// </summary>
-		/// <param name="inData">The binary data containing the object.</param>
-		public void LoadBinaryData(byte[] inData)
+        /// <summary>
+        /// Creates a new, empty doodad set block.
+        /// </summary>
+        public ModelDoodadSets()
         {
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					int setCount = inData.Length / DoodadSet.GetSize();
-					for (uint i = 0; i < setCount; ++i)
-					{
-						this.DoodadSets.Add(new DoodadSet(br.ReadBytes(DoodadSet.GetSize())));
-					}
-				}
-			}
+
         }
 
-		/// <summary>
-		/// Gets the static data signature of this data block type.
-		/// </summary>
-		/// <returns>A string representing the block signature.</returns>
-		public string GetSignature()
+        /// <summary>
+        /// Deserializes a doodad set block from binary data.
+        /// </summary>
+        /// <param name="inData">The binary data containing the doodad set object.</param>
+        public ModelDoodadSets(byte[] inData)
         {
-        	return Signature;
+            LoadBinaryData(inData);
         }
 
-		/// <summary>
-		/// Serializes the current object into a byte array.
-		/// </summary>
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        /// <summary>
+        /// Deserialzes the provided binary data of the object. This is the full data block which follows the data
+        /// signature and data block length.
+        /// </summary>
+        /// <param name="inData">The binary data containing the object.</param>
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (DoodadSet doodadSet in this.DoodadSets)
-		            {
-			            bw.Write(doodadSet.Serialize());
-		            }
-            	}
-
-            	return ms.ToArray();
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    int setCount = inData.Length / DoodadSet.GetSize();
+                    for (uint i = 0; i < setCount; ++i)
+                    {
+                        this.DoodadSets.Add(new DoodadSet(br.ReadBytes(DoodadSet.GetSize())));
+                    }
+                }
             }
-		}
-	}
+        }
+
+        /// <summary>
+        /// Gets the static data signature of this data block type.
+        /// </summary>
+        /// <returns>A string representing the block signature.</returns>
+        public string GetSignature()
+        {
+            return Signature;
+        }
+
+        /// <summary>
+        /// Serializes the current object into a byte array.
+        /// </summary>
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (DoodadSet doodadSet in this.DoodadSets)
+                    {
+                        bw.Write(doodadSet.Serialize());
+                    }
+                }
+
+                return ms.ToArray();
+            }
+        }
+    }
 }
 

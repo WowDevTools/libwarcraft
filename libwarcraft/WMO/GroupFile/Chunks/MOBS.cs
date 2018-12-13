@@ -24,35 +24,35 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class MOBS : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOBS";
+    public class MOBS : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOBS";
 
-		public byte[] Data;
+        public byte[] Data;
 
-		public MOBS()
-		{
-		}
-
-		public MOBS(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
-		{
-			this.Data = inData;
-		}
-
-		public string GetSignature()
-		{
-			return Signature;
-		}
-
-		public byte[] Serialize()
+        public MOBS()
         {
-        	return this.Data;
         }
-	}
+
+        public MOBS(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            this.Data = inData;
+        }
+
+        public string GetSignature()
+        {
+            return Signature;
+        }
+
+        public byte[] Serialize()
+        {
+            return this.Data;
+        }
+    }
 }
 

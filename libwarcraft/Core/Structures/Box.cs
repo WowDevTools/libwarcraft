@@ -29,47 +29,47 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.Core.Structures
 {
-	/// <summary>
-	/// A structure representing an axis-aligned bounding box, comprised of two <see cref="Vector3"/> objects
-	/// defining the bottom and top corners of the box.
-	/// </summary>
-	public struct Box : IFlattenableData<float>
-	{
-		/// <summary>
-		/// The bottom corner of the bounding box.
-		/// </summary>
-		public Vector3 BottomCorner;
+    /// <summary>
+    /// A structure representing an axis-aligned bounding box, comprised of two <see cref="Vector3"/> objects
+    /// defining the bottom and top corners of the box.
+    /// </summary>
+    public struct Box : IFlattenableData<float>
+    {
+        /// <summary>
+        /// The bottom corner of the bounding box.
+        /// </summary>
+        public Vector3 BottomCorner;
 
-		/// <summary>
-		/// The top corner of the bounding box.
-		/// </summary>
-		public Vector3 TopCorner;
+        /// <summary>
+        /// The top corner of the bounding box.
+        /// </summary>
+        public Vector3 TopCorner;
 
-		/// <summary>
-		/// Creates a new <see cref="Box"/> object from a top and bottom corner.
-		/// </summary>
-		/// <param name="inBottomCorner">The bottom corner of the box.</param>
-		/// <param name="inTopCorner">The top corner of the box.</param>
-		/// <returns>A new <see cref="Box"/> object.</returns>
-		public Box(Vector3 inBottomCorner, Vector3 inTopCorner)
-		{
-			this.BottomCorner = inBottomCorner;
-			this.TopCorner = inTopCorner;
-		}
+        /// <summary>
+        /// Creates a new <see cref="Box"/> object from a top and bottom corner.
+        /// </summary>
+        /// <param name="inBottomCorner">The bottom corner of the box.</param>
+        /// <param name="inTopCorner">The top corner of the box.</param>
+        /// <returns>A new <see cref="Box"/> object.</returns>
+        public Box(Vector3 inBottomCorner, Vector3 inTopCorner)
+        {
+            this.BottomCorner = inBottomCorner;
+            this.TopCorner = inTopCorner;
+        }
 
-		/// <summary>
-		/// Gets the coordinates of the center of the box.
-		/// </summary>
-		/// <returns>A vector with the coordinates of the center of the box.</returns>
-		public Vector3 GetCenterCoordinates()
-		{
-			return (this.BottomCorner + this.TopCorner) / 2;
-		}
+        /// <summary>
+        /// Gets the coordinates of the center of the box.
+        /// </summary>
+        /// <returns>A vector with the coordinates of the center of the box.</returns>
+        public Vector3 GetCenterCoordinates()
+        {
+            return (this.BottomCorner + this.TopCorner) / 2;
+        }
 
-		/// <inheritdoc />
-		public IReadOnlyCollection<float> Flatten()
-		{
-			return this.TopCorner.Flatten().Concat(this.BottomCorner.Flatten()).ToArray();
-		}
-	}
+        /// <inheritdoc />
+        public IReadOnlyCollection<float> Flatten()
+        {
+            return this.TopCorner.Flatten().Concat(this.BottomCorner.Flatten()).ToArray();
+        }
+    }
 }

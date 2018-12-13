@@ -28,55 +28,55 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelPortalVertices : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOPV";
+    public class ModelPortalVertices : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOPV";
 
-		public readonly List<Vector3> Vertices = new List<Vector3>();
+        public readonly List<Vector3> Vertices = new List<Vector3>();
 
-		public ModelPortalVertices()
-		{
+        public ModelPortalVertices()
+        {
 
-		}
+        }
 
-		public ModelPortalVertices(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelPortalVertices(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					while (ms.Position < ms.Length)
-					{
-						this.Vertices.Add(br.ReadVector3());
-					}
-				}
-			}
-		}
-
-		public string GetSignature()
-		{
-			return Signature;
-		}
-
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (Vector3 portalVertex in this.Vertices)
-		            {
-			            bw.WriteVector3(portalVertex);
-		            }
-            	}
-
-            	return ms.ToArray();
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.Vertices.Add(br.ReadVector3());
+                    }
+                }
             }
-		}
-	}
+        }
+
+        public string GetSignature()
+        {
+            return Signature;
+        }
+
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (Vector3 portalVertex in this.Vertices)
+                    {
+                        bw.WriteVector3(portalVertex);
+                    }
+                }
+
+                return ms.ToArray();
+            }
+        }
+    }
 }

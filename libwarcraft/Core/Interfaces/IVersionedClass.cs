@@ -22,13 +22,13 @@
 
 namespace Warcraft.Core.Interfaces
 {
-	/// <summary>
-	/// The IVersionedClass interface does not require any specific functionality, but rather acts as a decorator to
-	/// provide generic functions with the knowledge that the class which implements it has multiple deserialization
-	/// paths depending on different versions of its own or its containing object's class.
-	/// </summary>
-	public interface IVersionedClass
-	{
+    /// <summary>
+    /// The IVersionedClass interface does not require any specific functionality, but rather acts as a decorator to
+    /// provide generic functions with the knowledge that the class which implements it has multiple deserialization
+    /// paths depending on different versions of its own or its containing object's class.
+    /// </summary>
+    public interface IVersionedClass
+    {
 
-	}
+    }
 }

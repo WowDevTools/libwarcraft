@@ -28,55 +28,55 @@ using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelVertexColours : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOCV";
+    public class ModelVertexColours : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOCV";
 
-		public List<BGRA> VertexColours = new List<BGRA>();
+        public List<BGRA> VertexColours = new List<BGRA>();
 
-		public ModelVertexColours()
-		{
-		}
+        public ModelVertexColours()
+        {
+        }
 
-		public ModelVertexColours(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelVertexColours(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-            	{
-		            while (ms.Position < ms.Length)
-		            {
-			            this.VertexColours.Add(br.ReadBGRA());
-		            }
-            	}
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.VertexColours.Add(br.ReadBGRA());
+                    }
+                }
             }
-		}
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (BGRA vertexColour in this.VertexColours)
-		            {
-			            bw.WriteBGRA(vertexColour);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (BGRA vertexColour in this.VertexColours)
+                    {
+                        bw.WriteBGRA(vertexColour);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

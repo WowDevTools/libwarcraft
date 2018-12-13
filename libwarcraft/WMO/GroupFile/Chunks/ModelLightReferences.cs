@@ -26,55 +26,55 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-	public class ModelLightReferences : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOLR";
+    public class ModelLightReferences : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOLR";
 
-		public List<ushort> LightReferences = new List<ushort>();
+        public List<ushort> LightReferences = new List<ushort>();
 
-		public ModelLightReferences()
-		{
-		}
+        public ModelLightReferences()
+        {
+        }
 
-		public ModelLightReferences(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public ModelLightReferences(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryReader br = new BinaryReader(ms))
-            	{
-		            while (ms.Position < ms.Length)
-		            {
-			            this.LightReferences.Add(br.ReadUInt16());
-		            }
-            	}
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.LightReferences.Add(br.ReadUInt16());
+                    }
+                }
             }
-		}
+        }
 
-		public string GetSignature()
-		{
-			return Signature;
-		}
+        public string GetSignature()
+        {
+            return Signature;
+        }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (ushort lightReference in this.LightReferences)
-		            {
-			            bw.Write(lightReference);
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (ushort lightReference in this.LightReferences)
+                    {
+                        bw.Write(lightReference);
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

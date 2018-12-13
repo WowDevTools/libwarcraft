@@ -1,50 +1,50 @@
 namespace Warcraft.Core.Compression.Squish
 {
-	internal abstract class ColourFit
-	{
-		#region Fields
+    internal abstract class ColourFit
+    {
+        #region Fields
 
-		protected ColourSet _Colours;
-		private SquishOptions _Flags;
+        protected ColourSet _Colours;
+        private SquishOptions _Flags;
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		protected ColourFit(ColourSet colours, SquishOptions flags)
-		{
-			this._Colours = colours;
-			this._Flags = flags;
-		}
+        protected ColourFit(ColourSet colours, SquishOptions flags)
+        {
+            this._Colours = colours;
+            this._Flags = flags;
+        }
 
-		#endregion
+        #endregion
 
-		#region Public
+        #region Public
 
-		public void Compress(ref byte[] block)
-		{
-			if (this._Flags.HasFlag(SquishOptions.DXT1))
-			{
-				Compress3(block);
-				if (!this._Colours.IsTransparent)
-				{
-					Compress4(block);
-				}
-			}
-			else
-			{
-				Compress4(block);
-			}
-		}
+        public void Compress(ref byte[] block)
+        {
+            if (this._Flags.HasFlag(SquishOptions.DXT1))
+            {
+                Compress3(block);
+                if (!this._Colours.IsTransparent)
+                {
+                    Compress4(block);
+                }
+            }
+            else
+            {
+                Compress4(block);
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region Protected
+        #region Protected
 
-		protected abstract void Compress3(byte[] block);
+        protected abstract void Compress3(byte[] block);
 
-		protected abstract void Compress4(byte[] block);
+        protected abstract void Compress4(byte[] block);
 
-		#endregion
-	}
+        #endregion
+    }
 }

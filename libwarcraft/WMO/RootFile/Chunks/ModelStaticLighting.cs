@@ -29,149 +29,149 @@ using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelStaticLighting : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOLT";
+    public class ModelStaticLighting : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOLT";
 
-		public readonly List<StaticLight> StaticLights = new List<StaticLight>();
+        public readonly List<StaticLight> StaticLights = new List<StaticLight>();
 
-		public ModelStaticLighting()
-		{
-
-		}
-
-		public ModelStaticLighting(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public ModelStaticLighting()
         {
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					int lightCount = inData.Length / StaticLight.GetSize();
-					for (uint i = 0; i < lightCount; ++i)
-					{
-						this.StaticLights.Add(new StaticLight(br.ReadBytes(StaticLight.GetSize())));
-					}
-				}
-			}
+
+        }
+
+        public ModelStaticLighting(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    int lightCount = inData.Length / StaticLight.GetSize();
+                    for (uint i = 0; i < lightCount; ++i)
+                    {
+                        this.StaticLights.Add(new StaticLight(br.ReadBytes(StaticLight.GetSize())));
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (StaticLight staticLight in this.StaticLights)
-		            {
-			            bw.Write(staticLight.Serialize());
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (StaticLight staticLight in this.StaticLights)
+                    {
+                        bw.Write(staticLight.Serialize());
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 
-	public class StaticLight : IBinarySerializable
-	{
-		public LightType Type;
+    public class StaticLight : IBinarySerializable
+    {
+        public LightType Type;
 
-		public bool UseAttenuation;
-		public bool UseUnknown1;
-		public bool UseUnknown2;
+        public bool UseAttenuation;
+        public bool UseUnknown1;
+        public bool UseUnknown2;
 
-		public BGRA Colour;
-		public Vector3 Position;
-		public float Intensity;
+        public BGRA Colour;
+        public Vector3 Position;
+        public float Intensity;
 
-		public float AttenuationStartRadius;
-		public float AttenuationEndRadius;
+        public float AttenuationStartRadius;
+        public float AttenuationEndRadius;
 
-		public float Unknown1StartRadius;
-		public float Unknown1EndRadius;
+        public float Unknown1StartRadius;
+        public float Unknown1EndRadius;
 
-		public float Unknown2StartRadius;
-		public float Unknown2EndRadius;
+        public float Unknown2StartRadius;
+        public float Unknown2EndRadius;
 
-		public StaticLight(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Type = (LightType) br.ReadByte();
-					this.UseAttenuation = br.ReadBoolean();
-					this.UseUnknown1 = br.ReadBoolean();
-					this.UseUnknown2 = br.ReadBoolean();
-
-					this.Colour = br.ReadBGRA();
-					this.Position = br.ReadVector3();
-					this.Intensity = br.ReadSingle();
-
-					this.AttenuationStartRadius = br.ReadSingle();
-					this.AttenuationEndRadius = br.ReadSingle();
-
-					this.Unknown1StartRadius = br.ReadSingle();
-					this.Unknown1EndRadius = br.ReadSingle();
-
-					this.Unknown2StartRadius = br.ReadSingle();
-					this.Unknown2EndRadius = br.ReadSingle();
-				}
-			}
-		}
-
-		public static int GetSize()
-		{
-			return 48;
-		}
-
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public StaticLight(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-            		bw.Write((byte)this.Type);
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Type = (LightType) br.ReadByte();
+                    this.UseAttenuation = br.ReadBoolean();
+                    this.UseUnknown1 = br.ReadBoolean();
+                    this.UseUnknown2 = br.ReadBoolean();
 
-		            bw.Write(this.UseAttenuation);
-		            bw.Write(this.UseUnknown1);
-		            bw.Write(this.UseUnknown2);
+                    this.Colour = br.ReadBGRA();
+                    this.Position = br.ReadVector3();
+                    this.Intensity = br.ReadSingle();
 
-		            bw.WriteBGRA(this.Colour);
-		            bw.WriteVector3(this.Position);
-		            bw.Write(this.Intensity);
+                    this.AttenuationStartRadius = br.ReadSingle();
+                    this.AttenuationEndRadius = br.ReadSingle();
 
-		            bw.Write(this.AttenuationStartRadius);
-		            bw.Write(this.AttenuationEndRadius);
+                    this.Unknown1StartRadius = br.ReadSingle();
+                    this.Unknown1EndRadius = br.ReadSingle();
 
-		            bw.Write(this.Unknown1StartRadius);
-		            bw.Write(this.Unknown1EndRadius);
-
-		            bw.Write(this.Unknown2StartRadius);
-		            bw.Write(this.Unknown2EndRadius);
-	            }
-
-            	return ms.ToArray();
+                    this.Unknown2StartRadius = br.ReadSingle();
+                    this.Unknown2EndRadius = br.ReadSingle();
+                }
             }
-		}
-	}
+        }
 
-	public enum LightType : byte
-	{
-		Omnidirectional = 0,
-		Spot 			= 1,
-		Directional 	= 2,
-		Ambient 		= 3
-	}
+        public static int GetSize()
+        {
+            return 48;
+        }
+
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write((byte)this.Type);
+
+                    bw.Write(this.UseAttenuation);
+                    bw.Write(this.UseUnknown1);
+                    bw.Write(this.UseUnknown2);
+
+                    bw.WriteBGRA(this.Colour);
+                    bw.WriteVector3(this.Position);
+                    bw.Write(this.Intensity);
+
+                    bw.Write(this.AttenuationStartRadius);
+                    bw.Write(this.AttenuationEndRadius);
+
+                    bw.Write(this.Unknown1StartRadius);
+                    bw.Write(this.Unknown1EndRadius);
+
+                    bw.Write(this.Unknown2StartRadius);
+                    bw.Write(this.Unknown2EndRadius);
+                }
+
+                return ms.ToArray();
+            }
+        }
+    }
+
+    public enum LightType : byte
+    {
+        Omnidirectional = 0,
+        Spot             = 1,
+        Directional     = 2,
+        Ambient         = 3
+    }
 }
 

@@ -26,53 +26,53 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	public class MapChunkModelReferences : IIFFChunk
-	{
-		public const string Signature = "MCRF";
+    public class MapChunkModelReferences : IIFFChunk
+    {
+        public const string Signature = "MCRF";
 
-		private byte[] Data;
+        private byte[] Data;
 
-		public List<uint> GameModelObjectReferences = new List<uint>();
-		public List<uint> WorldModelObjectReferences = new List<uint>();
+        public List<uint> GameModelObjectReferences = new List<uint>();
+        public List<uint> WorldModelObjectReferences = new List<uint>();
 
-		public MapChunkModelReferences()
-		{
+        public MapChunkModelReferences()
+        {
 
-		}
+        }
 
-		public MapChunkModelReferences(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        public MapChunkModelReferences(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			this.Data = inData;
-		}
+        public void LoadBinaryData(byte[] inData)
+        {
+            this.Data = inData;
+        }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public void PostLoadReferences(uint gameModelObjectCount, uint worldModelObjectCount)
-		{
-			using (MemoryStream ms = new MemoryStream(this.Data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					for (int i = 0; i < gameModelObjectCount; ++i)
-					{
-						this.GameModelObjectReferences.Add(br.ReadUInt32());
-					}
+        public void PostLoadReferences(uint gameModelObjectCount, uint worldModelObjectCount)
+        {
+            using (MemoryStream ms = new MemoryStream(this.Data))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    for (int i = 0; i < gameModelObjectCount; ++i)
+                    {
+                        this.GameModelObjectReferences.Add(br.ReadUInt32());
+                    }
 
-					for (int i = 0; i < worldModelObjectCount; ++i)
-					{
-						this.WorldModelObjectReferences.Add(br.ReadUInt32());
-					}
-				}
-			}
-		}
-	}
+                    for (int i = 0; i < worldModelObjectCount; ++i)
+                    {
+                        this.WorldModelObjectReferences.Add(br.ReadUInt32());
+                    }
+                }
+            }
+        }
+    }
 }
 

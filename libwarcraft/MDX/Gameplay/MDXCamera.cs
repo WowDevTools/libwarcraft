@@ -30,50 +30,50 @@ using Warcraft.MDX.Animation;
 
 namespace Warcraft.MDX.Gameplay
 {
-	public class MDXCamera : IVersionedClass
-	{
-		public uint TypeLookupIndex;
+    public class MDXCamera : IVersionedClass
+    {
+        public uint TypeLookupIndex;
 
-		// < Cataclysm only
-		public float FieldOfView;
+        // < Cataclysm only
+        public float FieldOfView;
 
-		public float FarClip;
-		public float NearClip;
-		public MDXTrack<SplineKey<Vector3>> Positions;
-		public Vector3 PositionBase;
+        public float FarClip;
+        public float NearClip;
+        public MDXTrack<SplineKey<Vector3>> Positions;
+        public Vector3 PositionBase;
 
-		public MDXTrack<SplineKey<Vector3>> TargetPositions;
-		public Vector3 TargetPositionBase;
+        public MDXTrack<SplineKey<Vector3>> TargetPositions;
+        public Vector3 TargetPositionBase;
 
-		public MDXTrack<SplineKey<float>> Roll;
+        public MDXTrack<SplineKey<float>> Roll;
 
-		// => Cataclysm only
-		public MDXTrack<SplineKey<float>> AnimatedFOV;
+        // => Cataclysm only
+        public MDXTrack<SplineKey<float>> AnimatedFOV;
 
-		public MDXCamera(BinaryReader br, WarcraftVersion version)
-		{
-			this.TypeLookupIndex = br.ReadUInt32();
+        public MDXCamera(BinaryReader br, WarcraftVersion version)
+        {
+            this.TypeLookupIndex = br.ReadUInt32();
 
-			if (version < WarcraftVersion.Cataclysm)
-			{
-				this.FieldOfView = br.ReadSingle();
-			}
+            if (version < WarcraftVersion.Cataclysm)
+            {
+                this.FieldOfView = br.ReadSingle();
+            }
 
-			this.FarClip = br.ReadSingle();
-			this.NearClip = br.ReadSingle();
+            this.FarClip = br.ReadSingle();
+            this.NearClip = br.ReadSingle();
 
-			this.Positions = br.ReadMDXTrack<SplineKey<Vector3>>(version);
-			this.PositionBase = br.ReadVector3();
+            this.Positions = br.ReadMDXTrack<SplineKey<Vector3>>(version);
+            this.PositionBase = br.ReadVector3();
 
-			this.TargetPositions = br.ReadMDXTrack<SplineKey<Vector3>>(version);
-			this.TargetPositionBase = br.ReadVector3();
+            this.TargetPositions = br.ReadMDXTrack<SplineKey<Vector3>>(version);
+            this.TargetPositionBase = br.ReadVector3();
 
-			this.Roll = br.ReadMDXTrack<SplineKey<float>>(version);
+            this.Roll = br.ReadMDXTrack<SplineKey<float>>(version);
 
-			if (version >= WarcraftVersion.Cataclysm)
-			{
-				this.AnimatedFOV = br.ReadMDXTrack<SplineKey<float>>(version);
-			}
-		}
-	}
+            if (version >= WarcraftVersion.Cataclysm)
+            {
+                this.AnimatedFOV = br.ReadMDXTrack<SplineKey<float>>(version);
+            }
+        }
+    }
 }

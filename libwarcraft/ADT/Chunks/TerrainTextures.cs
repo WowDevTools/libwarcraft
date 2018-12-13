@@ -27,50 +27,50 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	/// <summary>
-	/// MTEX Chunk - Contains a list of all referenced textures in this ADT.
-	/// </summary>
-	public class TerrainTextures : IIFFChunk
-	{
-		public const string Signature = "MTEX";
+    /// <summary>
+    /// MTEX Chunk - Contains a list of all referenced textures in this ADT.
+    /// </summary>
+    public class TerrainTextures : IIFFChunk
+    {
+        public const string Signature = "MTEX";
 
-		/// <summary>
-		///A list of full paths to the textures referenced in this ADT.
-		/// </summary>
-		public List<string> Filenames = new List<string>();
+        /// <summary>
+        ///A list of full paths to the textures referenced in this ADT.
+        /// </summary>
+        public List<string> Filenames = new List<string>();
 
-		public TerrainTextures()
-		{
-
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainTextures"/> class.
-		/// </summary>
-		/// <param name="inData">ExtendedData.</param>
-		public TerrainTextures(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public TerrainTextures()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					while (br.BaseStream.Position != br.BaseStream.Length)
-					{
-						this.Filenames.Add(br.ReadNullTerminatedString());
-					}
-				}
-			}
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainTextures"/> class.
+        /// </summary>
+        /// <param name="inData">ExtendedData.</param>
+        public TerrainTextures(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (br.BaseStream.Position != br.BaseStream.Length)
+                    {
+                        this.Filenames.Add(br.ReadNullTerminatedString());
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
-	}
+    }
 }
 

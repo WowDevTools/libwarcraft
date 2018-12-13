@@ -34,186 +34,186 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelMaterials : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MOMT";
+    public class ModelMaterials : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MOMT";
 
-		public readonly List<ModelMaterial> Materials = new List<ModelMaterial>();
+        public readonly List<ModelMaterial> Materials = new List<ModelMaterial>();
 
-		public ModelMaterials()
-		{
-
-		}
-
-		public ModelMaterials(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public ModelMaterials()
         {
-	        using (MemoryStream ms = new MemoryStream(inData))
-	        {
-		        using (BinaryReader br = new BinaryReader(ms))
-		        {
-			        int materialCount = inData.Length / ModelMaterial.GetSize();
-			        for (int i = 0; i < materialCount; ++i)
-			        {
-				        this.Materials.Add(new ModelMaterial(br.ReadBytes(ModelMaterial.GetSize())));
-			        }
-		        }
-	        }
+
+        }
+
+        public ModelMaterials(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    int materialCount = inData.Length / ModelMaterial.GetSize();
+                    for (int i = 0; i < materialCount; ++i)
+                    {
+                        this.Materials.Add(new ModelMaterial(br.ReadBytes(ModelMaterial.GetSize())));
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (ModelMaterial modelMaterial in this.Materials)
-		            {
-			            bw.Write(modelMaterial.Serialize());
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (ModelMaterial modelMaterial in this.Materials)
+                    {
+                        bw.Write(modelMaterial.Serialize());
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 
-	public class ModelMaterial : IBinarySerializable
-	{
-		public MaterialFlags Flags;
-		public WMOFragmentShaderType Shader;
-		public BlendingMode BlendMode;
+    public class ModelMaterial : IBinarySerializable
+    {
+        public MaterialFlags Flags;
+        public WMOFragmentShaderType Shader;
+        public BlendingMode BlendMode;
 
-		public uint FirstTextureOffset;
-		public RGBA FirstColour;
-		public MaterialFlags FirstFlags;
+        public uint FirstTextureOffset;
+        public RGBA FirstColour;
+        public MaterialFlags FirstFlags;
 
-		public uint SecondTextureOffset;
-		public RGBA SecondColour;
+        public uint SecondTextureOffset;
+        public RGBA SecondColour;
 
-		public ForeignKey<uint> GroundType;
-		public uint ThirdTextureOffset;
-		public RGBA BaseDiffuseColour;
-		public MaterialFlags ThirdFlags;
+        public ForeignKey<uint> GroundType;
+        public uint ThirdTextureOffset;
+        public RGBA BaseDiffuseColour;
+        public MaterialFlags ThirdFlags;
 
-		public uint RuntimeData1;
-		public uint RuntimeData2;
-		public uint RuntimeData3;
-		public uint RuntimeData4;
+        public uint RuntimeData1;
+        public uint RuntimeData2;
+        public uint RuntimeData3;
+        public uint RuntimeData4;
 
-		/*
-			Nonserialized utility fields
-		*/
+        /*
+            Nonserialized utility fields
+        */
 
-		public string Texture0
-		{
-			get;
-			set;
-		}
+        public string Texture0
+        {
+            get;
+            set;
+        }
 
-		public string Texture1
-		{
-			get;
-			set;
-		}
+        public string Texture1
+        {
+            get;
+            set;
+        }
 
-		public string Texture2
-		{
-			get;
-			set;
-		}
+        public string Texture2
+        {
+            get;
+            set;
+        }
 
-		public ModelMaterial(byte[] inData)
-		{
-			using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Flags = (MaterialFlags) br.ReadUInt32();
-					this.Shader = (WMOFragmentShaderType) br.ReadUInt32();
-					this.BlendMode = (BlendingMode) br.ReadUInt32();
-
-					this.FirstTextureOffset = br.ReadUInt32();
-					this.FirstColour = br.ReadRGBA();
-					this.FirstFlags  = (MaterialFlags)br.ReadUInt32();
-
-					this.SecondTextureOffset = br.ReadUInt32();
-					this.SecondColour = br.ReadRGBA();
-
-					this.GroundType = new ForeignKey<uint>(DatabaseName.TerrainType, nameof(DBCRecord.ID), br.ReadUInt32()); // TODO: Implement TerrainTypeRecord
-					this.ThirdTextureOffset = br.ReadUInt32();
-					this.BaseDiffuseColour = br.ReadRGBA();
-					this.ThirdFlags = (MaterialFlags)br.ReadUInt32();
-
-					this.RuntimeData1 = br.ReadUInt32();
-					this.RuntimeData2 = br.ReadUInt32();
-					this.RuntimeData3 = br.ReadUInt32();
-					this.RuntimeData4 = br.ReadUInt32();
-				}
-			}
-		}
-
-		public static int GetSize()
-		{
-			return 64;
-		}
-
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public ModelMaterial(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-            		bw.Write((uint)this.Flags);
-		            bw.Write((uint)this.Shader);
-		            bw.Write((uint)this.BlendMode);
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Flags = (MaterialFlags) br.ReadUInt32();
+                    this.Shader = (WMOFragmentShaderType) br.ReadUInt32();
+                    this.BlendMode = (BlendingMode) br.ReadUInt32();
 
-		            bw.Write(this.FirstTextureOffset);
-		            bw.WriteRGBA(this.FirstColour);
-		            bw.Write((uint)this.FirstFlags);
+                    this.FirstTextureOffset = br.ReadUInt32();
+                    this.FirstColour = br.ReadRGBA();
+                    this.FirstFlags  = (MaterialFlags)br.ReadUInt32();
 
-		            bw.Write(this.SecondTextureOffset);
-		            bw.WriteRGBA(this.SecondColour);
+                    this.SecondTextureOffset = br.ReadUInt32();
+                    this.SecondColour = br.ReadRGBA();
 
-		            bw.Write(this.GroundType.Key);
-		            bw.Write(this.ThirdTextureOffset);
-		            bw.WriteRGBA(this.BaseDiffuseColour);
-		            bw.Write((uint)this.ThirdFlags);
+                    this.GroundType = new ForeignKey<uint>(DatabaseName.TerrainType, nameof(DBCRecord.ID), br.ReadUInt32()); // TODO: Implement TerrainTypeRecord
+                    this.ThirdTextureOffset = br.ReadUInt32();
+                    this.BaseDiffuseColour = br.ReadRGBA();
+                    this.ThirdFlags = (MaterialFlags)br.ReadUInt32();
 
-		            bw.Write(this.RuntimeData1);
-		            bw.Write(this.RuntimeData2);
-		            bw.Write(this.RuntimeData3);
-		            bw.Write(this.RuntimeData4);
-            	}
-
-            	return ms.ToArray();
+                    this.RuntimeData1 = br.ReadUInt32();
+                    this.RuntimeData2 = br.ReadUInt32();
+                    this.RuntimeData3 = br.ReadUInt32();
+                    this.RuntimeData4 = br.ReadUInt32();
+                }
             }
-		}
-	}
+        }
 
-	[Flags]
-	public enum MaterialFlags : uint
-	{
-		UnknownPossiblyLightmap = 0x1,
-		Unknown2				= 0x2,
-		TwoSided				= 0x4,
-		Darken					= 0x8,
-		UnshadedDuringNight		= 0x10,
-		Unknown3				= 0x20,
-		TextureWrappingClamp	= 0x40,
-		TextureWrappingRepeat	= 0x80,
-		Unknown4				= 0x100
+        public static int GetSize()
+        {
+            return 64;
+        }
 
-		// Followed by 23 unused flags
-	}
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write((uint)this.Flags);
+                    bw.Write((uint)this.Shader);
+                    bw.Write((uint)this.BlendMode);
+
+                    bw.Write(this.FirstTextureOffset);
+                    bw.WriteRGBA(this.FirstColour);
+                    bw.Write((uint)this.FirstFlags);
+
+                    bw.Write(this.SecondTextureOffset);
+                    bw.WriteRGBA(this.SecondColour);
+
+                    bw.Write(this.GroundType.Key);
+                    bw.Write(this.ThirdTextureOffset);
+                    bw.WriteRGBA(this.BaseDiffuseColour);
+                    bw.Write((uint)this.ThirdFlags);
+
+                    bw.Write(this.RuntimeData1);
+                    bw.Write(this.RuntimeData2);
+                    bw.Write(this.RuntimeData3);
+                    bw.Write(this.RuntimeData4);
+                }
+
+                return ms.ToArray();
+            }
+        }
+    }
+
+    [Flags]
+    public enum MaterialFlags : uint
+    {
+        UnknownPossiblyLightmap = 0x1,
+        Unknown2                = 0x2,
+        TwoSided                = 0x4,
+        Darken                    = 0x8,
+        UnshadedDuringNight        = 0x10,
+        Unknown3                = 0x20,
+        TextureWrappingClamp    = 0x40,
+        TextureWrappingRepeat    = 0x80,
+        Unknown4                = 0x100
+
+        // Followed by 23 unused flags
+    }
 }
 

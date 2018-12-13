@@ -22,10 +22,10 @@
 
 namespace Warcraft.MDX.Gameplay
 {
-	public enum MDXCameraType : short
-	{
-		Other			= -1,
-		Portrait		= 0,
-		CharacterInfo	= 1,
-	}
+    public enum MDXCameraType : short
+    {
+        Other            = -1,
+        Portrait        = 0,
+        CharacterInfo    = 1,
+    }
 }

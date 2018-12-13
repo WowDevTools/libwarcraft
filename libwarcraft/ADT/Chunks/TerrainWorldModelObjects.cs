@@ -27,66 +27,66 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	/// <summary>
-	/// MWMO Chunk - Contains a list of all referenced WMO models in this ADT.
-	/// </summary>
-	public class TerrainWorldModelObjects : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MWMO";
+    /// <summary>
+    /// MWMO Chunk - Contains a list of all referenced WMO models in this ADT.
+    /// </summary>
+    public class TerrainWorldModelObjects : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MWMO";
 
-		/// <summary>
-		///A list of full paths to the M2 models referenced in this ADT.
-		/// </summary>
-		public List<string> Filenames = new List<string>();
+        /// <summary>
+        ///A list of full paths to the M2 models referenced in this ADT.
+        /// </summary>
+        public List<string> Filenames = new List<string>();
 
-		public TerrainWorldModelObjects()
-		{
-
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldModelObjects"/> class.
-		/// </summary>
-		/// <param name="inData">ExtendedData.</param>
-		public TerrainWorldModelObjects(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public TerrainWorldModelObjects()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					while (ms.Position < ms.Length)
-					{
-						this.Filenames.Add(br.ReadNullTerminatedString());
-					}
-				}
-			}
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldModelObjects"/> class.
+        /// </summary>
+        /// <param name="inData">ExtendedData.</param>
+        public TerrainWorldModelObjects(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    while (ms.Position < ms.Length)
+                    {
+                        this.Filenames.Add(br.ReadNullTerminatedString());
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					foreach (string filename in this.Filenames)
-					{
-						bw.WriteNullTerminatedString(filename);
-					}
-				}
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (string filename in this.Filenames)
+                    {
+                        bw.WriteNullTerminatedString(filename);
+                    }
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 }
 

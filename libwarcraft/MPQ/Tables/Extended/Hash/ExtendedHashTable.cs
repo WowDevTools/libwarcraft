@@ -24,22 +24,22 @@ using System.Collections.Generic;
 
 namespace Warcraft.MPQ.Tables.Extended.Hash
 {
-	public class ExtendedHashTable
-	{
-		private uint TableSize;
-		private uint HashTableSize;
-		private uint HashEntrySize;
-		private uint TotalIndexSize;
-		private uint IndexSizeExtra;
-		private uint IndexSize;
-		private uint BlockTableSize;
+    public class ExtendedHashTable
+    {
+        private uint TableSize;
+        private uint HashTableSize;
+        private uint HashEntrySize;
+        private uint TotalIndexSize;
+        private uint IndexSizeExtra;
+        private uint IndexSize;
+        private uint BlockTableSize;
 
-		private List<byte> HashTable;
-		private List<ulong> FileIndices;
+        private List<byte> HashTable;
+        private List<ulong> FileIndices;
 
-		public ExtendedHashTable(byte[] data)
-		{
-		}
-	}
+        public ExtendedHashTable(byte[] data)
+        {
+        }
+    }
 }
 

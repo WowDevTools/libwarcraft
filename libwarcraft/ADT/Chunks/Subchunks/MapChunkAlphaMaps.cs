@@ -26,172 +26,172 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	/// <summary>
-	/// MCAL Chunk - Contains alpha map data in one of three forms - uncompressed 2048, uncompressed 4096 and compressed.
-	/// </summary>
-	public class MapChunkAlphaMaps : IIFFChunk
-	{
-		public const string Signature = "MCAL";
+    /// <summary>
+    /// MCAL Chunk - Contains alpha map data in one of three forms - uncompressed 2048, uncompressed 4096 and compressed.
+    /// </summary>
+    public class MapChunkAlphaMaps : IIFFChunk
+    {
+        public const string Signature = "MCAL";
 
-		//unformatted data contained in MCAL
-		private byte[] Data;
+        //unformatted data contained in MCAL
+        private byte[] Data;
 
-		public MapChunkAlphaMaps()
-		{
+        public MapChunkAlphaMaps()
+        {
 
-		}
+        }
 
-		// TODO: Implement WDT
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.Subchunks.MapChunkAlphaMaps"/> class.
-		/// </summary>
-		/// <param name="inData">ExtendedData.</param>
-		public MapChunkAlphaMaps(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
+        // TODO: Implement WDT
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.Subchunks.MapChunkAlphaMaps"/> class.
+        /// </summary>
+        /// <param name="inData">ExtendedData.</param>
+        public MapChunkAlphaMaps(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
 
-		public void LoadBinaryData(byte[] inData)
-		{
-			this.Data = inData;
-		}
+        public void LoadBinaryData(byte[] inData)
+        {
+            this.Data = inData;
+        }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
 
-		public IEnumerable<byte> GetAlphaMap(uint mapOffset, TextureLayerFlags layerFlags, MapChunkFlags mapFlags/*, TerrainTileFlags TileFlags*/)
-		{
-			return null;
-		}
+        public IEnumerable<byte> GetAlphaMap(uint mapOffset, TextureLayerFlags layerFlags, MapChunkFlags mapFlags/*, TerrainTileFlags TileFlags*/)
+        {
+            return null;
+        }
 
-		private IEnumerable<byte> DecompressAlphaMap(uint mapOffset)
-		{
-			List<byte> decompressedAlphaMap = new List<byte>();
+        private IEnumerable<byte> DecompressAlphaMap(uint mapOffset)
+        {
+            List<byte> decompressedAlphaMap = new List<byte>();
 
-			using (MemoryStream ms = new MemoryStream(this.Data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					br.BaseStream.Position = mapOffset;
+            using (MemoryStream ms = new MemoryStream(this.Data))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    br.BaseStream.Position = mapOffset;
 
-					while (decompressedAlphaMap.Count > 4096)
-					{
-						sbyte headerByte = br.ReadSByte();
-						int compressionCount = Math.Abs(headerByte);
+                    while (decompressedAlphaMap.Count > 4096)
+                    {
+                        sbyte headerByte = br.ReadSByte();
+                        int compressionCount = Math.Abs(headerByte);
 
-						// The mode of the compression depends on the sign bit being true or false.
-						// Thus, we can simply switch depending on whether or not the "header byte" is
-						// negative or not.
-						if (headerByte > 0)
-						{
-							// Copy mode
-							decompressedAlphaMap.AddRange(br.ReadBytes(compressionCount));
-						}
-						else
-						{
-							// Fill mode
-							byte fillByte = br.ReadByte();
+                        // The mode of the compression depends on the sign bit being true or false.
+                        // Thus, we can simply switch depending on whether or not the "header byte" is
+                        // negative or not.
+                        if (headerByte > 0)
+                        {
+                            // Copy mode
+                            decompressedAlphaMap.AddRange(br.ReadBytes(compressionCount));
+                        }
+                        else
+                        {
+                            // Fill mode
+                            byte fillByte = br.ReadByte();
 
-							for (int i = 0; i < compressionCount; ++i)
-							{
-								decompressedAlphaMap.Add(fillByte);
-							}
-						}
-					}
-				}
-			}
+                            for (int i = 0; i < compressionCount; ++i)
+                            {
+                                decompressedAlphaMap.Add(fillByte);
+                            }
+                        }
+                    }
+                }
+            }
 
-			return decompressedAlphaMap;
-		}
+            return decompressedAlphaMap;
+        }
 
-		private List<byte> Read4BitAlphaMap(byte[] compressedAlphaMap, MapChunkFlags mapFlags)
-		{
-			List<byte> decompressedAlphaMap = new List<byte>();
-			for (int y = 0; y < 64; y++)
-			{
-				for (int x = 0; x < 32; x++)
-				{
-					if (mapFlags.HasFlag(MapChunkFlags.DoNotRepairAlphaMaps))
-					{
-						//fill in normally
-						byte alpha1 = (byte)((compressedAlphaMap[x + y * 32]) & 0xf0);
-						byte alpha2 = (byte)((compressedAlphaMap[x + y * 32] << 4) & 0xf0);
+        private List<byte> Read4BitAlphaMap(byte[] compressedAlphaMap, MapChunkFlags mapFlags)
+        {
+            List<byte> decompressedAlphaMap = new List<byte>();
+            for (int y = 0; y < 64; y++)
+            {
+                for (int x = 0; x < 32; x++)
+                {
+                    if (mapFlags.HasFlag(MapChunkFlags.DoNotRepairAlphaMaps))
+                    {
+                        //fill in normally
+                        byte alpha1 = (byte)((compressedAlphaMap[x + y * 32]) & 0xf0);
+                        byte alpha2 = (byte)((compressedAlphaMap[x + y * 32] << 4) & 0xf0);
 
-						byte normalizedAlpha1 = (byte)(alpha1 * 17);
-						byte normalizedAlpha2 = (byte)(alpha2 * 17);
+                        byte normalizedAlpha1 = (byte)(alpha1 * 17);
+                        byte normalizedAlpha2 = (byte)(alpha2 * 17);
 
-						decompressedAlphaMap.Add(normalizedAlpha1);
-						decompressedAlphaMap.Add(normalizedAlpha2);
-					}
-					else
-					{
-						// Bottom row
-						if (y == 63)
-						{
-							int yminus = y - 1;
-							//attempt to repair map on vertical axis
+                        decompressedAlphaMap.Add(normalizedAlpha1);
+                        decompressedAlphaMap.Add(normalizedAlpha2);
+                    }
+                    else
+                    {
+                        // Bottom row
+                        if (y == 63)
+                        {
+                            int yminus = y - 1;
+                            //attempt to repair map on vertical axis
 
-							byte alpha1 = (byte)((compressedAlphaMap[x + yminus * 32]) & 0xf0);
-							byte alpha2 = (byte)((compressedAlphaMap[x + 1 + yminus * 32] << 4) & 0xf0);
+                            byte alpha1 = (byte)((compressedAlphaMap[x + yminus * 32]) & 0xf0);
+                            byte alpha2 = (byte)((compressedAlphaMap[x + 1 + yminus * 32] << 4) & 0xf0);
 
-							byte normalizedAlpha1 = (byte)(alpha1 * 17);
-							byte normalizedAlpha2 = (byte)(alpha2 * 17);
+                            byte normalizedAlpha1 = (byte)(alpha1 * 17);
+                            byte normalizedAlpha2 = (byte)(alpha2 * 17);
 
-							decompressedAlphaMap.Add(normalizedAlpha1);
-							decompressedAlphaMap.Add(normalizedAlpha2);
-						}
-						else if (x == 31)
-						{
-							int xminus = x - 1;
+                            decompressedAlphaMap.Add(normalizedAlpha1);
+                            decompressedAlphaMap.Add(normalizedAlpha2);
+                        }
+                        else if (x == 31)
+                        {
+                            int xminus = x - 1;
 
-							//attempt to repair map on horizontal axis
-							byte alpha = (byte)(compressedAlphaMap[xminus + y * 32] << 4 & 0xf0);
-							byte normalizedAlpha = (byte)(alpha * 17);
+                            //attempt to repair map on horizontal axis
+                            byte alpha = (byte)(compressedAlphaMap[xminus + y * 32] << 4 & 0xf0);
+                            byte normalizedAlpha = (byte)(alpha * 17);
 
-							decompressedAlphaMap.Add(normalizedAlpha);
-						}
-						else
-						{
-							//fill in normally
-							byte alpha1 = (byte)((compressedAlphaMap[x + y * 32]) & 0xf0);
-							byte alpha2 = (byte)((compressedAlphaMap[x + y * 32] << 4) & 0xf0);
+                            decompressedAlphaMap.Add(normalizedAlpha);
+                        }
+                        else
+                        {
+                            //fill in normally
+                            byte alpha1 = (byte)((compressedAlphaMap[x + y * 32]) & 0xf0);
+                            byte alpha2 = (byte)((compressedAlphaMap[x + y * 32] << 4) & 0xf0);
 
-							byte normalizedAlpha1 = (byte)(alpha1 * 17);
-							byte normalizedAlpha2 = (byte)(alpha2 * 17);
+                            byte normalizedAlpha1 = (byte)(alpha1 * 17);
+                            byte normalizedAlpha2 = (byte)(alpha2 * 17);
 
-							decompressedAlphaMap.Add(normalizedAlpha1);
-							decompressedAlphaMap.Add(normalizedAlpha2);
-						}
-					}
-				}
-			}
+                            decompressedAlphaMap.Add(normalizedAlpha1);
+                            decompressedAlphaMap.Add(normalizedAlpha2);
+                        }
+                    }
+                }
+            }
 
-			return decompressedAlphaMap;
-		}
-		/*
-	     * Uncompressed with a size of 4096 (post WOTLK)
-	     * Uncompressed with a size of 2048 (pre WOTLK)
-	     * Compressed - this is only for WOTLK chunks. Size is not very important when dealing with compressed alpha maps,
-	     * considering you are constantly checking if you've extracted 4096 bytes of data. Here's how you do it, according to the wiki:
-	     *
-	     * Read a byte.
-	     * Check for a sign bit.
-	     * If it's set, we're in fill mode. If not, we're in copy mode.
-	     *
-	     * 1000000 = set sign bit, fill mode
-	     * 0000000 = unset sign bit, copy mode
-	     *
-	     * 0            1 0 1 0 1 0 1
-	     * sign bit,    7 lesser bits
-	     *
-	     * Take the 7 lesser bits of the first byte as a count indicator,
-	     * If we're in fill mode, read the next byte and fill it by count in your resulting alpha map
-	     * If we're in copy mode, read the next count bytes and copy them to your resulting alpha map
-	     * If the alpha map is complete (4096 bytes), we're finished. If not, go back and start at 1 again.
-	     */
-	}
+            return decompressedAlphaMap;
+        }
+        /*
+         * Uncompressed with a size of 4096 (post WOTLK)
+         * Uncompressed with a size of 2048 (pre WOTLK)
+         * Compressed - this is only for WOTLK chunks. Size is not very important when dealing with compressed alpha maps,
+         * considering you are constantly checking if you've extracted 4096 bytes of data. Here's how you do it, according to the wiki:
+         *
+         * Read a byte.
+         * Check for a sign bit.
+         * If it's set, we're in fill mode. If not, we're in copy mode.
+         *
+         * 1000000 = set sign bit, fill mode
+         * 0000000 = unset sign bit, copy mode
+         *
+         * 0            1 0 1 0 1 0 1
+         * sign bit,    7 lesser bits
+         *
+         * Take the 7 lesser bits of the first byte as a count indicator,
+         * If we're in fill mode, read the next byte and fill it by count in your resulting alpha map
+         * If we're in copy mode, read the next count bytes and copy them to your resulting alpha map
+         * If the alpha map is complete (4096 bytes), we're finished. If not, go back and start at 1 again.
+         */
+    }
 }
 

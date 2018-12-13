@@ -26,57 +26,57 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-	public class ModelDoodadInstances : IIFFChunk, IBinarySerializable
-	{
-		public const string Signature = "MODD";
+    public class ModelDoodadInstances : IIFFChunk, IBinarySerializable
+    {
+        public const string Signature = "MODD";
 
-		public  readonly List<DoodadInstance> DoodadInstances = new List<DoodadInstance>();
+        public  readonly List<DoodadInstance> DoodadInstances = new List<DoodadInstance>();
 
-		public ModelDoodadInstances()
-		{
-
-		}
-
-		public ModelDoodadInstances(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public ModelDoodadInstances()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					int instanceCount = inData.Length / DoodadInstance.GetSize();
-					for (int i = 0; i < instanceCount; ++i)
-					{
-						this.DoodadInstances.Add(new DoodadInstance(br.ReadBytes(DoodadInstance.GetSize())));
-					}
-				}
-			}
+
+        }
+
+        public ModelDoodadInstances(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    int instanceCount = inData.Length / DoodadInstance.GetSize();
+                    for (int i = 0; i < instanceCount; ++i)
+                    {
+                        this.DoodadInstances.Add(new DoodadInstance(br.ReadBytes(DoodadInstance.GetSize())));
+                    }
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
 
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
             {
-            	using (BinaryWriter bw = new BinaryWriter(ms))
-            	{
-		            foreach (DoodadInstance doodadInstance in this.DoodadInstances)
-		            {
-			            bw.Write(doodadInstance.Serialize());
-		            }
-            	}
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    foreach (DoodadInstance doodadInstance in this.DoodadInstances)
+                    {
+                        bw.Write(doodadInstance.Serialize());
+                    }
+                }
 
-            	return ms.ToArray();
+                return ms.ToArray();
             }
-		}
-	}
+        }
+    }
 }
 

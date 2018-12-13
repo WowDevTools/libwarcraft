@@ -22,21 +22,21 @@
 
 namespace Warcraft.Core.Shading.Blending
 {
-	public enum BlendingMode : ushort
-	{
-		Opaque							= 0,
-		AlphaKey						= 1,
-		Alpha							= 2,
-		Additive						= 3,
-		Modulate						= 4,
-		Modulate2x						= 5,
-		ModulateAdditive				= 6,
-		InvertedSourceAlphaAdditive		= 7,
-		InvertedSourceAlphaOpaque		= 8,
-		SourceAlphaOpaque				= 9,
-		NoAlphaAdditive					= 10,
-		ConstantAlpha					= 11,
-		Screen							= 12,
-		BlendAdditive					= 13
-	}
+    public enum BlendingMode : ushort
+    {
+        Opaque                            = 0,
+        AlphaKey                        = 1,
+        Alpha                            = 2,
+        Additive                        = 3,
+        Modulate                        = 4,
+        Modulate2x                        = 5,
+        ModulateAdditive                = 6,
+        InvertedSourceAlphaAdditive        = 7,
+        InvertedSourceAlphaOpaque        = 8,
+        SourceAlphaOpaque                = 9,
+        NoAlphaAdditive                    = 10,
+        ConstantAlpha                    = 11,
+        Screen                            = 12,
+        BlendAdditive                    = 13
+    }
 }

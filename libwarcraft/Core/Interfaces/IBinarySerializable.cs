@@ -22,16 +22,16 @@
 
 namespace Warcraft.Core.Interfaces
 {
-	/// <summary>
-	/// Classes which implement this interface promise to be able to serialize themselves into a binary format,
-	/// which can then be used to reconstruct the object fully by passing the same data as a byte array to its
-	/// constructor.
-	/// </summary>
-	public interface IBinarySerializable
-	{
-		/// <summary>
-		/// Serializes the current object into a byte array.
-		/// </summary>
-		byte[] Serialize();
-	}
+    /// <summary>
+    /// Classes which implement this interface promise to be able to serialize themselves into a binary format,
+    /// which can then be used to reconstruct the object fully by passing the same data as a byte array to its
+    /// constructor.
+    /// </summary>
+    public interface IBinarySerializable
+    {
+        /// <summary>
+        /// Serializes the current object into a byte array.
+        /// </summary>
+        byte[] Serialize();
+    }
 }

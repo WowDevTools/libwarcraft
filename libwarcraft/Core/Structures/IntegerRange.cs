@@ -24,69 +24,69 @@ using System;
 
 namespace Warcraft.Core.Structures
 {
-	/// <summary>
-	/// A structure representing a float range with a maximum and minimum value.
-	/// </summary>
-	public struct IntegerRange
-	{
-		/// <summary>
-		/// The minimum value included in the range.
-		/// </summary>
-		public uint Minimum
-		{
-			get;
-			private set;
-		}
+    /// <summary>
+    /// A structure representing a float range with a maximum and minimum value.
+    /// </summary>
+    public struct IntegerRange
+    {
+        /// <summary>
+        /// The minimum value included in the range.
+        /// </summary>
+        public uint Minimum
+        {
+            get;
+            private set;
+        }
 
-		/// <summary>
-		/// The maximum value included in the range.
-		/// </summary>
-		public uint Maximum
-		{
-			get;
-			private set;
-		}
+        /// <summary>
+        /// The maximum value included in the range.
+        /// </summary>
+        public uint Maximum
+        {
+            get;
+            private set;
+        }
 
-		/// <summary>
-		/// Whether or not the range is inclusive - that is, if the <see cref="Minimum"/> and <see cref="Maximum"/>
-		/// values are considered a part of the range.
-		/// </summary>
-		public bool IsInclusive
-		{
-			get;
-			private set;
-		}
+        /// <summary>
+        /// Whether or not the range is inclusive - that is, if the <see cref="Minimum"/> and <see cref="Maximum"/>
+        /// values are considered a part of the range.
+        /// </summary>
+        public bool IsInclusive
+        {
+            get;
+            private set;
+        }
 
-		/// <summary>
-		/// Creates a new <see cref="Range"/> object from a maximum and minimum value.
-		/// </summary>
-		/// <param name="inMin">The minimum value in the range.</param>
-		/// <param name="inMax">The maximum value in the range.</param>
-		/// <param name="inIsInclusive">Whether or not the range is inclusive.</param>
-		/// <returns>A new <see cref="Range"/> object.</returns>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// An <see cref="ArgumentOutOfRangeException"/> can be thrown if the minimum value is greater than the maximum
-		/// value.
-		/// </exception>
-		public IntegerRange(uint inMin, uint inMax, bool inIsInclusive = true)
-		{
-			if (!(inMin <= inMax))
-			{
-				throw new ArgumentOutOfRangeException(nameof(inMin), "inMin must be less than or equal to inMax");
-			}
+        /// <summary>
+        /// Creates a new <see cref="Range"/> object from a maximum and minimum value.
+        /// </summary>
+        /// <param name="inMin">The minimum value in the range.</param>
+        /// <param name="inMax">The maximum value in the range.</param>
+        /// <param name="inIsInclusive">Whether or not the range is inclusive.</param>
+        /// <returns>A new <see cref="Range"/> object.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// An <see cref="ArgumentOutOfRangeException"/> can be thrown if the minimum value is greater than the maximum
+        /// value.
+        /// </exception>
+        public IntegerRange(uint inMin, uint inMax, bool inIsInclusive = true)
+        {
+            if (!(inMin <= inMax))
+            {
+                throw new ArgumentOutOfRangeException(nameof(inMin), "inMin must be less than or equal to inMax");
+            }
 
-			this.Minimum = inMin;
-			this.Maximum = inMax;
-			this.IsInclusive = inIsInclusive;
-		}
+            this.Minimum = inMin;
+            this.Maximum = inMax;
+            this.IsInclusive = inIsInclusive;
+        }
 
-		/// <summary>
-		/// Creates a string representation of the current instance.
-		/// </summary>
-		/// <returns>A string representation of the current instance.</returns>
-		public override string ToString()
-		{
-			return $"Integer Range: {this.Minimum} to {this.Maximum}";
-		}
-	}
+        /// <summary>
+        /// Creates a string representation of the current instance.
+        /// </summary>
+        /// <returns>A string representation of the current instance.</returns>
+        public override string ToString()
+        {
+            return $"Integer Range: {this.Minimum} to {this.Maximum}";
+        }
+    }
 }

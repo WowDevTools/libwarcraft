@@ -22,63 +22,63 @@
 
 namespace Warcraft.Core.Structures
 {
-	/// <summary>
-	/// A structure representing an BGRA colour value.
-	/// </summary>
-	public struct BGRA
-	{
-		/// <summary>
-		/// The red component.
-		/// </summary>
-		public byte B;
+    /// <summary>
+    /// A structure representing an BGRA colour value.
+    /// </summary>
+    public struct BGRA
+    {
+        /// <summary>
+        /// The red component.
+        /// </summary>
+        public byte B;
 
-		/// <summary>
-		/// The green component.
-		/// </summary>
-		public byte G;
+        /// <summary>
+        /// The green component.
+        /// </summary>
+        public byte G;
 
-		/// <summary>
-		/// The blue component.
-		/// </summary>
-		public byte R;
+        /// <summary>
+        /// The blue component.
+        /// </summary>
+        public byte R;
 
-		/// <summary>
-		/// The alpha component.
-		/// </summary>
-		public byte A;
+        /// <summary>
+        /// The alpha component.
+        /// </summary>
+        public byte A;
 
-		/// <summary>
-		/// Creates a new <see cref="BGRA"/> object from a set of byte component values.
-		/// </summary>
-		/// <param name="inG">The input blue component.</param>
-		/// <param name="inB">The input green component.</param>
-		/// <param name="inR">The input red component.</param>
-		/// <param name="inA">The input alpha component.</param>
-		public BGRA(byte inB, byte inG, byte inR, byte inA)
-		{
-			this.B = inB;
-			this.G = inG;
-			this.R = inR;
-			this.A = inA;
-		}
+        /// <summary>
+        /// Creates a new <see cref="BGRA"/> object from a set of byte component values.
+        /// </summary>
+        /// <param name="inG">The input blue component.</param>
+        /// <param name="inB">The input green component.</param>
+        /// <param name="inR">The input red component.</param>
+        /// <param name="inA">The input alpha component.</param>
+        public BGRA(byte inB, byte inG, byte inR, byte inA)
+        {
+            this.B = inB;
+            this.G = inG;
+            this.R = inR;
+            this.A = inA;
+        }
 
-		/// <summary>
-		/// Creates a new <see cref="BGRA"/> object from a byte that fills all components.
-		/// </summary>
-		/// <param name="all">The input byte component.</param>
-		public BGRA(byte all)
-			:this(all, all, all, all)
-		{
+        /// <summary>
+        /// Creates a new <see cref="BGRA"/> object from a byte that fills all components.
+        /// </summary>
+        /// <param name="all">The input byte component.</param>
+        public BGRA(byte all)
+            :this(all, all, all, all)
+        {
 
-		}
+        }
 
-		/// <summary>
-		/// Creates a string representation of the current instance.
-		/// </summary>
-		/// <returns>A string representation of the current instance.</returns>
-		public override string ToString()
-		{
-			return $"bgra({this.B}, {this.G}, {this.R}, {this.A})";
-		}
-	}
+        /// <summary>
+        /// Creates a string representation of the current instance.
+        /// </summary>
+        /// <returns>A string representation of the current instance.</returns>
+        public override string ToString()
+        {
+            return $"bgra({this.B}, {this.G}, {this.R}, {this.A})";
+        }
+    }
 }

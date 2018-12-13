@@ -3,117 +3,117 @@ using System.Numerics;
 
 namespace Warcraft.Core.Compression.Squish
 {
-	internal class ClusterFit : ColourFit
-	{
-		private const int MaxIterations = 8;
+    internal class ClusterFit : ColourFit
+    {
+        private const int MaxIterations = 8;
 
-		#region Fields
+        #region Fields
 
-		private int _IterationCount;
-		private Vector3 _Principle;
-		private byte[] _Order = new byte[16 * MaxIterations];
-		private Vector4[] _PointsWeight = new Vector4[16];
-		private Vector4 _XSumWSum;
-		private Vector4 _Metric;
-		private Vector4 _BestError;
+        private int _IterationCount;
+        private Vector3 _Principle;
+        private byte[] _Order = new byte[16 * MaxIterations];
+        private Vector4[] _PointsWeight = new Vector4[16];
+        private Vector4 _XSumWSum;
+        private Vector4 _Metric;
+        private Vector4 _BestError;
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		protected ClusterFit(ColourSet colours, SquishOptions flags)
-			: base(colours, flags)
-		{
-			// Set the iteration count.
-			this._IterationCount = flags.HasFlag(SquishOptions.ColourIterativeClusterFit) ? MaxIterations : 1;
+        protected ClusterFit(ColourSet colours, SquishOptions flags)
+            : base(colours, flags)
+        {
+            // Set the iteration count.
+            this._IterationCount = flags.HasFlag(SquishOptions.ColourIterativeClusterFit) ? MaxIterations : 1;
 
-			// Initialise the best error.
-			this._BestError = new Vector4(float.MaxValue);
+            // Initialise the best error.
+            this._BestError = new Vector4(float.MaxValue);
 
-			// Initialize the metric
-			var perceptual = flags.HasFlag(SquishOptions.ColourMetricPerceptual);
-			if (perceptual)
-			{
-				this._Metric = new Vector4(0.2126f, 0.7152f, 0.0722f, 0.0f);
-			}
-			else
-			{
-				this._Metric = new Vector4(1.0f);
-			}
+            // Initialize the metric
+            var perceptual = flags.HasFlag(SquishOptions.ColourMetricPerceptual);
+            if (perceptual)
+            {
+                this._Metric = new Vector4(0.2126f, 0.7152f, 0.0722f, 0.0f);
+            }
+            else
+            {
+                this._Metric = new Vector4(1.0f);
+            }
 
-			// Get the covariance matrix.
-			var covariance = Sym3x3.ComputeWeightedCovariance(colours.Count, colours.Points, colours.Weights);
+            // Get the covariance matrix.
+            var covariance = Sym3x3.ComputeWeightedCovariance(colours.Count, colours.Points, colours.Weights);
 
-			// Compute the principle component
-			this._Principle = Sym3x3.ComputePrincipledComponent(covariance);
-		}
+            // Compute the principle component
+            this._Principle = Sym3x3.ComputePrincipledComponent(covariance);
+        }
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		protected bool ConstructOrdering(Vector3 axis, int iteration)
-		{
-			// Build the list of dot products.
-			var dps = new float[16];
-			var ordOff = 16 * iteration;
-			for (int i = 0; i < this._Colours.Count; ++i)
-			{
-				dps[i] = Vector3.Dot(this._Colours.Points[i], axis);
-				this._Order[ordOff + i] = (byte)i;
-			}
+        protected bool ConstructOrdering(Vector3 axis, int iteration)
+        {
+            // Build the list of dot products.
+            var dps = new float[16];
+            var ordOff = 16 * iteration;
+            for (int i = 0; i < this._Colours.Count; ++i)
+            {
+                dps[i] = Vector3.Dot(this._Colours.Points[i], axis);
+                this._Order[ordOff + i] = (byte)i;
+            }
 
-			// Stable sort using them.
-			for (int i = 0; i < this._Colours.Count; ++i)
-			{
-				for (int j = i; j > 0 && dps[j] < dps[j - 1]; --j)
-				{
-					var _dps = dps[j];
-					var _order = this._Order[ordOff + j];
+            // Stable sort using them.
+            for (int i = 0; i < this._Colours.Count; ++i)
+            {
+                for (int j = i; j > 0 && dps[j] < dps[j - 1]; --j)
+                {
+                    var _dps = dps[j];
+                    var _order = this._Order[ordOff + j];
 
-					dps[j] = dps[j - 1];
-					dps[j - 1] = _dps;
-					this._Order[ordOff + j] = this._Order[ordOff + j - 1];
-					this._Order[ordOff + j - 1] = _order;
-				}
-			}
+                    dps[j] = dps[j - 1];
+                    dps[j - 1] = _dps;
+                    this._Order[ordOff + j] = this._Order[ordOff + j - 1];
+                    this._Order[ordOff + j - 1] = _order;
+                }
+            }
 
-			// Check this ordering is unique
-			for (int it = 0; it < iteration; ++it)
-			{
-				var prevOff = 16 * it;
-				var same = true;
-				for (int i = 0; i < this._Colours.Count; ++i)
-				{
-					if (this._Order[ordOff + i] != this._Order[prevOff + i])
-					{
-						same = false;
-						break;
-					}
-				}
-				if (same)
-				{
-					return false;
-				}
-			}
+            // Check this ordering is unique
+            for (int it = 0; it < iteration; ++it)
+            {
+                var prevOff = 16 * it;
+                var same = true;
+                for (int i = 0; i < this._Colours.Count; ++i)
+                {
+                    if (this._Order[ordOff + i] != this._Order[prevOff + i])
+                    {
+                        same = false;
+                        break;
+                    }
+                }
+                if (same)
+                {
+                    return false;
+                }
+            }
 
-			// Copy the ordering and weight all the points
-			this._XSumWSum = new Vector4(0f);
-			for (int i = 0; i < this._Colours.Count; ++i)
-			{
-				var j = this._Order[ordOff + i];
-				var p = new Vector4(this._Colours.Points[j].X, this._Colours.Points[j].Y, this._Colours.Points[j].Z, 1f);
-				var w = new Vector4(this._Colours.Weights[j]);
-				var x = p * w;
-				this._PointsWeight[i] = x;
-				this._XSumWSum += x;
-			}
-			return true;
-		}
+            // Copy the ordering and weight all the points
+            this._XSumWSum = new Vector4(0f);
+            for (int i = 0; i < this._Colours.Count; ++i)
+            {
+                var j = this._Order[ordOff + i];
+                var p = new Vector4(this._Colours.Points[j].X, this._Colours.Points[j].Y, this._Colours.Points[j].Z, 1f);
+                var w = new Vector4(this._Colours.Weights[j]);
+                var x = p * w;
+                this._PointsWeight[i] = x;
+                this._XSumWSum += x;
+            }
+            return true;
+        }
 
-		protected override void Compress3(byte[] block)
-		{
-			/*
+        protected override void Compress3(byte[] block)
+        {
+            /*
            // Declare variables
             var count = _Colours.Count;
             var zero = new Vector4(0f);
@@ -140,13 +140,13 @@ namespace Warcraft.Core.Compression.Squish
                 throw new NotImplementedException();
             }
             */
-		}
+        }
 
-		protected override void Compress4(byte[] block)
-		{
-			throw new NotImplementedException();
-		}
+        protected override void Compress4(byte[] block)
+        {
+            throw new NotImplementedException();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

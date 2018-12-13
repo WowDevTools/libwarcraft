@@ -27,61 +27,61 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MPQ.Tables.Extended.Common
 {
-	/// <summary>
-	/// The extended table header class represents a common header for the extended table types, used in the
-	/// <see cref="MPQFormat.ExtendedV2"/> and <see cref="MPQFormat.ExtendedV3"/> formats. It contains a simple
-	/// binary signature, a table format version, and a total size of the following table.
-	/// </summary>
-	public class ExtendedTableHeader : IBinarySerializable
-	{
-		/// <summary>
-		/// The data signature of the extended table.
-		/// </summary>
-		public string Signature;
+    /// <summary>
+    /// The extended table header class represents a common header for the extended table types, used in the
+    /// <see cref="MPQFormat.ExtendedV2"/> and <see cref="MPQFormat.ExtendedV3"/> formats. It contains a simple
+    /// binary signature, a table format version, and a total size of the following table.
+    /// </summary>
+    public class ExtendedTableHeader : IBinarySerializable
+    {
+        /// <summary>
+        /// The data signature of the extended table.
+        /// </summary>
+        public string Signature;
 
-		/// <summary>
-		/// The version of the extended table.
-		/// </summary>
-		public uint Version;
+        /// <summary>
+        /// The version of the extended table.
+        /// </summary>
+        public uint Version;
 
-		/// <summary>
-		/// The size of the following table data.
-		/// </summary>
-		public uint DataSize;
+        /// <summary>
+        /// The size of the following table data.
+        /// </summary>
+        public uint DataSize;
 
-		/// <summary>
-		/// Creates a new <see cref="ExtendedTableHeader"/> object from provided binary data.
-		/// </summary>
-		/// <param name="data">The data to deserialize the object from.</param>
-		public ExtendedTableHeader(byte[] data)
-		{
-			using (MemoryStream ms = new MemoryStream(data))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Signature = BitConverter.ToString(br.ReadBytes(4));
-					this.Version = br.ReadUInt32();
-					this.DataSize = br.ReadUInt32();
-				}
-			}
-		}
+        /// <summary>
+        /// Creates a new <see cref="ExtendedTableHeader"/> object from provided binary data.
+        /// </summary>
+        /// <param name="data">The data to deserialize the object from.</param>
+        public ExtendedTableHeader(byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Signature = BitConverter.ToString(br.ReadBytes(4));
+                    this.Version = br.ReadUInt32();
+                    this.DataSize = br.ReadUInt32();
+                }
+            }
+        }
 
-		/// <summary>
-		/// Serializes the current object into a byte array.
-		/// </summary>
-		public byte[] Serialize()
-		{
-			using (MemoryStream ms = new MemoryStream())
-			{
-				using (BinaryWriter bw = new BinaryWriter(ms))
-				{
-					bw.Write(BitConverter.ToUInt32(Encoding.ASCII.GetBytes(this.Signature), 0));
-					bw.Write(this.Version);
-					bw.Write(this.DataSize);
-				}
+        /// <summary>
+        /// Serializes the current object into a byte array.
+        /// </summary>
+        public byte[] Serialize()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write(BitConverter.ToUInt32(Encoding.ASCII.GetBytes(this.Signature), 0));
+                    bw.Write(this.Version);
+                    bw.Write(this.DataSize);
+                }
 
-				return ms.ToArray();
-			}
-		}
-	}
+                return ms.ToArray();
+            }
+        }
+    }
 }

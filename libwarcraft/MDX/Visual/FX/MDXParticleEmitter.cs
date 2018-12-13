@@ -22,11 +22,11 @@
 
 namespace Warcraft.MDX.Visual.FX
 {
-	public class MDXParticleEmitter
-	{
-		public MDXParticleEmitter()
-		{
-		}
-	}
+    public class MDXParticleEmitter
+    {
+        public MDXParticleEmitter()
+        {
+        }
+    }
 }
 

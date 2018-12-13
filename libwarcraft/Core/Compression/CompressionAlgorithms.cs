@@ -24,49 +24,49 @@ using System;
 
 namespace Warcraft.Core.Compression
 {
-	/// <summary>
-	/// This enum contains all of the compression algorithms used in MPQ archives. They are sorted according to
-	/// compression order, and must not be reordered.
-	///
-	/// When compressing, the algorithms are applied from top to bottom. When decompressing, the inverse is true.
-	/// </summary>
-	[Flags]
-	public enum CompressionAlgorithms : byte
-	{
-		/// <summary>
-		/// LZMA compression.
-		/// </summary>
-		LZMA 			= 0x20,
+    /// <summary>
+    /// This enum contains all of the compression algorithms used in MPQ archives. They are sorted according to
+    /// compression order, and must not be reordered.
+    ///
+    /// When compressing, the algorithms are applied from top to bottom. When decompressing, the inverse is true.
+    /// </summary>
+    [Flags]
+    public enum CompressionAlgorithms : byte
+    {
+        /// <summary>
+        /// LZMA compression.
+        /// </summary>
+        LZMA             = 0x20,
 
-		/// <summary>
-		/// IMA ADPCM Mono Audio compression.
-		/// </summary>
-		ADPCMMono 		= 0x40,
+        /// <summary>
+        /// IMA ADPCM Mono Audio compression.
+        /// </summary>
+        ADPCMMono         = 0x40,
 
-		/// <summary>
-		/// IMA ADPCM Stereo Audio compression.
-		/// </summary>
-		ADPCMStereo		= 0x80,
+        /// <summary>
+        /// IMA ADPCM Stereo Audio compression.
+        /// </summary>
+        ADPCMStereo        = 0x80,
 
-		/// <summary>
-		/// Huffman tree compression.
-		/// </summary>
-		Huffman 		= 0x01,
+        /// <summary>
+        /// Huffman tree compression.
+        /// </summary>
+        Huffman         = 0x01,
 
-		/// <summary>
-		/// ZLIB Deflate compression.
-		/// </summary>
-		Deflate 		= 0x02,
+        /// <summary>
+        /// ZLIB Deflate compression.
+        /// </summary>
+        Deflate         = 0x02,
 
-		/// <summary>
-		/// PKWARE Implde compression.
-		/// </summary>
-		Implode 		= 0x08,
+        /// <summary>
+        /// PKWARE Implde compression.
+        /// </summary>
+        Implode         = 0x08,
 
-		/// <summary>
-		/// BZip2 compression.
-		/// </summary>
-		BZip2 			= 0x10
-	}
+        /// <summary>
+        /// BZip2 compression.
+        /// </summary>
+        BZip2             = 0x10
+    }
 }
 

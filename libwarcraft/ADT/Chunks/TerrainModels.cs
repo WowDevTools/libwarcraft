@@ -27,47 +27,47 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
-	/// <summary>
-	/// MMDX Chunk - Contains a list of all referenced M2 models in this ADT.
-	/// </summary>
-	public class TerrainModels : IIFFChunk
-	{
-		public const string Signature = "MMDX";
+    /// <summary>
+    /// MMDX Chunk - Contains a list of all referenced M2 models in this ADT.
+    /// </summary>
+    public class TerrainModels : IIFFChunk
+    {
+        public const string Signature = "MMDX";
 
-		/// <summary>
-		///A list of full paths to the M2 models referenced in this ADT.
-		/// </summary>
-		public List<string> Filenames = new List<string>();
+        /// <summary>
+        ///A list of full paths to the M2 models referenced in this ADT.
+        /// </summary>
+        public List<string> Filenames = new List<string>();
 
-		public TerrainModels()
-		{
-
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainModels"/> class.
-		/// </summary>
-		/// <param name="inData">ExtendedData.</param>
-		public TerrainModels(byte[] inData)
-		{
-			LoadBinaryData(inData);
-		}
-
-		public void LoadBinaryData(byte[] inData)
+        public TerrainModels()
         {
-        	using (MemoryStream ms = new MemoryStream(inData))
-			{
-				using (BinaryReader br = new BinaryReader(ms))
-				{
-					this.Filenames.Add(br.ReadNullTerminatedString());
-				}
-			}
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainModels"/> class.
+        /// </summary>
+        /// <param name="inData">ExtendedData.</param>
+        public TerrainModels(byte[] inData)
+        {
+            LoadBinaryData(inData);
+        }
+
+        public void LoadBinaryData(byte[] inData)
+        {
+            using (MemoryStream ms = new MemoryStream(inData))
+            {
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    this.Filenames.Add(br.ReadNullTerminatedString());
+                }
+            }
         }
 
         public string GetSignature()
         {
-        	return Signature;
+            return Signature;
         }
-	}
+    }
 }
 

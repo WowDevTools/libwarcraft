@@ -25,32 +25,32 @@ using Warcraft.DBC;
 
 namespace Warcraft.Core.Reflection.DBC
 {
-	/// <summary>
-	/// Applies information about a foreign key to a record property, such as the database name and the name of the
-	/// field it points to.
-	/// </summary>
-	[AttributeUsage(AttributeTargets.Property)]
-	public class ForeignKeyInfoAttribute : Attribute
-	{
-		/// <summary>
-		/// Gets the database that the key points to.
-		/// </summary>
-		public DatabaseName Database { get; }
+    /// <summary>
+    /// Applies information about a foreign key to a record property, such as the database name and the name of the
+    /// field it points to.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ForeignKeyInfoAttribute : Attribute
+    {
+        /// <summary>
+        /// Gets the database that the key points to.
+        /// </summary>
+        public DatabaseName Database { get; }
 
-		/// <summary>
-		/// Gets the name of the column that the key points to in the database.
-		/// </summary>
-		public string Field { get; }
+        /// <summary>
+        /// Gets the name of the column that the key points to in the database.
+        /// </summary>
+        public string Field { get; }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ForeignKeyInfoAttribute"/> class.
-		/// </summary>
-		/// <param name="databaseName">The name of the database the key points to.</param>
-		/// <param name="field">The name of the field that the key points to in the database.</param>
-		public ForeignKeyInfoAttribute(DatabaseName databaseName, string field)
-		{
-			this.Database = databaseName;
-			this.Field = field;
-		}
-	}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ForeignKeyInfoAttribute"/> class.
+        /// </summary>
+        /// <param name="databaseName">The name of the database the key points to.</param>
+        /// <param name="field">The name of the field that the key points to in the database.</param>
+        public ForeignKeyInfoAttribute(DatabaseName databaseName, string field)
+        {
+            this.Database = databaseName;
+            this.Field = field;
+        }
+    }
 }

@@ -24,16 +24,16 @@ using System.Collections.Generic;
 
 namespace Warcraft.Core.Interfaces
 {
-	/// <summary>
-	/// Defines an interface which provides a way to flatten a data type into a collection of another data type.
-	/// </summary>
-	/// <typeparam name="T">The data type to flatten to.</typeparam>
-	public interface IFlattenableData<out T>
-	{
-		/// <summary>
-		/// Flattens the object into a collection of <typeparamref name="T"/>.
-		/// </summary>
-		/// <returns>A read-only collection.</returns>
-		IReadOnlyCollection<T> Flatten();
-	}
+    /// <summary>
+    /// Defines an interface which provides a way to flatten a data type into a collection of another data type.
+    /// </summary>
+    /// <typeparam name="T">The data type to flatten to.</typeparam>
+    public interface IFlattenableData<out T>
+    {
+        /// <summary>
+        /// Flattens the object into a collection of <typeparamref name="T"/>.
+        /// </summary>
+        /// <returns>A read-only collection.</returns>
+        IReadOnlyCollection<T> Flatten();
+    }
 }
