@@ -27,6 +27,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelVertexColours : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOCV";
 
         public List<BGRA> VertexColours = new List<BGRA>();

@@ -25,6 +25,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelLightReferences : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOLR";
 
         public List<ushort> LightReferences = new List<ushort>();

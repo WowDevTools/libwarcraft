@@ -35,6 +35,9 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <summary>
         /// The RIFF signature for this block.
         /// </summary>
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MODN";
 
         /// <summary>

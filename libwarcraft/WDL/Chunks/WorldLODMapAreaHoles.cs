@@ -25,6 +25,9 @@ namespace Warcraft.WDL.Chunks
 {
     public class WorldLODMapAreaHoles : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MAHO";
 
         public readonly List<short> HoleMasks = new List<short>();

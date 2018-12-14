@@ -25,6 +25,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 {
     public class ModelGameObjectFileID : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "GFID";
 
         public List<uint> IDFlags = new List<uint>();

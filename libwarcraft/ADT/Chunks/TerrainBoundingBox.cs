@@ -27,6 +27,9 @@ namespace Warcraft.ADT.Chunks
 {
     public class TerrainBoundingBox : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MFBO";
 
         public ShortPlane Maximum;

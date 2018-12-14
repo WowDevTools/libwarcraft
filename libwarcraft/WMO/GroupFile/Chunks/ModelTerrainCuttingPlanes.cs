@@ -27,6 +27,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelTerrainCuttingPlanes : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOPL";
 
         public List<Plane> CuttingPlanes = new List<Plane>();

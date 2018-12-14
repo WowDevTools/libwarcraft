@@ -27,6 +27,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelTangentArray : IIFFChunk, IBinarySerializable, IPostLoad<ModelTangentArrayPostLoadParameters>
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOTA";
 
         private bool InternalHasFinishedLoading;

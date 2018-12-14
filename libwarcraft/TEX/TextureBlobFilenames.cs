@@ -32,6 +32,9 @@ namespace Warcraft.TEX
         /// <summary>
         /// The RIFF chunk signature of this data chunk.
         /// </summary>
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "TXFN";
 
         /// <summary>

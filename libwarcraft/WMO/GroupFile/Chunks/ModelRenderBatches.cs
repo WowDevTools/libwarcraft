@@ -27,6 +27,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelRenderBatches : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOBA";
 
         public readonly List<RenderBatch> RenderBatches = new List<RenderBatch>();

@@ -16,15 +16,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-using System;
+
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
+    /// <summary>
+    /// MCLQ chunk - holds liquid vertex data.
+    /// </summary>
     public class MapChunkLiquids : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MCLQ";
 
         public float MinimumLiquidLevel;
@@ -74,55 +80,6 @@ namespace Warcraft.ADT.Chunks.Subchunks
         {
             return Signature;
         }
-    }
-
-    public class LiquidVertex : IBinarySerializable
-    {
-        public Tuple<ushort, ushort> TextureCoordinates;
-        public float Height;
-
-        public LiquidVertex(byte[] data)
-        {
-            using (MemoryStream ms = new MemoryStream(data))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    TextureCoordinates = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-                    Height = br.ReadSingle();
-                }
-            }
-        }
-
-        public static int GetSize()
-        {
-            return 8;
-        }
-
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write(TextureCoordinates.Item1);
-                    bw.Write(TextureCoordinates.Item2);
-
-                    bw.Write(Height);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
-
-    [Flags]
-    public enum LiquidFlags : byte
-    {
-        Hidden         = 0x08,
-        // Unknown1 = 0x10,
-        // Unknown2 = 0x20,
-        Fishable     = 0x40,
-        Shared         = 0x80
     }
 }
 

@@ -27,6 +27,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelTextureCoordinates : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOTV";
 
         public readonly List<Vector2> TextureCoordinates = new List<Vector2>();

@@ -25,6 +25,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelVertexIndices : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOVI";
 
         public List<ushort> VertexIndices = new List<ushort>();

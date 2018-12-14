@@ -25,6 +25,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
 {
     public class MapChunkSoundEmitters : IIFFChunk, IBinarySerializable, IPostLoad<uint>
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MCSE";
         private bool hasFinishedLoading;
         private byte[] Data;

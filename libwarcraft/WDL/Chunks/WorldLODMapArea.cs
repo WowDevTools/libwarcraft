@@ -25,6 +25,9 @@ namespace Warcraft.WDL.Chunks
 {
     public class WorldLODMapArea : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MARE";
 
         public readonly List<short> HighResVertices = new List<short>();

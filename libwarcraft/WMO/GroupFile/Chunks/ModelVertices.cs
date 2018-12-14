@@ -34,6 +34,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
     /// </summary>
     public class ModelVertices : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOVT";
 
         public readonly List<Vector3> Vertices = new List<Vector3>();

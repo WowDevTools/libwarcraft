@@ -25,6 +25,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelBSPNodes : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOBN";
 
         public readonly List<BSPNode> BSPNodes = new List<BSPNode>();

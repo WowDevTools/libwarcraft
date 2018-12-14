@@ -26,6 +26,9 @@ namespace Warcraft.ADT.Chunks
     /// </summary>
     public class TerrainVersion : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MVER";
 
         /// <summary>

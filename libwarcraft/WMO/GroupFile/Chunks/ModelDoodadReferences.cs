@@ -25,6 +25,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelDoodadReferences : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MODR";
 
         public readonly List<ushort> DoodadReferences = new List<ushort>();

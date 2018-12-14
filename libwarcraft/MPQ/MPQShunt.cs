@@ -32,6 +32,9 @@ namespace Warcraft.MPQ
         /// <summary>
         /// The data signature of the shunt.
         /// </summary>
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MPQ\x1B";
 
         /// <summary>

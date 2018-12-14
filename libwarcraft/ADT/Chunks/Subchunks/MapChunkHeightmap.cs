@@ -31,21 +31,27 @@ namespace Warcraft.ADT.Chunks.Subchunks
     /// </summary>
     public class MapChunkHeightmap : IIFFChunk
     {
-        public const string Signature = "MCVT";
         /// <summary>
-        /// The high res vertices, used when viewing a map tile up close. When these
+        /// Holds the binary chunk signature.
+        /// </summary>
+        public const string Signature = "MCVT";
+
+        /// <summary>
+        /// Gets or sets the high res vertices, used when viewing a map tile up close. When these
         /// are visible, the low res vertices are also used.
         /// </summary>
-        public List<float> HighResVertices = new List<float>();
+        public List<float> HighResVertices { get; set; } = new List<float>();
 
         /// <summary>
-        /// The low res vertices, used when viewing a map tile from far away.
+        /// Gets or sets the low res vertices, used when viewing a map tile from far away.
         /// </summary>
-        public List<float> LowResVertices = new List<float>();
+        public List<float> LowResVertices { get; set; }  = new List<float>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkHeightmap"/> class.
+        /// </summary>
         public MapChunkHeightmap()
         {
-
         }
 
         /// <summary>
@@ -57,6 +63,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
             LoadBinaryData(inData);
         }
 
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
@@ -86,6 +93,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
             }
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;

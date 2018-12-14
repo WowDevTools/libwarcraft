@@ -25,6 +25,9 @@ namespace Warcraft.WDL.Chunks
 {
     public class WorldLODMapAreaOffsets : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MAOF";
 
         public readonly List<uint> MapAreaOffsets = new List<uint>();

@@ -38,6 +38,9 @@ namespace Warcraft.MDX
 {
     public class MDX
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MD20";
         public WarcraftVersion Version;
         public string Name;

@@ -26,6 +26,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
 {
     public class MapChunkVertexNormals : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MCNR";
 
         public List<Vector3> HighResVertexNormals = new List<Vector3>();

@@ -28,6 +28,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 {
     public class ModelGroupInformation : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOGI";
 
         public readonly List<GroupInformation> GroupInformations = new List<GroupInformation>();

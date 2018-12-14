@@ -25,6 +25,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 {
     public class ModelSkybox : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOSB";
 
         public string SkyboxName;

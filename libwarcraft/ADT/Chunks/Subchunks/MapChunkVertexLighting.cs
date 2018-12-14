@@ -27,6 +27,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
 {
     public class MapChunkVertexLighting : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MCLV";
 
         public List<RGBA> HighResVertexLights = new List<RGBA>();

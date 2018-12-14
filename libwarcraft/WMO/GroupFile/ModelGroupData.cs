@@ -32,6 +32,9 @@ namespace Warcraft.WMO.GroupFile
 {
     public class ModelGroupData : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOGP";
 
         public uint GroupNameOffset;

@@ -25,6 +25,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 {
     public class ModelVisibleBlocks : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOVB";
 
         public readonly List<VisibleBlock> VisibleBlocks = new List<VisibleBlock>();

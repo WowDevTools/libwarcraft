@@ -31,6 +31,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
     /// </summary>
     public class MapChunkTextureLayers : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MCLY";
 
         /// <summary>

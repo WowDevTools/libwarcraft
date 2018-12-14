@@ -24,6 +24,9 @@ namespace Warcraft.WDT.Chunks
 {
     public class WorldTableHeader : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MPHD";
 
         public WorldTableFlags Flags;

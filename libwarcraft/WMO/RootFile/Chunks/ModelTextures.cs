@@ -27,6 +27,9 @@ namespace Warcraft.WMO.RootFile.Chunks
     // TODO: Rework to support offset-based seeking and adding of strings
     public class ModelTextures : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOTX";
 
         public readonly Dictionary<long, string> Textures = new Dictionary<long, string>();

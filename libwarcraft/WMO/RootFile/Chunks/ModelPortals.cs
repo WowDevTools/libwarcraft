@@ -27,6 +27,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 {
     public class ModelPortals : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOPT";
 
         public readonly List<Portal> Portals = new List<Portal>();

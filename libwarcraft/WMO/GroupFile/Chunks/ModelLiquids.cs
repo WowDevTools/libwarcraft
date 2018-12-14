@@ -28,6 +28,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelLiquids : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MLIQ";
 
         public uint WidthVertices;

@@ -31,6 +31,9 @@ namespace Warcraft.ADT.Chunks
     /// </summary>
     public class TerrainWorldModelObjectPlacementInfo : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MODF";
 
         /// <summary>

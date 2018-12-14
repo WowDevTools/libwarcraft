@@ -25,6 +25,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelPolygonMaterials : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOPY";
 
         public List<PolygonMaterial> PolygonMaterials = new List<PolygonMaterial>();

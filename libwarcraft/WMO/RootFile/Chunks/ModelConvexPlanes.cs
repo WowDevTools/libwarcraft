@@ -38,6 +38,9 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <summary>
         /// The static block signature of the convex plane block.
         /// </summary>
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MCVP";
 
         /// <summary>

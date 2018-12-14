@@ -25,6 +25,9 @@ namespace Warcraft.WDT.Chunks
 {
     public class WorldTableAreaInfo : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MAIN";
 
         public List<AreaInfoEntry> Entries = new List<AreaInfoEntry>();

@@ -27,6 +27,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 {
     public class ModelVisibleVertices : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOVV";
 
         public readonly List<Vector3> VisibleVertices = new List<Vector3>();

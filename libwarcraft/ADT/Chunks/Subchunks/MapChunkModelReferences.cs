@@ -25,6 +25,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
 {
     public class MapChunkModelReferences : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MCRF";
 
         private byte[] Data;

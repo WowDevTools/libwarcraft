@@ -29,6 +29,9 @@ namespace Warcraft.ADT.Chunks
     /// </summary>
     public class TerrainMapChunk : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MCNK";
         /// <summary>
         /// Header contains information about the MCNK and its subchunks such as offsets, position and flags.

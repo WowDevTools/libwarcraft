@@ -28,6 +28,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 {
     public class ModelFog : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MFOG";
 
         public readonly List<FogInstance> FogInstances = new List<FogInstance>();

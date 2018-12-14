@@ -25,6 +25,9 @@ namespace Warcraft.ADT.Chunks
 {
     public class TerrainTextureFlags : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MTXF";
 
         private List<TerrainTextureFlag> TextureFlags = new List<TerrainTextureFlag>();

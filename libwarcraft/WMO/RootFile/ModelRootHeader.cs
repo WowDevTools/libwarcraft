@@ -30,6 +30,9 @@ namespace Warcraft.WMO.RootFile
 {
     public class ModelRootHeader : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOHD";
 
         public uint TextureCount;

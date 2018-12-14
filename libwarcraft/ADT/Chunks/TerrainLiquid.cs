@@ -32,6 +32,9 @@ namespace Warcraft.ADT.Chunks
     /// </summary>
     public class TerrainLiquid : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MH2O";
 
         /// <summary>

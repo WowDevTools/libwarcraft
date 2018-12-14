@@ -29,6 +29,9 @@ namespace Warcraft.ADT.Chunks
     /// </summary>
     public class TerrainModels : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MMDX";
 
         /// <summary>

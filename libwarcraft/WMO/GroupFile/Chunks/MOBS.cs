@@ -23,6 +23,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class MOBS : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOBS";
 
         public byte[] Data;

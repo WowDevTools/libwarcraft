@@ -33,6 +33,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 {
     public class ModelMaterials : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOMT";
 
         public readonly List<ModelMaterial> Materials = new List<ModelMaterial>();

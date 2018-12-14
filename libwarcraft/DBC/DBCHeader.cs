@@ -29,6 +29,9 @@ namespace Warcraft.DBC
         /// <summary>
         /// The data signature of a DBC file.
         /// </summary>
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "WDBC";
 
         /// <summary>

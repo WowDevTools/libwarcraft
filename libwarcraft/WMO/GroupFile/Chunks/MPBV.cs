@@ -29,6 +29,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <summary>
         /// The RIFF chunk signature of this chunk.
         /// </summary>
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MPBV";
 
         /// <summary>

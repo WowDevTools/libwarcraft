@@ -32,6 +32,9 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <summary>
         /// The static block signature of this chunk.
         /// </summary>
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MODS";
 
         /// <summary>

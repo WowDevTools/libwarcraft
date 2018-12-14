@@ -27,6 +27,9 @@ namespace Warcraft.ADT.Chunks
     /// </summary>
     public class TerrainHeader : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MHDR";
 
         /// <summary>

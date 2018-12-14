@@ -30,6 +30,9 @@ namespace Warcraft.WMO.RootFile.Chunks
     // TODO: Rework to support offset-based seeking and adding of strings
     public class ModelGroupNames : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOGN";
 
         public readonly Dictionary<long, string> GroupNames = new Dictionary<long, string>();

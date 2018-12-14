@@ -28,6 +28,9 @@ namespace Warcraft.WMO.RootFile.Chunks
 {
     public class ModelStaticLighting : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MOLT";
 
         public readonly List<StaticLight> StaticLights = new List<StaticLight>();
