@@ -19,63 +19,63 @@
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	/// <summary>
-	/// Flags available for a MCNK.
-	/// </summary>
-	public enum MapChunkFlags : uint
-	{
-		/// <summary>
-		/// Flags the MCNK as containing a static shadow map
-		/// </summary>
-		HasBakedShadows = 1,
+    /// <summary>
+    /// Flags available for a MCNK.
+    /// </summary>
+    public enum MapChunkFlags : uint
+    {
+        /// <summary>
+        /// Flags the MCNK as containing a static shadow map
+        /// </summary>
+        HasBakedShadows = 1,
 
-		/// <summary>
-		/// Flags the MCNK as impassible
-		/// </summary>
-		Impassible = 2,
+        /// <summary>
+        /// Flags the MCNK as impassible
+        /// </summary>
+        Impassible = 2,
 
-		/// <summary>
-		/// Flags the MCNK as a river
-		/// </summary>
-		IsRiver = 4,
+        /// <summary>
+        /// Flags the MCNK as a river
+        /// </summary>
+        IsRiver = 4,
 
-		/// <summary>
-		/// Flags the MCNK as an ocean
-		/// </summary>
-		IsOcean = 8,
+        /// <summary>
+        /// Flags the MCNK as an ocean
+        /// </summary>
+        IsOcean = 8,
 
-		/// <summary>
-		/// Flags the MCNK as magma
-		/// </summary>
-		IsMagma = 16,
+        /// <summary>
+        /// Flags the MCNK as magma
+        /// </summary>
+        IsMagma = 16,
 
-		/// <summary>
-		/// Flags the MCNK as slime
-		/// </summary>
-		IsSlime = 32,
+        /// <summary>
+        /// Flags the MCNK as slime
+        /// </summary>
+        IsSlime = 32,
 
-		/// <summary>
-		/// Flags the MCNK as containing an MCCV chunk
-		/// </summary>
-		HasVertexShading = 64,
+        /// <summary>
+        /// Flags the MCNK as containing an MCCV chunk
+        /// </summary>
+        HasVertexShading = 64,
 
-		/// <summary>
-		/// Unknown flag, but occasionally set.
-		/// </summary>
-		Unknown = 128,
+        /// <summary>
+        /// Unknown flag, but occasionally set.
+        /// </summary>
+        Unknown = 128,
 
-		// 7 unused bits
+        // 7 unused bits
 
-		/// <summary>
-		/// Disables repair of the alpha maps in this chunk.
-		/// </summary>
-		DoNotRepairAlphaMaps = 32768,
+        /// <summary>
+        /// Disables repair of the alpha maps in this chunk.
+        /// </summary>
+        DoNotRepairAlphaMaps = 32768,
 
-		/// <summary>
-		/// Flags the MCNK for high-resolution holes. Introduced in WoW 5.3
-		/// </summary>
-		UsesHighResHoles = 65536,
+        /// <summary>
+        /// Flags the MCNK for high-resolution holes. Introduced in WoW 5.3
+        /// </summary>
+        UsesHighResHoles = 65536,
 
-		// 15 unused bits
-	}
+        // 15 unused bits
+    }
 }

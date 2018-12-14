@@ -21,35 +21,35 @@ using System;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
-	/// <summary>
-	/// Holds flags for the liquid chunk.
-	/// </summary>
-	[Flags]
-	public enum LiquidFlags : byte
-	{
-		/// <summary>
-		/// The liquid is present, but hidden.
-		/// </summary>
-		Hidden = 0x08,
+    /// <summary>
+    /// Holds flags for the liquid chunk.
+    /// </summary>
+    [Flags]
+    public enum LiquidFlags : byte
+    {
+        /// <summary>
+        /// The liquid is present, but hidden.
+        /// </summary>
+        Hidden = 0x08,
 
-		/// <summary>
-		/// Unknown.
-		/// </summary>
-		Unknown1 = 0x10,
+        /// <summary>
+        /// Unknown.
+        /// </summary>
+        Unknown1 = 0x10,
 
-		/// <summary>
-		/// Unknown.
-		/// </summary>
-		Unknown2 = 0x20,
+        /// <summary>
+        /// Unknown.
+        /// </summary>
+        Unknown2 = 0x20,
 
-		/// <summary>
-		/// The liquid is fishable.
-		/// </summary>
-		Fishable = 0x40,
+        /// <summary>
+        /// The liquid is fishable.
+        /// </summary>
+        Fishable = 0x40,
 
-		/// <summary>
-		/// The liquid is shared.
-		/// </summary>
-		Shared = 0x80
-	}
+        /// <summary>
+        /// The liquid is shared.
+        /// </summary>
+        Shared = 0x80
+    }
 }
