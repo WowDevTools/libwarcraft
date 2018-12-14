@@ -19,6 +19,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
@@ -78,6 +79,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
                 {
                     MinimumLiquidLevel = br.ReadSingle();
                     MaxiumLiquidLevel = br.ReadSingle();
+
+                    // Future note: New information suggests there may be more than one liquid layer here, based on
+                    // the chunk flags (i.e, one layer for river, one layer for ocean, etc)
 
                     for (int y = 0; y < 9; ++y)
                     {

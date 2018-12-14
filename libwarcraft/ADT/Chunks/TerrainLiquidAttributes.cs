@@ -21,17 +21,20 @@ using System.IO;
 
 namespace Warcraft.ADT.Chunks
 {
+    /// <summary>
+    /// Holds attributes for liquid tiles.
+    /// </summary>
     public class TerrainLiquidAttributes
     {
         /// <summary>
         /// Gets or sets a boolean bitfield representing which liquid chunks are fishable.
         /// </summary>
-        public ulong Fishable;
+        public ulong Fishable { get; set; }
 
         /// <summary>
         /// Gets or sets a boolean bitfield representing which liquid chunks are considered deep.
         /// </summary>
-        public ulong Deep;
+        public ulong Deep { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainLiquidAttributes"/> class.
@@ -58,6 +61,10 @@ namespace Warcraft.ADT.Chunks
             Deep = 0;
         }
 
+        /// <summary>
+        /// Gets the serialized size of the attributes.
+        /// </summary>
+        /// <returns>The size in bytes.</returns>
         public static int GetSize()
         {
             return 16;

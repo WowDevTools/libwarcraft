@@ -17,13 +17,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Numerics;
+
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
+    /// <summary>
+    /// MCNR chunk - Holds per-vertex normals of a map chunk.
+    /// </summary>
     public class MapChunkVertexNormals : IIFFChunk
     {
         /// <summary>
@@ -31,8 +35,15 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// </summary>
         public const string Signature = "MCNR";
 
-        public List<Vector3> HighResVertexNormals = new List<Vector3>();
-        public List<Vector3> LowResVertexNormals = new List<Vector3>();
+        /// <summary>
+        /// Gets or sets the normals of the high-resolution vertices.
+        /// </summary>
+        public List<Vector3> HighResVertexNormals { get; set; } = new List<Vector3>();
+
+        /// <summary>
+        /// Gets or sets the normals of the low-resolution vertices.
+        /// </summary>
+        public List<Vector3> LowResVertexNormals { get; set; } = new List<Vector3>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MapChunkVertexNormals"/> class.
@@ -41,6 +52,10 @@ namespace Warcraft.ADT.Chunks.Subchunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkVertexNormals"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public MapChunkVertexNormals(byte[] inData)
         {
             LoadBinaryData(inData);
