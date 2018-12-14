@@ -46,6 +46,7 @@ namespace Warcraft.WDT.Chunks
             LoadBinaryData(inData);
         }
 
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))

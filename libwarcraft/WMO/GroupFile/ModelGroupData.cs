@@ -107,6 +107,7 @@ namespace Warcraft.WMO.GroupFile
         /// signature and data block length.
         /// </summary>
         /// <param name="inData">The binary data containing the object.</param>
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))

@@ -60,6 +60,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// signature and data block length.
         /// </summary>
         /// <param name="inData">The binary data containing the object.</param>
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             Data = inData;

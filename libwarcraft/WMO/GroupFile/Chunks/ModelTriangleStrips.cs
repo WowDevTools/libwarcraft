@@ -32,6 +32,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             throw new NotImplementedException();
