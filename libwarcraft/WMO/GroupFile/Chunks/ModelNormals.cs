@@ -60,6 +60,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             }
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;

@@ -37,6 +37,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             throw new NotImplementedException();

@@ -76,6 +76,7 @@ namespace Warcraft.WDL.Chunks
             return (17 * 17) * sizeof(short) + (16 * 16) * sizeof(short);
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;

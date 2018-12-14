@@ -81,6 +81,7 @@ namespace Warcraft.WMO.RootFile
             }
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;

@@ -47,6 +47,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             Data = inData;
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;

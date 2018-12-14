@@ -63,6 +63,7 @@ namespace Warcraft.ADT.Chunks
             }
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;

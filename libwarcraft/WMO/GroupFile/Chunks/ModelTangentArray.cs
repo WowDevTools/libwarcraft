@@ -57,6 +57,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             InternalHasFinishedLoading = false;
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;

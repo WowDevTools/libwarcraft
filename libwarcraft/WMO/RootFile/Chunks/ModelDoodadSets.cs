@@ -82,6 +82,7 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// Gets the static data signature of this data block type.
         /// </summary>
         /// <returns>A string representing the block signature.</returns>
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;

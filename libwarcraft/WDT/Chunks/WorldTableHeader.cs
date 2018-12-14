@@ -58,6 +58,7 @@ namespace Warcraft.WDT.Chunks
             }
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;
