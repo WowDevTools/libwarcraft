@@ -41,9 +41,11 @@ namespace Warcraft.ADT.Chunks
         /// </summary>
         public List<WorldModelObjectPlacementEntry> Entries = new List<WorldModelObjectPlacementEntry>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainWorldModelObjectPlacementInfo"/> class.
+        /// </summary>
         public TerrainWorldModelObjectPlacementInfo()
         {
-
         }
 
         /// <summary>

@@ -88,9 +88,11 @@ namespace Warcraft.ADT.Chunks
         /// </summary>
         public MapChunkVertexLighting VertexLighting;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainMapChunk"/> class.
+        /// </summary>
         public TerrainMapChunk()
         {
-
         }
 
         /// <summary>

@@ -38,9 +38,11 @@ namespace Warcraft.ADT.Chunks
         /// </summary>
         public List<uint> WorldModelObjectFilenameOffsets = new List<uint>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainWorldObjectModelIndices"/> class.
+        /// </summary>
         public TerrainWorldObjectModelIndices()
         {
-
         }
 
         /// <summary>

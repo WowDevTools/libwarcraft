@@ -47,7 +47,6 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public ModelDoodadSets()
         {
-
         }
 
         /// <summary>

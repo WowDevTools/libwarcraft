@@ -25,6 +25,9 @@ using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks
 {
+    /// <summary>
+    /// MFBO chunk - holds a bounding box for the terrain chunk.
+    /// </summary>
     public class TerrainBoundingBox : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -32,14 +35,26 @@ namespace Warcraft.ADT.Chunks
         /// </summary>
         public const string Signature = "MFBO";
 
-        public ShortPlane Maximum;
-        public ShortPlane Minimum;
+        /// <summary>
+        /// Gets or sets the maximum bounding plane.
+        /// </summary>
+        public ShortPlane Maximum { get; set; }
 
+        /// <summary>
+        /// Gets or sets the minimum bounding plane.
+        /// </summary>
+        public ShortPlane Minimum { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainBoundingBox"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public TerrainBoundingBox(byte[] inData)
         {
             LoadBinaryData(inData);
         }
 
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
@@ -52,11 +67,13 @@ namespace Warcraft.ADT.Chunks
             }
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

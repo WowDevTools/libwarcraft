@@ -32,6 +32,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public readonly List<ushort> DoodadReferences = new List<ushort>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelDoodadReferences"/> class.
+        /// </summary>
         public ModelDoodadReferences()
         {
         }

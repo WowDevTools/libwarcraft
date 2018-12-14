@@ -35,9 +35,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly List<StaticLight> StaticLights = new List<StaticLight>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelStaticLighting"/> class.
+        /// </summary>
         public ModelStaticLighting()
         {
-
         }
 
         public ModelStaticLighting(byte[] inData)

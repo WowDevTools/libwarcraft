@@ -32,9 +32,11 @@ namespace Warcraft.WDL.Chunks
 
         public readonly List<uint> MapAreaOffsets = new List<uint>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldLODMapAreaOffsets"/> class.
+        /// </summary>
         public WorldLODMapAreaOffsets()
         {
-
         }
 
         public WorldLODMapAreaOffsets(byte[] inData)

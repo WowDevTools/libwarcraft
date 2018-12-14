@@ -34,6 +34,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public readonly List<RenderBatch> RenderBatches = new List<RenderBatch>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelRenderBatches"/> class.
+        /// </summary>
         public ModelRenderBatches()
         {
         }

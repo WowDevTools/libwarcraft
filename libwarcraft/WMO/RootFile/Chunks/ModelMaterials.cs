@@ -40,9 +40,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly List<ModelMaterial> Materials = new List<ModelMaterial>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelMaterials"/> class.
+        /// </summary>
         public ModelMaterials()
         {
-
         }
 
         public ModelMaterials(byte[] inData)

@@ -1,5 +1,5 @@
-//
-//  MDAL.cs
+﻿//
+//  TerrainHeaderFlags.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,16 +17,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Warcraft.WMO.GroupFile.Chunks
+using System;
+
+namespace Warcraft.ADT.Chunks
 {
-    public class MDAL
+    /// <summary>
+    /// Flags for the ADT.
+    /// </summary>
+    [Flags]
+    public enum TerrainHeaderFlags
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MDAL"/> class.
+        /// This terrain file contains a bounding box.
         /// </summary>
-        public MDAL()
-        {
-        }
+        HasBoundingBox = 1,
+
+        /// <summary>
+        /// Flag if the ADT is from Northrend. This flag is not always set.
+        /// </summary>
+        Northrend = 2,
     }
 }
-

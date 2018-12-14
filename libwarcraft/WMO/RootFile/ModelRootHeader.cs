@@ -47,9 +47,11 @@ namespace Warcraft.WMO.RootFile
         public Box BoundingBox;
         public RootFlags Flags;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelRootHeader"/> class.
+        /// </summary>
         public ModelRootHeader()
         {
-
         }
 
         public ModelRootHeader(byte[] inData)

@@ -32,9 +32,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public List<uint> IDFlags = new List<uint>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelGameObjectFileID"/> class.
+        /// </summary>
         public ModelGameObjectFileID()
         {
-
         }
 
         public ModelGameObjectFileID(byte[] inData)

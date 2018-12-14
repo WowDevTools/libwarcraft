@@ -32,6 +32,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public readonly List<BSPNode> BSPNodes = new List<BSPNode>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelBSPNodes"/> class.
+        /// </summary>
         public ModelBSPNodes()
         {
         }

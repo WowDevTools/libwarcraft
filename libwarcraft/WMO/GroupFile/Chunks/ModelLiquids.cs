@@ -44,6 +44,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
         public List<LiquidVertex> LiquidVertices = new List<LiquidVertex>();
         public List<LiquidFlags> LiquidTileFlags = new List<LiquidFlags>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelLiquids"/> class.
+        /// </summary>
         public ModelLiquids()
         {
         }

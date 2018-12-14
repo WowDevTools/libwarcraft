@@ -38,6 +38,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
         public List<short> FirstIndices = new List<short>();
         public List<Vector4> Tangents = new List<Vector4>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelTangentArray"/> class.
+        /// </summary>
         public ModelTangentArray()
         {
             InternalHasFinishedLoading = true;
@@ -112,6 +115,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
         public uint RenderBatchCount;
         public uint AccumulatedIndexCount;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelTangentArrayPostLoadParameters"/> class.
+        /// </summary>
         public ModelTangentArrayPostLoadParameters()
         {
         }

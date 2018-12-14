@@ -34,6 +34,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public List<BGRA> VertexColours = new List<BGRA>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVertexColours"/> class.
+        /// </summary>
         public ModelVertexColours()
         {
         }

@@ -1,5 +1,5 @@
-//
-//  MOBS.cs
+﻿//
+//  DatabaseSoundEmitter.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,45 +17,37 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.Numerics;
 using Warcraft.Core.Interfaces;
+using Warcraft.DBC.SpecialFields;
 
-namespace Warcraft.WMO.GroupFile.Chunks
+namespace Warcraft.ADT.Chunks.Subchunks
 {
-    public class MOBS : IIFFChunk, IBinarySerializable
+    /// <summary>
+    /// Represents a sound emitter that gets its data from a database entry.
+    /// </summary>
+    public class DatabaseSoundEmitter : SoundEmitter, IBinarySerializable
     {
         /// <summary>
-        /// Holds the binary chunk signature.
+        /// Gets or sets the ID of the sound entry in the database.
         /// </summary>
-        public const string Signature = "MOBS";
-
-        public byte[] Data;
+        public ForeignKey<uint> SoundEntryID { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MOBS"/> class.
+        /// Gets or sets the position of the emitter.
         /// </summary>
-        public MOBS()
-        {
-        }
+        public Vector3 Position { get; set; }
 
-        public MOBS(byte[] inData)
-        {
-            LoadBinaryData(inData);
-        }
+        /// <summary>
+        /// Gets or sets the size of the emitter.
+        /// </summary>
+        public Vector3 Size { get; set; }
 
-        public void LoadBinaryData(byte[] inData)
-        {
-            Data = inData;
-        }
-
-        public string GetSignature()
-        {
-            return Signature;
-        }
-
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
-            return Data;
+            throw new NotImplementedException();
         }
     }
 }
-

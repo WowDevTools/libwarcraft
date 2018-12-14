@@ -16,13 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-using System;
+
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core.Interfaces;
-using Warcraft.DBC;
-using Warcraft.DBC.Definitions;
-using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
@@ -37,20 +34,27 @@ namespace Warcraft.ADT.Chunks.Subchunks
         public const string Signature = "MCLY";
 
         /// <summary>
-        /// An array of alpha map layers in this MCNK.
+        /// Gets or sets an array of alpha map layers in this MCNK.
         /// </summary>
-        public List<TextureLayerEntry> Layers = new List<TextureLayerEntry>();
+        public List<TextureLayerEntry> Layers { get; set; } = new List<TextureLayerEntry>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkTextureLayers"/> class.
+        /// </summary>
         public MapChunkTextureLayers()
         {
-
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkTextureLayers"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public MapChunkTextureLayers(byte[] inData)
         {
             LoadBinaryData(inData);
         }
 
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
@@ -66,96 +70,11 @@ namespace Warcraft.ADT.Chunks.Subchunks
             }
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;
         }
-    }
-
-    /// <summary>
-    /// Texture layer entry, representing a ground texture in the chunk.
-    /// </summary>
-    public class TextureLayerEntry
-    {
-        /// <summary>
-        /// Index of the texture in the MTEX chunk
-        /// </summary>
-        public uint TextureID;
-
-        /// <summary>
-        /// Flags for the texture. Used for animation data.
-        /// </summary>
-        public TextureLayerFlags Flags;
-
-        /// <summary>
-        /// Offset into MCAL where the alpha map begins.
-        /// </summary>
-        public uint AlphaMapOffset;
-
-        /// <summary>
-        /// Ground effect ID. This is a foreign key entry into GroundEffectTexture::ID.
-        /// </summary>
-        public ForeignKey<ushort> EffectID;
-
-        /// <summary>
-        /// A currently unused value.
-        /// </summary>
-        public ushort Unused;
-
-        public TextureLayerEntry(byte[] data)
-        {
-            using (MemoryStream ms = new MemoryStream(data))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    TextureID = br.ReadUInt32();
-                    Flags = (TextureLayerFlags)br.ReadUInt32();
-                    AlphaMapOffset = br.ReadUInt32();
-
-                    EffectID = new ForeignKey<ushort>(DatabaseName.GroundEffectTexture, nameof(DBCRecord.ID), br.ReadUInt16()); // TODO: Implement GroundEffectTextureRecord
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the size of a texture layer entry.
-        /// </summary>
-        /// <returns>The size.</returns>
-        public static int GetSize()
-        {
-            return 16;
-        }
-    }
-
-    /// <summary>
-    /// Chunk flags
-    /// </summary>
-    [Flags]
-    public enum TextureLayerFlags : uint
-    {
-        Animated45RotationPerTick = 0x001,
-
-        Animated90RotationPerTick = 0x002,
-
-        Animated180RotationPerTick = 0x004,
-
-        AnimSpeed1 = 0x008,
-
-        AnimSpeed2 = 0x010,
-
-        AnimSpeed3 = 0x020,
-
-        AnimationEnabled = 0x040,
-
-        EmissiveLayer = 0x080,
-
-        UseAlpha = 0x100,
-
-        CompressedAlpha = 0x200,
-
-        UseCubeMappedReflection = 0x400,
-
-        // 19 unused bits
     }
 }
 

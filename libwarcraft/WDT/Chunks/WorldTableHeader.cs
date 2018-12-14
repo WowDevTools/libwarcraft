@@ -34,9 +34,11 @@ namespace Warcraft.WDT.Chunks
 
         // Six unused fields
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldTableHeader"/> class.
+        /// </summary>
         public WorldTableHeader()
         {
-
         }
 
         public WorldTableHeader(byte[] inData)

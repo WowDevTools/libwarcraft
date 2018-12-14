@@ -32,9 +32,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly List<VisibleBlock> VisibleBlocks = new List<VisibleBlock>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVisibleBlocks"/> class.
+        /// </summary>
         public ModelVisibleBlocks()
         {
-
         }
 
         public ModelVisibleBlocks(byte[] inData)

@@ -34,6 +34,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public List<Plane> CuttingPlanes = new List<Plane>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelTerrainCuttingPlanes"/> class.
+        /// </summary>
         public ModelTerrainCuttingPlanes()
         {
         }

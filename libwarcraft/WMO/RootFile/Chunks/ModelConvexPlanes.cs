@@ -54,7 +54,6 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public ModelConvexPlanes()
         {
-
         }
 
         /// <summary>

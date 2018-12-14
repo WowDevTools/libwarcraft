@@ -90,9 +90,11 @@ namespace Warcraft.WMO.GroupFile
         public ModelVertexColours AdditionalVertexColours;
         public ModelTextureCoordinates SecondAddtionalTextureCoordinates;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelGroupData"/> class.
+        /// </summary>
         public ModelGroupData()
         {
-
         }
 
         public ModelGroupData(byte[] inData)

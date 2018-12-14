@@ -7,9 +7,11 @@ namespace Warcraft.Core
     {
         public DatabaseName Database { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DatabaseRecordAttribute"/> class.
+        /// </summary>
         public DatabaseRecordAttribute()
         {
-
         }
 
         public DatabaseRecordAttribute(DatabaseName database)

@@ -40,9 +40,11 @@ namespace Warcraft.WDL.Chunks
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldLODMapAreaHoles"/> class.
+        /// </summary>
         public WorldLODMapAreaHoles()
         {
-
         }
 
         public WorldLODMapAreaHoles(byte[] inData)

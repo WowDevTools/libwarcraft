@@ -34,9 +34,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly List<Portal> Portals = new List<Portal>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelPortals"/> class.
+        /// </summary>
         public ModelPortals()
         {
-
         }
 
         public ModelPortals(byte[] inData)

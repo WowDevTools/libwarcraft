@@ -32,9 +32,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public  readonly List<DoodadInstance> DoodadInstances = new List<DoodadInstance>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelDoodadInstances"/> class.
+        /// </summary>
         public ModelDoodadInstances()
         {
-
         }
 
         public ModelDoodadInstances(byte[] inData)

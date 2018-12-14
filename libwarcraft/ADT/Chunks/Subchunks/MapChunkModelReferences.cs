@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
+    /// <summary>
+    /// MCRF chunk - holds model references.
+    /// </summary>
     public class MapChunkModelReferences : IIFFChunk
     {
         /// <summary>
@@ -32,29 +35,49 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
         private byte[] Data;
 
-        public List<uint> GameModelObjectReferences = new List<uint>();
-        public List<uint> WorldModelObjectReferences = new List<uint>();
+        /// <summary>
+        /// Gets or sets the game model references.
+        /// </summary>
+        public List<uint> GameModelObjectReferences { get; set; } = new List<uint>();
 
+        /// <summary>
+        /// Gets or sets the world model references.
+        /// </summary>
+        public List<uint> WorldModelObjectReferences { get; set; } = new List<uint>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkModelReferences"/> class.
+        /// </summary>
         public MapChunkModelReferences()
         {
-
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkModelReferences"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public MapChunkModelReferences(byte[] inData)
         {
             LoadBinaryData(inData);
         }
 
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             Data = inData;
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;
         }
 
+        /// <summary>
+        /// Performs post-creation loading of data reliant on external sources.
+        /// </summary>
+        /// <param name="gameModelObjectCount">The number of game model objects in the chunk.</param>
+        /// <param name="worldModelObjectCount">The number of world model objects in the chunk.</param>
         public void PostLoadReferences(uint gameModelObjectCount, uint worldModelObjectCount)
         {
             using (MemoryStream ms = new MemoryStream(Data))

@@ -35,9 +35,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly List<FogInstance> FogInstances = new List<FogInstance>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelFog"/> class.
+        /// </summary>
         public ModelFog()
         {
-
         }
 
         public ModelFog(byte[] inData)

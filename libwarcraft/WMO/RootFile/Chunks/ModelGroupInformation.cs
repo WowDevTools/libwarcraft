@@ -35,9 +35,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly List<GroupInformation> GroupInformations = new List<GroupInformation>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelGroupInformation"/> class.
+        /// </summary>
         public ModelGroupInformation()
         {
-
         }
 
         public ModelGroupInformation(byte[] inData)

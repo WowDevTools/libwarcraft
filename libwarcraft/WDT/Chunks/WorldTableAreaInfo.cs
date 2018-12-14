@@ -32,9 +32,11 @@ namespace Warcraft.WDT.Chunks
 
         public List<AreaInfoEntry> Entries = new List<AreaInfoEntry>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldTableAreaInfo"/> class.
+        /// </summary>
         public WorldTableAreaInfo()
         {
-
         }
 
         public WorldTableAreaInfo(byte[] inData)

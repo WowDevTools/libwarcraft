@@ -32,9 +32,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public string SkyboxName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelSkybox"/> class.
+        /// </summary>
         public ModelSkybox()
         {
-
         }
 
         public ModelSkybox(byte[] inData)

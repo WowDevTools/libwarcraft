@@ -34,9 +34,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly List<Vector3> Vertices = new List<Vector3>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelPortalVertices"/> class.
+        /// </summary>
         public ModelPortalVertices()
         {
-
         }
 
         public ModelPortalVertices(byte[] inData)

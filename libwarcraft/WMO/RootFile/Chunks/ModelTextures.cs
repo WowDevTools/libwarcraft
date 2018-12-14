@@ -34,9 +34,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly Dictionary<long, string> Textures = new Dictionary<long, string>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelTextures"/> class.
+        /// </summary>
         public ModelTextures()
         {
-
         }
 
         public ModelTextures(byte[] inData)

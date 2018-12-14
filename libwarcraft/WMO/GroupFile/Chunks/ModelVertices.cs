@@ -41,6 +41,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public readonly List<Vector3> Vertices = new List<Vector3>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVertices"/> class.
+        /// </summary>
         public ModelVertices()
         {
         }

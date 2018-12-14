@@ -1,5 +1,5 @@
-//
-//  MDAL.cs
+﻿//
+//  SoundEmitter.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,16 +17,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Warcraft.WMO.GroupFile.Chunks
+namespace Warcraft.ADT.Chunks.Subchunks
 {
-    public class MDAL
+    /// <summary>
+    /// Base class for sound emitters.
+    /// </summary>
+    public abstract class SoundEmitter
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MDAL"/> class.
-        /// </summary>
-        public MDAL()
-        {
-        }
     }
 }
-

@@ -38,9 +38,11 @@ namespace Warcraft.ADT.Chunks
         /// </summary>
         public List<MapChunkOffsetEntry> Entries = new List<MapChunkOffsetEntry>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainMapChunkOffsets"/> class.
+        /// </summary>
         public TerrainMapChunkOffsets()
         {
-
         }
 
         /// <summary>

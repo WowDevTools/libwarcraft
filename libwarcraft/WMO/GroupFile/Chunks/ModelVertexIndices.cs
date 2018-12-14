@@ -32,6 +32,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public List<ushort> VertexIndices = new List<ushort>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVertexIndices"/> class.
+        /// </summary>
         public ModelVertexIndices()
         {
         }

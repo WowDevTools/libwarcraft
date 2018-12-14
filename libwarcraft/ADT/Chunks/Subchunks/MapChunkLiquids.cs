@@ -33,13 +33,32 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// </summary>
         public const string Signature = "MCLQ";
 
+        /// <summary>
+        /// Gets or sets the minimum liquid level.
+        /// </summary>
         public float MinimumLiquidLevel { get; set; }
 
+        /// <summary>
+        /// Gets or sets the maximum liquid level.
+        /// </summary>
         public float MaxiumLiquidLevel { get; set; }
 
+        /// <summary>
+        /// Gets or sets the liquid vertices in the chunk.
+        /// </summary>
         public List<LiquidVertex> LiquidVertices { get; set; } = new List<LiquidVertex>();
 
+        /// <summary>
+        /// Gets or sets the flags for each liquid tile.
+        /// </summary>
         public List<LiquidFlags> LiquidTileFlags { get; set; } = new List<LiquidFlags>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkLiquids"/> class.
+        /// </summary>
+        public MapChunkLiquids()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MapChunkLiquids"/> class.
@@ -48,10 +67,6 @@ namespace Warcraft.ADT.Chunks.Subchunks
         public MapChunkLiquids(byte[] inData)
         {
             LoadBinaryData(inData);
-        }
-
-        public MapChunkLiquids()
-        {
         }
 
         /// <inheritdoc/>

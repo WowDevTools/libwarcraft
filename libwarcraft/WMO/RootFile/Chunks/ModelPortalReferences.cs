@@ -32,9 +32,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly List<PortalReference> PortalReferences = new List<PortalReference>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelPortalReferences"/> class.
+        /// </summary>
         public ModelPortalReferences()
         {
-
         }
 
         public ModelPortalReferences(byte[] inData)

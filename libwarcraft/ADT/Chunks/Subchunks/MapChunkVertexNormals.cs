@@ -34,9 +34,11 @@ namespace Warcraft.ADT.Chunks.Subchunks
         public List<Vector3> HighResVertexNormals = new List<Vector3>();
         public List<Vector3> LowResVertexNormals = new List<Vector3>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkVertexNormals"/> class.
+        /// </summary>
         public MapChunkVertexNormals()
         {
-
         }
 
         public MapChunkVertexNormals(byte[] inData)

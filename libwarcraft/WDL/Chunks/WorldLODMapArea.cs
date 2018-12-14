@@ -33,9 +33,11 @@ namespace Warcraft.WDL.Chunks
         public readonly List<short> HighResVertices = new List<short>();
         public readonly List<short> LowResVertices = new List<short>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldLODMapArea"/> class.
+        /// </summary>
         public WorldLODMapArea()
         {
-
         }
 
         public WorldLODMapArea(byte[] inData)

@@ -25,6 +25,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 {
     public class ModelTriangleStrips : IIFFChunk, IBinarySerializable
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelTriangleStrips"/> class.
+        /// </summary>
         public ModelTriangleStrips()
         {
         }

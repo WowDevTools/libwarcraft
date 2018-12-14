@@ -34,9 +34,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly List<Vector3> VisibleVertices = new List<Vector3>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVisibleVertices"/> class.
+        /// </summary>
         public ModelVisibleVertices()
         {
-
         }
 
         public ModelVisibleVertices(byte[] inData)

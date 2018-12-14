@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-using System;
+
 using System.IO;
 using Warcraft.Core.Interfaces;
 
@@ -33,63 +33,70 @@ namespace Warcraft.ADT.Chunks
         public const string Signature = "MHDR";
 
         /// <summary>
-        /// Flags for this ADT
+        /// Gets or sets flags for this ADT.
         /// </summary>
-        public TerrainHeaderFlags Flags;
+        public TerrainHeaderFlags Flags { get; set; }
 
         /// <summary>
-        /// Offset into the file where the MCIN Chunk can be found.
+        /// Gets or sets offset into the file where the MCIN Chunk can be found.
         /// </summary>
-        public int MapChunkOffsetsOffset;
-        /// <summary>
-        /// Offset into the file where the MTEX Chunk can be found.
-        /// </summary>
-        public int TexturesOffset;
+        public int MapChunkOffsetsOffset { get; set; }
 
         /// <summary>
-        /// Offset into the file where the MMDX Chunk can be found.
+        /// Gets or sets offset into the file where the MTEX Chunk can be found.
         /// </summary>
-        public int ModelsOffset;
-        /// <summary>
-        /// Offset into the file where the MMID Chunk can be found.
-        /// </summary>
-        public int ModelIndicesOffset;
+        public int TexturesOffset { get; set; }
 
         /// <summary>
-        /// Offset into the file where the MWMO Chunk can be found.
+        /// Gets or sets offset into the file where the MMDX Chunk can be found.
         /// </summary>
-        public int WorldModelObjectsOffset;
-        /// <summary>
-        /// Offset into the file where the MWID Chunk can be found.
-        /// </summary>
-        public int WorldModelObjectIndicesOffset;
+        public int ModelsOffset { get; set; }
 
         /// <summary>
-        /// Offset into the file where the MMDF Chunk can be found.
+        /// Gets or sets offset into the file where the MMID Chunk can be found.
         /// </summary>
-        public int ModelPlacementInformationOffset;
-        /// <summary>
-        /// Offset into the file where the MODF Chunk can be found.
-        /// </summary>
-        public int WorldModelObjectPlacementInformationOffset;
+        public int ModelIndicesOffset { get; set; }
 
         /// <summary>
-        /// Offset into the file where the MFBO Chunk can be found. This is only set if the Flags contains MDHR_MFBO.
+        /// Gets or sets offset into the file where the MWMO Chunk can be found.
         /// </summary>
-        public int BoundingBoxOffset;
+        public int WorldModelObjectsOffset { get; set; }
 
         /// <summary>
-        /// Offset into the file where the MH2O Chunk can be found.
+        /// Gets or sets offset into the file where the MWID Chunk can be found.
         /// </summary>
-        public int LiquidOffset;
-        /// <summary>
-        /// Offset into the file where the MTXF Chunk can be found.
-        /// </summary>
-        public int TextureFlagsOffset;
+        public int WorldModelObjectIndicesOffset { get; set; }
 
+        /// <summary>
+        /// Gets or sets offset into the file where the MMDF Chunk can be found.
+        /// </summary>
+        public int ModelPlacementInformationOffset { get; set; }
+
+        /// <summary>
+        /// Gets or sets offset into the file where the MODF Chunk can be found.
+        /// </summary>
+        public int WorldModelObjectPlacementInformationOffset { get; set; }
+
+        /// <summary>
+        /// Gets or sets offset into the file where the MFBO Chunk can be found. This is only set if the Flags contains MDHR_MFBO.
+        /// </summary>
+        public int BoundingBoxOffset { get; set; }
+
+        /// <summary>
+        /// Gets or sets offset into the file where the MH2O Chunk can be found.
+        /// </summary>
+        public int LiquidOffset { get; set; }
+
+        /// <summary>
+        /// Gets or sets offset into the file where the MTXF Chunk can be found.
+        /// </summary>
+        public int TextureFlagsOffset { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainHeader"/> class.
+        /// </summary>
         public TerrainHeader()
         {
-
         }
 
         /// <summary>
@@ -101,6 +108,7 @@ namespace Warcraft.ADT.Chunks
             LoadBinaryData(inData);
         }
 
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
@@ -129,27 +137,10 @@ namespace Warcraft.ADT.Chunks
             }
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;
         }
     }
-
-    /// <summary>
-    /// Flags for the ADT.
-    /// </summary>
-    [Flags]
-    public enum TerrainHeaderFlags
-    {
-        /// <summary>
-        /// This terrain file contains a bounding box.
-        /// </summary>
-        HasBoundingBox = 1,
-
-        /// <summary>
-        /// Flag if the ADT is from Northrend. This flag is not always set.
-        /// </summary>
-        Northrend = 2,
-    }
 }
-

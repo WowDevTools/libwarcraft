@@ -34,6 +34,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public readonly List<Vector3> Normals = new List<Vector3>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelNormals"/> class.
+        /// </summary>
         public ModelNormals()
         {
         }

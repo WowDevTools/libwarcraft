@@ -36,9 +36,11 @@ namespace Warcraft.ADT.Chunks
         /// </summary>
         public uint Version;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainVersion"/> class.
+        /// </summary>
         public TerrainVersion()
         {
-
         }
 
         /// <summary>

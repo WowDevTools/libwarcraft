@@ -34,6 +34,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public readonly List<Vector2> TextureCoordinates = new List<Vector2>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelTextureCoordinates"/> class.
+        /// </summary>
         public ModelTextureCoordinates()
         {
         }

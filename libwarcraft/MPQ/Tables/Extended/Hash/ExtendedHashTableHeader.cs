@@ -38,6 +38,9 @@ namespace Warcraft.MPQ.Tables.Extended.Hash
 
         private List<byte> TableData = new List<byte>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExtendedHashTableHeader"/> class.
+        /// </summary>
         public ExtendedHashTableHeader()
         {
         }

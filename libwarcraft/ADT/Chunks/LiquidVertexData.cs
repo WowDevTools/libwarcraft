@@ -1,5 +1,5 @@
-//
-//  MDAL.cs
+﻿//
+//  MapChunkAlphaMaps.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,16 +17,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Warcraft.WMO.GroupFile.Chunks
+namespace Warcraft.ADT.Chunks
 {
-    public class MDAL
+    /// <summary>
+    /// Abstract base class for liquid vertex data.
+    /// </summary>
+    public abstract class LiquidVertexData
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MDAL"/> class.
-        /// </summary>
-        public MDAL()
-        {
-        }
     }
 }
-

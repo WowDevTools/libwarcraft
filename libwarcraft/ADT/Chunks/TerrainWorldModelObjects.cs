@@ -39,9 +39,11 @@ namespace Warcraft.ADT.Chunks
         /// </summary>
         public List<string> Filenames = new List<string>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainWorldModelObjects"/> class.
+        /// </summary>
         public TerrainWorldModelObjects()
         {
-
         }
 
         /// <summary>

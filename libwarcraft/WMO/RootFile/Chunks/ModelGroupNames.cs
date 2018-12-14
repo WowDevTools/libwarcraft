@@ -37,9 +37,11 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public readonly Dictionary<long, string> GroupNames = new Dictionary<long, string>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelGroupNames"/> class.
+        /// </summary>
         public ModelGroupNames()
         {
-
         }
 
         public ModelGroupNames(byte[] inData)

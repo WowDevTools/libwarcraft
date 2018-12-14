@@ -17,98 +17,67 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
-using System.Numerics;
 using Warcraft.Core.Interfaces;
-using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
+    /// <summary>
+    /// MCSE chunk - holds sound emitters.
+    /// </summary>
     public class MapChunkSoundEmitters : IIFFChunk, IBinarySerializable, IPostLoad<uint>
     {
         /// <summary>
         /// Holds the binary chunk signature.
         /// </summary>
         public const string Signature = "MCSE";
+
         private bool hasFinishedLoading;
         private byte[] Data;
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkSoundEmitters"/> class.
+        /// </summary>
         public MapChunkSoundEmitters()
         {
-
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkSoundEmitters"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public MapChunkSoundEmitters(byte[] inData)
         {
             LoadBinaryData(inData);
         }
 
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             Data = inData;
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public bool HasFinishedLoading()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void PostLoad(uint loadingParameters)
         {
             throw new NotImplementedException();
         }
     }
-
-    public abstract class SoundEmitter
-    {
-
-    }
-
-    public class DatabaseSoundEmitter : SoundEmitter, IBinarySerializable
-    {
-        public ForeignKey<uint> SoundEntryID;
-        public Vector3 Position;
-        public Vector3 Size;
-
-        public byte[] Serialize()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class PlainSoundEmitter : SoundEmitter, IBinarySerializable
-    {
-        public uint SoundID;
-        public uint SoundNameID;
-        public Vector3 Position;
-        public float AttenuationRadiusStart;
-        public float AttenuationRadiusEnd;
-        public float CutoffDistance;
-        public ushort StartTime;
-        public ushort EndTime;
-        public ushort GroupSilenceMin;
-        public ushort GroupSilenceMax;
-        public ushort PlayInstancesMin;
-        public ushort PlayInstancesMax;
-        public ushort LoopCountMin;
-        public ushort LoopCountMax;
-        public ushort InterSoundGapMin;
-        public ushort InterSoundMapMax;
-
-        public byte[] Serialize()
-        {
-            throw new NotImplementedException();
-        }
-    }
 }
-

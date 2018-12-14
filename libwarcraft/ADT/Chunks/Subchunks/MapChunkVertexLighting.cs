@@ -17,14 +17,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
+    /// <summary>
+    /// MCLV chunk - holds painted per-vertex lighting data.
+    /// </summary>
     public class MapChunkVertexLighting : IIFFChunk
     {
         /// <summary>
@@ -32,19 +36,33 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// </summary>
         public const string Signature = "MCLV";
 
-        public List<RGBA> HighResVertexLights = new List<RGBA>();
-        public List<RGBA> LowResVertexLights = new List<RGBA>();
+        /// <summary>
+        /// Gets or sets the high-resolution vertex lights.
+        /// </summary>
+        public List<RGBA> HighResVertexLights { get; set; } = new List<RGBA>();
 
+        /// <summary>
+        /// Gets or sets the low-resolution vertex lights.
+        /// </summary>
+        public List<RGBA> LowResVertexLights { get; set; } = new List<RGBA>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkVertexLighting"/> class.
+        /// </summary>
         public MapChunkVertexLighting()
         {
-
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkVertexLighting"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public MapChunkVertexLighting(byte[] inData)
         {
             LoadBinaryData(inData);
         }
 
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
@@ -74,10 +92,10 @@ namespace Warcraft.ADT.Chunks.Subchunks
             }
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;
         }
     }
 }
-

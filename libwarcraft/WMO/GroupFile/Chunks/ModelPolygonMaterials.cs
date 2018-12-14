@@ -32,6 +32,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public List<PolygonMaterial> PolygonMaterials = new List<PolygonMaterial>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelPolygonMaterials"/> class.
+        /// </summary>
         public ModelPolygonMaterials()
         {
         }
