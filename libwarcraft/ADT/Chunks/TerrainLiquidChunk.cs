@@ -15,6 +15,10 @@ namespace Warcraft.ADT.Chunks
         public List<TerrainLiquidInstance> LiquidInstances = new List<TerrainLiquidInstance>();
         public TerrainLiquidAttributes LiquidAttributes;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainLiquidChunk"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public TerrainLiquidChunk(byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))

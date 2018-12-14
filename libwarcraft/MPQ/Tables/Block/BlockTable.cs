@@ -28,11 +28,17 @@ namespace Warcraft.MPQ.Tables.Block
         public static readonly uint TableKey = MPQCrypt.Hash("(block table)", HashType.FileKey);
         private readonly List<BlockTableEntry> Entries = new List<BlockTableEntry>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockTable"/> class.
+        /// </summary>
         public BlockTable()
         {
-
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockTable"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public BlockTable(byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))

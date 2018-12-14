@@ -34,6 +34,10 @@ namespace Warcraft.MPQ.Tables.Extended.Hash
         private List<byte> HashTable;
         private List<ulong> FileIndices;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExtendedHashTable"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public ExtendedHashTable(byte[] data)
         {
         }

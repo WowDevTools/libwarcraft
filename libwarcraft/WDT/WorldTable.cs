@@ -33,6 +33,10 @@ namespace Warcraft.WDT
         public TerrainWorldModelObjects WorldModelObjects;
         public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldTable"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public WorldTable(byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))

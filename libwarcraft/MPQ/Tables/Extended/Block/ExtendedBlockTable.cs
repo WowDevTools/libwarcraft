@@ -47,6 +47,10 @@ namespace Warcraft.MPQ.Tables.Extended.Block
         private List<byte[]> FileTable;
         private List<byte[]> HashTable;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExtendedBlockTable"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public ExtendedBlockTable(byte[] data)
         {
         }

@@ -26,6 +26,10 @@ namespace Warcraft.TRS
     {
         public Dictionary<string, string> HashMappings = new Dictionary<string, string>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TRS"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public TRS(byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))

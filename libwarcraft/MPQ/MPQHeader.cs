@@ -153,6 +153,10 @@ namespace Warcraft.MPQ
         /// <param name="data">A byte array containing the header data of the archive.</param>
         /// <exception cref="FileLoadException">A FileLoadException may be thrown if the archive was not
         /// an MPQ file starting with the string "MPQ\x1a".</exception>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MPQHeader"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public MPQHeader(byte[] data)
         {
             using (MemoryStream dataStream = new MemoryStream(data))

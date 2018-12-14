@@ -45,7 +45,11 @@ namespace Warcraft.ADT.Chunks
         public uint VertexDataOffset;
         public LiquidVertexData VertexData;
 
-        /// <summary>         /// Initializes a new instance of the <see cref="TerrainLiquidInstance"/> class.         /// </summary>         /// <param name="data">The binary data.</param>         public TerrainLiquidInstance(byte[] data)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainLiquidInstance"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
+        public TerrainLiquidInstance(byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))
             {

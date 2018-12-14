@@ -26,6 +26,10 @@ namespace Warcraft.MPQ.Crypto
         public const string InternalFilename = "(signature)";
         public readonly byte[] PackageSignature;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WeakPackageSignature"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public WeakPackageSignature(byte[] data)
         {
             if (data.Length != 72)

@@ -100,6 +100,10 @@ namespace Warcraft.MDX
         // cond: wrath & blendmap overrides
         public MDXArray<BlendingMode> BlendMapOverrides;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDX"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public MDX(byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))

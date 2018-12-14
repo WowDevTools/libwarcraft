@@ -111,6 +111,10 @@ namespace Warcraft.ADT
         /// </summary>
         /// <param name="data">Byte array containing ADT data.</param>
         /// <returns>A parsed ADT file with objects for all chunks</returns>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainTile"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public TerrainTile(byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))
