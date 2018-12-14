@@ -50,14 +50,14 @@ namespace Warcraft.BLS
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Header = new BLSHeader(br.ReadBytes(BLSHeader.GetSize()));
+                    Header = new BLSHeader(br.ReadBytes(BLSHeader.GetSize()));
 
-                    for (int i = 0; i < this.Header.ShaderBlockCount; ++i)
+                    for (int i = 0; i < Header.ShaderBlockCount; ++i)
                     {
                         ShaderBlock shaderBlock = new ShaderBlock(br.ReadBytes(ShaderBlock.GetSize()));
                         shaderBlock.Data = br.ReadChars((int)shaderBlock.DataSize);
 
-                        this.Shaders.Add(shaderBlock);
+                        Shaders.Add(shaderBlock);
 
                         if ((ms.Position % 4) == 0)
                         {
@@ -80,8 +80,8 @@ namespace Warcraft.BLS
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.Header.Serialize());
-                    foreach (ShaderBlock shaderBlock in this.Shaders)
+                    bw.Write(Header.Serialize());
+                    foreach (ShaderBlock shaderBlock in Shaders)
                     {
                         bw.Write(shaderBlock.Serialize());
                     }

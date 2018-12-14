@@ -33,9 +33,9 @@ namespace Warcraft.MDX.Animation
 
         public MDXTextureTransform(BinaryReader br, WarcraftVersion version)
         {
-            this.Translation = br.ReadMDXTrack<Vector3>(version);
-            this.Rotation = br.ReadMDXTrack<Quaternion>(version);
-            this.Scale = br.ReadMDXTrack<Vector3>(version);
+            Translation = br.ReadMDXTrack<Vector3>(version);
+            Rotation = br.ReadMDXTrack<Quaternion>(version);
+            Scale = br.ReadMDXTrack<Vector3>(version);
         }
     }
 }

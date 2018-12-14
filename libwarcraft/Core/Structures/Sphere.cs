@@ -44,8 +44,8 @@ namespace Warcraft.Core.Structures
         /// <param name="inRadius">The sphere's radius.</param>
         public Sphere(Vector3 inPosition, float inRadius)
         {
-            this.Position = inPosition;
-            this.Radius = inRadius;
+            Position = inPosition;
+            Radius = inRadius;
         }
     }
 }

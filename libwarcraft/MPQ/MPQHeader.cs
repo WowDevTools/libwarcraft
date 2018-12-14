@@ -126,24 +126,24 @@ namespace Warcraft.MPQ
         {
             if (inFormat == MPQFormat.Basic)
             {
-                this.HeaderSize = 32;
+                HeaderSize = 32;
             }
             else if (inFormat == MPQFormat.ExtendedV1)
             {
-                this.HeaderSize = 44;
+                HeaderSize = 44;
             }
             else
             {
                 throw new NotImplementedException();
             }
 
-            this.BasicArchiveSize = this.HeaderSize;
-            this.Format = inFormat;
-            this.SectorSizeExponent = 3;
+            BasicArchiveSize = HeaderSize;
+            Format = inFormat;
+            SectorSizeExponent = 3;
 
-            if (this.Format > MPQFormat.ExtendedV1)
+            if (Format > MPQFormat.ExtendedV1)
             {
-                this.LongArchiveSize = this.HeaderSize;
+                LongArchiveSize = HeaderSize;
             }
         }
 
@@ -165,45 +165,45 @@ namespace Warcraft.MPQ
                         throw new FileLoadException("The provided file was not an MPQ file.");
                     }
 
-                    this.HeaderSize = br.ReadUInt32();
-                    this.BasicArchiveSize = br.ReadUInt32();
-                    this.Format = (MPQFormat)br.ReadUInt16();
-                    this.SectorSizeExponent = br.ReadUInt16();
-                    this.HashTableOffset = br.ReadUInt32();
-                    this.BlockTableOffset = br.ReadUInt32();
-                    this.HashTableEntryCount = br.ReadUInt32();
-                    this.BlockTableEntryCount = br.ReadUInt32();
+                    HeaderSize = br.ReadUInt32();
+                    BasicArchiveSize = br.ReadUInt32();
+                    Format = (MPQFormat)br.ReadUInt16();
+                    SectorSizeExponent = br.ReadUInt16();
+                    HashTableOffset = br.ReadUInt32();
+                    BlockTableOffset = br.ReadUInt32();
+                    HashTableEntryCount = br.ReadUInt32();
+                    BlockTableEntryCount = br.ReadUInt32();
 
-                    if (this.Format >= MPQFormat.ExtendedV1)
+                    if (Format >= MPQFormat.ExtendedV1)
                     {
-                        this.ExtendedBlockTableOffset = br.ReadUInt64();
-                        this.ExtendedFormatHashTableOffsetBits = br.ReadUInt16();
-                        this.ExtendedFormatBlockTableOffsetBits = br.ReadUInt16();
+                        ExtendedBlockTableOffset = br.ReadUInt64();
+                        ExtendedFormatHashTableOffsetBits = br.ReadUInt16();
+                        ExtendedFormatBlockTableOffsetBits = br.ReadUInt16();
                     }
 
-                    if (this.Format >= MPQFormat.ExtendedV2)
+                    if (Format >= MPQFormat.ExtendedV2)
                     {
-                        this.LongArchiveSize = br.ReadUInt64();
-                        this.BETTableOffset = br.ReadUInt64();
-                        this.HETTableOffset = br.ReadUInt64();
+                        LongArchiveSize = br.ReadUInt64();
+                        BETTableOffset = br.ReadUInt64();
+                        HETTableOffset = br.ReadUInt64();
                     }
 
-                    if (this.Format >= MPQFormat.ExtendedV3)
+                    if (Format >= MPQFormat.ExtendedV3)
                     {
-                        this.CompressedHashTableSize = br.ReadUInt64();
-                        this.CompressedBlockTableSize = br.ReadUInt64();
-                        this.CompressedExtendedBlockTableSize = br.ReadUInt64();
-                        this.CompressedHETTableSize = br.ReadUInt64();
-                        this.CompressedBETTableSize = br.ReadUInt64();
+                        CompressedHashTableSize = br.ReadUInt64();
+                        CompressedBlockTableSize = br.ReadUInt64();
+                        CompressedExtendedBlockTableSize = br.ReadUInt64();
+                        CompressedHETTableSize = br.ReadUInt64();
+                        CompressedBETTableSize = br.ReadUInt64();
 
-                        this.ChunkSizeForHashing = br.ReadUInt32();
+                        ChunkSizeForHashing = br.ReadUInt32();
 
-                        this.MD5BlockTable = BitConverter.ToString(br.ReadBytes(16));
-                        this.MD5HashTable = BitConverter.ToString(br.ReadBytes(16));
-                        this.MD5ExtendedBlockTable = BitConverter.ToString(br.ReadBytes(16));
-                        this.MD5BETTable = BitConverter.ToString(br.ReadBytes(16));
-                        this.MD5HETTable = BitConverter.ToString(br.ReadBytes(16));
-                        this.MD5Header = BitConverter.ToString(br.ReadBytes(16));
+                        MD5BlockTable = BitConverter.ToString(br.ReadBytes(16));
+                        MD5HashTable = BitConverter.ToString(br.ReadBytes(16));
+                        MD5ExtendedBlockTable = BitConverter.ToString(br.ReadBytes(16));
+                        MD5BETTable = BitConverter.ToString(br.ReadBytes(16));
+                        MD5HETTable = BitConverter.ToString(br.ReadBytes(16));
+                        MD5Header = BitConverter.ToString(br.ReadBytes(16));
                     }
                 }
             }
@@ -215,7 +215,7 @@ namespace Warcraft.MPQ
         /// <returns>The hash table size.</returns>
         public ulong GetHashTableSize()
         {
-            return (ulong)(this.HashTableEntryCount * HashTableEntry.GetSize());
+            return (ulong)(HashTableEntryCount * HashTableEntry.GetSize());
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Warcraft.MPQ
         /// <returns>The size of the compressed table.</returns>
         public ulong GetCompressedHashTableSize()
         {
-            return this.CompressedHashTableSize;
+            return CompressedHashTableSize;
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Warcraft.MPQ
         /// <returns><value>true</value> if the hash table is compressed; otherwise, <value>false</value>.</returns>
         public bool IsHashTableCompressed()
         {
-            return this.CompressedHashTableSize > GetHashTableSize();
+            return CompressedHashTableSize > GetHashTableSize();
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Warcraft.MPQ
         /// <returns>The block table size.</returns>
         public ulong GetBlockTableSize()
         {
-            return (ulong)(this.BlockTableEntryCount * BlockTableEntry.GetSize());
+            return (ulong)(BlockTableEntryCount * BlockTableEntry.GetSize());
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Warcraft.MPQ
         /// <returns>The size of the compressed table.</returns>
         public ulong GetCompressedBlockTableSize()
         {
-            return this.CompressedBlockTableSize;
+            return CompressedBlockTableSize;
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Warcraft.MPQ
         /// <returns><value>true</value> if the block table is compressed; otherwise, <value>false</value>.</returns>
         public bool IsBlockTableCompressed()
         {
-            return this.CompressedBlockTableSize > GetBlockTableSize();
+            return CompressedBlockTableSize > GetBlockTableSize();
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Warcraft.MPQ
         /// <returns>The extended block table size.</returns>
         public ulong GetExtendedBlockTableSize()
         {
-            return (ulong)this.BlockTableEntryCount * sizeof(ushort);
+            return (ulong)BlockTableEntryCount * sizeof(ushort);
         }
 
         /// <summary>
@@ -278,9 +278,9 @@ namespace Warcraft.MPQ
         /// <returns>The hash table offset.</returns>
         public ulong GetHashTableOffset()
         {
-            if (this.Format == MPQFormat.Basic)
+            if (Format == MPQFormat.Basic)
             {
-                return this.HashTableOffset;
+                return HashTableOffset;
             }
             else
             {
@@ -294,7 +294,7 @@ namespace Warcraft.MPQ
         /// <returns>The base hash table offset.</returns>
         private uint GetBaseHashTableOffset()
         {
-            return this.HashTableOffset;
+            return HashTableOffset;
         }
 
         /// <summary>
@@ -303,9 +303,9 @@ namespace Warcraft.MPQ
         /// <returns>The block table offset.</returns>
         public ulong GetBlockTableOffset()
         {
-            if (this.Format == MPQFormat.Basic)
+            if (Format == MPQFormat.Basic)
             {
-                return this.BlockTableOffset;
+                return BlockTableOffset;
             }
             else
             {
@@ -319,7 +319,7 @@ namespace Warcraft.MPQ
         /// <returns>The base block table offset.</returns>
         private uint GetBaseBlockTableOffset()
         {
-            return this.BlockTableOffset;
+            return BlockTableOffset;
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Warcraft.MPQ
         /// <returns>The number of hash table entries.</returns>
         public uint GetHashTableEntryCount()
         {
-            return this.HashTableEntryCount;
+            return HashTableEntryCount;
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Warcraft.MPQ
         /// <returns>The number of block table entries.</returns>
         public uint GetBlockTableEntryCount()
         {
-            return this.BlockTableEntryCount;
+            return BlockTableEntryCount;
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace Warcraft.MPQ
         /// <returns>The format of the archive.</returns>
         public MPQFormat GetFormat()
         {
-            return this.Format;
+            return Format;
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Warcraft.MPQ
         /// <returns>The extended block table offset.</returns>
         public ulong GetExtendedBlockTableOffset()
         {
-            return this.ExtendedBlockTableOffset;
+            return ExtendedBlockTableOffset;
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Warcraft.MPQ
         /// <returns>The extended hash table offset bits.</returns>
         public ushort GetExtendedHashTableOffsetBits()
         {
-            return this.ExtendedFormatHashTableOffsetBits;
+            return ExtendedFormatHashTableOffsetBits;
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Warcraft.MPQ
         /// <returns>The extended block table offset bits.</returns>
         public ushort GetExtendedBlockTableOffsetBits()
         {
-            return this.ExtendedFormatBlockTableOffsetBits;
+            return ExtendedFormatBlockTableOffsetBits;
         }
 
         /// <summary>
@@ -382,11 +382,11 @@ namespace Warcraft.MPQ
         /// <returns>The archive size.</returns>
         public ulong GetArchiveSize()
         {
-            if (this.Format == MPQFormat.Basic)
+            if (Format == MPQFormat.Basic)
             {
-                return this.BasicArchiveSize;
+                return BasicArchiveSize;
             }
-            else if (this.Format == MPQFormat.ExtendedV1)
+            else if (Format == MPQFormat.ExtendedV1)
             {
                 // Calculate the size from the start of the header to the end of the
                 // hash table, block table or extended block table (whichever is furthest away)
@@ -425,7 +425,7 @@ namespace Warcraft.MPQ
             }
             else
             {
-                return this.LongArchiveSize;
+                return LongArchiveSize;
             }
         }
 
@@ -435,7 +435,7 @@ namespace Warcraft.MPQ
         /// <returns>The sector size exponent.</returns>
         public uint GetSectorSizeExponent()
         {
-            return this.SectorSizeExponent;
+            return SectorSizeExponent;
         }
 
         /// <summary>
@@ -468,45 +468,45 @@ namespace Warcraft.MPQ
                         bw.Write(c);
                     }
 
-                    bw.Write(this.HeaderSize);
-                    bw.Write(this.ArchiveSize);
-                    bw.Write((ushort)this.Format);
-                    bw.Write(this.SectorSizeExponent);
-                    bw.Write(this.HashTableOffset);
-                    bw.Write(this.BlockTableOffset);
-                    bw.Write(this.HashTableEntryCount);
-                    bw.Write(this.BlockTableEntryCount);
+                    bw.Write(HeaderSize);
+                    bw.Write(ArchiveSize);
+                    bw.Write((ushort)Format);
+                    bw.Write(SectorSizeExponent);
+                    bw.Write(HashTableOffset);
+                    bw.Write(BlockTableOffset);
+                    bw.Write(HashTableEntryCount);
+                    bw.Write(BlockTableEntryCount);
 
-                    if (this.Format > MPQFormat.Basic)
+                    if (Format > MPQFormat.Basic)
                     {
-                        bw.Write(this.ExtendedBlockTableOffset);
-                        bw.Write(this.ExtendedFormatHashTableOffsetBits);
-                        bw.Write(this.ExtendedFormatBlockTableOffsetBits);
+                        bw.Write(ExtendedBlockTableOffset);
+                        bw.Write(ExtendedFormatHashTableOffsetBits);
+                        bw.Write(ExtendedFormatBlockTableOffsetBits);
                     }
 
-                    if (this.Format > MPQFormat.ExtendedV1)
+                    if (Format > MPQFormat.ExtendedV1)
                     {
-                        bw.Write(this.LongArchiveSize);
-                        bw.Write(this.BETTableOffset);
-                        bw.Write(this.HETTableOffset);
+                        bw.Write(LongArchiveSize);
+                        bw.Write(BETTableOffset);
+                        bw.Write(HETTableOffset);
                     }
 
-                    if (this.Format > MPQFormat.ExtendedV2)
+                    if (Format > MPQFormat.ExtendedV2)
                     {
-                        bw.Write(this.CompressedHashTableSize);
-                        bw.Write(this.CompressedBlockTableSize);
-                        bw.Write(this.CompressedExtendedBlockTableSize);
-                        bw.Write(this.CompressedHETTableSize);
-                        bw.Write(this.CompressedBETTableSize);
+                        bw.Write(CompressedHashTableSize);
+                        bw.Write(CompressedBlockTableSize);
+                        bw.Write(CompressedExtendedBlockTableSize);
+                        bw.Write(CompressedHETTableSize);
+                        bw.Write(CompressedBETTableSize);
 
-                        bw.Write(this.ChunkSizeForHashing);
+                        bw.Write(ChunkSizeForHashing);
 
-                        bw.Write(Encoding.UTF8.GetBytes(this.MD5BlockTable));
-                        bw.Write(Encoding.UTF8.GetBytes(this.MD5HashTable));
-                        bw.Write(Encoding.UTF8.GetBytes(this.MD5ExtendedBlockTable));
-                        bw.Write(Encoding.UTF8.GetBytes(this.MD5BETTable));
-                        bw.Write(Encoding.UTF8.GetBytes(this.MD5HETTable));
-                        bw.Write(Encoding.UTF8.GetBytes(this.MD5Header));
+                        bw.Write(Encoding.UTF8.GetBytes(MD5BlockTable));
+                        bw.Write(Encoding.UTF8.GetBytes(MD5HashTable));
+                        bw.Write(Encoding.UTF8.GetBytes(MD5ExtendedBlockTable));
+                        bw.Write(Encoding.UTF8.GetBytes(MD5BETTable));
+                        bw.Write(Encoding.UTF8.GetBytes(MD5HETTable));
+                        bw.Write(Encoding.UTF8.GetBytes(MD5Header));
                     }
                 }
 

@@ -47,22 +47,22 @@ namespace Warcraft.MDX.Animation
 
         public MDXBone(BinaryReader br, WarcraftVersion version)
         {
-            this.SocketLookupTableIndex = br.ReadInt32();
-            this.Flags = (MDXBoneFlag) br.ReadUInt32();
-            this.ParentBone = br.ReadInt16();
-            this.SkinSectionID = br.ReadUInt16();
+            SocketLookupTableIndex = br.ReadInt32();
+            Flags = (MDXBoneFlag) br.ReadUInt32();
+            ParentBone = br.ReadInt16();
+            SkinSectionID = br.ReadUInt16();
 
             if (version >= WarcraftVersion.BurningCrusade)
             {
-                this.DistanceToFurtherDesc = br.ReadUInt16();
-                this.ZRationOfBoneChain = br.ReadUInt16();
+                DistanceToFurtherDesc = br.ReadUInt16();
+                ZRationOfBoneChain = br.ReadUInt16();
             }
 
-            this.Translation = br.ReadMDXTrack<Vector3>(version);
-            this.Rotation = br.ReadMDXTrack<Quaternion>(version);
-            this.Scale = br.ReadMDXTrack<Vector3>(version);
+            Translation = br.ReadMDXTrack<Vector3>(version);
+            Rotation = br.ReadMDXTrack<Quaternion>(version);
+            Scale = br.ReadMDXTrack<Vector3>(version);
 
-            this.PivotPoint = br.ReadVector3();
+            PivotPoint = br.ReadVector3();
         }
     }
 }

@@ -56,8 +56,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.StartTriangleIndex = br.ReadUInt32();
-                    this.TriangleIndexCount = br.ReadUInt16();
+                    StartTriangleIndex = br.ReadUInt32();
+                    TriangleIndexCount = br.ReadUInt16();
                 }
             }
         }
@@ -68,8 +68,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.StartTriangleIndex);
-                    bw.Write(this.TriangleIndexCount);
+                    bw.Write(StartTriangleIndex);
+                    bw.Write(TriangleIndexCount);
 
                     // Then a bit of padding
                     bw.Write((ushort)0);

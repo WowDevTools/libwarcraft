@@ -121,82 +121,82 @@ namespace Warcraft.MDX
                                                 "It might be a Legion file, or you may have omitted the signature, which should be \"MD20\".");
                 }
 
-                this.Version = GetModelVersion(br.ReadUInt32());
-                this.Name = new string(br.ReadMDXArray<char>().GetValues().ToArray());
-                this.GlobalModelFlags = (ModelObjectFlags) br.ReadUInt32();
+                Version = GetModelVersion(br.ReadUInt32());
+                Name = new string(br.ReadMDXArray<char>().GetValues().ToArray());
+                GlobalModelFlags = (ModelObjectFlags) br.ReadUInt32();
 
-                this.GlobalSequenceTimestamps = br.ReadMDXArray<uint>();
-                this.AnimationSequences = br.ReadMDXArray<MDXAnimationSequence>(this.Version);
-                this.AnimationSequenceLookupTable = br.ReadMDXArray<ushort>();
+                GlobalSequenceTimestamps = br.ReadMDXArray<uint>();
+                AnimationSequences = br.ReadMDXArray<MDXAnimationSequence>(Version);
+                AnimationSequenceLookupTable = br.ReadMDXArray<ushort>();
 
-                if (this.Version < WarcraftVersion.Wrath)
+                if (Version < WarcraftVersion.Wrath)
                 {
-                    this.PlayableAnimationLookupTable = br.ReadMDXArray<MDXPlayableAnimationLookupTableEntry>();
+                    PlayableAnimationLookupTable = br.ReadMDXArray<MDXPlayableAnimationLookupTableEntry>();
                 }
 
-                this.Bones = br.ReadMDXArray<MDXBone>(this.Version);
-                this.BoneSocketLookupTable = br.ReadMDXArray<ushort>();
-                this.Vertices = br.ReadMDXArray<MDXVertex>();
+                Bones = br.ReadMDXArray<MDXBone>(Version);
+                BoneSocketLookupTable = br.ReadMDXArray<ushort>();
+                Vertices = br.ReadMDXArray<MDXVertex>();
 
-                if (this.Version < WarcraftVersion.Wrath)
+                if (Version < WarcraftVersion.Wrath)
                 {
-                    this.Skins = br.ReadMDXArray<MDXSkin>(this.Version);
+                    Skins = br.ReadMDXArray<MDXSkin>(Version);
                 }
                 else
                 {
                     // Skins are stored out of file, figure out a clean solution
-                    this.SkinCount = br.ReadUInt32();
+                    SkinCount = br.ReadUInt32();
                 }
 
-                this.ColourAnimations = br.ReadMDXArray<MDXColourAnimation>(this.Version);
-                this.Textures = br.ReadMDXArray<MDXTexture>();
-                this.TransparencyAnimations = br.ReadMDXArray<MDXTextureWeight>(this.Version);
+                ColourAnimations = br.ReadMDXArray<MDXColourAnimation>(Version);
+                Textures = br.ReadMDXArray<MDXTexture>();
+                TransparencyAnimations = br.ReadMDXArray<MDXTextureWeight>(Version);
 
-                if (this.Version <= WarcraftVersion.BurningCrusade)
+                if (Version <= WarcraftVersion.BurningCrusade)
                 {
                     // There's an array of something here, but we've no idea what type of data it is. Thus, we'll skip
                     // over it.
                     br.BaseStream.Position += 8;
                 }
 
-                this.TextureTransformations = br.ReadMDXArray<MDXTextureTransform>(this.Version);
-                this.ReplaceableTextureLookupTable = br.ReadMDXArray<short>();
-                this.Materials = br.ReadMDXArray<MDXMaterial>(this.Version);
+                TextureTransformations = br.ReadMDXArray<MDXTextureTransform>(Version);
+                ReplaceableTextureLookupTable = br.ReadMDXArray<short>();
+                Materials = br.ReadMDXArray<MDXMaterial>(Version);
 
-                this.BoneLookupTable = br.ReadMDXArray<short>();
-                this.TextureLookupTable = br.ReadMDXArray<short>();
-                this.TextureMappingLookupTable = br.ReadMDXArray<EMDXTextureMappingType>();
-                this.TransparencyLookupTable = br.ReadMDXArray<short>();
-                this.TextureTransformationLookupTable = br.ReadMDXArray<short>();
+                BoneLookupTable = br.ReadMDXArray<short>();
+                TextureLookupTable = br.ReadMDXArray<short>();
+                TextureMappingLookupTable = br.ReadMDXArray<EMDXTextureMappingType>();
+                TransparencyLookupTable = br.ReadMDXArray<short>();
+                TextureTransformationLookupTable = br.ReadMDXArray<short>();
 
-                this.BoundingBox = br.ReadBox();
-                this.BoundingSphereRadius = br.ReadSingle();
+                BoundingBox = br.ReadBox();
+                BoundingSphereRadius = br.ReadSingle();
 
-                this.CollisionBox = br.ReadBox();
-                this.CollisionSphereRadius = br.ReadSingle();
+                CollisionBox = br.ReadBox();
+                CollisionSphereRadius = br.ReadSingle();
 
-                this.CollisionTriangles = br.ReadMDXArray<ushort>();
-                this.CollisionVertices = br.ReadMDXArray<Vector3>();
-                this.CollisionNormals = br.ReadMDXArray<Vector3>();
+                CollisionTriangles = br.ReadMDXArray<ushort>();
+                CollisionVertices = br.ReadMDXArray<Vector3>();
+                CollisionNormals = br.ReadMDXArray<Vector3>();
 
-                this.Attachments = br.ReadMDXArray<MDXAttachment>(this.Version);
-                this.AttachmentLookupTable = br.ReadMDXArray<MDXAttachmentType>();
+                Attachments = br.ReadMDXArray<MDXAttachment>(Version);
+                AttachmentLookupTable = br.ReadMDXArray<MDXAttachmentType>();
 
-                this.AnimationEvents = br.ReadMDXArray<MDXAnimationEvent>(this.Version);
-                this.Lights = br.ReadMDXArray<MDXLight>(this.Version);
+                AnimationEvents = br.ReadMDXArray<MDXAnimationEvent>(Version);
+                Lights = br.ReadMDXArray<MDXLight>(Version);
 
-                this.Cameras = br.ReadMDXArray<MDXCamera>(this.Version);
-                this.CameraTypeLookupTable = br.ReadMDXArray<MDXCameraType>();
+                Cameras = br.ReadMDXArray<MDXCamera>(Version);
+                CameraTypeLookupTable = br.ReadMDXArray<MDXCameraType>();
 
-                this.RibbonEmitters = br.ReadMDXArray<MDXRibbonEmitter>(this.Version);
+                RibbonEmitters = br.ReadMDXArray<MDXRibbonEmitter>(Version);
 
                 // TODO: Particle Emitters
                 // Skip for now
                 br.BaseStream.Position += 8;
 
-                if (this.Version >= WarcraftVersion.Wrath && this.GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
+                if (Version >= WarcraftVersion.Wrath && GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
                 {
-                    this.BlendMapOverrides = br.ReadMDXArray<BlendingMode>();
+                    BlendMapOverrides = br.ReadMDXArray<BlendingMode>();
                 }
             }
         }
@@ -208,12 +208,12 @@ namespace Warcraft.MDX
         public void SetSkins(IEnumerable<MDXSkin> skins)
         {
             var skinArray = new MDXArray<MDXSkin>(skins);
-            if (skinArray.Count != this.SkinCount)
+            if (skinArray.Count != SkinCount)
             {
                 throw new ArgumentException("The number of skins did not match the skin count for the model.", nameof(skins));
             }
 
-            this.Skins = skinArray;
+            Skins = skinArray;
         }
 
         /// <summary>

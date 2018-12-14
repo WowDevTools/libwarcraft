@@ -41,9 +41,9 @@ namespace Warcraft.DBC.SpecialFields
 
         public ForeignKey(DatabaseName inDatabase, string inField, T key)
         {
-            this.Database = inDatabase;
-            this.Field = inField;
-            this.Key = key;
+            Database = inDatabase;
+            Field = inField;
+            Key = key;
         }
     }
 }

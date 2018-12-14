@@ -61,29 +61,29 @@ namespace Warcraft.DBC.Definitions
             Which ones to use depend on the value of BaseSection.
         */
 
-        public StringReference SkinTexture => this.SectionTexture0;
-        public StringReference ExtraSkinTexture => this.SectionTexture1;
+        public StringReference SkinTexture => SectionTexture0;
+        public StringReference ExtraSkinTexture => SectionTexture1;
 
-        public StringReference FaceLowerTexture => this.SectionTexture0;
-        public StringReference FaceUpperTexture => this.SectionTexture1;
+        public StringReference FaceLowerTexture => SectionTexture0;
+        public StringReference FaceUpperTexture => SectionTexture1;
 
-        public StringReference FacialLowerTexture => this.SectionTexture0;
-        public StringReference FacialUpperTexture => this.SectionTexture1;
+        public StringReference FacialLowerTexture => SectionTexture0;
+        public StringReference FacialUpperTexture => SectionTexture1;
 
-        public StringReference HairTexture => this.SectionTexture0;
-        public StringReference ScalpLowerTexture => this.SectionTexture1;
-        public StringReference ScalpUpperTexture => this.SectionTexture2;
+        public StringReference HairTexture => SectionTexture0;
+        public StringReference ScalpLowerTexture => SectionTexture1;
+        public StringReference ScalpUpperTexture => SectionTexture2;
 
-        public StringReference PelvisTexture => this.SectionTexture0;
-        public StringReference TorsoTexture => this.SectionTexture1;
+        public StringReference PelvisTexture => SectionTexture0;
+        public StringReference TorsoTexture => SectionTexture1;
 
         public override IEnumerable<StringReference> GetStringReferences()
         {
             return new List<StringReference>
             {
-                this.SectionTexture0,
-                this.SectionTexture1,
-                this.SectionTexture2
+                SectionTexture0,
+                SectionTexture1,
+                SectionTexture2
             };
         }
     }

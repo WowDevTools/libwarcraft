@@ -43,8 +43,8 @@ namespace Warcraft.DBC.Definitions
         [RecordField(WarcraftVersion.Classic)]
         public uint SilenceTimeNightMax { get; set; }
 
-        public Range SilenceIntervalDay => new Range(this.SilenceTimeDayMin, this.SilenceTimeDayMax, rigorous:false);
-        public Range SilenceIntervalNight => new Range(this.SilenceTimeNightMin, this.SilenceTimeNightMax, rigorous:false);
+        public Range SilenceIntervalDay => new Range(SilenceTimeDayMin, SilenceTimeDayMax, rigorous:false);
+        public Range SilenceIntervalNight => new Range(SilenceTimeNightMin, SilenceTimeNightMax, rigorous:false);
 
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
@@ -57,7 +57,7 @@ namespace Warcraft.DBC.Definitions
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()
         {
-            yield return this.SetName;
+            yield return SetName;
         }
     }
 }

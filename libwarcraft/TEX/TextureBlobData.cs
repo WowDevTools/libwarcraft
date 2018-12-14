@@ -43,7 +43,7 @@ namespace Warcraft.TEX
         /// <param name="inData">The binary data containing the object.</param>
         public void LoadBinaryData(byte[] inData)
         {
-            this.TextureData = inData;
+            TextureData = inData;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Warcraft.TEX
         /// </summary>
         public byte[] Serialize()
         {
-            return this.TextureData;
+            return TextureData;
         }
     }
 }

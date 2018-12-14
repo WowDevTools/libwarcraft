@@ -58,10 +58,10 @@ namespace Warcraft.MPQ.Tables.Block
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.BlockOffset = br.ReadUInt32();
-                    this.BlockSize = br.ReadUInt32();
-                    this.FileSize = br.ReadUInt32();
-                    this.Flags = (BlockFlags)br.ReadUInt32();
+                    BlockOffset = br.ReadUInt32();
+                    BlockSize = br.ReadUInt32();
+                    FileSize = br.ReadUInt32();
+                    Flags = (BlockFlags)br.ReadUInt32();
                 }
             }
         }
@@ -72,7 +72,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The block offset.</returns>
         public uint GetBlockOffset()
         {
-            return this.BlockOffset;
+            return BlockOffset;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The final offset.</returns>
         public ulong GetExtendedBlockOffset(ushort highBits)
         {
-            return MPQHeader.MergeHighBits(this.BlockOffset, highBits);
+            return MPQHeader.MergeHighBits(BlockOffset, highBits);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The block size.</returns>
         public uint GetBlockSize()
         {
-            return this.BlockSize;
+            return BlockSize;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The flags.</returns>
         public BlockFlags GetFlags()
         {
-            return this.Flags;
+            return Flags;
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The file size.</returns>
         public uint GetFileSize()
         {
-            return this.FileSize;
+            return FileSize;
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns><c>true</c> if this instance is block empty; otherwise, <c>false</c>.</returns>
         public bool IsBlockEmpty()
         {
-            return (this.BlockOffset != 0) && (this.BlockSize != 0) && (this.FileSize == 0) && (this.Flags == 0);
+            return (BlockOffset != 0) && (BlockSize != 0) && (FileSize == 0) && (Flags == 0);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns><c>true</c> if this instance is block unused; otherwise, <c>false</c>.</returns>
         public bool IsBlockUnused()
         {
-            return (this.BlockOffset == 0) && (this.BlockSize == 0) && (this.FileSize == 0) && (this.Flags == 0);
+            return (BlockOffset == 0) && (BlockSize == 0) && (FileSize == 0) && (Flags == 0);
         }
 
         /// <summary>
@@ -140,13 +140,13 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns><value>true</value> if the block is compressed; otherwise, <value>false</value>.</returns>
         public bool IsCompressed()
         {
-            bool isCompressedInAnyWay = this.Flags.HasFlag(BlockFlags.IsCompressed) ||
-                                        this.Flags.HasFlag(BlockFlags.IsCompressedMultiple) ||
-                                        this.Flags.HasFlag(BlockFlags.IsImploded);
+            bool isCompressedInAnyWay = Flags.HasFlag(BlockFlags.IsCompressed) ||
+                                        Flags.HasFlag(BlockFlags.IsCompressedMultiple) ||
+                                        Flags.HasFlag(BlockFlags.IsImploded);
 
             // Oddly enough, on occasion the block will be marked as compressed but will not actually be compressed.
             // These sorts of blocks can be detected by comparing the block size with the actual file size.
-            return (this.BlockSize != this.FileSize) && isCompressedInAnyWay;
+            return (BlockSize != FileSize) && isCompressedInAnyWay;
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns><value>true</value> if the block is encrypted; otherwise, <value>false</value>.</returns>
         public bool IsEncrypted()
         {
-            return this.Flags.HasFlag(BlockFlags.IsEncrypted);
+            return Flags.HasFlag(BlockFlags.IsEncrypted);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns><value>true</value> if the block is stored in sectors; otherwise, <value>false</value>.</returns>
         public bool HasSectors()
         {
-            return !this.Flags.HasFlag(BlockFlags.IsSingleUnit);
+            return !Flags.HasFlag(BlockFlags.IsSingleUnit);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns><value>true</value> if the block points to any data; otherwise, <value>false</value>.</returns>
         public bool HasData()
         {
-            return this.Flags.HasFlag(BlockFlags.Exists) && !this.Flags.HasFlag(BlockFlags.IsDeletionMarker);
+            return Flags.HasFlag(BlockFlags.Exists) && !Flags.HasFlag(BlockFlags.IsDeletionMarker);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns></returns>
         public bool IsDeleted()
         {
-            return this.Flags.HasFlag(BlockFlags.IsDeletionMarker);
+            return Flags.HasFlag(BlockFlags.IsDeletionMarker);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns><value>true</value> if the block is stored as a single unit; otherwise, <value>false</value>.</returns>
         public bool IsSingleUnit()
         {
-            return this.Flags.HasFlag(BlockFlags.IsSingleUnit);
+            return Flags.HasFlag(BlockFlags.IsSingleUnit);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns><value>true</value> if the key should be adjusted; otherwise, <value>false</value>.</returns>
         public bool ShouldEncryptionKeyBeAdjusted()
         {
-            return this.Flags.HasFlag(BlockFlags.HasAdjustedEncryptionKey);
+            return Flags.HasFlag(BlockFlags.HasAdjustedEncryptionKey);
         }
 
         /// <summary>
@@ -212,10 +212,10 @@ namespace Warcraft.MPQ.Tables.Block
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.BlockOffset);
-                    bw.Write(this.BlockSize);
-                    bw.Write(this.FileSize);
-                    bw.Write((uint)this.Flags);
+                    bw.Write(BlockOffset);
+                    bw.Write(BlockSize);
+                    bw.Write(FileSize);
+                    bw.Write((uint)Flags);
                 }
 
                 return ms.ToArray();

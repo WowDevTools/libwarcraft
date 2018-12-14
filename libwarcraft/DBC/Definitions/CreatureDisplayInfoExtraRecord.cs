@@ -108,7 +108,7 @@ namespace Warcraft.DBC.Definitions
 
         public override IEnumerable<StringReference> GetStringReferences()
         {
-            yield return this.BakedName;
+            yield return BakedName;
         }
     }
 }

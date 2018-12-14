@@ -55,7 +55,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
                             // Read a block of 9 high res vertices
                             for (int x = 0; x < 9; ++x)
                             {
-                                this.HighResVertexLights.Add(br.ReadRGBA());
+                                HighResVertexLights.Add(br.ReadRGBA());
                             }
                         }
                         else
@@ -63,7 +63,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
                             // Read a block of 8 low res vertices
                             for (int x = 0; x < 8; ++x)
                             {
-                                this.LowResVertexLights.Add(br.ReadRGBA());
+                                LowResVertexLights.Add(br.ReadRGBA());
                             }
                         }
                     }

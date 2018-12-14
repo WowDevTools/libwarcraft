@@ -35,11 +35,11 @@ namespace Warcraft.MDX.Animation
 
         public MDXAnimationEvent(BinaryReader br, WarcraftVersion version)
         {
-            this.EventName = new string(br.ReadChars(4));
-            this.Data = br.ReadUInt32();
-            this.Bone = br.ReadUInt32();
-            this.RelativePosition = br.ReadVector3();
-            this.RaiseEvent = br.ReadMDXTrack<bool>(version, true);
+            EventName = new string(br.ReadChars(4));
+            Data = br.ReadUInt32();
+            Bone = br.ReadUInt32();
+            RelativePosition = br.ReadVector3();
+            RaiseEvent = br.ReadMDXTrack<bool>(version, true);
         }
     }
 }

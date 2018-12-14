@@ -26,8 +26,8 @@ namespace Warcraft.MDX.Animation
 
         public MDXPlayableAnimationLookupTableEntry(short inFallbackAnimationID, MDXPlayableAnimationFlags inFlags)
         {
-            this.FallbackAnimationID = inFallbackAnimationID;
-            this.Flags = inFlags;
+            FallbackAnimationID = inFallbackAnimationID;
+            Flags = inFlags;
         }
     }
 }

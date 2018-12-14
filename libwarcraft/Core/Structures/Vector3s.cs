@@ -50,9 +50,9 @@ namespace Warcraft.Core.Structures
         /// <param name="inZ">Z coordinate.</param>
         public Vector3s(short inX, short inY, short inZ)
         {
-            this.X = inX;
-            this.Y = inY;
-            this.Z = inZ;
+            X = inX;
+            Y = inY;
+            Z = inZ;
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace Warcraft.Core.Structures
         /// <param name="inZ">Z.</param>
         public Vector3s(sbyte inX, sbyte inY, sbyte inZ)
         {
-            this.X = (short)(127 / inX);
-            this.Y = (short)(127 / inY);
-            this.Z = (short)(127 / inZ);
+            X = (short)(127 / inX);
+            Y = (short)(127 / inY);
+            Z = (short)(127 / inZ);
         }
 
         /// <summary>
@@ -166,12 +166,12 @@ namespace Warcraft.Core.Structures
         /// <returns>A string representation of the current instance.</returns>
         public override string ToString()
         {
-            return $"{this.X}, {this.Y}, {this.Z}";
+            return $"{X}, {Y}, {Z}";
         }
 
         public IReadOnlyCollection<short> Flatten()
         {
-            return new[] {this.X, this.Y, this.Z};
+            return new[] {X, Y, Z};
         }
     }
 }

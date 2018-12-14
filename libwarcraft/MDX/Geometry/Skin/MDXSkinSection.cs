@@ -125,22 +125,22 @@ namespace Warcraft.MDX.Geometry.Skin
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.SkinSectionID = new BaseSkinSectionIdentifier(br.ReadUInt16());
-                    this.Level = br.ReadUInt16();
-                    this.StartVertexIndex = br.ReadUInt16();
-                    this.VertexCount = br.ReadUInt16();
-                    this.StartTriangleIndex = br.ReadUInt16();
-                    this.TriangleCount = br.ReadUInt16();
-                    this.BoneCount = br.ReadUInt16();
-                    this.StartBoneIndex = br.ReadUInt16();
-                    this.InfluencingBonesCount = br.ReadUInt16();
-                    this.CenterBoneIndex = br.ReadUInt16();
-                    this.CenterPosition = br.ReadVector3();
+                    SkinSectionID = new BaseSkinSectionIdentifier(br.ReadUInt16());
+                    Level = br.ReadUInt16();
+                    StartVertexIndex = br.ReadUInt16();
+                    VertexCount = br.ReadUInt16();
+                    StartTriangleIndex = br.ReadUInt16();
+                    TriangleCount = br.ReadUInt16();
+                    BoneCount = br.ReadUInt16();
+                    StartBoneIndex = br.ReadUInt16();
+                    InfluencingBonesCount = br.ReadUInt16();
+                    CenterBoneIndex = br.ReadUInt16();
+                    CenterPosition = br.ReadVector3();
 
                     if (br.BaseStream.Length > 32)
                     {
-                        this.SortCenterPosition = br.ReadVector3();
-                        this.SortRadius = br.ReadSingle();
+                        SortCenterPosition = br.ReadVector3();
+                        SortRadius = br.ReadSingle();
                     }
                 }
             }

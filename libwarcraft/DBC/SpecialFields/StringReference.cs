@@ -31,12 +31,12 @@ namespace Warcraft.DBC.SpecialFields
 
         public StringReference(uint inOffset)
         {
-            this.Offset = inOffset;
+            Offset = inOffset;
         }
 
         public override string ToString()
         {
-            return this.Value;
+            return Value;
         }
     }
 }

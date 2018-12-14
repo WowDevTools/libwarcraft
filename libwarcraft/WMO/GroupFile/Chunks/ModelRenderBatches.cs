@@ -48,7 +48,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.RenderBatches.Add(new RenderBatch(br.ReadBytes(RenderBatch.GetSize())));
+                        RenderBatches.Add(new RenderBatch(br.ReadBytes(RenderBatch.GetSize())));
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (RenderBatch renderBatch in this.RenderBatches)
+                    foreach (RenderBatch renderBatch in RenderBatches)
                     {
                         bw.Write(renderBatch.Serialize());
                     }
@@ -95,14 +95,14 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.BoundingBox = br.ReadShortBox();
-                    this.FirstPolygonIndex = br.ReadUInt32();
-                    this.PolygonIndexCount = br.ReadUInt16();
-                    this.FirstVertexIndex = br.ReadUInt16();
-                    this.LastVertexIndex = br.ReadUInt16();
+                    BoundingBox = br.ReadShortBox();
+                    FirstPolygonIndex = br.ReadUInt32();
+                    PolygonIndexCount = br.ReadUInt16();
+                    FirstVertexIndex = br.ReadUInt16();
+                    LastVertexIndex = br.ReadUInt16();
 
-                    this.UnknownFlags = br.ReadByte();
-                    this.MaterialIndex = br.ReadByte();
+                    UnknownFlags = br.ReadByte();
+                    MaterialIndex = br.ReadByte();
                 }
             }
         }
@@ -118,16 +118,16 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.WriteShortBox(this.BoundingBox);
+                    bw.WriteShortBox(BoundingBox);
 
-                    bw.Write(this.FirstPolygonIndex);
-                    bw.Write(this.PolygonIndexCount);
+                    bw.Write(FirstPolygonIndex);
+                    bw.Write(PolygonIndexCount);
 
-                    bw.Write(this.FirstVertexIndex);
-                    bw.Write(this.LastVertexIndex);
+                    bw.Write(FirstVertexIndex);
+                    bw.Write(LastVertexIndex);
 
-                    bw.Write(this.UnknownFlags);
-                    bw.Write(this.MaterialIndex);
+                    bw.Write(UnknownFlags);
+                    bw.Write(MaterialIndex);
                 }
 
                 return ms.ToArray();

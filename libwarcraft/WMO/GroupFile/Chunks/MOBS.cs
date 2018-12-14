@@ -38,7 +38,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public void LoadBinaryData(byte[] inData)
         {
-            this.Data = inData;
+            Data = inData;
         }
 
         public string GetSignature()
@@ -48,7 +48,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
 
         public byte[] Serialize()
         {
-            return this.Data;
+            return Data;
         }
     }
 }

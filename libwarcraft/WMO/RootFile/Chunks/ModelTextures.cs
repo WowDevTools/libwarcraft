@@ -51,7 +51,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     {
                         if (ms.Position % 4 == 0)
                         {
-                            this.Textures.Add(ms.Position, br.ReadNullTerminatedString());
+                            Textures.Add(ms.Position, br.ReadNullTerminatedString());
                         }
                         else
                         {
@@ -64,7 +64,7 @@ namespace Warcraft.WMO.RootFile.Chunks
 
         public string GetTexturePathByOffset(uint nameOffset)
         {
-            foreach (KeyValuePair<long, string> textureName in this.Textures)
+            foreach (KeyValuePair<long, string> textureName in Textures)
             {
                 if (textureName.Key == nameOffset)
                 {
@@ -86,7 +86,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (KeyValuePair<long, string> texture in this.Textures)
+                    foreach (KeyValuePair<long, string> texture in Textures)
                     {
                         if (ms.Position % 4 == 0)
                         {

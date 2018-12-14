@@ -57,7 +57,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
                     long nLayers = br.BaseStream.Length / TextureLayerEntry.GetSize();
                     for (int i = 0; i < nLayers; i++)
                     {
-                        this.Layers.Add(new TextureLayerEntry(br.ReadBytes(TextureLayerEntry.GetSize())));
+                        Layers.Add(new TextureLayerEntry(br.ReadBytes(TextureLayerEntry.GetSize())));
                     }
                 }
             }
@@ -105,11 +105,11 @@ namespace Warcraft.ADT.Chunks.Subchunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.TextureID = br.ReadUInt32();
-                    this.Flags = (TextureLayerFlags)br.ReadUInt32();
-                    this.AlphaMapOffset = br.ReadUInt32();
+                    TextureID = br.ReadUInt32();
+                    Flags = (TextureLayerFlags)br.ReadUInt32();
+                    AlphaMapOffset = br.ReadUInt32();
 
-                    this.EffectID = new ForeignKey<ushort>(DatabaseName.GroundEffectTexture, nameof(DBCRecord.ID), br.ReadUInt16()); // TODO: Implement GroundEffectTextureRecord
+                    EffectID = new ForeignKey<ushort>(DatabaseName.GroundEffectTexture, nameof(DBCRecord.ID), br.ReadUInt16()); // TODO: Implement GroundEffectTextureRecord
                 }
             }
         }

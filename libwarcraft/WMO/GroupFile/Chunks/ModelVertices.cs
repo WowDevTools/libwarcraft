@@ -55,7 +55,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.Vertices.Add(br.ReadVector3());
+                        Vertices.Add(br.ReadVector3());
                     }
                 }
             }
@@ -72,7 +72,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Vector3 vertex in this.Vertices)
+                    foreach (Vector3 vertex in Vertices)
                     {
                         bw.WriteVector3(vertex);
                     }

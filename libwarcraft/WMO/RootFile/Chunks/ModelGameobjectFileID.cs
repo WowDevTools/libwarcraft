@@ -48,7 +48,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int groupCount = inData.Length / sizeof(uint);
                     for (int i = 0; i < groupCount; ++i)
                     {
-                        this.IDFlags.Add(br.ReadUInt32());
+                        IDFlags.Add(br.ReadUInt32());
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (int idFlag in this.IDFlags)
+                    foreach (int idFlag in IDFlags)
                     {
                         bw.Write(idFlag);
                     }

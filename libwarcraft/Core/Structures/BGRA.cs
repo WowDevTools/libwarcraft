@@ -53,10 +53,10 @@ namespace Warcraft.Core.Structures
         /// <param name="inA">The input alpha component.</param>
         public BGRA(byte inB, byte inG, byte inR, byte inA)
         {
-            this.B = inB;
-            this.G = inG;
-            this.R = inR;
-            this.A = inA;
+            B = inB;
+            G = inG;
+            R = inR;
+            A = inA;
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Warcraft.Core.Structures
         /// <returns>A string representation of the current instance.</returns>
         public override string ToString()
         {
-            return $"bgra({this.B}, {this.G}, {this.R}, {this.A})";
+            return $"bgra({B}, {G}, {R}, {A})";
         }
     }
 }

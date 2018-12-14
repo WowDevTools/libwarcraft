@@ -77,7 +77,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int planeCount = inData.Length / 16;
                     for (int i = 0; i < planeCount; ++i)
                     {
-                        this.ConvexPlanes.Add(br.ReadPlane());
+                        ConvexPlanes.Add(br.ReadPlane());
                     }
                 }
             }
@@ -101,7 +101,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Plane convexPlane in this.ConvexPlanes)
+                    foreach (Plane convexPlane in ConvexPlanes)
                     {
                         bw.WritePlane(convexPlane);
                     }

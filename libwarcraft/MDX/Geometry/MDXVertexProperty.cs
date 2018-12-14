@@ -40,10 +40,10 @@ namespace Warcraft.MDX.Geometry
         /// <param name="inBoneD">The fourth bone.</param>
         public MDXVertexProperty(byte inBoneA, byte inBoneB, byte inBoneC, byte inBoneD)
         {
-            this.BoneIndices.Add(inBoneA);
-            this.BoneIndices.Add(inBoneB);
-            this.BoneIndices.Add(inBoneC);
-            this.BoneIndices.Add(inBoneD);
+            BoneIndices.Add(inBoneA);
+            BoneIndices.Add(inBoneB);
+            BoneIndices.Add(inBoneC);
+            BoneIndices.Add(inBoneD);
         }
     }
 }

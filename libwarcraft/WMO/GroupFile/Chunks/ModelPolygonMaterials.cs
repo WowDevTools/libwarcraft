@@ -46,7 +46,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.PolygonMaterials.Add(new PolygonMaterial(br.ReadBytes(PolygonMaterial.GetSize())));
+                        PolygonMaterials.Add(new PolygonMaterial(br.ReadBytes(PolygonMaterial.GetSize())));
                     }
                 }
             }
@@ -64,7 +64,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (PolygonMaterial polygonMaterial in this.PolygonMaterials)
+                    foreach (PolygonMaterial polygonMaterial in PolygonMaterials)
                     {
                         bw.Write(polygonMaterial.Serialize());
                     }
@@ -86,8 +86,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Flags = (PolygonMaterialFlags)br.ReadByte();
-                    this.MaterialIndex = br.ReadByte();
+                    Flags = (PolygonMaterialFlags)br.ReadByte();
+                    MaterialIndex = br.ReadByte();
                 }
             }
         }
@@ -103,8 +103,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write((byte)this.Flags);
-                    bw.Write(this.MaterialIndex);
+                    bw.Write((byte)Flags);
+                    bw.Write(MaterialIndex);
                 }
 
                 return ms.ToArray();

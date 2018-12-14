@@ -46,7 +46,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.DoodadReferences.Add(br.ReadUInt16());
+                        DoodadReferences.Add(br.ReadUInt16());
                     }
                 }
             }
@@ -63,7 +63,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (ushort doodadReference in this.DoodadReferences)
+                    foreach (ushort doodadReference in DoodadReferences)
                     {
                         bw.Write(doodadReference);
                     }

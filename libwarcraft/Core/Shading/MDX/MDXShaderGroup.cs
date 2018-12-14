@@ -34,23 +34,23 @@ namespace Warcraft.Core.Shading.MDX
         public MDXShaderGroup(MDXVertexShaderType vertex, MDXControlShaderType control, MDXEvaluationShaderType eval,
             MDXFragmentShaderType frag, uint colourOp, uint alphaOp)
         {
-            this.VertexShader = vertex;
-            this.ControlShader = control;
-            this.EvaluationShader = eval;
-            this.FragmentShader = frag;
-            this.ColourOperations = colourOp;
-            this.AlphaOperations = alphaOp;
+            VertexShader = vertex;
+            ControlShader = control;
+            EvaluationShader = eval;
+            FragmentShader = frag;
+            ColourOperations = colourOp;
+            AlphaOperations = alphaOp;
         }
 
         public MDXShaderGroup(MDXFragmentShaderType frag, MDXVertexShaderType vertex, MDXControlShaderType control,
             MDXEvaluationShaderType eval, uint colourOp, uint alphaOp)
         {
-            this.VertexShader = vertex;
-            this.ControlShader = control;
-            this.EvaluationShader = eval;
-            this.FragmentShader = frag;
-            this.ColourOperations = colourOp;
-            this.AlphaOperations = alphaOp;
+            VertexShader = vertex;
+            ControlShader = control;
+            EvaluationShader = eval;
+            FragmentShader = frag;
+            ColourOperations = colourOp;
+            AlphaOperations = alphaOp;
         }
     }
 }

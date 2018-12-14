@@ -85,7 +85,7 @@ namespace Warcraft.DBC.Definitions
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()
         {
-            return this.AreaName.GetReferences();
+            return AreaName.GetReferences();
         }
     }
 }

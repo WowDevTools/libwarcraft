@@ -68,8 +68,8 @@ namespace Warcraft.MPQ
                         throw new InvalidDataException("The data did not contain a valid shunt signature.");
                     }
 
-                    this.ShuntedArchiveAllocatedSize = br.ReadUInt32();
-                    this.ShuntedArchiveOffset = br.ReadUInt32();
+                    ShuntedArchiveAllocatedSize = br.ReadUInt32();
+                    ShuntedArchiveOffset = br.ReadUInt32();
                 }
             }
         }
@@ -84,8 +84,8 @@ namespace Warcraft.MPQ
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
                     bw.WriteChunkSignature(Signature);
-                    bw.Write(this.ShuntedArchiveAllocatedSize);
-                    bw.Write(this.ShuntedArchiveOffset);
+                    bw.Write(ShuntedArchiveAllocatedSize);
+                    bw.Write(ShuntedArchiveOffset);
                 }
 
                 return ms.ToArray();

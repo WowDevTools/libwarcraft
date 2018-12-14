@@ -36,8 +36,8 @@ namespace Warcraft.Core.Structures
         /// </summary>
         public float Pitch
         {
-            get => this.Values.X;
-            set => this.Values.X = value;
+            get => Values.X;
+            set => Values.X = value;
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace Warcraft.Core.Structures
         /// </summary>
         public float Yaw
         {
-            get => this.Values.Y;
-            set => this.Values.Y = value;
+            get => Values.Y;
+            set => Values.Y = value;
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace Warcraft.Core.Structures
         /// </summary>
         public float Roll
         {
-            get => this.Values.Z;
-            set => this.Values.Z = value;
+            get => Values.Z;
+            set => Values.Z = value;
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Warcraft.Core.Structures
         /// <param name="inRoll">Roll</param>
         public Rotator(float inPitch, float inYaw, float inRoll)
         {
-            this.Values = new Vector3(inPitch, inYaw, inRoll);
+            Values = new Vector3(inPitch, inYaw, inRoll);
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Warcraft.Core.Structures
         /// <returns>A string representation of the current instance.</returns>
         public override string ToString()
         {
-            return $"Pitch: {this.Pitch}, Yaw: {this.Yaw}, Roll: {this.Roll}";
+            return $"Pitch: {Pitch}, Yaw: {Yaw}, Roll: {Roll}";
         }
 
         public IReadOnlyCollection<float> Flatten()
         {
-            return this.Values.Flatten();
+            return Values.Flatten();
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Warcraft.Core
         public FileDeletedException(string message, string filePath)
             : base(message)
         {
-            this.FilePath = filePath;
+            FilePath = filePath;
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Warcraft.Core
         public FileDeletedException(string message, string filePath, Exception innerException)
             : base(message, innerException)
         {
-            this.FilePath = filePath;
+            FilePath = filePath;
         }
     }
 
@@ -179,7 +179,7 @@ namespace Warcraft.Core
         public IncompatibleRecordArrayTypeException(string message, Type incompatibleType)
             :base(message)
         {
-            this.IncompatibType = incompatibleType;
+            IncompatibType = incompatibleType;
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Warcraft.Core
         public IncompatibleRecordArrayTypeException(string message, Type incompatibleType, Exception innerException)
             : base(message, innerException)
         {
-            this.IncompatibType = incompatibleType;
+            IncompatibType = incompatibleType;
         }
     }
 }

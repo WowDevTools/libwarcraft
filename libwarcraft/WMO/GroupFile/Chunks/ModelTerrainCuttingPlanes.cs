@@ -48,7 +48,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                 {
                     while (ms.Position < ms.Length)
                     {
-                        this.CuttingPlanes.Add(br.ReadPlane());
+                        CuttingPlanes.Add(br.ReadPlane());
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Plane cuttingPlane in this.CuttingPlanes)
+                    foreach (Plane cuttingPlane in CuttingPlanes)
                     {
                         bw.WritePlane(cuttingPlane);
                     }

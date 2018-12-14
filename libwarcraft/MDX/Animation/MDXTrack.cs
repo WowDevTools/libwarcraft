@@ -64,14 +64,14 @@ namespace Warcraft.MDX.Animation
         /// </param>
         public MDXTrack(BinaryReader br, WarcraftVersion version, bool valueless = false)
         {
-            this.Interpolationtype = (InterpolationType)br.ReadUInt16();
-            this.GlobalSequenceID = br.ReadUInt16();
+            Interpolationtype = (InterpolationType)br.ReadUInt16();
+            GlobalSequenceID = br.ReadUInt16();
 
             if (version < WarcraftVersion.Wrath)
             {
-                this.IsComposite = true;
-                this.CompositeTimelineInterpolationRanges = br.ReadMDXArray<IntegerRange>();
-                this.CompositeTimelineTimestamps = br.ReadMDXArray<uint>();
+                IsComposite = true;
+                CompositeTimelineInterpolationRanges = br.ReadMDXArray<IntegerRange>();
+                CompositeTimelineTimestamps = br.ReadMDXArray<uint>();
 
                 if (valueless)
                 {
@@ -81,17 +81,17 @@ namespace Warcraft.MDX.Animation
                 // HACK: MDXTracks with quaternions need to have the version passed along
                 if (typeof(T) == typeof(Quaternion))
                 {
-                    this.CompositeTimelineValues = br.ReadMDXArray<T>(version);
+                    CompositeTimelineValues = br.ReadMDXArray<T>(version);
                 }
                 else
                 {
-                    this.CompositeTimelineValues = br.ReadMDXArray<T>();
+                    CompositeTimelineValues = br.ReadMDXArray<T>();
                 }
             }
             else
             {
-                this.IsComposite = false;
-                this.Timestamps = br.ReadMDXArray<MDXArray<uint>>();
+                IsComposite = false;
+                Timestamps = br.ReadMDXArray<MDXArray<uint>>();
 
                 if (valueless)
                 {
@@ -101,11 +101,11 @@ namespace Warcraft.MDX.Animation
                 // HACK: MDXTracks with quaternions need to have the version passed along
                 if (typeof(T) == typeof(Quaternion))
                 {
-                    this.Values = br.ReadMDXArray<MDXArray<T>>(version);
+                    Values = br.ReadMDXArray<MDXArray<T>>(version);
                 }
                 else
                 {
-                    this.Values = br.ReadMDXArray<MDXArray<T>>();
+                    Values = br.ReadMDXArray<MDXArray<T>>();
                 }
             }
         }

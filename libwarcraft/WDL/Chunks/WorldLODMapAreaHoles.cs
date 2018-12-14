@@ -33,7 +33,7 @@ namespace Warcraft.WDL.Chunks
         {
             get
             {
-                return this.HoleMasks.TrueForAll(sh => sh == 0);
+                return HoleMasks.TrueForAll(sh => sh == 0);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Warcraft.WDL.Chunks
                 {
                     for (int i = 0; i < 16; ++i)
                     {
-                        this.HoleMasks.Add(br.ReadInt16());
+                        HoleMasks.Add(br.ReadInt16());
                     }
                 }
             }
@@ -86,7 +86,7 @@ namespace Warcraft.WDL.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (short holeMask in this.HoleMasks)
+                    foreach (short holeMask in HoleMasks)
                     {
                         bw.Write(holeMask);
                     }

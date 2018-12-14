@@ -36,8 +36,8 @@ namespace Warcraft.Core.Structures
         /// </summary>
         public float R
         {
-            get => this.Values.X;
-            set => this.Values.X = value;
+            get => Values.X;
+            set => Values.X = value;
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace Warcraft.Core.Structures
         /// </summary>
         public float G
         {
-            get => this.Values.Y;
-            set => this.Values.Y = value;
+            get => Values.Y;
+            set => Values.Y = value;
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace Warcraft.Core.Structures
         /// </summary>
         public float B
         {
-            get => this.Values.Z;
-            set => this.Values.Z = value;
+            get => Values.Z;
+            set => Values.Z = value;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Warcraft.Core.Structures
         /// <param name="inB">The input green component.</param>
         public RGB(float inR, float inG, float inB)
         {
-            this.Values = new Vector3(inR, inG, inB);
+            Values = new Vector3(inR, inG, inB);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Warcraft.Core.Structures
         /// <param name="inVector">The input colour vector.</param>
         public RGB(Vector3 inVector)
         {
-            this.Values = inVector;
+            Values = inVector;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Warcraft.Core.Structures
         /// <returns>A string representation of the current instance.</returns>
         public override string ToString()
         {
-            return $"rgb({this.R}, {this.G}, {this.B})";
+            return $"rgb({R}, {G}, {B})";
         }
     }
 }

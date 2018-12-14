@@ -77,7 +77,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
                             }
                         }
 
-                        this.ShadowMap.Add(mapRow);
+                        ShadowMap.Add(mapRow);
                     }
                 }
             }

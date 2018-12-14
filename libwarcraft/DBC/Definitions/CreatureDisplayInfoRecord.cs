@@ -81,21 +81,21 @@ namespace Warcraft.DBC.Definitions
         [RecordField(WarcraftVersion.Wrath)]
         public uint ObjectEffectPackage { get; set; }
 
-        public IReadOnlyList<StringReference> TextureVariations => new[] { this.TextureVariation1, this.TextureVariation2, this.TextureVariation3 };
+        public IReadOnlyList<StringReference> TextureVariations => new[] { TextureVariation1, TextureVariation2, TextureVariation3 };
 
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()
         {
             var references =  new List<StringReference>
             {
-                this.TextureVariation1,
-                this.TextureVariation2,
-                this.TextureVariation3
+                TextureVariation1,
+                TextureVariation2,
+                TextureVariation3
             };
 
-            if (this.Version >= WarcraftVersion.BurningCrusade)
+            if (Version >= WarcraftVersion.BurningCrusade)
             {
-                references.Add(this.PortraitTexture);
+                references.Add(PortraitTexture);
             }
 
             return references;

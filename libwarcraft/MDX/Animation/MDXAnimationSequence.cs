@@ -113,29 +113,29 @@ namespace Warcraft.MDX.Animation
         /// <param name="version"></param>
         public MDXAnimationSequence(BinaryReader br, WarcraftVersion version)
         {
-            this.AnimationID = br.ReadUInt32();
+            AnimationID = br.ReadUInt32();
 
             if (version <= WarcraftVersion.BurningCrusade)
             {
-                this.StartTimestamp = br.ReadUInt32();
-                this.EndTimestamp = br.ReadUInt32();
+                StartTimestamp = br.ReadUInt32();
+                EndTimestamp = br.ReadUInt32();
             }
             else
             {
-                this.Duration = br.ReadUInt32();
+                Duration = br.ReadUInt32();
             }
 
-            this.MovementSpeed = br.ReadSingle();
-            this.Flags = (MDXAnimationSequenceFlags)br.ReadUInt32();
-            this.Probability = br.ReadInt16();
-            this.Padding = br.ReadUInt16();
-            this.ReplayRange = br.ReadIntegerRange();
+            MovementSpeed = br.ReadSingle();
+            Flags = (MDXAnimationSequenceFlags)br.ReadUInt32();
+            Probability = br.ReadInt16();
+            Padding = br.ReadUInt16();
+            ReplayRange = br.ReadIntegerRange();
 
-            this.BlendTime = br.ReadUInt32();
-            this.BoundingBox = br.ReadBox();
-            this.BoundingSphereRadius = br.ReadSingle();
-            this.NextVariation = br.ReadInt16();
-            this.NextAliasedAnimationID = br.ReadUInt16();
+            BlendTime = br.ReadUInt32();
+            BoundingBox = br.ReadBox();
+            BoundingSphereRadius = br.ReadSingle();
+            NextVariation = br.ReadInt16();
+            NextAliasedAnimationID = br.ReadUInt16();
         }
     }
 }

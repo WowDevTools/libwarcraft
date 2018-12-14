@@ -32,8 +32,8 @@ namespace Warcraft.MDX.Animation
 
         public MDXColourAnimation(BinaryReader br, WarcraftVersion version)
         {
-            this.ColourTrack = br.ReadMDXTrack<RGB>(version);
-            this.OpacityTrack = br.ReadMDXTrack<short>(version);
+            ColourTrack = br.ReadMDXTrack<RGB>(version);
+            OpacityTrack = br.ReadMDXTrack<short>(version);
         }
     }
 }

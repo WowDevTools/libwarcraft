@@ -49,7 +49,7 @@ namespace Warcraft.WDL.Chunks
                     {
                         for (int x = 0; x < 64; ++x)
                         {
-                            this.MapAreaOffsets.Add(br.ReadUInt32());
+                            MapAreaOffsets.Add(br.ReadUInt32());
                         }
                     }
                 }
@@ -72,7 +72,7 @@ namespace Warcraft.WDL.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (uint mapAreaOffset in this.MapAreaOffsets)
+                    foreach (uint mapAreaOffset in MapAreaOffsets)
                     {
                         bw.Write(mapAreaOffset);
                     }

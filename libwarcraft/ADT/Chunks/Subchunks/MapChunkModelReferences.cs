@@ -44,7 +44,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
         public void LoadBinaryData(byte[] inData)
         {
-            this.Data = inData;
+            Data = inData;
         }
 
         public string GetSignature()
@@ -54,18 +54,18 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
         public void PostLoadReferences(uint gameModelObjectCount, uint worldModelObjectCount)
         {
-            using (MemoryStream ms = new MemoryStream(this.Data))
+            using (MemoryStream ms = new MemoryStream(Data))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
                     for (int i = 0; i < gameModelObjectCount; ++i)
                     {
-                        this.GameModelObjectReferences.Add(br.ReadUInt32());
+                        GameModelObjectReferences.Add(br.ReadUInt32());
                     }
 
                     for (int i = 0; i < worldModelObjectCount; ++i)
                     {
-                        this.WorldModelObjectReferences.Add(br.ReadUInt32());
+                        WorldModelObjectReferences.Add(br.ReadUInt32());
                     }
                 }
             }

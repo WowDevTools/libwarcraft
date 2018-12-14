@@ -59,7 +59,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <param name="inData">The binary data containing the object.</param>
         public void LoadBinaryData(byte[] inData)
         {
-            this.Data = inData;
+            Data = inData;
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public byte[] Serialize()
         {
-            return this.Data;
+            return Data;
         }
     }
 }

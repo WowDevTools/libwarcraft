@@ -51,7 +51,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     long groupInfoCount = ms.Length / GroupInformation.GetSize();
                     for (int i = 0; i < groupInfoCount; ++i)
                     {
-                        this.GroupInformations.Add(new GroupInformation(br.ReadBytes(GroupInformation.GetSize())));
+                        GroupInformations.Add(new GroupInformation(br.ReadBytes(GroupInformation.GetSize())));
                     }
                 }
             }
@@ -68,7 +68,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (GroupInformation groupInformation in this.GroupInformations)
+                    foreach (GroupInformation groupInformation in GroupInformations)
                     {
                         bw.Write(groupInformation.Serialize());
                     }
@@ -91,16 +91,16 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Flags = (GroupFlags)br.ReadUInt32();
-                    this.BoundingBox = br.ReadBox();
-                    this.GroupNameOffset = br.ReadInt32();
+                    Flags = (GroupFlags)br.ReadUInt32();
+                    BoundingBox = br.ReadBox();
+                    GroupNameOffset = br.ReadInt32();
                 }
             }
         }
 
         public bool HasGroupName()
         {
-            return this.GroupNameOffset > -1;
+            return GroupNameOffset > -1;
         }
 
         public static int GetSize()
@@ -114,9 +114,9 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write((uint)this.Flags);
-                    bw.WriteBox(this.BoundingBox);
-                    bw.Write(this.GroupNameOffset);
+                    bw.Write((uint)Flags);
+                    bw.WriteBox(BoundingBox);
+                    bw.Write(GroupNameOffset);
                 }
 
                 return ms.ToArray();

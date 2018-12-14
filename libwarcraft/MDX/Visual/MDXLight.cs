@@ -42,18 +42,18 @@ namespace Warcraft.MDX.Visual
 
         public MDXLight(BinaryReader br, WarcraftVersion version)
         {
-            this.Type = (MDXLightType)br.ReadUInt16();
-            this.Bone = br.ReadInt16();
-            this.Position = br.ReadVector3();
+            Type = (MDXLightType)br.ReadUInt16();
+            Bone = br.ReadInt16();
+            Position = br.ReadVector3();
 
-            this.AmbientColour = br.ReadMDXTrack<RGB>(version);
-            this.AmbientIntensity = br.ReadMDXTrack<float>(version);
-            this.DiffuseColour = br.ReadMDXTrack<RGB>(version);
-            this.DiffuseIntensity = br.ReadMDXTrack<float>(version);
-            this.AttenuationStart = br.ReadMDXTrack<float>(version);
-            this.AttenuationEnd = br.ReadMDXTrack<float>(version);
+            AmbientColour = br.ReadMDXTrack<RGB>(version);
+            AmbientIntensity = br.ReadMDXTrack<float>(version);
+            DiffuseColour = br.ReadMDXTrack<RGB>(version);
+            DiffuseIntensity = br.ReadMDXTrack<float>(version);
+            AttenuationStart = br.ReadMDXTrack<float>(version);
+            AttenuationEnd = br.ReadMDXTrack<float>(version);
 
-            this.Visibility = br.ReadMDXTrack<bool>(version);
+            Visibility = br.ReadMDXTrack<bool>(version);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.SkyboxName = br.ReadNullTerminatedString();
+                    SkyboxName = br.ReadNullTerminatedString();
                 }
             }
         }
@@ -61,13 +61,13 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    if (string.IsNullOrEmpty(this.SkyboxName))
+                    if (string.IsNullOrEmpty(SkyboxName))
                     {
                         bw.Write(new byte[4]);
                     }
                     else
                     {
-                        bw.WriteNullTerminatedString(this.SkyboxName);
+                        bw.WriteNullTerminatedString(SkyboxName);
                     }
                 }
 

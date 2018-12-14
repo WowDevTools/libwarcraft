@@ -51,7 +51,7 @@ namespace Warcraft.WMO.RootFile.Chunks
                     int lightCount = inData.Length / StaticLight.GetSize();
                     for (uint i = 0; i < lightCount; ++i)
                     {
-                        this.StaticLights.Add(new StaticLight(br.ReadBytes(StaticLight.GetSize())));
+                        StaticLights.Add(new StaticLight(br.ReadBytes(StaticLight.GetSize())));
                     }
                 }
             }
@@ -68,7 +68,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (StaticLight staticLight in this.StaticLights)
+                    foreach (StaticLight staticLight in StaticLights)
                     {
                         bw.Write(staticLight.Serialize());
                     }
@@ -106,23 +106,23 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Type = (LightType) br.ReadByte();
-                    this.UseAttenuation = br.ReadBoolean();
-                    this.UseUnknown1 = br.ReadBoolean();
-                    this.UseUnknown2 = br.ReadBoolean();
+                    Type = (LightType) br.ReadByte();
+                    UseAttenuation = br.ReadBoolean();
+                    UseUnknown1 = br.ReadBoolean();
+                    UseUnknown2 = br.ReadBoolean();
 
-                    this.Colour = br.ReadBGRA();
-                    this.Position = br.ReadVector3();
-                    this.Intensity = br.ReadSingle();
+                    Colour = br.ReadBGRA();
+                    Position = br.ReadVector3();
+                    Intensity = br.ReadSingle();
 
-                    this.AttenuationStartRadius = br.ReadSingle();
-                    this.AttenuationEndRadius = br.ReadSingle();
+                    AttenuationStartRadius = br.ReadSingle();
+                    AttenuationEndRadius = br.ReadSingle();
 
-                    this.Unknown1StartRadius = br.ReadSingle();
-                    this.Unknown1EndRadius = br.ReadSingle();
+                    Unknown1StartRadius = br.ReadSingle();
+                    Unknown1EndRadius = br.ReadSingle();
 
-                    this.Unknown2StartRadius = br.ReadSingle();
-                    this.Unknown2EndRadius = br.ReadSingle();
+                    Unknown2StartRadius = br.ReadSingle();
+                    Unknown2EndRadius = br.ReadSingle();
                 }
             }
         }
@@ -138,24 +138,24 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write((byte)this.Type);
+                    bw.Write((byte)Type);
 
-                    bw.Write(this.UseAttenuation);
-                    bw.Write(this.UseUnknown1);
-                    bw.Write(this.UseUnknown2);
+                    bw.Write(UseAttenuation);
+                    bw.Write(UseUnknown1);
+                    bw.Write(UseUnknown2);
 
-                    bw.WriteBGRA(this.Colour);
-                    bw.WriteVector3(this.Position);
-                    bw.Write(this.Intensity);
+                    bw.WriteBGRA(Colour);
+                    bw.WriteVector3(Position);
+                    bw.Write(Intensity);
 
-                    bw.Write(this.AttenuationStartRadius);
-                    bw.Write(this.AttenuationEndRadius);
+                    bw.Write(AttenuationStartRadius);
+                    bw.Write(AttenuationEndRadius);
 
-                    bw.Write(this.Unknown1StartRadius);
-                    bw.Write(this.Unknown1EndRadius);
+                    bw.Write(Unknown1StartRadius);
+                    bw.Write(Unknown1EndRadius);
 
-                    bw.Write(this.Unknown2StartRadius);
-                    bw.Write(this.Unknown2EndRadius);
+                    bw.Write(Unknown2StartRadius);
+                    bw.Write(Unknown2EndRadius);
                 }
 
                 return ms.ToArray();

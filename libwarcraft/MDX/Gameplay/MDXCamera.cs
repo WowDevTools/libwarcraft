@@ -49,27 +49,27 @@ namespace Warcraft.MDX.Gameplay
 
         public MDXCamera(BinaryReader br, WarcraftVersion version)
         {
-            this.TypeLookupIndex = br.ReadUInt32();
+            TypeLookupIndex = br.ReadUInt32();
 
             if (version < WarcraftVersion.Cataclysm)
             {
-                this.FieldOfView = br.ReadSingle();
+                FieldOfView = br.ReadSingle();
             }
 
-            this.FarClip = br.ReadSingle();
-            this.NearClip = br.ReadSingle();
+            FarClip = br.ReadSingle();
+            NearClip = br.ReadSingle();
 
-            this.Positions = br.ReadMDXTrack<SplineKey<Vector3>>(version);
-            this.PositionBase = br.ReadVector3();
+            Positions = br.ReadMDXTrack<SplineKey<Vector3>>(version);
+            PositionBase = br.ReadVector3();
 
-            this.TargetPositions = br.ReadMDXTrack<SplineKey<Vector3>>(version);
-            this.TargetPositionBase = br.ReadVector3();
+            TargetPositions = br.ReadMDXTrack<SplineKey<Vector3>>(version);
+            TargetPositionBase = br.ReadVector3();
 
-            this.Roll = br.ReadMDXTrack<SplineKey<float>>(version);
+            Roll = br.ReadMDXTrack<SplineKey<float>>(version);
 
             if (version >= WarcraftVersion.Cataclysm)
             {
-                this.AnimatedFOV = br.ReadMDXTrack<SplineKey<float>>(version);
+                AnimatedFOV = br.ReadMDXTrack<SplineKey<float>>(version);
             }
         }
     }

@@ -60,18 +60,18 @@ namespace Warcraft.WMO.RootFile
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.TextureCount = br.ReadUInt32();
-                    this.GroupCount = br.ReadUInt32();
-                    this.PortalCount = br.ReadUInt32();
-                    this.LightCount = br.ReadUInt32();
-                    this.DoodadNameCount = br.ReadUInt32();
-                    this.DoodadDefinitionCount = br.ReadUInt32();
-                    this.DoodadSetCount = br.ReadUInt32();
+                    TextureCount = br.ReadUInt32();
+                    GroupCount = br.ReadUInt32();
+                    PortalCount = br.ReadUInt32();
+                    LightCount = br.ReadUInt32();
+                    DoodadNameCount = br.ReadUInt32();
+                    DoodadDefinitionCount = br.ReadUInt32();
+                    DoodadSetCount = br.ReadUInt32();
 
-                    this.BaseAmbientColour = br.ReadRGBA();
-                    this.WMOID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, nameof(WMOAreaTableRecord.WMOID), br.ReadUInt32());
-                    this.BoundingBox = br.ReadBox();
-                    this.Flags = (RootFlags) br.ReadUInt32();
+                    BaseAmbientColour = br.ReadRGBA();
+                    WMOID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, nameof(WMOAreaTableRecord.WMOID), br.ReadUInt32());
+                    BoundingBox = br.ReadBox();
+                    Flags = (RootFlags) br.ReadUInt32();
                 }
             }
         }
@@ -87,18 +87,18 @@ namespace Warcraft.WMO.RootFile
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(this.TextureCount);
-                    bw.Write(this.GroupCount);
-                    bw.Write(this.PortalCount);
-                    bw.Write(this.LightCount);
-                    bw.Write(this.DoodadNameCount);
-                    bw.Write(this.DoodadDefinitionCount);
-                    bw.Write(this.DoodadSetCount);
+                    bw.Write(TextureCount);
+                    bw.Write(GroupCount);
+                    bw.Write(PortalCount);
+                    bw.Write(LightCount);
+                    bw.Write(DoodadNameCount);
+                    bw.Write(DoodadDefinitionCount);
+                    bw.Write(DoodadSetCount);
 
-                    bw.WriteRGBA(this.BaseAmbientColour);
-                    bw.Write(this.WMOID.Key);
-                    bw.WriteBox(this.BoundingBox);
-                    bw.Write((uint) this.Flags);
+                    bw.WriteRGBA(BaseAmbientColour);
+                    bw.Write(WMOID.Key);
+                    bw.WriteBox(BoundingBox);
+                    bw.Write((uint) Flags);
                 }
 
                 return ms.ToArray();

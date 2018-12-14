@@ -58,7 +58,7 @@ namespace Warcraft.ADT.Chunks
                     int offsetCount = inData.Length / 4;
                     for (int i = 0; i < offsetCount; ++i)
                     {
-                        this.WorldModelObjectFilenameOffsets.Add(br.ReadUInt32());
+                        WorldModelObjectFilenameOffsets.Add(br.ReadUInt32());
                     }
                 }
             }
@@ -75,7 +75,7 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (uint filenameOffset in this.WorldModelObjectFilenameOffsets)
+                    foreach (uint filenameOffset in WorldModelObjectFilenameOffsets)
                     {
                         bw.Write(filenameOffset);
                     }

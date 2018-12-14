@@ -179,53 +179,53 @@ namespace Warcraft.ADT.Chunks.Subchunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    this.Flags = (MapChunkFlags)br.ReadUInt32();
-                    this.MapIndexX = br.ReadUInt32();
-                    this.MapIndexY = br.ReadUInt32();
-                    this.TextureLayerCount = br.ReadUInt32();
-                    this.ModelReferenceCount = br.ReadUInt32();
+                    Flags = (MapChunkFlags)br.ReadUInt32();
+                    MapIndexX = br.ReadUInt32();
+                    MapIndexY = br.ReadUInt32();
+                    TextureLayerCount = br.ReadUInt32();
+                    ModelReferenceCount = br.ReadUInt32();
 
-                    if (this.Flags.HasFlag(MapChunkFlags.UsesHighResHoles))
+                    if (Flags.HasFlag(MapChunkFlags.UsesHighResHoles))
                     {
-                        this.HighResHoles = br.ReadUInt64();
+                        HighResHoles = br.ReadUInt64();
                     }
 
-                    this.HeightmapOffset = br.ReadUInt32();
-                    this.VertexNormalOffset = br.ReadUInt32();
-                    this.TextureLayersOffset = br.ReadUInt32();
-                    this.ModelReferencesOffset = br.ReadUInt32();
-                    this.AlphaMapsOffset = br.ReadUInt32();
-                    this.AlphaMapsSize = br.ReadUInt32();
-                    this.BakedShadowsOffset = br.ReadUInt32();
-                    this.BakedShadowsSize = br.ReadUInt32();
+                    HeightmapOffset = br.ReadUInt32();
+                    VertexNormalOffset = br.ReadUInt32();
+                    TextureLayersOffset = br.ReadUInt32();
+                    ModelReferencesOffset = br.ReadUInt32();
+                    AlphaMapsOffset = br.ReadUInt32();
+                    AlphaMapsSize = br.ReadUInt32();
+                    BakedShadowsOffset = br.ReadUInt32();
+                    BakedShadowsSize = br.ReadUInt32();
 
-                    this.AreaID = br.ReadUInt32();
-                    this.WorldModelObjectReferenceCount = br.ReadUInt32();
+                    AreaID = br.ReadUInt32();
+                    WorldModelObjectReferenceCount = br.ReadUInt32();
 
                     // TODO: Turn into bitmapped boolean field
-                    if (!this.Flags.HasFlag(MapChunkFlags.UsesHighResHoles))
+                    if (!Flags.HasFlag(MapChunkFlags.UsesHighResHoles))
                     {
-                        this.LowResHoles = br.ReadUInt16();
+                        LowResHoles = br.ReadUInt16();
                     }
 
-                    this.Unknown = br.ReadUInt16();
+                    Unknown = br.ReadUInt16();
 
                     // TODO: This is a set of 8 by 8 2-bit integers. Shift and read into a byte array.
-                    this.LowResTextureMap = br.ReadUInt16();
+                    LowResTextureMap = br.ReadUInt16();
 
-                    this.PredTex = br.ReadUInt32();
-                    this.NoEffectDoodad = br.ReadUInt32();
+                    PredTex = br.ReadUInt32();
+                    NoEffectDoodad = br.ReadUInt32();
 
-                    this.SoundEmittersOffset = br.ReadUInt32();
-                    this.SoundEmitterCount = br.ReadUInt32();
-                    this.LiquidOffset = br.ReadUInt32();
-                    this.LiquidSize = br.ReadUInt32();
+                    SoundEmittersOffset = br.ReadUInt32();
+                    SoundEmitterCount = br.ReadUInt32();
+                    LiquidOffset = br.ReadUInt32();
+                    LiquidSize = br.ReadUInt32();
 
-                    this.MapTilePosition = br.ReadVector3();
+                    MapTilePosition = br.ReadVector3();
 
-                    if (this.Flags.HasFlag(MapChunkFlags.HasVertexShading))
+                    if (Flags.HasFlag(MapChunkFlags.HasVertexShading))
                     {
-                        this.VertexShadingOffset = br.ReadUInt32();
+                        VertexShadingOffset = br.ReadUInt32();
                     }
                 }
             }
