@@ -79,6 +79,7 @@ namespace Warcraft.ADT.Chunks
         }
 
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

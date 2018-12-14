@@ -68,6 +68,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             return Signature;
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())
@@ -114,6 +115,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             return 32;
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

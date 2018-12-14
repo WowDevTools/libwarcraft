@@ -161,6 +161,7 @@ namespace Warcraft.WMO.GroupFile
         /// <summary>
         /// Serializes the current object into a byte array.
         /// </summary>
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

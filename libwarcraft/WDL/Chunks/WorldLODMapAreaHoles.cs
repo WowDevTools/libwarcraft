@@ -86,6 +86,7 @@ namespace Warcraft.WDL.Chunks
             return new WorldLODMapAreaHoles(new byte[32]);
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

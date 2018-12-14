@@ -161,6 +161,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <summary>
         /// Serializes the current object into a byte array.
         /// </summary>
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

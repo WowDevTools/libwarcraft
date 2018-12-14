@@ -1021,6 +1021,7 @@ namespace Warcraft.BLP
         /// Gets the BLP image object as a byte array, which can be written to disk as a file.
         /// </summary>
         /// <returns>The bytes.</returns>
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             byte[] headerBytes = Header.Serialize();

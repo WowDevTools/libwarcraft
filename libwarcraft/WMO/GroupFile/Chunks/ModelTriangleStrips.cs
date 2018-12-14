@@ -43,6 +43,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             throw new NotImplementedException();
@@ -66,6 +67,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             }
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

@@ -53,6 +53,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             return Signature;
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             return Data;

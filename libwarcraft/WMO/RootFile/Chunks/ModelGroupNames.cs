@@ -94,6 +94,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             throw new ArgumentException("Descriptive group name not found.", nameof(modelGroup));
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

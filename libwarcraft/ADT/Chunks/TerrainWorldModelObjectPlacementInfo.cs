@@ -78,6 +78,7 @@ namespace Warcraft.ADT.Chunks
             return Signature;
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())
@@ -179,6 +180,7 @@ namespace Warcraft.ADT.Chunks
             return 64;
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

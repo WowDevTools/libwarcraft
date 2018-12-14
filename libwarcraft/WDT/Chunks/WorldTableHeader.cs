@@ -73,6 +73,7 @@ namespace Warcraft.WDT.Chunks
             return 32;
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

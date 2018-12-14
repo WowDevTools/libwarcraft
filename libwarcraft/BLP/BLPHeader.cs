@@ -202,6 +202,7 @@ namespace Warcraft.BLP
         /// Gets the data in the header as a byte array, ready to be written to a file.
         /// </summary>
         /// <returns>The header bytes.</returns>
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream headerStream = new MemoryStream())

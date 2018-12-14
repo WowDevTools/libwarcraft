@@ -65,6 +65,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
 
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())
@@ -104,6 +105,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             return 2;
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

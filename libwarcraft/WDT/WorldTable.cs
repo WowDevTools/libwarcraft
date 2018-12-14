@@ -127,6 +127,7 @@ namespace Warcraft.WDT
             return infoEntry.Flags.HasFlag(AreaInfoFlags.HasTerrainData);
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

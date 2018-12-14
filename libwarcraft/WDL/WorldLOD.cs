@@ -129,6 +129,7 @@ namespace Warcraft.WDL
             return MapAreas[index];
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())

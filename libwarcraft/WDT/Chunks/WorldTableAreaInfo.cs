@@ -83,6 +83,7 @@ namespace Warcraft.WDT.Chunks
             return Entries[tileIndex];
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())
@@ -129,6 +130,7 @@ namespace Warcraft.WDT.Chunks
             }
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream(8))

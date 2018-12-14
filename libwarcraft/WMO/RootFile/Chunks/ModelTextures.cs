@@ -86,6 +86,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             return Signature;
         }
 
+        /// <inheritdoc/>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())
