@@ -17,29 +17,47 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Collections;
+
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
+    /// <summary>
+    /// MCSH chunk - holds baked terrain shadows.
+    /// </summary>
     public class MapChunkBakedShadows : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MCSH";
 
-        public List<List<bool>> ShadowMap = new List<List<bool>>();
+        /// <summary>
+        /// Gets the shadow map contained in the chunk. Each chunk contains 64x64 values, indicating whether the section
+        /// is shadowed or not.
+        /// </summary>
+        public List<List<bool>> ShadowMap { get; } = new List<List<bool>>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkBakedShadows"/> class.
+        /// </summary>
         public MapChunkBakedShadows()
         {
-
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkBakedShadows"/> class.
+        /// </summary>
+        /// <param name="inData">The input binary data.</param>
         public MapChunkBakedShadows(byte[] inData)
         {
             LoadBinaryData(inData);
         }
 
+        /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
@@ -65,6 +83,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
             }
         }
 
+        /// <inheritdoc/>
         public string GetSignature()
         {
             return Signature;

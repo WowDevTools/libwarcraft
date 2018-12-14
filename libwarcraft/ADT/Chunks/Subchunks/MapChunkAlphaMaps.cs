@@ -16,9 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks.Subchunks
@@ -28,17 +30,23 @@ namespace Warcraft.ADT.Chunks.Subchunks
     /// </summary>
     public class MapChunkAlphaMaps : IIFFChunk
     {
+        /// <summary>
+        /// Holds the binary chunk signature.
+        /// </summary>
         public const string Signature = "MCAL";
 
-        //unformatted data contained in MCAL
+        /// <summary>
+        /// Holds unformatted data contained in the chunk.
+        /// </summary>
         private byte[] Data;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkAlphaMaps"/> class.
+        /// </summary>
         public MapChunkAlphaMaps()
         {
-
         }
 
-        // TODO: Implement WDT
         /// <summary>
         /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.Subchunks.MapChunkAlphaMaps"/> class.
         /// </summary>
@@ -48,20 +56,16 @@ namespace Warcraft.ADT.Chunks.Subchunks
             LoadBinaryData(inData);
         }
 
+        /// <inheritdoc />
         public void LoadBinaryData(byte[] inData)
         {
             Data = inData;
         }
 
+        /// <inheritdoc />
         public string GetSignature()
         {
             return Signature;
-        }
-
-
-        public IEnumerable<byte> GetAlphaMap(uint mapOffset, TextureLayerFlags layerFlags, MapChunkFlags mapFlags/*, TerrainTileFlags TileFlags*/)
-        {
-            return null;
         }
 
         private IEnumerable<byte> DecompressAlphaMap(uint mapOffset)
@@ -114,8 +118,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
                     if (mapFlags.HasFlag(MapChunkFlags.DoNotRepairAlphaMaps))
                     {
                         //fill in normally
-                        byte alpha1 = (byte)((compressedAlphaMap[x + y * 32]) & 0xf0);
-                        byte alpha2 = (byte)((compressedAlphaMap[x + y * 32] << 4) & 0xf0);
+                        byte alpha1 = (byte)((compressedAlphaMap[x + (y * 32)]) & 0xf0);
+                        byte alpha2 = (byte)((compressedAlphaMap[x + (y * 32)] << 4) & 0xf0);
 
                         byte normalizedAlpha1 = (byte)(alpha1 * 17);
                         byte normalizedAlpha2 = (byte)(alpha2 * 17);
@@ -129,10 +133,10 @@ namespace Warcraft.ADT.Chunks.Subchunks
                         if (y == 63)
                         {
                             int yminus = y - 1;
-                            //attempt to repair map on vertical axis
 
-                            byte alpha1 = (byte)((compressedAlphaMap[x + yminus * 32]) & 0xf0);
-                            byte alpha2 = (byte)((compressedAlphaMap[x + 1 + yminus * 32] << 4) & 0xf0);
+                            // attempt to repair map on vertical axis
+                            byte alpha1 = (byte)((compressedAlphaMap[x + (yminus * 32)]) & 0xf0);
+                            byte alpha2 = (byte)((compressedAlphaMap[x + 1 + (yminus * 32)] << 4) & 0xf0);
 
                             byte normalizedAlpha1 = (byte)(alpha1 * 17);
                             byte normalizedAlpha2 = (byte)(alpha2 * 17);
@@ -144,17 +148,17 @@ namespace Warcraft.ADT.Chunks.Subchunks
                         {
                             int xminus = x - 1;
 
-                            //attempt to repair map on horizontal axis
-                            byte alpha = (byte)(compressedAlphaMap[xminus + y * 32] << 4 & 0xf0);
+                            // attempt to repair map on horizontal axis
+                            byte alpha = (byte)(compressedAlphaMap[xminus + (y * 32)] << 4 & 0xf0);
                             byte normalizedAlpha = (byte)(alpha * 17);
 
                             decompressedAlphaMap.Add(normalizedAlpha);
                         }
                         else
                         {
-                            //fill in normally
-                            byte alpha1 = (byte)((compressedAlphaMap[x + y * 32]) & 0xf0);
-                            byte alpha2 = (byte)((compressedAlphaMap[x + y * 32] << 4) & 0xf0);
+                            // fill in normally
+                            byte alpha1 = (byte)((compressedAlphaMap[x + (y * 32)]) & 0xf0);
+                            byte alpha2 = (byte)((compressedAlphaMap[x + (y * 32)] << 4) & 0xf0);
 
                             byte normalizedAlpha1 = (byte)(alpha1 * 17);
                             byte normalizedAlpha2 = (byte)(alpha2 * 17);
@@ -168,6 +172,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
             return decompressedAlphaMap;
         }
+
         /*
          * Uncompressed with a size of 4096 (post WOTLK)
          * Uncompressed with a size of 2048 (pre WOTLK)

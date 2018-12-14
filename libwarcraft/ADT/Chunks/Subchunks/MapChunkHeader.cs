@@ -23,150 +23,156 @@ using Warcraft.Core.Extensions;
 
 namespace Warcraft.ADT.Chunks.Subchunks
 {
+    /// <summary>
+    /// Header data for a map chunk.
+    /// </summary>
     public class MapChunkHeader
     {
         /// <summary>
-        /// Flags for the MCNK
+        /// Gets or sets flags for the MCNK.
         /// </summary>
-        public MapChunkFlags Flags;
+        public MapChunkFlags Flags { get; set; }
 
         /// <summary>
-        /// Zero-based X position of the MCNK
+        /// Gets or sets the zero-based X position of the MCNK.
         /// </summary>
-        public uint MapIndexX;
+        public uint MapIndexX { get; set; }
 
         /// <summary>
-        /// Zero-based Y position of the MCNK
+        /// Gets or sets the zero-based Y position of the MCNK.
         /// </summary>
-        public uint MapIndexY;
+        public uint MapIndexY { get; set; }
 
         /// <summary>
-        /// Alpha map layers in the MCNK
+        /// Gets or sets the number of alpha map layers in the MCNK.
         /// </summary>
-        public uint TextureLayerCount;
+        public uint TextureLayerCount { get; set; }
 
         /// <summary>
-        /// Number of doodad references in the MCNK
+        /// Gets or sets the number of doodad references in the MCNK.
         /// </summary>
-        public uint ModelReferenceCount;
+        public uint ModelReferenceCount { get; set; }
 
         /// <summary>
-        /// The high res holes.
+        /// Gets or sets the high res holes. This is a bitmap of boolean values.
         /// </summary>
-        public ulong HighResHoles;
-
+        public ulong HighResHoles { get; set; }
 
         /// <summary>
-        /// MCNK-based Offset of the MCVT Heightmap Chunk
+        /// Gets or sets the relative offset of the MCVT Heightmap Chunk.
         /// </summary>
-        public uint HeightmapOffset;
+        public uint HeightmapOffset { get; set; }
 
         /// <summary>
-        /// MCNK-based Offset of the MMCNR Normal map Chunk
+        /// Gets or sets the relative offset of the MMCNR Normal map Chunk.
         /// </summary>
-        public uint VertexNormalOffset;
+        public uint VertexNormalOffset { get; set; }
 
         /// <summary>
-        /// MCNK-based Offset of the MCLY Alpha Map Layer Chunk
+        /// Gets or sets the relative offset of the MCLY Alpha Map Layer Chunk.
         /// </summary>
-        public uint TextureLayersOffset;
+        public uint TextureLayersOffset { get; set; }
 
         /// <summary>
-        /// MCNK-based Offset of the MCRF Object References Chunk
+        /// Gets or sets the relative offset of the MCRF Object References Chunk.
         /// </summary>
-        public uint ModelReferencesOffset;
-
-
-        /// <summary>
-        /// MCNK-based Offset of the MCAL Alpha Map Chunk
-        /// </summary>
-        public uint AlphaMapsOffset;
+        public uint ModelReferencesOffset { get; set; }
 
         /// <summary>
-        /// Size of the Alpha Map chunk
+        /// Gets or sets the relative offset of the MCAL Alpha Map Chunk.
         /// </summary>
-        public uint AlphaMapsSize;
-
-
-        /// <summary>
-        /// MCNK-based Offset of the MCSH Static shadow Chunk. This is only set with flags MCNK_MCSH.
-        /// </summary>
-        public uint BakedShadowsOffset;
+        public uint AlphaMapsOffset { get; set; }
 
         /// <summary>
-        /// Size of the shadow map chunk.
+        /// Gets or sets the size of the Alpha Map chunk.
         /// </summary>
-        public uint BakedShadowsSize;
-
-
-        /// <summary>
-        /// Area ID for the MCNK.
-        /// </summary>
-        public uint AreaID;
+        public uint AlphaMapsSize { get; set; }
 
         /// <summary>
-        /// Number of object references in this MCNK.
+        /// Gets or sets the relative offset of the MCSH Static shadow Chunk. This is only set with flags MCNK_MCSH.
         /// </summary>
-        public uint WorldModelObjectReferenceCount;
+        public uint BakedShadowsOffset { get; set; }
 
         /// <summary>
-        /// Holes in the MCNK.
+        /// Gets or sets the size of the shadow map chunk.
         /// </summary>
-        public ushort LowResHoles;
+        public uint BakedShadowsSize { get; set; }
 
         /// <summary>
-        /// Unknown value, but it is used.
+        /// Gets or sets the area ID for the MCNK.
         /// </summary>
-        public ushort Unknown;
+        public uint AreaID { get; set; }
 
         /// <summary>
-        /// A low-quality texture map of the MCNK. Used with LOD.
+        /// Gets or sets the number of object references in this MCNK.
         /// </summary>
-        public ushort LowResTextureMap;
+        public uint WorldModelObjectReferenceCount { get; set; }
 
         /// <summary>
-        /// It is not yet known what predTex does.
+        /// Gets or sets low-resolution holes in the MCNK. This is a bitmap of boolean values.
         /// </summary>
-        public uint PredTex;
-        /// <summary>
-        /// It is not yet known what noEffectDoodad does.
-        /// </summary>
-        public uint NoEffectDoodad;
+        public ushort LowResHoles { get; set; }
 
         /// <summary>
-        /// MCNK-based Offset of the MCSE Sound Emitters Chunk
+        /// Gets or sets an unknown value. It is used, but it's unclear for what.
         /// </summary>
-        public uint SoundEmittersOffset;
-        /// <summary>
-        /// Number of sound emitters in the MCNK
-        /// </summary>
-        public uint SoundEmitterCount;
+        public ushort Unknown { get; set; }
 
         /// <summary>
-        /// MCNK-based Offset of the MCLQ Liquid Chunk
+        /// Gets or sets a low-quality texture map of the MCNK. Used with LOD.
         /// </summary>
-        public uint LiquidOffset;
-        /// <summary>
-        /// Size of the liquid chunk. This is 8 when not used - if it is 8, use the newer MH2O chunk.
-        /// </summary>
-        public uint LiquidSize;
+        public ushort LowResTextureMap { get; set; }
 
         /// <summary>
-        /// The map tile position is a global offset that is applied to the entire heightmap to allow for
-        /// far greater height differences in the world.
+        /// Gets or sets it PredTex. It is not yet known what PredTex does.
         /// </summary>
-        public Vector3 MapTilePosition;
+        public uint PredTex { get; set; }
 
         /// <summary>
-        /// MCNK-based Offset of the MCCV Chunk
+        /// Gets or sets NoEffectDoodad. It is not yet known what NoEffectDoodad does.
         /// </summary>
-        public uint VertexShadingOffset;
+        public uint NoEffectDoodad { get; set; }
 
         /// <summary>
-        /// MCNK-based Offset of the MCLV Chunk. Introduced in Cataclysm.
+        /// Gets or sets the relative offset of the MCSE Sound Emitters Chunk.
         /// </summary>
-        public uint VertexLightingOffset;
+        public uint SoundEmittersOffset { get; set; }
 
+        /// <summary>
+        /// Gets or sets the number of sound emitters in the MCNK.
+        /// </summary>
+        public uint SoundEmitterCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the relative offset of the MCLQ Liquid Chunk.
+        /// </summary>
+        public uint LiquidOffset { get; set; }
+
+        /// <summary>
+        /// Gets or sets the size of the liquid chunk. This is 8 when not used - if it is 8, use the newer MH2O chunk.
+        /// </summary>
+        public uint LiquidSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the map tile position. This position is a global offset that is applied to the entire heightmap
+        /// to allow for far greater height differences in the world.
+        /// </summary>
+        public Vector3 MapTilePosition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the relative offset of the MCCV Chunk.
+        /// </summary>
+        public uint VertexShadingOffset { get; set; }
+
+        /// <summary>
+        /// Gets or sets the relative offset of the MCLV Chunk. Introduced in Cataclysm.
+        /// </summary>
+        public uint VertexLightingOffset { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MapChunkHeader"/> class.
+        /// </summary>
+        /// <param name="data">The binary data.</param>
         public MapChunkHeader(byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))
@@ -234,65 +240,4 @@ namespace Warcraft.ADT.Chunks.Subchunks
             return 128;
         }
     }
-
-    /// <summary>
-    /// Flags available for this MCNK
-    /// </summary>
-    public enum MapChunkFlags : uint
-    {
-        /// <summary>
-        /// Flags the MCNK as containing a static shadow map
-        /// </summary>
-        HasBakedShadows = 1,
-
-        /// <summary>
-        /// Flags the MCNK as impassible
-        /// </summary>
-        Impassible = 2,
-
-        /// <summary>
-        /// Flags the MCNK as a river
-        /// </summary>
-        IsRiver = 4,
-
-        /// <summary>
-        /// Flags the MCNK as an ocean
-        /// </summary>
-        IsOcean = 8,
-
-        /// <summary>
-        /// Flags the MCNK as magma
-        /// </summary>
-        IsMagma = 16,
-
-        /// <summary>
-        /// Flags the MCNK as slime
-        /// </summary>
-        IsSlime = 32,
-
-        /// <summary>
-        /// Flags the MCNK as containing an MCCV chunk
-        /// </summary>
-        HasVertexShading = 64,
-
-        /// <summary>
-        /// Unknown flag, but occasionally set.
-        /// </summary>
-        Unknown = 128,
-
-        // 7 unused bits
-
-        /// <summary>
-        /// Disables repair of the alpha maps in this chunk.
-        /// </summary>
-        DoNotRepairAlphaMaps = 32768,
-
-        /// <summary>
-        /// Flags the MCNK for high-resolution holes. Introduced in WoW 5.3
-        /// </summary>
-        UsesHighResHoles = 65536,
-
-        // 15 unused bits
-    }
 }
-
