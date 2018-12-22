@@ -46,6 +46,7 @@ namespace Warcraft.Core.Extensions
                     }
                 }
             }
+
             return false;
         }
     }

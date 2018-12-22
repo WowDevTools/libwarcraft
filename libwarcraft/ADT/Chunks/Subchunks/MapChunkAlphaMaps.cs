@@ -38,7 +38,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <summary>
         /// Holds unformatted data contained in the chunk.
         /// </summary>
-        private byte[] Data;
+        private byte[] _data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MapChunkAlphaMaps"/> class.
@@ -59,7 +59,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <inheritdoc />
         public void LoadBinaryData(byte[] inData)
         {
-            Data = inData;
+            _data = inData;
         }
 
         /// <inheritdoc />
@@ -72,7 +72,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         {
             List<byte> decompressedAlphaMap = new List<byte>();
 
-            using (MemoryStream ms = new MemoryStream(Data))
+            using (MemoryStream ms = new MemoryStream(_data))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
@@ -117,8 +117,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
                 {
                     if (mapFlags.HasFlag(MapChunkFlags.DoNotRepairAlphaMaps))
                     {
-                        //fill in normally
-                        byte alpha1 = (byte)((compressedAlphaMap[x + (y * 32)]) & 0xf0);
+                        // Fill in normally
+                        byte alpha1 = (byte)(compressedAlphaMap[x + (y * 32)] & 0xf0);
                         byte alpha2 = (byte)((compressedAlphaMap[x + (y * 32)] << 4) & 0xf0);
 
                         byte normalizedAlpha1 = (byte)(alpha1 * 17);
@@ -134,8 +134,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
                         {
                             int yminus = y - 1;
 
-                            // attempt to repair map on vertical axis
-                            byte alpha1 = (byte)((compressedAlphaMap[x + (yminus * 32)]) & 0xf0);
+                            // Attempt to repair map on vertical axis
+                            byte alpha1 = (byte)(compressedAlphaMap[x + (yminus * 32)] & 0xf0);
                             byte alpha2 = (byte)((compressedAlphaMap[x + 1 + (yminus * 32)] << 4) & 0xf0);
 
                             byte normalizedAlpha1 = (byte)(alpha1 * 17);
@@ -148,7 +148,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
                         {
                             int xminus = x - 1;
 
-                            // attempt to repair map on horizontal axis
+                            // Attempt to repair map on horizontal axis
                             byte alpha = (byte)(compressedAlphaMap[xminus + (y * 32)] << 4 & 0xf0);
                             byte normalizedAlpha = (byte)(alpha * 17);
 
@@ -156,8 +156,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
                         }
                         else
                         {
-                            // fill in normally
-                            byte alpha1 = (byte)((compressedAlphaMap[x + (y * 32)]) & 0xf0);
+                            // Fill in normally
+                            byte alpha1 = (byte)(compressedAlphaMap[x + (y * 32)] & 0xf0);
                             byte alpha2 = (byte)((compressedAlphaMap[x + (y * 32)] << 4) & 0xf0);
 
                             byte normalizedAlpha1 = (byte)(alpha1 * 17);
@@ -196,4 +196,3 @@ namespace Warcraft.ADT.Chunks.Subchunks
          */
     }
 }
-

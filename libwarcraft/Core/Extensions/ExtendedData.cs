@@ -82,24 +82,36 @@ namespace Warcraft.Core.Extensions
         public static byte[] PackForOpenGL(this MDXVertex vertex)
         {
             using (MemoryStream ms = new MemoryStream())
-            using (BinaryWriter bw = new BinaryWriter(ms))
             {
-                bw.WriteVector3(vertex.Position, AxisConfiguration.YUp);
-                bw.Write(vertex.BoneWeights.ToArray());
-                bw.Write(vertex.BoneIndices.ToArray());
-                bw.WriteVector3(vertex.Normal, AxisConfiguration.YUp);
-                bw.WriteVector2(vertex.UV1);
-                bw.WriteVector2(vertex.UV2);
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.WriteVector3(vertex.Position, AxisConfiguration.YUp);
+                    bw.Write(vertex.BoneWeights.ToArray());
+                    bw.Write(vertex.BoneIndices.ToArray());
+                    bw.WriteVector3(vertex.Normal, AxisConfiguration.YUp);
+                    bw.WriteVector2(vertex.UV1);
+                    bw.WriteVector2(vertex.UV2);
 
-                return ms.ToArray();
+                    return ms.ToArray();
+                }
             }
         }
 
+        /// <summary>
+        /// Converts a short-packed quaternion value to a normal float.
+        /// </summary>
+        /// <param name="inShort">The short.</param>
+        /// <returns>The unpacked float.</returns>
         public static float ShortQuatValueToFloat(short inShort)
         {
-            return inShort / (float) short.MaxValue;
+            return inShort / (float)short.MaxValue;
         }
 
+        /// <summary>
+        /// Converts a floating-point value to a packed short.
+        /// </summary>
+        /// <param name="inFloat">The float.</param>
+        /// <returns>The packed short.</returns>
         public static short FloatQuatValueToShort(float inFloat)
         {
             return (short)((inFloat + 1.0f) * short.MaxValue);

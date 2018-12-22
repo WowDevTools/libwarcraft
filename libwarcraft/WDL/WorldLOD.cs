@@ -34,7 +34,7 @@ namespace Warcraft.WDL
             WMO fields are only present in WDL files with a version >= Wrath.
         */
         public readonly TerrainWorldModelObjects WorldModelObjects;
-        public readonly TerrainWorldObjectModelIndices WorldModelObjectIndices;
+        public readonly TerrainWorldModelObjectIndices WorldModelObjectIndices;
         public readonly TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo;
         // End specific fields
 
@@ -62,9 +62,9 @@ namespace Warcraft.WDL
                         WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
                     }
 
-                    if (br.PeekChunkSignature() == TerrainWorldObjectModelIndices.Signature)
+                    if (br.PeekChunkSignature() == TerrainWorldModelObjectIndices.Signature)
                     {
-                        WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldObjectModelIndices>();
+                        WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldModelObjectIndices>();
                     }
 
                     if (br.PeekChunkSignature() == TerrainWorldModelObjectPlacementInfo.Signature)

@@ -17,12 +17,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.ADT.Chunks
 {
+    /// <summary>
+    /// Holds texture flags for a terrain tile.
+    /// </summary>
     public class TerrainTextureFlags : IIFFChunk
     {
         /// <summary>
@@ -64,13 +68,4 @@ namespace Warcraft.ADT.Chunks
             return Signature;
         }
     }
-
-    public enum TerrainTextureFlag : uint
-    {
-        FlatShading = 1,
-        Unknown = 3,
-        ScaledTexture = 4,
-        Unknown2 = 24
-    }
 }
-

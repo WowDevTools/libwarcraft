@@ -25,68 +25,70 @@ using Warcraft.Core.Interfaces;
 namespace Warcraft.ADT.Chunks
 {
     /// <summary>
-    /// MCNK Chunk - Main map chunk which contains a number of smaller subchunks. 256 of these are present in an ADT file.
+    /// MCNK chunk - Main map chunk which contains a number of smaller subchunks. 256 of these are present in an ADT file.
     /// </summary>
     public class TerrainMapChunk : IIFFChunk
     {
         /// <summary>
-        /// Holds the binary chunk signature.
+        /// Gets or sets the holds the binary chunk signature.
         /// </summary>
         public const string Signature = "MCNK";
-        /// <summary>
-        /// Header contains information about the MCNK and its subchunks such as offsets, position and flags.
-        /// </summary>
-        public MapChunkHeader Header;
 
         /// <summary>
-        /// Heightmap Chunk
+        /// Gets or sets the header, which contains information about the MCNK and its subchunks such as offsets,
+        /// position and flags.
         /// </summary>
-        public MapChunkHeightmap Heightmap;
+        public MapChunkHeader Header { get; set; }
 
         /// <summary>
-        /// Normal map chunk
+        /// Gets or sets the heightmap chunk.
         /// </summary>
-        public MapChunkVertexNormals VertexNormals;
+        public MapChunkHeightmap Heightmap { get; set; }
 
         /// <summary>
-        /// Alphamap Layer chunk
+        /// Gets or sets the normal map chunk.
         /// </summary>
-        public MapChunkTextureLayers TextureLayers;
+        public MapChunkVertexNormals VertexNormals { get; set; }
 
         /// <summary>
-        /// Map Object References chunk
+        /// Gets or sets the alphamap Layer chunk.
         /// </summary>
-        public MapChunkModelReferences ModelReferences;
+        public MapChunkTextureLayers TextureLayers { get; set; }
 
         /// <summary>
-        /// Alphamap chunk
+        /// Gets or sets the map Object References chunk.
         /// </summary>
-        public MapChunkAlphaMaps AlphaMaps;
+        public MapChunkModelReferences ModelReferences { get; set; }
 
         /// <summary>
-        /// The baked shadows.
+        /// Gets or sets the alphamap chunk.
         /// </summary>
-        public MapChunkBakedShadows BakedShadows;
+        public MapChunkAlphaMaps AlphaMaps { get; set; }
 
         /// <summary>
-        /// Sound Emitter Chunk
+        /// Gets or sets the the baked shadows.
         /// </summary>
-        public MapChunkSoundEmitters SoundEmitters;
+        public MapChunkBakedShadows BakedShadows { get; set; }
 
         /// <summary>
-        /// Liquid Chunk
+        /// Gets or sets the sound Emitter chunk.
         /// </summary>
-        public MapChunkLiquids Liquid;
+        public MapChunkSoundEmitters SoundEmitters { get; set; }
 
         /// <summary>
-        /// The vertex shading chunk.
+        /// Gets or sets the liquid chunk.
         /// </summary>
-        public MapChunkVertexShading VertexShading;
+        public MapChunkLiquids Liquid { get; set; }
 
         /// <summary>
-        /// The vertex lighting chunk
+        /// Gets or sets the the vertex shading chunk.
         /// </summary>
-        public MapChunkVertexLighting VertexLighting;
+        public MapChunkVertexShading VertexShading { get; set; }
+
+        /// <summary>
+        /// Gets or sets the the vertex lighting chunk.
+        /// </summary>
+        public MapChunkVertexLighting VertexLighting { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainMapChunk"/> class.
@@ -96,7 +98,7 @@ namespace Warcraft.ADT.Chunks
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainMapChunk"/> class.
+        /// Initializes a new instance of the <see cref="TerrainMapChunk"/> class.
         /// </summary>
         /// <param name="inData">ExtendedData.</param>
         public TerrainMapChunk(byte[] inData)
@@ -185,4 +187,3 @@ namespace Warcraft.ADT.Chunks
         }
     }
 }
-

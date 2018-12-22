@@ -1,5 +1,5 @@
 //
-//  BLPVersion.cs
+//  BLPFormat.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -40,4 +40,3 @@ namespace Warcraft.BLP
         BLP2
     }
 }
-

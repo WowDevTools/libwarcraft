@@ -23,6 +23,7 @@ using SharpCompress.Compressors;
 using SharpCompress.Compressors.BZip2;
 using SharpCompress.Compressors.Deflate;
 using SharpCompress.Compressors.LZMA;
+using Warcraft.Core.Compression.Huffman;
 using Warcraft.MPQ.Tables.Block;
 
 namespace Warcraft.Core.Compression
@@ -130,7 +131,7 @@ namespace Warcraft.Core.Compression
         {
             using (MemoryStream ms = new MemoryStream(inData))
             {
-                return MpqWavCompression.Decompress(ms, 1);
+                return ADPCM.ADPCM.Decompress(ms, 1);
             }
         }
 
@@ -143,7 +144,7 @@ namespace Warcraft.Core.Compression
         {
             using (MemoryStream ms = new MemoryStream(inData))
             {
-                return MpqWavCompression.Decompress(ms, 2);
+                return ADPCM.ADPCM.Decompress(ms, 2);
             }
         }
 
@@ -238,4 +239,3 @@ namespace Warcraft.Core.Compression
         }
     }
 }
-

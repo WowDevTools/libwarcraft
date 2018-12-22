@@ -33,37 +33,36 @@ namespace Warcraft.Core.Compression
         /// <summary>
         /// LZMA compression.
         /// </summary>
-        LZMA             = 0x20,
+        LZMA = 0x20,
 
         /// <summary>
         /// IMA ADPCM Mono Audio compression.
         /// </summary>
-        ADPCMMono         = 0x40,
+        ADPCMMono = 0x40,
 
         /// <summary>
         /// IMA ADPCM Stereo Audio compression.
         /// </summary>
-        ADPCMStereo        = 0x80,
+        ADPCMStereo = 0x80,
 
         /// <summary>
         /// Huffman tree compression.
         /// </summary>
-        Huffman         = 0x01,
+        Huffman = 0x01,
 
         /// <summary>
         /// ZLIB Deflate compression.
         /// </summary>
-        Deflate         = 0x02,
+        Deflate = 0x02,
 
         /// <summary>
-        /// PKWARE Implde compression.
+        /// PKWARE Implode compression.
         /// </summary>
-        Implode         = 0x08,
+        Implode = 0x08,
 
         /// <summary>
         /// BZip2 compression.
         /// </summary>
-        BZip2             = 0x10
+        BZip2 = 0x10
     }
 }
-

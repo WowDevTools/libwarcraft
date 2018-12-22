@@ -1,4 +1,23 @@
-﻿using System.Collections.Generic;
+﻿//
+//  TerrainLiquidChunk.cs
+//
+//  Copyright (c) 2018 Jarl Gullberg
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+using System.Collections.Generic;
 using System.IO;
 
 namespace Warcraft.ADT.Chunks
@@ -8,12 +27,30 @@ namespace Warcraft.ADT.Chunks
     /// </summary>
     public class TerrainLiquidChunk
     {
-        public uint WaterInstanceOffset;
-        public uint LayerCount;
-        public uint AttributesOffset;
+        /// <summary>
+        /// Gets or sets the offset to the water instance.
+        /// </summary>
+        public uint WaterInstanceOffset { get; set; }
 
-        public List<TerrainLiquidInstance> LiquidInstances = new List<TerrainLiquidInstance>();
-        public TerrainLiquidAttributes LiquidAttributes;
+        /// <summary>
+        /// Gets or sets the layer count.
+        /// </summary>
+        public uint LayerCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the offset to the liquid attributes.
+        /// </summary>
+        public uint AttributesOffset { get; set; }
+
+        /// <summary>
+        /// Gets or sets the liquid instances.
+        /// </summary>
+        public List<TerrainLiquidInstance> LiquidInstances { get; set; } = new List<TerrainLiquidInstance>();
+
+        /// <summary>
+        /// Gets or sets the liquid attributes.
+        /// </summary>
+        public TerrainLiquidAttributes LiquidAttributes { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainLiquidChunk"/> class.

@@ -22,7 +22,7 @@ using Warcraft.Core.Interfaces;
 namespace Warcraft.ADT.Chunks
 {
     /// <summary>
-    /// MVER Chunk - Contains the ADT version
+    /// MVER Chunk - Contains the ADT version.
     /// </summary>
     public class TerrainVersion : IIFFChunk, IBinarySerializable
     {
@@ -32,9 +32,9 @@ namespace Warcraft.ADT.Chunks
         public const string Signature = "MVER";
 
         /// <summary>
-        /// ADT version from MVER
+        /// Gets or sets the ADT version.
         /// </summary>
-        public uint Version;
+        public uint Version { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainVersion"/> class.
@@ -79,7 +79,6 @@ namespace Warcraft.ADT.Chunks
             return 4;
         }
 
-
         /// <inheritdoc/>
         public byte[] Serialize()
         {
@@ -95,4 +94,3 @@ namespace Warcraft.ADT.Chunks
         }
     }
 }
-

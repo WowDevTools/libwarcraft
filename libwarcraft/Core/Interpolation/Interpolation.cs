@@ -21,6 +21,9 @@ using System;
 
 namespace Warcraft.Core.Interpolation
 {
+    /// <summary>
+    /// Holds various interpolation algorithms.
+    /// </summary>
     public static class Interpolation
     {
         /// <summary>
@@ -32,7 +35,7 @@ namespace Warcraft.Core.Interpolation
         /// <returns>The interpolated value.</returns>
         public static float InterpolateLinear(float a, float b, float alpha)
         {
-            return a + alpha * (b - a);
+            return a + (alpha * (b - a));
         }
 
         /// <summary>
@@ -40,36 +43,36 @@ namespace Warcraft.Core.Interpolation
         /// <paramref name="alpha"/>, using the in/out tangents for a and b <paramref name="tangentA"/> and
         /// <paramref name="tangentB"/>, respectively.
         ///
-        /// This implementation was taken from <a href="http://blog.demofox.org/2015/08/08/cubic-hermite-interpolation/"/>
+        /// This implementation was taken from <a href="http://blog.demofox.org/2015/08/08/cubic-hermite-interpolation/"/>.
         /// </summary>
         /// <param name="a">The first point.</param>
-        /// <param name="b">The second point.</param>
-        /// <param name="alpha">The distance to interpolate.</param>
         /// <param name="tangentA">The in/out tangent of a.</param>
-        /// <param name="tangentB">The in/out tanget of b.</param>
-        /// <returns></returns>
+        /// <param name="b">The second point.</param>
+        /// <param name="tangentB">The in/out tangent of b.</param>
+        /// <param name="alpha">The distance to interpolate.</param>
+        /// <returns>The interpolated value.</returns>
         public static float InterpolateHermite(float a, float tangentA, float b, float tangentB, float alpha)
         {
-            float inter1 = -a / 2.0f + (3.0f * tangentA) / 2.0f - (3.0f * b) / 2.0f + tangentB / 2.0f;
-            float inter2 = a - (5.0f * tangentA) / 2.0f + 2.0f * b - tangentB / 2.0f;
-            float inter3 = -a / 2.0f + b / 2.0f;
+            float inter1 = (-a / 2.0f) + ((3.0f * tangentA) / 2.0f) - ((3.0f * b) / 2.0f) + (tangentB / 2.0f);
+            float inter2 = a - ((5.0f * tangentA) / 2.0f) + (2.0f * b) - (tangentB / 2.0f);
+            float inter3 = (-a / 2.0f) + (b / 2.0f);
             float inter4 = tangentB;
 
-            return (float)(inter1 * Math.Pow(alpha, 3) + inter2 * Math.Pow(alpha, 2) + inter3 * alpha + inter4);
+            return (float)((inter1 * Math.Pow(alpha, 3)) + (inter2 * Math.Pow(alpha, 2)) + (inter3 * alpha) + inter4);
         }
 
+        /// <summary>
+        /// Interpolates using the Bezier algorithm.
+        /// </summary>
+        /// <param name="a">The first point.</param>
+        /// <param name="tangentA">The tangent to the first point.</param>
+        /// <param name="b">The second point.</param>
+        /// <param name="tangentB">The tangent to the second point.</param>
+        /// <param name="alpha">The alpha value.</param>
+        /// <returns>The interpolated value.</returns>
         public static float InterpolateBezier(float a, float tangentA, float b, float tangentB, float alpha)
         {
-            return 0.0f;
+            throw new NotImplementedException();
         }
     }
-
-    public enum InterpolationType : ushort
-    {
-        None = 0,
-        Linear = 1,
-        Hermite = 2,
-        Bezier = 3
-    }
 }
-

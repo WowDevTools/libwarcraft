@@ -97,47 +97,46 @@ namespace Warcraft.Core.Extensions
             { typeof(MDXTexture), r => r.ReadMDXTexture() },
             { typeof(MDXAttachmentType), r => r.ReadMDXAttachmentType() },
             { typeof(MDXCameraType), r => r.ReadMDXCameraType() },
-            { typeof(MDXPlayableAnimationLookupTableEntry), r => r.ReadMDXPlayableAnimationLookupTableEntry()},
+            { typeof(MDXPlayableAnimationLookupTableEntry), r => r.ReadMDXPlayableAnimationLookupTableEntry() },
 
             // A few very specific MDXArray types, which are used with M2Tracks. This is a dirty, dirty hack to enable
             // jagged MDXArrays, since we can't cram a generic type in here
-
-            { typeof(MDXArray<Vector4>), r => r.ReadMDXArray<Vector4>()},
-            { typeof(MDXArray<Vector3>), r => r.ReadMDXArray<Vector3>()},
-            { typeof(MDXArray<Vector2>), r => r.ReadMDXArray<Vector2>()},
-            { typeof(MDXArray<bool>), r => r.ReadMDXArray<bool>()},
-            { typeof(MDXArray<byte>), r => r.ReadMDXArray<byte>()},
-            { typeof(MDXArray<short>), r => r.ReadMDXArray<short>()},
-            { typeof(MDXArray<ushort>), r => r.ReadMDXArray<ushort>()},
-            { typeof(MDXArray<int>), r => r.ReadMDXArray<int>()},
-            { typeof(MDXArray<uint>), r => r.ReadMDXArray<uint>()},
-            { typeof(MDXArray<float>), r => r.ReadMDXArray<float>()},
-            { typeof(MDXArray<RGB>), r => r.ReadMDXArray<RGB>()},
-            { typeof(MDXArray<RGBA>), r => r.ReadMDXArray<RGBA>()},
-            { typeof(MDXArray<BGRA>), r => r.ReadMDXArray<BGRA>()},
-            { typeof(MDXArray<SplineKey<float>>), r => r.ReadMDXArray<SplineKey<float>>()},
-            { typeof(MDXArray<SplineKey<Vector3>>), r => r.ReadMDXArray<SplineKey<Vector3>>()},
+            { typeof(MDXArray<Vector4>), r => r.ReadMDXArray<Vector4>() },
+            { typeof(MDXArray<Vector3>), r => r.ReadMDXArray<Vector3>() },
+            { typeof(MDXArray<Vector2>), r => r.ReadMDXArray<Vector2>() },
+            { typeof(MDXArray<bool>), r => r.ReadMDXArray<bool>() },
+            { typeof(MDXArray<byte>), r => r.ReadMDXArray<byte>() },
+            { typeof(MDXArray<short>), r => r.ReadMDXArray<short>() },
+            { typeof(MDXArray<ushort>), r => r.ReadMDXArray<ushort>() },
+            { typeof(MDXArray<int>), r => r.ReadMDXArray<int>() },
+            { typeof(MDXArray<uint>), r => r.ReadMDXArray<uint>() },
+            { typeof(MDXArray<float>), r => r.ReadMDXArray<float>() },
+            { typeof(MDXArray<RGB>), r => r.ReadMDXArray<RGB>() },
+            { typeof(MDXArray<RGBA>), r => r.ReadMDXArray<RGBA>() },
+            { typeof(MDXArray<BGRA>), r => r.ReadMDXArray<BGRA>() },
+            { typeof(MDXArray<SplineKey<float>>), r => r.ReadMDXArray<SplineKey<float>>() },
+            { typeof(MDXArray<SplineKey<Vector3>>), r => r.ReadMDXArray<SplineKey<Vector3>>() },
 
             // Jagged jagged arrays... hooray
-            { typeof(MDXArray<MDXArray<Vector4>>), r => r.ReadMDXArray<MDXArray<Vector4>>()},
-            { typeof(MDXArray<MDXArray<Vector3>>), r => r.ReadMDXArray<MDXArray<Vector3>>()},
-            { typeof(MDXArray<MDXArray<Vector2>>), r => r.ReadMDXArray<MDXArray<Vector2>>()},
-            { typeof(MDXArray<MDXArray<bool>>), r => r.ReadMDXArray<MDXArray<bool>>()},
-            { typeof(MDXArray<MDXArray<byte>>), r => r.ReadMDXArray<MDXArray<byte>>()},
-            { typeof(MDXArray<MDXArray<short>>), r => r.ReadMDXArray<MDXArray<short>>()},
-            { typeof(MDXArray<MDXArray<ushort>>), r => r.ReadMDXArray<MDXArray<ushort>>()},
-            { typeof(MDXArray<MDXArray<int>>), r => r.ReadMDXArray<MDXArray<int>>()},
-            { typeof(MDXArray<MDXArray<uint>>), r => r.ReadMDXArray<MDXArray<uint>>()},
-            { typeof(MDXArray<MDXArray<float>>), r => r.ReadMDXArray<MDXArray<float>>()},
-            { typeof(MDXArray<MDXArray<RGB>>), r => r.ReadMDXArray<MDXArray<RGB>>()},
-            { typeof(MDXArray<MDXArray<RGBA>>), r => r.ReadMDXArray<MDXArray<RGBA>>()},
-            { typeof(MDXArray<MDXArray<BGRA>>), r => r.ReadMDXArray<MDXArray<BGRA>>()},
-            { typeof(MDXArray<MDXArray<SplineKey<float>>>), r => r.ReadMDXArray<MDXArray<SplineKey<float>>>()},
-            { typeof(MDXArray<MDXArray<SplineKey<Vector3>>>), r => r.ReadMDXArray<MDXArray<SplineKey<Vector3>>>()},
+            { typeof(MDXArray<MDXArray<Vector4>>), r => r.ReadMDXArray<MDXArray<Vector4>>() },
+            { typeof(MDXArray<MDXArray<Vector3>>), r => r.ReadMDXArray<MDXArray<Vector3>>() },
+            { typeof(MDXArray<MDXArray<Vector2>>), r => r.ReadMDXArray<MDXArray<Vector2>>() },
+            { typeof(MDXArray<MDXArray<bool>>), r => r.ReadMDXArray<MDXArray<bool>>() },
+            { typeof(MDXArray<MDXArray<byte>>), r => r.ReadMDXArray<MDXArray<byte>>() },
+            { typeof(MDXArray<MDXArray<short>>), r => r.ReadMDXArray<MDXArray<short>>() },
+            { typeof(MDXArray<MDXArray<ushort>>), r => r.ReadMDXArray<MDXArray<ushort>>() },
+            { typeof(MDXArray<MDXArray<int>>), r => r.ReadMDXArray<MDXArray<int>>() },
+            { typeof(MDXArray<MDXArray<uint>>), r => r.ReadMDXArray<MDXArray<uint>>() },
+            { typeof(MDXArray<MDXArray<float>>), r => r.ReadMDXArray<MDXArray<float>>() },
+            { typeof(MDXArray<MDXArray<RGB>>), r => r.ReadMDXArray<MDXArray<RGB>>() },
+            { typeof(MDXArray<MDXArray<RGBA>>), r => r.ReadMDXArray<MDXArray<RGBA>>() },
+            { typeof(MDXArray<MDXArray<BGRA>>), r => r.ReadMDXArray<MDXArray<BGRA>>() },
+            { typeof(MDXArray<MDXArray<SplineKey<float>>>), r => r.ReadMDXArray<MDXArray<SplineKey<float>>>() },
+            { typeof(MDXArray<MDXArray<SplineKey<Vector3>>>), r => r.ReadMDXArray<MDXArray<SplineKey<Vector3>>>() },
 
             // Some spline key types
-            { typeof(SplineKey<float>), r => r.ReadSplineKey<float>()},
-            { typeof(SplineKey<Vector3>), r => r.ReadSplineKey<Vector3>()},
+            { typeof(SplineKey<float>), r => r.ReadSplineKey<float>() },
+            { typeof(SplineKey<Vector3>), r => r.ReadSplineKey<Vector3>() },
 
             // DBC-related types
             { typeof(StringReference), r => r.ReadStringReference() },
@@ -155,29 +154,28 @@ namespace Warcraft.Core.Extensions
         {
             // MDX types
             { typeof(MDXSkin), (r, v) => r.ReadMDXSkin(v) },
-            { typeof(MDXSkinSection), (r, v) => r.ReadMDXSkinSection(v)},
-            { typeof(MDXAnimationSequence), (r, v) => r.ReadMDXAnimationSequence(v)},
-
-            { typeof(MDXBone), (r, v) => r.ReadMDXBone(v)},
-            { typeof(MDXTextureWeight), (r, v) => r.ReadMDXTextureWeight(v)},
-            { typeof(MDXTextureTransform), (r, v) => r.ReadMDXTextureTransform(v)},
-            { typeof(MDXAttachment), (r, v) => r.ReadMDXAttachment(v)},
-            { typeof(MDXAnimationEvent), (r, v) => r.ReadMDXAnimationEvent(v)},
-            { typeof(MDXLight), (r, v) => r.ReadMDXLight(v)},
-            { typeof(MDXCamera), (r, v) => r.ReadMDXCamera(v)},
-            { typeof(MDXRibbonEmitter), (r, v) => r.ReadMDXRibbonEmitter(v)},
-            { typeof(MDXMaterial), (r, v)=> r.ReadMDXMaterial(v) },
+            { typeof(MDXSkinSection), (r, v) => r.ReadMDXSkinSection(v) },
+            { typeof(MDXAnimationSequence), (r, v) => r.ReadMDXAnimationSequence(v) },
+            { typeof(MDXBone), (r, v) => r.ReadMDXBone(v) },
+            { typeof(MDXTextureWeight), (r, v) => r.ReadMDXTextureWeight(v) },
+            { typeof(MDXTextureTransform), (r, v) => r.ReadMDXTextureTransform(v) },
+            { typeof(MDXAttachment), (r, v) => r.ReadMDXAttachment(v) },
+            { typeof(MDXAnimationEvent), (r, v) => r.ReadMDXAnimationEvent(v) },
+            { typeof(MDXLight), (r, v) => r.ReadMDXLight(v) },
+            { typeof(MDXCamera), (r, v) => r.ReadMDXCamera(v) },
+            { typeof(MDXRibbonEmitter), (r, v) => r.ReadMDXRibbonEmitter(v) },
+            { typeof(MDXMaterial), (r, v) => r.ReadMDXMaterial(v) },
             { typeof(MDXColourAnimation), (r, v) => r.ReadMDXColourAnimation(v) },
 
             // System.Numerics.Vectors types
-            { typeof(Quaternion), (r, v) => v >= WarcraftVersion.BurningCrusade ? r.ReadQuaternion16() : r.ReadQuaternion32()},
+            { typeof(Quaternion), (r, v) => v >= WarcraftVersion.BurningCrusade ? r.ReadQuaternion16() : r.ReadQuaternion32() },
 
             // Specific versioned MDXArray types
-            { typeof(MDXArray<Quaternion>), (r, v) => r.ReadMDXArray<Quaternion>(v)},
+            { typeof(MDXArray<Quaternion>), (r, v) => r.ReadMDXArray<Quaternion>(v) },
 
             // A few very specific MDXArray types, which are used with M2Tracks. This is a dirty, dirty hack to enable
             // jagged MDXArrays, since we can't cram a generic type in here
-            { typeof(MDXArray<MDXArray<Quaternion>>), (r, v) => r.ReadMDXArray<MDXArray<Quaternion>>(v)},
+            { typeof(MDXArray<MDXArray<Quaternion>>), (r, v) => r.ReadMDXArray<MDXArray<Quaternion>>(v) },
 
             // DBC-related types
             { typeof(LocalizedStringReference), (r, v) => r.ReadLocalizedStringReference(v) },
@@ -186,8 +184,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Registers a custom type with the dynamic deserialization system. A valid reading function must be provided.
         /// </summary>
-        /// <param name="readingFunction">A function that will read a value of the given type from the data stream.</param>
         /// <param name="type">The type to register.</param>
+        /// <param name="readingFunction">A function that will read a value of the given type from the data stream.</param>
         /// <exception cref="ArgumentNullException">Thrown if the type or function are null.</exception>
         public static void RegisterTypeReader(Type type, Func<BinaryReader, dynamic> readingFunction)
         {
@@ -212,8 +210,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Registers a custom versioned type with the dynamic deserialization system. A valid reading function must be provided.
         /// </summary>
-        /// <param name="readingFunction">A function that will read a value of the given type from the data stream.</param>
         /// <param name="type">The type to register.</param>
+        /// <param name="readingFunction">A function that will read a value of the given type from the data stream.</param>
         /// <exception cref="ArgumentNullException">Thrown if the type or function are null.</exception>
         public static void RegisterVersionedTypeReader(Type type, Func<BinaryReader, WarcraftVersion, dynamic> readingFunction)
         {
@@ -240,15 +238,18 @@ namespace Warcraft.Core.Extensions
         /// explicitly implemented in <see cref="TypeReaderMap"/>. Note that strings are read as C-style null-terminated
         /// strings, and not C#-style length-prefixed strings.
         /// </summary>
-        /// <param name="br"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <param name="br">The reader.</param>
+        /// <typeparam name="T">The type to read.</typeparam>
+        /// <returns>The Value.</returns>
         public static T Read<T>(this BinaryReader br)
         {
             if (!TypeReaderMap.ContainsKey(typeof(T)))
             {
-                throw new ArgumentException("The given generic type has no supported reading function associated " +
-                                            "with it.", typeof(T).Name);
+                throw new ArgumentException
+                (
+                    "The given generic type has no supported reading function associated with it.",
+                    typeof(T).Name
+                );
             }
 
             return Read(br, typeof(T));
@@ -259,16 +260,21 @@ namespace Warcraft.Core.Extensions
         /// explicitly implemented in <see cref="TypeReaderMap"/>. Note that strings are read as C-style null-terminated
         /// strings, and not C#-style length-prefixed strings.
         /// </summary>
-        /// <param name="br"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <param name="br">The reader.</param>
+        /// <param name="type">The type.</param>
+        /// <returns>The value.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown if the type has no reading function associated with it.
+        /// </exception>
         public static dynamic Read(this BinaryReader br, Type type)
         {
             if (!TypeReaderMap.ContainsKey(type))
             {
-                throw new ArgumentException("The given type has no supported reading function associated " +
-                                            "with it.", type.Name);
+                throw new ArgumentException
+                (
+                    "The given type has no supported reading function associated with it.",
+                    type.Name
+                );
             }
 
             return TypeReaderMap[type](br);
@@ -278,16 +284,19 @@ namespace Warcraft.Core.Extensions
         /// Reads a versioned value of type <typeparamref name="T"/> from the data stream. The generic type must be
         /// explicitly implemented in <see cref="VersionedTypeReaderMap"/>.
         /// </summary>
-        /// <param name="br"></param>
+        /// <param name="br">The reader.</param>
         /// <param name="version">The contextually relevant version for the object to be read.</param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">The type.</typeparam>
+        /// <returns>The value.</returns>
         public static T Read<T>(this BinaryReader br, WarcraftVersion version)
         {
             if (!VersionedTypeReaderMap.ContainsKey(typeof(T)))
             {
-                throw new ArgumentException("The given versioned generic type has no supported reading function associated " +
-                                            "with it.", typeof(T).Name);
+                throw new ArgumentException
+                (
+                    "The given versioned generic type has no supported reading function associated with it.",
+                    typeof(T).Name
+                );
             }
 
             return Read(br, typeof(T), version);
@@ -298,16 +307,20 @@ namespace Warcraft.Core.Extensions
         /// explicitly implemented in <see cref="TypeReaderMap"/>. Note that strings are read as C-style null-terminated
         /// strings, and not C#-style length-prefixed strings.
         /// </summary>
-        /// <param name="br"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <param name="br">The reader.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
+        /// <exception cref="ArgumentException">Thrown if the type has no reading function.</exception>
         public static dynamic Read(this BinaryReader br, Type type, WarcraftVersion version)
         {
             if (!VersionedTypeReaderMap.ContainsKey(type))
             {
-                throw new ArgumentException("The given versioned type has no supported reading function associated " +
-                                            "with it.", type.Name);
+                throw new ArgumentException
+                (
+                    "The given versioned type has no supported reading function associated with it.",
+                    type.Name
+                );
             }
 
             return VersionedTypeReaderMap[type](br, version);
@@ -320,8 +333,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads a <see cref="LocalizedStringReference"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The string.</returns>
         public static LocalizedStringReference ReadLocalizedStringReference(this BinaryReader binaryReader, WarcraftVersion version)
         {
             LocalizedStringReference locRef = new LocalizedStringReference();
@@ -366,8 +380,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads a <see cref="StringReference"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The value.</returns>
         public static StringReference ReadStringReference(this BinaryReader binaryReader)
         {
             return new StringReference(binaryReader.ReadUInt32());
@@ -380,9 +394,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads a spline key with a value and in/out tangents from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <typeparam name="T">The type of the key.</typeparam>
+        /// <returns>The value.</returns>
         public static SplineKey<T> ReadSplineKey<T>(this BinaryReader binaryReader)
         {
             return new SplineKey<T>(binaryReader);
@@ -391,8 +405,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads a 12-byte <see cref="RGB"/> value from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The value.</returns>
         public static RGB ReadRGB(this BinaryReader binaryReader)
         {
             return new RGB(binaryReader.ReadVector3());
@@ -402,7 +416,7 @@ namespace Warcraft.Core.Extensions
         /// Reads an 8-byte Range value from the data stream.
         /// </summary>
         /// <returns>The range.</returns>
-        /// <param name="binaryReader">binaryReader.</param>
+        /// <param name="binaryReader">The reader.</param>
         public static Range ReadRange(this BinaryReader binaryReader)
         {
             return new Range(binaryReader.ReadSingle(), binaryReader.ReadSingle());
@@ -411,8 +425,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an 8-byte <see cref="IntegerRange"/> value from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The value.</returns>
         public static IntegerRange ReadIntegerRange(this BinaryReader binaryReader)
         {
             return new IntegerRange(binaryReader.ReadUInt32(), binaryReader.ReadUInt32());
@@ -422,7 +436,7 @@ namespace Warcraft.Core.Extensions
         /// Reads a 4-byte RGBA value from the data stream.
         /// </summary>
         /// <returns>The argument.</returns>
-        /// <param name="binaryReader">binaryReader.</param>
+        /// <param name="binaryReader">The reader.</param>
         public static RGBA ReadRGBA(this BinaryReader binaryReader)
         {
             byte r = binaryReader.ReadByte();
@@ -439,7 +453,7 @@ namespace Warcraft.Core.Extensions
         /// Reads a 4-byte BGRA value from the data stream.
         /// </summary>
         /// <returns>The argument.</returns>
-        /// <param name="binaryReader">binaryReader.</param>
+        /// <param name="binaryReader">The reader.</param>
         public static BGRA ReadBGRA(this BinaryReader binaryReader)
         {
             byte b = binaryReader.ReadByte();
@@ -456,7 +470,7 @@ namespace Warcraft.Core.Extensions
         /// Reads a 4-byte RGBA value from the data stream.
         /// </summary>
         /// <returns>The argument.</returns>
-        /// <param name="binaryReader">binaryReader.</param>
+        /// <param name="binaryReader">The reader.</param>
         public static ARGB ReadARGB(this BinaryReader binaryReader)
         {
             byte a = binaryReader.ReadByte();
@@ -473,7 +487,7 @@ namespace Warcraft.Core.Extensions
         /// Reads a standard null-terminated string from the data stream.
         /// </summary>
         /// <returns>The null terminated string.</returns>
-        /// <param name="binaryReader">binaryReader.</param>
+        /// <param name="binaryReader">The reader.</param>
         public static string ReadNullTerminatedString(this BinaryReader binaryReader)
         {
             StringBuilder sb = new StringBuilder();
@@ -490,6 +504,7 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads a 4-byte RIFF chunk signature from the data stream.
         /// </summary>
+        /// <param name="binaryReader">The reader.</param>
         /// <returns>The signature as a string.</returns>
         public static string ReadBinarySignature(this BinaryReader binaryReader)
         {
@@ -509,6 +524,8 @@ namespace Warcraft.Core.Extensions
         /// Peeks a 4-byte RIFF chunk signature from the data stream. This does not
         /// advance the position of the stream.
         /// </summary>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The signature.</returns>
         public static string PeekChunkSignature(this BinaryReader binaryReader)
         {
             string chunkSignature = binaryReader.ReadBinarySignature();
@@ -521,7 +538,9 @@ namespace Warcraft.Core.Extensions
         /// Reads an IFF-style chunk from the stream. The chunk must have the <see cref="IIFFChunk"/>
         /// interface, and implement a parameterless constructor.
         /// </summary>
-        /// <param name="reader">The current <see cref="BinaryReader"/></param>
+        /// <param name="reader">The current <see cref="BinaryReader"/>.</param>
+        /// <typeparam name="T">The chunk type.</typeparam>
+        /// <returns>The chunk.</returns>
         public static T ReadIFFChunk<T>(this BinaryReader reader) where T : IIFFChunk, new()
         {
             string chunkSignature = reader.ReadBinarySignature();
@@ -546,9 +565,9 @@ namespace Warcraft.Core.Extensions
         /// <param name="fieldCount">The number of expected fields.</param>
         /// <param name="recordSize">The expected record size.</param>
         /// <param name="version">The version to load.</param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <typeparam name="T">The record type.</typeparam>
+        /// <returns>The record.</returns>
+        /// <exception cref="ArgumentException">Thrown if the record type does not match the file.</exception>
         public static T ReadRecord<T>(this BinaryReader reader, int fieldCount, int recordSize, WarcraftVersion version = WarcraftVersion.Classic)
             where T : IDBCRecord, new()
         {
@@ -577,7 +596,7 @@ namespace Warcraft.Core.Extensions
         /// Reads an 16-byte <see cref="Plane"/> from the data stream.
         /// </summary>
         /// <returns>The plane.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         public static Plane ReadPlane(this BinaryReader binaryReader)
         {
             return new Plane(binaryReader.ReadVector3(), binaryReader.ReadSingle());
@@ -587,10 +606,10 @@ namespace Warcraft.Core.Extensions
         /// Reads an 18-byte <see cref="ShortPlane"/> from the data stream.
         /// </summary>
         /// <returns>The plane.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         public static ShortPlane ReadShortPlane(this BinaryReader binaryReader)
         {
-            ShortPlane shortPlane = new ShortPlane();
+            ShortPlane shortPlane = default(ShortPlane);
             for (int y = 0; y < 3; ++y)
             {
                 List<short> coordinateRow = new List<short>();
@@ -598,6 +617,7 @@ namespace Warcraft.Core.Extensions
                 {
                     coordinateRow.Add(binaryReader.ReadInt16());
                 }
+
                 shortPlane.Coordinates.Add(coordinateRow);
             }
 
@@ -609,7 +629,7 @@ namespace Warcraft.Core.Extensions
         /// 16 bytes.
         /// </summary>
         /// <returns>The quaternion.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         public static Quaternion ReadQuaternion32(this BinaryReader binaryReader)
         {
             return new Quaternion(binaryReader.ReadVector3(), binaryReader.ReadSingle());
@@ -620,7 +640,7 @@ namespace Warcraft.Core.Extensions
         /// 8 bytes.
         /// </summary>
         /// <returns>The quaternion.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         public static Quaternion ReadQuaternion16(this BinaryReader binaryReader)
         {
             var vector = binaryReader.ReadVector3s();
@@ -640,7 +660,7 @@ namespace Warcraft.Core.Extensions
         /// 12 bytes.
         /// </summary>
         /// <returns>The rotator.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         public static Rotator ReadRotator(this BinaryReader binaryReader)
         {
             return new Rotator(binaryReader.ReadVector3());
@@ -651,7 +671,7 @@ namespace Warcraft.Core.Extensions
         /// 12 bytes.
         /// </summary>
         /// <returns>The vector3f.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         /// <param name="convertTo">Which axis configuration the read vector should be converted to.</param>
         public static Vector3 ReadVector3(this BinaryReader binaryReader, AxisConfiguration convertTo = AxisConfiguration.YUp)
         {
@@ -661,6 +681,7 @@ namespace Warcraft.Core.Extensions
                 {
                     return new Vector3(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
                 }
+
                 case AxisConfiguration.YUp:
                 {
                     float x1 = binaryReader.ReadSingle();
@@ -673,9 +694,10 @@ namespace Warcraft.Core.Extensions
 
                     return new Vector3(x, y, z);
                 }
+
                 case AxisConfiguration.ZUp:
                 {
-                    float x1 =  binaryReader.ReadSingle();
+                    float x1 = binaryReader.ReadSingle();
                     float y1 = binaryReader.ReadSingle();
                     float z1 = binaryReader.ReadSingle();
 
@@ -685,6 +707,7 @@ namespace Warcraft.Core.Extensions
 
                     return new Vector3(x, y, z);
                 }
+
                 default:
                 {
                     throw new ArgumentOutOfRangeException(nameof(convertTo), convertTo, null);
@@ -697,7 +720,7 @@ namespace Warcraft.Core.Extensions
         /// 16 bytes.
         /// </summary>
         /// <returns>The vector3f.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         /// <param name="convertTo">Which axis configuration the read vector should be converted to.</param>
         public static Vector4 ReadVector4(this BinaryReader binaryReader, AxisConfiguration convertTo = AxisConfiguration.YUp)
         {
@@ -707,6 +730,7 @@ namespace Warcraft.Core.Extensions
                 {
                     return new Vector4(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
                 }
+
                 case AxisConfiguration.YUp:
                 {
                     float x1 = binaryReader.ReadSingle();
@@ -721,9 +745,10 @@ namespace Warcraft.Core.Extensions
 
                     return new Vector4(x, y, z, w);
                 }
+
                 case AxisConfiguration.ZUp:
                 {
-                    float x1 =  binaryReader.ReadSingle();
+                    float x1 = binaryReader.ReadSingle();
                     float y1 = binaryReader.ReadSingle();
                     float z1 = binaryReader.ReadSingle();
 
@@ -735,6 +760,7 @@ namespace Warcraft.Core.Extensions
 
                     return new Vector4(x, y, z, w);
                 }
+
                 default:
                 {
                     throw new ArgumentOutOfRangeException(nameof(convertTo), convertTo, null);
@@ -747,7 +773,7 @@ namespace Warcraft.Core.Extensions
         /// 6 bytes.
         /// </summary>
         /// <returns>The vector3s.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         /// <param name="convertTo">Which axis configuration the read vector should be converted to.</param>
         public static Vector3s ReadVector3s(this BinaryReader binaryReader, AxisConfiguration convertTo = AxisConfiguration.YUp)
         {
@@ -757,6 +783,7 @@ namespace Warcraft.Core.Extensions
                 {
                     return new Vector3s(binaryReader.ReadInt16(), binaryReader.ReadInt16(), binaryReader.ReadInt16());
                 }
+
                 case AxisConfiguration.YUp:
                 {
                     short x1 = binaryReader.ReadInt16();
@@ -769,9 +796,10 @@ namespace Warcraft.Core.Extensions
 
                     return new Vector3s(x, y, z);
                 }
+
                 case AxisConfiguration.ZUp:
                 {
-                    short x1 =  binaryReader.ReadInt16();
+                    short x1 = binaryReader.ReadInt16();
                     short y1 = binaryReader.ReadInt16();
                     short z1 = binaryReader.ReadInt16();
 
@@ -781,6 +809,7 @@ namespace Warcraft.Core.Extensions
 
                     return new Vector3s(x, y, z);
                 }
+
                 default:
                 {
                     throw new ArgumentOutOfRangeException(nameof(convertTo), convertTo, null);
@@ -793,7 +822,7 @@ namespace Warcraft.Core.Extensions
         /// 8 bytes.
         /// </summary>
         /// <returns>The vector2f.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         public static Vector2 ReadVector2(this BinaryReader binaryReader)
         {
             return new Vector2(binaryReader.ReadSingle(), binaryReader.ReadSingle());
@@ -804,7 +833,7 @@ namespace Warcraft.Core.Extensions
         /// 24 bytes.
         /// </summary>
         /// <returns>The box.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         public static Box ReadBox(this BinaryReader binaryReader)
         {
             return new Box(binaryReader.ReadVector3(), binaryReader.ReadVector3());
@@ -815,7 +844,7 @@ namespace Warcraft.Core.Extensions
         /// 12 bytes.
         /// </summary>
         /// <returns>The box.</returns>
-        /// <param name="binaryReader">The current <see cref="BinaryReader"/></param>
+        /// <param name="binaryReader">The reader.</param>
         public static ShortBox ReadShortBox(this BinaryReader binaryReader)
         {
             return new ShortBox(binaryReader.ReadVector3s(), binaryReader.ReadVector3s());
@@ -911,6 +940,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Writes an RIFF-style chunk to the data stream.
         /// </summary>
+        /// <typeparam name="T">The chunk type.</typeparam>
+        /// <param name="binaryWriter">The writer.</param>
+        /// <param name="chunk">The chunk.</param>
         public static void WriteIFFChunk<T>(this BinaryWriter binaryWriter, T chunk) where T : IIFFChunk, IBinarySerializable
         {
             byte[] serializedChunk = chunk.Serialize();
@@ -1012,6 +1044,7 @@ namespace Warcraft.Core.Extensions
                     binaryWriter.Write(vector.Z);
                     break;
                 }
+
                 case AxisConfiguration.ZUp:
                 {
                     binaryWriter.Write(vector.X);
@@ -1019,6 +1052,7 @@ namespace Warcraft.Core.Extensions
                     binaryWriter.Write(vector.Y);
                     break;
                 }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(storeAs), storeAs, null);
             }
@@ -1046,6 +1080,7 @@ namespace Warcraft.Core.Extensions
                     binaryWriter.Write(vector.W);
                     break;
                 }
+
                 case AxisConfiguration.ZUp:
                 {
                     binaryWriter.Write(vector.X);
@@ -1054,6 +1089,7 @@ namespace Warcraft.Core.Extensions
                     binaryWriter.Write(vector.W);
                     break;
                 }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(storeAs), storeAs, null);
             }
@@ -1078,6 +1114,7 @@ namespace Warcraft.Core.Extensions
                     binaryWriter.Write(vector.Z);
                     break;
                 }
+
                 case AxisConfiguration.ZUp:
                 {
                     binaryWriter.Write(vector.X);
@@ -1085,6 +1122,7 @@ namespace Warcraft.Core.Extensions
                     binaryWriter.Write(vector.Y);
                     break;
                 }
+
                 default:
                 {
                     throw new ArgumentOutOfRangeException(nameof(storeAs), storeAs, null);

@@ -1,5 +1,5 @@
-﻿//
-//  LiquidFlags.cs
+//
+//  MapChunkOffsetEntry.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,39 +17,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-
-namespace Warcraft.ADT.Chunks.Subchunks
+namespace Warcraft.ADT.Chunks
 {
     /// <summary>
-    /// Holds flags for the liquid chunk.
+    /// A struct containing information about the referenced MCNK.
     /// </summary>
-    [Flags]
-    public enum LiquidFlags : byte
+    public class MapChunkOffsetEntry
     {
         /// <summary>
-        /// The liquid is present, but hidden.
+        /// Gets or sets the absolute offset of the MCNK.
         /// </summary>
-        Hidden = 0x08,
+        public int MapChunkOffset { get; set; }
 
         /// <summary>
-        /// Unknown.
+        /// Gets or sets the size of the MCNK.
         /// </summary>
-        Unknown1 = 0x10,
+        public int MapChunkSize { get; set; }
 
         /// <summary>
-        /// Unknown.
+        /// Gets or sets the flags of the MCNK. This is only set on the client, and is as such always 0.
         /// </summary>
-        Unknown2 = 0x20,
+        public int Flags { get; set; }
 
         /// <summary>
-        /// The liquid is fishable.
+        /// Gets or sets the loading ID of the MCNK. This is only set on the client, and is as such always 0.
         /// </summary>
-        Fishable = 0x40,
-
-        /// <summary>
-        /// The liquid is shared.
-        /// </summary>
-        Shared = 0x80
+        public int AsynchronousLoadingID { get; set; }
     }
 }

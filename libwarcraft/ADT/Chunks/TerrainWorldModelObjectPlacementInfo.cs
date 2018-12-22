@@ -16,18 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-using System;
+
 using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
-using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
-using Warcraft.Core.Structures;
 
 namespace Warcraft.ADT.Chunks
 {
     /// <summary>
-    /// MODF Chunk - Contains WMO model placement information
+    /// MODF Chunk - Contains WMO model placement information.
     /// </summary>
     public class TerrainWorldModelObjectPlacementInfo : IIFFChunk, IBinarySerializable
     {
@@ -37,9 +34,9 @@ namespace Warcraft.ADT.Chunks
         public const string Signature = "MODF";
 
         /// <summary>
-        /// An array of WMO model information entries
+        /// Gets or sets an array of WMO model information entries.
         /// </summary>
-        public List<WorldModelObjectPlacementEntry> Entries = new List<WorldModelObjectPlacementEntry>();
+        public List<WorldModelObjectPlacementEntry> Entries { get; set; } = new List<WorldModelObjectPlacementEntry>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainWorldModelObjectPlacementInfo"/> class.
@@ -96,125 +93,4 @@ namespace Warcraft.ADT.Chunks
             }
         }
     }
-
-    /// <summary>
-    /// An entry struct containing information about the WMO
-    /// </summary>
-    public class WorldModelObjectPlacementEntry : IBinarySerializable
-    {
-        /// <summary>
-        /// Specifies which WHO to use via the MMID chunk
-        /// </summary>
-        public uint WorldModelObjectEntryIndex;
-
-        /// <summary>
-        /// A unique actor ID for the model. Blizzard implements this as game global, but it's only checked in loaded tiles.
-        /// When not in use, it's set to -1.
-        /// </summary>
-        public int UniqueID;
-
-        /// <summary>
-        /// Position of the WMO
-        /// </summary>
-        public Vector3 Position;
-        /// <summary>
-        /// Rotation of the model
-        /// </summary>
-        public Rotator Rotation;
-
-        /// <summary>
-        /// The bounding box of the model.
-        /// </summary>
-        public Box BoundingBox;
-
-        /// <summary>
-        /// Flags of the model
-        /// </summary>
-        public WorldModelObjectFlags Flags;
-
-        /// <summary>
-        /// Doodadset of the model
-        /// </summary>
-        public ushort DoodadSet;
-
-        /// <summary>
-        /// Nameset of the model
-        /// </summary>
-        public ushort NameSet;
-
-        /// <summary>
-        /// An unused value. Seems to have data in Legion tiles.
-        /// </summary>
-        public ushort Unused;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.WorldModelObjectPlacementEntry"/> class.
-        /// </summary>
-        /// <param name="data">ExtendedData.</param>
-        public WorldModelObjectPlacementEntry(byte[] data)
-        {
-            using (MemoryStream ms = new MemoryStream(data))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    WorldModelObjectEntryIndex = br.ReadUInt32();
-                    UniqueID = br.ReadInt32();
-
-                    Position = br.ReadVector3();
-                    Rotation = br.ReadRotator();
-                    BoundingBox = br.ReadBox();
-
-                    Flags = (WorldModelObjectFlags)br.ReadUInt16();
-                    DoodadSet = br.ReadUInt16();
-                    NameSet = br.ReadUInt16();
-                    Unused = br.ReadUInt16();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the size of a placement entry.
-        /// </summary>
-        /// <returns>The size.</returns>
-        public static int GetSize()
-        {
-            return 64;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write(WorldModelObjectEntryIndex);
-                    bw.Write(UniqueID);
-
-                    bw.WriteVector3(Position);
-                    bw.WriteRotator(Rotation);
-                    bw.WriteBox(BoundingBox);
-
-                    bw.Write((ushort)Flags);
-                    bw.Write(DoodadSet);
-                    bw.Write(NameSet);
-                    bw.Write(Unused);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Flags for the WMO
-    /// </summary>
-    [Flags]
-    public enum WorldModelObjectFlags : ushort
-    {
-        Destructible = 1,
-        UseLOD = 2,
-        Unknown = 4
-    }
 }
-

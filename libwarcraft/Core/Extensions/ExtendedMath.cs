@@ -52,7 +52,7 @@ namespace Warcraft.Core.Extensions
 
         /// <summary>
         /// Maps a value in a specified range to a new value in a new range.
-        /// Taken from the Arduino reference (https://www.arduino.cc/en/Reference/Map)
+        /// Taken from the Arduino reference (https://www.arduino.cc/en/Reference/Map).
         /// </summary>
         /// <param name="val">The input value.</param>
         /// <param name="inMin">The original mininum value.</param>
@@ -62,7 +62,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>The value, mapped to the new range.</returns>
         public static int Map(int val, int inMin, int inMax, int outMin, int outMax)
         {
-            return (val - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+            return ((val - inMin) * (outMax - outMin) / (inMax - inMin)) + outMin;
         }
     }
 }

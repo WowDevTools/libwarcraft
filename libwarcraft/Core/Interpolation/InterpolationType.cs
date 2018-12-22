@@ -1,5 +1,5 @@
 //
-//  IInterpolatable.cs
+//  InterpolationType.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -20,19 +20,28 @@
 namespace Warcraft.Core.Interpolation
 {
     /// <summary>
-    /// Specifies that the type which implements this interface can be interpolated between itself and a target point.
+    /// The type of interpolation used.
     /// </summary>
-    /// <typeparam name="T">The type to interpolate.</typeparam>
-    public interface IInterpolatable<T>
+    public enum InterpolationType : ushort
     {
         /// <summary>
-        /// Interpolates the instance between itself and the <paramref name="target"/> object by an alpha factor,
-        /// using the interpolation algorithm specified in <paramref name="interpolationType"/>.
+        /// No interpolation.
         /// </summary>
-        /// <param name="target">The target point.</param>
-        /// <param name="alpha">The alpha factor.</param>
-        /// <param name="interpolationType">The interpolation algorithm to use.</param>
-        /// <returns>An interpolated object.</returns>
-        T Interpolate(T target, float alpha, InterpolationType interpolationType);
+        None = 0,
+
+        /// <summary>
+        /// Linear interpolation.
+        /// </summary>
+        Linear = 1,
+
+        /// <summary>
+        /// Hermite interpolation.
+        /// </summary>
+        Hermite = 2,
+
+        /// <summary>
+        /// Bezier interpolation.
+        /// </summary>
+        Bezier = 3
     }
 }

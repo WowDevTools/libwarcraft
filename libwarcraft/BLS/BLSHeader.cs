@@ -40,22 +40,22 @@ namespace Warcraft.BLS
         public const string FragmentShaderSignature = "GXPS";
 
         /// <summary>
-        /// The type of the container, that is, vertex or fragment.
+        /// Gets or sets the type of the container, that is, vertex or fragment.
         /// </summary>
-        public ShaderContainerType ContainerType;
+        public ShaderContainerType ContainerType { get; set; }
 
         /// <summary>
-        /// The binary format version of the BLS file.
+        /// Gets or sets the binary format version of the BLS file.
         /// </summary>
-        public uint Version;
+        public uint Version { get; set; }
 
         /// <summary>
-        /// The number of shader blocks stored in the file.
+        /// Gets or sets the number of shader blocks stored in the file.
         /// </summary>
-        public uint ShaderBlockCount;
+        public uint ShaderBlockCount { get; set; }
 
         /// <summary>
-        /// Creates a new <see cref="BLSHeader"/> object from supplied binary data, containing a serialized object.
+        /// Initializes a new instance of the <see cref="BLSHeader"/> class.
         /// </summary>
         /// <param name="inData">The binary data containing the object.</param>
         /// <exception cref="FileLoadException">Thrown if no matching signatures could be found in the data.</exception>
@@ -116,26 +116,10 @@ namespace Warcraft.BLS
         /// <summary>
         /// Gets the static binary size of this class, that is, the absolute size in bytes of a serialized object.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The size in bytes.</returns>
         public static int GetSize()
         {
             return 12;
         }
-    }
-
-    /// <summary>
-    /// All the different container types there are of BLS files.
-    /// </summary>
-    public enum ShaderContainerType : byte
-    {
-        /// <summary>
-        /// This BLS file is a vertex shader container.
-        /// </summary>
-        Vertex,
-
-        /// <summary>
-        /// This BLS file is a fragment shader container.
-        /// </summary>
-        Fragment
     }
 }

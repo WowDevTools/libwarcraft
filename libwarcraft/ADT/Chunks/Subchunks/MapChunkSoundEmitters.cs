@@ -31,8 +31,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// </summary>
         public const string Signature = "MCSE";
 
-        private bool hasFinishedLoading;
-        private byte[] Data;
+        private bool _hasFinishedLoading;
+        private byte[] _data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MapChunkSoundEmitters"/> class.
@@ -53,7 +53,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            Data = inData;
+            _data = inData;
         }
 
         /// <inheritdoc/>

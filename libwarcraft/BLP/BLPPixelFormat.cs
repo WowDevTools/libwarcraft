@@ -27,17 +27,17 @@ namespace Warcraft.BLP
         /// <summary>
         /// DXT1 compressed pixels.
         /// </summary>
-        DXT1                             = 0,
+        DXT1 = 0,
 
         /// <summary>
         /// DXT3 compressed pixels.
         /// </summary>
-        DXT3                             = 1,
+        DXT3 = 1,
 
         /// <summary>
         /// ARGB8888 formatted pixels.
         /// </summary>
-        ARGB8888                         = 2,
+        ARGB8888 = 2,
 
         /// <summary>
         /// PAL ARGB1555 formatted pixels.
@@ -52,17 +52,17 @@ namespace Warcraft.BLP
         /// <summary>
         /// PAL ARGB565 formatted pixels.
         /// </summary>
-        PalARGB565DitherFloydSteinberg     = 5,
+        PalARGB565DitherFloydSteinberg = 5,
 
         /// <summary>
         /// DXT5 compressed pixels.
         /// </summary>
-        DXT5                             = 7,
+        DXT5 = 7,
 
         /// <summary>
         /// Palettized pixels, that is, the pixels are indices into the stored colour palette.
         /// </summary>
-        Palettized                         = 8,
+        Palettized = 8,
 
         /// <summary>
         /// PAL ARGB2565 formatted pixels.

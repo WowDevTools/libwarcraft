@@ -26,6 +26,5 @@ namespace Warcraft.Core.Interfaces
     /// </summary>
     public interface IVersionedClass
     {
-
     }
 }

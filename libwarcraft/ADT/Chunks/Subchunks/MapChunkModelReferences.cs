@@ -33,7 +33,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// </summary>
         public const string Signature = "MCRF";
 
-        private byte[] Data;
+        private byte[] _data;
 
         /// <summary>
         /// Gets or sets the game model references.
@@ -64,7 +64,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            Data = inData;
+            _data = inData;
         }
 
         /// <inheritdoc/>
@@ -80,7 +80,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <param name="worldModelObjectCount">The number of world model objects in the chunk.</param>
         public void PostLoadReferences(uint gameModelObjectCount, uint worldModelObjectCount)
         {
-            using (MemoryStream ms = new MemoryStream(Data))
+            using (MemoryStream ms = new MemoryStream(_data))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
@@ -98,4 +98,3 @@ namespace Warcraft.ADT.Chunks.Subchunks
         }
     }
 }
-

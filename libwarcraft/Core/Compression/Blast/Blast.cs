@@ -15,7 +15,6 @@ company.
 The license terms do not and cannot cover any part of this work that
 is covered by patent claims of any other entity.
 
-
 https://github.com/madler/zlib/blob/master/contrib/blast/
 blast.c
 
@@ -86,7 +85,6 @@ namespace Warcraft.Core.Compression.Blast
         /// </summary>
         private static readonly byte[] LENGTH_CODE_EXTRA = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
-
         //
         // state variables
         //
@@ -106,7 +104,6 @@ namespace Warcraft.Core.Compression.Blast
         // output buffer and sliding window
         private int _outputBufferPos = 0;
         // index of next write location in _outputBuffer[]
-
 
         /// <summary>
         /// <para>Decompress input to output using the provided infun() and outfun() calls.
@@ -430,7 +427,6 @@ namespace Warcraft.Core.Compression.Blast
             // true if input now available
             return _inputBufferRemaining > 0;
         }
-
 
         #endregion
 

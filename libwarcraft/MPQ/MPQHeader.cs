@@ -117,7 +117,6 @@ namespace Warcraft.MPQ
         private string MD5Header;
         // The MD5_Header is calculated from the start of the signature to the end of the MD5_HETTable
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQHeader"/> class.
         /// This creates a default header for an empty archive.

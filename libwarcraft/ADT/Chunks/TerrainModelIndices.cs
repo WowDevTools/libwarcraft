@@ -24,7 +24,7 @@ using Warcraft.Core.Interfaces;
 namespace Warcraft.ADT.Chunks
 {
     /// <summary>
-    /// MMID Chunk - Contains a list of M2 model indexes
+    /// MMID Chunk - Contains a list of M2 model indexes.
     /// </summary>
     public class TerrainModelIndices : IIFFChunk
     {
@@ -34,9 +34,9 @@ namespace Warcraft.ADT.Chunks
         public const string Signature = "MMID";
 
         /// <summary>
-        /// List indexes for models in an MMID chunk
+        /// Gets or sets the list of indexes for models in an MMID chunk.
         /// </summary>
-        public List<uint> ModelFilenameOffsets = new List<uint>();
+        public List<uint> ModelFilenameOffsets { get; set; } = new List<uint>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainModelIndices"/> class.
@@ -45,6 +45,10 @@ namespace Warcraft.ADT.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainModelIndices"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public TerrainModelIndices(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -73,4 +77,3 @@ namespace Warcraft.ADT.Chunks
         }
     }
 }
-

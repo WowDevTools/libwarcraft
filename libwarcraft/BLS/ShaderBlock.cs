@@ -27,21 +27,43 @@ namespace Warcraft.BLS
     /// </summary>
     public class ShaderBlock : IBinarySerializable
     {
-        public ShaderFlags1 Flags1;
-        public ShaderFlags2 Flags2;
-        public uint Unknown;
+        /// <summary>
+        /// Gets or sets the first set of shader flags.
+        /// </summary>
+        public ShaderFlags1 Flags1 { get; set; }
 
-        public uint DataSize;
-        public char[] Data;
+        /// <summary>
+        /// Gets or sets the second set of shader flags.
+        /// </summary>
+        public ShaderFlags2 Flags2 { get; set; }
 
+        /// <summary>
+        /// Gets or sets an unknown value.
+        /// </summary>
+        public uint Unknown { get; set; }
+
+        /// <summary>
+        /// Gets or sets the size of the data.
+        /// </summary>
+        public uint DataSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the data.
+        /// </summary>
+        public char[] Data { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShaderBlock"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ShaderBlock(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    Flags1 = (ShaderFlags1) br.ReadUInt32();
-                    Flags2 = (ShaderFlags2) br.ReadUInt32();
+                    Flags1 = (ShaderFlags1)br.ReadUInt32();
+                    Flags2 = (ShaderFlags2)br.ReadUInt32();
                     Unknown = br.ReadUInt32();
 
                     DataSize = br.ReadUInt32();
@@ -71,19 +93,13 @@ namespace Warcraft.BLS
             }
         }
 
+        /// <summary>
+        /// Gets the static binary size of this class, that is, the absolute size in bytes of a serialized object.
+        /// </summary>
+        /// <returns>The size in bytes.</returns>
         public static int GetSize()
         {
             return 16;
         }
-    }
-
-    public enum ShaderFlags1 : uint
-    {
-
-    }
-
-    public enum ShaderFlags2 : uint
-    {
-
     }
 }

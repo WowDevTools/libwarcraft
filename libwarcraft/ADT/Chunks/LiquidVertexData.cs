@@ -1,5 +1,5 @@
 ﻿//
-//  MapChunkAlphaMaps.cs
+//  LiquidVertexData.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //

@@ -1,5 +1,5 @@
 ﻿//
-//  MapChunkAlphaMaps.cs
+//  MapChunkTextureLayers.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -77,4 +77,3 @@ namespace Warcraft.ADT.Chunks.Subchunks
         }
     }
 }
-

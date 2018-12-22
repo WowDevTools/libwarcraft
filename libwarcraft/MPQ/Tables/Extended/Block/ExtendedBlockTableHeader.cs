@@ -52,7 +52,6 @@ namespace Warcraft.MPQ.Tables.Extended.Block
 
         private List<BlockFlags> FlagArray = new List<BlockFlags>();
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtendedBlockTableHeader"/> class.
         /// </summary>

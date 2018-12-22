@@ -95,7 +95,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
                     {
                         for (int x = 0; x < 8; ++x)
                         {
-                            LiquidTileFlags.Add(((LiquidFlags)br.ReadByte()));
+                            LiquidTileFlags.Add((LiquidFlags)br.ReadByte());
                         }
                     }
                 }

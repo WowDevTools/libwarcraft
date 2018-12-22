@@ -177,7 +177,6 @@ namespace Warcraft.Core.Reflection.DBC
             bool implementsGenericIList = propertyType.GetInterfaces()
                 .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IList<>));
 
-
             return isArray || implementsGenericIList;
         }
 

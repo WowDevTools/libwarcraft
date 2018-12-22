@@ -1,5 +1,5 @@
-﻿//
-//  LiquidFlags.cs
+//
+//  ModelPlacementFlags.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -19,37 +19,22 @@
 
 using System;
 
-namespace Warcraft.ADT.Chunks.Subchunks
+namespace Warcraft.ADT.Chunks
 {
     /// <summary>
-    /// Holds flags for the liquid chunk.
+    /// Flags for the model.
     /// </summary>
     [Flags]
-    public enum LiquidFlags : byte
+    public enum ModelPlacementFlags : ushort
     {
         /// <summary>
-        /// The liquid is present, but hidden.
+        /// Biodome. Perhaps a skybox?
         /// </summary>
-        Hidden = 0x08,
+        Biodome = 1,
 
         /// <summary>
-        /// Unknown.
+        /// Possibly used for vegetation and grass.
         /// </summary>
-        Unknown1 = 0x10,
-
-        /// <summary>
-        /// Unknown.
-        /// </summary>
-        Unknown2 = 0x20,
-
-        /// <summary>
-        /// The liquid is fishable.
-        /// </summary>
-        Fishable = 0x40,
-
-        /// <summary>
-        /// The liquid is shared.
-        /// </summary>
-        Shared = 0x80
+        Shrubbery = 2,
     }
 }

@@ -29,6 +29,7 @@ namespace Warcraft.Core.Interfaces
         /// <summary>
         /// Serializes the current object into a byte array.
         /// </summary>
+        /// <returns>The serialized object.</returns>
         byte[] Serialize();
     }
 }

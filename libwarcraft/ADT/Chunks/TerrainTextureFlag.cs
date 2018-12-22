@@ -1,5 +1,5 @@
-﻿//
-//  LiquidFlags.cs
+//
+//  TerrainTextureFlag.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,39 +17,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-
-namespace Warcraft.ADT.Chunks.Subchunks
+namespace Warcraft.ADT.Chunks
 {
     /// <summary>
-    /// Holds flags for the liquid chunk.
+    /// Texture flags for a terrain texture.
     /// </summary>
-    [Flags]
-    public enum LiquidFlags : byte
+    public enum TerrainTextureFlag : uint
     {
         /// <summary>
-        /// The liquid is present, but hidden.
+        /// The texture is unshaded.
         /// </summary>
-        Hidden = 0x08,
+        FlatShading = 1,
 
         /// <summary>
         /// Unknown.
         /// </summary>
-        Unknown1 = 0x10,
+        Unknown = 3,
+
+        /// <summary>
+        /// The texture has a scaling factor.
+        /// </summary>
+        ScaledTexture = 4,
 
         /// <summary>
         /// Unknown.
         /// </summary>
-        Unknown2 = 0x20,
-
-        /// <summary>
-        /// The liquid is fishable.
-        /// </summary>
-        Fishable = 0x40,
-
-        /// <summary>
-        /// The liquid is shared.
-        /// </summary>
-        Shared = 0x80
+        Unknown2 = 24
     }
 }

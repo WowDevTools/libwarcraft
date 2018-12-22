@@ -45,7 +45,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <summary>
         /// Gets or sets the low res vertices, used when viewing a map tile from far away.
         /// </summary>
-        public List<float> LowResVertices { get; set; }  = new List<float>();
+        public List<float> LowResVertices { get; set; } = new List<float>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MapChunkHeightmap"/> class.
@@ -100,4 +100,3 @@ namespace Warcraft.ADT.Chunks.Subchunks
         }
     }
 }
-

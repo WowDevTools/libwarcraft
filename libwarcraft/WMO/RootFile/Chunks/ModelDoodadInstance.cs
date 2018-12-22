@@ -33,7 +33,6 @@ namespace Warcraft.WMO.RootFile.Chunks
         public uint NameOffset;
         public DoodadInstanceFlags Flags;
 
-
         public Vector3 Position;
         public Quaternion Orientation;
         public float Scale;

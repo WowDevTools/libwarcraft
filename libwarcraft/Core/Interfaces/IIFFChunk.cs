@@ -25,9 +25,7 @@ namespace Warcraft.Core.Interfaces
     /// IFF blocks are stored in binary format as a signature, data length, and block data in the following layout:
     /// char[4] Signature;
     /// uint32 BlockSize;
-    /// byte[BlockSize] BlockData;
-    ///
-    /// Using
+    /// byte[BlockSize] BlockData.
     /// </summary>
     public interface IIFFChunk
     {
@@ -45,4 +43,3 @@ namespace Warcraft.Core.Interfaces
         string GetSignature();
     }
 }
-

@@ -97,10 +97,10 @@ namespace Warcraft.Core.Extensions
         }
 
         /// <summary>
-        /// Finds the innermost generic type of
+        /// Finds the innermost generic type argument of the given type.
         /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
+        /// <param name="t">The type.</param>
+        /// <returns>The innermost type.</returns>
         public static Type FindInnermostGenericType(Type t)
         {
             if (!t.IsGenericType)
@@ -119,9 +119,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXAttachment"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXAttachment ReadMDXAttachment(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXAttachment(binaryReader, version);
@@ -130,8 +130,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXAttachmentType"/> value from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The value.</returns>
         public static MDXAttachmentType ReadMDXAttachmentType(this BinaryReader binaryReader)
         {
             return (MDXAttachmentType)binaryReader.ReadInt16();
@@ -140,9 +140,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXMaterial"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXMaterial ReadMDXMaterial(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXMaterial(binaryReader, version);
@@ -151,9 +151,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXColourAnimation"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXColourAnimation ReadMDXColourAnimation(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXColourAnimation(binaryReader, version);
@@ -162,9 +162,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXTextureTransform"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXTextureTransform ReadMDXTextureTransform(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXTextureTransform(binaryReader, version);
@@ -173,9 +173,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXTextureWeight"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXTextureWeight ReadMDXTextureWeight(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXTextureWeight(binaryReader, version);
@@ -184,8 +184,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXTexture"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The value.</returns>
         public static MDXTexture ReadMDXTexture(this BinaryReader binaryReader)
         {
             return new MDXTexture(binaryReader);
@@ -194,9 +194,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXRibbonEmitter"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXRibbonEmitter ReadMDXRibbonEmitter(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXRibbonEmitter(binaryReader, version);
@@ -205,9 +205,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXCamera"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXCamera ReadMDXCamera(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXCamera(binaryReader, version);
@@ -216,19 +216,19 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXCameraType"/> value from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The value.</returns>
         public static MDXCameraType ReadMDXCameraType(this BinaryReader binaryReader)
         {
-            return (MDXCameraType) binaryReader.ReadInt16();
+            return (MDXCameraType)binaryReader.ReadInt16();
         }
 
         /// <summary>
         /// Reads an <see cref="MDXLight"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXLight ReadMDXLight(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXLight(binaryReader, version);
@@ -237,9 +237,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXAnimationEvent"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXAnimationEvent ReadMDXAnimationEvent(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXAnimationEvent(binaryReader, version);
@@ -248,14 +248,14 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXTrack{T}"/> of type <typeparamref name="T"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
         /// <param name="valueless">
         /// If this value is true, it indicates that no values are associated with
         /// this track, and any value-related reading should be skipped.
         /// </param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of the track.</typeparam>
+        /// <returns>The value.</returns>
         public static MDXTrack<T> ReadMDXTrack<T>(this BinaryReader binaryReader, WarcraftVersion version, bool valueless = false)
         {
             return new MDXTrack<T>(binaryReader, version, valueless);
@@ -264,9 +264,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXBone"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXBone ReadMDXBone(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXBone(binaryReader, version);
@@ -275,8 +275,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXPlayableAnimationLookupTableEntry"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The value.</returns>
         public static MDXPlayableAnimationLookupTableEntry ReadMDXPlayableAnimationLookupTableEntry(
             this BinaryReader binaryReader)
         {
@@ -286,8 +286,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXVertex"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The value.</returns>
         public static MDXVertex ReadMDXVertex(this BinaryReader binaryReader)
         {
             return new MDXVertex(binaryReader.ReadBytes(MDXVertex.GetSize()));
@@ -296,9 +296,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXAnimationSequence"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXAnimationSequence ReadMDXAnimationSequence(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXAnimationSequence(binaryReader, version);
@@ -307,8 +307,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXVertexProperty"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The value.</returns>
         public static MDXVertexProperty ReadMDXVertexProperty(this BinaryReader binaryReader)
         {
             return new MDXVertexProperty
@@ -323,9 +323,9 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXSkinSection"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>The value.</returns>
         public static MDXSkinSection ReadMDXSkinSection(this BinaryReader binaryReader, WarcraftVersion version)
         {
             return new MDXSkinSection(binaryReader.ReadBytes(MDXSkinSection.GetSize(version)));
@@ -334,8 +334,8 @@ namespace Warcraft.Core.Extensions
         /// <summary>
         /// Reads an <see cref="MDXRenderBatch"/> from the data stream.
         /// </summary>
-        /// <param name="binaryReader"></param>
-        /// <returns></returns>
+        /// <param name="binaryReader">The reader.</param>
+        /// <returns>The value.</returns>
         public static MDXRenderBatch ReadMDXRenderBatch(this BinaryReader binaryReader)
         {
             return new MDXRenderBatch(binaryReader.ReadBytes(MDXRenderBatch.GetSize()));

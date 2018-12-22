@@ -34,9 +34,9 @@ namespace Warcraft.ADT.Chunks
         public const string Signature = "MCIN";
 
         /// <summary>
-        /// An array of 256 MCIN entries, containing map chunk offsets and sizes.
+        /// Gets or sets an array of 256 MCIN entries, containing map chunk offsets and sizes.
         /// </summary>
-        public List<MapChunkOffsetEntry> Entries = new List<MapChunkOffsetEntry>();
+        public List<MapChunkOffsetEntry> Entries { get; set; } = new List<MapChunkOffsetEntry>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainMapChunkOffsets"/> class.
@@ -48,6 +48,7 @@ namespace Warcraft.ADT.Chunks
         /// <summary>
         /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainMapChunkOffsets"/> class.
         /// </summary>
+        /// <param name="inData">The binary data.</param>
         public TerrainMapChunkOffsets(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -85,31 +86,4 @@ namespace Warcraft.ADT.Chunks
             return Signature;
         }
     }
-
-    /// <summary>
-    /// A struct containing information about the referenced MCNK
-    /// </summary>
-    public class MapChunkOffsetEntry
-    {
-        /// <summary>
-        /// Absolute offset of the MCNK
-        /// </summary>
-        public int MapChunkOffset;
-
-        /// <summary>
-        /// Size of the MCNK
-        /// </summary>
-        public int MapChunkSize;
-
-        /// <summary>
-        /// Flags of the MCNK. This is only set on the client, and is as such always 0.
-        /// </summary>
-        public int Flags;
-
-        /// <summary>
-        /// Async loading ID of the MCNK. This is only set on the client, and is as such always 0.
-        /// </summary>
-        public int AsynchronousLoadingID;
-    }
 }
-

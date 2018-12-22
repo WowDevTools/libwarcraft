@@ -1,5 +1,5 @@
 ﻿//
-//  TerrainWater.cs
+//  TerrainLiquid.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //

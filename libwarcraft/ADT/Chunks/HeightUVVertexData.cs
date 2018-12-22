@@ -1,5 +1,5 @@
 ﻿//
-//  MapChunkAlphaMaps.cs
+//  HeightUVVertexData.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //

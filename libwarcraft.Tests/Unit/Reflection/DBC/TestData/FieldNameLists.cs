@@ -20,7 +20,6 @@ namespace libwarcraft.Tests.Unit.Reflection.DBC.TestData
             nameof(TestDBCRecordWithSingleMovedField.FieldB)
         };
 
-
         public static readonly string[] SingleMovedFieldWrathAfterMove =
         {
             nameof(DBCRecord.ID),

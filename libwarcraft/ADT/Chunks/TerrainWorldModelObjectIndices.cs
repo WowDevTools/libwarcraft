@@ -24,9 +24,9 @@ using Warcraft.Core.Interfaces;
 namespace Warcraft.ADT.Chunks
 {
     /// <summary>
-    /// MMID Chunk - Contains a list of WMO model indexes
+    /// MMID Chunk - Contains a list of WMO model indexes.
     /// </summary>
-    public class TerrainWorldObjectModelIndices : IIFFChunk, IBinarySerializable
+    public class TerrainWorldModelObjectIndices : IIFFChunk, IBinarySerializable
     {
         /// <summary>
         /// Holds the binary chunk signature.
@@ -34,22 +34,22 @@ namespace Warcraft.ADT.Chunks
         public const string Signature = "MWID";
 
         /// <summary>
-        /// List indexes for WMO models in an MWMO chunk
+        /// Gets or sets a list of indexes for WMO models in an MWMO chunk.
         /// </summary>
-        public List<uint> WorldModelObjectFilenameOffsets = new List<uint>();
+        public List<uint> WorldModelObjectFilenameOffsets { get; set; } = new List<uint>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TerrainWorldObjectModelIndices"/> class.
+        /// Initializes a new instance of the <see cref="TerrainWorldModelObjectIndices"/> class.
         /// </summary>
-        public TerrainWorldObjectModelIndices()
+        public TerrainWorldModelObjectIndices()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainWorldObjectModelIndices"/> class.
+        /// Initializes a new instance of the <see cref="TerrainWorldModelObjectIndices"/> class.
         /// </summary>
         /// <param name="inData">ExtendedData.</param>
-        public TerrainWorldObjectModelIndices(byte[] inData)
+        public TerrainWorldModelObjectIndices(byte[] inData)
         {
             LoadBinaryData(inData);
         }
@@ -94,4 +94,3 @@ namespace Warcraft.ADT.Chunks
         }
     }
 }
-

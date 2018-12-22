@@ -17,9 +17,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.IO;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.IO;
+
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Structures;
 
@@ -33,54 +34,54 @@ namespace Warcraft.BLP
     public class BLPHeader : IBinarySerializable
     {
         /// <summary>
-        /// The binary signature of a BLP file.
+        /// Gets or sets the the binary signature of a BLP file.
         /// </summary>
-        public string Signature;
+        public string Signature { get; set; }
 
         /// <summary>
-        /// The format of the BLP file.
+        /// Gets or sets the the format of the BLP file.
         /// </summary>
-        public BLPFormat Format;
+        public BLPFormat Format { get; set; }
 
         /// <summary>
-        /// The version of the BLP file.
+        /// Gets or sets the the version of the BLP file.
         /// </summary>
-        public uint Version;
+        public uint Version { get; set; }
 
         /// <summary>
-        /// The type of the compression used for the mipmaps stored in the BLP file.
+        /// Gets or sets the the type of the compression used for the mipmaps stored in the BLP file.
         /// </summary>
-        public TextureCompressionType CompressionType;
+        public TextureCompressionType CompressionType { get; set; }
 
         /// <summary>
-        /// The alpha bit depth of the mipmaps. Depends on the compression type.
+        /// Gets or sets the the alpha bit depth of the mipmaps. Depends on the compression type.
         /// </summary>
-        public uint AlphaBitDepth;
+        public uint AlphaBitDepth { get; set; }
 
         /// <summary>
-        /// The pixel format of the compressed textures.
+        /// Gets or sets the the pixel format of the compressed textures.
         /// </summary>
-        public BLPPixelFormat PixelFormat;
+        public BLPPixelFormat PixelFormat { get; set; }
 
         /// <summary>
-        /// The type of the mip map stored in the image.
+        /// Gets or sets the the type of the mip map stored in the image.
         /// </summary>
-        public uint MipMapType;
+        public uint MipMapType { get; set; }
 
         /// <summary>
-        /// The resolution of the image.
+        /// Gets or sets the the resolution of the image.
         /// </summary>
-        public Resolution Resolution;
+        public Resolution Resolution { get; set; }
 
         /// <summary>
-        /// A list of offsets to the start of each mipmap.
+        /// Gets or sets the a list of offsets to the start of each mipmap.
         /// </summary>
-        public List<uint> MipMapOffsets = new List<uint>();
+        public List<uint> MipMapOffsets { get; set; } = new List<uint>();
 
         /// <summary>
-        /// A list of sizes for each mipmap.
+        /// Gets or sets the a list of sizes for each mipmap.
         /// </summary>
-        public List<uint> MipMapSizes = new List<uint>();
+        public List<uint> MipMapSizes { get; set; } = new List<uint>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Warcraft.BLP.BLPHeader"/> class.
@@ -96,8 +97,10 @@ namespace Warcraft.BLP
                 {
                     Signature = new string(br.ReadChars(4));
 
-                    if (Enum.TryParse(Signature, out Format))
+                    if (Enum.TryParse(Signature, out BLPFormat format))
                     {
+                        Format = format;
+
                         if (Format == BLPFormat.BLP2)
                         {
                             Version = (uint)br.ReadInt32();
@@ -229,7 +232,7 @@ namespace Warcraft.BLP
                         else
                         {
                             // Write a 0
-                            bw.Write((uint)0);
+                            bw.Write(0U);
                         }
                     }
 
@@ -243,7 +246,7 @@ namespace Warcraft.BLP
                         else
                         {
                             // Write a 0
-                            bw.Write((uint)0);
+                            bw.Write(0U);
                         }
                     }
 
@@ -276,4 +279,3 @@ namespace Warcraft.BLP
         }
     }
 }
-

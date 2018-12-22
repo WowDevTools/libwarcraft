@@ -74,7 +74,6 @@ namespace libwarcraft.Tests.Integration.DBC
                 var propertyE = DBCInspector.GetRecordProperties(typeof(TestDBCRecordWithMultipleMovedFields))
                     .First(p => p.Name == nameof(TestDBCRecordWithMultipleMovedFields.FieldE));
 
-
                 Assert.That(orderer.PrecedenceChains[propertyA].Select(p => p.Name), Is.EquivalentTo(MultiMoveBCDependencyChainFieldA));
                 Assert.That(orderer.PrecedenceChains[propertyC].Select(p => p.Name), Is.EquivalentTo(MultiMoveBCDependencyChainFieldC));
                 Assert.That(orderer.PrecedenceChains[propertyE].Select(p => p.Name), Is.EquivalentTo(MultiMoveBCDependencyChainFieldE));
@@ -101,7 +100,6 @@ namespace libwarcraft.Tests.Integration.DBC
 
                 var propertyE = DBCInspector.GetRecordProperties(typeof(TestDBCRecordWithMultipleMovedFields))
                     .First(p => p.Name == nameof(TestDBCRecordWithMultipleMovedFields.FieldE));
-
 
                 Assert.That(orderer.PrecedenceChains[propertyA].Select(p => p.Name), Is.EquivalentTo(MultiMoveBCDependencyChainFieldA));
                 Assert.That(orderer.PrecedenceChains[propertyC].Select(p => p.Name), Is.EquivalentTo(MultiMoveBCDependencyChainFieldC));
@@ -154,7 +152,6 @@ namespace libwarcraft.Tests.Integration.DBC
                     DBCInspector.GetVersionRelevantProperties(WarcraftVersion.Wrath, typeof(TestDBCRecordWithSingleMovedFieldMultipleVersions))
                         .ToList()
                 );
-
 
                 Assert.That(ordererBC.ReorderProperties().Select(p => p.Name), Is.EquivalentTo(SingleMovedFieldBCAfterMove));
                 Assert.That(ordererWrath.ReorderProperties().Select(p => p.Name), Is.EquivalentTo(SingleMovedFieldWrathAfterMove));

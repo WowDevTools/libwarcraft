@@ -35,9 +35,9 @@ namespace Warcraft.ADT.Chunks
         public const string Signature = "MTEX";
 
         /// <summary>
-        ///A list of full paths to the textures referenced in this ADT.
+        /// Gets or sets a list of full paths to the textures referenced in this ADT.
         /// </summary>
-        public List<string> Filenames = new List<string>();
+        public List<string> Filenames { get; set; } = new List<string>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainTextures"/> class.
@@ -77,4 +77,3 @@ namespace Warcraft.ADT.Chunks
         }
     }
 }
-

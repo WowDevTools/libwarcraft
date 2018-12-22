@@ -150,7 +150,6 @@ namespace Warcraft.Core.Shading.MDX
             return operationCount == 1 ? MDXControlShaderType.T1 : MDXControlShaderType.T1_T2;
         }
 
-
         /// <summary>
         /// Gets the evaluation shader type for a given shader ID and operation count.
         /// </summary>

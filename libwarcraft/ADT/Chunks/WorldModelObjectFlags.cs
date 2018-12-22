@@ -1,5 +1,5 @@
-﻿//
-//  LiquidFlags.cs
+//
+//  WorldModelObjectFlags.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -19,37 +19,27 @@
 
 using System;
 
-namespace Warcraft.ADT.Chunks.Subchunks
+namespace Warcraft.ADT.Chunks
 {
     /// <summary>
-    /// Holds flags for the liquid chunk.
+    /// Flags for the WMO.
     /// </summary>
     [Flags]
-    public enum LiquidFlags : byte
+    public enum WorldModelObjectFlags : ushort
     {
         /// <summary>
-        /// The liquid is present, but hidden.
+        /// The WMO is a destructible.
         /// </summary>
-        Hidden = 0x08,
+        Destructible = 1,
+
+        /// <summary>
+        /// The WMO has LOD levels.
+        /// </summary>
+        UseLOD = 2,
 
         /// <summary>
         /// Unknown.
         /// </summary>
-        Unknown1 = 0x10,
-
-        /// <summary>
-        /// Unknown.
-        /// </summary>
-        Unknown2 = 0x20,
-
-        /// <summary>
-        /// The liquid is fishable.
-        /// </summary>
-        Fishable = 0x40,
-
-        /// <summary>
-        /// The liquid is shared.
-        /// </summary>
-        Shared = 0x80
+        Unknown = 4
     }
 }

@@ -112,7 +112,6 @@ namespace Warcraft.MPQ.Crypto
             // Copy the aligned bytes to the new array
             Buffer.BlockCopy(data, 0, dataToBeModified, 0, (int)(data.Length - danglingBytes));
 
-
             uint encryptionSeed = 0xEEEEEEEE;
             List<byte> finalizedData = new List<byte>();
 

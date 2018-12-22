@@ -1,5 +1,5 @@
 ﻿//
-//  ADT.cs
+//  TerrainTile.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -31,89 +31,90 @@ namespace Warcraft.ADT
     public class TerrainTile
     {
         /// <summary>
-        /// Contains the ADT version.
+        /// Gets or sets the contains the ADT version.
         /// </summary>
-        public TerrainVersion Version;
+        public TerrainVersion Version { get; set; }
 
         /// <summary>
-        /// Contains the ADT Header with offsets. The header has offsets to the other chunks in the ADT.
+        /// Gets or sets the contains the ADT Header with offsets. The header has offsets to the other chunks in the
+        /// ADT.
         /// </summary>
-        public TerrainHeader Header;
+        public TerrainHeader Header { get; set; }
 
         /// <summary>
-        /// Contains an array of offsets where MCNKs are in the file.
+        /// Gets or sets the contains an array of offsets where MCNKs are in the file.
         /// </summary>
-        public TerrainMapChunkOffsets MapChunkOffsets;
+        public TerrainMapChunkOffsets MapChunkOffsets { get; set; }
 
         /// <summary>
-        /// Contains a list of all textures referenced by this ADT.
+        /// Gets or sets the contains a list of all textures referenced by this ADT.
         /// </summary>
-        public TerrainTextures Textures;
+        public TerrainTextures Textures { get; set; }
 
         /// <summary>
-        /// Contains a list of all M2 models refereced by this ADT.
+        /// Gets or sets the contains a list of all M2 models refereced by this ADT.
         /// </summary>
-        public TerrainModels Models;
+        public TerrainModels Models { get; set; }
 
         /// <summary>
-        /// Contains M2 model indexes for the list in ADTModels (MMDX chunk).
+        /// Gets or sets the contains M2 model indexes for the list in ADTModels (MMDX chunk).
         /// </summary>
-        public TerrainModelIndices ModelIndices;
+        public TerrainModelIndices ModelIndices { get; set; }
 
         /// <summary>
-        /// Contains a list of all WMOs referenced by this ADT.
+        /// Gets or sets the contains a list of all WMOs referenced by this ADT.
         /// </summary>
-        public TerrainWorldModelObjects WorldModelObjects;
+        public TerrainWorldModelObjects WorldModelObjects { get; set; }
 
         /// <summary>
-        /// Contains WMO indexes for the list in ADTWMOs (MWMO chunk).
+        /// Gets or sets the contains WMO indexes for the list in ADTWMOs (MWMO chunk).
         /// </summary>
-        public TerrainWorldObjectModelIndices WorldModelObjectIndices;
+        public TerrainWorldModelObjectIndices WorldModelObjectIndices { get; set; }
 
         /// <summary>
-        /// Contains position information for all M2 models in this ADT.
+        /// Gets or sets the contains position information for all M2 models in this ADT.
         /// </summary>
-        public TerrainModelPlacementInfo ModelPlacementInfo;
+        public TerrainModelPlacementInfo ModelPlacementInfo { get; set; }
 
         /// <summary>
-        /// Contains position information for all WMO models in this ADT.
+        /// Gets or sets the contains position information for all WMO models in this ADT.
         /// </summary>
-        public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo;
+        public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo { get; set; }
 
         /// <summary>
-        /// Contains water data for this ADT. This chunk is present in WOTLK chunks and above.
+        /// Gets or sets the contains water data for this ADT. This chunk is present in WOTLK chunks and above.
         /// </summary>
-        public TerrainLiquid Liquids;
+        public TerrainLiquid Liquids { get; set; }
 
         /// <summary>
-        /// The texture flags. This chunk is present in WOTLK chunks and above.
+        /// Gets or sets the the texture flags. This chunk is present in WOTLK chunks and above.
         /// </summary>
-        public TerrainTextureFlags TextureFlags;
+        public TerrainTextureFlags TextureFlags { get; set; }
 
         /// <summary>
-        /// Contains an array of all MCNKs in this ADT.
+        /// Gets or sets the contains an array of all MCNKs in this ADT.
         /// </summary>
-        public List<TerrainMapChunk> MapChunks = new List<TerrainMapChunk>();
+        public List<TerrainMapChunk> MapChunks { get; set; } = new List<TerrainMapChunk>();
 
-        private readonly bool HasWorldFlags;
-        private readonly WorldTableFlags WorldFlags;
+        private readonly bool _hasWorldFlags;
+        private readonly WorldTableFlags _worldFlags;
 
-        public TerrainTile(byte[] data, WorldTableFlags inWorldFlags)
-            : this(data)
-        {
-            HasWorldFlags = true;
-            WorldFlags = inWorldFlags;
-        }
-
-        // TODO: Change to stream-based loading
-        /// <summary>
-        /// Creates a new ADT object from a file on disk
-        /// </summary>
-        /// <param name="data">Byte array containing ADT data.</param>
-        /// <returns>A parsed ADT file with objects for all chunks</returns>
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainTile"/> class.
         /// </summary>
+        /// <param name="data">The binary data.</param>
+        /// <param name="inWorldFlags">The world flags.</param>
+        public TerrainTile(byte[] data, WorldTableFlags inWorldFlags)
+            : this(data)
+        {
+            _hasWorldFlags = true;
+            _worldFlags = inWorldFlags;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TerrainTile"/> class.
+        /// </summary>
+        /// <returns>A parsed ADT file with objects for all chunks.</returns>
         /// <param name="data">The binary data.</param>
         public TerrainTile(byte[] data)
         {
@@ -164,7 +165,7 @@ namespace Warcraft.ADT
                     if (Header.WorldModelObjectIndicesOffset > 0)
                     {
                         br.BaseStream.Position = Header.WorldModelObjectIndicesOffset;
-                        WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldObjectModelIndices>();
+                        WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldModelObjectIndices>();
                     }
 
                     if (Header.LiquidOffset > 0)

@@ -1,5 +1,4 @@
-﻿
-//
+﻿//
 //  TerrainBoundingBox.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
@@ -89,4 +88,3 @@ namespace Warcraft.ADT.Chunks
         }
     }
 }
-

@@ -1,5 +1,5 @@
-﻿//
-//  LiquidFlags.cs
+//
+//  ShaderContainerType.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,39 +17,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-
-namespace Warcraft.ADT.Chunks.Subchunks
+namespace Warcraft.BLS
 {
     /// <summary>
-    /// Holds flags for the liquid chunk.
+    /// All the different container types there are of BLS files.
     /// </summary>
-    [Flags]
-    public enum LiquidFlags : byte
+    public enum ShaderContainerType : byte
     {
         /// <summary>
-        /// The liquid is present, but hidden.
+        /// This BLS file is a vertex shader container.
         /// </summary>
-        Hidden = 0x08,
+        Vertex,
 
         /// <summary>
-        /// Unknown.
+        /// This BLS file is a fragment shader container.
         /// </summary>
-        Unknown1 = 0x10,
-
-        /// <summary>
-        /// Unknown.
-        /// </summary>
-        Unknown2 = 0x20,
-
-        /// <summary>
-        /// The liquid is fishable.
-        /// </summary>
-        Fishable = 0x40,
-
-        /// <summary>
-        /// The liquid is shared.
-        /// </summary>
-        Shared = 0x80
+        Fragment
     }
 }

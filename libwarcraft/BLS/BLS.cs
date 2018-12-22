@@ -31,17 +31,17 @@ namespace Warcraft.BLS
     public class BLS : IBinarySerializable
     {
         /// <summary>
-        /// The header of the BLS file.
+        /// Gets or sets the header of the BLS file.
         /// </summary>
-        public BLSHeader Header;
+        public BLSHeader Header { get; set; }
 
         /// <summary>
-        /// A list containing all the shader blocks in this shader container.
+        /// Gets or sets a list containing all the shader blocks in this shader container.
         /// </summary>
-        public List<ShaderBlock> Shaders = new List<ShaderBlock>();
+        public List<ShaderBlock> Shaders { get; set; } = new List<ShaderBlock>();
 
         /// <summary>
-        /// Creates a new instance of the <see cref="BLS"/> class from supplied binary data.
+        /// Initializes a new instance of the <see cref="BLS"/> class.
         /// </summary>
         /// <param name="inData">The binary data containing the BLS file.</param>
         public BLS(byte[] inData)
