@@ -29,44 +29,44 @@ namespace Warcraft.Core.Structures
     /// </summary>
     public struct Rotator : IFlattenableData<float>
     {
-        private Vector3 Values;
+        private Vector3 _values;
 
         /// <summary>
-        /// Pitch of the rotator
+        /// Gets or sets the pitch of the rotator.
         /// </summary>
         public float Pitch
         {
-            get => Values.X;
-            set => Values.X = value;
+            get => _values.X;
+            set => _values.X = value;
         }
 
         /// <summary>
-        /// Yaw of the rotator
+        /// Gets or sets the yaw of the rotator.
         /// </summary>
         public float Yaw
         {
-            get => Values.Y;
-            set => Values.Y = value;
+            get => _values.Y;
+            set => _values.Y = value;
         }
 
         /// <summary>
-        /// Roll of the rotator
+        /// Gets or sets the roll of the rotator.
         /// </summary>
         public float Roll
         {
-            get => Values.Z;
-            set => Values.Z = value;
+            get => _values.Z;
+            set => _values.Z = value;
         }
 
         /// <summary>
-        /// Creates a new rotator object from three floats.
+        /// Initializes a new instance of the <see cref="Rotator"/> struct.
         /// </summary>
-        /// <param name="inPitch">Pitch</param>
-        /// <param name="inYaw">Yaw</param>
-        /// <param name="inRoll">Roll</param>
+        /// <param name="inPitch">The pitch.</param>
+        /// <param name="inYaw">The yaw.</param>
+        /// <param name="inRoll">The roll.</param>
         public Rotator(float inPitch, float inYaw, float inRoll)
         {
-            Values = new Vector3(inPitch, inYaw, inRoll);
+            _values = new Vector3(inPitch, inYaw, inRoll);
         }
 
         /// <summary>
@@ -74,23 +74,20 @@ namespace Warcraft.Core.Structures
         /// </summary>
         /// <param name="inVector">In vector.</param>
         public Rotator(Vector3 inVector)
-            :this(inVector.X, inVector.Y, inVector.Z)
+            : this(inVector.X, inVector.Y, inVector.Z)
         {
-
         }
 
-        /// <summary>
-        /// Creates a string representation of the current instance.
-        /// </summary>
-        /// <returns>A string representation of the current instance.</returns>
+        /// <inheritdoc />
         public override string ToString()
         {
             return $"Pitch: {Pitch}, Yaw: {Yaw}, Roll: {Roll}";
         }
 
+        /// <inheritdoc />
         public IReadOnlyCollection<float> Flatten()
         {
-            return Values.Flatten();
+            return _values.Flatten();
         }
     }
 }

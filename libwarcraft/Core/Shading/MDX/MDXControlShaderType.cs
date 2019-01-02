@@ -20,13 +20,28 @@
 namespace Warcraft.Core.Shading.MDX
 {
     /// <summary>
-    /// All of the tesselation control shaders (known in DX as hull shaders) in WoW.
+    /// All of the tessellation control shaders (known in DX as hull shaders) in WoW.
     /// </summary>
     public enum MDXControlShaderType
     {
+        /// <summary>
+        /// Single-texture tessellation.
+        /// </summary>
         T1,
-        T1_T2,
-        T1_T2_T3,
-        T1_T2_T3_T4
+
+        /// <summary>
+        /// Dual-texture tessellation.
+        /// </summary>
+        T1T2,
+
+        /// <summary>
+        /// Triple-texture tessellation.
+        /// </summary>
+        T1T2T3,
+
+        /// <summary>
+        /// Quad-texture tessellation.
+        /// </summary>
+        T1T2T3T4
     }
 }

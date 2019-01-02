@@ -1,5 +1,5 @@
 ﻿//
-//  FieldInformationCache.cs
+//  RecordInformationCache.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -38,11 +38,11 @@ namespace Warcraft.Core.Reflection.DBC
         /// <summary>
         /// The cache dictionary containing the reflection information.
         /// </summary>
-        private readonly Dictionary<RecordInformationIdentifier, RecordFieldInformation> InformationCache;
+        private readonly Dictionary<RecordInformationIdentifier, RecordFieldInformation> _informationCache;
 
         private RecordInformationCache()
         {
-            InformationCache = new Dictionary<RecordInformationIdentifier, RecordFieldInformation>();
+            _informationCache = new Dictionary<RecordInformationIdentifier, RecordFieldInformation>();
         }
 
         /// <summary>
@@ -55,13 +55,13 @@ namespace Warcraft.Core.Reflection.DBC
         public RecordFieldInformation GetRecordInformation(Type recordType, WarcraftVersion version)
         {
             var infoKey = new RecordInformationIdentifier(recordType, version);
-            if (!InformationCache.ContainsKey(infoKey))
+            if (!_informationCache.ContainsKey(infoKey))
             {
                 var recordInfo = new RecordFieldInformation(recordType, version);
-                InformationCache.Add(infoKey, recordInfo);
+                _informationCache.Add(infoKey, recordInfo);
             }
 
-            return InformationCache[infoKey];
+            return _informationCache[infoKey];
         }
     }
 }

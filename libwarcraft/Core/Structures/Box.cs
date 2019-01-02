@@ -42,7 +42,7 @@ namespace Warcraft.Core.Structures
         public Vector3 TopCorner;
 
         /// <summary>
-        /// Creates a new <see cref="Box"/> object from a top and bottom corner.
+        /// Initializes a new instance of the <see cref="Box"/> struct from a top and bottom corner.
         /// </summary>
         /// <param name="inBottomCorner">The bottom corner of the box.</param>
         /// <param name="inTopCorner">The top corner of the box.</param>

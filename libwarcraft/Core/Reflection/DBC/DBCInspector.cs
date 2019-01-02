@@ -1,4 +1,23 @@
-﻿using System;
+﻿//
+//  DBCInspector.cs
+//
+//  Copyright (c) 2018 Jarl Gullberg
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,12 +41,12 @@ namespace Warcraft.Core.Reflection.DBC
         /// </summary>
         private static readonly Dictionary<Type, int> CustomFieldTypeFieldCounts = new Dictionary<Type, int>
         {
-            { typeof(Vector2), 2},
-            { typeof(Vector3), 3},
-            { typeof(Vector4), 4},
-            { typeof(Box), 6},
-            { typeof(BGRA), 1},
-            { typeof(ARGB), 1}
+            { typeof(Vector2), 2 },
+            { typeof(Vector3), 3 },
+            { typeof(Vector4), 4 },
+            { typeof(Box), 6 },
+            { typeof(BGRA), 1 },
+            { typeof(ARGB), 1 }
         };
 
         /// <summary>
@@ -35,17 +54,15 @@ namespace Warcraft.Core.Reflection.DBC
         /// Box, Vector3, etc. There's no need to register a struct type here, unless the marshaller is reporting an
         /// incorrect value.
         /// </summary>
-        private static readonly Dictionary<Type, int> CustomFieldTypeStorageSizes = new Dictionary<Type, int>
-        {
-        };
+        private static readonly Dictionary<Type, int> CustomFieldTypeStorageSizes = new Dictionary<Type, int>();
 
         /// <summary>
         /// Register a custom type with the inspector, such that it properly recognizes it and can use it to determine
         /// the layout of records. If the type is not a marshallable struct, then a storage size must be supplied.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="fieldCount"></param>
-        /// <param name="storageSize"></param>
+        /// <param name="type">The type of the field.</param>
+        /// <param name="fieldCount">The element count of the field.</param>
+        /// <param name="storageSize">The absolute storage size of the type.</param>
         public static void RegisterFieldType(Type type, int fieldCount, int? storageSize = null)
         {
             if (!type.IsValueType && !storageSize.HasValue)
@@ -75,7 +92,7 @@ namespace Warcraft.Core.Reflection.DBC
         /// <summary>
         /// Gets the underlying element type of a field array property.
         /// </summary>
-        /// <param name="propertyType">The type to get the underlying type of</param>
+        /// <param name="propertyType">The type to get the underlying type of.</param>
         /// <returns>The underlying type.</returns>
         /// <exception cref="ArgumentException">Thrown if no underlying type could be deduced.</exception>
         public static Type GetFieldArrayPropertyElementType(Type propertyType)
@@ -109,7 +126,7 @@ namespace Warcraft.Core.Reflection.DBC
         /// </summary>
         /// <param name="version">The version that the attribute should be relevant for.</param>
         /// <param name="propertyInfo">The property to check.</param>
-        /// <returns></returns>
+        /// <returns>A field array attribute.</returns>
         /// <exception cref="ArgumentException">
         /// Thrown if the property is not an array type.
         /// Thrown if the property does not have a field array attribute.
@@ -134,7 +151,7 @@ namespace Warcraft.Core.Reflection.DBC
         /// Gets the <see cref="RecordFieldAttribute"/> that the given property is decorated with.
         /// </summary>
         /// <param name="propertyInfo">The property to check.</param>
-        /// <returns></returns>
+        /// <returns>A field attribute.</returns>
         /// <exception cref="InvalidDataException">Thrown if the property does not have a field attribute.</exception>
         public static RecordFieldAttribute GetPropertyFieldAttribute(PropertyInfo propertyInfo) // TODO: Write tests
         {
@@ -257,9 +274,9 @@ namespace Warcraft.Core.Reflection.DBC
         /// Determines whether or not the given property has moved in the specified version. If the property moved in
         /// a previous version, it is also considered as having moved in the current version.
         /// </summary>
-        /// <param name="version"></param>
-        /// <param name="property"></param>
-        /// <returns></returns>
+        /// <param name="version">The version.</param>
+        /// <param name="property">The property.</param>
+        /// <returns>true if the property has moved; otherwise, false.</returns>
         public static bool HasPropertyMovedInVersion(WarcraftVersion version, PropertyInfo property)
         {
             var orderAttribute = property.GetCustomAttributes().FirstOrDefault(a => a is RecordFieldOrderAttribute) as RecordFieldOrderAttribute;
@@ -280,9 +297,9 @@ namespace Warcraft.Core.Reflection.DBC
         /// <summary>
         /// Gets the properties that have moved in the given version.
         /// </summary>
-        /// <param name="version"></param>
-        /// <param name="properties"></param>
-        /// <returns></returns>
+        /// <param name="version">The version.</param>
+        /// <param name="properties">The properties.</param>
+        /// <returns>The properties that have moved.</returns>
         public static Dictionary<PropertyInfo, RecordFieldOrderAttribute> GetMovedProperties(WarcraftVersion version, IEnumerable<PropertyInfo> properties)
         {
             var movingProperties = new Dictionary<PropertyInfo, RecordFieldOrderAttribute>();
@@ -342,7 +359,7 @@ namespace Warcraft.Core.Reflection.DBC
         /// Gets the <see cref="ForeignKeyInfoAttribute"/> attached to the given property.
         /// </summary>
         /// <param name="foreignKey">The foreign key property.</param>
-        /// <returns></returns>
+        /// <returns>The foreign key info.</returns>
         /// <exception cref="ArgumentException">Thrown if the property is not a foreign key.</exception>
         /// <exception cref="InvalidDataException">Thrown if the property is not decorated with a <see cref="ForeignKeyInfoAttribute"/>.</exception>
         public static ForeignKeyInfoAttribute GetForeignKeyInfo(PropertyInfo foreignKey)
@@ -385,6 +402,7 @@ namespace Warcraft.Core.Reflection.DBC
                         size += Marshal.SizeOf(underlyingType);
                         break;
                     }
+
                     // Multi-field types
                     case Type genericListType when genericListType.IsGenericType && genericListType.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IList<>)):
                     case Type arrayType when arrayType.IsArray:
@@ -396,17 +414,20 @@ namespace Warcraft.Core.Reflection.DBC
 
                         break;
                     }
+
                     // Special version-variant length handling
                     case Type locStringRefType when locStringRefType == typeof(LocalizedStringReference):
                     {
                         size += LocalizedStringReference.GetFieldCount(version) * sizeof(uint);
                         break;
                     }
+
                     case Type registeredType when CustomFieldTypeStorageSizes.ContainsKey(registeredType):
                     {
                         size += CustomFieldTypeStorageSizes[registeredType];
                         break;
                     }
+
                     default:
                     {
                         size += Marshal.SizeOf(recordProperty.PropertyType);
@@ -440,16 +461,19 @@ namespace Warcraft.Core.Reflection.DBC
 
                         break;
                     }
+
                     case Type locStringRefType when locStringRefType == typeof(LocalizedStringReference):
                     {
                         count += LocalizedStringReference.GetFieldCount(version);
                         break;
                     }
+
                     case Type registeredType when CustomFieldTypeFieldCounts.ContainsKey(registeredType):
                     {
                         count += CustomFieldTypeFieldCounts[registeredType];
                         break;
                     }
+
                     default:
                     {
                         ++count;

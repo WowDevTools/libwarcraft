@@ -33,7 +33,7 @@ namespace Warcraft.Core.Structures
         public List<List<short>> Coordinates;
 
         /// <summary>
-        /// Creates a new <see cref="ShortPlane"/> from a jagged list of coordinates.
+        /// Initializes a new instance of the <see cref="ShortPlane"/> struct from a jagged list of coordinates.
         /// </summary>
         /// <param name="inCoordinates">A list of coordinates.</param>
         /// <exception cref="ArgumentException">
@@ -58,7 +58,7 @@ namespace Warcraft.Core.Structures
         }
 
         /// <summary>
-        /// Creates a new <see cref="ShortPlane"/> from a single short value, which is applied to all nine coordinates.
+        /// Initializes a new instance of the <see cref="ShortPlane"/> struct from a single short value, which is applied to all nine coordinates.
         /// </summary>
         /// <param name="inAllCoordinates">The short to use for all coordinates.</param>
         public ShortPlane(short inAllCoordinates)
@@ -72,6 +72,7 @@ namespace Warcraft.Core.Structures
                 {
                     coordinateRow.Add(inAllCoordinates);
                 }
+
                 Coordinates.Add(coordinateRow);
             }
         }

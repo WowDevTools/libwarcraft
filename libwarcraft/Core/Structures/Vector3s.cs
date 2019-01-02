@@ -28,22 +28,22 @@ namespace Warcraft.Core.Structures
     public struct Vector3s : IFlattenableData<short>
     {
         /// <summary>
-        /// X coordinate of this vector
+        /// X coordinate of this vector.
         /// </summary>
         public short X;
 
         /// <summary>
-        /// Y coordinate of this vector
+        /// Y coordinate of this vector.
         /// </summary>
         public short Y;
 
         /// <summary>
-        /// Z coordinate of this vector
+        /// Z coordinate of this vector.
         /// </summary>
         public short Z;
 
         /// <summary>
-        /// Creates a new 3D vector object from three short.
+        /// Initializes a new instance of the <see cref="Vector3s"/> struct.
         /// </summary>
         /// <param name="inX">X coordinate.</param>
         /// <param name="inY">Y coordinate.</param>
@@ -74,9 +74,8 @@ namespace Warcraft.Core.Structures
         /// </summary>
         /// <param name="all">All.</param>
         public Vector3s(short all)
-            :this(all, all, all)
+            : this(all, all, all)
         {
-
         }
 
         /// <summary>
@@ -99,9 +98,9 @@ namespace Warcraft.Core.Structures
         /// <returns>The cross product of the two vectors.</returns>
         public static Vector3s Cross(Vector3s start, Vector3s end)
         {
-            short x = (short)(start.Y * end.Z - end.Y * start.Z);
-            short y = (short)((start.X * end.Z - end.X * start.Z) * -1);
-            short z = (short)(start.X * end.Y - end.X * start.Y);
+            short x = (short)((start.Y * end.Z) - (end.Y * start.Z));
+            short y = (short)(((start.X * end.Z) - (end.X * start.Z)) * -1);
+            short z = (short)((start.X * end.Y) - (end.X * start.Y));
 
             var rtnvector = new Vector3s(x, y, z);
             return rtnvector;
@@ -113,7 +112,7 @@ namespace Warcraft.Core.Structures
         /// <param name="vect1">The initial vector.</param>
         /// <param name="vect2">The argument vector.</param>
         /// <returns>The two vectors added together.</returns>
-        public static Vector3s operator+(Vector3s vect1, Vector3s vect2)
+        public static Vector3s operator +(Vector3s vect1, Vector3s vect2)
         {
             return new Vector3s((short)(vect1.X + vect2.X), (short)(vect1.Y + vect2.Y), (short)(vect1.Z + vect2.Z));
         }
@@ -124,7 +123,7 @@ namespace Warcraft.Core.Structures
         /// <param name="vect1">The initial vector.</param>
         /// <param name="vect2">The argument vector.</param>
         /// <returns>The two vectors subtracted from each other.</returns>
-        public static Vector3s operator-(Vector3s vect1, Vector3s vect2)
+        public static Vector3s operator -(Vector3s vect1, Vector3s vect2)
         {
             return new Vector3s((short)(vect1.X - vect2.X), (short)(vect1.Y - vect2.Y), (short)(vect1.Z - vect2.Z));
         }
@@ -134,7 +133,7 @@ namespace Warcraft.Core.Structures
         /// </summary>
         /// <param name="vect1">The initial vector.</param>
         /// <returns>The initial vector in inverted form..</returns>
-        public static Vector3s operator-(Vector3s vect1)
+        public static Vector3s operator -(Vector3s vect1)
         {
             return new Vector3s((short)-vect1.X, (short)-vect1.Y, (short)-vect1.Z);
         }
@@ -145,7 +144,7 @@ namespace Warcraft.Core.Structures
         /// <param name="vect1">The initial vector.</param>
         /// <param name="vect2">The argument vector.</param>
         /// <returns>The initial vector, divided by the argument vector.</returns>
-        public static Vector3s operator/(Vector3s vect1, Vector3s vect2)
+        public static Vector3s operator /(Vector3s vect1, Vector3s vect2)
         {
             return new Vector3s((short)(vect1.X / vect2.X), (short)(vect1.Y / vect2.Y), (short)(vect1.Z / vect2.Z));
         }
@@ -160,18 +159,16 @@ namespace Warcraft.Core.Structures
             return new Vector3s(i);
         }
 
-        /// <summary>
-        /// Creates a string representation of the current instance.
-        /// </summary>
-        /// <returns>A string representation of the current instance.</returns>
+        /// <inheritdoc />
         public override string ToString()
         {
             return $"{X}, {Y}, {Z}";
         }
 
+        /// <inheritdoc />
         public IReadOnlyCollection<short> Flatten()
         {
-            return new[] {X, Y, Z};
+            return new[] { X, Y, Z };
         }
     }
 }

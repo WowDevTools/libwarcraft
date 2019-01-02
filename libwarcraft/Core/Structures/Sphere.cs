@@ -38,7 +38,7 @@ namespace Warcraft.Core.Structures
         public float Radius;
 
         /// <summary>
-        /// Creates a new <see cref="Sphere"/> object from a position and a radius.
+        /// Initializes a new instance of the <see cref="Sphere"/> struct from a position and a radius.
         /// </summary>
         /// <param name="inPosition">The sphere's position in model space.</param>
         /// <param name="inRadius">The sphere's radius.</param>

@@ -45,7 +45,7 @@ namespace Warcraft.Core.Structures
         public byte A;
 
         /// <summary>
-        /// Creates a new <see cref="ARGB"/> object from a set of byte component values.
+        ///  Initializes a new instance of the <see cref="ARGB"/> struct from a set of byte component values.
         /// </summary>
         /// <param name="inR">The input red component.</param>
         /// <param name="inG">The input blue component.</param>
@@ -60,13 +60,12 @@ namespace Warcraft.Core.Structures
         }
 
         /// <summary>
-        /// Creates a new <see cref="ARGB"/> object from a byte that fills all components.
+        ///  Initializes a new instance of the <see cref="ARGB"/> struct from a byte that fills all components.
         /// </summary>
         /// <param name="all">The input byte component.</param>
         public ARGB(byte all)
-            :this(all, all, all, all)
+            : this(all, all, all, all)
         {
-
         }
 
         /// <summary>

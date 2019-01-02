@@ -29,37 +29,37 @@ namespace Warcraft.Core.Structures
         /// <summary>
         /// The values in the structure.
         /// </summary>
-        private Vector3 Values;
+        private Vector3 _values;
 
         /// <summary>
-        /// The red component.
+        /// Gets or sets the red component.
         /// </summary>
         public float R
         {
-            get => Values.X;
-            set => Values.X = value;
+            get => _values.X;
+            set => _values.X = value;
         }
 
         /// <summary>
-        /// The green component.
+        /// Gets or sets the green component.
         /// </summary>
         public float G
         {
-            get => Values.Y;
-            set => Values.Y = value;
+            get => _values.Y;
+            set => _values.Y = value;
         }
 
         /// <summary>
-        /// The blue component.
+        /// Gets or sets the blue component.
         /// </summary>
         public float B
         {
-            get => Values.Z;
-            set => Values.Z = value;
+            get => _values.Z;
+            set => _values.Z = value;
         }
 
         /// <summary>
-        /// Creates a new <see cref="RGB"/> object from a set of floating point colour component
+        /// Initializes a new instance of the <see cref="RGB"/> struct from a set of floating point colour component
         /// values.
         /// </summary>
         /// <param name="inR">The input red component.</param>
@@ -67,16 +67,16 @@ namespace Warcraft.Core.Structures
         /// <param name="inB">The input green component.</param>
         public RGB(float inR, float inG, float inB)
         {
-            Values = new Vector3(inR, inG, inB);
+            _values = new Vector3(inR, inG, inB);
         }
 
         /// <summary>
-        /// Creates a new <see cref="RGB"/> object from a <see cref="Vector3"/> colour vector.
+        /// Initializes a new instance of the <see cref="RGB"/> struct from a <see cref="Vector3"/> colour vector.
         /// </summary>
         /// <param name="inVector">The input colour vector.</param>
         public RGB(Vector3 inVector)
         {
-            Values = inVector;
+            _values = inVector;
         }
 
         /// <summary>

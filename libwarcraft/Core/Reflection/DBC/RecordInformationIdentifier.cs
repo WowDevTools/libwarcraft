@@ -1,5 +1,5 @@
 ﻿//
-//  FieldInformationCache.cs
+//  RecordInformationIdentifier.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //

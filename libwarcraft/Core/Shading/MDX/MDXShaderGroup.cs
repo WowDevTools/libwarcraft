@@ -24,26 +24,54 @@ namespace Warcraft.Core.Shading.MDX
     /// </summary>
     internal class MDXShaderGroup
     {
+        /// <summary>
+        /// Gets or sets the vertex shader algorithm.
+        /// </summary>
         public MDXVertexShaderType VertexShader { get; set; }
+
+        /// <summary>
+        /// Gets or sets the control shader algorithm.
+        /// </summary>
         public MDXControlShaderType ControlShader { get; set; }
+
+        /// <summary>
+        /// Gets or sets the evaluation shader algorithm.
+        /// </summary>
         public MDXEvaluationShaderType EvaluationShader { get; set; }
+
+        /// <summary>
+        /// Gets or sets the fragment shader algorithm.
+        /// </summary>
         public MDXFragmentShaderType FragmentShader { get; set; }
+
+        /// <summary>
+        /// Gets or sets the colour operations.
+        /// </summary>
         public uint ColourOperations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the alpha operations.
+        /// </summary>
         public uint AlphaOperations { get; set; }
 
-        public MDXShaderGroup(MDXVertexShaderType vertex, MDXControlShaderType control, MDXEvaluationShaderType eval,
-            MDXFragmentShaderType frag, uint colourOp, uint alphaOp)
-        {
-            VertexShader = vertex;
-            ControlShader = control;
-            EvaluationShader = eval;
-            FragmentShader = frag;
-            ColourOperations = colourOp;
-            AlphaOperations = alphaOp;
-        }
-
-        public MDXShaderGroup(MDXFragmentShaderType frag, MDXVertexShaderType vertex, MDXControlShaderType control,
-            MDXEvaluationShaderType eval, uint colourOp, uint alphaOp)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXShaderGroup"/> class.
+        /// </summary>
+        /// <param name="frag">The fragment shader algorithm.</param>
+        /// <param name="vertex">The vertex shader algorithm.</param>
+        /// <param name="control">The control shader algorithm.</param>
+        /// <param name="eval">The evaluation shader algorithm.</param>
+        /// <param name="colourOp">The colour operations.</param>
+        /// <param name="alphaOp">The alpha operations.</param>
+        public MDXShaderGroup
+        (
+            MDXFragmentShaderType frag,
+            MDXVertexShaderType vertex,
+            MDXControlShaderType control,
+            MDXEvaluationShaderType eval,
+            uint colourOp,
+            uint alphaOp
+        )
         {
             VertexShader = vertex;
             ControlShader = control;

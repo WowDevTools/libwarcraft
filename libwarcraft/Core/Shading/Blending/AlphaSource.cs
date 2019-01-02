@@ -25,11 +25,34 @@ namespace Warcraft.Core.Shading.Blending
     /// </summary>
     public enum AlphaSource
     {
-        Zero                    = 0,
-        One                        = 1,
-        SourceAlpha                = 770,
-        OneMinusSourceAlpha        = 771,
-        DestinationAlpha        = 772,
-        ConstantAlpha            = 32771
+        /// <summary>
+        /// Use zero as the source factor.
+        /// </summary>
+        Zero = 0,
+
+        /// <summary>
+        /// Use one as the source factor.
+        /// </summary>
+        One = 1,
+
+        /// <summary>
+        /// Use the source alpha as the source factor.
+        /// </summary>
+        SourceAlpha = 770,
+
+        /// <summary>
+        /// Use one minus the source alpha as the source factor.
+        /// </summary>
+        OneMinusSourceAlpha = 771,
+
+        /// <summary>
+        /// Use the destination alpha as the source factor.
+        /// </summary>
+        DestinationAlpha = 772,
+
+        /// <summary>
+        /// Use a constant alpha value as the source factor.
+        /// </summary>
+        ConstantAlpha = 32771
     }
 }

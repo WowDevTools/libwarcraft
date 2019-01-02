@@ -1,5 +1,5 @@
 ﻿//
-//  StringReference.cs
+//  InheritanceChainComparer.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -22,7 +22,6 @@ using System.Collections.Generic;
 
 namespace Warcraft.Core.Reflection.DBC
 {
-    /// <inheritdoc />
     /// <summary>
     /// Compares types by their inheritance chain. A subclass is considered more (that is, more derived) than a parent
     /// class.

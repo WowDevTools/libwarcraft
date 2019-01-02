@@ -32,46 +32,44 @@ namespace Warcraft.DBC.Definitions
     public class AnimationDataRecord : DBCRecord
     {
         /// <summary>
-        /// The name of the animation.
+        /// Gets or sets the name of the animation.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public StringReference Name { get; set; }
 
         /// <summary>
-        /// The weapon flags. This affects how the model's weapons are held during the animation.
+        /// Gets or sets the weapon flags. This affects how the model's weapons are held during the animation.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public WeaponAnimationFlags WeaponFlags { get; set; }
 
         /// <summary>
-        /// The body flags.
+        /// Gets or sets the body flags.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint BodyFlags { get; set; }
 
         /// <summary>
-        /// General animation flags.
+        /// Gets or sets general animation flags.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint Flags { get; set; }
 
         /// <summary>
-        /// The fallback animation that precedes this one.
+        /// Gets or sets the fallback animation that precedes this one.
         /// </summary>
-        [RecordField(WarcraftVersion.Classic)]
-        [ForeignKeyInfo(DatabaseName.AnimationData, nameof(ID))]
+        [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.AnimationData, nameof(ID))]
         public ForeignKey<uint> FallbackAnimation { get; set; }
 
         /// <summary>
-        /// The top-level behaviour animation that this animation is a child of.
+        /// Gets or sets the top-level behaviour animation that this animation is a child of.
         /// </summary>
-        [RecordField(WarcraftVersion.Classic)]
-        [ForeignKeyInfo(DatabaseName.AnimationData, nameof(ID))]
+        [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.AnimationData, nameof(ID))]
         public ForeignKey<uint> BehaviourAnimation { get; set; }
 
         /// <summary>
-        /// The behaviour tier of the animation. In most cases, this indicates whether or not the animation
-        /// is used for flying characters.
+        /// Gets or sets the behaviour tier of the animation. In most cases, this indicates whether or not the animation
+        /// Gets or sets is used for flying characters.
         /// </summary>
         [RecordField(WarcraftVersion.Wrath)]
         public uint BehaviourTier { get; set; }
@@ -82,31 +80,4 @@ namespace Warcraft.DBC.Definitions
             yield return Name;
         }
     }
-
-    /// <summary>
-    /// Weapon animation flags.
-    /// </summary>
-    public enum WeaponAnimationFlags : uint
-    {
-        /// <summary>
-        /// Ignores the current state of the character's weapons.
-        /// </summary>
-        None = 0,
-
-        /// <summary>
-        /// Sheathes the weapons for the duration of the animation.
-        /// </summary>
-        Sheathe = 4,
-
-        /// <summary>
-        /// Sheathes the weapons for the duration of the animation.
-        /// </summary>
-        Sheathe2 = 16,
-
-        /// <summary>
-        /// Unsheathes the weapons for the duration of the animation.
-        /// </summary>
-        Unsheathe = 32
-    }
 }
-

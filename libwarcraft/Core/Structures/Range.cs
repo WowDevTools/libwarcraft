@@ -27,7 +27,7 @@ namespace Warcraft.Core.Structures
     public struct Range
     {
         /// <summary>
-        /// The minimum value included in the range.
+        /// Gets the minimum value included in the range.
         /// </summary>
         public float Minimum
         {
@@ -36,7 +36,7 @@ namespace Warcraft.Core.Structures
         }
 
         /// <summary>
-        /// The maximum value included in the range.
+        /// Gets the maximum value included in the range.
         /// </summary>
         public float Maximum
         {
@@ -45,8 +45,8 @@ namespace Warcraft.Core.Structures
         }
 
         /// <summary>
-        /// Whether or not the range is inclusive - that is, if the <see cref="Minimum"/> and <see cref="Maximum"/>
-        /// values are considered a part of the range.
+        /// Gets a value indicating whether or not the range is inclusive - that is, if the <see cref="Minimum"/> and
+        /// <see cref="Maximum"/> values are considered a part of the range.
         /// </summary>
         public bool IsInclusive
         {
@@ -55,7 +55,7 @@ namespace Warcraft.Core.Structures
         }
 
         /// <summary>
-        /// Creates a new <see cref="Range"/> object from a maximum and minimum value.
+        /// Initializes a new instance of the <see cref="Range"/> struct from a maximum and minimum value.
         /// </summary>
         /// <param name="inMin">The minimum value in the range.</param>
         /// <param name="inMax">The maximum value in the range.</param>

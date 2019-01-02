@@ -22,12 +22,31 @@ using Warcraft.Core.Extensions;
 
 namespace Warcraft.Core.Structures
 {
+    /// <summary>
+    /// Represents a key value in a spline.
+    /// </summary>
+    /// <typeparam name="T">The type of the key.</typeparam>
     public class SplineKey<T>
     {
-        public T Value;
-        public T InTangent;
-        public T OutTangent;
+        /// <summary>
+        /// Gets or sets the value of the key.
+        /// </summary>
+        public T Value { get; set; }
 
+        /// <summary>
+        /// Gets or sets the in tangent of the key.
+        /// </summary>
+        public T InTangent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the out tangent of the key.
+        /// </summary>
+        public T OutTangent { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SplineKey{T}"/> class.
+        /// </summary>
+        /// <param name="br">The reader to use when reading the key.</param>
         public SplineKey(BinaryReader br)
         {
             Value = br.Read<T>();

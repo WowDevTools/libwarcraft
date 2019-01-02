@@ -45,7 +45,7 @@ namespace Warcraft.Core.Structures
         public byte A;
 
         /// <summary>
-        /// Creates a new <see cref="BGRA"/> object from a set of byte component values.
+        /// Initializes a new instance of the <see cref="BGRA"/> struct from a set of byte component values.
         /// </summary>
         /// <param name="inG">The input blue component.</param>
         /// <param name="inB">The input green component.</param>
@@ -60,13 +60,12 @@ namespace Warcraft.Core.Structures
         }
 
         /// <summary>
-        /// Creates a new <see cref="BGRA"/> object from a byte that fills all components.
+        /// Initializes a new instance of the <see cref="BGRA"/> struct from a byte that fills all components.
         /// </summary>
         /// <param name="all">The input byte component.</param>
         public BGRA(byte all)
-            :this(all, all, all, all)
+            : this(all, all, all, all)
         {
-
         }
 
         /// <summary>

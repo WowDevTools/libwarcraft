@@ -1,5 +1,5 @@
 ﻿//
-//  MDXControlShaderType.cs
+//  MDXEvaluationShaderType.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -20,13 +20,28 @@
 namespace Warcraft.Core.Shading.MDX
 {
     /// <summary>
-    /// All of the tesselation evaluation shaders (known in DX as domain shaders) in WoW.
+    /// All of the tessellation evaluation shaders (known in DX as domain shaders) in WoW.
     /// </summary>
     public enum MDXEvaluationShaderType
     {
+        /// <summary>
+        /// Single-texture tessellation.
+        /// </summary>
         T1,
-        T1_T2,
-        T1_T2_T3,
-        T1_T2_T3_T4
+
+        /// <summary>
+        /// Dual-texture tessellation.
+        /// </summary>
+        T1T2,
+
+        /// <summary>
+        /// Triple-texture tessellation.
+        /// </summary>
+        T1T2T3,
+
+        /// <summary>
+        /// Quad-texture tessellation.
+        /// </summary>
+        T1T2T3T4
     }
 }

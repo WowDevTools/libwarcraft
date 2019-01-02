@@ -110,4 +110,3 @@ namespace Warcraft.Core.Shading
         AdditiveMaskedEnvMetal = 17
     }
 }
-

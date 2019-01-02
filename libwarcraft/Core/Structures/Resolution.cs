@@ -25,17 +25,17 @@ namespace Warcraft.Core.Structures
     public struct Resolution
     {
         /// <summary>
-        /// The horizontal resolution (or X resolution)
+        /// The horizontal resolution (or X resolution).
         /// </summary>
         public uint X;
 
         /// <summary>
-        /// The vertical resolution (or Y resolution)
+        /// The vertical resolution (or Y resolution).
         /// </summary>
         public uint Y;
 
         /// <summary>
-        /// Creates a new <see cref="Resolution"/> object from a height and a width.
+        /// Initializes a new instance of the <see cref="Resolution"/> struct from a height and a width.
         /// </summary>
         /// <param name="inX">The input width component.</param>
         /// <param name="inY">The input height component.</param>
@@ -46,13 +46,12 @@ namespace Warcraft.Core.Structures
         }
 
         /// <summary>
-        /// Creates a new <see cref="Resolution"/> object from a single input uint, filling all components.
+        /// Initializes a new instance of the <see cref="Resolution"/> struct from a single input uint, filling all components.
         /// </summary>
         /// <param name="all">The input component.</param>
         public Resolution(uint all)
-            :this(all, all)
+            : this(all, all)
         {
-
         }
 
         /// <summary>

@@ -116,11 +116,19 @@ namespace Warcraft.Core.Reflection.DBC
         /// Reads a property value from the given <see cref="BinaryReader"/>.
         /// </summary>
         /// <param name="reader">The reader, containing the data.</param>
+        /// <param name="recordInfo">The reflected field information.</param>
         /// <param name="property">The property which will contain the data.</param>
         /// <param name="elementType">The element type of the field. This is primarily used for reading arrays.</param>
         /// <param name="version">The version of the record.</param>
         /// <returns>The value that should be assigned to the property.</returns>
-        public static object ReadPropertyValue(BinaryReader reader, RecordFieldInformation recordInfo, PropertyInfo property, Type elementType, WarcraftVersion version)
+        public static object ReadPropertyValue
+        (
+            BinaryReader reader,
+            RecordFieldInformation recordInfo,
+            PropertyInfo property,
+            Type elementType,
+            WarcraftVersion version
+        )
         {
             object fieldValue;
             if (DBCInspector.IsPropertyForeignKey(property))

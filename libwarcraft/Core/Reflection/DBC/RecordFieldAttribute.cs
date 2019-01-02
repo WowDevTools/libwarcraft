@@ -1,5 +1,5 @@
 ﻿//
-//  RecordField.cs
+//  RecordFieldAttribute.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -49,4 +49,3 @@ namespace Warcraft.Core.Reflection.DBC
         }
     }
 }
-

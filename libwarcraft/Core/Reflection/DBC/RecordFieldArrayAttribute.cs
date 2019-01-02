@@ -1,5 +1,5 @@
 ﻿//
-//  ForeignKeyInfoAttribute.cs
+//  RecordFieldArrayAttribute.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //

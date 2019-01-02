@@ -25,10 +25,29 @@ namespace Warcraft.Core.Shading.Blending
     /// </summary>
     public enum AlphaDestination
     {
-        Zero                    = 0,
-        One                        = 1,
-        SourceAlpha                = 770,
-        OneMinusSourceAlpha        = 771,
-        OneMinusConstantAlpha    = 32772
+        /// <summary>
+        /// A factor of zero.
+        /// </summary>
+        Zero = 0,
+
+        /// <summary>
+        /// A factor of one.
+        /// </summary>
+        One = 1,
+
+        /// <summary>
+        /// Use the source alpha as the blending factor.
+        /// </summary>
+        SourceAlpha = 770,
+
+        /// <summary>
+        /// Use one minus the source alpha as the blending factor.
+        /// </summary>
+        OneMinusSourceAlpha = 771,
+
+        /// <summary>
+        /// Use one minus the constant alpha value as the blending factor.
+        /// </summary>
+        OneMinusConstantAlpha = 32772
     }
 }
