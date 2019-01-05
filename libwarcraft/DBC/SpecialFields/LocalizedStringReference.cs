@@ -1,5 +1,5 @@
 ﻿//
-//  MapRecord.cs
+//  LocalizedStringReference.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -30,93 +30,99 @@ namespace Warcraft.DBC.SpecialFields
     public class LocalizedStringReference
     {
         /// <summary>
-        /// The reference to the English version of the string.
+        /// Gets or sets the reference to the English version of the string.
         /// </summary>
-        public StringReference English;
+        public StringReference English { get; set; }
 
         /// <summary>
-        /// The reference to the Korean version of the string.
+        /// Gets or sets the reference to the Korean version of the string.
         /// </summary>
-        public StringReference Korean;
+        public StringReference Korean { get; set; }
 
         /// <summary>
-        /// The reference to the French version of the string.
+        /// Gets or sets the reference to the French version of the string.
         /// </summary>
-        public StringReference French;
+        public StringReference French { get; set; }
 
         /// <summary>
-        /// The reference to the German version of the string.
+        /// Gets or sets the reference to the German version of the string.
         /// </summary>
-        public StringReference German;
+        public StringReference German { get; set; }
 
         /// <summary>
-        /// The reference to the Chinese version of the string.
+        /// Gets or sets the reference to the Chinese version of the string.
         /// </summary>
-        public StringReference Chinese;
+        public StringReference Chinese { get; set; }
 
         /// <summary>
-        /// The reference to the Taiwan version of the string.
+        /// Gets or sets the reference to the Taiwan version of the string.
         /// </summary>
-        public StringReference Taiwan;
+        public StringReference Taiwan { get; set; }
 
         /// <summary>
-        /// The reference to the Spanish version of the string.
+        /// Gets or sets the reference to the Spanish version of the string.
         /// </summary>
-        public StringReference Spanish;
+        public StringReference Spanish { get; set; }
 
         /// <summary>
-        /// The reference to the Mexican Spanish version of the string.
+        /// Gets or sets the reference to the Mexican Spanish version of the string.
         /// </summary>
-        public StringReference SpanishMexican;
+        public StringReference SpanishMexican { get; set; }
 
         /// <summary>
-        /// The reference to the Russian version of the string.
+        /// Gets or sets the reference to the Russian version of the string.
         /// </summary>
-        public StringReference Russian;
+        public StringReference Russian { get; set; }
 
         /// <summary>
-        /// The reference to an unknown version of the string.
+        /// Gets or sets the reference to an unknown version of the string.
         /// </summary>
-        public StringReference Unknown1;
+        public StringReference Unknown1 { get; set; }
 
         /// <summary>
-        /// The reference to the Portugese version of the string.
+        /// Gets or sets the reference to the Portugese version of the string.
         /// </summary>
-        public StringReference Portugese;
+        public StringReference Portugese { get; set; }
 
         /// <summary>
-        /// The reference to the Italian version of the string.
+        /// Gets or sets the reference to the Italian version of the string.
         /// </summary>
-        public StringReference Italian;
+        public StringReference Italian { get; set; }
 
         /// <summary>
-        /// The reference to an unknown version of the string.
+        /// Gets or sets the reference to an unknown version of the string.
         /// </summary>
-        public StringReference Unknown2;
+        public StringReference Unknown2 { get; set; }
 
         /// <summary>
-        /// The reference to an unknown version of the string.
+        /// Gets or sets the reference to an unknown version of the string.
         /// </summary>
-        public StringReference Unknown3;
+        public StringReference Unknown3 { get; set; }
 
         /// <summary>
-        /// The reference to an unknown version of the string.
+        /// Gets or sets the reference to an unknown version of the string.
         /// </summary>
-        public StringReference Unknown4;
+        public StringReference Unknown4 { get; set; }
 
         /// <summary>
-        /// The reference to an unknown version of the string.
+        /// Gets or sets the reference to an unknown version of the string.
         /// </summary>
-        public StringReference Unknown5;
+        public StringReference Unknown5 { get; set; }
 
-        public uint Flags;
+        /// <summary>
+        /// Gets or sets the flags.
+        /// </summary>
+        public uint Flags { get; set; }
 
-        public StringReference ClientLocale;
+        /// <summary>
+        /// Gets or sets the locale of the client.
+        /// </summary>
+        public StringReference ClientLocale { get; set; }
 
         /// <summary>
         /// Gets the actual localized references.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The references.</returns>
         public IEnumerable<StringReference> GetReferences()
         {
             return new[]
@@ -145,8 +151,8 @@ namespace Warcraft.DBC.SpecialFields
         /// Gets the number of fields expected to be in a reference by version. This is equal to LanguageCount + 1,
         /// that is, including the flag field.
         /// </summary>
-        /// <param name="version"></param>
-        /// <returns></returns>
+        /// <param name="version">The version.</param>
+        /// <returns>The count.</returns>
         public static int GetFieldCount(WarcraftVersion version)
         {
             if (version >= WarcraftVersion.Cataclysm)
@@ -161,10 +167,12 @@ namespace Warcraft.DBC.SpecialFields
                 {
                     return 17;
                 }
+
                 case WarcraftVersion.Classic:
                 {
                     return 9;
                 }
+
                 default:
                 {
                     throw new ArgumentOutOfRangeException(nameof(version));
