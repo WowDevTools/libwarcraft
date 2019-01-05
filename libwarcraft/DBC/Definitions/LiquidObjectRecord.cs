@@ -1,5 +1,5 @@
 ﻿//
-//  AnimationDataRecord.cs
+//  LiquidObjectRecord.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -30,33 +30,32 @@ namespace Warcraft.DBC.Definitions
     public class LiquidObjectRecord : DBCRecord
     {
         /// <summary>
-        /// The direction in which the liquid flows.
+        /// Gets or sets the direction in which the liquid flows.
         /// </summary>
         [RecordField(WarcraftVersion.Cataclysm)]
         public float FlowDirection { get; set; }
 
         /// <summary>
-        /// The speed with which the liquid flows.
+        /// Gets or sets the speed with which the liquid flows.
         /// </summary>
         [RecordField(WarcraftVersion.Cataclysm)]
         public float FlowSpeed { get; set; }
 
         /// <summary>
-        /// The type of liquid. This is a foreign reference to another table.
+        /// Gets or sets the type of liquid. This is a foreign reference to another table.
         /// </summary>
-        [RecordField(WarcraftVersion.Cataclysm)]
-        [ForeignKeyInfo(DatabaseName.LiquidType, nameof(ID))]
+        [RecordField(WarcraftVersion.Cataclysm), ForeignKeyInfo(DatabaseName.LiquidType, nameof(ID))]
         public ForeignKey<uint> LiquidType { get; set; }
 
         /// <summary>
-        /// Whether or not this liquid is fishable.
+        /// Gets or sets whether or not this liquid is fishable.
         /// </summary>
         [RecordField(WarcraftVersion.Cataclysm)]
         public uint Fishable { get; set; }
 
         /// <summary>
-        /// TODO: Unconfirmed behaviour
-        /// The amount light this liquid reflects.
+        /// Gets or sets the amount light this liquid reflects.
+        /// TODO: Unconfirmed behaviour.
         /// </summary>
         [RecordField(WarcraftVersion.Cataclysm)]
         public uint Reflection { get; set; }

@@ -1,5 +1,5 @@
 //
-//  SoundAmbienceRecord.cs
+//  SoundAmbianceRecord.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -23,21 +23,22 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+    /// <summary>
+    /// Defines ambient sounds for a zone.
+    /// </summary>
     [DatabaseRecord(DatabaseName.ZoneAmbience)]
-    public class SoundAmbienceRecord : DBCRecord
+    public class SoundAmbianceRecord : DBCRecord
     {
         /// <summary>
-        /// The ambience sound to play during the day.
+        /// Gets or sets the ambiance sound to play during the day.
         /// </summary>
-        [RecordField(WarcraftVersion.Classic)]
-        [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-        public ForeignKey<uint> AmbienceDay { get; set; }
+        [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+        public ForeignKey<uint> AmbianceDay { get; set; }
 
         /// <summary>
-        /// The ambience sound to play during the night.
+        /// Gets or sets the ambiance sound to play during the night.
         /// </summary>
-        [RecordField(WarcraftVersion.Classic)]
-        [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-        public ForeignKey<uint> AmbienceNight { get; set; }
+        [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
+        public ForeignKey<uint> AmbianceNight { get; set; }
     }
 }

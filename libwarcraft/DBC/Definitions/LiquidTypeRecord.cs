@@ -40,9 +40,10 @@ namespace Warcraft.DBC.Definitions
         public LiquidType Type
         {
             get => TranslateLiquidType();
-            set => TypeInternal = value;
+            set => _internalType = value;
         }
-        private LiquidType TypeInternal;
+
+        private LiquidType _internalType;
 
         [RecordField(WarcraftVersion.Wrath)]
         [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
@@ -101,42 +102,33 @@ namespace Warcraft.DBC.Definitions
         {
             if (Version >= WarcraftVersion.Wrath)
             {
-                return TypeInternal;
+                return _internalType;
             }
 
-            int baseValue = (int)TypeInternal;
+            int baseValue = (int)_internalType;
             switch (baseValue)
             {
                 case 0:
                 {
                     return LiquidType.Magma;
                 }
+
                 case 2:
                 {
                     return LiquidType.Slime;
                 }
+
                 case 3:
                 {
                     return LiquidType.Water;
                 }
+
                 default:
                 {
                     return LiquidType.Water;
                 }
             }
         }
-    }
-
-    public enum LiquidType
-    {
-        // Originally 3, now 0
-        Water = 0,
-        // Originally 3 (same as water), now 1
-        Ocean = 1,
-        // Originally 0, now 2
-        Magma = 2,
-        // Originally 2, now 3
-        Slime = 3
     }
 }
 

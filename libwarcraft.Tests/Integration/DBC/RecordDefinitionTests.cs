@@ -49,7 +49,7 @@ namespace libwarcraft.Tests.Integration.DBC
         [Test]
         public void SoundAmbienceRecord()
         {
-            TestLoadRecord<SoundAmbienceRecord>(Version);
+            TestLoadRecord<SoundAmbianceRecord>(Version);
         }
 
         [Test]
