@@ -65,4 +65,3 @@ namespace Warcraft.Core
         Legion = 7
     }
 }
-

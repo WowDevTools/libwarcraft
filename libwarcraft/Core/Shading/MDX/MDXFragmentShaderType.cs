@@ -17,10 +17,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+// ReSharper disable InconsistentNaming
+#pragma warning disable 1591, SA1602
+
 namespace Warcraft.Core.Shading.MDX
 {
     /// <summary>
-    /// All of the fragment shader types for M2/MDX in WoW.
+    /// All of the fragment shader types for M2/MDX in WoW. See
+    /// https://github.com/WowDevTools/Everlook/blob/master/Everlook/Content/Shaders/Components/Combiners/Combiners.glsl
+    /// for the algorithms.
     /// </summary>
     public enum MDXFragmentShaderType
     {

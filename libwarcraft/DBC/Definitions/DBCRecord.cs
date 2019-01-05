@@ -1,5 +1,5 @@
 //
-//  DBCDefinition.cs
+//  DBCRecord.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -31,7 +31,8 @@ namespace Warcraft.DBC.Definitions
     public abstract class DBCRecord : IDBCRecord
     {
         /// <summary>
-        /// The record ID. This is the equivalent of a primary key in an SQL database, and is unique to the record.
+        /// Gets or sets the record ID. This is the equivalent of a primary key in an SQL database, and is unique to the
+        /// record.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint ID
@@ -41,7 +42,7 @@ namespace Warcraft.DBC.Definitions
         }
 
         /// <summary>
-        /// The game version this record is valid for.
+        /// Gets or sets the game version this record is valid for.
         /// </summary>
         /// <value>The version.</value>
         public WarcraftVersion Version
@@ -53,11 +54,10 @@ namespace Warcraft.DBC.Definitions
         /// <summary>
         /// Gets a list of any string references in the record. Used for resolving them after they have been loaded.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The string references.</returns>
         public virtual IEnumerable<StringReference> GetStringReferences()
         {
             yield break;
         }
     }
 }
-

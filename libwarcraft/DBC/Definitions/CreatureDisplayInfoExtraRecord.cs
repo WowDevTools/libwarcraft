@@ -25,7 +25,8 @@ using Warcraft.DBC.SpecialFields;
 namespace Warcraft.DBC.Definitions
 {
     /// <summary>
-    /// Defines a display info record for a creature that contains a unique look - creature look, armor, weapons, etc.
+    /// Defines extra information for display info record for a creature that contains a unique look - creature look,
+    /// armor, weapons, etc.
     /// </summary>
     [DatabaseRecord(DatabaseName.CreatureDisplayInfoExtra)]
     public class CreatureDisplayInfoExtraRecord : DBCRecord
