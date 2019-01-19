@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
+    /// <summary>
+    /// Represents the holes in a LOD level of a map area.
+    /// </summary>
     public class WorldLODMapAreaHoles : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,8 +33,14 @@ namespace Warcraft.WDL.Chunks
         /// </summary>
         public const string Signature = "MAHO";
 
-        public readonly List<short> HoleMasks = new List<short>();
+        /// <summary>
+        /// Gets the hole masks.
+        /// </summary>
+        public List<short> HoleMasks { get; } = new List<short>();
 
+        /// <summary>
+        /// Gets a value indicating whether the area has no holes.
+        /// </summary>
         public bool IsEmpty
         {
             get
@@ -47,6 +56,10 @@ namespace Warcraft.WDL.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldLODMapAreaHoles"/> class.
+        /// </summary>
+        /// <param name="inData">The input data.</param>
         public WorldLODMapAreaHoles(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -67,6 +80,10 @@ namespace Warcraft.WDL.Chunks
             }
         }
 
+        /// <summary>
+        /// Gets the binary size of the instance.
+        /// </summary>
+        /// <returns>The size in bytes.</returns>
         public static int GetSize()
         {
             return 16 * sizeof(short);
@@ -105,4 +122,3 @@ namespace Warcraft.WDL.Chunks
         }
     }
 }
-

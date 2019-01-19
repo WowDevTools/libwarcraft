@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
+    /// <summary>
+    /// Represents the offsets of a map area.
+    /// </summary>
     public class WorldLODMapAreaOffsets : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +33,10 @@ namespace Warcraft.WDL.Chunks
         /// </summary>
         public const string Signature = "MAOF";
 
-        public readonly List<uint> MapAreaOffsets = new List<uint>();
+        /// <summary>
+        /// Gets the map area offsets.
+        /// </summary>
+        public List<uint> MapAreaOffsets { get; } = new List<uint>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldLODMapAreaOffsets"/> class.
@@ -39,6 +45,10 @@ namespace Warcraft.WDL.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldLODMapAreaOffsets"/> class.
+        /// </summary>
+        /// <param name="inData">The input data.</param>
         public WorldLODMapAreaOffsets(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -62,6 +72,10 @@ namespace Warcraft.WDL.Chunks
             }
         }
 
+        /// <summary>
+        /// Gets the binary size of the instance.
+        /// </summary>
+        /// <returns>The size in bytes.</returns>
         public static int GetSize()
         {
             return (64 * 64) * sizeof(uint);
@@ -91,4 +105,3 @@ namespace Warcraft.WDL.Chunks
         }
     }
 }
-

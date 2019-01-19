@@ -1,5 +1,5 @@
 ﻿//
-//  WDL.cs
+//  WorldLOD.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -16,32 +16,66 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 using System;
-using System.IO;
-using Warcraft.ADT.Chunks;
-using Warcraft.WDL.Chunks;
 using System.Collections.Generic;
+using System.IO;
+
+using Warcraft.ADT.Chunks;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
+using Warcraft.WDL.Chunks;
 
 namespace Warcraft.WDL
 {
+    /// <summary>
+    /// Represets a LOD level for a world.
+    /// </summary>
     public class WorldLOD : IBinarySerializable
     {
-        public readonly TerrainVersion Version;
+        /// <summary>
+        /// Gets the terrain version.
+        /// </summary>
+        public TerrainVersion Version { get; }
 
         /*
             WMO fields are only present in WDL files with a version >= Wrath.
         */
-        public readonly TerrainWorldModelObjects WorldModelObjects;
-        public readonly TerrainWorldModelObjectIndices WorldModelObjectIndices;
-        public readonly TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo;
-        // End specific fields
 
-        public readonly WorldLODMapAreaOffsets MapAreaOffsets;
-        public List<WorldLODMapArea> MapAreas = new List<WorldLODMapArea>(4096);
-        public List<WorldLODMapAreaHoles> MapAreaHoles = new List<WorldLODMapAreaHoles>(4096);
+        /// <summary>
+        /// Gets the WMOs included in the LOD level.
+        /// </summary>
+        public TerrainWorldModelObjects WorldModelObjects { get; }
 
+        /// <summary>
+        /// Gets the WMO indexes in the LOD level.
+        /// </summary>
+        public TerrainWorldModelObjectIndices WorldModelObjectIndices { get; }
+
+        /// <summary>
+        /// Gets the placement info of the WMOs.
+        /// </summary>
+        public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo { get; }
+
+        /// <summary>
+        /// Gets the map area offsets.
+        /// </summary>
+        public WorldLODMapAreaOffsets MapAreaOffsets { get; }
+
+        /// <summary>
+        /// Gets or sets the map areas.
+        /// </summary>
+        public List<WorldLODMapArea> MapAreas { get; set; } = new List<WorldLODMapArea>(4096);
+
+        /// <summary>
+        /// Gets or sets the map area holes.
+        /// </summary>
+        public List<WorldLODMapAreaHoles> MapAreaHoles { get; set; } = new List<WorldLODMapAreaHoles>(4096);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldLOD"/> class.
+        /// </summary>
+        /// <param name="inData">The input data.</param>
         public WorldLOD(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
@@ -107,6 +141,12 @@ namespace Warcraft.WDL
             }
         }
 
+        /// <summary>
+        /// Determines if the LOD world has an entry at the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>true if the LOD world has an entry at the given coordinate; otherwise, false.</returns>
         public bool HasEntry(int x, int y)
         {
             if (x < 0 || y < 0 || x > 63 || y > 63)
@@ -114,10 +154,16 @@ namespace Warcraft.WDL
                 return false;
             }
 
-            var index = x + y * 64;
+            var index = x + (y * 64);
             return MapAreas[index] != null;
         }
 
+        /// <summary>
+        /// Gets the entry at the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The entry.</returns>
         public WorldLODMapArea GetEntry(int x, int y)
         {
             if (x < 0 || y < 0 || x > 63 || y > 63)
@@ -125,7 +171,7 @@ namespace Warcraft.WDL
                 throw new ArgumentException();
             }
 
-            var index = x + y * 64;
+            var index = x + (y * 64);
             return MapAreas[index];
         }
 
@@ -166,7 +212,7 @@ namespace Warcraft.WDL
                             if (MapAreas[mapAreaOffsetIndex] != null)
                             {
                                 // This tile is populated, so we update the offset table
-                                uint newOffset = (uint) (ms.Position + offsetChunkHeaderSize + WorldLODMapAreaOffsets.GetSize() + writtenMapAreaSize);
+                                uint newOffset = (uint)(ms.Position + offsetChunkHeaderSize + WorldLODMapAreaOffsets.GetSize() + writtenMapAreaSize);
                                 MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex] = newOffset;
 
                                 writtenMapAreaSize += WorldLODMapArea.GetSize() + offsetChunkHeaderSize;
@@ -207,4 +253,3 @@ namespace Warcraft.WDL
         }
     }
 }
-

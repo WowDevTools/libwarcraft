@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDL.Chunks
 {
+    /// <summary>
+    /// Represents a LOD level of a map area.
+    /// </summary>
     public class WorldLODMapArea : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,8 +33,15 @@ namespace Warcraft.WDL.Chunks
         /// </summary>
         public const string Signature = "MARE";
 
-        public readonly List<short> HighResVertices = new List<short>();
-        public readonly List<short> LowResVertices = new List<short>();
+        /// <summary>
+        /// Gets the high-resolution vertices.
+        /// </summary>
+        public List<short> HighResVertices { get; } = new List<short>();
+
+        /// <summary>
+        /// Gets the low-resolution vertices.
+        /// </summary>
+        public List<short> LowResVertices { get; } = new List<short>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldLODMapArea"/> class.
@@ -40,6 +50,10 @@ namespace Warcraft.WDL.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldLODMapArea"/> class.
+        /// </summary>
+        /// <param name="inData">The input data.</param>
         public WorldLODMapArea(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -72,9 +86,13 @@ namespace Warcraft.WDL.Chunks
             }
         }
 
+        /// <summary>
+        /// Gets the binary size of the instance.
+        /// </summary>
+        /// <returns>The size in bytes.</returns>
         public static int GetSize()
         {
-            return (17 * 17) * sizeof(short) + (16 * 16) * sizeof(short);
+            return ((17 * 17) * sizeof(short)) + ((16 * 16) * sizeof(short));
         }
 
         /// <inheritdoc/>
@@ -106,4 +124,3 @@ namespace Warcraft.WDL.Chunks
         }
     }
 }
-
