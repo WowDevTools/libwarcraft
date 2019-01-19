@@ -30,40 +30,40 @@ namespace Warcraft.MDX.Geometry
     public class MDXVertex
     {
         /// <summary>
-        /// The position of the vertex in model space.
+        /// Gets or sets the position of the vertex in model space.
         /// </summary>
-        public Vector3 Position;
+        public Vector3 Position { get; set; }
 
         /// <summary>
-        /// The weights of any affecting bones onto this vertex. Up to four bones may affect the vertex.
+        /// Gets or sets the weights of any affecting bones onto this vertex. Up to four bones may affect the vertex.
         /// </summary>
-        public List<byte> BoneWeights;
+        public List<byte> BoneWeights { get; set; }
 
         /// <summary>
-        /// The indexes of up to four bones which affect this vertex. A bone may be listed more than once, but will
+        /// Gets or sets the indexes of up to four bones which affect this vertex. A bone may be listed more than once, but will
         /// only affect the vertex once.
         /// </summary>
-        public List<byte> BoneIndices;
+        public List<byte> BoneIndices { get; set; }
 
         /// <summary>
-        /// The normal vector of this vertex.
+        /// Gets or sets the normal vector of this vertex.
         /// </summary>
-        public Vector3 Normal;
+        public Vector3 Normal { get; set; }
 
         /// <summary>
-        /// UV texture coordinates for this vertex. There are two UV channels for each vertex, of which this is the
+        /// Gets or sets uV texture coordinates for this vertex. There are two UV channels for each vertex, of which this is the
         /// first.
         /// </summary>
-        public Vector2 UV1;
+        public Vector2 UV1 { get; set; }
 
         /// <summary>
-        /// UV texture coordinates for this vertex. There are two UV channels for each vertex, of which this is the
+        /// Gets or sets uV texture coordinates for this vertex. There are two UV channels for each vertex, of which this is the
         /// second.
         /// </summary>
-        public Vector2 UV2;
+        public Vector2 UV2 { get; set; }
 
         /// <summary>
-        /// Deserializes an <see cref="MDXVertex"/> from binary data.
+        /// Initializes a new instance of the <see cref="MDXVertex"/> class.
         /// </summary>
         /// <param name="data">The binary data in which the vertex is stored.</param>
         public MDXVertex(byte[] data)
@@ -85,11 +85,10 @@ namespace Warcraft.MDX.Geometry
         /// <summary>
         /// Gets the absolute byte size of a serialized object.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The size.</returns>
         public static int GetSize()
         {
             return 48;
         }
     }
 }
-

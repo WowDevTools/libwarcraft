@@ -1,5 +1,5 @@
 //
-//  MDXFlags.cs
+//  ModelObjectFlags.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -20,15 +20,40 @@ using System;
 
 namespace Warcraft.MDX
 {
+    /// <summary>
+    /// Defines various model flags.
+    /// </summary>
     [Flags]
     public enum ModelObjectFlags : uint
     {
-        TiltX                        = 0x1,
-        TiltY                        = 0x2,
-        HasBlendModeOverrides        = 0x8,
-        HasPhysicsData                = 0x20,
-        HasSkinLODs                    = 0x80,
-        UnknownCameraFlag            = 0x100
+        /// <summary>
+        /// The model is tilted on the X axis.
+        /// </summary>
+        TiltX = 0x1,
+
+        /// <summary>
+        /// The model is tilted on the Y axis.
+        /// </summary>
+        TiltY = 0x2,
+
+        /// <summary>
+        /// The model has blend mode overrides.
+        /// </summary>
+        HasBlendModeOverrides = 0x8,
+
+        /// <summary>
+        /// The model has physics data.
+        /// </summary>
+        HasPhysicsData = 0x20,
+
+        /// <summary>
+        /// The model has skin LODs.
+        /// </summary>
+        HasSkinLODs = 0x80,
+
+        /// <summary>
+        /// Unknown. Camera-related.
+        /// </summary>
+        UnknownCameraFlag = 0x100
     }
 }
-

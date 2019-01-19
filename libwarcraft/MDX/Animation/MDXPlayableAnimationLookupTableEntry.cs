@@ -19,11 +19,26 @@
 
 namespace Warcraft.MDX.Animation
 {
+    /// <summary>
+    /// An entry in the playable animation lookup table.
+    /// </summary>
     public class MDXPlayableAnimationLookupTableEntry
     {
-        public short FallbackAnimationID;
-        public MDXPlayableAnimationFlags Flags;
+        /// <summary>
+        /// Gets or sets the fallback animation ID.
+        /// </summary>
+        public short FallbackAnimationID { get; set; }
 
+        /// <summary>
+        /// Gets or sets the animation flags.
+        /// </summary>
+        public MDXPlayableAnimationFlags Flags { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXPlayableAnimationLookupTableEntry"/> class.
+        /// </summary>
+        /// <param name="inFallbackAnimationID">The fallback animation.</param>
+        /// <param name="inFlags">The flags.</param>
         public MDXPlayableAnimationLookupTableEntry(short inFallbackAnimationID, MDXPlayableAnimationFlags inFlags)
         {
             FallbackAnimationID = inFallbackAnimationID;
@@ -31,4 +46,3 @@ namespace Warcraft.MDX.Animation
         }
     }
 }
-

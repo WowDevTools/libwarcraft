@@ -31,26 +31,26 @@ namespace Warcraft.MDX.Visual
     public class MDXMaterial : IVersionedClass
     {
         /// <summary>
-        /// General set of flags, that is, actions to apply to this material.
+        /// Gets or sets a general set of flags, that is, actions to apply to this material.
         /// </summary>
-        public EMDXRenderFlag Flags;
+        public EMDXRenderFlag Flags { get; set; }
 
         /// <summary>
-        /// The framebuffer blending mode to apply with this material.
+        /// Gets or sets the framebuffer blending mode to apply with this material.
         /// </summary>
-        public BlendingMode BlendMode;
+        public BlendingMode BlendMode { get; set; }
 
         /// <summary>
-        /// Deserializes an <see cref="MDXMaterial"/> using a given <see cref="BinaryReader"/>.
+        /// Initializes a new instance of the <see cref="MDXMaterial"/> class.
         /// </summary>
-        /// <param name="br"></param>
-        /// <param name="version"></param>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         public MDXMaterial(BinaryReader br, WarcraftVersion version)
         {
             Flags = (EMDXRenderFlag)br.ReadUInt16();
             if (version >= WarcraftVersion.Cataclysm)
             {
-                BlendMode = (BlendingMode) br.ReadUInt16();
+                BlendMode = (BlendingMode)br.ReadUInt16();
             }
             else
             {
@@ -65,8 +65,8 @@ namespace Warcraft.MDX.Visual
         /// This is required before Cataclysm, probably due to a mismatch between the enumerations used in the
         /// client and the exporter.
         /// </summary>
-        /// <param name="blendingMode"></param>
-        /// <returns></returns>
+        /// <param name="blendingMode">The blending mode.</param>
+        /// <returns>The remapped mode.</returns>
         private static BlendingMode RemapBlendingMode(uint blendingMode)
         {
             if (blendingMode == 3)
@@ -79,8 +79,7 @@ namespace Warcraft.MDX.Visual
                 return (BlendingMode)(blendingMode - 1);
             }
 
-            return (BlendingMode) blendingMode;
+            return (BlendingMode)blendingMode;
         }
     }
 }
-

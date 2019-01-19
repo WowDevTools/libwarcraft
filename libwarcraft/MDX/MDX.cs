@@ -22,83 +22,228 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using Warcraft.MDX.Visual;
-using Warcraft.MDX.Geometry;
-using Warcraft.MDX.Animation;
+
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Shading.Blending;
 using Warcraft.Core.Structures;
+
+using Warcraft.MDX.Animation;
 using Warcraft.MDX.Data;
 using Warcraft.MDX.Gameplay;
+using Warcraft.MDX.Geometry;
 using Warcraft.MDX.Geometry.Skin;
+using Warcraft.MDX.Visual;
 using Warcraft.MDX.Visual.FX;
 
 namespace Warcraft.MDX
 {
+    /// <summary>
+    /// Represents a game model.
+    /// </summary>
     public class MDX
     {
         /// <summary>
         /// Holds the binary chunk signature.
         /// </summary>
         public const string Signature = "MD20";
-        public WarcraftVersion Version;
-        public string Name;
 
-        public ModelObjectFlags GlobalModelFlags;
+        /// <summary>
+        /// Gets or sets the game version the model is for.
+        /// </summary>
+        public WarcraftVersion Version { get; set; }
 
-        public MDXArray<uint> GlobalSequenceTimestamps;
-        public MDXArray<MDXAnimationSequence> AnimationSequences;
-        public MDXArray<ushort> AnimationSequenceLookupTable;
+        /// <summary>
+        /// Gets or sets the name of the model.
+        /// </summary>
+        public string Name { get; set; }
 
-        public MDXArray<MDXPlayableAnimationLookupTableEntry> PlayableAnimationLookupTable;
+        /// <summary>
+        /// Gets or sets the model flags.
+        /// </summary>
+        public ModelObjectFlags GlobalModelFlags { get; set; }
 
-        public MDXArray<MDXBone> Bones;
-        public MDXArray<ushort> BoneSocketLookupTable;
+        /// <summary>
+        /// Gets or sets the global sequence timestamps.
+        /// </summary>
+        public MDXArray<uint> GlobalSequenceTimestamps { get; set; }
 
-        public MDXArray<MDXVertex> Vertices;
-        public MDXArray<MDXSkin> Skins;
-        public uint SkinCount;
+        /// <summary>
+        /// Gets or sets the animation sequences.
+        /// </summary>
+        public MDXArray<MDXAnimationSequence> AnimationSequences { get; set; }
 
-        public MDXArray<MDXColourAnimation> ColourAnimations;
-        public MDXArray<MDXTexture> Textures;
-        public MDXArray<MDXTextureWeight> TransparencyAnimations;
-        public MDXArray<MDXTextureTransform> TextureTransformations;
-        public MDXArray<short> ReplaceableTextureLookupTable;
-        public MDXArray<MDXMaterial> Materials;
+        /// <summary>
+        /// Gets or sets the animation sequence lookup table.
+        /// </summary>
+        public MDXArray<ushort> AnimationSequenceLookupTable { get; set; }
 
-        public MDXArray<short> BoneLookupTable;
-        public MDXArray<short> TextureLookupTable;
-        public MDXArray<EMDXTextureMappingType> TextureMappingLookupTable;
-        public MDXArray<short> TransparencyLookupTable;
-        public MDXArray<short> TextureTransformationLookupTable;
+        /// <summary>
+        /// Gets or sets the playable animation lookup table.
+        /// </summary>
+        public MDXArray<MDXPlayableAnimationLookupTableEntry> PlayableAnimationLookupTable { get; set; }
 
-        public Box BoundingBox;
-        public float BoundingSphereRadius;
+        /// <summary>
+        /// Gets or sets the bones of the model.
+        /// </summary>
+        public MDXArray<MDXBone> Bones { get; set; }
 
-        public Box CollisionBox;
-        public float CollisionSphereRadius;
+        /// <summary>
+        /// Gets or sets the bone socket lookup table.
+        /// </summary>
+        public MDXArray<ushort> BoneSocketLookupTable { get; set; }
 
-        public MDXArray<ushort> CollisionTriangles;
-        public MDXArray<Vector3> CollisionVertices;
-        public MDXArray<Vector3> CollisionNormals;
+        /// <summary>
+        /// Gets or sets the vertices of the model.
+        /// </summary>
+        public MDXArray<MDXVertex> Vertices { get; set; }
 
-        public MDXArray<MDXAttachment> Attachments;
-        public MDXArray<MDXAttachmentType> AttachmentLookupTable;
+        /// <summary>
+        /// Gets or sets the skins of the model.
+        /// </summary>
+        public MDXArray<MDXSkin> Skins { get; set; }
 
-        public MDXArray<MDXAnimationEvent> AnimationEvents;
+        /// <summary>
+        /// Gets or sets the number of skins in the model.
+        /// </summary>
+        public uint SkinCount { get; set; }
 
-        public MDXArray<MDXLight> Lights;
+        /// <summary>
+        /// Gets or sets the colour animations.
+        /// </summary>
+        public MDXArray<MDXColourAnimation> ColourAnimations { get; set; }
 
-        public MDXArray<MDXCamera> Cameras;
-        public MDXArray<MDXCameraType> CameraTypeLookupTable;
+        /// <summary>
+        /// Gets or sets the model's textures.
+        /// </summary>
+        public MDXArray<MDXTexture> Textures { get; set; }
 
-        public MDXArray<MDXRibbonEmitter> RibbonEmitters;
-        // ribbon emitters
-        // particle emitters
+        /// <summary>
+        /// Gets or sets the transparency animations.
+        /// </summary>
+        public MDXArray<MDXTextureWeight> TransparencyAnimations { get; set; }
 
+        /// <summary>
+        /// Gets or sets the texture transformations.
+        /// </summary>
+        public MDXArray<MDXTextureTransform> TextureTransformations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the replaceable texture lookup table.
+        /// </summary>
+        public MDXArray<short> ReplaceableTextureLookupTable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the model's materials.
+        /// </summary>
+        public MDXArray<MDXMaterial> Materials { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bone lookup table.
+        /// </summary>
+        public MDXArray<short> BoneLookupTable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the texture lookup table.
+        /// </summary>
+        public MDXArray<short> TextureLookupTable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the texture mapping lookup table.
+        /// </summary>
+        public MDXArray<EMDXTextureMappingType> TextureMappingLookupTable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the transparency lookup table.
+        /// </summary>
+        public MDXArray<short> TransparencyLookupTable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the texture transformation lookup table.
+        /// </summary>
+        public MDXArray<short> TextureTransformationLookupTable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the model's bounding box.
+        /// </summary>
+        public Box BoundingBox { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bounding sphere radius.
+        /// </summary>
+        public float BoundingSphereRadius { get; set; }
+
+        /// <summary>
+        /// Gets or sets the model's collision box.
+        /// </summary>
+        public Box CollisionBox { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collision sphere radius.
+        /// </summary>
+        public float CollisionSphereRadius { get; set; }
+
+        /// <summary>
+        /// Gets or sets the triangle indexes of the convex collision hull.
+        /// </summary>
+        public MDXArray<ushort> CollisionTriangles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vertices of the convex collision hull.
+        /// </summary>
+        public MDXArray<Vector3> CollisionVertices { get; set; }
+
+        /// <summary>
+        /// Gets or sets the normals of the convex collision hull.
+        /// </summary>
+        public MDXArray<Vector3> CollisionNormals { get; set; }
+
+        /// <summary>
+        /// Gets or sets the attachments of the model.
+        /// </summary>
+        public MDXArray<MDXAttachment> Attachments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the attachment lookup table.
+        /// </summary>
+        public MDXArray<MDXAttachmentType> AttachmentLookupTable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the animation events.
+        /// </summary>
+        public MDXArray<MDXAnimationEvent> AnimationEvents { get; set; }
+
+        /// <summary>
+        /// Gets or sets the lights in the model.
+        /// </summary>
+        public MDXArray<MDXLight> Lights { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cameras in the model.
+        /// </summary>
+        public MDXArray<MDXCamera> Cameras { get; set; }
+
+        /// <summary>
+        /// Gets or sets the camera type lookup table.
+        /// </summary>
+        public MDXArray<MDXCameraType> CameraTypeLookupTable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ribbon emitters in the model.
+        /// </summary>
+        public MDXArray<MDXRibbonEmitter> RibbonEmitters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the particle emitters in the model.
+        /// </summary>
+        public MDXArray<MDXParticleEmitter> ParticleEmitters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the blending mode overrides. This is only present if the model is from Wrath or above, and has
+        /// the blending map override flag set.
+        /// </summary>
         // cond: wrath & blendmap overrides
-        public MDXArray<BlendingMode> BlendMapOverrides;
+        public MDXArray<BlendingMode> BlendMapOverrides { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MDX"/> class.
@@ -112,6 +257,10 @@ namespace Warcraft.MDX
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDX"/> class.
+        /// </summary>
+        /// <param name="dataStream">The stream to load the model from.</param>
         public MDX(Stream dataStream)
         {
             LoadFromStream(dataStream);
@@ -130,7 +279,7 @@ namespace Warcraft.MDX
 
                 Version = GetModelVersion(br.ReadUInt32());
                 Name = new string(br.ReadMDXArray<char>().GetValues().ToArray());
-                GlobalModelFlags = (ModelObjectFlags) br.ReadUInt32();
+                GlobalModelFlags = (ModelObjectFlags)br.ReadUInt32();
 
                 GlobalSequenceTimestamps = br.ReadMDXArray<uint>();
                 AnimationSequences = br.ReadMDXArray<MDXAnimationSequence>(Version);
@@ -211,7 +360,7 @@ namespace Warcraft.MDX
         /// <summary>
         /// Sets the skins used in this model.
         /// </summary>
-        /// <param name="skins"></param>
+        /// <param name="skins">The skins.</param>
         public void SetSkins(IEnumerable<MDXSkin> skins)
         {
             var skinArray = new MDXArray<MDXSkin>(skins);
@@ -266,4 +415,3 @@ namespace Warcraft.MDX
         }
     }
 }
-

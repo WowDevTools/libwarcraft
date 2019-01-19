@@ -19,14 +19,44 @@
 
 namespace Warcraft.MDX.Animation
 {
+    /// <summary>
+    /// Defines various bone flags.
+    /// </summary>
     public enum MDXBoneFlag : uint
     {
-        SphericalBillboard            = 0x8,
-        CylindricalBillboardLockedX    = 0x10,
-        CylindricalBillboardLockedY    = 0x20,
-        CylindricalBillboardLockedZ    = 0x40,
-        Transformed                    = 0x200,
-        KinematicBone                = 0x400,
-        ScaledAnimation                = 0x1000
+        /// <summary>
+        /// The bone is a spherical billboard.
+        /// </summary>
+        SphericalBillboard = 0x8,
+
+        /// <summary>
+        /// The bone is a cylindrical billboard, rotating around the X axis.
+        /// </summary>
+        CylindricalBillboardLockedX = 0x10,
+
+        /// <summary>
+        /// The bone is a cylindrical billboard, rotating around the Y axis.
+        /// </summary>
+        CylindricalBillboardLockedY = 0x20,
+
+        /// <summary>
+        /// The bone is a cylindrical billboard, rotating around the Z axis.
+        /// </summary>
+        CylindricalBillboardLockedZ = 0x40,
+
+        /// <summary>
+        /// The bone is transformed.
+        /// </summary>
+        Transformed = 0x200,
+
+        /// <summary>
+        /// The bone is a kinematic bone.
+        /// </summary>
+        KinematicBone = 0x400,
+
+        /// <summary>
+        /// The bone has scaled animation.
+        /// </summary>
+        ScaledAnimation = 0x1000
     }
 }

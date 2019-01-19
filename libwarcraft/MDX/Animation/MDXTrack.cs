@@ -17,17 +17,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.Core.Interpolation;
 using System.IO;
 using System.Numerics;
+
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Interpolation;
 using Warcraft.Core.Structures;
 using Warcraft.MDX.Data;
 
 namespace Warcraft.MDX.Animation
 {
+    /// <summary>
+    /// Represents a time-indexed track of variable data.
+    /// </summary>
+    /// <typeparam name="T">The contained type.</typeparam>
     public class MDXTrack<T> : IVersionedClass
     {
         /// <summary>
@@ -35,29 +40,54 @@ namespace Warcraft.MDX.Animation
         /// </summary>
         public bool IsComposite { get; }
 
-        public InterpolationType Interpolationtype;
-        public ushort GlobalSequenceID;
+        /// <summary>
+        /// Gets the interpolation type of the track.
+        /// </summary>
+        public InterpolationType Interpolationtype { get; }
+
+        /// <summary>
+        /// Gets the global sequence ID.
+        /// </summary>
+        public ushort GlobalSequenceID { get; }
 
         /*
             <= BC
         */
 
-        public readonly MDXArray<IntegerRange> CompositeTimelineInterpolationRanges;
-        public readonly MDXArray<uint> CompositeTimelineTimestamps;
-        public readonly MDXArray<T> CompositeTimelineValues;
+        /// <summary>
+        /// Gets the composite interpolation ranges.
+        /// </summary>
+        public MDXArray<IntegerRange> CompositeTimelineInterpolationRanges { get; }
+
+        /// <summary>
+        /// Gets the composite timestamps.
+        /// </summary>
+        public MDXArray<uint> CompositeTimelineTimestamps { get; }
+
+        /// <summary>
+        /// Gets the composite values.
+        /// </summary>
+        public MDXArray<T> CompositeTimelineValues { get; }
 
         /*
             >= Wrath
         */
 
-        public readonly MDXArray<MDXArray<uint>> Timestamps;
-        public readonly MDXArray<MDXArray<T>> Values;
+        /// <summary>
+        /// Gets the timestamps.
+        /// </summary>
+        public MDXArray<MDXArray<uint>> Timestamps { get; }
+
+        /// <summary>
+        /// Gets the values.
+        /// </summary>
+        public MDXArray<MDXArray<T>> Values { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Warcraft.MDX.Animation.MDXTrack{T}"/> class.
         /// </summary>
-        /// <param name="br"></param>
-        /// <param name="version">Format.</param>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         /// <param name="valueless">
         /// If this value is true, it indicates that no values are associated with
         /// this track, and any value-related reading should be skipped.
@@ -111,4 +141,3 @@ namespace Warcraft.MDX.Animation
         }
     }
 }
-

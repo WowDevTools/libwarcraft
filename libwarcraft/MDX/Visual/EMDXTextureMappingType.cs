@@ -1,5 +1,5 @@
 ﻿//
-//  ExtendedIO.cs
+//  EMDXTextureMappingType.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -19,10 +19,24 @@
 
 namespace Warcraft.MDX.Visual
 {
+    /// <summary>
+    /// Texture mapping types.
+    /// </summary>
     public enum EMDXTextureMappingType : short
     {
+        /// <summary>
+        /// Uses the first texture slot.
+        /// </summary>
         T1 = 0,
+
+        /// <summary>
+        /// Uses the second texture slot.
+        /// </summary>
         T2 = 1,
+
+        /// <summary>
+        /// Uses the environment mapping texture slot.
+        /// </summary>
         Environment = -1
     }
 }

@@ -25,14 +25,41 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MDX.Animation
 {
+    /// <summary>
+    /// Represents an event that is triggered at some point during an animation.
+    /// </summary>
     public class MDXAnimationEvent : IVersionedClass
     {
-        public string EventName;
-        public uint Data;
-        public uint Bone;
-        public Vector3 RelativePosition;
-        public MDXTrack<bool> RaiseEvent;
+        /// <summary>
+        /// Gets or sets the name of the event.
+        /// </summary>
+        public string EventName { get; set; }
 
+        /// <summary>
+        /// Gets or sets generic data in the event.
+        /// </summary>
+        public uint Data { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bone the event affects.
+        /// </summary>
+        public uint Bone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the relative position from the bone of the event.
+        /// </summary>
+        public Vector3 RelativePosition { get; set; }
+
+        /// <summary>
+        /// Gets or sets a track of points where the event should be raised.
+        /// </summary>
+        public MDXTrack<bool> RaiseEvent { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXAnimationEvent"/> class.
+        /// </summary>
+        /// <param name="br">The reader.</param>
+        /// <param name="version">The version.</param>
         public MDXAnimationEvent(BinaryReader br, WarcraftVersion version)
         {
             EventName = new string(br.ReadChars(4));

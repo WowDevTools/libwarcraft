@@ -21,17 +21,55 @@ using System;
 
 namespace Warcraft.MDX.Animation
 {
+    /// <summary>
+    /// Defines modifying flags for an animation sequence.
+    /// </summary>
     [Flags]
     public enum MDXAnimationSequenceFlags : uint
     {
+        /// <summary>
+        /// The blend animation should be set.
+        /// </summary>
         SetBlendAnimation = 0x01,
+
+        /// <summary>
+        /// Unknown.
+        /// </summary>
         Unknown1 = 0x02,
+
+        /// <summary>
+        /// Unknown.
+        /// </summary>
         Unknown2 = 0x04,
+
+        /// <summary>
+        /// Unknown.
+        /// </summary>
         Unknown3 = 0x08,
+
+        /// <summary>
+        /// This animation was loaded as a low-priority sequence.
+        /// </summary>
         LoadedAsLowPrioritySequence = 0x10,
+
+        /// <summary>
+        /// This animation is looping.
+        /// </summary>
         Looping = 0x20,
+
+        /// <summary>
+        /// This animation is aliased, and has another animation that will follow it.
+        /// </summary>
         IsAliasedAndHasFollowupAnimation = 0x40,
+
+        /// <summary>
+        /// This animation is blended.
+        /// </summary>
         IsBlended = 0x80,
+
+        /// <summary>
+        /// The sequence is locally stored.
+        /// </summary>
         LocallyStoredSequence = 0x100
     }
 }

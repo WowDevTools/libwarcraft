@@ -1,5 +1,5 @@
 //
-//  MDXView.cs
+//  MDXSkin.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -32,37 +32,36 @@ namespace Warcraft.MDX.Geometry.Skin
     public class MDXSkin : IVersionedClass
     {
         /// <summary>
-        /// A list of vertices from the global vertex list which are used in this skin.
+        /// Gets or sets a list of vertices from the global vertex list which are used in this skin.
         /// </summary>
-        public MDXArray<ushort> VertexIndices;
+        public MDXArray<ushort> VertexIndices { get; set; }
 
         /// <summary>
-        /// A list of indices into the <see cref="VertexIndices"/> list, which constitute the triangles in the skin.
+        /// Gets or sets a list of indices into the <see cref="VertexIndices"/> list, which constitute the triangles in the skin.
         /// Each triplet of indices in this list corresponds to one triangle.
         /// </summary>
-        public MDXArray<ushort> Triangles;
+        public MDXArray<ushort> Triangles { get; set; }
 
         /// <summary>
-        /// A list of bone index quantets for the vertices in the skin. The given indices are indexed into the
+        /// Gets or sets a list of bone index quantets for the vertices in the skin. The given indices are indexed into the
         /// <see cref="MDX.BoneLookupTable"/>.
         /// </summary>
-        public MDXArray<MDXVertexProperty> VertexProperties;
+        public MDXArray<MDXVertexProperty> VertexProperties { get; set; }
 
         /// <summary>
-        /// A list of <see cref="MDXSkinSection"/> objects, which constitute the parts of the whole skin. These
+        /// Gets or sets a list of <see cref="MDXSkinSection"/> objects, which constitute the parts of the whole skin. These
         /// separations act to divide the skin into different shading zones.
         /// </summary>
-        public MDXArray<MDXSkinSection> Sections;
+        public MDXArray<MDXSkinSection> Sections { get; set; }
 
         /// <summary>
-        /// A list of <see cref="MDXRenderBatch"/> objects. These render batches act as shader layers for skin sections.
+        /// Gets or sets a list of <see cref="MDXRenderBatch"/> objects. These render batches act as shader layers for skin sections.
         /// </summary>
-        public MDXArray<MDXRenderBatch> RenderBatches;
+        public MDXArray<MDXRenderBatch> RenderBatches { get; set; }
 
         /// <summary>
-        /// The maximum number of bones in each draw call.
+        /// Gets or sets the maximum number of bones in each draw call.
         /// </summary>
-        public uint BoneCountMax;
+        public uint BoneCountMax { get; set; }
     }
 }
-

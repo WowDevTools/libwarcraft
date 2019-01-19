@@ -26,14 +26,41 @@ using Warcraft.MDX.Animation;
 
 namespace Warcraft.MDX.Gameplay
 {
+    /// <summary>
+    /// Represents an attachment to a model.
+    /// </summary>
     public class MDXAttachment : IVersionedClass
     {
-        public uint AttachmentIDLookupIndex;
-        public ushort Bone;
-        public ushort Unknown;
-        public Vector3 Position;
-        public MDXTrack<bool> AnimateAttached;
+        /// <summary>
+        /// Gets or sets the attachment lookup index.
+        /// </summary>
+        public uint AttachmentIDLookupIndex { get; set; }
 
+        /// <summary>
+        /// Gets or sets the bone the attachment is attached to.
+        /// </summary>
+        public ushort Bone { get; set; }
+
+        /// <summary>
+        /// Gets or sets an unknown value.
+        /// </summary>
+        public ushort Unknown { get; set; }
+
+        /// <summary>
+        /// Gets or sets the relative position of the attachment.
+        /// </summary>
+        public Vector3 Position { get; set; }
+
+        /// <summary>
+        /// Gets or sets a track which indicates if the attachment should be animated.
+        /// </summary>
+        public MDXTrack<bool> AnimateAttached { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXAttachment"/> class.
+        /// </summary>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         public MDXAttachment(BinaryReader br, WarcraftVersion version)
         {
             AttachmentIDLookupIndex = br.ReadUInt32();

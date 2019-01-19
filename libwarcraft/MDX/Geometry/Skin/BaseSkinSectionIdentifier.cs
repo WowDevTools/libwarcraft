@@ -33,13 +33,20 @@ namespace Warcraft.MDX.Geometry.Skin
     {
         private readonly ushort InternalValue;
 
+        /// <summary>
+        /// Gets the major type of the skin.
+        /// </summary>
         public string MajorType => GetMajorType();
+
+        /// <summary>
+        /// Gets the minor type of the skin.
+        /// </summary>
         public string MinorType => GetMinorType(MajorType);
 
         /// <summary>
-        /// Creates a new <see cref="BaseSkinSectionIdentifier"/> object from an underlying data value.
+        /// Initializes a new instance of the <see cref="BaseSkinSectionIdentifier"/> class.
         /// </summary>
-        /// <param name="inValue"></param>
+        /// <param name="inValue">The value.</param>
         public BaseSkinSectionIdentifier(ushort inValue)
         {
             if (inValue > 9999)
@@ -60,98 +67,122 @@ namespace Warcraft.MDX.Geometry.Skin
             {
                 return "Skin";
             }
+
             if (InternalValue > 0 && InternalValue < 100)
             {
                 return "Hair";
             }
+
             if (InternalValue >= 100 && InternalValue < 200)
             {
                 return "Beard";
             }
+
             if (InternalValue >= 200 && InternalValue < 300)
             {
                 return "Moustache";
             }
+
             if (InternalValue >= 300 && InternalValue < 400)
             {
                 return "Sideburns";
             }
+
             if (InternalValue >= 400 && InternalValue < 500)
             {
                 return "Glove";
             }
+
             if (InternalValue >= 500 && InternalValue < 600)
             {
                 return "Boots";
             }
+
             if (InternalValue >= 600 && InternalValue < 700)
             {
                 return "None";
             }
+
             if (InternalValue >= 700 && InternalValue < 800)
             {
                 return "Ears";
             }
+
             if (InternalValue >= 800 && InternalValue < 900)
             {
                 return "Wristbands";
             }
+
             if (InternalValue >= 900 && InternalValue < 1000)
             {
                 return "Kneepads";
             }
+
             if (InternalValue >= 1000 && InternalValue < 1100)
             {
                 return "Chest";
             }
+
             if (InternalValue >= 1100 && InternalValue < 1200)
             {
                 return "Pants";
             }
+
             if (InternalValue >= 1200 && InternalValue < 1300)
             {
                 return "Tabard";
             }
+
             if (InternalValue >= 1300 && InternalValue < 1400)
             {
                 return "Trousers";
             }
+
             if (InternalValue >= 1400 && InternalValue < 1500)
             {
                 return "None";
             }
+
             if (InternalValue >= 1500 && InternalValue < 1600)
             {
                 return "Cloak";
             }
+
             if (InternalValue >= 1600 && InternalValue < 1700)
             {
                 return "None";
             }
+
             if (InternalValue >= 1700 && InternalValue < 1800)
             {
                 return "Eyeglow";
             }
+
             if (InternalValue >= 1800 && InternalValue < 1900)
             {
                 return "Belt";
             }
+
             if (InternalValue >= 1900 && InternalValue < 2000)
             {
                 return "Tail";
             }
+
             if (InternalValue >= 2000 && InternalValue < 2100)
             {
                 return "Feet";
             }
+
             if (InternalValue >= 2100 && InternalValue < 2200)
             {
                 return "None";
             }
+
             if (InternalValue >= 2200 && InternalValue < 2300)
             {
                 return "None";
             }
+
             if (InternalValue >= 2300 && InternalValue < 2400)
             {
                 return "Elf Hands";
@@ -163,6 +194,7 @@ namespace Warcraft.MDX.Geometry.Skin
         /// <summary>
         /// Gets the minor type of this skin section.
         /// </summary>
+        /// <param name="majorType">The major type.</param>
         /// <returns>The minor type.</returns>
         protected virtual string GetMinorType(string majorType)
         {
@@ -174,6 +206,7 @@ namespace Warcraft.MDX.Geometry.Skin
                 {
                     return "Simple";
                 }
+
                 case "Cloak":
                 case "Hair":
                 case "Beard":
@@ -184,6 +217,7 @@ namespace Warcraft.MDX.Geometry.Skin
                 {
                     break;
                 }
+
                 case "Moustache":
                 case "Sideburns":
                 case "Chest":
@@ -196,6 +230,7 @@ namespace Warcraft.MDX.Geometry.Skin
 
                     break;
                 }
+
                 case "Wristbands":
                 {
                     if (minorTypeValue == 1)
@@ -215,6 +250,7 @@ namespace Warcraft.MDX.Geometry.Skin
 
                     break;
                 }
+
                 case "Kneepads":
                 {
                     if (minorTypeValue == 1)
@@ -234,6 +270,7 @@ namespace Warcraft.MDX.Geometry.Skin
 
                     break;
                 }
+
                 case "Pants":
                 {
                     if (minorTypeValue == 1)
@@ -253,6 +290,7 @@ namespace Warcraft.MDX.Geometry.Skin
 
                     break;
                 }
+
                 case "Tabard":
                 {
                     if (minorTypeValue == 1)
@@ -267,6 +305,7 @@ namespace Warcraft.MDX.Geometry.Skin
 
                     break;
                 }
+
                 case "Trousers":
                 {
                     if (minorTypeValue == 1)
@@ -281,6 +320,7 @@ namespace Warcraft.MDX.Geometry.Skin
 
                     break;
                 }
+
                 case "Eyeglows":
                 {
                     if (minorTypeValue == 1)
@@ -300,6 +340,7 @@ namespace Warcraft.MDX.Geometry.Skin
 
                     break;
                 }
+
                 case "Belt":
                 {
                     if (minorTypeValue == 1)
@@ -314,6 +355,7 @@ namespace Warcraft.MDX.Geometry.Skin
 
                     break;
                 }
+
                 case "Feet":
                 {
                     if (minorTypeValue == 1)
@@ -325,8 +367,10 @@ namespace Warcraft.MDX.Geometry.Skin
                     {
                         return "Feet";
                     }
+
                     break;
                 }
+
                 default:
                 {
                     return "Unknown";
@@ -336,10 +380,7 @@ namespace Warcraft.MDX.Geometry.Skin
             return $"{majorType} {minorTypeValue}";
         }
 
-        /// <summary>
-        /// Converts the object into a string, representing its values in a human-readable format.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public override string ToString()
         {
             return $"{MajorType} - {MinorType}";

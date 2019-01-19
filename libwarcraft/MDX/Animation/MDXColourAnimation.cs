@@ -25,11 +25,26 @@ using Warcraft.Core.Structures;
 
 namespace Warcraft.MDX.Animation
 {
+    /// <summary>
+    /// Represents a colour animation.
+    /// </summary>
     public class MDXColourAnimation : IVersionedClass
     {
-        public MDXTrack<RGB> ColourTrack;
-        public MDXTrack<short> OpacityTrack;
+        /// <summary>
+        /// Gets or sets the colour track.
+        /// </summary>
+        public MDXTrack<RGB> ColourTrack { get; set; }
 
+        /// <summary>
+        /// Gets or sets the opacity track.
+        /// </summary>
+        public MDXTrack<short> OpacityTrack { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXColourAnimation"/> class.
+        /// </summary>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         public MDXColourAnimation(BinaryReader br, WarcraftVersion version)
         {
             ColourTrack = br.ReadMDXTrack<RGB>(version);
@@ -37,4 +52,3 @@ namespace Warcraft.MDX.Animation
         }
     }
 }
-

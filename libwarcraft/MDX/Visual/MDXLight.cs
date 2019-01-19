@@ -27,19 +27,66 @@ using Warcraft.MDX.Animation;
 
 namespace Warcraft.MDX.Visual
 {
+    /// <summary>
+    /// Represents a light source in a model.
+    /// </summary>
     public class MDXLight : IVersionedClass
     {
-        public MDXLightType Type;
-        public short Bone; // -1 if not attached to bone
-        public Vector3 Position;
-        public MDXTrack<RGB> AmbientColour;
-        public MDXTrack<float> AmbientIntensity;
-        public MDXTrack<RGB> DiffuseColour;
-        public MDXTrack<float> DiffuseIntensity;
-        public MDXTrack<float> AttenuationStart;
-        public MDXTrack<float> AttenuationEnd;
-        public MDXTrack<bool> Visibility;
+        /// <summary>
+        /// Gets or sets the light type.
+        /// </summary>
+        public MDXLightType Type { get; set; }
 
+        /// <summary>
+        /// Gets or sets the bone the light is attached to. -1 means no attachment.
+        /// </summary>
+        public short Bone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the relative position of the light.
+        /// </summary>
+        public Vector3 Position { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ambient colour track.
+        /// </summary>
+        public MDXTrack<RGB> AmbientColour { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ambient intensity track.
+        /// </summary>
+        public MDXTrack<float> AmbientIntensity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the diffuse colour track.
+        /// </summary>
+        public MDXTrack<RGB> DiffuseColour { get; set; }
+
+        /// <summary>
+        /// Gets or sets the diffuse intensity track.
+        /// </summary>
+        public MDXTrack<float> DiffuseIntensity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the attenuation start distance track.
+        /// </summary>
+        public MDXTrack<float> AttenuationStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets the attenuation end distance track.
+        /// </summary>
+        public MDXTrack<float> AttenuationEnd { get; set; }
+
+        /// <summary>
+        /// Gets or sets the visibility track.
+        /// </summary>
+        public MDXTrack<bool> Visibility { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXLight"/> class.
+        /// </summary>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         public MDXLight(BinaryReader br, WarcraftVersion version)
         {
             Type = (MDXLightType)br.ReadUInt16();

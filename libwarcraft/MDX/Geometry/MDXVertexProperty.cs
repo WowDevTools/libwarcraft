@@ -27,12 +27,12 @@ namespace Warcraft.MDX.Geometry
     public class MDXVertexProperty
     {
         /// <summary>
-        /// A list of bone indices.
+        /// Gets a list of bone indices.
         /// </summary>
-        public readonly List<byte> BoneIndices = new List<byte>();
+        public List<byte> BoneIndices { get; } = new List<byte>();
 
         /// <summary>
-        /// Creates a new <see cref="MDXVertexProperty"/> object from a set of bone indices.
+        /// Initializes a new instance of the <see cref="MDXVertexProperty"/> class.
         /// </summary>
         /// <param name="inBoneA">The first bone.</param>
         /// <param name="inBoneB">The second bone.</param>
@@ -47,4 +47,3 @@ namespace Warcraft.MDX.Geometry
         }
     }
 }
-

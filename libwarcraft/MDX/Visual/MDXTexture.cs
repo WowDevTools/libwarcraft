@@ -1,5 +1,5 @@
 //
-//  Texture.cs
+//  MDXTexture.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -23,13 +23,30 @@ using Warcraft.Core.Extensions;
 
 namespace Warcraft.MDX.Visual
 {
+    /// <summary>
+    /// Represents a texture in a model.
+    /// </summary>
     public class MDXTexture
     {
-        public EMDXTextureType TextureType;
-        public EMDXTextureFlags Flags;
+        /// <summary>
+        /// Gets or sets the texture type.
+        /// </summary>
+        public EMDXTextureType TextureType { get; set; }
 
-        public string Filename;
+        /// <summary>
+        /// Gets or sets the flags.
+        /// </summary>
+        public EMDXTextureFlags Flags { get; set; }
 
+        /// <summary>
+        /// Gets or sets the path to the texture.
+        /// </summary>
+        public string Filename { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXTexture"/> class.
+        /// </summary>
+        /// <param name="br">The reader to read the instance from.</param>
         public MDXTexture(BinaryReader br)
         {
             TextureType = (EMDXTextureType)br.ReadUInt32();
@@ -40,4 +57,3 @@ namespace Warcraft.MDX.Visual
         }
     }
 }
-

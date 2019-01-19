@@ -27,26 +27,66 @@ using Warcraft.MDX.Animation;
 
 namespace Warcraft.MDX.Gameplay
 {
+    /// <summary>
+    /// Represents a camera in a model.
+    /// </summary>
     public class MDXCamera : IVersionedClass
     {
-        public uint TypeLookupIndex;
+        /// <summary>
+        /// Gets or sets the type lookup index.
+        /// </summary>
+        public uint TypeLookupIndex { get; set; }
 
-        // < Cataclysm only
-        public float FieldOfView;
+        /// <summary>
+        /// Gets or sets the field of view of the camera. This is only present in versions below Cataclysm.
+        /// </summary>
+        public float FieldOfView { get; set; }
 
-        public float FarClip;
-        public float NearClip;
-        public MDXTrack<SplineKey<Vector3>> Positions;
-        public Vector3 PositionBase;
+        /// <summary>
+        /// Gets or sets the far clipping plane distance.
+        /// </summary>
+        public float FarClip { get; set; }
 
-        public MDXTrack<SplineKey<Vector3>> TargetPositions;
-        public Vector3 TargetPositionBase;
+        /// <summary>
+        /// Gets or sets the near clipping plane distance.
+        /// </summary>
+        public float NearClip { get; set; }
 
-        public MDXTrack<SplineKey<float>> Roll;
+        /// <summary>
+        /// Gets or sets the relative camera position track.
+        /// </summary>
+        public MDXTrack<SplineKey<Vector3>> Positions { get; set; }
 
-        // => Cataclysm only
-        public MDXTrack<SplineKey<float>> AnimatedFOV;
+        /// <summary>
+        /// Gets or sets the base position of the camera.
+        /// </summary>
+        public Vector3 PositionBase { get; set; }
 
+        /// <summary>
+        /// Gets or sets the relative camera target position track.
+        /// </summary>
+        public MDXTrack<SplineKey<Vector3>> TargetPositions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the base target position.
+        /// </summary>
+        public Vector3 TargetPositionBase { get; set; }
+
+        /// <summary>
+        /// Gets or sets the camera roll track.
+        /// </summary>
+        public MDXTrack<SplineKey<float>> Roll { get; set; }
+
+        /// <summary>
+        /// Gets or sets the camera FOV track. This is only present in Cataclysm and above.
+        /// </summary>
+        public MDXTrack<SplineKey<float>> AnimatedFOV { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXCamera"/> class.
+        /// </summary>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         public MDXCamera(BinaryReader br, WarcraftVersion version)
         {
             TypeLookupIndex = br.ReadUInt32();

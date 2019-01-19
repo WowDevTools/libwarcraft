@@ -25,12 +25,31 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MDX.Animation
 {
+    /// <summary>
+    /// Defines a texture transformation animation.
+    /// </summary>
     public class MDXTextureTransform : IVersionedClass
     {
-        public MDXTrack<Vector3> Translation;
-        public MDXTrack<Quaternion> Rotation;
-        public MDXTrack<Vector3> Scale;
+        /// <summary>
+        /// Gets or sets the texture translation.
+        /// </summary>
+        public MDXTrack<Vector3> Translation { get; set; }
 
+        /// <summary>
+        /// Gets or sets the texture rotation.
+        /// </summary>
+        public MDXTrack<Quaternion> Rotation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the texture scale.
+        /// </summary>
+        public MDXTrack<Vector3> Scale { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXTextureTransform"/> class.
+        /// </summary>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         public MDXTextureTransform(BinaryReader br, WarcraftVersion version)
         {
             Translation = br.ReadMDXTrack<Vector3>(version);
@@ -39,4 +58,3 @@ namespace Warcraft.MDX.Animation
         }
     }
 }
-

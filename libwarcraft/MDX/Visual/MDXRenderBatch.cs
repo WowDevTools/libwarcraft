@@ -30,79 +30,79 @@ namespace Warcraft.MDX.Visual
     public class MDXRenderBatch
     {
         /// <summary>
-        /// A set of flags, defining operations on this layer.
+        /// Gets or sets a set of flags, defining operations on this layer.
         /// </summary>
-        public EMDXRenderBatchFlags Flags;
+        public EMDXRenderBatchFlags Flags { get; set; }
 
         /// <summary>
-        /// The rendering priority plane of this layer.
+        /// Gets or sets the rendering priority plane of this layer.
         /// </summary>
-        public sbyte PriorityPlane;
+        public sbyte PriorityPlane { get; set; }
 
         /// <summary>
-        /// The shader ID for this layer.
+        /// Gets or sets the shader ID for this layer.
         /// </summary>
-        public ushort ShaderID;
+        public ushort ShaderID { get; set; }
 
         /// <summary>
-        /// The index of the skin section which this batch belongs to.
+        /// Gets or sets the index of the skin section which this batch belongs to.
         /// </summary>
-        public ushort SkinSectionIndex;
+        public ushort SkinSectionIndex { get; set; }
 
         /// <summary>
-        /// The index of the geoset which this batch belongs to.
+        /// Gets or sets the index of the geoset which this batch belongs to.
         /// </summary>
-        public ushort GeosetIndex;
+        public ushort GeosetIndex { get; set; }
 
         /// <summary>
-        /// The index of a colour animation track which this batch should use. -1 denotes no colour.
-        /// This is an index into <see cref="MDX.ColourAnimations"/>
+        /// Gets or sets the index of a colour animation track which this batch should use. -1 denotes no colour.
+        /// This is an index into <see cref="MDX.ColourAnimations"/>.
         /// </summary>
-        public short ColorIndex;
+        public short ColorIndex { get; set; }
 
         /// <summary>
-        /// The index of the material to use for this batch. This is an index into <see cref="MDX.Materials"/>.
+        /// Gets or sets the index of the material to use for this batch. This is an index into <see cref="MDX.Materials"/>.
         /// </summary>
-        public ushort MaterialIndex;
+        public ushort MaterialIndex { get; set; }
 
         /// <summary>
-        /// The layer that this batch is on. Used when multiple batches are assigned to one skin section to determine
+        /// Gets or sets the layer that this batch is on. Used when multiple batches are assigned to one skin section to determine
         /// the order in which the batches should be applied.
         /// </summary>
-        public ushort MaterialLayer;
+        public ushort MaterialLayer { get; set; }
 
         /// <summary>
-        /// The number of textures used in this batch. This is also the number of textures to load, starting at
+        /// Gets or sets the number of textures used in this batch. This is also the number of textures to load, starting at
         /// <see cref="TextureLookupTableIndex"/> in <see cref="MDX.TextureLookupTable"/>.
         /// </summary>
-        public ushort TextureCount;
+        public ushort TextureCount { get; set; }
 
         /// <summary>
-        /// The start index of the set of textures associated in this batch.
+        /// Gets or sets the start index of the set of textures associated in this batch.
         /// This is an index into <see cref="MDX.TextureLookupTable"/>.
         /// </summary>
-        public ushort TextureLookupTableIndex;
+        public ushort TextureLookupTableIndex { get; set; }
 
         /// <summary>
-        /// The start index of the shader texture slot to attach the textures to. This is usually -1, 0 or 1. -1 denotes
+        /// Gets or sets the start index of the shader texture slot to attach the textures to. This is usually -1, 0 or 1. -1 denotes
         /// environment mapping. This is an index into <see cref="MDX.TextureMappingLookupTable"/>.
         /// </summary>
-        public ushort TextureMappingLookupTableIndex;
+        public ushort TextureMappingLookupTableIndex { get; set; }
 
         /// <summary>
-        /// The start index of the texture weights used for the textures. This is an index into
+        /// Gets or sets the start index of the texture weights used for the textures. This is an index into
         /// <see cref="MDX.TransparencyLookupTable"/>.
         /// </summary>
-        public ushort TransparencyLookupTableIndex;
+        public ushort TransparencyLookupTableIndex { get; set; }
 
         /// <summary>
-        /// The start index of the UV coordinate animation tracks used for the textures. This is an index into
-        /// <see cref="MDX.TextureTransformLookupTable"/>
+        /// Gets or sets the start index of the UV coordinate animation tracks used for the textures. This is an index into
+        /// <see cref="MDX.TextureTransformLookupTable"/>.
         /// </summary>
-        public ushort TextureTransformLookupTableIndex;
+        public ushort TextureTransformLookupTableIndex { get; set; }
 
         /// <summary>
-        /// Deserializes a new <see cref="MDXRenderBatch"/> object from given binary data.
+        /// Initializes a new instance of the <see cref="MDXRenderBatch"/> class.
         /// </summary>
         /// <param name="data">The binary data containing the batch.</param>
         public MDXRenderBatch(byte[] data)
@@ -134,11 +134,10 @@ namespace Warcraft.MDX.Visual
         /// <summary>
         /// Gets the absolute byte size of a serialized object.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The size.</returns>
         public static int GetSize()
         {
             return 24;
         }
     }
 }
-

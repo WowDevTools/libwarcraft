@@ -32,13 +32,13 @@ namespace Warcraft.MDX.Geometry.Skin
     public class MDXSkinSection : IVersionedClass
     {
         /// <summary>
-        /// An identifier which specifies what type of skin section this is. It differentiates standard parts, such as
+        /// Gets or sets an identifier which specifies what type of skin section this is. It differentiates standard parts, such as
         /// the shell of a pot, from nonstandard parts, such as hair styles, horns, equipment geometry, etc.
         /// </summary>
-        public BaseSkinSectionIdentifier SkinSectionID;
+        public BaseSkinSectionIdentifier SkinSectionID { get; set; }
 
         /// <summary>
-        /// An index modifier. This value acts as the upper 16 bits of a 32-bit index value for some of the indexing
+        /// Gets or sets an index modifier. This value acts as the upper 16 bits of a 32-bit index value for some of the indexing
         /// values in the skin section. This is done as a storage saving operation.
         ///
         /// The affected fields are
@@ -50,72 +50,72 @@ namespace Warcraft.MDX.Geometry.Skin
         ///
         /// To combine the level modifier with the value, the following formula is used.
         ///
-        /// int finalIndex = (Level &lt;&lt; 16) | originalIndex;
+        /// int finalIndex = (Level &lt;&lt; 16) | originalIndex.
         /// </summary>
-        public ushort Level;
+        public ushort Level { get; set; }
 
         /// <summary>
-        /// The index of the vertex where this skin section starts. This index is into the local skin vertex list.
+        /// Gets or sets the index of the vertex where this skin section starts. This index is into the local skin vertex list.
         /// </summary>
-        public ushort StartVertexIndex;
+        public ushort StartVertexIndex { get; set; }
 
         /// <summary>
-        /// The number of vertices used in this skin section.
+        /// Gets or sets the number of vertices used in this skin section.
         /// </summary>
-        public ushort VertexCount;
+        public ushort VertexCount { get; set; }
 
         /// <summary>
-        /// The index of the triangle where this skin section starts. This index is into the local skin triangle list.
+        /// Gets or sets the index of the triangle where this skin section starts. This index is into the local skin triangle list.
         /// </summary>
-        public ushort StartTriangleIndex;
+        public ushort StartTriangleIndex { get; set; }
 
         /// <summary>
-        /// The number of triangles in this skin section.
+        /// Gets or sets the number of triangles in this skin section.
         /// </summary>
-        public ushort TriangleCount;
+        public ushort TriangleCount { get; set; }
 
         /// <summary>
-        /// The number of bones in the lookup table which are relevant for this skin section.
+        /// Gets or sets the number of bones in the lookup table which are relevant for this skin section.
         /// </summary>
-        public ushort BoneCount;
+        public ushort BoneCount { get; set; }
 
         /// <summary>
-        /// The starting index in the <see cref="MDX.KeyedBoneLookupTable"/> where the bones affecting this skin section
+        /// Gets or sets the starting index in the <see cref="MDX.KeyedBoneLookupTable"/> where the bones affecting this skin section
         /// are.
         /// </summary>
-        public ushort StartBoneIndex;
+        public ushort StartBoneIndex { get; set; }
 
         /// <summary>
-        /// The number of bones up the parent chain which influence this skin section.
+        /// Gets or sets the number of bones up the parent chain which influence this skin section.
         /// </summary>
-        public ushort InfluencingBonesCount;
+        public ushort InfluencingBonesCount { get; set; }
 
         /// <summary>
-        /// The index of the center bone (the "root" bone) in the bone lookup table.
+        /// Gets or sets the index of the center bone (the "root" bone) in the bone lookup table.
         /// </summary>
-        public ushort CenterBoneIndex;
+        public ushort CenterBoneIndex { get; set; }
 
         /// <summary>
-        /// The center position of this skin section, in model space.
+        /// Gets or sets the center position of this skin section, in model space.
         /// </summary>
-        public Vector3 CenterPosition;
+        public Vector3 CenterPosition { get; set; }
 
         /*
             The following fields are present >= Burning Crusade
         */
 
         /// <summary>
-        /// The center position of this skin section, in model space, which is used for draw sorting.
+        /// Gets or sets the center position of this skin section, in model space, which is used for draw sorting.
         /// </summary>
-        public Vector3 SortCenterPosition;
+        public Vector3 SortCenterPosition { get; set; }
 
         /// <summary>
-        /// The distance to the furthest vertex from the <see cref="SortCenterPosition"/>.
+        /// Gets or sets the distance to the furthest vertex from the <see cref="SortCenterPosition"/>.
         /// </summary>
-        public float SortRadius;
+        public float SortRadius { get; set; }
 
         /// <summary>
-        /// Deserializes an <see cref="MDXSkinSection"/> from a given block of binary data. The data is expected to be
+        /// Initializes a new instance of the <see cref="MDXSkinSection"/> class. The data is expected to be
         /// 32 or 48 bytes long, depending on the version of the originating file.
         /// </summary>
         /// <param name="data">The data containing the skin section.</param>
@@ -162,4 +162,3 @@ namespace Warcraft.MDX.Geometry.Skin
         }
     }
 }
-

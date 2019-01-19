@@ -21,13 +21,35 @@ using System;
 
 namespace Warcraft.MDX.Visual
 {
+    /// <summary>
+    /// Render flags for the whole model, or for a section of it.
+    /// </summary>
     [Flags]
     public enum EMDXRenderFlag : ushort
     {
-        Unlit                = 0x1,
-        NoFog                = 0x2,
-        TwoSided            = 0x4,
-        Unknown                = 0x8,
-        DisableZBuffering    = 0x10
+        /// <summary>
+        /// The model is unlit.
+        /// </summary>
+        Unlit = 0x1,
+
+        /// <summary>
+        /// The model is unaffected by fog.
+        /// </summary>
+        NoFog = 0x2,
+
+        /// <summary>
+        /// The model's textures are two-sided.
+        /// </summary>
+        TwoSided = 0x4,
+
+        /// <summary>
+        /// Unknown.
+        /// </summary>
+        Unknown = 0x8,
+
+        /// <summary>
+        /// The model's Z buffer is disabled.
+        /// </summary>
+        DisableZBuffering = 0x10
     }
 }

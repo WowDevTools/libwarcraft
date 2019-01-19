@@ -19,10 +19,24 @@
 
 namespace Warcraft.MDX.Gameplay
 {
+    /// <summary>
+    /// Defines the various camera types.
+    /// </summary>
     public enum MDXCameraType : short
     {
-        Other            = -1,
-        Portrait        = 0,
-        CharacterInfo    = 1,
+        /// <summary>
+        /// A general camera - narration, character camera, etc.
+        /// </summary>
+        Other = -1,
+
+        /// <summary>
+        /// A portrait camera.
+        /// </summary>
+        Portrait = 0,
+
+        /// <summary>
+        /// A character info camera.
+        /// </summary>
+        CharacterInfo = 1,
     }
 }

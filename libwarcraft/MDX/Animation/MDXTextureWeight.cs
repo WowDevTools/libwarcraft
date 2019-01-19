@@ -24,10 +24,21 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MDX.Animation
 {
+    /// <summary>
+    /// Defines a texture weight animation.
+    /// </summary>
     public class MDXTextureWeight : IVersionedClass
     {
-        public MDXTrack<short> Weight;
+        /// <summary>
+        /// Gets or sets the weight track.
+        /// </summary>
+        public MDXTrack<short> Weight { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXTextureWeight"/> class.
+        /// </summary>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         public MDXTextureWeight(BinaryReader br, WarcraftVersion version)
         {
             Weight = br.ReadMDXTrack<short>(version);

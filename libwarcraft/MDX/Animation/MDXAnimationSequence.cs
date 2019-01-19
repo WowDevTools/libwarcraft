@@ -32,85 +32,85 @@ namespace Warcraft.MDX.Animation
     public class MDXAnimationSequence : IVersionedClass
     {
         /// <summary>
-        /// The animation ID, pointing to additional data in <see cref="AnimationDataRecord"/>.
+        /// Gets or sets the animation ID, pointing to additional data in <see cref="AnimationDataRecord"/>.
         /// </summary>
-        public uint AnimationID;
+        public uint AnimationID { get; set; }
 
         /// <summary>
-        /// The start timestamp of this animation. This field was rendered obsolete in versions > Burning Crusade.
+        /// Gets or sets the start timestamp of this animation. This field was rendered obsolete in versions > Burning Crusade.
         /// </summary>
-        public uint StartTimestamp;
+        public uint StartTimestamp { get; set; }
 
         /// <summary>
-        /// The end timestamp of this animation. This field was rendered obsolete in versions > Burning Crusade.
+        /// Gets or sets the end timestamp of this animation. This field was rendered obsolete in versions > Burning Crusade.
         /// </summary>
-        public uint EndTimestamp;
+        public uint EndTimestamp { get; set; }
 
         /// <summary>
-        /// The duration (in milliseconds) of this animation. Only present after Burning Crusade.
+        /// Gets or sets the duration (in milliseconds) of this animation. Only present after Burning Crusade.
         /// </summary>
-        public uint Duration;
+        public uint Duration { get; set; }
 
         /// <summary>
-        /// The speed at which the model can move during the animation.
+        /// Gets or sets the speed at which the model can move during the animation.
         /// </summary>
-        public float MovementSpeed;
+        public float MovementSpeed { get; set; }
 
         /// <summary>
-        /// A set of modifying flags.
+        /// Gets or sets a set of modifying flags.
         /// </summary>
-        public MDXAnimationSequenceFlags Flags;
+        public MDXAnimationSequenceFlags Flags { get; set; }
 
         /// <summary>
-        /// The probability that the animation will be played. For all animations of the same type, this will add up to
-        /// 0x7FFF (32767).
+        /// Gets or sets the probability that the animation will be played. For all animations of the same type, this
+        /// will add up to 0x7FFF (32767).
         /// </summary>
-        public short Probability;
+        public short Probability { get; set; }
 
         /// <summary>
-        /// A bit of padding, or an unknown field.
+        /// Gets or sets a bit of padding, or an unknown field.
         /// </summary>
-        public ushort Padding;
+        public ushort Padding { get; set; }
 
         /// <summary>
-        /// A range from which the client will pick a number of repetitions, once the animation is played.
+        /// Gets or sets a range from which the client will pick a number of repetitions, once the animation is played.
         /// Both the upper and lower values may be 0 to denote no repetitions.
         /// </summary>
-        public IntegerRange ReplayRange;
+        public IntegerRange ReplayRange { get; set; }
 
         /// <summary>
-        /// The time taken to blend between this animation and the next.
+        /// Gets or sets the time taken to blend between this animation and the next.
         /// </summary>
-        public uint BlendTime;
+        public uint BlendTime { get; set; }
 
         /// <summary>
-        /// A bounding box, which encompasses the maximum size the animation may deform the model to.
+        /// Gets or sets a bounding box, which encompasses the maximum size the animation may deform the model to.
         /// </summary>
-        public Box BoundingBox;
+        public Box BoundingBox { get; set; }
 
         /// <summary>
-        /// A bounding radius which (when used with the center of <see cref="BoundingBox"/>) forms a
+        /// Gets or sets a bounding radius which (when used with the center of <see cref="BoundingBox"/>) forms a
         /// bounding sphere which encompasses the maximum size the animation may deform the model to.
         /// </summary>
-        public float BoundingSphereRadius;
+        public float BoundingSphereRadius { get; set; }
 
         /// <summary>
-        /// The ID of the following variant of this animation which is to be played, or -1 for none.
+        /// Gets or sets the ID of the following variant of this animation which is to be played, or -1 for none.
         /// </summary>
-        public short NextVariation;
+        public short NextVariation { get; set; }
 
         /// <summary>
-        /// The ID of the following aninmation. This field is used if this animation is an alias
+        /// Gets or sets the ID of the following aninmation. This field is used if this animation is an alias
         /// (that is, <see cref="Flags"/> has <see cref="MDXAnimationSequenceFlags.IsAliasedAndHasFollowupAnimation"/>
         /// set.
         /// </summary>
-        public ushort NextAliasedAnimationID;
+        public ushort NextAliasedAnimationID { get; set; }
 
         /// <summary>
-        /// Deserializes an <see cref="MDXAnimationSequence"/> from a given data stream.
+        /// Initializes a new instance of the <see cref="MDXAnimationSequence"/> class.
         /// </summary>
-        /// <param name="br"></param>
-        /// <param name="version"></param>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         public MDXAnimationSequence(BinaryReader br, WarcraftVersion version)
         {
             AnimationID = br.ReadUInt32();
@@ -139,4 +139,3 @@ namespace Warcraft.MDX.Animation
         }
     }
 }
-

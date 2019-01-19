@@ -19,9 +19,19 @@
 
 namespace Warcraft.MDX.Visual
 {
+    /// <summary>
+    /// Defines light types.
+    /// </summary>
     public enum MDXLightType : ushort
     {
-        Directional        = 0,
-        Point            = 1
+        /// <summary>
+        /// A directional light, like a sun.
+        /// </summary>
+        Directional = 0,
+
+        /// <summary>
+        /// A point light, like a lightbulb.
+        /// </summary>
+        Point = 1
     }
 }

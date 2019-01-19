@@ -28,29 +28,106 @@ using Warcraft.MDX.Data;
 
 namespace Warcraft.MDX.Visual.FX
 {
+    /// <summary>
+    /// Represents a ribbon emitter.
+    /// </summary>
     public class MDXRibbonEmitter : IVersionedClass
     {
-        public uint RibbonID;
-        public uint BoneIndex;
-        public Vector3 RelativePosition;
-        public MDXArray<ushort> Textures;
-        public MDXArray<ushort> Materials;
-        public MDXTrack<RGB> Colour;
-        public MDXTrack<short> Alpha;
-        public MDXTrack<float> HeightAbove;
-        public MDXTrack<float> HeightBelow;
-        public float EdgesPerSecond;
-        public float EdgeLifetime;
-        public float Gravity;
-        public ushort TextureTileX;
-        public ushort TextureTileY;
-        public MDXTrack<ushort> TextureSlot;
-        public MDXTrack<bool> Visibility;
+        /// <summary>
+        /// Gets or sets the ribbon ID.
+        /// </summary>
+        public uint RibbonID { get; set; }
 
-        // >= Wrath (probably, needs verification)
-        public short PriorityPlane;
-        public short Unknown;
+        /// <summary>
+        /// Gets or sets the bone index.
+        /// </summary>
+        public uint BoneIndex { get; set; }
 
+        /// <summary>
+        /// Gets or sets the relative position of the ribbon.
+        /// </summary>
+        public Vector3 RelativePosition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the texture IDs of the ribbon.
+        /// </summary>
+        public MDXArray<ushort> Textures { get; set; }
+
+        /// <summary>
+        /// Gets or sets the materials of the ribbon.
+        /// </summary>
+        public MDXArray<ushort> Materials { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ribbon's colour animation track.
+        /// </summary>
+        public MDXTrack<RGB> Colour { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ribbon's opacity animation track.
+        /// </summary>
+        public MDXTrack<short> Alpha { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ribbon's height above its position.
+        /// </summary>
+        public MDXTrack<float> HeightAbove { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ribbon's height below its position.
+        /// </summary>
+        public MDXTrack<float> HeightBelow { get; set; }
+
+        /// <summary>
+        /// Gets or sets the edges per second of the ribbon.
+        /// </summary>
+        public float EdgesPerSecond { get; set; }
+
+        /// <summary>
+        /// Gets or sets the lifetime of an edge.
+        /// </summary>
+        public float EdgeLifetime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the gravitational constant for the ribbon.
+        /// </summary>
+        public float Gravity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of texture tiles in the X direction.
+        /// </summary>
+        public ushort TextureTileX { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of texture tiles in the Y direction.
+        /// </summary>
+        public ushort TextureTileY { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ribbon's texture slot track.
+        /// </summary>
+        public MDXTrack<ushort> TextureSlot { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ribbon's visibility track.
+        /// </summary>
+        public MDXTrack<bool> Visibility { get; set; }
+
+        /// <summary>
+        /// Gets or sets the priority plane of the ribbon. Probably introduced in Wrath.
+        /// </summary>
+        public short PriorityPlane { get; set; }
+
+        /// <summary>
+        /// Gets or sets an unknown field.
+        /// </summary>
+        public short Unknown { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXRibbonEmitter"/> class.
+        /// </summary>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         public MDXRibbonEmitter(BinaryReader br, WarcraftVersion version)
         {
             RibbonID = br.ReadUInt32();
@@ -83,4 +160,3 @@ namespace Warcraft.MDX.Visual.FX
         }
     }
 }
-

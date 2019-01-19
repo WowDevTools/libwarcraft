@@ -19,6 +19,9 @@
 
 namespace Warcraft.MDX.Visual.FX
 {
+    /// <summary>
+    /// Represents a particle emitter.
+    /// </summary>
     public class MDXParticleEmitter
     {
         /// <summary>
@@ -29,4 +32,3 @@ namespace Warcraft.MDX.Visual.FX
         }
     }
 }
-

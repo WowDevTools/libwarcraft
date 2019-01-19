@@ -21,11 +21,25 @@ using System;
 
 namespace Warcraft.MDX.Animation
 {
+    /// <summary>
+    /// Flags for how an animation should be played.
+    /// </summary>
     [Flags]
     public enum MDXPlayableAnimationFlags : short
     {
+        /// <summary>
+        /// Normal playback.
+        /// </summary>
         PlayNormally = 0,
+
+        /// <summary>
+        /// Reversed playback.
+        /// </summary>
         PlayReversed = 1,
+
+        /// <summary>
+        /// The animation is frozen (typically at time index 0).
+        /// </summary>
         Freeze = 3
     }
 }

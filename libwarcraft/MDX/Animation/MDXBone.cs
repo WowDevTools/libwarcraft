@@ -25,37 +25,77 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MDX.Animation
 {
+    /// <summary>
+    /// Represents a bone in a model.
+    /// </summary>
     public class MDXBone : IVersionedClass
     {
-        public int SocketLookupTableIndex;
-        public MDXBoneFlag Flags;
-        public short ParentBone;
-        public ushort SkinSectionID; // Likely not the correct name
+        /// <summary>
+        /// Gets or sets the socket lookup table index.
+        /// </summary>
+        public int SocketLookupTableIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bone flags.
+        /// </summary>
+        public MDXBoneFlag Flags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent bone, or -1 if it is the root bone.
+        /// </summary>
+        public short ParentBone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the skin section the bone belongs to.
+        /// </summary>
+        public ushort SkinSectionID { get; set; } // Likely not the correct name
 
         /*
             Only present in Version >= BC. Naming is most likely incorrect.
         */
-        public ushort DistanceToFurtherDesc;
-        public ushort ZRationOfBoneChain;
+
+        /// <summary>
+        /// Gets or sets the CRC of the bone name.
+        /// </summary>
+        public uint BoneNameCRC { get; set; }
 
         // ...
-        public MDXTrack<Vector3> Translation;
-        public MDXTrack<Quaternion> Rotation;
-        public MDXTrack<Vector3> Scale;
 
-        public Vector3 PivotPoint;
+        /// <summary>
+        /// Gets or sets the translation track of the bone.
+        /// </summary>
+        public MDXTrack<Vector3> Translation { get; set; }
 
+        /// <summary>
+        /// Gets or sets the rotation track of the bone.
+        /// </summary>
+        public MDXTrack<Quaternion> Rotation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the scale track of the bone.
+        /// </summary>
+        public MDXTrack<Vector3> Scale { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pivot point of the bone.
+        /// </summary>
+        public Vector3 PivotPoint { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MDXBone"/> class.
+        /// </summary>
+        /// <param name="br">The reader to read the instance from.</param>
+        /// <param name="version">The version to read the instance in the context of.</param>
         public MDXBone(BinaryReader br, WarcraftVersion version)
         {
             SocketLookupTableIndex = br.ReadInt32();
-            Flags = (MDXBoneFlag) br.ReadUInt32();
+            Flags = (MDXBoneFlag)br.ReadUInt32();
             ParentBone = br.ReadInt16();
             SkinSectionID = br.ReadUInt16();
 
             if (version >= WarcraftVersion.BurningCrusade)
             {
-                DistanceToFurtherDesc = br.ReadUInt16();
-                ZRationOfBoneChain = br.ReadUInt16();
+                BoneNameCRC = br.ReadUInt32();
             }
 
             Translation = br.ReadMDXTrack<Vector3>(version);
@@ -66,4 +106,3 @@ namespace Warcraft.MDX.Animation
         }
     }
 }
-
