@@ -1,5 +1,5 @@
 //
-//  MPQBlockTable.cs
+//  BlockTable.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -23,8 +23,14 @@ using Warcraft.MPQ.Crypto;
 
 namespace Warcraft.MPQ.Tables.Block
 {
+    /// <summary>
+    /// Represents the block table in an archive.
+    /// </summary>
     public class BlockTable
     {
+        /// <summary>
+        /// Holds the table encryption key.
+        /// </summary>
         public static readonly uint TableKey = MPQCrypt.Hash("(block table)", HashType.FileKey);
         private readonly List<BlockTableEntry> Entries = new List<BlockTableEntry>();
 
@@ -54,7 +60,10 @@ namespace Warcraft.MPQ.Tables.Block
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Serializes the table.
+        /// </summary>
+        /// <returns>The serialized bytes.</returns>
         public byte[] Serialize()
         {
             using (MemoryStream ms = new MemoryStream())
@@ -72,15 +81,23 @@ namespace Warcraft.MPQ.Tables.Block
             }
         }
 
+        /// <summary>
+        /// Gets the entry at the given index.
+        /// </summary>
+        /// <param name="index">The element index.</param>
+        /// <returns>The entry at the index.</returns>
         public BlockTableEntry GetEntry(int index)
         {
             return Entries[index];
         }
 
+        /// <summary>
+        /// Gets the size in bytes of the table.
+        /// </summary>
+        /// <returns>The size.</returns>
         public ulong GetSize()
         {
             return (ulong)(Entries.Count * BlockTableEntry.GetSize());
         }
     }
 }
-

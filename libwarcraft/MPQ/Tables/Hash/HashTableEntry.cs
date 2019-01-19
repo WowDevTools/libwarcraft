@@ -57,7 +57,7 @@ namespace Warcraft.MPQ.Tables.Hash
         private readonly uint FileBlockIndex;
 
         /// <summary>
-        /// Deserializes a new hash table entry from provided data.
+        /// Initializes a new instance of the <see cref="HashTableEntry"/> class.
         /// </summary>
         /// <param name="data">The serialized hash table data.</param>
         public HashTableEntry(byte[] data)
@@ -172,7 +172,5 @@ namespace Warcraft.MPQ.Tables.Hash
         {
             return 16;
         }
-
     }
 }
-

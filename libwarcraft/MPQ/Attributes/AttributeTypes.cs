@@ -30,16 +30,16 @@ namespace Warcraft.MPQ.Attributes
         /// <summary>
         /// The file has a CRC32 hash.
         /// </summary>
-        CRC32         = 0x00000001,
+        CRC32 = 0x00000001,
 
         /// <summary>
         /// The file has a timestamp.
         /// </summary>
-        Timestamp     = 0x00000002,
+        Timestamp = 0x00000002,
 
         /// <summary>
         /// This file has an MD5 hash.
         /// </summary>
-        MD5         = 0x00000004
+        MD5 = 0x00000004
     }
 }

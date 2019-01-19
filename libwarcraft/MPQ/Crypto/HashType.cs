@@ -1,5 +1,5 @@
 //
-//  ExtendedHashTableHeader.cs
+//  HashType.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,33 +17,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-
-namespace Warcraft.MPQ.Tables.Extended.Hash
+namespace Warcraft.MPQ.Crypto
 {
-    public class ExtendedHashTableHeader
+    /// <summary>
+    /// Different types of hashes that can be produced by the hashing function.
+    /// </summary>
+    public enum HashType : uint
     {
-        public string Signature => "HET\x1A";
-
-        public uint Version;
-        public uint DataSize;
-
-        public uint TableSize;
-        public uint MaxFileCount;
-        public uint HashTableSize;
-        public uint HashEntrySize;
-        public uint IndexSizeExtra;
-        public uint IndexSize;
-        public uint BlockTableSize;
-
-        private List<byte> TableData = new List<byte>();
+        /// <summary>
+        /// The hash algorithm used for determining the home entry of a file in the hash table.
+        /// </summary>
+        FileHashTableOffset = 0,
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtendedHashTableHeader"/> class.
+        /// One of the two algorithms used to generate hashes for filenames.
         /// </summary>
-        public ExtendedHashTableHeader()
-        {
-        }
+        FilePathA = 1,
+
+        /// <summary>
+        /// One of the two algorithms used to generate hashes for filenames.
+        /// </summary>
+        FilePathB = 2,
+
+        /// <summary>
+        /// The hash algorithm used for generating encryption keys.
+        /// </summary>
+        FileKey = 3
     }
 }
-

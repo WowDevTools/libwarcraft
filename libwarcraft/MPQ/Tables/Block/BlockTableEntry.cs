@@ -44,11 +44,12 @@ namespace Warcraft.MPQ.Tables.Block
         private readonly uint FileSize;
 
         /// <summary>
-        /// A set of flags which holds some information about how the file is stored.
+        /// Gets or sets a set of flags which holds some information about how the file is stored.
         /// </summary>
-        public BlockFlags Flags;
+        public BlockFlags Flags { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BlockTableEntry"/> class.
         /// Deserializes a <see cref="BlockTableEntry"/> from provided binary data.
         /// </summary>
         /// <param name="data">The serialized data.</param>
@@ -179,7 +180,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <summary>
         /// Determines whether or not this block entry is pointing to a deleted file.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true if the file is deleted; otherwise, false.</returns>
         public bool IsDeleted()
         {
             return Flags.HasFlag(BlockFlags.IsDeletionMarker);
@@ -233,4 +234,3 @@ namespace Warcraft.MPQ.Tables.Block
         }
     }
 }
-

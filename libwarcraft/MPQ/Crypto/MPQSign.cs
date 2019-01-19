@@ -19,39 +19,40 @@
 
 namespace Warcraft.MPQ.Crypto
 {
-    // TODO: Implement
+    /// <summary>
+    /// This class handles signing of an MPQ archive. Currently, this is unimplemented.
+    /// </summary>
     internal static class MPQSign
     {
         static MPQSign()
         {
-
         }
 
-        public static void SignArchive(MPQ archive, Strength signingStrength)
+        /// <summary>
+        /// Signs the archive using the given signing strength.
+        /// </summary>
+        /// <param name="archive">The archive.</param>
+        /// <param name="signingStrength">The signing strength.</param>
+        public static void SignArchive(MPQ archive, SigningStrength signingStrength)
         {
-
         }
 
         private static void InternalSignWeak(MPQ archive)
         {
-
         }
 
         private static void InternalSignString(MPQ archive)
         {
-
         }
 
+        /// <summary>
+        /// Verifies the integrity of the archive, based on the cryptographic signature.
+        /// </summary>
+        /// <param name="archive">The archive.</param>
+        /// <returns>true if the archive is intact; otherwise, false.</returns>
         public static bool VerifyArchiveIntegrity(MPQ archive)
         {
             return true;
         }
     }
-
-    public enum Strength : byte
-    {
-        Weak,
-        Strong
-    }
 }
-

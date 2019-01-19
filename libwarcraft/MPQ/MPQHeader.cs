@@ -19,10 +19,11 @@
 
 using System;
 using System.IO;
-using Warcraft.MPQ.Tables.Hash;
-using Warcraft.MPQ.Tables.Block;
 using System.Text;
+
 using Warcraft.Core.Interfaces;
+using Warcraft.MPQ.Tables.Block;
+using Warcraft.MPQ.Tables.Hash;
 
 namespace Warcraft.MPQ
 {
@@ -44,7 +45,7 @@ namespace Warcraft.MPQ
         public const string ArchiveSignature = "MPQ\x1a";
 
         /// <summary>
-        /// The size of this header in bytes. Stored in the archive, and varies between
+        /// Gets the size of this header in bytes. Stored in the archive, and varies between
         /// format versions.
         /// </summary>
         public uint HeaderSize
@@ -56,7 +57,7 @@ namespace Warcraft.MPQ
         private uint BasicArchiveSize;
 
         /// <summary>
-        /// The size of the full archive in bytes.
+        /// Gets the size of the full archive in bytes.
         /// </summary>
         public ulong ArchiveSize => GetArchiveSize();
 
@@ -67,7 +68,7 @@ namespace Warcraft.MPQ
         private uint BlockTableOffset;
 
         /// <summary>
-        /// The number of hash table entries stored in this archive.
+        /// Gets the number of hash table entries stored in this archive.
         /// </summary>
         public uint HashTableEntryCount
         {
@@ -76,7 +77,7 @@ namespace Warcraft.MPQ
         }
 
         /// <summary>
-        /// The number of block table entries stored in this archive.
+        /// Gets the number of block table entries stored in this archive.
         /// </summary>
         public uint BlockTableEntryCount
         {
@@ -121,6 +122,7 @@ namespace Warcraft.MPQ
         /// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQHeader"/> class.
         /// This creates a default header for an empty archive.
         /// </summary>
+        /// <param name="inFormat">The format.</param>
         public MPQHeader(MPQFormat inFormat)
         {
             if (inFormat == MPQFormat.Basic)
@@ -276,7 +278,7 @@ namespace Warcraft.MPQ
         }
 
         /// <summary>
-        /// Gets the offset of the hash table, adjusted using the high bits if neccesary
+        /// Gets the offset of the hash table, adjusted using the high bits if neccesary.
         /// </summary>
         /// <returns>The hash table offset.</returns>
         public ulong GetHashTableOffset()
@@ -519,4 +521,3 @@ namespace Warcraft.MPQ
         }
     }
 }
-

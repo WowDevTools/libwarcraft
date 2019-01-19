@@ -21,10 +21,20 @@ using System.IO;
 
 namespace Warcraft.MPQ.Crypto
 {
+    /// <summary>
+    /// Represents a weak archive signature.
+    /// </summary>
     public class WeakPackageSignature
     {
+        /// <summary>
+        /// Holds the internal filename of the signature file.
+        /// </summary>
         public const string InternalFilename = "(signature)";
-        public readonly byte[] PackageSignature;
+
+        /// <summary>
+        /// Gets the package signature.
+        /// </summary>
+        public byte[] PackageSignature { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WeakPackageSignature"/> class.
@@ -54,4 +64,3 @@ namespace Warcraft.MPQ.Crypto
         }
     }
 }
-

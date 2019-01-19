@@ -1,5 +1,5 @@
 //
-//  ExtendedHashTable.cs
+//  SigningStrength.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,30 +17,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-
-namespace Warcraft.MPQ.Tables.Extended.Hash
+namespace Warcraft.MPQ.Crypto
 {
-    public class ExtendedHashTable
+    /// <summary>
+    /// The strength of the signing algorithm.
+    /// </summary>
+    public enum SigningStrength : byte
     {
-        private uint TableSize;
-        private uint HashTableSize;
-        private uint HashEntrySize;
-        private uint TotalIndexSize;
-        private uint IndexSizeExtra;
-        private uint IndexSize;
-        private uint BlockTableSize;
-
-        private List<byte> HashTable;
-        private List<ulong> FileIndices;
+        /// <summary>
+        /// Weak signing.
+        /// </summary>
+        Weak,
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtendedHashTable"/> class.
+        /// Strong signing.
         /// </summary>
-        /// <param name="data">The binary data.</param>
-        public ExtendedHashTable(byte[] data)
-        {
-        }
+        Strong
     }
 }
-

@@ -18,8 +18,8 @@
 //
 
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Warcraft.MPQ.Attributes
 {
@@ -34,27 +34,26 @@ namespace Warcraft.MPQ.Attributes
         public const string InternalFileName = "(attributes)";
 
         /// <summary>
-        /// The version of the attribute file format.
+        /// Gets or sets the version of the attribute file format.
         /// </summary>
-        public uint Version;
+        public uint Version { get; set; }
 
         /// <summary>
-        /// The attributes present in the attribute file.
+        /// Gets or sets the attributes present in the attribute file.
         /// </summary>
-        public AttributeTypes AttributesPresent;
+        public AttributeTypes AttributesPresent { get; set; }
 
         /// <summary>
-        /// The list of file attributes.
+        /// Gets or sets the list of file attributes.
         /// </summary>
-        public List<FileAttributes> FileAttributes;
+        public List<FileAttributes> FileAttributes { get; set; }
 
         /// <summary>
-        /// Deserializes a <see cref="ExtendedAttributes"/> object from the provided binary data, and an expected
-        /// file block count.
+        /// Initializes a new instance of the <see cref="ExtendedAttributes"/> class.
         /// </summary>
-        /// <param name="data"></param>
-        /// <param name="fileBlockCount"></param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <param name="data">The data.</param>
+        /// <param name="fileBlockCount">The expected file block count.</param>
+        /// <exception cref="ArgumentNullException">Thrown if the data is null.</exception>
         public ExtendedAttributes(byte[] data, uint fileBlockCount)
         {
             if (data == null)
@@ -139,12 +138,12 @@ namespace Warcraft.MPQ.Attributes
                                 if (data.Length >= expectedDataLength)
                                 {
                                     byte[] md5Data = br.ReadBytes(16);
-                                    string md5 = BitConverter.ToString(md5Data).Replace("-", "");
+                                    string md5 = BitConverter.ToString(md5Data).Replace("-", string.Empty);
                                     md5Hashes.Add(md5);
                                 }
                                 else
                                 {
-                                    md5Hashes.Add("");
+                                    md5Hashes.Add(string.Empty);
                                 }
                             }
                         }
@@ -152,7 +151,7 @@ namespace Warcraft.MPQ.Attributes
                         {
                             for (int i = 0; i < fileBlockCount; ++i)
                             {
-                                md5Hashes.Add("");
+                                md5Hashes.Add(string.Empty);
                             }
                         }
 
@@ -169,11 +168,10 @@ namespace Warcraft.MPQ.Attributes
         /// <summary>
         /// Determines whether or not the stored attributes are valid.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true if the attributes are valid; otherwise, false.</returns>
         public bool AreAttributesValid()
         {
             return Version == 100 && AttributesPresent > 0;
         }
     }
 }
-

@@ -1,5 +1,5 @@
 ﻿//
-//  AttributeTypes.cs
+//  FileAttributes.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -25,22 +25,22 @@ namespace Warcraft.MPQ.Attributes
     public class FileAttributes
     {
         /// <summary>
-        /// A CRC32 hash of the file.
+        /// Gets or sets the CRC32 hash of the file.
         /// </summary>
-        public uint CRC32;
+        public uint CRC32 { get; set; }
 
         /// <summary>
-        /// A last modified timestamp of the file.
+        /// Gets or sets the last modified timestamp of the file.
         /// </summary>
-        public ulong Timestamp;
+        public ulong Timestamp { get; set; }
 
         /// <summary>
-        /// An MD5 hash of the file.
+        /// Gets or sets the MD5 hash of the file.
         /// </summary>
-        public string MD5;
+        public string MD5 { get; set; }
 
         /// <summary>
-        /// Creates a new <see cref="FileAttributes"/> object from two given hashes and a timestamp.
+        /// Initializes a new instance of the <see cref="FileAttributes"/> class.
         /// </summary>
         /// <param name="crc32">The CRC32 hash of the file.</param>
         /// <param name="timestamp">The last modified timestamp of the file.</param>

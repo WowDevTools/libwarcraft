@@ -1,5 +1,5 @@
 //
-//  MPQHashTable.cs
+//  HashTable.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -75,7 +75,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <param name="fileName">File name.</param>
         public HashTableEntry FindEntry(string fileName)
         {
-            uint entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint) Entries.Count - 1;
+            uint entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint)Entries.Count - 1;
             uint hashA = MPQCrypt.Hash(fileName, HashType.FilePathA);
             uint hashB = MPQCrypt.Hash(fileName, HashType.FilePathB);
 
@@ -87,7 +87,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// </summary>
         /// <returns>The entry.</returns>
         /// <param name="hashA">A hash of the filename (Algorithm A).</param>
-        /// <param name="hashB">A hash of the filename (Algorithm B)</param>
+        /// <param name="hashB">A hash of the filename (Algorithm B).</param>
         /// <param name="entryHomeIndex">The home index for the file we're searching for. Reduces lookup times.</param>
         public HashTableEntry FindEntry(uint hashA, uint hashB, uint entryHomeIndex)
         {
@@ -189,4 +189,3 @@ namespace Warcraft.MPQ.Tables.Hash
         }
     }
 }
-

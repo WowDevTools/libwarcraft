@@ -16,8 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-// Certain parts of the crypto class was taken from this library. Thanks!
-// https://github.com/nickaceves/nmpq/blob/master/Nmpq/Parsing/Crypto.cs
 
 using System;
 using System.Collections.Generic;
@@ -28,6 +26,11 @@ using Warcraft.Core.Hashing;
 
 namespace Warcraft.MPQ.Crypto
 {
+    /// <summary>
+    /// This class handles MPQ decryption and encryption of sections in the MPQ file.
+    /// Certain parts of the crypto class was taken from this library. Thanks!
+    /// https://github.com/nickaceves/nmpq/blob/master/Nmpq/Parsing/Crypto.cs.
+    /// </summary>
     internal static class MPQCrypt
     {
         /// <summary>
@@ -53,14 +56,14 @@ namespace Warcraft.MPQ.Crypto
                 int i = 0;
                 for (uint tableIndex = loopIndex; i < 5; i++, tableIndex += 0x100)
                 {
-                    seed = (seed * 125 + 3) % 0x2AAAAB;
+                    seed = ((seed * 125) + 3) % 0x2AAAAB;
                     uint temp1 = (seed & 0xFFFF) << 0x10;
 
-                    seed = (seed * 125 + 3) % 0x2AAAAB;
-                    uint temp2 = (seed & 0xFFFF);
+                    seed = ((seed * 125) + 3) % 0x2AAAAB;
+                    uint temp2 = seed & 0xFFFF;
 
                     // Add to Encryption table
-                    EncryptionTable[tableIndex] = (temp1 | temp2);
+                    EncryptionTable[tableIndex] = temp1 | temp2;
                 }
             }
         }
@@ -180,7 +183,7 @@ namespace Warcraft.MPQ.Crypto
         /// Calculates the decryption key for a file sector.
         /// </summary>
         /// <returns>The sector key.</returns>
-        /// <param name="fileName">The name of the file the sector belongs to</param>
+        /// <param name="fileName">The name of the file the sector belongs to.</param>
         /// <param name="isAdjusted">If set to <c>true</c>, the key is adjusted by the given block offset and file size.</param>
         /// <param name="blockOffset">The block offset of the file.</param>
         /// <param name="fileSize">The size of the file.</param>
@@ -203,7 +206,7 @@ namespace Warcraft.MPQ.Crypto
         /// an exception will be thrown.
         /// </summary>
         /// <exception cref="InvalidFileSectorTableException">Thrown if the sector table is found to be inconsistent in any way.</exception>
-        /// <param name="br">The archive's BinaryReader</param>
+        /// <param name="br">The archive's BinaryReader.</param>
         /// <param name="sectorOffsets">The output sector offsets.</param>
         /// <param name="blockSize">The size of the block to be decrypted.</param>
         /// <param name="key">The decryption key for the offset table.</param>
@@ -294,7 +297,7 @@ namespace Warcraft.MPQ.Crypto
             uint fileKey;
             if (adjustKeyByOffset)
             {
-                fileKey = GetFileKey(Path.GetFileName(filePath), true, (uint) adjustedBlockOffset, fileSize);
+                fileKey = GetFileKey(Path.GetFileName(filePath), true, (uint)adjustedBlockOffset, fileSize);
             }
             else
             {
@@ -304,31 +307,4 @@ namespace Warcraft.MPQ.Crypto
             return fileKey;
         }
     }
-
-    /// <summary>
-    /// Different types of hashes that can be produced by the hashing function.
-    /// </summary>
-    public enum HashType : uint
-    {
-        /// <summary>
-        /// The hash algorithm used for determining the home entry of a file in the hash table.
-        /// </summary>
-        FileHashTableOffset = 0,
-
-        /// <summary>
-        /// One of the two algorithms used to generate hashes for filenames.
-        /// </summary>
-        FilePathA = 1,
-
-        /// <summary>
-        /// One of the two algorithms used to generate hashes for filenames.
-        /// </summary>
-        FilePathB = 2,
-
-        /// <summary>
-        /// The hash algorithm used for generating encryption keys.
-        /// </summary>
-        FileKey = 3
-    }
 }
-

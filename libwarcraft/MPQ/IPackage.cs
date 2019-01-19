@@ -63,4 +63,3 @@ namespace Warcraft.MPQ
         MPQFileInfo GetFileInfo(string filePath);
     }
 }
-

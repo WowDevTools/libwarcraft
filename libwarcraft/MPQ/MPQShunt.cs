@@ -48,15 +48,12 @@ namespace Warcraft.MPQ
         private uint ShuntedArchiveOffset;
 
         /// <summary>
-        /// Deserializes an <see cref="MPQShunt"/> object from provided binary data.
+        /// Initializes a new instance of the <see cref="MPQShunt"/> class.
         /// </summary>
         /// <param name="data">The input data.</param>
         /// <exception cref="InvalidDataException">
         /// Thrown if the input data is null, or if it does not contain a valid signature.
         /// </exception>
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MPQShunt"/> class.
-        /// </summary>
         /// <param name="data">The binary data.</param>
         public MPQShunt(byte[] data)
         {
@@ -101,4 +98,3 @@ namespace Warcraft.MPQ
         }
     }
 }
-

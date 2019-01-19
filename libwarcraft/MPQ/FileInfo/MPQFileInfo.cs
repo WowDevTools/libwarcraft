@@ -17,17 +17,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.MPQ.Tables.Hash;
-using Warcraft.MPQ.Tables.Block;
 using Warcraft.Core.Locale;
 using Warcraft.MPQ.Attributes;
+using Warcraft.MPQ.Tables.Block;
+using Warcraft.MPQ.Tables.Hash;
 
 namespace Warcraft.MPQ.FileInfo
 {
+    /// <summary>
+    /// Holds a set of information about a given file in an MPQ archive.
+    /// </summary>
     public class MPQFileInfo
     {
         /// <summary>
-        /// The path of the file in the archive.
+        /// Gets the path of the file in the archive.
         /// </summary>
         /// <value>The path.</value>
         public string Path
@@ -37,7 +40,7 @@ namespace Warcraft.MPQ.FileInfo
         }
 
         /// <summary>
-        /// The hash entry that points to this file.
+        /// Gets the hash entry that points to this file.
         /// </summary>
         /// <value>A hash entry.</value>
         public HashTableEntry HashEntry
@@ -47,7 +50,7 @@ namespace Warcraft.MPQ.FileInfo
         }
 
         /// <summary>
-        /// The block entry describing the storage of the file.
+        /// Gets the block entry describing the storage of the file.
         /// </summary>
         /// <value>The block entry.</value>
         public BlockTableEntry BlockEntry
@@ -146,4 +149,3 @@ namespace Warcraft.MPQ.FileInfo
         }
     }
 }
-

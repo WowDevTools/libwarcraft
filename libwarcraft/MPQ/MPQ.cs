@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 // A massive thanks to Justin Olbrantz (Quantam) and Jean-Francois Roy
 // (BahamutZERO), whose [documentation of the MPQ
 // format](http://wiki.devklog.net/index.php?title=The_MoPaQ_Archive_Format) was
@@ -29,11 +30,12 @@ using System.IO;
 using System.Linq;
 using Warcraft.Core;
 using Warcraft.Core.Compression;
+
+using Warcraft.MPQ.Attributes;
 using Warcraft.MPQ.Crypto;
 using Warcraft.MPQ.FileInfo;
 using Warcraft.MPQ.Tables.Block;
 using Warcraft.MPQ.Tables.Hash;
-using Warcraft.MPQ.Attributes;
 
 namespace Warcraft.MPQ
 {
@@ -57,41 +59,41 @@ namespace Warcraft.MPQ
         private bool IsDisposed;
 
         /// <summary>
-        /// The header of the MPQ archive. Contains information about sizes and offsets of relational structures
+        /// Gets or sets the header of the MPQ archive. Contains information about sizes and offsets of relational structures
         /// such as the hash and block table in the archive.
         /// </summary>
-        public MPQHeader Header;
+        public MPQHeader Header { get; set; }
 
         /// <summary>
-        /// The hash table. Contains hash entries for all files stored in the archive, and for any overrides.
+        /// Gets or sets the hash table. Contains hash entries for all files stored in the archive, and for any overrides.
         /// </summary>
-        public HashTable ArchiveHashTable;
+        public HashTable ArchiveHashTable { get; set; }
 
         /// <summary>
-        /// The block table. Contains block entries for all files stored in the archive. These entries contain
+        /// Gets or sets the block table. Contains block entries for all files stored in the archive. These entries contain
         /// information about the state of the file.
         /// </summary>
-        public BlockTable ArchiveBlockTable;
+        public BlockTable ArchiveBlockTable { get; set; }
 
         /// <summary>
-        /// The extended block table. Contains a list of upper bits of a ulong number, which is in later versions
+        /// Gets the extended block table. Contains a list of upper bits of a ulong number, which is in later versions
         /// of the archive format merged with the offset listed in the block table. This format extension allows
         /// archives to grow larger than 4GB in size.
         /// </summary>
-        public readonly List<ushort> ExtendedBlockTable = new List<ushort>();
-
-        /// <summary>
-        /// A set of extended file attributes. These attributes are not guaranteed to be present in all archives,
-        /// and may be empty or zeroed for some archives.
-        /// </summary>
-        private ExtendedAttributes FileAttributes;
+        public List<ushort> ExtendedBlockTable { get; } = new List<ushort>();
 
         /// <summary>
         /// The archive reader. A BinaryReader that exists for the lifetime of the MPQ object and handles all
         /// the file reading inside it. As archives are far too big to be loaded into memory all at once,
         /// we seek to the desired parts and read them as we need them.
         /// </summary>
-        private readonly BinaryReader ArchiveReader;
+        private readonly BinaryReader _archiveReader;
+
+        /// <summary>
+        /// A set of extended file attributes. These attributes are not guaranteed to be present in all archives,
+        /// and may be empty or zeroed for some archives.
+        /// </summary>
+        private ExtendedAttributes FileAttributes;
 
         /// <summary>
         /// The external listfile. Instead of extracting the listfile from the archive, the user can provide one
@@ -122,17 +124,17 @@ namespace Warcraft.MPQ
         /// <param name="mpqStream">An open stream to data containing an MPQ archive.</param>
         public MPQ(Stream mpqStream)
         {
-            ArchiveReader = new BinaryReader(mpqStream);
+            _archiveReader = new BinaryReader(mpqStream);
 
-            Header = new MPQHeader(ArchiveReader.ReadBytes((int) PeekHeaderSize()));
+            Header = new MPQHeader(_archiveReader.ReadBytes((int)PeekHeaderSize()));
 
             // Seek to the hash table and load it
-            ArchiveReader.BaseStream.Position = (long) Header.GetHashTableOffset();
+            _archiveReader.BaseStream.Position = (long)Header.GetHashTableOffset();
 
             byte[] hashTableData;
             if (Header.IsHashTableCompressed())
             {
-                byte[] encryptedData = ArchiveReader.ReadBytes((int) Header.GetCompressedHashTableSize());
+                byte[] encryptedData = _archiveReader.ReadBytes((int)Header.GetCompressedHashTableSize());
                 byte[] decryptedData = MPQCrypt.DecryptData(encryptedData, HashTable.TableKey);
 
                 BlockFlags tableFlags = BlockFlags.IsCompressedMultiple;
@@ -140,19 +142,19 @@ namespace Warcraft.MPQ
             }
             else
             {
-                byte[] encryptedData = ArchiveReader.ReadBytes((int) Header.GetHashTableSize());
+                byte[] encryptedData = _archiveReader.ReadBytes((int)Header.GetHashTableSize());
                 hashTableData = MPQCrypt.DecryptData(encryptedData, HashTable.TableKey);
             }
 
             ArchiveHashTable = new HashTable(hashTableData);
 
             // Seek to the block table and load it
-            ArchiveReader.BaseStream.Position = (long) Header.GetBlockTableOffset();
+            _archiveReader.BaseStream.Position = (long)Header.GetBlockTableOffset();
 
             byte[] blockTableData;
             if (Header.IsBlockTableCompressed())
             {
-                byte[] encryptedData = ArchiveReader.ReadBytes((int) Header.GetCompressedBlockTableSize());
+                byte[] encryptedData = _archiveReader.ReadBytes((int)Header.GetCompressedBlockTableSize());
                 byte[] decryptedData = MPQCrypt.DecryptData(encryptedData, BlockTable.TableKey);
 
                 BlockFlags tableFlags = BlockFlags.IsCompressedMultiple;
@@ -160,7 +162,7 @@ namespace Warcraft.MPQ
             }
             else
             {
-                byte[] encryptedData = ArchiveReader.ReadBytes((int) Header.GetBlockTableSize());
+                byte[] encryptedData = _archiveReader.ReadBytes((int)Header.GetBlockTableSize());
                 blockTableData = MPQCrypt.DecryptData(encryptedData, BlockTable.TableKey);
             }
 
@@ -177,11 +179,10 @@ namespace Warcraft.MPQ
                     return;
                 }
 
-                ArchiveReader.BaseStream.Position = (long) Header.GetExtendedBlockTableOffset();
+                _archiveReader.BaseStream.Position = (long)Header.GetExtendedBlockTableOffset();
                 for (int i = 0; i < Header.GetBlockTableEntryCount(); ++i)
                 {
-
-                    ExtendedBlockTable.Add(ArchiveReader.ReadUInt16());
+                    ExtendedBlockTable.Add(_archiveReader.ReadUInt16());
                 }
             }
         }
@@ -193,11 +194,11 @@ namespace Warcraft.MPQ
         /// <returns>The header size.</returns>
         private uint PeekHeaderSize()
         {
-            long originalPosition = ArchiveReader.BaseStream.Position;
+            long originalPosition = _archiveReader.BaseStream.Position;
 
-            ArchiveReader.BaseStream.Position = 4;
-            uint headerSize = ArchiveReader.ReadUInt32();
-            ArchiveReader.BaseStream.Position = originalPosition;
+            _archiveReader.BaseStream.Position = 4;
+            uint headerSize = _archiveReader.ReadUInt32();
+            _archiveReader.BaseStream.Position = originalPosition;
 
             return headerSize;
         }
@@ -216,6 +217,7 @@ namespace Warcraft.MPQ
         /// <summary>
         /// Gets the extended file attributes stored in the archive, if there are any.
         /// </summary>
+        /// <returns>The attributes.</returns>
         public ExtendedAttributes GetFileAttributes()
         {
             ThrowIfDisposed();
@@ -388,7 +390,7 @@ namespace Warcraft.MPQ
             ThrowIfDisposed();
 
             // Reset all positions to be safe
-            ArchiveReader.BaseStream.Position = 0;
+            _archiveReader.BaseStream.Position = 0;
 
             HashTableEntry fileHashEntry;
             try
@@ -419,7 +421,8 @@ namespace Warcraft.MPQ
             {
                 adjustedBlockOffset = fileBlockEntry.GetBlockOffset();
             }
-            ArchiveReader.BaseStream.Position = adjustedBlockOffset;
+
+            _archiveReader.BaseStream.Position = adjustedBlockOffset;
 
             // Calculate the decryption key if neccesary
             uint fileKey = MPQCrypt.CreateFileEncryptionKey
@@ -463,10 +466,10 @@ namespace Warcraft.MPQ
             for (int i = 0; i < sectorOffsets.Count - 1; ++i)
             {
                 long sectorStartPosition = adjustedBlockOffset + sectorOffsets[i];
-                ArchiveReader.BaseStream.Position = sectorStartPosition;
+                _archiveReader.BaseStream.Position = sectorStartPosition;
 
                 uint sectorLength = sectorOffsets[i + 1] - sectorOffsets[i];
-                compressedSectors.Add(ArchiveReader.ReadBytes((int) sectorLength));
+                compressedSectors.Add(_archiveReader.ReadBytes((int)sectorLength));
             }
 
             // Begin decompressing and decrypting the sectors
@@ -562,7 +565,7 @@ namespace Warcraft.MPQ
             List<uint> sectorOffsets = new List<uint>();
             if (fileBlockEntry.IsEncrypted())
             {
-                MPQCrypt.DecryptSectorOffsetTable(ArchiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
+                MPQCrypt.DecryptSectorOffsetTable(_archiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
             }
             else
             {
@@ -574,7 +577,7 @@ namespace Warcraft.MPQ
                 uint sectorOffset = 0;
                 while (sectorOffset != fileBlockEntry.GetBlockSize())
                 {
-                    sectorOffset = ArchiveReader.ReadUInt32();
+                    sectorOffset = _archiveReader.ReadUInt32();
 
                     // Should the resulting sector offset be less than the previous data, then the data is inconsistent
                     // and no table should be returned.
@@ -603,6 +606,7 @@ namespace Warcraft.MPQ
                     sectorOffsets.Add(sectorOffset);
                 }
             }
+
             return sectorOffsets;
         }
 
@@ -618,19 +622,19 @@ namespace Warcraft.MPQ
             uint finalSectorSize = fileBlockEntry.GetFileSize() % GetMaxSectorSize();
 
             // All the even sectors you can fit into the file size
-            uint sectorCount = ((fileBlockEntry.GetFileSize() - finalSectorSize) / GetMaxSectorSize());
+            uint sectorCount = (fileBlockEntry.GetFileSize() - finalSectorSize) / GetMaxSectorSize();
 
             List<byte[]> rawSectors = new List<byte[]>();
             for (int i = 0; i < sectorCount; ++i)
             {
                 // Read a normal sector (usually 4096 bytes)
-                rawSectors.Add(ArchiveReader.ReadBytes((int) GetMaxSectorSize()));
+                rawSectors.Add(_archiveReader.ReadBytes((int)GetMaxSectorSize()));
             }
 
             // And finally, if there's an uneven sector at the end, read that one too
             if (finalSectorSize > 0)
             {
-                rawSectors.Add(ArchiveReader.ReadBytes((int) finalSectorSize));
+                rawSectors.Add(_archiveReader.ReadBytes((int)finalSectorSize));
             }
 
             uint sectorIndex = 0;
@@ -660,7 +664,7 @@ namespace Warcraft.MPQ
         private byte[] ExtractSingleUnitFile(BlockTableEntry fileBlockEntry, uint fileKey)
         {
             // This file does not use sectoring, but may still be encrypted or compressed.
-            byte[] fileData = ArchiveReader.ReadBytes((int) fileBlockEntry.GetBlockSize());
+            byte[] fileData = _archiveReader.ReadBytes((int)fileBlockEntry.GetBlockSize());
 
             if (fileBlockEntry.IsEncrypted())
             {
@@ -668,7 +672,7 @@ namespace Warcraft.MPQ
                 fileData = MPQCrypt.DecryptData(fileData, fileKey);
             }
 
-            // Decompress the sector if neccesary
+            // Decompress the sector if neccessary
             if (fileBlockEntry.IsCompressed())
             {
                 fileData = Compression.DecompressSector(fileData, fileBlockEntry.Flags);
@@ -720,7 +724,7 @@ namespace Warcraft.MPQ
         /// <returns><c>true</c>, if extended format is required, <c>false</c> otherwise.</returns>
         private bool RequiresExtendedFormat()
         {
-            return ArchiveReader.BaseStream.Length > uint.MaxValue;
+            return _archiveReader.BaseStream.Length > uint.MaxValue;
         }
 
         /// <summary>
@@ -757,14 +761,13 @@ namespace Warcraft.MPQ
                 ExternalListfile.Clear();
             }
 
-            if (ArchiveReader != null)
+            if (_archiveReader != null)
             {
-                ArchiveReader.Close();
-                ArchiveReader.Dispose();
+                _archiveReader.Close();
+                _archiveReader.Dispose();
             }
 
             IsDisposed = true;
         }
     }
 }
-
