@@ -22,9 +22,15 @@ using System.IO;
 
 namespace Warcraft.TRS
 {
+    /// <summary>
+    /// Represents a hash translation table file.
+    /// </summary>
     public class TRS
     {
-        public Dictionary<string, string> HashMappings = new Dictionary<string, string>();
+        /// <summary>
+        /// Gets the mapping table.
+        /// </summary>
+        public Dictionary<string, string> HashMappings { get; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TRS"/> class.
@@ -52,4 +58,3 @@ namespace Warcraft.TRS
         }
     }
 }
-
