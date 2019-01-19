@@ -54,7 +54,6 @@ namespace Warcraft.MPQ
         /// <exception cref="InvalidDataException">
         /// Thrown if the input data is null, or if it does not contain a valid signature.
         /// </exception>
-        /// <param name="data">The binary data.</param>
         public MPQShunt(byte[] data)
         {
             if (data == null)
