@@ -1,5 +1,5 @@
 ﻿//
-//  MainChunk.cs
+//  WorldTableAreaInfo.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,6 +24,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
+    /// <summary>
+    /// Represents area information in a world table.
+    /// </summary>
     public class WorldTableAreaInfo : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +34,10 @@ namespace Warcraft.WDT.Chunks
         /// </summary>
         public const string Signature = "MAIN";
 
-        public List<AreaInfoEntry> Entries = new List<AreaInfoEntry>();
+        /// <summary>
+        /// Gets the entries in the area information table.
+        /// </summary>
+        public List<AreaInfoEntry> Entries { get; } = new List<AreaInfoEntry>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldTableAreaInfo"/> class.
@@ -39,6 +46,10 @@ namespace Warcraft.WDT.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldTableAreaInfo"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public WorldTableAreaInfo(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -68,6 +79,13 @@ namespace Warcraft.WDT.Chunks
             return Signature;
         }
 
+        /// <summary>
+        /// Retrieves the area information at the given coordinates.
+        /// </summary>
+        /// <param name="inTileX">The tile's X coordinate.</param>
+        /// <param name="inTileY">The tile's Y coordinate.</param>
+        /// <returns>The tile.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if either of the coordinates is more than 63.</exception>
         public AreaInfoEntry GetAreaInfo(uint inTileX, uint inTileY)
         {
             if (inTileX > 63)
@@ -103,61 +121,4 @@ namespace Warcraft.WDT.Chunks
             }
         }
     }
-
-    public class AreaInfoEntry : IBinarySerializable
-    {
-        public AreaInfoFlags Flags;
-        public uint AreaID;
-
-        /*
-            The following fields are not serialized, and are provided as
-            helper fields for programmers.
-        */
-
-        public readonly uint TileX;
-        public readonly uint TileY;
-
-        public AreaInfoEntry(byte[] data, uint inTileX, uint inTileY)
-        {
-            TileX = inTileX;
-            TileY = inTileY;
-            using (MemoryStream ms = new MemoryStream(data))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    Flags = (AreaInfoFlags)br.ReadUInt32();
-                    AreaID = br.ReadUInt32();
-                }
-            }
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream(8))
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write((uint)Flags);
-                    bw.Write(AreaID);
-
-                    bw.Flush();
-                }
-
-                return ms.ToArray();
-            }
-        }
-
-        public static uint GetSize()
-        {
-            return 8;
-        }
-    }
-
-    public enum AreaInfoFlags : uint
-    {
-        HasTerrainData = 1,
-        IsLoaded = 2,
-    }
 }
-

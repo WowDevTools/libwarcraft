@@ -16,12 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-using System;
+
 using System.IO;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WDT.Chunks
 {
+    /// <summary>
+    /// Represents the world table header.
+    /// </summary>
     public class WorldTableHeader : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -29,8 +32,15 @@ namespace Warcraft.WDT.Chunks
         /// </summary>
         public const string Signature = "MPHD";
 
-        public WorldTableFlags Flags;
-        public uint Unknown;
+        /// <summary>
+        /// Gets or sets the world flags.
+        /// </summary>
+        public WorldTableFlags Flags { get; set; }
+
+        /// <summary>
+        /// Gets or sets an unknown value.
+        /// </summary>
+        public uint Unknown { get; set; }
 
         // Six unused fields
 
@@ -41,6 +51,10 @@ namespace Warcraft.WDT.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorldTableHeader"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public WorldTableHeader(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -87,7 +101,7 @@ namespace Warcraft.WDT.Chunks
                     // Write the six unused fields
                     for (int i = 0; i < 6; ++i)
                     {
-                        bw.Write((uint)0);
+                        bw.Write(0U);
                     }
                 }
 
@@ -95,20 +109,4 @@ namespace Warcraft.WDT.Chunks
             }
         }
     }
-
-    [Flags]
-    public enum WorldTableFlags : uint
-    {
-        UsesGlobalModels                 = 0x01,
-        UsesVertexShading                 = 0x02,
-        UsesEnvironmentMapping             = 0x04,
-        DisableUnknownRenderingFlag     = 0x08,
-        UsesVertexLighting                 = 0x10,
-        FlipGroundNormals                 = 0x20,
-        Unknown                         = 0x40,
-        UsesHardAlphaFalloff             = 0x80,
-        UnknownHardAlphaRelated         = 0x100,
-        UnknownContinentRelated         = 0x8000
-    }
 }
-

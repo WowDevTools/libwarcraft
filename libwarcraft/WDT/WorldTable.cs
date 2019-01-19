@@ -1,5 +1,5 @@
 ﻿//
-//  WDT.cs
+//  WorldTable.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,21 +17,45 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.ADT.Chunks;
-using Warcraft.WDT.Chunks;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+
+using Warcraft.ADT.Chunks;
 using Warcraft.Core.Extensions;
+using Warcraft.Core.Interfaces;
+using Warcraft.WDT.Chunks;
 
 namespace Warcraft.WDT
 {
-    public class WorldTable
+    /// <summary>
+    /// Represents a world table.
+    /// </summary>
+    public class WorldTable : IBinarySerializable
     {
-        public TerrainVersion Version;
-        public WorldTableHeader Header;
-        public WorldTableAreaInfo AreaInfo;
-        public TerrainWorldModelObjects WorldModelObjects;
-        public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo;
+        /// <summary>
+        /// Gets or sets the table terrain version.
+        /// </summary>
+        public TerrainVersion Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the header.
+        /// </summary>
+        public WorldTableHeader Header { get; set; }
+
+        /// <summary>
+        /// Gets or sets the area info.
+        /// </summary>
+        public WorldTableAreaInfo AreaInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the global model objects.
+        /// </summary>
+        public TerrainWorldModelObjects WorldModelObjects { get; set; }
+
+        /// <summary>
+        /// Gets or sets the global model placement info.
+        /// </summary>
+        public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldTable"/> class.
@@ -150,4 +174,3 @@ namespace Warcraft.WDT
         }
     }
 }
-
