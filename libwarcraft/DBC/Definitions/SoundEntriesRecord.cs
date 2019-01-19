@@ -24,40 +24,76 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+    /// <summary>
+    /// Defines a database entry containing properties of a set of sounds.
+    /// </summary>
     [DatabaseRecord(DatabaseName.SoundEntries)]
     public class SoundEntriesRecord : DBCRecord
     {
+        /// <summary>
+        /// Gets or sets the type of the sound set.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public SoundType Type { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name of the sound set.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public StringReference Name { get; set; }
 
+        /// <summary>
+        /// Gets or sets the sounds included in the sound set.
+        /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 10)]
         public List<StringReference> SoundFiles { get; set; }
 
+        /// <summary>
+        /// Gets or sets the playback frequencies of the sounds.
+        /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 10)]
         public List<uint> PlayFrequencies { get; set; }
 
+        /// <summary>
+        /// Gets or sets the base directory of the sound references.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public StringReference DirectoryBase { get; set; }
 
+        /// <summary>
+        /// Gets or sets the volume of the sound set.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public float Volume { get; set; }
 
+        /// <summary>
+        /// Gets or sets the flags of the sound.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint Flags { get; set; }
 
+        /// <summary>
+        /// Gets or sets the minimum distance that the sound is audible at.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public float MinDistance { get; set; }
 
+        /// <summary>
+        /// Gets or sets the cutoff distance of the sound.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public float DistanceCutoff { get; set; }
 
+        /// <summary>
+        /// Gets or sets the extended audio effects definition.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundProviderPreferences, nameof(ID))]
         public ForeignKey<uint> EAXDefinition { get; set; }
 
+        /// <summary>
+        /// Gets or sets the advanced properties ID.
+        /// </summary>
         [RecordField(WarcraftVersion.Wrath)]
         public uint SoundEntriesAdvancedID { get; set; }
 

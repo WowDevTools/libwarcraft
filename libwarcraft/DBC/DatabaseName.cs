@@ -18,7 +18,7 @@
 //
 
 // ReSharper disable InconsistentNaming
-#pragma warning disable 1591
+#pragma warning disable 1591, SA1602
 
 namespace Warcraft.DBC
 {
@@ -131,7 +131,7 @@ namespace Warcraft.DBC
         SkillLine,
         SkillRaceClassInfo,
         SkillTiers,
-        SoundAmbience,
+        SoundAmbiance,
         SoundCharacterMacroLines,
         SoundEntries,
         SoundProviderPreferences,

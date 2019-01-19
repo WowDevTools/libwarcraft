@@ -1,5 +1,5 @@
 //
-//  ForeignKey.cs
+//  IDBCRecord.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -23,10 +23,25 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC
 {
+    /// <summary>
+    /// Database record interface.
+    /// </summary>
     public interface IDBCRecord
     {
+        /// <summary>
+        /// Gets the ID of the record.
+        /// </summary>
         uint ID { get; }
+
+        /// <summary>
+        /// Gets or sets the game version the record is valid for.
+        /// </summary>
         WarcraftVersion Version { get; set; }
+
+        /// <summary>
+        /// Gets the string references (if any) in the record.
+        /// </summary>
+        /// <returns>The references.</returns>
         IEnumerable<StringReference> GetStringReferences();
     }
 }

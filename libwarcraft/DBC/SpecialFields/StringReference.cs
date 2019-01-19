@@ -19,25 +19,38 @@
 
 namespace Warcraft.DBC.SpecialFields
 {
+    /// <summary>
+    /// Represents a reference to a string in the database.
+    /// </summary>
     public class StringReference
     {
+        /// <summary>
+        /// Gets the relative offset into the database file's string block.
+        /// </summary>
         public uint Offset
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Gets or sets the actual string.
+        /// </summary>
         public string Value { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringReference"/> class.
+        /// </summary>
+        /// <param name="inOffset">The relative offset into the database file's string block.</param>
         public StringReference(uint inOffset)
         {
             Offset = inOffset;
         }
 
+        /// <inheritdoc />
         public override string ToString()
         {
             return Value;
         }
     }
 }
-

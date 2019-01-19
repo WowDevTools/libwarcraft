@@ -35,24 +35,24 @@ namespace Warcraft.DBC
         public const string Signature = "WDBC";
 
         /// <summary>
-        /// The number of records in the database.
+        /// Gets or sets the number of records in the database.
         /// </summary>
-        public uint RecordCount;
+        public uint RecordCount { get; set; }
 
         /// <summary>
-        /// The field count in the database.
+        /// Gets or sets the field count in the database.
         /// </summary>
-        public uint FieldCount;
+        public uint FieldCount { get; set; }
 
         /// <summary>
-        /// The size of a single record in the database.
+        /// Gets or sets the size of a single record in the database.
         /// </summary>
-        public uint RecordSize;
+        public uint RecordSize { get; set; }
 
         /// <summary>
-        /// The size of the string block in the database. This block is always stored at the end of the database.
+        /// Gets or sets the size of the string block in the database. This block is always stored at the end of the database.
         /// </summary>
-        public uint StringBlockSize;
+        public uint StringBlockSize { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Warcraft.DBC.DBCHeader"/> class.
@@ -65,7 +65,7 @@ namespace Warcraft.DBC
                 using (BinaryReader br = new BinaryReader(ms))
                 {
                     string dataSignature = new string(br.ReadChars(4));
-                    if (Signature != dataSignature)
+                    if (dataSignature != Signature)
                     {
                         throw new FileLoadException("The loaded data did not have a valid DBC signature.");
                     }
@@ -88,4 +88,3 @@ namespace Warcraft.DBC
         }
     }
 }
-

@@ -25,31 +25,62 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+    /// <summary>
+    /// Defines music in a zone.
+    /// </summary>
     [DatabaseRecord(DatabaseName.ZoneMusic)]
     public class ZoneMusicRecord : DBCRecord
     {
+        /// <summary>
+        /// Gets or sets the name of the music set.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public StringReference SetName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the minimum silence between tracks during the day.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint SilenceTimeDayMin { get; set; }
 
+        /// <summary>
+        /// Gets or sets the minimum silence between tracks during the night.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint SilenceTimeNightMin { get; set; }
 
+        /// <summary>
+        /// Gets or sets the maximum silence between tracks during the day.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint SilenceTimeDayMax { get; set; }
 
+        /// <summary>
+        /// Gets or sets the maximum silence between tracks during the night.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint SilenceTimeNightMax { get; set; }
 
-        public Range SilenceIntervalDay => new Range(SilenceTimeDayMin, SilenceTimeDayMax, rigorous:false);
-        public Range SilenceIntervalNight => new Range(SilenceTimeNightMin, SilenceTimeNightMax, rigorous:false);
+        /// <summary>
+        /// Gets the silence interval during the day.
+        /// </summary>
+        public Range SilenceIntervalDay => new Range(SilenceTimeDayMin, SilenceTimeDayMax, rigorous: false);
 
+        /// <summary>
+        /// Gets the silence interval during the night.
+        /// </summary>
+        public Range SilenceIntervalNight => new Range(SilenceTimeNightMin, SilenceTimeNightMax, rigorous: false);
+
+        /// <summary>
+        /// Gets or sets the music to use during the day.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
         public ForeignKey<uint> DayMusic { get; set; }
 
+        /// <summary>
+        /// Gets or sets the music to use during the night.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
         public ForeignKey<uint> NightMusic { get; set; }

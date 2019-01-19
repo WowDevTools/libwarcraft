@@ -32,7 +32,8 @@ namespace Warcraft.DBC
     /// <summary>
     /// DBC file handler. Parses and presents DBC files in a statically typed, easy to use fashion.
     /// </summary>
-    public class DBC<T> : IDBC, IReadOnlyList<T> where T : DBCRecord, new()
+    /// <typeparam name="TRecord">The record type.</typeparam>
+    public class DBC<TRecord> : IDBC, IReadOnlyList<TRecord> where TRecord : DBCRecord, new()
     {
         /// <summary>
         /// The header of the database file. Describes the sizes and field counts of the records in the database.
@@ -40,27 +41,27 @@ namespace Warcraft.DBC
         private readonly DBCHeader Header;
 
         /// <summary>
-        /// The number of held records.
+        /// Gets the number of held records.
         /// </summary>
         public int RecordCount => (int)Header.RecordCount;
 
         /// <summary>
-        /// The number of fields in each record.
+        /// Gets the number of fields in each record.
         /// </summary>
         public int FieldCount => (int)Header.FieldCount;
 
         /// <summary>
-        /// The absolute size of each record.
+        /// Gets the absolute size of each record.
         /// </summary>
         public int RecordSize => (int)Header.RecordSize;
 
         /// <summary>
-        /// The absolute size of the string block.
+        /// Gets the absolute size of the string block.
         /// </summary>
         public int StringBlockSize => (int)Header.StringBlockSize;
 
         /// <summary>
-        /// The game version this database is valid for. This affects how the records are parsed, and is vital for
+        /// Gets the game version this database is valid for. This affects how the records are parsed, and is vital for
         /// getting correct data.
         /// </summary>
         public WarcraftVersion Version
@@ -77,17 +78,17 @@ namespace Warcraft.DBC
         private readonly long StringBlockOffset;
 
         /// <summary>
-        /// The strings in the DBC file.
+        /// Gets the strings in the DBC file.
         /// </summary>
-        public readonly Dictionary<long, string> Strings = new Dictionary<long, string>();
+        public Dictionary<long, string> Strings { get; } = new Dictionary<long, string>();
 
         /// <summary>
         /// The records in the database. Used as a procedural cache.
         /// </summary>
-        private readonly List<T> Records;
+        private readonly List<TRecord> Records;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DBC"/> class.
+        /// Initializes a new instance of the <see cref="DBC{TRecord}"/> class.
         /// </summary>
         /// <param name="inVersion">In version.</param>
         /// <param name="data">ExtendedData.</param>
@@ -109,7 +110,7 @@ namespace Warcraft.DBC
                 }
             }
 
-            Records = new List<T>(Count);
+            Records = new List<TRecord>(Count);
 
             // Initialize the record list with null values
             for (int i = 0; i < Count; ++i)
@@ -121,9 +122,9 @@ namespace Warcraft.DBC
         /// <summary>
         /// Gets a record from the database by its primary key ID.
         /// </summary>
-        /// <returns>The record</returns>
+        /// <returns>The record.</returns>
         /// <param name="id">Primary key ID.</param>
-        public T GetRecordByID(int id)
+        public TRecord GetRecordByID(int id)
         {
             return this.FirstOrDefault(record => record.ID == id);
         }
@@ -132,7 +133,6 @@ namespace Warcraft.DBC
         /// Resolves a string reference. String references are stored as offsets into the string data block
         /// of the database. This function looks up the matching string and stores it in the reference object.
         /// </summary>
-        /// <returns>The string reference.</returns>
         /// <param name="reference">Reference.</param>
         public void ResolveStringReference(StringReference reference)
         {
@@ -142,7 +142,7 @@ namespace Warcraft.DBC
                 return;
             }
 
-            reference.Value = "";
+            reference.Value = string.Empty;
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Warcraft.DBC
         /// <param name="record">The record to cache.</param>
         /// <param name="index">The index where to cache the record.</param>
         /// <exception cref="InvalidOperationException">Thrown if there is already a record cached at the given index.</exception>
-        internal void CacheRecordAtIndex(T record, int index)
+        internal void CacheRecordAtIndex(TRecord record, int index)
         {
             if (HasCachedRecordAtIndex(index))
             {
@@ -185,9 +185,9 @@ namespace Warcraft.DBC
         }
 
         /// <inheritdoc />
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<TRecord> GetEnumerator()
         {
-            return new DBCEnumerator<T>(this, DatabaseContents, StringBlockOffset);
+            return new DBCEnumerator<TRecord>(this, DatabaseContents, StringBlockOffset);
         }
 
         /*
@@ -195,7 +195,7 @@ namespace Warcraft.DBC
         */
 
         /// <inheritdoc />
-        public T this[int i]
+        public TRecord this[int i]
         {
             get
             {
@@ -206,10 +206,10 @@ namespace Warcraft.DBC
 
                 using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(DatabaseContents)))
                 {
-                    long recordOffset = DBCHeader.GetSize() + Header.RecordSize * i;
+                    long recordOffset = DBCHeader.GetSize() + (Header.RecordSize * i);
                     databaseReader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
 
-                    T record = databaseReader.ReadRecord<T>((int)Header.FieldCount, (int)Header.RecordSize, Version);
+                    TRecord record = databaseReader.ReadRecord<TRecord>((int)Header.FieldCount, (int)Header.RecordSize, Version);
 
                     foreach (var stringReference in record.GetStringReferences())
                     {
@@ -224,4 +224,3 @@ namespace Warcraft.DBC
         }
     }
 }
-

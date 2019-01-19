@@ -24,45 +24,81 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.DBC.Definitions
 {
+    /// <summary>
+    /// Defines area information for a world model object.
+    /// </summary>
     [DatabaseRecord(DatabaseName.WMOAreaTable)]
     public class WMOAreaTableRecord : DBCRecord
     {
+        /// <summary>
+        /// Gets or sets the ID of the WMO that the area information is relevant for.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint WMOID { get; set; }
 
+        /// <summary>
+        /// Gets or sets the ID of the name set.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint NameSetID { get; set; }
 
+        /// <summary>
+        /// Gets or sets the group ID of the WMO that the area information is relevant for.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public int WMOGroupID { get; set; }
 
+        /// <summary>
+        /// Gets or sets the sound settings of the area.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundProviderPreferences, nameof(ID))]
         public ForeignKey<uint> SoundProviderPref { get; set; }
 
+        /// <summary>
+        /// Gets or sets the underwater sound settings of the area.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundProviderPreferences, nameof(ID))]
         public ForeignKey<uint> SoundProviderPrefUnderwater { get; set; }
 
+        /// <summary>
+        /// Gets or sets the ambiance in the area.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        [ForeignKeyInfo(DatabaseName.SoundAmbience, nameof(ID))]
-        public ForeignKey<uint> AmbienceID { get; set; }
+        [ForeignKeyInfo(DatabaseName.SoundAmbiance, nameof(ID))]
+        public ForeignKey<uint> AmbianceID { get; set; }
 
+        /// <summary>
+        /// Gets or sets the music in the area.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.ZoneMusic, nameof(ID))]
         public ForeignKey<uint> ZoneMusic { get; set; }
 
+        /// <summary>
+        /// Gets or sets the intro sound of the area.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.ZoneIntroMusicTable, nameof(ID))]
         public ForeignKey<uint> IntroSound { get; set; }
 
+        /// <summary>
+        /// Gets or sets the flags of the area.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public uint Flags { get; set; }
 
+        /// <summary>
+        /// Gets or sets the area table entry that contains more relevant information.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.AreaTable, nameof(ID))]
         public ForeignKey<uint> AreaTableID { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name of the area.
+        /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         public LocalizedStringReference AreaName { get; set; }
 
@@ -70,17 +106,26 @@ namespace Warcraft.DBC.Definitions
             Cataclysm and up
         */
 
+        /// <summary>
+        /// Gets or sets the underwater intro sound.
+        /// </summary>
         [RecordField(WarcraftVersion.Cataclysm)]
         [ForeignKeyInfo(DatabaseName.ZoneIntroMusicTable, nameof(ID))]
         public ForeignKey<uint> UnderwaterIntroSound { get; set; }
 
+        /// <summary>
+        /// Gets or sets the underwater zone music.
+        /// </summary>
         [RecordField(WarcraftVersion.Cataclysm)]
         [ForeignKeyInfo(DatabaseName.ZoneMusic, nameof(ID))]
         public ForeignKey<uint> UnderwaterZoneMusic { get; set; }
 
+        /// <summary>
+        /// Gets or sets the ambiance underwater.
+        /// </summary>
         [RecordField(WarcraftVersion.Cataclysm)]
-        [ForeignKeyInfo(DatabaseName.SoundAmbience, nameof(ID))]
-        public ForeignKey<uint> UnderwaterAmbience { get; set; }
+        [ForeignKeyInfo(DatabaseName.SoundAmbiance, nameof(ID))]
+        public ForeignKey<uint> UnderwaterAmbiance { get; set; }
 
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()

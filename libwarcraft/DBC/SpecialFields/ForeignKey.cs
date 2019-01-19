@@ -19,26 +19,45 @@
 
 namespace Warcraft.DBC.SpecialFields
 {
+    /// <summary>
+    /// Represents a field that references a record in another database.
+    /// </summary>
+    /// <typeparam name="T">The field's container type.</typeparam>
     public class ForeignKey<T>
     {
+        /// <summary>
+        /// Gets or sets the database the key refers to.
+        /// </summary>
         public DatabaseName Database
         {
             get;
             protected set;
         }
 
+        /// <summary>
+        /// Gets or sets the name of the field the key refers to.
+        /// </summary>
         public string Field
         {
             get;
             protected set;
         }
 
+        /// <summary>
+        /// Gets or sets the value of the key.
+        /// </summary>
         public T Key
         {
             get;
             protected set;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ForeignKey{T}"/> class.
+        /// </summary>
+        /// <param name="inDatabase">The database the key refers to.</param>
+        /// <param name="inField">The name of the field the key refers to.</param>
+        /// <param name="key">The value of the key.</param>
         public ForeignKey(DatabaseName inDatabase, string inField, T key)
         {
             Database = inDatabase;
@@ -47,4 +66,3 @@ namespace Warcraft.DBC.SpecialFields
         }
     }
 }
-

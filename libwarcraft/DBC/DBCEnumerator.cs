@@ -28,23 +28,22 @@ namespace Warcraft.DBC
     /// <summary>
     /// Enumerator object of a DBC object.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class DBCEnumerator<T> : IEnumerator<T> where T : DBCRecord, new()
+    /// <typeparam name="TRecord">The record type.</typeparam>
+    public class DBCEnumerator<TRecord> : IEnumerator<TRecord> where TRecord : DBCRecord, new()
     {
-        private readonly DBC<T> ParentDatabase;
+        private readonly DBC<TRecord> ParentDatabase;
         private readonly BinaryReader DatabaseReader;
         private readonly long StringBlockOffset;
 
         private int RecordIndex;
 
         /// <summary>
-        /// Initialize a new <see cref="DBCEnumerator{T}"/> from a given database, its data, and where the string block
-        /// begins in it.
+        /// Initializes a new instance of the <see cref="DBCEnumerator{TRecord}"/> class.
         /// </summary>
-        /// <param name="database"></param>
-        /// <param name="data"></param>
-        /// <param name="stringBlockOffset"></param>
-        public DBCEnumerator(DBC<T> database, byte[] data, long stringBlockOffset)
+        /// <param name="database">The database.</param>
+        /// <param name="data">The data to load.</param>
+        /// <param name="stringBlockOffset">The offset of the string block.</param>
+        public DBCEnumerator(DBC<TRecord> database, byte[] data, long stringBlockOffset)
         {
             ParentDatabase = database;
             StringBlockOffset = stringBlockOffset;
@@ -71,7 +70,7 @@ namespace Warcraft.DBC
             }
             else
             {
-                Current = DatabaseReader.ReadRecord<T>(ParentDatabase.FieldCount, ParentDatabase.RecordSize, ParentDatabase.Version);
+                Current = DatabaseReader.ReadRecord<TRecord>(ParentDatabase.FieldCount, ParentDatabase.RecordSize, ParentDatabase.Version);
 
                 foreach (var stringReference in Current.GetStringReferences())
                 {
@@ -95,8 +94,9 @@ namespace Warcraft.DBC
         }
 
         /// <inheritdoc />
-        public T Current { get; private set; }
+        public TRecord Current { get; private set; }
 
+        /// <inheritdoc/>
         object IEnumerator.Current => Current;
 
         /// <inheritdoc />
