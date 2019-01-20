@@ -22,7 +22,7 @@ using System.Collections.Generic;
 namespace Warcraft.MDX.Geometry
 {
     /// <summary>
-    /// A quartet of bone indices into the <see cref="MDX.KeyedBoneLookupTable"/>, which are associated with a vertex.
+    /// A quartet of bone indices into the <see cref="MDX.KeyBoneLookupTable"/>, which are associated with a vertex.
     /// </summary>
     public class MDXVertexProperty
     {

@@ -97,7 +97,7 @@ namespace Warcraft.MDX.Visual
 
         /// <summary>
         /// Gets or sets the start index of the UV coordinate animation tracks used for the textures. This is an index into
-        /// <see cref="MDX.TextureTransformLookupTable"/>.
+        /// <see cref="MDX.TextureTransformationLookupTable"/>.
         /// </summary>
         public ushort TextureTransformLookupTableIndex { get; set; }
 

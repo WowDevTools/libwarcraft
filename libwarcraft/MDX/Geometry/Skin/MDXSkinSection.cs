@@ -80,7 +80,7 @@ namespace Warcraft.MDX.Geometry.Skin
         public ushort BoneCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the starting index in the <see cref="MDX.KeyedBoneLookupTable"/> where the bones affecting this skin section
+        /// Gets or sets the starting index in the <see cref="MDX.Bones"/> where the bones affecting this skin section
         /// are.
         /// </summary>
         public ushort StartBoneIndex { get; set; }

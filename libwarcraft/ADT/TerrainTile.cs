@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.IO;
 using Warcraft.ADT.Chunks;
 using Warcraft.Core.Extensions;
-using Warcraft.WDT.Chunks;
 
 namespace Warcraft.ADT
 {
@@ -96,21 +95,6 @@ namespace Warcraft.ADT
         /// </summary>
         public List<TerrainMapChunk> MapChunks { get; set; } = new List<TerrainMapChunk>();
 
-        private readonly bool _hasWorldFlags;
-        private readonly WorldTableFlags _worldFlags;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TerrainTile"/> class.
-        /// </summary>
-        /// <param name="data">The binary data.</param>
-        /// <param name="inWorldFlags">The world flags.</param>
-        public TerrainTile(byte[] data, WorldTableFlags inWorldFlags)
-            : this(data)
-        {
-            _hasWorldFlags = true;
-            _worldFlags = inWorldFlags;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainTile"/> class.
         /// </summary>
@@ -172,6 +156,7 @@ namespace Warcraft.ADT
                     {
                         br.BaseStream.Position = Header.LiquidOffset;
                         Liquids = br.ReadIFFChunk<TerrainLiquid>();
+
                         // TODO: [#9] Pass in DBC liquid type to load the vertex data
                     }
 

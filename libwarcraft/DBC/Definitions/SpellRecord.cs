@@ -17,10 +17,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+// ReSharper disable UnusedMember.Global
+
 using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC.SpecialFields;
-// ReSharper disable UnusedMember.Global
 
 namespace Warcraft.DBC.Definitions
 {

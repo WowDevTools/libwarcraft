@@ -116,6 +116,7 @@ namespace Warcraft.MPQ
         private string _md5BetTable;
         private string _md5HetTable;
         private string _md5Header;
+
         // The MD5_Header is calculated from the start of the signature to the end of the MD5_HETTable
 
         /// <summary>
@@ -154,10 +155,6 @@ namespace Warcraft.MPQ
         /// <param name="data">A byte array containing the header data of the archive.</param>
         /// <exception cref="FileLoadException">A FileLoadException may be thrown if the archive was not
         /// an MPQ file starting with the string "MPQ\x1a".</exception>
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MPQHeader"/> class.
-        /// </summary>
-        /// <param name="data">The binary data.</param>
         public MPQHeader(byte[] data)
         {
             using (MemoryStream dataStream = new MemoryStream(data))
@@ -395,7 +392,6 @@ namespace Warcraft.MPQ
             {
                 // Calculate the size from the start of the header to the end of the
                 // hash table, block table or extended block table (whichever is furthest away)
-
                 ulong hashTableOffset = GetHashTableOffset();
                 ulong blockTableOffset = GetBlockTableOffset();
                 ulong extendedBlockTableOffset = GetExtendedBlockTableOffset();

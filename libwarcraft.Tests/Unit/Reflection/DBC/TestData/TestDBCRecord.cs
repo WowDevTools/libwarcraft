@@ -1,4 +1,7 @@
-﻿using Warcraft.Core;
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable UnassignedGetOnlyAutoProperty
+
+using Warcraft.Core;
 using Warcraft.Core.Reflection.DBC;
 using Warcraft.DBC;
 using Warcraft.DBC.Definitions;

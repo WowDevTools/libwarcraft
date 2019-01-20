@@ -82,7 +82,6 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
                     // Future note: New information suggests there may be more than one liquid layer here, based on
                     // the chunk flags (i.e, one layer for river, one layer for ocean, etc)
-
                     for (int y = 0; y < 9; ++y)
                     {
                         for (int x = 0; x < 9; ++x)

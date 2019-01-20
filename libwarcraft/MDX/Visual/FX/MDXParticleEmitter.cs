@@ -24,11 +24,5 @@ namespace Warcraft.MDX.Visual.FX
     /// </summary>
     public class MDXParticleEmitter
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MDXParticleEmitter"/> class.
-        /// </summary>
-        public MDXParticleEmitter()
-        {
-        }
     }
 }

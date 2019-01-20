@@ -89,9 +89,9 @@ namespace Warcraft.MDX
         public MDXArray<MDXBone> Bones { get; set; }
 
         /// <summary>
-        /// Gets or sets the bone socket lookup table.
+        /// Gets or sets the key bone lookup table.
         /// </summary>
-        public MDXArray<ushort> BoneSocketLookupTable { get; set; }
+        public MDXArray<ushort> KeyBoneLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the vertices of the model.
@@ -291,7 +291,7 @@ namespace Warcraft.MDX
                 }
 
                 Bones = br.ReadMDXArray<MDXBone>(Version);
-                BoneSocketLookupTable = br.ReadMDXArray<ushort>();
+                KeyBoneLookupTable = br.ReadMDXArray<ushort>();
                 Vertices = br.ReadMDXArray<MDXVertex>();
 
                 if (Version < WarcraftVersion.Wrath)

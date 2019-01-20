@@ -61,7 +61,7 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    //read size, n of entries is size / 16
+                    // read size, n of entries is size / 16
                     long nEntries = br.BaseStream.Length / 16;
 
                     for (int i = 0; i < nEntries; ++i)

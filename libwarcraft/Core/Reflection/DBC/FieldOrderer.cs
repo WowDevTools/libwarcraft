@@ -91,7 +91,6 @@ namespace Warcraft.Core.Reflection.DBC
 
             // Then, we'll move the fields which need special handling. Order them by the length of their dependency
             // chains such that we are working our way down the chains.
-
             var movingPropertiesByDepth = PrecedenceChains.OrderBy(kvp => kvp.Value.Count);
             foreach (var propertyPair in movingPropertiesByDepth)
             {

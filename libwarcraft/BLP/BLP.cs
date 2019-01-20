@@ -169,6 +169,7 @@ namespace Warcraft.BLP
             if (compressionType == TextureCompressionType.Palettized)
             {
                 Header.PixelFormat = BLPPixelFormat.Palettized;
+
                 // Determine best alpha bit depth
                 if (image.HasAlpha())
                 {
@@ -290,7 +291,7 @@ namespace Warcraft.BLP
         }
 
         /// <summary>
-        /// Gets a bitmap representing the given zero-based mipmap level. This creates a new <see cref="Bitmap"/> object
+        /// Gets a bitmap representing the given zero-based mipmap level. This creates a new <see cref="Image{Rgba32}"/> object
         /// from one of the raw mipmaps stored in the image.
         /// </summary>
         /// <returns>A bitmap.</returns>

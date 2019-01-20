@@ -170,7 +170,6 @@ namespace Warcraft.MPQ
 
             // TODO: Seek to the extended hash table and load it
             // TODO: Seek to the extended block table and load it
-
             if (Header.GetFormat() >= MPQFormat.ExtendedV1)
             {
                 // Seek to the extended block table and load it, if neccesary
@@ -458,7 +457,7 @@ namespace Warcraft.MPQ
         private byte[] ExtractCompressedSectoredFile(BlockTableEntry fileBlockEntry, uint fileKey, long adjustedBlockOffset)
         {
             // This file uses sectoring, and is compressed. It may be encrypted.
-            //Retrieve the offsets for each sector - these are relative to the beginning of the data.
+            // Retrieve the offsets for each sector - these are relative to the beginning of the data.
             List<uint> sectorOffsets = ReadFileSectorOffsetTable(fileBlockEntry, fileKey);
 
             // Read all of the raw file sectors.

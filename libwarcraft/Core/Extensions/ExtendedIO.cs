@@ -17,6 +17,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+// ReSharper disable MemberCanBePrivate.Global
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,8 +37,6 @@ using Warcraft.MDX.Geometry;
 using Warcraft.MDX.Geometry.Skin;
 using Warcraft.MDX.Visual;
 using Warcraft.MDX.Visual.FX;
-
-// ReSharper disable MemberCanBePrivate.Global
 
 namespace Warcraft.Core.Extensions
 {

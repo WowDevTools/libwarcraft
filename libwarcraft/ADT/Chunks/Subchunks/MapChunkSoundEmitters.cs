@@ -31,7 +31,6 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// </summary>
         public const string Signature = "MCSE";
 
-        private bool _hasFinishedLoading;
         private byte[] _data;
 
         /// <summary>

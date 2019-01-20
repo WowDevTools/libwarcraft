@@ -115,7 +115,6 @@ namespace Warcraft.ADT.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    //read values
                     Flags = (TerrainHeaderFlags)br.ReadInt32();
 
                     MapChunkOffsetsOffset = br.ReadInt32();

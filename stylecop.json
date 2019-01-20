@@ -25,7 +25,14 @@
         "namingRules" : {
             "allowCommonHungarianPrefixes" : true,
             "allowedHungarianPrefixes" : [
-                "gl"
+                "gl",
+                "x",
+                "y",
+                "z",
+                "w",
+                "n",
+                "uv",
+                "op"
             ]
         },
         "maintainabilityRules" : {
