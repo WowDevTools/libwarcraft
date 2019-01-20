@@ -25,6 +25,9 @@ using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
+    /// <summary>
+    /// Holds vertex colours.
+    /// </summary>
     public class ModelVertexColours : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -32,7 +35,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public const string Signature = "MOCV";
 
-        public List<BGRA> VertexColours = new List<BGRA>();
+        /// <summary>
+        /// Gets the vertex colours.
+        /// </summary>
+        public List<BGRA> VertexColours { get; } = new List<BGRA>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelVertexColours"/> class.
@@ -41,6 +47,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVertexColours"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelVertexColours(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -85,4 +95,3 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
     }
 }
-

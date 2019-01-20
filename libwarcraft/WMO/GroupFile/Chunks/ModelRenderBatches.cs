@@ -19,12 +19,13 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
-using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
+    /// <summary>
+    /// Holds render batches.
+    /// </summary>
     public class ModelRenderBatches : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -32,7 +33,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public const string Signature = "MOBA";
 
-        public readonly List<RenderBatch> RenderBatches = new List<RenderBatch>();
+        /// <summary>
+        /// Gets the render batches.
+        /// </summary>
+        public List<RenderBatch> RenderBatches { get; } = new List<RenderBatch>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelRenderBatches"/> class.
@@ -41,6 +45,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelRenderBatches"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelRenderBatches(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -84,65 +92,4 @@ namespace Warcraft.WMO.GroupFile.Chunks
             }
         }
     }
-
-    public class RenderBatch : IBinarySerializable
-    {
-        public ShortBox BoundingBox;
-
-        public uint FirstPolygonIndex;
-        public ushort PolygonIndexCount;
-
-        public ushort FirstVertexIndex;
-        public ushort LastVertexIndex;
-
-        public byte UnknownFlags;
-        public byte MaterialIndex;
-
-        public RenderBatch(byte[] inData)
-        {
-            using (MemoryStream ms = new MemoryStream(inData))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    BoundingBox = br.ReadShortBox();
-                    FirstPolygonIndex = br.ReadUInt32();
-                    PolygonIndexCount = br.ReadUInt16();
-                    FirstVertexIndex = br.ReadUInt16();
-                    LastVertexIndex = br.ReadUInt16();
-
-                    UnknownFlags = br.ReadByte();
-                    MaterialIndex = br.ReadByte();
-                }
-            }
-        }
-
-        public static int GetSize()
-        {
-            return 24;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.WriteShortBox(BoundingBox);
-
-                    bw.Write(FirstPolygonIndex);
-                    bw.Write(PolygonIndexCount);
-
-                    bw.Write(FirstVertexIndex);
-                    bw.Write(LastVertexIndex);
-
-                    bw.Write(UnknownFlags);
-                    bw.Write(MaterialIndex);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
 }
-

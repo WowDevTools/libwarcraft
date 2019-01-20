@@ -1,5 +1,5 @@
 ﻿//
-//  ModelDoodadSet.cs
+//  DoodadSet.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -29,15 +29,17 @@ namespace Warcraft.WMO.RootFile.Chunks
     /// </summary>
     public class DoodadSet : IBinarySerializable
     {
-        private string InternalName;
+        private string _internalName;
+
         /// <summary>
-        /// The name of the doodad set. This name is stored in the block as binary data, and may not be longer than 20
-        /// characters.
+        /// Gets or sets the name of the doodad set. This name is stored in the block as binary data, and may not be
+        /// longer than 20 characters.
         /// </summary>
         /// <exception cref="ArgumentException">Thrown if the assigned name is longer than 20 characters.</exception>
         public string Name
         {
-            get { return InternalName; }
+            get => _internalName;
+
             set
             {
                 if (value.Length > 20)
@@ -45,30 +47,30 @@ namespace Warcraft.WMO.RootFile.Chunks
                     throw new ArgumentException("Doodad set names may not be longer than 20 characters.", nameof(Name));
                 }
 
-                InternalName = value;
+                _internalName = value;
             }
         }
 
         /// <summary>
-        /// The index of the first doodad instance in this set. This index points to a doodad in a <see cref="ModelDoodadInstances"/>
+        /// Gets or sets the index of the first doodad instance in this set. This index points to a doodad in a <see cref="ModelDoodadInstances"/>
         /// object.
         /// </summary>
-        public uint FirstDoodadInstanceIndex;
+        public uint FirstDoodadInstanceIndex { get; set; }
 
         /// <summary>
-        /// The number of instances after the first which are a part of this set.
+        /// Gets or sets the number of instances after the first which are a part of this set.
         /// </summary>
-        public uint DoodadInstanceCount;
+        public uint DoodadInstanceCount { get; set; }
 
         /// <summary>
-        /// Unknown or unused field.
+        /// Gets or sets an unknown or unused field.
         /// </summary>
-        public uint Unused;
+        public uint Unused { get; set; }
 
         /// <summary>
-        /// Deseralizeds a doodad set from binary data.
+        /// Initializes a new instance of the <see cref="DoodadSet"/> class.
         /// </summary>
-        /// <param name="inData"></param>
+        /// <param name="inData">The binary data.</param>
         public DoodadSet(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))

@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
+    /// <summary>
+    /// Holds polygon materials.
+    /// </summary>
     public class ModelPolygonMaterials : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +33,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public const string Signature = "MOPY";
 
-        public List<PolygonMaterial> PolygonMaterials = new List<PolygonMaterial>();
+        /// <summary>
+        /// Gets the polygon materials.
+        /// </summary>
+        public List<PolygonMaterial> PolygonMaterials { get; } = new List<PolygonMaterial>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelPolygonMaterials"/> class.
@@ -39,6 +45,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelPolygonMaterials"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelPolygonMaterials(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -82,55 +92,4 @@ namespace Warcraft.WMO.GroupFile.Chunks
             }
         }
     }
-
-    public class PolygonMaterial : IBinarySerializable
-    {
-        public PolygonMaterialFlags Flags;
-        public byte MaterialIndex;
-
-        public PolygonMaterial(byte[] inData)
-        {
-            using (MemoryStream ms = new MemoryStream(inData))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    Flags = (PolygonMaterialFlags)br.ReadByte();
-                    MaterialIndex = br.ReadByte();
-                }
-            }
-        }
-
-        public static int GetSize()
-        {
-            return 2;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write((byte)Flags);
-                    bw.Write(MaterialIndex);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
-
-    public enum PolygonMaterialFlags : byte
-    {
-        Unknown1             = 0x01,
-        NoCameraCollide     = 0x02,
-        Detail                = 0x04,
-        HasCollision        = 0x08,
-        Hint                = 0x10,
-        Render                = 0x20,
-        Unknown2            = 0x40,
-        CollideHit            = 0x80
-    }
 }
-

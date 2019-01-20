@@ -1,9 +1,29 @@
-﻿using System;
-using Warcraft.WMO.RootFile;
-using Warcraft.WMO.GroupFile;
+﻿//
+//  WMO.cs
+//
+//  Copyright (c) 2018 Jarl Gullberg
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
+using Warcraft.WMO.GroupFile;
+using Warcraft.WMO.RootFile;
 using Warcraft.WMO.RootFile.Chunks;
 
 namespace Warcraft.WMO
@@ -13,13 +33,27 @@ namespace Warcraft.WMO
     /// This class hosts the root file with metadata definitions, as well as the
     /// group files which contain the actual 3D model data.
     /// </summary>
-    public class WMO : IDisposable
+    public class WMO
     {
-        public ModelRoot RootInformation;
-        public List<ModelGroup> Groups = new List<ModelGroup>();
+        /// <summary>
+        /// Gets or sets the root information of the model.
+        /// </summary>
+        public ModelRoot RootInformation { get; set; }
 
+        /// <summary>
+        /// Gets the groups in the model.
+        /// </summary>
+        public List<ModelGroup> Groups { get; } = new List<ModelGroup>();
+
+        /// <summary>
+        /// Gets the number of groups in the model.
+        /// </summary>
         public int GroupCount => (int)RootInformation.Header.GroupCount;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WMO"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public WMO(byte[] inData)
         {
             RootInformation = new ModelRoot(inData);
@@ -37,34 +71,29 @@ namespace Warcraft.WMO
 
             foreach (ModelMaterial modelMaterial in RootInformation.Materials.Materials)
             {
-                string texturePath0 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.FirstTextureOffset);
-                string texturePath1 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.SecondTextureOffset);
-                string texturePath2 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.ThirdTextureOffset);
+                string texturePath0 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.DiffuseTextureOffset);
+                string texturePath1 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.EnvironmentMapTextureOffset);
+                string texturePath2 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.SpecularTextureOffset);
 
                 if (string.IsNullOrEmpty(texturePath0))
                 {
                     texturePath0 = "createcrappygreentexture.blp";
                 }
 
-                modelMaterial.Texture0 = texturePath0;
-                modelMaterial.Texture1 = texturePath1;
-                modelMaterial.Texture2 = texturePath2;
+                modelMaterial.DiffuseTexture = texturePath0;
+                modelMaterial.EnvironmentMapTexture = texturePath1;
+                modelMaterial.SpecularTexture = texturePath2;
             }
         }
 
+        /// <summary>
+        /// Determines whether or not the given group belongs to the model.
+        /// </summary>
+        /// <param name="modelGroup">The group.</param>
+        /// <returns>true if the group belongs to the model; otherwise, false.</returns>
         public bool DoesGroupBelongToModel(ModelGroup modelGroup)
         {
             return RootInformation.ContainsGroup(modelGroup);
-        }
-
-        /// <summary>
-        /// Adds a model group to the model object. The model group must be listed in the root object,
-        /// or it won't be accepted by the model.
-        /// </summary>
-        /// <param name="modelGroupStream">Stream containing the Model group.</param>
-        public void AddModelGroup(Stream modelGroupStream)
-        {
-
         }
 
         /// <summary>
@@ -95,21 +124,40 @@ namespace Warcraft.WMO
             AddModelGroup(group);
         }
 
+        /// <summary>
+        /// Gets the internal group name of the given group.
+        /// </summary>
+        /// <param name="modelGroup">The group.</param>
+        /// <returns>The name.</returns>
         public string ResolveInternalGroupName(ModelGroup modelGroup)
         {
             return RootInformation.GetInternalGroupName(modelGroup);
         }
 
+        /// <summary>
+        /// Gets the internal descriptive group name of the given group.
+        /// </summary>
+        /// <param name="modelGroup">The group.</param>
+        /// <returns>The descriptive name.</returns>
         private string ResolveInternalDescriptiveGroupName(ModelGroup modelGroup)
         {
             return RootInformation.GetInternalDescriptiveGroupName(modelGroup);
         }
 
+        /// <summary>
+        /// Gets the texture names of the model.
+        /// </summary>
+        /// <returns>The texture names.</returns>
         public IEnumerable<string> GetTextures()
         {
             return RootInformation.Textures.Textures.Select(kvp => kvp.Value).Where(s => !string.IsNullOrEmpty(s)).ToList();
         }
 
+        /// <summary>
+        /// Gets a material based on its ID.
+        /// </summary>
+        /// <param name="materialID">The material ID.</param>
+        /// <returns>The material.</returns>
         public ModelMaterial GetMaterial(byte materialID)
         {
             return RootInformation.Materials.Materials[materialID];
@@ -118,23 +166,10 @@ namespace Warcraft.WMO
         /// <summary>
         /// Gets the materials in this model.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The materials.</returns>
         public IEnumerable<ModelMaterial> GetMaterials()
         {
             return RootInformation.Materials.Materials;
         }
-
-        /// <summary>
-        /// Releases all resource used by the <see cref="Warcraft.WMO.WMO"/> object.
-        /// </summary>
-        /// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Warcraft.WMO.WMO"/>. The
-        /// <see cref="Dispose"/> method leaves the <see cref="Warcraft.WMO.WMO"/> in an unusable state. After calling
-        /// <see cref="Dispose"/>, you must release all references to the <see cref="Warcraft.WMO.WMO"/> so the garbage
-        /// collector can reclaim the memory that the <see cref="Warcraft.WMO.WMO"/> was occupying.</remarks>
-        public void Dispose()
-        {
-
-        }
     }
 }
-

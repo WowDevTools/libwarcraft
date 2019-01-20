@@ -26,6 +26,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
+    /// <summary>
+    /// Holds liquids in a model.
+    /// </summary>
     public class ModelLiquids : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -33,16 +36,45 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public const string Signature = "MLIQ";
 
-        public uint WidthVertices;
-        public uint HeightVertices;
-        public uint WidthTileFlags;
-        public uint HeightTileFlags;
+        /// <summary>
+        /// Gets or sets the number of vertexes in the X direction.
+        /// </summary>
+        public uint XVertexCount { get; set; }
 
-        public Vector3 Location;
-        public ushort MaterialIndex;
+        /// <summary>
+        /// Gets or sets the number of vertexes in the Y direction.
+        /// </summary>
+        public uint YVertexCount { get; set; }
 
-        public List<LiquidVertex> LiquidVertices = new List<LiquidVertex>();
-        public List<LiquidFlags> LiquidTileFlags = new List<LiquidFlags>();
+        /// <summary>
+        /// Gets or sets the number of X tiles.
+        /// </summary>
+        public uint WidthTileFlags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of Y tiles.
+        /// </summary>
+        public uint HeightTileFlags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the base location of the liquid.
+        /// </summary>
+        public Vector3 Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the liquid's material index.
+        /// </summary>
+        public ushort MaterialIndex { get; set; }
+
+        /// <summary>
+        /// Gets the liquid vertexes.
+        /// </summary>
+        public List<LiquidVertex> LiquidVertices { get; } = new List<LiquidVertex>();
+
+        /// <summary>
+        /// Gets the liquid tiles.
+        /// </summary>
+        public List<LiquidFlags> LiquidTileFlags { get; } = new List<LiquidFlags>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelLiquids"/> class.
@@ -51,6 +83,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelLiquids"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelLiquids(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -63,8 +99,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    WidthVertices = br.ReadUInt32();
-                    HeightVertices = br.ReadUInt32();
+                    XVertexCount = br.ReadUInt32();
+                    YVertexCount = br.ReadUInt32();
 
                     WidthTileFlags = br.ReadUInt32();
                     HeightTileFlags = br.ReadUInt32();
@@ -72,7 +108,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
                     Location = br.ReadVector3();
                     MaterialIndex = br.ReadUInt16();
 
-                    uint vertexCount = WidthVertices * HeightVertices;
+                    uint vertexCount = XVertexCount * YVertexCount;
                     for (int i = 0; i < vertexCount; ++i)
                     {
                         LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
@@ -100,8 +136,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(WidthVertices);
-                    bw.Write(HeightVertices);
+                    bw.Write(XVertexCount);
+                    bw.Write(YVertexCount);
 
                     bw.Write(WidthTileFlags);
                     bw.Write(HeightTileFlags);
@@ -125,4 +161,3 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
     }
 }
-

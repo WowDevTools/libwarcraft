@@ -123,4 +123,3 @@ namespace Warcraft.Core.Hashing
         }
     }
 }
-

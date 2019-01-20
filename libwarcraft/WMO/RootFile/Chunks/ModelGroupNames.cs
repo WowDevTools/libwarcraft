@@ -27,7 +27,9 @@ using Warcraft.WMO.GroupFile;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-    // TODO: Rework to support offset-based seeking and adding of strings
+    /// <summary>
+    /// Holds the group names associated with the model.
+    /// </summary>
     public class ModelGroupNames : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -35,7 +37,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MOGN";
 
-        public readonly Dictionary<long, string> GroupNames = new Dictionary<long, string>();
+        /// <summary>
+        /// Gets a dictionary of offsets that map to the group names.
+        /// </summary>
+        public Dictionary<long, string> GroupNames { get; } = new Dictionary<long, string>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelGroupNames"/> class.
@@ -44,6 +49,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelGroupNames"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelGroupNames(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -73,9 +82,15 @@ namespace Warcraft.WMO.RootFile.Chunks
             return Signature;
         }
 
+        /// <summary>
+        /// Gets the internal group name of the given group.
+        /// </summary>
+        /// <param name="modelGroup">The group.</param>
+        /// <returns>The group name.</returns>
+        /// <exception cref="ArgumentException">Thrown if the name was not found.</exception>
         public string GetInternalGroupName(ModelGroup modelGroup)
         {
-            int internalNameOffset = (int) modelGroup.GetInternalNameOffset();
+            int internalNameOffset = (int)modelGroup.GetInternalNameOffset();
             if (GroupNames.ContainsKey(internalNameOffset))
             {
                 return GroupNames[internalNameOffset];
@@ -84,9 +99,15 @@ namespace Warcraft.WMO.RootFile.Chunks
             throw new ArgumentException("Group name not found.", nameof(modelGroup));
         }
 
+        /// <summary>
+        /// Gets the internal descriptive group name of the given group.
+        /// </summary>
+        /// <param name="modelGroup">The group.</param>
+        /// <returns>The descriptive group name.</returns>
+        /// <exception cref="ArgumentException">Thrown if the name was not found.</exception>
         public string GetInternalDescriptiveGroupName(ModelGroup modelGroup)
         {
-            int internalDescriptiveNameOffset = (int) modelGroup.GetInternalDescriptiveNameOffset();
+            int internalDescriptiveNameOffset = (int)modelGroup.GetInternalDescriptiveNameOffset();
             if (GroupNames.ContainsKey(internalDescriptiveNameOffset))
             {
                 return GroupNames[internalDescriptiveNameOffset];
@@ -130,4 +151,3 @@ namespace Warcraft.WMO.RootFile.Chunks
         }
     }
 }
-

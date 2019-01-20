@@ -1,5 +1,5 @@
 //
-//  ModelDoodadNames.cs
+//  ModelDoodadPaths.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -41,20 +41,20 @@ namespace Warcraft.WMO.RootFile.Chunks
         public const string Signature = "MODN";
 
         /// <summary>
-        /// The paths of all the doodads referenced by this WMO. Each is stored as an offset into the string block,
+        /// Gets the paths of all the doodads referenced by this WMO. Each is stored as an offset into the string block,
         /// and the actual string stored there.
         /// </summary>
-        public readonly List<KeyValuePair<long, string>> DoodadNames = new List<KeyValuePair<long, string>>();
+        public List<KeyValuePair<long, string>> DoodadNames { get; } = new List<KeyValuePair<long, string>>();
 
         /// <summary>
-        /// Creates a new empty doodad path block object.
+        /// Initializes a new instance of the <see cref="ModelDoodadPaths"/> class.
         /// </summary>
         public ModelDoodadPaths()
         {
         }
 
         /// <summary>
-        /// Creates a new doodad path block object by deserializing it from binary data.
+        /// Initializes a new instance of the <see cref="ModelDoodadPaths"/> class.
         /// </summary>
         /// <param name="inData">The binary data containing the doodad paths.</param>
         public ModelDoodadPaths(byte[] inData)
@@ -134,4 +134,3 @@ namespace Warcraft.WMO.RootFile.Chunks
         }
     }
 }
-

@@ -17,7 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.IO;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
@@ -28,6 +27,9 @@ using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.WMO.RootFile
 {
+    /// <summary>
+    /// Represents the root header.
+    /// </summary>
     public class ModelRootHeader : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -35,17 +37,60 @@ namespace Warcraft.WMO.RootFile
         /// </summary>
         public const string Signature = "MOHD";
 
-        public uint TextureCount;
-        public uint GroupCount;
-        public uint PortalCount;
-        public uint LightCount;
-        public uint DoodadNameCount;
-        public uint DoodadDefinitionCount;
-        public uint DoodadSetCount;
-        public RGBA BaseAmbientColour;
-        public ForeignKey<uint> WMOID;
-        public Box BoundingBox;
-        public RootFlags Flags;
+        /// <summary>
+        /// Gets or sets the number of textures in the model.
+        /// </summary>
+        public uint TextureCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of groups in the model.
+        /// </summary>
+        public uint GroupCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of portals in the model.
+        /// </summary>
+        public uint PortalCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of lights in the model.
+        /// </summary>
+        public uint LightCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of doodad names in the group.
+        /// </summary>
+        public uint DoodadNameCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of doodad definitions in the group.
+        /// </summary>
+        public uint DoodadDefinitionCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of doodad sets in the group.
+        /// </summary>
+        public uint DoodadSetCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the base ambient lighting colour.
+        /// </summary>
+        public RGBA BaseAmbientColour { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the WMO information.
+        /// </summary>
+        public ForeignKey<uint> WMOID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the model's complete bounding box.
+        /// </summary>
+        public Box BoundingBox { get; set; }
+
+        /// <summary>
+        /// Gets or sets the flags of the root group.
+        /// </summary>
+        public RootFlags Flags { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelRootHeader"/> class.
@@ -54,6 +99,10 @@ namespace Warcraft.WMO.RootFile
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelRootHeader"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelRootHeader(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -77,7 +126,7 @@ namespace Warcraft.WMO.RootFile
                     BaseAmbientColour = br.ReadRGBA();
                     WMOID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, nameof(WMOAreaTableRecord.WMOID), br.ReadUInt32());
                     BoundingBox = br.ReadBox();
-                    Flags = (RootFlags) br.ReadUInt32();
+                    Flags = (RootFlags)br.ReadUInt32();
                 }
             }
         }
@@ -106,23 +155,11 @@ namespace Warcraft.WMO.RootFile
                     bw.WriteRGBA(BaseAmbientColour);
                     bw.Write(WMOID.Key);
                     bw.WriteBox(BoundingBox);
-                    bw.Write((uint) Flags);
+                    bw.Write((uint)Flags);
                 }
 
                 return ms.ToArray();
             }
         }
     }
-
-    [Flags]
-    public enum RootFlags : uint
-    {
-        AttenuateVerticesBasedOnPortalDistance     = 0x01,
-        SkipAddingBaseAmbientColour             = 0x02,
-        LiquidFilled                             = 0x04,
-        HasOutdoorGroups                         = 0x08,
-        HasLevelsOfDetail                        = 0x10
-        // Followed by 27 unused flags
-    }
 }
-

@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+    /// <summary>
+    /// Holds portal references.
+    /// </summary>
     public class ModelPortalReferences : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +33,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MOPR";
 
-        public readonly List<PortalReference> PortalReferences = new List<PortalReference>();
+        /// <summary>
+        /// Gets the portal references.
+        /// </summary>
+        public List<PortalReference> PortalReferences { get; } = new List<PortalReference>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelPortalReferences"/> class.
@@ -39,6 +45,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelPortalReferences"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelPortalReferences(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -83,49 +93,4 @@ namespace Warcraft.WMO.RootFile.Chunks
             }
         }
     }
-
-    public class PortalReference : IBinarySerializable
-    {
-        public ushort PortalIndex;
-        public ushort GroupIndex;
-        public short Side;
-        public ushort Unknown;
-
-        public PortalReference(byte[] inData)
-        {
-            using (MemoryStream ms = new MemoryStream(inData))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    PortalIndex = br.ReadUInt16();
-                    GroupIndex = br.ReadUInt16();
-                    Side = br.ReadInt16();
-                    Unknown = br.ReadUInt16();
-                }
-            }
-        }
-
-        public static int GetSize()
-        {
-            return 8;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write(PortalIndex);
-                    bw.Write(GroupIndex);
-                    bw.Write(Side);
-                    bw.Write(Unknown);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
 }
-

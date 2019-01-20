@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
+    /// <summary>
+    /// Holds vertex indexes.
+    /// </summary>
     public class ModelVertexIndices : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +33,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public const string Signature = "MOVI";
 
-        public List<ushort> VertexIndices = new List<ushort>();
+        /// <summary>
+        /// Gets the vertex indexes.
+        /// </summary>
+        public List<ushort> VertexIndices { get; } = new List<ushort>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelVertexIndices"/> class.
@@ -39,6 +45,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVertexIndices"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelVertexIndices(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -84,4 +94,3 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
     }
 }
-

@@ -1,5 +1,5 @@
 //
-//  ModelTriangleStrips.cs
+//  PolygonMaterial.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,55 +17,49 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.IO;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
-    public class ModelTriangleStrips : IIFFChunk, IBinarySerializable
+    /// <summary>
+    /// Represents a polygon material.
+    /// </summary>
+    public class PolygonMaterial : IBinarySerializable
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelTriangleStrips"/> class.
+        /// Gets or sets the material flags.
         /// </summary>
-        public ModelTriangleStrips()
-        {
-        }
+        public PolygonMaterialFlags Flags { get; set; }
 
-        /// <inheritdoc/>
-        public void LoadBinaryData(byte[] inData)
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Gets or sets the material index.
+        /// </summary>
+        public byte MaterialIndex { get; set; }
 
-        /// <inheritdoc/>
-        public string GetSignature()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class TriangleStrip : IBinarySerializable
-    {
-        public uint StartTriangleIndex;
-        public ushort TriangleIndexCount;
-
-        public TriangleStrip(byte[] inData)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PolygonMaterial"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
+        public PolygonMaterial(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    StartTriangleIndex = br.ReadUInt32();
-                    TriangleIndexCount = br.ReadUInt16();
+                    Flags = (PolygonMaterialFlags)br.ReadByte();
+                    MaterialIndex = br.ReadByte();
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the serialized size of the instance.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public static int GetSize()
+        {
+            return 2;
         }
 
         /// <inheritdoc/>
@@ -75,11 +69,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(StartTriangleIndex);
-                    bw.Write(TriangleIndexCount);
-
-                    // Then a bit of padding
-                    bw.Write((ushort)0);
+                    bw.Write((byte)Flags);
+                    bw.Write(MaterialIndex);
                 }
 
                 return ms.ToArray();
@@ -87,4 +78,3 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
     }
 }
-

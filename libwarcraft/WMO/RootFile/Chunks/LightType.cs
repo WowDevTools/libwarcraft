@@ -1,5 +1,5 @@
 //
-//  CharSectionFlag.cs
+//  LightType.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,39 +17,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-
-namespace Warcraft.DBC.Definitions
+namespace Warcraft.WMO.RootFile.Chunks
 {
     /// <summary>
-    /// Defines flag values for the section.
+    /// Defines a set of light types.
     /// </summary>
-    [Flags]
-    public enum CharSectionAvailability
+    public enum LightType : byte
     {
         /// <summary>
-        /// Available during character creation.
+        /// A point light source, like a lightbulb.
         /// </summary>
-        CharacterCreate = 0x1,
+        Point = 0,
 
         /// <summary>
-        /// Available in barber shops.
+        /// A directional spotlight, like a, well, spotlight.
         /// </summary>
-        BarberShop = 0x2,
+        Spot = 1,
 
         /// <summary>
-        /// Available for death knights.
+        /// A directional global light, like the sun.
         /// </summary>
-        DeathKnight = 0x4,
+        Directional = 2,
 
         /// <summary>
-        /// Available for NPCs.
+        /// A general ambient light level.
         /// </summary>
-        NPC = 0x8,
-
-        /// <summary>
-        /// Unknown.
-        /// </summary>
-        Unknown = 0x10
+        Ambient = 3
     }
 }

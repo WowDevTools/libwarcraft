@@ -1,5 +1,5 @@
 ﻿//
-//  ModelDoodadPaths.cs
+//  ModelDoodadReferences.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
+    /// <summary>
+    /// Holds doodad references in a model.
+    /// </summary>
     public class ModelDoodadReferences : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +33,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public const string Signature = "MODR";
 
-        public readonly List<ushort> DoodadReferences = new List<ushort>();
+        /// <summary>
+        /// Gets the doodad references.
+        /// </summary>
+        public List<ushort> DoodadReferences { get; } = new List<ushort>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelDoodadReferences"/> class.
@@ -39,6 +45,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelDoodadReferences"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelDoodadReferences(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -83,4 +93,3 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
     }
 }
-

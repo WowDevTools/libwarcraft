@@ -38,19 +38,19 @@ namespace Warcraft.WMO.RootFile.Chunks
         public const string Signature = "MODS";
 
         /// <summary>
-        /// A list of the doodad sets contained in this chunk.
+        /// Gets a list of the doodad sets contained in this chunk.
         /// </summary>
-        public readonly List<DoodadSet> DoodadSets = new List<DoodadSet>();
+        public List<DoodadSet> DoodadSets { get; } = new List<DoodadSet>();
 
         /// <summary>
-        /// Creates a new, empty doodad set block.
+        /// Initializes a new instance of the <see cref="ModelDoodadSets"/> class.
         /// </summary>
         public ModelDoodadSets()
         {
         }
 
         /// <summary>
-        /// Deserializes a doodad set block from binary data.
+        /// Initializes a new instance of the <see cref="ModelDoodadSets"/> class.
         /// </summary>
         /// <param name="inData">The binary data containing the doodad set object.</param>
         public ModelDoodadSets(byte[] inData)
@@ -110,4 +110,3 @@ namespace Warcraft.WMO.RootFile.Chunks
         }
     }
 }
-

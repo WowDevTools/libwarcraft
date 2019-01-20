@@ -25,6 +25,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
+    /// <summary>
+    /// Holds texture coordinates in the model.
+    /// </summary>
     public class ModelTextureCoordinates : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -32,7 +35,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public const string Signature = "MOTV";
 
-        public readonly List<Vector2> TextureCoordinates = new List<Vector2>();
+        /// <summary>
+        /// Gets the texture coordinates.
+        /// </summary>
+        public List<Vector2> TextureCoordinates { get; } = new List<Vector2>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelTextureCoordinates"/> class.
@@ -41,6 +47,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelTextureCoordinates"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelTextureCoordinates(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -85,4 +95,3 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
     }
 }
-

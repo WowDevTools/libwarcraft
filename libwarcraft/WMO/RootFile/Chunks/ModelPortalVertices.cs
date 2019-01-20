@@ -25,6 +25,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+    /// <summary>
+    /// Holds portal vertices.
+    /// </summary>
     public class ModelPortalVertices : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -32,7 +35,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MOPV";
 
-        public readonly List<Vector3> Vertices = new List<Vector3>();
+        /// <summary>
+        /// Gets the portal vertices.
+        /// </summary>
+        public List<Vector3> Vertices { get; } = new List<Vector3>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelPortalVertices"/> class.
@@ -41,6 +47,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelPortalVertices"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelPortalVertices(byte[] inData)
         {
             LoadBinaryData(inData);

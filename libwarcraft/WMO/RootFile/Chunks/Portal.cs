@@ -1,5 +1,5 @@
 //
-//  ModelNormals.cs
+//  Portal.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,64 +17,57 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
-namespace Warcraft.WMO.GroupFile.Chunks
+namespace Warcraft.WMO.RootFile.Chunks
 {
     /// <summary>
-    /// Holds the vertex normals of the model.
+    /// Represents a culling portal.
     /// </summary>
-    public class ModelNormals : IIFFChunk, IBinarySerializable
+    public class Portal : IBinarySerializable
     {
         /// <summary>
-        /// Holds the binary chunk signature.
+        /// Gets or sets the base vertex index of the portal.
         /// </summary>
-        public const string Signature = "MONR";
+        public ushort BaseVertexIndex { get; set; }
 
         /// <summary>
-        /// Gets the normals.
+        /// Gets or sets the number of vertexes in the portal.
         /// </summary>
-        public List<Vector3> Normals { get; } = new List<Vector3>();
+        public ushort VertexCount { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelNormals"/> class.
+        /// Gets or sets the portal's plane.
         /// </summary>
-        public ModelNormals()
-        {
-        }
+        public Plane PortalPlane { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelNormals"/> class.
+        /// Initializes a new instance of the <see cref="Portal"/> class.
         /// </summary>
         /// <param name="inData">The binary data.</param>
-        public ModelNormals(byte[] inData)
-        {
-            LoadBinaryData(inData);
-        }
-
-        /// <inheritdoc/>
-        public void LoadBinaryData(byte[] inData)
+        public Portal(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    while (ms.Position < ms.Length)
-                    {
-                        Normals.Add(br.ReadVector3());
-                    }
+                    BaseVertexIndex = br.ReadUInt16();
+                    VertexCount = br.ReadUInt16();
+                    PortalPlane = br.ReadPlane();
                 }
             }
         }
 
-        /// <inheritdoc/>
-        public string GetSignature()
+        /// <summary>
+        /// Gets the serialized size of the instance.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public static int GetSize()
         {
-            return Signature;
+            return 20;
         }
 
         /// <inheritdoc/>
@@ -84,10 +77,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Vector3 normal in Normals)
-                    {
-                        bw.WriteVector3(normal);
-                    }
+                    bw.Write(BaseVertexIndex);
+                    bw.Write(VertexCount);
+                    bw.WritePlane(PortalPlane);
                 }
 
                 return ms.ToArray();

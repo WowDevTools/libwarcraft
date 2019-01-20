@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
+    /// <summary>
+    /// Holds light references in a model.
+    /// </summary>
     public class ModelLightReferences : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +33,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public const string Signature = "MOLR";
 
-        public List<ushort> LightReferences = new List<ushort>();
+        /// <summary>
+        /// Gets the light references.
+        /// </summary>
+        public List<ushort> LightReferences { get; } = new List<ushort>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelLightReferences"/> class.
@@ -39,6 +45,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelLightReferences"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelLightReferences(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -83,4 +93,3 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
     }
 }
-

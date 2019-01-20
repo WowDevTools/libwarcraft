@@ -17,7 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core.Extensions;
@@ -30,6 +29,9 @@ using Warcraft.WMO.GroupFile.Chunks;
 
 namespace Warcraft.WMO.GroupFile
 {
+    /// <summary>
+    /// Holds group data for a model.
+    /// </summary>
     public class ModelGroupData : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -37,58 +39,160 @@ namespace Warcraft.WMO.GroupFile
         /// </summary>
         public const string Signature = "MOGP";
 
-        public uint GroupNameOffset;
-        public uint DescriptiveGroupNameOffset;
+        /// <summary>
+        /// Gets or sets the offset of the group name.
+        /// </summary>
+        public uint GroupNameOffset { get; set; }
 
-        public GroupFlags Flags;
+        /// <summary>
+        /// Gets or sets the offset of the descriptive name.
+        /// </summary>
+        public uint DescriptiveGroupNameOffset { get; set; }
 
-        public Box BoundingBox;
+        /// <summary>
+        /// Gets or sets the flags of the group.
+        /// </summary>
+        public GroupFlags Flags { get; set; }
 
-        public ushort PortalReferenceStartingIndex;
-        public ushort PortalReferenceCount;
+        /// <summary>
+        /// Gets or sets the bounding box of the group.
+        /// </summary>
+        public Box BoundingBox { get; set; }
 
-        public ushort RenderBatchCountA;
-        public ushort RenderBatchCountInterior;
-        public ushort RenderBatchCountExterior;
-        public ushort Unknown;
+        /// <summary>
+        /// Gets or sets the first index of the portal references.
+        /// </summary>
+        public ushort FirstPortalReferenceIndex { get; set; }
 
-        public readonly List<byte> FogIndices = new List<byte>(4);
-        public uint LiquidType;
-        public ForeignKey<uint> GroupID;
+        /// <summary>
+        /// Gets or sets the number of portal references.
+        /// </summary>
+        public ushort PortalReferenceCount { get; set; }
 
-        public uint UnknownFlags;
-        public uint Unused;
+        /// <summary>
+        /// Gets or sets the rendering batch count.
+        /// </summary>
+        public ushort RenderBatchCountA { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of interior render batches.
+        /// </summary>
+        public ushort RenderBatchCountInterior { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of exterior render batches.
+        /// </summary>
+        public ushort RenderBatchCountExterior { get; set; }
+
+        /// <summary>
+        /// Gets or sets an unknown value.
+        /// </summary>
+        public ushort Unknown { get; set; }
+
+        /// <summary>
+        /// Gets the fog indexes.
+        /// </summary>
+        public List<byte> FogIndices { get; } = new List<byte>(4);
+
+        /// <summary>
+        /// Gets or sets the model's liquid type.
+        /// </summary>
+        public uint LiquidType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the model's group ID.
+        /// </summary>
+        public ForeignKey<uint> GroupID { get; set; }
+
+        /// <summary>
+        /// Gets or sets a set of unknown flags.
+        /// </summary>
+        public uint UnknownFlags { get; set; }
+
+        /// <summary>
+        /// Gets or sets an unused value.
+        /// </summary>
+        public uint Unused { get; set; }
 
         // The chunks in a model group file are actually subchunks of this one. They are listed here
         // for the sake of correctness, and are then given abstraction accessors in the ModelGroup class.
-        public ModelPolygonMaterials PolygonMaterials;
-        public ModelVertexIndices VertexIndices;
-        public ModelVertices Vertices;
-        public ModelNormals Normals;
-        public ModelTextureCoordinates TextureCoordinates;
-        public ModelRenderBatches RenderBatches;
+
+        /// <summary>
+        /// Gets or sets the polygon materials.
+        /// </summary>
+        public ModelPolygonMaterials PolygonMaterials { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vertex indexes.
+        /// </summary>
+        public ModelVertexIndices VertexIndices { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vertexes.
+        /// </summary>
+        public ModelVertices Vertices { get; set; }
+
+        /// <summary>
+        /// Gets or sets the normals.
+        /// </summary>
+        public ModelNormals Normals { get; set; }
+
+        /// <summary>
+        /// Gets or sets the texture coordinates.
+        /// </summary>
+        public ModelTextureCoordinates TextureCoordinates { get; set; }
+
+        /// <summary>
+        /// Gets or sets the render batches.
+        /// </summary>
+        public ModelRenderBatches RenderBatches { get; set; }
 
         // The following chunks are optional, and are read based on flags in the header.
-        public MOBS mobs;
-        public ModelLightReferences LightReferences;
-        public ModelDoodadReferences DoodadReferences;
-        public ModelBSPNodes BSPNodes;
-        public ModelBSPFaceIndices BSPFaceIndices;
 
-        public MPBV mpbv;
-        public MPBP mpbp;
-        public MPBI mpbi;
-        public MPBG mpbg;
+        /// <summary>
+        /// Gets or sets the light references.
+        /// </summary>
+        public ModelLightReferences LightReferences { get; set; }
 
-        public ModelVertexColours VertexColours;
-        public ModelLiquids Liquids;
+        /// <summary>
+        /// Gets or sets doodad references.
+        /// </summary>
+        public ModelDoodadReferences DoodadReferences { get; set; }
 
-        public ModelTriangleStripIndices TriangleStripIndices;
-        public ModelTriangleStrips TriangleStrips;
+        /// <summary>
+        /// Gets or sets the BSP nodes.
+        /// </summary>
+        public ModelBSPNodes BSPNodes { get; set; }
 
-        public ModelTextureCoordinates AdditionalTextureCoordinates;
-        public ModelVertexColours AdditionalVertexColours;
-        public ModelTextureCoordinates SecondAddtionalTextureCoordinates;
+        /// <summary>
+        /// Gets or sets the BSP face indexes.
+        /// </summary>
+        public ModelBSPFaceIndices BSPFaceIndices { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vertex colours.
+        /// </summary>
+        public ModelVertexColours VertexColours { get; set; }
+
+        /// <summary>
+        /// Gets or sets the liquids.
+        /// </summary>
+        public ModelLiquids Liquids { get; set; }
+
+        /// <summary>
+        /// Gets or sets the additional texture coordinates.
+        /// </summary>
+        public ModelTextureCoordinates AdditionalTextureCoordinates { get; set; }
+
+        /// <summary>
+        /// Gets or sets the additional vertex colours.
+        /// </summary>
+        public ModelVertexColours AdditionalVertexColours { get; set; }
+
+        /// <summary>
+        /// Gets or sets the second set of additional texture coordinates.
+        /// </summary>
+        public ModelTextureCoordinates SecondAddtionalTextureCoordinates { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelGroupData"/> class.
@@ -97,6 +201,10 @@ namespace Warcraft.WMO.GroupFile
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelGroupData"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelGroupData(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -117,11 +225,11 @@ namespace Warcraft.WMO.GroupFile
                     GroupNameOffset = br.ReadUInt32();
                     DescriptiveGroupNameOffset = br.ReadUInt32();
 
-                    Flags = (GroupFlags) br.ReadUInt32();
+                    Flags = (GroupFlags)br.ReadUInt32();
 
                     BoundingBox = br.ReadBox();
 
-                    PortalReferenceStartingIndex = br.ReadUInt16();
+                    FirstPortalReferenceIndex = br.ReadUInt16();
                     PortalReferenceCount = br.ReadUInt16();
 
                     RenderBatchCountA = br.ReadUInt16();
@@ -149,11 +257,6 @@ namespace Warcraft.WMO.GroupFile
                     RenderBatches = br.ReadIFFChunk<ModelRenderBatches>();
 
                     // Optional chunks
-                    if (br.PeekChunkSignature() == MOBS.Signature)
-                    {
-                        mobs = br.ReadIFFChunk<MOBS>();
-                    }
-
                     if (Flags.HasFlag(GroupFlags.HasLights))
                     {
                         LightReferences = br.ReadIFFChunk<ModelLightReferences>();
@@ -170,14 +273,6 @@ namespace Warcraft.WMO.GroupFile
                         BSPFaceIndices = br.ReadIFFChunk<ModelBSPFaceIndices>();
                     }
 
-                    if (Flags.HasFlag(GroupFlags.UnknownLODRelated))
-                    {
-                        mpbv = br.ReadIFFChunk<MPBV>();
-                        mpbp = br.ReadIFFChunk<MPBP>();
-                        mpbi = br.ReadIFFChunk<MPBI>();
-                        mpbg = br.ReadIFFChunk<MPBG>();
-                    }
-
                     if (Flags.HasFlag(GroupFlags.HasVertexColours))
                     {
                         VertexColours = br.ReadIFFChunk<ModelVertexColours>();
@@ -186,12 +281,6 @@ namespace Warcraft.WMO.GroupFile
                     if (Flags.HasFlag(GroupFlags.HasLiquids))
                     {
                         Liquids = br.ReadIFFChunk<ModelLiquids>();
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasTriangleStrips))
-                    {
-                        TriangleStripIndices = br.ReadIFFChunk<ModelTriangleStripIndices>();
-                        TriangleStrips = br.ReadIFFChunk<ModelTriangleStrips>();
                     }
 
                     if (Flags.HasFlag(GroupFlags.HasTwoTextureCoordinateSets))
@@ -241,7 +330,7 @@ namespace Warcraft.WMO.GroupFile
 
                     bw.WriteBox(BoundingBox);
 
-                    bw.Write(PortalReferenceStartingIndex);
+                    bw.Write(FirstPortalReferenceIndex);
                     bw.Write(PortalReferenceCount);
 
                     bw.Write(RenderBatchCountA);
@@ -269,11 +358,6 @@ namespace Warcraft.WMO.GroupFile
                     bw.WriteIFFChunk(RenderBatches);
 
                     // Write the optional chunks based on flags
-                    if (mobs != null)
-                    {
-                        bw.WriteIFFChunk(mobs);
-                    }
-
                     if (Flags.HasFlag(GroupFlags.HasLights))
                     {
                         bw.WriteIFFChunk(LightReferences);
@@ -290,14 +374,6 @@ namespace Warcraft.WMO.GroupFile
                         bw.WriteIFFChunk(BSPFaceIndices);
                     }
 
-                    if (Flags.HasFlag(GroupFlags.UnknownLODRelated))
-                    {
-                        bw.WriteIFFChunk(mpbv);
-                        bw.WriteIFFChunk(mpbp);
-                        bw.WriteIFFChunk(mpbi);
-                        bw.WriteIFFChunk(mpbg);
-                    }
-
                     if (Flags.HasFlag(GroupFlags.HasVertexColours))
                     {
                         bw.WriteIFFChunk(VertexColours);
@@ -306,12 +382,6 @@ namespace Warcraft.WMO.GroupFile
                     if (Flags.HasFlag(GroupFlags.HasLiquids))
                     {
                         bw.WriteIFFChunk(Liquids);
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasTriangleStrips))
-                    {
-                        bw.WriteIFFChunk(TriangleStripIndices);
-                        bw.WriteIFFChunk(TriangleStrips);
                     }
 
                     if (Flags.HasFlag(GroupFlags.HasTwoTextureCoordinateSets))
@@ -334,9 +404,12 @@ namespace Warcraft.WMO.GroupFile
             }
         }
 
+        /// <summary>
+        /// Updates the flags of the model.
+        /// </summary>
         public void UpdateFlags()
         {
-             if (LightReferences != null)
+            if (LightReferences != null)
             {
                 Flags |= GroupFlags.HasLights;
             }
@@ -351,11 +424,6 @@ namespace Warcraft.WMO.GroupFile
                 Flags |= GroupFlags.HasBSP;
             }
 
-            if (mpbv != null && mpbp != null && mpbi != null && mpbg != null)
-            {
-                Flags |= GroupFlags.UnknownLODRelated;
-            }
-
             if (VertexColours != null)
             {
                 Flags |= GroupFlags.HasVertexColours;
@@ -364,11 +432,6 @@ namespace Warcraft.WMO.GroupFile
             if (Liquids != null)
             {
                 Flags |= GroupFlags.HasLiquids;
-            }
-
-            if (TriangleStripIndices != null && TriangleStrips != null)
-            {
-                Flags |= GroupFlags.HasTriangleStrips;
             }
 
             if (AdditionalTextureCoordinates != null)
@@ -387,42 +450,4 @@ namespace Warcraft.WMO.GroupFile
             }
         }
     }
-
-    [Flags]
-    public enum GroupFlags : uint
-    {
-        HasBSP                             = 0x00000001,
-        SubtractAmbientColour             = 0x00000002,
-        HasVertexColours                 = 0x00000004,
-        IsOutdoors                        = 0x00000008,
-        // Unused1                        = 0x00000010,
-        // Unused2                        = 0x00000020,
-        DoNotUseLocalDiffuseLighting    = 0x00000040,
-        Unreachable                        = 0x00000080,
-        // Unused3                        = 0x00000100
-        HasLights                        = 0x00000200,
-        UnknownLODRelated                = 0x00000400,
-        HasDoodads                        = 0x00000800,
-        HasLiquids                        = 0x00001000,
-        IsIndoors                        = 0x00002000,
-        // Unused4                        = 0x00004000,
-        // Unused5                        = 0x00008000,
-        AlwaysDrawEvenIfOutdoors        = 0x00010000,
-        HasTriangleStrips                = 0x00020000,
-        ShowSkybox                        = 0x00040000,
-        IsOceanicWater                    = 0x00080000,
-        // Unused6                        = 0x00100000,
-        // Unused7                        = 0x00200000,
-        // Unused8                        = 0x00400000,
-        // Unused9                        = 0x00800000,
-        HasTwoVertexShadingSets            = 0x01000000,
-        HasTwoTextureCoordinateSets        = 0x02000000,
-        CreateOccluWithoutClearingBSP    = 0x04000000,
-        UnknownOcclusionRelated            = 0x08000000,
-        // Unused10                        = 0x10000000,
-        // Unused11                        = 0x20000000,
-        HasThreeTextureCoordinateSets    = 0x40000000
-        // Unused12                        = 0x80000000
-    }
 }
-

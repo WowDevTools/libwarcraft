@@ -19,12 +19,13 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
-using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+    /// <summary>
+    /// Holds the portals.
+    /// </summary>
     public class ModelPortals : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -32,7 +33,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MOPT";
 
-        public readonly List<Portal> Portals = new List<Portal>();
+        /// <summary>
+        /// Gets the portals.
+        /// </summary>
+        public List<Portal> Portals { get; } = new List<Portal>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelPortals"/> class.
@@ -41,6 +45,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelPortals"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelPortals(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -85,46 +93,4 @@ namespace Warcraft.WMO.RootFile.Chunks
             }
         }
     }
-
-    public class Portal : IBinarySerializable
-    {
-        public ushort BaseVertexIndex;
-        public ushort VertexCount;
-        public Plane PortalPlane;
-
-        public Portal(byte[] inData)
-        {
-            using (MemoryStream ms = new MemoryStream(inData))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    BaseVertexIndex = br.ReadUInt16();
-                    VertexCount = br.ReadUInt16();
-                    PortalPlane = br.ReadPlane();
-                }
-            }
-        }
-
-        public static int GetSize()
-        {
-            return 20;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write(BaseVertexIndex);
-                    bw.Write(VertexCount);
-                    bw.WritePlane(PortalPlane);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
 }
-

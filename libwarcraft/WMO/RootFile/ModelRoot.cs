@@ -27,41 +27,107 @@ using Warcraft.WMO.RootFile.Chunks;
 
 namespace Warcraft.WMO.RootFile
 {
+    /// <summary>
+    /// Represents the root chunk of a model.
+    /// </summary>
     public class ModelRoot : IBinarySerializable
     {
-        public TerrainVersion Version;
+        /// <summary>
+        /// Gets or sets the file format version.
+        /// </summary>
+        public TerrainVersion Version { get; set; }
 
-        public ModelRootHeader Header;
+        /// <summary>
+        /// Gets or sets the header.
+        /// </summary>
+        public ModelRootHeader Header { get; set; }
 
-        public ModelTextures Textures;
-        public ModelMaterials Materials;
+        /// <summary>
+        /// Gets or sets the textures.
+        /// </summary>
+        public ModelTextures Textures { get; set; }
 
-        public ModelGroupNames GroupNames;
-        public ModelGroupInformation GroupInformation;
+        /// <summary>
+        /// Gets or sets the materials.
+        /// </summary>
+        public ModelMaterials Materials { get; set; }
 
-        public ModelSkybox Skybox;
+        /// <summary>
+        /// Gets or sets the group names.
+        /// </summary>
+        public ModelGroupNames GroupNames { get; set; }
 
-        public ModelPortalVertices PortalVertices;
-        public ModelPortals Portals;
-        public ModelPortalReferences PortalReferences;
+        /// <summary>
+        /// Gets or sets information about the model's groups.
+        /// </summary>
+        public ModelGroupInformation GroupInformation { get; set; }
 
-        public ModelVisibleVertices VisibleVertices;
-        public ModelVisibleBlocks VisibleBlocks;
+        /// <summary>
+        /// Gets or sets the skybox.
+        /// </summary>
+        public ModelSkybox Skybox { get; set; }
 
-        public ModelStaticLighting StaticLighting;
+        /// <summary>
+        /// Gets or sets the culling portal vertices.
+        /// </summary>
+        public ModelPortalVertices PortalVertices { get; set; }
 
-        public ModelDoodadSets DoodadSets;
-        public ModelDoodadPaths DoodadPaths;
-        public ModelDoodadInstances DoodadInstances;
+        /// <summary>
+        /// Gets or sets the culling portals.
+        /// </summary>
+        public ModelPortals Portals { get; set; }
 
-        public ModelFog Fog;
+        /// <summary>
+        /// Gets or sets the culling portal references.
+        /// </summary>
+        public ModelPortalReferences PortalReferences { get; set; }
+
+        /// <summary>
+        /// Gets or sets the visible vertices.
+        /// </summary>
+        public ModelVisibleVertices VisibleVertices { get; set; }
+
+        /// <summary>
+        /// Gets or sets the visible blocks.
+        /// </summary>
+        public ModelVisibleBlocks VisibleBlocks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the static lighting.
+        /// </summary>
+        public ModelStaticLighting StaticLighting { get; set; }
+
+        /// <summary>
+        /// Gets or sets the doodad sets.
+        /// </summary>
+        public ModelDoodadSets DoodadSets { get; set; }
+
+        /// <summary>
+        /// Gets or sets the doodad paths.
+        /// </summary>
+        public ModelDoodadPaths DoodadPaths { get; set; }
+
+        /// <summary>
+        /// Gets or sets the doodad instances.
+        /// </summary>
+        public ModelDoodadInstances DoodadInstances { get; set; }
+
+        /// <summary>
+        /// Gets or sets the fog.
+        /// </summary>
+        public ModelFog Fog { get; set; }
 
         // Optional chunks
-        public ModelConvexPlanes ConvexPlanes;
 
-        // Added in Legion
-        public ModelGameObjectFileID GameObjectFileID;
+        /// <summary>
+        /// Gets or sets the convex planes.
+        /// </summary>
+        public ModelConvexPlanes ConvexPlanes { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelRoot"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelRoot(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
@@ -100,16 +166,15 @@ namespace Warcraft.WMO.RootFile
                     {
                         ConvexPlanes = br.ReadIFFChunk<ModelConvexPlanes>();
                     }
-
-                    // Version-dependent chunk
-                    if ((br.BaseStream.Position != br.BaseStream.Length) && br.PeekChunkSignature() == ModelGameObjectFileID.Signature)
-                    {
-                        GameObjectFileID = br.ReadIFFChunk<ModelGameObjectFileID>();
-                    }
                 }
             }
         }
 
+        /// <summary>
+        /// Determines whether or not the model contains a given group.
+        /// </summary>
+        /// <param name="modelGroup">The group.</param>
+        /// <returns>true if the model contains the group; otherwise, false.</returns>
         public bool ContainsGroup(ModelGroup modelGroup)
         {
             bool containsGroupName = GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalNameOffset()) > 0;
@@ -124,11 +189,21 @@ namespace Warcraft.WMO.RootFile
             return containsGroupName;
         }
 
+        /// <summary>
+        /// Gets the internal group name of the given group.
+        /// </summary>
+        /// <param name="modelGroup">The group.</param>
+        /// <returns>The name.</returns>
         public string GetInternalGroupName(ModelGroup modelGroup)
         {
             return GroupNames.GetInternalGroupName(modelGroup);
         }
 
+        /// <summary>
+        /// Gets the internal descriptive group name of the given group.
+        /// </summary>
+        /// <param name="modelGroup">The group.</param>
+        /// <returns>The descriptive name.</returns>
         public string GetInternalDescriptiveGroupName(ModelGroup modelGroup)
         {
             return GroupNames.GetInternalDescriptiveGroupName(modelGroup);
@@ -171,11 +246,6 @@ namespace Warcraft.WMO.RootFile
                     {
                         bw.WriteIFFChunk(ConvexPlanes);
                     }
-
-                    if (GameObjectFileID != null)
-                    {
-                        bw.WriteIFFChunk(GameObjectFileID);
-                    }
                 }
 
                 return ms.ToArray();
@@ -183,4 +253,3 @@ namespace Warcraft.WMO.RootFile
         }
     }
 }
-

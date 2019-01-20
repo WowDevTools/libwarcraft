@@ -1,5 +1,5 @@
 //
-//  ModelNormals.cs
+//  GroupInformation.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,64 +17,67 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
+using Warcraft.WMO.GroupFile;
 
-namespace Warcraft.WMO.GroupFile.Chunks
+namespace Warcraft.WMO.RootFile.Chunks
 {
     /// <summary>
-    /// Holds the vertex normals of the model.
+    /// Defines information about a model group.
     /// </summary>
-    public class ModelNormals : IIFFChunk, IBinarySerializable
+    public class GroupInformation : IBinarySerializable
     {
         /// <summary>
-        /// Holds the binary chunk signature.
+        /// Gets or sets the group's flags.
         /// </summary>
-        public const string Signature = "MONR";
+        public GroupFlags Flags { get; set; }
 
         /// <summary>
-        /// Gets the normals.
+        /// Gets or sets the bounding box of the group.
         /// </summary>
-        public List<Vector3> Normals { get; } = new List<Vector3>();
+        public Box BoundingBox { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelNormals"/> class.
+        /// Gets or sets the offset to the group's name.
         /// </summary>
-        public ModelNormals()
-        {
-        }
+        public int GroupNameOffset { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelNormals"/> class.
+        /// Initializes a new instance of the <see cref="GroupInformation"/> class.
         /// </summary>
         /// <param name="inData">The binary data.</param>
-        public ModelNormals(byte[] inData)
-        {
-            LoadBinaryData(inData);
-        }
-
-        /// <inheritdoc/>
-        public void LoadBinaryData(byte[] inData)
+        public GroupInformation(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    while (ms.Position < ms.Length)
-                    {
-                        Normals.Add(br.ReadVector3());
-                    }
+                    Flags = (GroupFlags)br.ReadUInt32();
+                    BoundingBox = br.ReadBox();
+                    GroupNameOffset = br.ReadInt32();
                 }
             }
         }
 
-        /// <inheritdoc/>
-        public string GetSignature()
+        /// <summary>
+        /// Determines whether or not the group has a name.
+        /// </summary>
+        /// <returns>true if the group has a name; otherwise, false.</returns>
+        public bool HasGroupName()
         {
-            return Signature;
+            return GroupNameOffset > -1;
+        }
+
+        /// <summary>
+        /// Gets the serialized size of the instance.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public static int GetSize()
+        {
+            return 32;
         }
 
         /// <inheritdoc/>
@@ -84,10 +87,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Vector3 normal in Normals)
-                    {
-                        bw.WriteVector3(normal);
-                    }
+                    bw.Write((uint)Flags);
+                    bw.WriteBox(BoundingBox);
+                    bw.Write(GroupNameOffset);
                 }
 
                 return ms.ToArray();

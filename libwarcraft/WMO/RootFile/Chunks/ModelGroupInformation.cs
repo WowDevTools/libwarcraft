@@ -19,13 +19,13 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
-using Warcraft.Core.Structures;
-using Warcraft.WMO.GroupFile;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+    /// <summary>
+    /// Holds group information in a model.
+    /// </summary>
     public class ModelGroupInformation : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -33,7 +33,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MOGI";
 
-        public readonly List<GroupInformation> GroupInformations = new List<GroupInformation>();
+        /// <summary>
+        /// Gets the group informations.
+        /// </summary>
+        public List<GroupInformation> GroupInformations { get; } = new List<GroupInformation>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelGroupInformation"/> class.
@@ -42,6 +45,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelGroupInformation"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelGroupInformation(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -86,51 +93,4 @@ namespace Warcraft.WMO.RootFile.Chunks
             }
         }
     }
-
-    public class GroupInformation : IBinarySerializable
-    {
-        public GroupFlags Flags;
-        public Box BoundingBox;
-        public int GroupNameOffset;
-
-        public GroupInformation(byte[] inData)
-        {
-            using (MemoryStream ms = new MemoryStream(inData))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    Flags = (GroupFlags)br.ReadUInt32();
-                    BoundingBox = br.ReadBox();
-                    GroupNameOffset = br.ReadInt32();
-                }
-            }
-        }
-
-        public bool HasGroupName()
-        {
-            return GroupNameOffset > -1;
-        }
-
-        public static int GetSize()
-        {
-            return 32;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write((uint)Flags);
-                    bw.WriteBox(BoundingBox);
-                    bw.Write(GroupNameOffset);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
 }
-

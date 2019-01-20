@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+    /// <summary>
+    /// Holds visible blocks.
+    /// </summary>
     public class ModelVisibleBlocks : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +33,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MOVB";
 
-        public readonly List<VisibleBlock> VisibleBlocks = new List<VisibleBlock>();
+        /// <summary>
+        /// Gets the visible blocks.
+        /// </summary>
+        public List<VisibleBlock> VisibleBlocks { get; } = new List<VisibleBlock>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelVisibleBlocks"/> class.
@@ -39,6 +45,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVisibleBlocks"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelVisibleBlocks(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -83,43 +93,4 @@ namespace Warcraft.WMO.RootFile.Chunks
             }
         }
     }
-
-    public class VisibleBlock : IBinarySerializable
-    {
-        public ushort FirstVertexIndex;
-        public ushort VertexCount;
-
-        public VisibleBlock(byte[] inData)
-        {
-            using (MemoryStream ms = new MemoryStream(inData))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    FirstVertexIndex = br.ReadUInt16();
-                    VertexCount = br.ReadUInt16();
-                }
-            }
-        }
-
-        public static int GetSize()
-        {
-            return 4;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write(FirstVertexIndex);
-                    bw.Write(VertexCount);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
 }
-

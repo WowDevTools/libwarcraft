@@ -37,19 +37,19 @@ namespace Warcraft.WMO.GroupFile.Chunks
         public const string Signature = "MOBR";
 
         /// <summary>
-        /// The list of face indices contained in this chunk.
+        /// Gets the list of face indices contained in this chunk.
         /// </summary>
-        public readonly List<ushort> BSPFaceIndices = new List<ushort>();
+        public List<ushort> BSPFaceIndices { get; } = new List<ushort>();
 
         /// <summary>
-        /// Creates a new <see cref="ModelBSPFaceIndices"/> object.
+        /// Initializes a new instance of the <see cref="ModelBSPFaceIndices"/> class.
         /// </summary>
         public ModelBSPFaceIndices()
         {
         }
 
         /// <summary>
-        /// Deserializes a <see cref="ModelBSPFaceIndices"/> object from the provided binary data.
+        /// Initializes a new instance of the <see cref="ModelBSPFaceIndices"/> class.
         /// </summary>
         /// <param name="inData">The binary data containing the object.</param>
         public ModelBSPFaceIndices(byte[] inData)
@@ -108,4 +108,3 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
     }
 }
-

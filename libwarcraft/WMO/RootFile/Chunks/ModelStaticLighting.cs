@@ -19,13 +19,13 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
-using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
-using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+    /// <summary>
+    /// Holds the static lights in the model.
+    /// </summary>
     public class ModelStaticLighting : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -33,7 +33,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MOLT";
 
-        public readonly List<StaticLight> StaticLights = new List<StaticLight>();
+        /// <summary>
+        /// Gets the static lights.
+        /// </summary>
+        public List<StaticLight> StaticLights { get; } = new List<StaticLight>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelStaticLighting"/> class.
@@ -42,6 +45,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelStaticLighting"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelStaticLighting(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -86,98 +93,4 @@ namespace Warcraft.WMO.RootFile.Chunks
             }
         }
     }
-
-    public class StaticLight : IBinarySerializable
-    {
-        public LightType Type;
-
-        public bool UseAttenuation;
-        public bool UseUnknown1;
-        public bool UseUnknown2;
-
-        public BGRA Colour;
-        public Vector3 Position;
-        public float Intensity;
-
-        public float AttenuationStartRadius;
-        public float AttenuationEndRadius;
-
-        public float Unknown1StartRadius;
-        public float Unknown1EndRadius;
-
-        public float Unknown2StartRadius;
-        public float Unknown2EndRadius;
-
-        public StaticLight(byte[] inData)
-        {
-            using (MemoryStream ms = new MemoryStream(inData))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    Type = (LightType) br.ReadByte();
-                    UseAttenuation = br.ReadBoolean();
-                    UseUnknown1 = br.ReadBoolean();
-                    UseUnknown2 = br.ReadBoolean();
-
-                    Colour = br.ReadBGRA();
-                    Position = br.ReadVector3();
-                    Intensity = br.ReadSingle();
-
-                    AttenuationStartRadius = br.ReadSingle();
-                    AttenuationEndRadius = br.ReadSingle();
-
-                    Unknown1StartRadius = br.ReadSingle();
-                    Unknown1EndRadius = br.ReadSingle();
-
-                    Unknown2StartRadius = br.ReadSingle();
-                    Unknown2EndRadius = br.ReadSingle();
-                }
-            }
-        }
-
-        public static int GetSize()
-        {
-            return 48;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write((byte)Type);
-
-                    bw.Write(UseAttenuation);
-                    bw.Write(UseUnknown1);
-                    bw.Write(UseUnknown2);
-
-                    bw.WriteBGRA(Colour);
-                    bw.WriteVector3(Position);
-                    bw.Write(Intensity);
-
-                    bw.Write(AttenuationStartRadius);
-                    bw.Write(AttenuationEndRadius);
-
-                    bw.Write(Unknown1StartRadius);
-                    bw.Write(Unknown1EndRadius);
-
-                    bw.Write(Unknown2StartRadius);
-                    bw.Write(Unknown2EndRadius);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
-
-    public enum LightType : byte
-    {
-        Omnidirectional = 0,
-        Spot             = 1,
-        Directional     = 2,
-        Ambient         = 3
-    }
 }
-

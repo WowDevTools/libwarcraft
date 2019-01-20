@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+    /// <summary>
+    /// Holds the model's skybox.
+    /// </summary>
     public class ModelSkybox : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +33,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MOSB";
 
-        public string SkyboxName;
+        /// <summary>
+        /// Gets or sets the skybox name.
+        /// </summary>
+        public string SkyboxName { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelSkybox"/> class.
@@ -39,6 +45,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelSkybox"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelSkybox(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -84,4 +94,3 @@ namespace Warcraft.WMO.RootFile.Chunks
         }
     }
 }
-

@@ -1,5 +1,5 @@
 //
-//  MOBS.cs
+//  RootFlags.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,48 +17,36 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Warcraft.Core.Interfaces;
+using System;
 
-namespace Warcraft.WMO.GroupFile.Chunks
+namespace Warcraft.WMO.RootFile
 {
-    public class MOBS : IIFFChunk, IBinarySerializable
+    /// <summary>
+    /// Defines a set of flags for the root model file.
+    /// </summary>
+    [Flags]
+    public enum RootFlags : uint
     {
         /// <summary>
-        /// Holds the binary chunk signature.
+        /// Vertexes should not be attenuated based on portal distance.
         /// </summary>
-        public const string Signature = "MOBS";
-
-        public byte[] Data;
+        DoNotAttenuateVerticesBasedOnPortalDistance = 0x01,
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MOBS"/> class.
+        /// The new rendering path should be used for this model.
         /// </summary>
-        public MOBS()
-        {
-        }
+        UseUnifiedRenderingPath = 0x02,
 
-        public MOBS(byte[] inData)
-        {
-            LoadBinaryData(inData);
-        }
+        /// <summary>
+        /// Use the real liquid type from the database instead of the local one.
+        /// </summary>
+        UseDatabaseLiquid = 0x04,
 
-        /// <inheritdoc/>
-        public void LoadBinaryData(byte[] inData)
-        {
-            Data = inData;
-        }
+        /// <summary>
+        /// The model has outdoor groups.
+        /// </summary>
+        HasOutdoorGroups = 0x08,
 
-        /// <inheritdoc/>
-        public string GetSignature()
-        {
-            return Signature;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            return Data;
-        }
+        // Followed by 28 unused flags
     }
 }
-

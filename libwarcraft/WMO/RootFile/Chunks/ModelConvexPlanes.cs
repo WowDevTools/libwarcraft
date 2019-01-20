@@ -44,22 +44,22 @@ namespace Warcraft.WMO.RootFile.Chunks
         public const string Signature = "MCVP";
 
         /// <summary>
-        /// The convex planes contained in this object. These planes are used to define regions in the model
+        /// Gets the convex planes contained in this object. These planes are used to define regions in the model
         /// object.
         /// </summary>
-        public readonly List<Plane> ConvexPlanes = new List<Plane>();
+        public List<Plane> ConvexPlanes { get; } = new List<Plane>();
 
         /// <summary>
-        /// Creates a new empty convex plane block object.
+        /// Initializes a new instance of the <see cref="ModelConvexPlanes"/> class.
         /// </summary>
         public ModelConvexPlanes()
         {
         }
 
         /// <summary>
-        /// Creates a new convex plane block object from binary data.
+        /// Initializes a new instance of the <see cref="ModelConvexPlanes"/> class.
         /// </summary>
-        /// <param name="inData"></param>
+        /// <param name="inData">The binary data.</param>
         public ModelConvexPlanes(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -117,4 +117,3 @@ namespace Warcraft.WMO.RootFile.Chunks
         }
     }
 }
-

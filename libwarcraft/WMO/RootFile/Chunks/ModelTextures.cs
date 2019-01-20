@@ -24,7 +24,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-    // TODO: Rework to support offset-based seeking and adding of strings
+    /// <summary>
+    /// Holds the textures used in the model.
+    /// </summary>
     public class ModelTextures : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -32,7 +34,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MOTX";
 
-        public readonly Dictionary<long, string> Textures = new Dictionary<long, string>();
+        /// <summary>
+        /// Gets a dictionary of the texture offets mapped to the actual names.
+        /// </summary>
+        public Dictionary<long, string> Textures { get; } = new Dictionary<long, string>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelTextures"/> class.
@@ -41,6 +46,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelTextures"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelTextures(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -61,13 +70,18 @@ namespace Warcraft.WMO.RootFile.Chunks
                         }
                         else
                         {
-                            ms.Position += (4 - (ms.Position % 4));
+                            ms.Position += 4 - (ms.Position % 4);
                         }
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Gets a texture path by its offset.
+        /// </summary>
+        /// <param name="nameOffset">The offset.</param>
+        /// <returns>The texture.</returns>
         public string GetTexturePathByOffset(uint nameOffset)
         {
             foreach (KeyValuePair<long, string> textureName in Textures)
@@ -126,4 +140,3 @@ namespace Warcraft.WMO.RootFile.Chunks
         }
     }
 }
-

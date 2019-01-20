@@ -1,5 +1,5 @@
 //
-//  ModelTerrainCuttingPlanes.cs
+//  FogDefinition.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,54 +17,57 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
+using Warcraft.Core.Structures;
 
-namespace Warcraft.WMO.GroupFile.Chunks
+namespace Warcraft.WMO.RootFile.Chunks
 {
-    public class ModelTerrainCuttingPlanes : IIFFChunk, IBinarySerializable
+    /// <summary>
+    /// Represents a fog definition.
+    /// </summary>
+    public class FogDefinition : IBinarySerializable
     {
         /// <summary>
-        /// Holds the binary chunk signature.
+        /// Gets or sets the end radius of the fog.
         /// </summary>
-        public const string Signature = "MOPL";
-
-        public List<Plane> CuttingPlanes = new List<Plane>();
+        public float EndRadius { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelTerrainCuttingPlanes"/> class.
+        /// Gets or sets the start multiplier of the fog.
         /// </summary>
-        public ModelTerrainCuttingPlanes()
-        {
-        }
+        public float StartMultiplier { get; set; }
 
-        public ModelTerrainCuttingPlanes(byte[] inData)
-        {
-            LoadBinaryData(inData);
-        }
+        /// <summary>
+        /// Gets or sets the colour of the fog.
+        /// </summary>
+        public BGRA Colour { get; set; }
 
-        /// <inheritdoc/>
-        public void LoadBinaryData(byte[] inData)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FogDefinition"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
+        public FogDefinition(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    while (ms.Position < ms.Length)
-                    {
-                        CuttingPlanes.Add(br.ReadPlane());
-                    }
+                    EndRadius = br.ReadSingle();
+                    StartMultiplier = br.ReadSingle();
+                    Colour = br.ReadBGRA();
                 }
             }
         }
 
-        /// <inheritdoc/>
-        public string GetSignature()
+        /// <summary>
+        /// Gets the serialized size of the instance.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public static int GetSize()
         {
-            return Signature;
+            return 12;
         }
 
         /// <inheritdoc/>
@@ -74,10 +77,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (Plane cuttingPlane in CuttingPlanes)
-                    {
-                        bw.WritePlane(cuttingPlane);
-                    }
+                    bw.Write(EndRadius);
+                    bw.Write(StartMultiplier);
+                    bw.WriteBGRA(Colour);
                 }
 
                 return ms.ToArray();
@@ -85,4 +87,3 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
     }
 }
-

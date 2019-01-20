@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+    /// <summary>
+    /// Holds doodad instances.
+    /// </summary>
     public class ModelDoodadInstances : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +33,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MODD";
 
-        public  readonly List<DoodadInstance> DoodadInstances = new List<DoodadInstance>();
+        /// <summary>
+        /// Gets the doodad instances.
+        /// </summary>
+        public List<DoodadInstance> DoodadInstances { get; } = new List<DoodadInstance>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelDoodadInstances"/> class.
@@ -39,6 +45,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelDoodadInstances"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelDoodadInstances(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -84,4 +94,3 @@ namespace Warcraft.WMO.RootFile.Chunks
         }
     }
 }
-

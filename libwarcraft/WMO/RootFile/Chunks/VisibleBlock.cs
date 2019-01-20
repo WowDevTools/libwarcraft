@@ -1,5 +1,5 @@
-﻿//
-//  ModelGameObjectFileID.cs
+//
+//  VisibleBlock.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,53 +17,49 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using System.IO;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
-    public class ModelGameObjectFileID : IIFFChunk, IBinarySerializable
+    /// <summary>
+    /// Represents a visible block.
+    /// </summary>
+    public class VisibleBlock : IBinarySerializable
     {
         /// <summary>
-        /// Holds the binary chunk signature.
+        /// Gets or sets the first vertex index.
         /// </summary>
-        public const string Signature = "GFID";
-
-        public List<uint> IDFlags = new List<uint>();
+        public ushort FirstVertexIndex { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelGameObjectFileID"/> class.
+        /// Gets or sets the vertex count.
         /// </summary>
-        public ModelGameObjectFileID()
-        {
-        }
+        public ushort VertexCount { get; set; }
 
-        public ModelGameObjectFileID(byte[] inData)
-        {
-            LoadBinaryData(inData);
-        }
-
-        /// <inheritdoc/>
-        public void LoadBinaryData(byte[] inData)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VisibleBlock"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
+        public VisibleBlock(byte[] inData)
         {
             using (MemoryStream ms = new MemoryStream(inData))
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    int groupCount = inData.Length / sizeof(uint);
-                    for (int i = 0; i < groupCount; ++i)
-                    {
-                        IDFlags.Add(br.ReadUInt32());
-                    }
+                    FirstVertexIndex = br.ReadUInt16();
+                    VertexCount = br.ReadUInt16();
                 }
             }
         }
 
-        /// <inheritdoc/>
-        public string GetSignature()
+        /// <summary>
+        /// Gets the serialized size of the instance.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public static int GetSize()
         {
-            return Signature;
+            return 4;
         }
 
         /// <inheritdoc/>
@@ -73,10 +69,8 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (int idFlag in IDFlags)
-                    {
-                        bw.Write(idFlag);
-                    }
+                    bw.Write(FirstVertexIndex);
+                    bw.Write(VertexCount);
                 }
 
                 return ms.ToArray();
@@ -84,4 +78,3 @@ namespace Warcraft.WMO.RootFile.Chunks
         }
     }
 }
-

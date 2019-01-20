@@ -101,4 +101,3 @@ namespace Warcraft.Core.Compression.ADPCM
         }
     }
 }
-

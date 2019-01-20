@@ -25,6 +25,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+    /// <summary>
+    /// Holds the visible vertices.
+    /// </summary>
     public class ModelVisibleVertices : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -32,7 +35,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MOVV";
 
-        public readonly List<Vector3> VisibleVertices = new List<Vector3>();
+        /// <summary>
+        /// Gets the visible vertices.
+        /// </summary>
+        public List<Vector3> VisibleVertices { get; } = new List<Vector3>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelVisibleVertices"/> class.
@@ -41,6 +47,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVisibleVertices"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelVisibleVertices(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -86,4 +96,3 @@ namespace Warcraft.WMO.RootFile.Chunks
         }
     }
 }
-

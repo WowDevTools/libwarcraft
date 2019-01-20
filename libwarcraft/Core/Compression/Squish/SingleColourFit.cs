@@ -8,32 +8,6 @@ using System.Numerics;
 
 namespace Warcraft.Core.Compression.Squish
 {
-    internal struct SourceBlock
-    {
-        public byte Start;
-        public byte End;
-        public byte Error;
-
-        public SourceBlock(byte Start, byte End, byte Error)
-        {
-            this.Start = Start;
-            this.End = End;
-            this.Error = Error;
-        }
-    }
-
-    internal struct SingleColourLookup
-    {
-        public SourceBlock[] Sources;
-
-        public SingleColourLookup(SourceBlock one, SourceBlock two)
-        {
-            Sources = new SourceBlock[2];
-            Sources[0] = one;
-            Sources[1] = two;
-        }
-    }
-
     internal partial class SingleColourFit : ColourFit
     {
         private byte[] colour = new byte[3];

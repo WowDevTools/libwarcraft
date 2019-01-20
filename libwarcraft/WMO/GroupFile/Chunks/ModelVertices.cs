@@ -39,7 +39,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public const string Signature = "MOVT";
 
-        public readonly List<Vector3> Vertices = new List<Vector3>();
+        /// <summary>
+        /// Gets the vertices.
+        /// </summary>
+        public List<Vector3> Vertices { get; } = new List<Vector3>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelVertices"/> class.
@@ -48,6 +51,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVertices"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelVertices(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -92,4 +99,3 @@ namespace Warcraft.WMO.GroupFile.Chunks
         }
     }
 }
-

@@ -23,6 +23,9 @@ using Warcraft.Core.Interfaces;
 
 namespace Warcraft.WMO.GroupFile.Chunks
 {
+    /// <summary>
+    /// Holds BSP nodes contained in the model.
+    /// </summary>
     public class ModelBSPNodes : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -30,7 +33,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// </summary>
         public const string Signature = "MOBN";
 
-        public readonly List<BSPNode> BSPNodes = new List<BSPNode>();
+        /// <summary>
+        /// Gets the BSP nodes.
+        /// </summary>
+        public List<BSPNode> BSPNodes { get; } = new List<BSPNode>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelBSPNodes"/> class.
@@ -39,6 +45,10 @@ namespace Warcraft.WMO.GroupFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelBSPNodes"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelBSPNodes(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -82,63 +92,4 @@ namespace Warcraft.WMO.GroupFile.Chunks
             }
         }
     }
-
-    public class BSPNode : IBinarySerializable
-    {
-        public PlaneType Type;
-        public short FirstChildIndex;
-        public short SecondChildIndex;
-        public ushort FaceCount;
-        public uint FirstFaceIndex;
-        public float DistanceFromCenter;
-
-        public BSPNode(byte[] inData)
-        {
-            using (MemoryStream ms = new MemoryStream(inData))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    Type = (PlaneType) br.ReadUInt16();
-                    FirstChildIndex = br.ReadInt16();
-                    SecondChildIndex = br.ReadInt16();
-                    FaceCount = br.ReadUInt16();
-                    FirstFaceIndex = br.ReadUInt32();
-                    DistanceFromCenter = br.ReadSingle();
-                }
-            }
-        }
-
-        public static int GetSize()
-        {
-            return 16;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write((ushort)Type);
-                    bw.Write(FirstChildIndex);
-                    bw.Write(SecondChildIndex);
-                    bw.Write(FaceCount);
-                    bw.Write(FirstFaceIndex);
-                    bw.Write(DistanceFromCenter);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
-
-    public enum PlaneType : ushort
-    {
-        YZ         = 0,
-        XZ         = 1,
-        XY         = 2,
-        Leaf     = 4
-    }
 }
-

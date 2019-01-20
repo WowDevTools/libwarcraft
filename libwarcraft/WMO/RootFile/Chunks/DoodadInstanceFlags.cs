@@ -1,5 +1,5 @@
 //
-//  MDAL.cs
+//  DoodadInstanceFlags.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,16 +17,34 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Warcraft.WMO.GroupFile.Chunks
+using System;
+
+namespace Warcraft.WMO.RootFile.Chunks
 {
-    public class MDAL
+    /// <summary>
+    /// A set of flags which can affect the way a doodad instance is rendered.
+    /// </summary>
+    [Flags]
+    public enum DoodadInstanceFlags : byte
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MDAL"/> class.
+        /// Accepts a projected texture.
         /// </summary>
-        public MDAL()
-        {
-        }
+        AcceptProjectedTexture = 0x1,
+
+        /// <summary>
+        /// Unknown. Related to lighting.
+        /// </summary>
+        Unknown1 = 0x2,
+
+        /// <summary>
+        /// Unknown.
+        /// </summary>
+        Unknown2 = 0x4,
+
+        /// <summary>
+        /// Unknown.
+        /// </summary>
+        Unknown3 = 0x8
     }
 }
-

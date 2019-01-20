@@ -34,17 +34,17 @@ namespace Warcraft.WMO.GroupFile
     public class ModelGroup : IBinarySerializable
     {
         /// <summary>
-        /// The version of the model group.
+        /// Gets or sets the version of the model group.
         /// </summary>
-        public TerrainVersion Version;
+        public TerrainVersion Version { get; set; }
 
         /// <summary>
-        /// The group data of the model. This is where all of the actual data is stored.
+        /// Gets or sets the group data of the model. This is where all of the actual data is stored.
         /// </summary>
-        public ModelGroupData GroupData;
+        public ModelGroupData GroupData { get; set; }
 
         /// <summary>
-        /// The name of the model group.
+        /// Gets or sets the name of the model group.
         /// </summary>
         public string Name
         {
@@ -53,7 +53,7 @@ namespace Warcraft.WMO.GroupFile
         }
 
         /// <summary>
-        /// The descriptive name of the model group.
+        /// Gets or sets the descriptive name of the model group.
         /// </summary>
         public string DescriptiveName
         {
@@ -62,7 +62,7 @@ namespace Warcraft.WMO.GroupFile
         }
 
         /// <summary>
-        /// Deserializes a <see cref="ModelGroup"/> object from provided binary data.
+        /// Initializes a new instance of the <see cref="ModelGroup"/> class.
         /// </summary>
         /// <param name="inData">The binary data containing the object.</param>
         public ModelGroup(byte[] inData)
@@ -80,7 +80,7 @@ namespace Warcraft.WMO.GroupFile
         /// <summary>
         /// Gets the position of the model group, relative to the model root.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The group's position.</returns>
         public Vector3 GetPosition()
         {
             return GetBoundingBox().GetCenterCoordinates();

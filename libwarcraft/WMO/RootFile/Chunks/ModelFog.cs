@@ -17,15 +17,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
-using Warcraft.Core.Structures;
 
 namespace Warcraft.WMO.RootFile.Chunks
 {
+    /// <summary>
+    /// Represents the fog instances in a model.
+    /// </summary>
     public class ModelFog : IIFFChunk, IBinarySerializable
     {
         /// <summary>
@@ -33,7 +33,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// </summary>
         public const string Signature = "MFOG";
 
-        public readonly List<FogInstance> FogInstances = new List<FogInstance>();
+        /// <summary>
+        /// Gets the fog instances.
+        /// </summary>
+        public List<FogInstance> FogInstances { get; } = new List<FogInstance>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelFog"/> class.
@@ -42,6 +45,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelFog"/> class.
+        /// </summary>
+        /// <param name="inData">The binary data.</param>
         public ModelFog(byte[] inData)
         {
             LoadBinaryData(inData);
@@ -86,56 +93,4 @@ namespace Warcraft.WMO.RootFile.Chunks
             }
         }
     }
-
-    public class FogDefinition : IBinarySerializable
-    {
-        public float EndRadius;
-        public float StartMultiplier;
-        public BGRA Colour;
-
-        public FogDefinition(byte[] inData)
-        {
-            using (MemoryStream ms = new MemoryStream(inData))
-            {
-                using (BinaryReader br = new BinaryReader(ms))
-                {
-                    EndRadius = br.ReadSingle();
-                    StartMultiplier = br.ReadSingle();
-                    Colour = br.ReadBGRA();
-                }
-            }
-        }
-
-        public static int GetSize()
-        {
-            return 12;
-        }
-
-        /// <inheritdoc/>
-        public byte[] Serialize()
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (BinaryWriter bw = new BinaryWriter(ms))
-                {
-                    bw.Write(EndRadius);
-                    bw.Write(StartMultiplier);
-                    bw.WriteBGRA(Colour);
-                }
-
-                return ms.ToArray();
-            }
-        }
-    }
-
-    [Flags]
-    public enum FogFlags : uint
-    {
-        InfiniteRadius    = 0x01,
-        // Unused1        = 0x02,
-        // Unused2        = 0x04,
-        Unknown1        = 0x10,
-        // Followed by 27 unused values
-    }
 }
-
