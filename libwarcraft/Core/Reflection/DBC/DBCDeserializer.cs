@@ -23,9 +23,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using Warcraft.Core.Extensions;
-using Warcraft.Core.Structures;
 using Warcraft.DBC.SpecialFields;
 
 namespace Warcraft.Core.Reflection.DBC
