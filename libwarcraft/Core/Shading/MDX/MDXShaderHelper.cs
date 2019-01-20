@@ -249,7 +249,7 @@ namespace Warcraft.Core.Shading.MDX
             if (!model.GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
             {
                 var textureMapping = model.TextureMappingLookupTable[renderBatch.TextureMappingLookupTableIndex];
-                bool isEnvMapped = textureMapping == EMDXTextureMappingType.Environment;
+                bool isEnvMapped = textureMapping == MDXTextureMappingType.Environment;
                 bool nonOpaqueBlendingMode = material.BlendMode != BlendingMode.Opaque;
 
                 if (nonOpaqueBlendingMode)
@@ -263,7 +263,7 @@ namespace Warcraft.Core.Shading.MDX
 
                 newShaderID *= 16;
 
-                if (textureMapping == EMDXTextureMappingType.T2)
+                if (textureMapping == MDXTextureMappingType.T2)
                 {
                     newShaderID |= 0x4000;
                 }
@@ -289,8 +289,8 @@ namespace Warcraft.Core.Shading.MDX
                 }
 
                 int textureMappingOverrideIndex = renderBatch.TextureMappingLookupTableIndex + opIndex;
-                EMDXTextureMappingType textureSlotOverride = model.TextureMappingLookupTable[textureMappingOverrideIndex];
-                bool isEnvMapped = textureSlotOverride == EMDXTextureMappingType.Environment;
+                MDXTextureMappingType textureSlotOverride = model.TextureMappingLookupTable[textureMappingOverrideIndex];
+                bool isEnvMapped = textureSlotOverride == MDXTextureMappingType.Environment;
 
                 if (isEnvMapped)
                 {
@@ -301,7 +301,7 @@ namespace Warcraft.Core.Shading.MDX
                     v19[opIndex] = (short)blendingOverride;
                 }
 
-                if (textureSlotOverride == EMDXTextureMappingType.Environment && (opIndex + 1) == operationCount)
+                if (textureSlotOverride == MDXTextureMappingType.Environment && (opIndex + 1) == operationCount)
                 {
                     newShaderID |= 0x4000;
                 }

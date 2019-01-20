@@ -1,5 +1,5 @@
-//
-//  EMDXRenderFlag.cs
+﻿//
+//  MDXTextureMappingType.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -17,39 +17,26 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-
 namespace Warcraft.MDX.Visual
 {
     /// <summary>
-    /// Render flags for the whole model, or for a section of it.
+    /// Texture mapping types.
     /// </summary>
-    [Flags]
-    public enum EMDXRenderFlag : ushort
+    public enum MDXTextureMappingType : short
     {
         /// <summary>
-        /// The model is unlit.
+        /// Uses the first texture slot.
         /// </summary>
-        Unlit = 0x1,
+        T1 = 0,
 
         /// <summary>
-        /// The model is unaffected by fog.
+        /// Uses the second texture slot.
         /// </summary>
-        NoFog = 0x2,
+        T2 = 1,
 
         /// <summary>
-        /// The model's textures are two-sided.
+        /// Uses the environment mapping texture slot.
         /// </summary>
-        TwoSided = 0x4,
-
-        /// <summary>
-        /// Unknown.
-        /// </summary>
-        Unknown = 0x8,
-
-        /// <summary>
-        /// The model's Z buffer is disabled.
-        /// </summary>
-        DisableZBuffering = 0x10
+        Environment = -1
     }
 }

@@ -46,12 +46,12 @@ namespace Warcraft.MDX.Data
         /// <summary>
         /// The values of the array.
         /// </summary>
-        private readonly List<T> Values = new List<T>();
+        private readonly List<T> _values = new List<T>();
 
         /// <summary>
         /// Whether or not the array has been filled with its values.
         /// </summary>
-        private bool IsFilled;
+        private bool _isFilled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MDXArray{T}"/> class.
@@ -67,11 +67,11 @@ namespace Warcraft.MDX.Data
                 throw new ArgumentNullException(nameof(values));
             }
 
-            Values.AddRange(values);
-            Count = (uint)Values.Count;
+            _values.AddRange(values);
+            Count = (uint)_values.Count;
 
             ElementsOffset = 0;
-            IsFilled = true;
+            _isFilled = true;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Warcraft.MDX.Data
         /// <param name="data">The data.</param>
         public MDXArray(byte[] data)
         {
-            IsFilled = false;
+            _isFilled = false;
             using (MemoryStream ms = new MemoryStream(data))
             {
                 using (BinaryReader br = new BinaryReader(ms))
@@ -105,7 +105,7 @@ namespace Warcraft.MDX.Data
 
             Fill(br);
 
-            IsFilled = true;
+            _isFilled = true;
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Warcraft.MDX.Data
 
             Fill(br, version);
 
-            IsFilled = true;
+            _isFilled = true;
         }
 
         /// <summary>
@@ -130,13 +130,13 @@ namespace Warcraft.MDX.Data
         /// <returns>The values.</returns>
         public IEnumerable<T> GetValues()
         {
-            if (!IsFilled)
+            if (!_isFilled)
             {
                 throw new InvalidOperationException("The values of the array cannot be accessed before it has been " +
                                                     "filled with its values.");
             }
 
-            return new List<T>(Values);
+            return new List<T>(_values);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Warcraft.MDX.Data
                                             "stored number of elements in the information header.");
             }
 
-            Values.AddRange(values);
+            _values.AddRange(values);
         }
 
         /// <summary>
@@ -168,12 +168,12 @@ namespace Warcraft.MDX.Data
 
             for (int i = 0; i < Count; ++i)
             {
-                Values.Add(br.Read<T>());
+                _values.Add(br.Read<T>());
             }
 
             br.BaseStream.Position = initialPositionBeforeJumpToData;
 
-            IsFilled = true;
+            _isFilled = true;
         }
 
         /// <summary>
@@ -189,12 +189,12 @@ namespace Warcraft.MDX.Data
 
             for (int i = 0; i < Count; ++i)
             {
-                Values.Add(br.Read<T>(version));
+                _values.Add(br.Read<T>(version));
             }
 
             br.BaseStream.Position = initialPositionBeforeJumpToData;
 
-            IsFilled = true;
+            _isFilled = true;
         }
 
         /// <summary>
@@ -205,37 +205,37 @@ namespace Warcraft.MDX.Data
         {
             get
             {
-                if (!IsFilled)
+                if (!_isFilled)
                 {
                     throw new InvalidOperationException("The values of the array cannot be accessed before it has been " +
                                                         "filled with its values.");
                 }
 
-                return Values[index];
+                return _values[index];
             }
 
             set
             {
-                if (!IsFilled)
+                if (!_isFilled)
                 {
                     throw new InvalidOperationException("The values of the array cannot be accessed before it has been " +
                                                         "filled with its values.");
                 }
 
-                Values[index] = value;
+                _values[index] = value;
             }
         }
 
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator()
         {
-            if (!IsFilled)
+            if (!_isFilled)
             {
                 throw new InvalidOperationException("The enumerator of the array cannot be accessed before it has been " +
                                                     "filled with its values.");
             }
 
-            return Values.GetEnumerator();
+            return _values.GetEnumerator();
         }
 
         /// <inheritdoc/>

@@ -31,11 +31,11 @@ namespace Warcraft.DBC
     /// <typeparam name="TRecord">The record type.</typeparam>
     public class DBCEnumerator<TRecord> : IEnumerator<TRecord> where TRecord : DBCRecord, new()
     {
-        private readonly DBC<TRecord> ParentDatabase;
-        private readonly BinaryReader DatabaseReader;
-        private readonly long StringBlockOffset;
+        private readonly DBC<TRecord> _parentDatabase;
+        private readonly BinaryReader _databaseReader;
+        private readonly long _stringBlockOffset;
 
-        private int RecordIndex;
+        private int _recordIndex;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DBCEnumerator{TRecord}"/> class.
@@ -45,51 +45,51 @@ namespace Warcraft.DBC
         /// <param name="stringBlockOffset">The offset of the string block.</param>
         public DBCEnumerator(DBC<TRecord> database, byte[] data, long stringBlockOffset)
         {
-            ParentDatabase = database;
-            StringBlockOffset = stringBlockOffset;
-            DatabaseReader = new BinaryReader(new MemoryStream(data));
-            RecordIndex = 0;
+            _parentDatabase = database;
+            _stringBlockOffset = stringBlockOffset;
+            _databaseReader = new BinaryReader(new MemoryStream(data));
+            _recordIndex = 0;
 
             // Seek to the start of the record block
-            DatabaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
+            _databaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
         }
 
         /// <inheritdoc />
         public bool MoveNext()
         {
-            long recordBlockEnd = StringBlockOffset;
-            if (DatabaseReader.BaseStream.Position >= recordBlockEnd)
+            long recordBlockEnd = _stringBlockOffset;
+            if (_databaseReader.BaseStream.Position >= recordBlockEnd)
             {
                 return false;
             }
 
-            if (ParentDatabase.HasCachedRecordAtIndex(RecordIndex))
+            if (_parentDatabase.HasCachedRecordAtIndex(_recordIndex))
             {
-                Current = ParentDatabase[RecordIndex];
-                DatabaseReader.BaseStream.Position += ParentDatabase.RecordSize;
+                Current = _parentDatabase[_recordIndex];
+                _databaseReader.BaseStream.Position += _parentDatabase.RecordSize;
             }
             else
             {
-                Current = DatabaseReader.ReadRecord<TRecord>(ParentDatabase.FieldCount, ParentDatabase.RecordSize, ParentDatabase.Version);
+                Current = _databaseReader.ReadRecord<TRecord>(_parentDatabase.FieldCount, _parentDatabase.RecordSize, _parentDatabase.Version);
 
                 foreach (var stringReference in Current.GetStringReferences())
                 {
-                    ParentDatabase.ResolveStringReference(stringReference);
+                    _parentDatabase.ResolveStringReference(stringReference);
                 }
 
-                ParentDatabase.CacheRecordAtIndex(Current, RecordIndex);
+                _parentDatabase.CacheRecordAtIndex(Current, _recordIndex);
             }
 
-            ++RecordIndex;
+            ++_recordIndex;
 
-            return DatabaseReader.BaseStream.Position != recordBlockEnd;
+            return _databaseReader.BaseStream.Position != recordBlockEnd;
         }
 
         /// <inheritdoc />
         public void Reset()
         {
-            DatabaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
-            RecordIndex = 0;
+            _databaseReader.BaseStream.Seek(DBCHeader.GetSize(), SeekOrigin.Begin);
+            _recordIndex = 0;
             Current = null;
         }
 
@@ -102,7 +102,7 @@ namespace Warcraft.DBC
         /// <inheritdoc />
         public void Dispose()
         {
-            DatabaseReader.Dispose();
+            _databaseReader.Dispose();
         }
     }
 }

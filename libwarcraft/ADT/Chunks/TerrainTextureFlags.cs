@@ -34,7 +34,7 @@ namespace Warcraft.ADT.Chunks
         /// </summary>
         public const string Signature = "MTXF";
 
-        private List<TerrainTextureFlag> TextureFlags = new List<TerrainTextureFlag>();
+        private List<TerrainTextureFlag> _textureFlags = new List<TerrainTextureFlag>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Warcraft.ADT.Chunks.TerrainTextureFlags"/> class.
@@ -56,7 +56,7 @@ namespace Warcraft.ADT.Chunks
 
                     for (int i = 0; i < entryCount; ++i)
                     {
-                        TextureFlags.Add((TerrainTextureFlag)br.ReadUInt32());
+                        _textureFlags.Add((TerrainTextureFlag)br.ReadUInt32());
                     }
                 }
             }

@@ -1,5 +1,5 @@
 //
-//  EMDXTextureFlags.cs
+//  MDXTextureFlags.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -22,7 +22,7 @@ namespace Warcraft.MDX.Visual
     /// <summary>
     /// Flags for model textures.
     /// </summary>
-    public enum EMDXTextureFlags : uint
+    public enum MDXTextureFlags : uint
     {
         /// <summary>
         /// The texture should wrap around the X axis.

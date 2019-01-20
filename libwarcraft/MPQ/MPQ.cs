@@ -56,7 +56,7 @@ namespace Warcraft.MPQ
         /// <summary>
         /// Whether or not this instance has been disposed.
         /// </summary>
-        private bool IsDisposed;
+        private bool _isDisposed;
 
         /// <summary>
         /// Gets or sets the header of the MPQ archive. Contains information about sizes and offsets of relational structures
@@ -93,13 +93,13 @@ namespace Warcraft.MPQ
         /// A set of extended file attributes. These attributes are not guaranteed to be present in all archives,
         /// and may be empty or zeroed for some archives.
         /// </summary>
-        private ExtendedAttributes FileAttributes;
+        private ExtendedAttributes _fileAttributes;
 
         /// <summary>
         /// The external listfile. Instead of extracting the listfile from the archive, the user can provide one
         /// to be used instead. This file is prioritized over the one stored in the archive.
         /// </summary>
-        private List<string> ExternalListfile = new List<string>();
+        private List<string> _externalListfile = new List<string>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQ"/> class.
@@ -222,18 +222,18 @@ namespace Warcraft.MPQ
         {
             ThrowIfDisposed();
 
-            if (FileAttributes != null)
+            if (_fileAttributes != null)
             {
-                return FileAttributes;
+                return _fileAttributes;
             }
 
             if (ContainsFile(ExtendedAttributes.InternalFileName))
             {
                 byte[] attributeData = ExtractFile(ExtendedAttributes.InternalFileName);
-                FileAttributes = new ExtendedAttributes(attributeData, Header.BlockTableEntryCount);
+                _fileAttributes = new ExtendedAttributes(attributeData, Header.BlockTableEntryCount);
             }
 
-            return FileAttributes;
+            return _fileAttributes;
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Warcraft.MPQ
         {
             ThrowIfDisposed();
 
-            return ContainsFile("(listfile)") || ExternalListfile.Count > 0;
+            return ContainsFile("(listfile)") || _externalListfile.Count > 0;
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Warcraft.MPQ
         {
             ThrowIfDisposed();
 
-            if (ExternalListfile.Count > 0)
+            if (_externalListfile.Count > 0)
             {
                 return GetExternalFileList();
             }
@@ -313,7 +313,7 @@ namespace Warcraft.MPQ
         {
             ThrowIfDisposed();
 
-            return ExternalListfile;
+            return _externalListfile;
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Warcraft.MPQ
         {
             ThrowIfDisposed();
 
-            ExternalListfile = inExternalListfile;
+            _externalListfile = inExternalListfile;
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Warcraft.MPQ
         {
             ThrowIfDisposed();
 
-            ExternalListfile.Clear();
+            _externalListfile.Clear();
         }
 
         /// <inheritdoc />
@@ -378,7 +378,7 @@ namespace Warcraft.MPQ
                 return new MPQFileInfo(filePath, hashEntry, blockEntry);
             }
 
-            return new MPQFileInfo(filePath, hashEntry, blockEntry, FileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]);
+            return new MPQFileInfo(filePath, hashEntry, blockEntry, _fileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]);
         }
 
         /// <inheritdoc />
@@ -738,7 +738,7 @@ namespace Warcraft.MPQ
 
         private void ThrowIfDisposed()
         {
-            if (IsDisposed)
+            if (_isDisposed)
             {
                 throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
             }
@@ -756,9 +756,9 @@ namespace Warcraft.MPQ
                 ExtendedBlockTable.Clear();
             }
 
-            if (ExternalListfile.Count > 0)
+            if (_externalListfile.Count > 0)
             {
-                ExternalListfile.Clear();
+                _externalListfile.Clear();
             }
 
             if (_archiveReader != null)
@@ -767,7 +767,7 @@ namespace Warcraft.MPQ
                 _archiveReader.Dispose();
             }
 
-            IsDisposed = true;
+            _isDisposed = true;
         }
     }
 }

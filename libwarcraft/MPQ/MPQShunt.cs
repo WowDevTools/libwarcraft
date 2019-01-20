@@ -40,12 +40,12 @@ namespace Warcraft.MPQ
         /// <summary>
         /// The allocated size of the embedded archive.
         /// </summary>
-        private uint ShuntedArchiveAllocatedSize;
+        private uint _shuntedArchiveAllocatedSize;
 
         /// <summary>
         /// The offset where the embedded archive begins.
         /// </summary>
-        private uint ShuntedArchiveOffset;
+        private uint _shuntedArchiveOffset;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MPQShunt"/> class.
@@ -71,8 +71,8 @@ namespace Warcraft.MPQ
                         throw new InvalidDataException("The data did not contain a valid shunt signature.");
                     }
 
-                    ShuntedArchiveAllocatedSize = br.ReadUInt32();
-                    ShuntedArchiveOffset = br.ReadUInt32();
+                    _shuntedArchiveAllocatedSize = br.ReadUInt32();
+                    _shuntedArchiveOffset = br.ReadUInt32();
                 }
             }
         }
@@ -88,8 +88,8 @@ namespace Warcraft.MPQ
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
                     bw.WriteChunkSignature(Signature);
-                    bw.Write(ShuntedArchiveAllocatedSize);
-                    bw.Write(ShuntedArchiveOffset);
+                    bw.Write(_shuntedArchiveAllocatedSize);
+                    bw.Write(_shuntedArchiveOffset);
                 }
 
                 return ms.ToArray();

@@ -151,7 +151,7 @@ namespace Warcraft.MDX
         /// <summary>
         /// Gets or sets the texture mapping lookup table.
         /// </summary>
-        public MDXArray<EMDXTextureMappingType> TextureMappingLookupTable { get; set; }
+        public MDXArray<MDXTextureMappingType> TextureMappingLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the transparency lookup table.
@@ -321,7 +321,7 @@ namespace Warcraft.MDX
 
                 BoneLookupTable = br.ReadMDXArray<short>();
                 TextureLookupTable = br.ReadMDXArray<short>();
-                TextureMappingLookupTable = br.ReadMDXArray<EMDXTextureMappingType>();
+                TextureMappingLookupTable = br.ReadMDXArray<MDXTextureMappingType>();
                 TransparencyLookupTable = br.ReadMDXArray<short>();
                 TextureTransformationLookupTable = br.ReadMDXArray<short>();
 

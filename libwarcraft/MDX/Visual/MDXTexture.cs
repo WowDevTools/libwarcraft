@@ -31,12 +31,12 @@ namespace Warcraft.MDX.Visual
         /// <summary>
         /// Gets or sets the texture type.
         /// </summary>
-        public EMDXTextureType TextureType { get; set; }
+        public MDXTextureType TextureType { get; set; }
 
         /// <summary>
         /// Gets or sets the flags.
         /// </summary>
-        public EMDXTextureFlags Flags { get; set; }
+        public MDXTextureFlags Flags { get; set; }
 
         /// <summary>
         /// Gets or sets the path to the texture.
@@ -49,8 +49,8 @@ namespace Warcraft.MDX.Visual
         /// <param name="br">The reader to read the instance from.</param>
         public MDXTexture(BinaryReader br)
         {
-            TextureType = (EMDXTextureType)br.ReadUInt32();
-            Flags = (EMDXTextureFlags)br.ReadUInt32();
+            TextureType = (MDXTextureType)br.ReadUInt32();
+            Flags = (MDXTextureFlags)br.ReadUInt32();
 
             // This points off to a null-terminated string, so we'll pop off the null byte when deserializing it
             Filename = new string(br.ReadMDXArray<char>().ToArray()).TrimEnd('\0');

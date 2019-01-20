@@ -1,5 +1,5 @@
 //
-//  EMDXTextureType.cs
+//  MDXTextureType.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -22,7 +22,7 @@ namespace Warcraft.MDX.Visual
     /// <summary>
     /// Defines the various texture types.
     /// </summary>
-    public enum EMDXTextureType : uint
+    public enum MDXTextureType : uint
     {
         /// <summary>
         /// A regular object texture.

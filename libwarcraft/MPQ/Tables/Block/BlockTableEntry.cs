@@ -31,17 +31,17 @@ namespace Warcraft.MPQ.Tables.Block
         /// <summary>
         /// The offset into the archive file where the file data begins.
         /// </summary>
-        private readonly uint BlockOffset;
+        private readonly uint _blockOffset;
 
         /// <summary>
         /// The absolute size in bytes of the stored file data.
         /// </summary>
-        private readonly uint BlockSize;
+        private readonly uint _blockSize;
 
         /// <summary>
         /// The absolute original file size in bytes.
         /// </summary>
-        private readonly uint FileSize;
+        private readonly uint _fileSize;
 
         /// <summary>
         /// Gets or sets a set of flags which holds some information about how the file is stored.
@@ -59,9 +59,9 @@ namespace Warcraft.MPQ.Tables.Block
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    BlockOffset = br.ReadUInt32();
-                    BlockSize = br.ReadUInt32();
-                    FileSize = br.ReadUInt32();
+                    _blockOffset = br.ReadUInt32();
+                    _blockSize = br.ReadUInt32();
+                    _fileSize = br.ReadUInt32();
                     Flags = (BlockFlags)br.ReadUInt32();
                 }
             }
@@ -73,7 +73,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The block offset.</returns>
         public uint GetBlockOffset()
         {
-            return BlockOffset;
+            return _blockOffset;
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The final offset.</returns>
         public ulong GetExtendedBlockOffset(ushort highBits)
         {
-            return MPQHeader.MergeHighBits(BlockOffset, highBits);
+            return MPQHeader.MergeHighBits(_blockOffset, highBits);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The block size.</returns>
         public uint GetBlockSize()
         {
-            return BlockSize;
+            return _blockSize;
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The file size.</returns>
         public uint GetFileSize()
         {
-            return FileSize;
+            return _fileSize;
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns><c>true</c> if this instance is block empty; otherwise, <c>false</c>.</returns>
         public bool IsBlockEmpty()
         {
-            return (BlockOffset != 0) && (BlockSize != 0) && (FileSize == 0) && (Flags == 0);
+            return (_blockOffset != 0) && (_blockSize != 0) && (_fileSize == 0) && (Flags == 0);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns><c>true</c> if this instance is block unused; otherwise, <c>false</c>.</returns>
         public bool IsBlockUnused()
         {
-            return (BlockOffset == 0) && (BlockSize == 0) && (FileSize == 0) && (Flags == 0);
+            return (_blockOffset == 0) && (_blockSize == 0) && (_fileSize == 0) && (Flags == 0);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Warcraft.MPQ.Tables.Block
 
             // Oddly enough, on occasion the block will be marked as compressed but will not actually be compressed.
             // These sorts of blocks can be detected by comparing the block size with the actual file size.
-            return (BlockSize != FileSize) && isCompressedInAnyWay;
+            return (_blockSize != _fileSize) && isCompressedInAnyWay;
         }
 
         /// <summary>
@@ -214,9 +214,9 @@ namespace Warcraft.MPQ.Tables.Block
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    bw.Write(BlockOffset);
-                    bw.Write(BlockSize);
-                    bw.Write(FileSize);
+                    bw.Write(_blockOffset);
+                    bw.Write(_blockSize);
+                    bw.Write(_fileSize);
                     bw.Write((uint)Flags);
                 }
 

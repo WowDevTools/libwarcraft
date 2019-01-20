@@ -1,5 +1,5 @@
 //
-//  EMDXRenderBatchFlags.cs
+//  MDXRenderBatchFlags.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -25,7 +25,7 @@ namespace Warcraft.MDX.Visual
     /// Defines the render flags of a batch.
     /// </summary>
     [Flags]
-    public enum EMDXRenderBatchFlags : byte
+    public enum MDXRenderBatchFlags : byte
     {
         /// <summary>
         /// The batch is animated.

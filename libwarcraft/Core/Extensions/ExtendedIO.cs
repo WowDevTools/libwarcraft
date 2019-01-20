@@ -143,7 +143,7 @@ namespace Warcraft.Core.Extensions
 
             // Enumeration types
             { typeof(BlendingMode), r => (BlendingMode)r.ReadUInt16() },
-            { typeof(EMDXTextureMappingType), r => (EMDXTextureMappingType)r.ReadInt16() }
+            { typeof(MDXTextureMappingType), r => (MDXTextureMappingType)r.ReadInt16() }
         };
 
         /// <summary>

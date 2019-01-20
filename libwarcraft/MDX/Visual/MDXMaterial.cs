@@ -33,7 +33,7 @@ namespace Warcraft.MDX.Visual
         /// <summary>
         /// Gets or sets a general set of flags, that is, actions to apply to this material.
         /// </summary>
-        public EMDXRenderFlag Flags { get; set; }
+        public MDXRenderFlag Flags { get; set; }
 
         /// <summary>
         /// Gets or sets the framebuffer blending mode to apply with this material.
@@ -47,7 +47,7 @@ namespace Warcraft.MDX.Visual
         /// <param name="version">The version to read the instance in the context of.</param>
         public MDXMaterial(BinaryReader br, WarcraftVersion version)
         {
-            Flags = (EMDXRenderFlag)br.ReadUInt16();
+            Flags = (MDXRenderFlag)br.ReadUInt16();
             if (version >= WarcraftVersion.Cataclysm)
             {
                 BlendMode = (BlendingMode)br.ReadUInt16();

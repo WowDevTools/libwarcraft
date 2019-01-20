@@ -38,27 +38,27 @@ namespace Warcraft.DBC
         /// <summary>
         /// The header of the database file. Describes the sizes and field counts of the records in the database.
         /// </summary>
-        private readonly DBCHeader Header;
+        private readonly DBCHeader _header;
 
         /// <summary>
         /// Gets the number of held records.
         /// </summary>
-        public int RecordCount => (int)Header.RecordCount;
+        public int RecordCount => (int)_header.RecordCount;
 
         /// <summary>
         /// Gets the number of fields in each record.
         /// </summary>
-        public int FieldCount => (int)Header.FieldCount;
+        public int FieldCount => (int)_header.FieldCount;
 
         /// <summary>
         /// Gets the absolute size of each record.
         /// </summary>
-        public int RecordSize => (int)Header.RecordSize;
+        public int RecordSize => (int)_header.RecordSize;
 
         /// <summary>
         /// Gets the absolute size of the string block.
         /// </summary>
-        public int StringBlockSize => (int)Header.StringBlockSize;
+        public int StringBlockSize => (int)_header.StringBlockSize;
 
         /// <summary>
         /// Gets the game version this database is valid for. This affects how the records are parsed, and is vital for
@@ -73,9 +73,9 @@ namespace Warcraft.DBC
         /// <summary>
         /// The <see cref="BinaryReader"/> which holds the data of the database.
         /// </summary>
-        private readonly byte[] DatabaseContents;
+        private readonly byte[] _databaseContents;
 
-        private readonly long StringBlockOffset;
+        private readonly long _stringBlockOffset;
 
         /// <summary>
         /// Gets the strings in the DBC file.
@@ -85,7 +85,7 @@ namespace Warcraft.DBC
         /// <summary>
         /// The records in the database. Used as a procedural cache.
         /// </summary>
-        private readonly List<TRecord> Records;
+        private readonly List<TRecord> _records;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DBC{TRecord}"/> class.
@@ -95,27 +95,27 @@ namespace Warcraft.DBC
         public DBC(WarcraftVersion inVersion, byte[] data)
         {
             Version = inVersion;
-            DatabaseContents = data;
+            _databaseContents = data;
 
-            using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(DatabaseContents)))
+            using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(_databaseContents)))
             {
-                Header = new DBCHeader(databaseReader.ReadBytes(DBCHeader.GetSize()));
+                _header = new DBCHeader(databaseReader.ReadBytes(DBCHeader.GetSize()));
 
                 // Seek to and read the string block
-                databaseReader.BaseStream.Seek(Header.RecordCount * Header.RecordSize, SeekOrigin.Current);
-                StringBlockOffset = databaseReader.BaseStream.Position;
+                databaseReader.BaseStream.Seek(_header.RecordCount * _header.RecordSize, SeekOrigin.Current);
+                _stringBlockOffset = databaseReader.BaseStream.Position;
                 while (databaseReader.BaseStream.Position != databaseReader.BaseStream.Length)
                 {
-                    Strings.Add(databaseReader.BaseStream.Position - StringBlockOffset, databaseReader.ReadNullTerminatedString());
+                    Strings.Add(databaseReader.BaseStream.Position - _stringBlockOffset, databaseReader.ReadNullTerminatedString());
                 }
             }
 
-            Records = new List<TRecord>(Count);
+            _records = new List<TRecord>(Count);
 
             // Initialize the record list with null values
             for (int i = 0; i < Count; ++i)
             {
-                Records.Add(null);
+                _records.Add(null);
             }
         }
 
@@ -152,7 +152,7 @@ namespace Warcraft.DBC
         /// <returns>true if the record has been cached; otherwise, false.</returns>
         internal bool HasCachedRecordAtIndex(int index)
         {
-            return Records[index] != null;
+            return _records[index] != null;
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Warcraft.DBC
                 throw new InvalidOperationException("A record was already cached at the given index.");
             }
 
-            Records[index] = record;
+            _records[index] = record;
         }
 
         /*
@@ -187,7 +187,7 @@ namespace Warcraft.DBC
         /// <inheritdoc />
         public IEnumerator<TRecord> GetEnumerator()
         {
-            return new DBCEnumerator<TRecord>(this, DatabaseContents, StringBlockOffset);
+            return new DBCEnumerator<TRecord>(this, _databaseContents, _stringBlockOffset);
         }
 
         /*
@@ -201,22 +201,22 @@ namespace Warcraft.DBC
             {
                 if (HasCachedRecordAtIndex(i))
                 {
-                    return Records[i];
+                    return _records[i];
                 }
 
-                using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(DatabaseContents)))
+                using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(_databaseContents)))
                 {
-                    long recordOffset = DBCHeader.GetSize() + (Header.RecordSize * i);
+                    long recordOffset = DBCHeader.GetSize() + (_header.RecordSize * i);
                     databaseReader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
 
-                    TRecord record = databaseReader.ReadRecord<TRecord>((int)Header.FieldCount, (int)Header.RecordSize, Version);
+                    TRecord record = databaseReader.ReadRecord<TRecord>((int)_header.FieldCount, (int)_header.RecordSize, Version);
 
                     foreach (var stringReference in record.GetStringReferences())
                     {
                         ResolveStringReference(stringReference);
                     }
 
-                    Records[i] = record;
+                    _records[i] = record;
 
                     return record;
                 }

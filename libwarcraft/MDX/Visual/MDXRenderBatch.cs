@@ -32,7 +32,7 @@ namespace Warcraft.MDX.Visual
         /// <summary>
         /// Gets or sets a set of flags, defining operations on this layer.
         /// </summary>
-        public EMDXRenderBatchFlags Flags { get; set; }
+        public MDXRenderBatchFlags Flags { get; set; }
 
         /// <summary>
         /// Gets or sets the rendering priority plane of this layer.
@@ -111,7 +111,7 @@ namespace Warcraft.MDX.Visual
             {
                 using (BinaryReader br = new BinaryReader(ms))
                 {
-                    Flags = (EMDXRenderBatchFlags)br.ReadByte();
+                    Flags = (MDXRenderBatchFlags)br.ReadByte();
                     PriorityPlane = br.ReadSByte();
 
                     ShaderID = br.ReadUInt16();

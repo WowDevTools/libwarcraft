@@ -31,7 +31,7 @@ namespace Warcraft.MDX.Geometry.Skin
     /// </summary>
     public class BaseSkinSectionIdentifier
     {
-        private readonly ushort InternalValue;
+        private readonly ushort _internalValue;
 
         /// <summary>
         /// Gets the major type of the skin.
@@ -54,7 +54,7 @@ namespace Warcraft.MDX.Geometry.Skin
                 throw new ArgumentOutOfRangeException(nameof(inValue), $"The input value may not exceed four digits. Given value was {inValue}");
             }
 
-            InternalValue = inValue;
+            _internalValue = inValue;
         }
 
         /// <summary>
@@ -63,127 +63,127 @@ namespace Warcraft.MDX.Geometry.Skin
         /// <returns>The major type.</returns>
         protected virtual string GetMajorType()
         {
-            if (InternalValue == 0)
+            if (_internalValue == 0)
             {
                 return "Skin";
             }
 
-            if (InternalValue > 0 && InternalValue < 100)
+            if (_internalValue > 0 && _internalValue < 100)
             {
                 return "Hair";
             }
 
-            if (InternalValue >= 100 && InternalValue < 200)
+            if (_internalValue >= 100 && _internalValue < 200)
             {
                 return "Beard";
             }
 
-            if (InternalValue >= 200 && InternalValue < 300)
+            if (_internalValue >= 200 && _internalValue < 300)
             {
                 return "Moustache";
             }
 
-            if (InternalValue >= 300 && InternalValue < 400)
+            if (_internalValue >= 300 && _internalValue < 400)
             {
                 return "Sideburns";
             }
 
-            if (InternalValue >= 400 && InternalValue < 500)
+            if (_internalValue >= 400 && _internalValue < 500)
             {
                 return "Glove";
             }
 
-            if (InternalValue >= 500 && InternalValue < 600)
+            if (_internalValue >= 500 && _internalValue < 600)
             {
                 return "Boots";
             }
 
-            if (InternalValue >= 600 && InternalValue < 700)
+            if (_internalValue >= 600 && _internalValue < 700)
             {
                 return "None";
             }
 
-            if (InternalValue >= 700 && InternalValue < 800)
+            if (_internalValue >= 700 && _internalValue < 800)
             {
                 return "Ears";
             }
 
-            if (InternalValue >= 800 && InternalValue < 900)
+            if (_internalValue >= 800 && _internalValue < 900)
             {
                 return "Wristbands";
             }
 
-            if (InternalValue >= 900 && InternalValue < 1000)
+            if (_internalValue >= 900 && _internalValue < 1000)
             {
                 return "Kneepads";
             }
 
-            if (InternalValue >= 1000 && InternalValue < 1100)
+            if (_internalValue >= 1000 && _internalValue < 1100)
             {
                 return "Chest";
             }
 
-            if (InternalValue >= 1100 && InternalValue < 1200)
+            if (_internalValue >= 1100 && _internalValue < 1200)
             {
                 return "Pants";
             }
 
-            if (InternalValue >= 1200 && InternalValue < 1300)
+            if (_internalValue >= 1200 && _internalValue < 1300)
             {
                 return "Tabard";
             }
 
-            if (InternalValue >= 1300 && InternalValue < 1400)
+            if (_internalValue >= 1300 && _internalValue < 1400)
             {
                 return "Trousers";
             }
 
-            if (InternalValue >= 1400 && InternalValue < 1500)
+            if (_internalValue >= 1400 && _internalValue < 1500)
             {
                 return "None";
             }
 
-            if (InternalValue >= 1500 && InternalValue < 1600)
+            if (_internalValue >= 1500 && _internalValue < 1600)
             {
                 return "Cloak";
             }
 
-            if (InternalValue >= 1600 && InternalValue < 1700)
+            if (_internalValue >= 1600 && _internalValue < 1700)
             {
                 return "None";
             }
 
-            if (InternalValue >= 1700 && InternalValue < 1800)
+            if (_internalValue >= 1700 && _internalValue < 1800)
             {
                 return "Eyeglow";
             }
 
-            if (InternalValue >= 1800 && InternalValue < 1900)
+            if (_internalValue >= 1800 && _internalValue < 1900)
             {
                 return "Belt";
             }
 
-            if (InternalValue >= 1900 && InternalValue < 2000)
+            if (_internalValue >= 1900 && _internalValue < 2000)
             {
                 return "Tail";
             }
 
-            if (InternalValue >= 2000 && InternalValue < 2100)
+            if (_internalValue >= 2000 && _internalValue < 2100)
             {
                 return "Feet";
             }
 
-            if (InternalValue >= 2100 && InternalValue < 2200)
+            if (_internalValue >= 2100 && _internalValue < 2200)
             {
                 return "None";
             }
 
-            if (InternalValue >= 2200 && InternalValue < 2300)
+            if (_internalValue >= 2200 && _internalValue < 2300)
             {
                 return "None";
             }
 
-            if (InternalValue >= 2300 && InternalValue < 2400)
+            if (_internalValue >= 2300 && _internalValue < 2400)
             {
                 return "Elf Hands";
             }
@@ -198,7 +198,7 @@ namespace Warcraft.MDX.Geometry.Skin
         /// <returns>The minor type.</returns>
         protected virtual string GetMinorType(string majorType)
         {
-            int minorTypeValue = int.Parse(InternalValue.ToString("D4").Substring(2));
+            int minorTypeValue = int.Parse(_internalValue.ToString("D4").Substring(2));
 
             switch (majorType)
             {

@@ -32,7 +32,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Holds the table encryption key.
         /// </summary>
         public static readonly uint TableKey = MPQCrypt.Hash("(block table)", HashType.FileKey);
-        private readonly List<BlockTableEntry> Entries = new List<BlockTableEntry>();
+        private readonly List<BlockTableEntry> _entries = new List<BlockTableEntry>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockTable"/> class.
@@ -54,7 +54,7 @@ namespace Warcraft.MPQ.Tables.Block
                     for (long i = 0; i < data.Length; i += BlockTableEntry.GetSize())
                     {
                         byte[] entryBytes = br.ReadBytes((int)BlockTableEntry.GetSize());
-                        Entries.Add(new BlockTableEntry(entryBytes));
+                        _entries.Add(new BlockTableEntry(entryBytes));
                     }
                 }
             }
@@ -70,7 +70,7 @@ namespace Warcraft.MPQ.Tables.Block
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
                 {
-                    foreach (BlockTableEntry entry in Entries)
+                    foreach (BlockTableEntry entry in _entries)
                     {
                         bw.Write(entry.Serialize());
                     }
@@ -88,7 +88,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The entry at the index.</returns>
         public BlockTableEntry GetEntry(int index)
         {
-            return Entries[index];
+            return _entries[index];
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The size.</returns>
         public ulong GetSize()
         {
-            return (ulong)(Entries.Count * BlockTableEntry.GetSize());
+            return (ulong)(_entries.Count * BlockTableEntry.GetSize());
         }
     }
 }
