@@ -28,6 +28,7 @@ namespace Warcraft.MPQ
     /// This class represents a binary structure which can be inserted into any file, and acts as a pointer
     /// to an embedded <see cref="MPQ"/> archive.
     /// </summary>
+    [PublicAPI]
     public class MPQShunt : IBinarySerializable
     {
         /// <summary>
@@ -36,6 +37,7 @@ namespace Warcraft.MPQ
         /// <summary>
         /// Holds the binary chunk signature.
         /// </summary>
+        [PublicAPI, NotNull]
         public const string Signature = "MPQ\x1B";
 
         /// <summary>

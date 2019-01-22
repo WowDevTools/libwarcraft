@@ -134,24 +134,26 @@ namespace Warcraft.MPQ
 
             ArchiveBlockTable = new BlockTable(blockTableData);
 
-            if (Header.GetFormat() == MPQFormat.ExtendedV1)
+            if (Header.GetFormat() != MPQFormat.ExtendedV1)
             {
-                // Seek to the extended block table and load it, if necessary
-                if (Header.GetExtendedBlockTableOffset() <= 0)
-                {
-                    return;
-                }
-
-                _archiveReader.BaseStream.Position = (long)Header.GetExtendedBlockTableOffset();
-                var extendedTable = new List<ushort>();
-
-                for (int i = 0; i < Header.GetBlockTableEntryCount(); ++i)
-                {
-                    extendedTable.Add(_archiveReader.ReadUInt16());
-                }
-
-                ExtendedBlockTable = extendedTable;
+                return;
             }
+
+            // Seek to the extended block table and load it, if necessary
+            if (Header.GetExtendedBlockTableOffset() <= 0)
+            {
+                return;
+            }
+
+            _archiveReader.BaseStream.Position = (long)Header.GetExtendedBlockTableOffset();
+            var extendedTable = new List<ushort>();
+
+            for (int i = 0; i < Header.GetBlockTableEntryCount(); ++i)
+            {
+                extendedTable.Add(_archiveReader.ReadUInt16());
+            }
+
+            ExtendedBlockTable = extendedTable;
         }
 
         /// <summary>
@@ -222,10 +224,7 @@ namespace Warcraft.MPQ
             return new WeakPackageSignature(ExtractFile(WeakPackageSignature.InternalFilename));
         }
 
-        /// <summary>
-        /// Determines whether this archive has a listfile.
-        /// </summary>
-        /// <returns><c>true</c> if this archive has a listfile; otherwise, <c>false</c>.</returns>
+        /// <inheritdoc />
         public bool HasFileList()
         {
             ThrowIfDisposed();
@@ -233,12 +232,7 @@ namespace Warcraft.MPQ
             return ContainsFile("(listfile)") || _externalListfile?.Count > 0;
         }
 
-        /// <summary>
-        /// Gets the best available listfile from the archive. If an external listfile has been provided,
-        /// that one is prioritized over the one stored in the archive.
-        /// </summary>
-        /// <returns>The listfile.</returns>
-        [PublicAPI]
+        /// <inheritdoc />
         public IEnumerable<string> GetFileList()
         {
             ThrowIfDisposed();
@@ -345,7 +339,6 @@ namespace Warcraft.MPQ
 
         /// <inheritdoc />
         /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
-        /// <exception cref="FileNotFoundException">Thrown if the archive does not contain a file at the given path.</exception>
         [PublicAPI]
         public MPQFileInfo GetFileInfo(string filePath)
         {
@@ -369,7 +362,6 @@ namespace Warcraft.MPQ
 
         /// <inheritdoc />
         /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
-        /// <exception cref="FileNotFoundException">Thrown if the archive does not contain a file at the given path.</exception>
         /// <exception cref="FileDeletedException">Thrown if the file is deleted in the archive.</exception>
         [PublicAPI]
         public byte[] ExtractFile(string filePath)

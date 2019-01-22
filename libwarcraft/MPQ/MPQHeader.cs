@@ -121,12 +121,14 @@ namespace Warcraft.MPQ
                     HashTableEntryCount = br.ReadUInt32();
                     BlockTableEntryCount = br.ReadUInt32();
 
-                    if (_format >= MPQFormat.ExtendedV1)
+                    if (_format < MPQFormat.ExtendedV1)
                     {
-                        _extendedBlockTableOffset = br.ReadUInt64();
-                        _extendedFormatHashTableOffsetBits = br.ReadUInt16();
-                        _extendedFormatBlockTableOffsetBits = br.ReadUInt16();
+                        return;
                     }
+
+                    _extendedBlockTableOffset = br.ReadUInt64();
+                    _extendedFormatHashTableOffsetBits = br.ReadUInt16();
+                    _extendedFormatBlockTableOffsetBits = br.ReadUInt16();
                 }
             }
         }
@@ -172,10 +174,8 @@ namespace Warcraft.MPQ
             {
                 return _hashTableOffset;
             }
-            else
-            {
-                return MergeHighBits(GetBaseHashTableOffset(), GetExtendedHashTableOffsetBits());
-            }
+
+            return MergeHighBits(GetBaseHashTableOffset(), GetExtendedHashTableOffsetBits());
         }
 
         /// <summary>
@@ -199,10 +199,8 @@ namespace Warcraft.MPQ
             {
                 return _blockTableOffset;
             }
-            else
-            {
-                return MergeHighBits(GetBaseBlockTableOffset(), GetExtendedBlockTableOffsetBits());
-            }
+
+            return MergeHighBits(GetBaseBlockTableOffset(), GetExtendedBlockTableOffsetBits());
         }
 
         /// <summary>
@@ -372,12 +370,14 @@ namespace Warcraft.MPQ
                     bw.Write(HashTableEntryCount);
                     bw.Write(BlockTableEntryCount);
 
-                    if (_format > MPQFormat.Basic)
+                    if (_format <= MPQFormat.Basic)
                     {
-                        bw.Write(_extendedBlockTableOffset);
-                        bw.Write(_extendedFormatHashTableOffsetBits);
-                        bw.Write(_extendedFormatBlockTableOffsetBits);
+                        return ms.ToArray();
                     }
+
+                    bw.Write(_extendedBlockTableOffset);
+                    bw.Write(_extendedFormatHashTableOffsetBits);
+                    bw.Write(_extendedFormatBlockTableOffsetBits);
                 }
 
                 return ms.ToArray();

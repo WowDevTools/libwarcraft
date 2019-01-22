@@ -79,94 +79,94 @@ namespace Warcraft.MPQ.Attributes
                         Version = 0;
                         AttributesPresent = 0;
                         FileAttributes = new List<FileAttributes>();
+
+                        return;
                     }
-                    else
+
+                    Version = br.ReadUInt32();
+                    AttributesPresent = (AttributeTypes)br.ReadUInt32();
+
+                    var crcHashes = new List<uint>();
+                    if (AttributesPresent.HasFlag(AttributeTypes.CRC32))
                     {
-                        Version = br.ReadUInt32();
-                        AttributesPresent = (AttributeTypes)br.ReadUInt32();
+                        expectedDataLength += sizeof(uint) * fileBlockCount;
 
-                        var crcHashes = new List<uint>();
-                        if (AttributesPresent.HasFlag(AttributeTypes.CRC32))
+                        for (int i = 0; i < fileBlockCount; ++i)
                         {
-                            expectedDataLength += sizeof(uint) * fileBlockCount;
-
-                            for (int i = 0; i < fileBlockCount; ++i)
+                            if (data.Length >= expectedDataLength)
                             {
-                                if (data.Length >= expectedDataLength)
-                                {
-                                    crcHashes.Add(br.ReadUInt32());
-                                }
-                                else
-                                {
-                                    crcHashes.Add(0);
-                                }
+                                crcHashes.Add(br.ReadUInt32());
                             }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < fileBlockCount; ++i)
+                            else
                             {
                                 crcHashes.Add(0);
                             }
                         }
-
-                        var timestamps = new List<ulong>();
-                        if (AttributesPresent.HasFlag(AttributeTypes.Timestamp))
+                    }
+                    else
+                    {
+                        for (int i = 0; i < fileBlockCount; ++i)
                         {
-                            expectedDataLength += sizeof(ulong) * fileBlockCount;
-
-                            for (int i = 0; i < fileBlockCount; ++i)
-                            {
-                                if (data.Length >= expectedDataLength)
-                                {
-                                    timestamps.Add(br.ReadUInt64());
-                                }
-                                else
-                                {
-                                    timestamps.Add(0);
-                                }
-                            }
+                            crcHashes.Add(0);
                         }
-                        else
+                    }
+
+                    var timestamps = new List<ulong>();
+                    if (AttributesPresent.HasFlag(AttributeTypes.Timestamp))
+                    {
+                        expectedDataLength += sizeof(ulong) * fileBlockCount;
+
+                        for (int i = 0; i < fileBlockCount; ++i)
                         {
-                            for (int i = 0; i < fileBlockCount; ++i)
+                            if (data.Length >= expectedDataLength)
+                            {
+                                timestamps.Add(br.ReadUInt64());
+                            }
+                            else
                             {
                                 timestamps.Add(0);
                             }
                         }
-
-                        var md5Hashes = new List<string>();
-                        if (AttributesPresent.HasFlag(AttributeTypes.MD5))
+                    }
+                    else
+                    {
+                        for (int i = 0; i < fileBlockCount; ++i)
                         {
-                            expectedDataLength += 16 * fileBlockCount;
-
-                            for (int i = 0; i < fileBlockCount; ++i)
-                            {
-                                if (data.Length >= expectedDataLength)
-                                {
-                                    var md5Data = br.ReadBytes(16);
-                                    string md5 = BitConverter.ToString(md5Data).Replace("-", string.Empty);
-                                    md5Hashes.Add(md5);
-                                }
-                                else
-                                {
-                                    md5Hashes.Add(string.Empty);
-                                }
-                            }
+                            timestamps.Add(0);
                         }
-                        else
+                    }
+
+                    var md5Hashes = new List<string>();
+                    if (AttributesPresent.HasFlag(AttributeTypes.MD5))
+                    {
+                        expectedDataLength += 16 * fileBlockCount;
+
+                        for (int i = 0; i < fileBlockCount; ++i)
                         {
-                            for (int i = 0; i < fileBlockCount; ++i)
+                            if (data.Length >= expectedDataLength)
+                            {
+                                var md5Data = br.ReadBytes(16);
+                                string md5 = BitConverter.ToString(md5Data).Replace("-", string.Empty);
+                                md5Hashes.Add(md5);
+                            }
+                            else
                             {
                                 md5Hashes.Add(string.Empty);
                             }
                         }
-
-                        FileAttributes = new List<FileAttributes>();
+                    }
+                    else
+                    {
                         for (int i = 0; i < fileBlockCount; ++i)
                         {
-                            FileAttributes.Add(new FileAttributes(crcHashes[i], timestamps[i], md5Hashes[i]));
+                            md5Hashes.Add(string.Empty);
                         }
+                    }
+
+                    FileAttributes = new List<FileAttributes>();
+                    for (int i = 0; i < fileBlockCount; ++i)
+                    {
+                        FileAttributes.Add(new FileAttributes(crcHashes[i], timestamps[i], md5Hashes[i]));
                     }
                 }
             }

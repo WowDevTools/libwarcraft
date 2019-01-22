@@ -155,11 +155,9 @@ namespace Warcraft.MPQ.Crypto
 
                 return finalDecryptedData;
             }
-            else
-            {
-                // Else we can just return the data as-is
-                return finalizedData.ToArray();
-            }
+
+            // Else we can just return the data as-is
+            return finalizedData.ToArray();
         }
 
         /// <summary>
@@ -192,7 +190,13 @@ namespace Warcraft.MPQ.Crypto
         /// <param name="isAdjusted">If set to <c>true</c>, the key is adjusted by the given block offset and file size.</param>
         /// <param name="blockOffset">The block offset of the file.</param>
         /// <param name="fileSize">The size of the file.</param>
-        public static uint GetFileKey([NotNull] string fileName, bool isAdjusted = false, uint blockOffset = 0, uint fileSize = 0)
+        public static uint GetFileKey
+        (
+            [NotNull] string fileName,
+            bool isAdjusted = false,
+            uint blockOffset = 0,
+            uint fileSize = 0
+        )
         {
             uint fileKey = Hash(fileName, HashType.FileKey);
 
