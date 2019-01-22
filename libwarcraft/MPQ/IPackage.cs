@@ -32,6 +32,16 @@ namespace Warcraft.MPQ
     public interface IPackage
     {
         /// <summary>
+        /// Attempts to extract the file at <paramref name="filePath"/> from the package.
+        /// </summary>
+        /// <param name="filePath">The full path to the file in the package.</param>
+        /// <param name="data">The bytes contained in the file.</param>
+        /// <returns>true if the file was successfully extracted; Otherwise, false.</returns>
+        [PublicAPI]
+        [ContractAnnotation("=> false, data : null; => true, data : notnull")]
+        bool TryExtractFile([NotNull] string filePath, [CanBeNull] out byte[] data);
+
+        /// <summary>
         /// Extract the file at <paramref name="filePath"/> from the package.
         /// </summary>
         /// <returns>The bytes contained in the file.</returns>

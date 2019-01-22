@@ -358,12 +358,39 @@ namespace Warcraft.MPQ
         {
             ThrowIfDisposed();
 
+            if (!TryExtractFile(filePath, out var data))
+            {
+                if (!ArchiveHashTable.TryFindEntry(filePath, out var fileHashEntry))
+                {
+                    throw new FileNotFoundException("No file found at the given path.", filePath);
+                }
+
+                var fileBlockEntry = ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
+                if (fileBlockEntry.IsDeleted())
+                {
+                    throw new FileDeletedException("The given file is deleted.", filePath);
+                }
+
+                throw new IOException("An unknown failure prevented the file from being extracted.");
+            }
+
+            return data;
+        }
+
+        /// <inheritdoc />
+        [PublicAPI]
+        public bool TryExtractFile(string filePath, out byte[] data)
+        {
+            ThrowIfDisposed();
+
+            data = null;
+
             // Reset all positions to be safe
             _archiveReader.BaseStream.Position = 0;
 
             if (!ArchiveHashTable.TryFindEntry(filePath, out var fileHashEntry))
             {
-                throw new FileNotFoundException("No file found at the given path.", filePath);
+                return false;
             }
 
             var fileBlockEntry = ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
@@ -371,7 +398,7 @@ namespace Warcraft.MPQ
             // Drop out if the file has been deleted
             if (fileBlockEntry.IsDeleted())
             {
-                throw new FileDeletedException("The given file is deleted.", filePath);
+                return false;
             }
 
             // Seek to the beginning of the file's sectors
@@ -400,15 +427,18 @@ namespace Warcraft.MPQ
             // Examine the file storage types and extract as necessary
             if (fileBlockEntry.IsSingleUnit())
             {
-                return ExtractSingleUnitFile(fileBlockEntry, fileKey);
+                data = ExtractSingleUnitFile(fileBlockEntry, fileKey);
+                return true;
             }
 
             if (fileBlockEntry.IsCompressed())
             {
-                return ExtractCompressedSectoredFile(fileBlockEntry, fileKey, adjustedBlockOffset);
+                data = ExtractCompressedSectoredFile(fileBlockEntry, fileKey, adjustedBlockOffset);
+                return true;
             }
 
-            return ExtractUncompressedSectoredFile(fileBlockEntry, fileKey);
+            data = ExtractUncompressedSectoredFile(fileBlockEntry, fileKey);
+            return true;
         }
 
         /// <summary>

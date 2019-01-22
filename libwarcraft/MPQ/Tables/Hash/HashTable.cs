@@ -112,7 +112,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <param name="tableEntry">The entry, or null.</param>
         /// <returns>The entry.</returns>
         [PublicAPI]
-        [ContractAnnotation("true <= tableEntry : notnull; false <= tableEntry : null")]
+        [ContractAnnotation("=> false, tableEntry : null; => true, tableEntry : notnull")]
         public bool TryFindEntry([NotNull] string fileName, out HashTableEntry tableEntry)
         {
             var entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint)_entries.Count - 1;
@@ -136,7 +136,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <param name="tableEntry">The entry, or null.</param>
         /// <returns>The entry.</returns>
         [PublicAPI]
-        [ContractAnnotation("true <= tableEntry : notnull; false <= tableEntry : null")]
+        [ContractAnnotation("=> false, tableEntry : null; => true, tableEntry : notnull")]
         public bool TryFindEntry
         (
             uint hashA,
