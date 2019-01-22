@@ -65,9 +65,6 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    // Skip the first two bytes, since they're always zero
-                    ms.Position += 2;
-
                     while (ms.Position < ms.Length)
                     {
                         GroupNames.Add(ms.Position, br.ReadNullTerminatedString());

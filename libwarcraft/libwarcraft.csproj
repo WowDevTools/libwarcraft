@@ -8,7 +8,7 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>3.0.0-rc1</Version>
+    <Version>3.0.0-rc3</Version>
   </PropertyGroup>
   <PropertyGroup>
     <PackageReleaseNotes>Correct some of the added records.</PackageReleaseNotes>
