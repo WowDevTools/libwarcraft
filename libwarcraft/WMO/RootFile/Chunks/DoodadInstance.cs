@@ -79,12 +79,12 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <param name="inData">The binary data.</param>
         public DoodadInstance(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
-                    byte[] finalNameBytes = new byte[4];
-                    byte[] nameOffsetBytes = br.ReadBytes(3);
+                    var finalNameBytes = new byte[4];
+                    var nameOffsetBytes = br.ReadBytes(3);
                     Buffer.BlockCopy(nameOffsetBytes, 0, finalNameBytes, 0, 3);
 
                     NameOffset = BitConverter.ToUInt32(finalNameBytes, 0);
@@ -114,12 +114,12 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
-                    byte[] nameOffsetBytes = BitConverter.GetBytes(NameOffset);
-                    byte[] finalNameOffsetBytes = new byte[3];
+                    var nameOffsetBytes = BitConverter.GetBytes(NameOffset);
+                    var finalNameOffsetBytes = new byte[3];
                     Buffer.BlockCopy(nameOffsetBytes, 0, finalNameOffsetBytes, 0, 3);
 
                     bw.Write(finalNameOffsetBytes);

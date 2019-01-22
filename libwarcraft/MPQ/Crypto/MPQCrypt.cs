@@ -115,13 +115,13 @@ namespace Warcraft.MPQ.Crypto
 
             // Find out how many dangling bytes we have
             uint danglingBytes = (uint)data.Length % 4;
-            byte[] dataToBeModified = new byte[data.Length - danglingBytes];
+            var dataToBeModified = new byte[data.Length - danglingBytes];
 
             // Copy the aligned bytes to the new array
             Buffer.BlockCopy(data, 0, dataToBeModified, 0, (int)(data.Length - danglingBytes));
 
             uint encryptionSeed = 0xEEEEEEEE;
-            List<byte> finalizedData = new List<byte>();
+            var finalizedData = new List<byte>();
 
             for (int i = 0; i < dataToBeModified.Length; i += sizeof(uint))
             {
@@ -137,7 +137,7 @@ namespace Warcraft.MPQ.Crypto
                 key = ((~key << 0x15) + 0x11111111) | (key >> 0x0B);
                 encryptionSeed = encryptionTarget + encryptionSeed + (encryptionSeed << 5) + 3;
 
-                byte[] encryptedBytes = BitConverter.GetBytes(encryptionTarget);
+                var encryptedBytes = BitConverter.GetBytes(encryptionTarget);
                 foreach (byte encryptedByte in encryptedBytes)
                 {
                     finalizedData.Add(encryptedByte);
@@ -147,8 +147,8 @@ namespace Warcraft.MPQ.Crypto
             // If we did have some dangling bytes, copy them to a new array
             if (danglingBytes > 0)
             {
-                byte[] decryptedDataBlock = finalizedData.ToArray();
-                byte[] finalDecryptedData = new byte[decryptedDataBlock.Length + danglingBytes];
+                var decryptedDataBlock = finalizedData.ToArray();
+                var finalDecryptedData = new byte[decryptedDataBlock.Length + danglingBytes];
 
                 Buffer.BlockCopy(decryptedDataBlock, 0, finalDecryptedData, 0, decryptedDataBlock.Length);
                 Buffer.BlockCopy(data, (int)(data.Length - danglingBytes), finalDecryptedData, decryptedDataBlock.Length, (int)danglingBytes);
@@ -276,7 +276,7 @@ namespace Warcraft.MPQ.Crypto
         /// <param name="checksum">Sector checksum.</param>
         public static bool VerifySectorChecksum([NotNull] byte[] sector, uint checksum)
         {
-            using (MemoryStream ms = new MemoryStream(sector))
+            using (var ms = new MemoryStream(sector))
             {
                 if (checksum == 0)
                 {

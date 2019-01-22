@@ -84,9 +84,9 @@ namespace Warcraft.MDX.Data
         public MDXArray(byte[] data)
         {
             _isFilled = false;
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     Count = br.ReadUInt32();
                     ElementsOffset = br.ReadUInt32();

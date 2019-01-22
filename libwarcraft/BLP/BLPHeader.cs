@@ -91,9 +91,9 @@ namespace Warcraft.BLP
         /// <param name="inData">ExtendedData.</param>
         public BLPHeader(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     Signature = new string(br.ReadChars(4));
 
@@ -208,9 +208,9 @@ namespace Warcraft.BLP
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream headerStream = new MemoryStream())
+            using (var headerStream = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(headerStream))
+                using (var bw = new BinaryWriter(headerStream))
                 {
                     bw.Write(Signature.ToCharArray());
                     bw.Write(Version);

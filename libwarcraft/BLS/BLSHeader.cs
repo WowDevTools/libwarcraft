@@ -61,9 +61,9 @@ namespace Warcraft.BLS
         /// <exception cref="FileLoadException">Thrown if no matching signatures could be found in the data.</exception>
         public BLSHeader(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     string dataSignature = br.ReadBinarySignature();
                     if (dataSignature != VertexShaderSignature && dataSignature != FragmentShaderSignature)
@@ -92,9 +92,9 @@ namespace Warcraft.BLS
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     if (ContainerType == ShaderContainerType.Vertex)
                     {

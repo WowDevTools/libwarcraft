@@ -82,9 +82,9 @@ namespace Warcraft.ADT.Chunks
         /// <param name="data">ExtendedData.</param>
         public WorldModelObjectPlacementEntry(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     WorldModelObjectEntryIndex = br.ReadUInt32();
                     UniqueID = br.ReadInt32();
@@ -113,9 +113,9 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.Write(WorldModelObjectEntryIndex);
                     bw.Write(UniqueID);

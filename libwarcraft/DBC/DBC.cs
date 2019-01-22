@@ -97,7 +97,7 @@ namespace Warcraft.DBC
             Version = inVersion;
             _databaseContents = data;
 
-            using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(_databaseContents)))
+            using (var databaseReader = new BinaryReader(new MemoryStream(_databaseContents)))
             {
                 _header = new DBCHeader(databaseReader.ReadBytes(DBCHeader.GetSize()));
 
@@ -204,12 +204,12 @@ namespace Warcraft.DBC
                     return _records[i];
                 }
 
-                using (BinaryReader databaseReader = new BinaryReader(new MemoryStream(_databaseContents)))
+                using (var databaseReader = new BinaryReader(new MemoryStream(_databaseContents)))
                 {
                     long recordOffset = DBCHeader.GetSize() + (_header.RecordSize * i);
                     databaseReader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
 
-                    TRecord record = databaseReader.ReadRecord<TRecord>((int)_header.FieldCount, (int)_header.RecordSize, Version);
+                    var record = databaseReader.ReadRecord<TRecord>((int)_header.FieldCount, (int)_header.RecordSize, Version);
 
                     foreach (var stringReference in record.GetStringReferences())
                     {

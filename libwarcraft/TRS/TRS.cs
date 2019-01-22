@@ -38,7 +38,7 @@ namespace Warcraft.TRS
         /// <param name="data">The binary data.</param>
         public TRS(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
                 using (TextReader tr = new StreamReader(ms))
                 {
@@ -50,7 +50,7 @@ namespace Warcraft.TRS
                             continue;
                         }
 
-                        string[] lineParts = mappingLine.Split('\t');
+                        var lineParts = mappingLine.Split('\t');
                         HashMappings.Add(lineParts[0], lineParts[1]);
                     }
                 }

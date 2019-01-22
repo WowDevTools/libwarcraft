@@ -57,9 +57,9 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     int offsetCount = inData.Length / 4;
                     for (int i = 0; i < offsetCount; ++i)

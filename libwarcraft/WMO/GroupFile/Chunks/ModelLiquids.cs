@@ -95,9 +95,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     XVertexCount = br.ReadUInt32();
                     YVertexCount = br.ReadUInt32();
@@ -132,9 +132,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.Write(XVertexCount);
                     bw.Write(YVertexCount);
@@ -145,12 +145,12 @@ namespace Warcraft.WMO.GroupFile.Chunks
                     bw.WriteVector3(Location);
                     bw.Write(MaterialIndex);
 
-                    foreach (LiquidVertex liquidVertex in LiquidVertices)
+                    foreach (var liquidVertex in LiquidVertices)
                     {
                         bw.Write(liquidVertex.Serialize());
                     }
 
-                    foreach (LiquidFlags liquidFlag in LiquidTileFlags)
+                    foreach (var liquidFlag in LiquidTileFlags)
                     {
                         bw.Write((byte)liquidFlag);
                     }

@@ -62,9 +62,9 @@ namespace Warcraft.WDL.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     // TODO: Verify if this isn't mapped the same way as ADT.Chunks.MapChunkHeightmap
                     for (int y = 0; y < 17; ++y)
@@ -104,9 +104,9 @@ namespace Warcraft.WDL.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     foreach (short lodVertex in HighResVertices)
                     {

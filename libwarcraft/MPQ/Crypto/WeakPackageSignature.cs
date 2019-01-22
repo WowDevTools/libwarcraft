@@ -52,9 +52,9 @@ namespace Warcraft.MPQ.Crypto
                 throw new InvalidDataException("The provided data had an invalid length.");
             }
 
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     long identifier = br.ReadInt64();
 

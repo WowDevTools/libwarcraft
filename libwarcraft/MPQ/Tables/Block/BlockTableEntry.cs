@@ -58,9 +58,9 @@ namespace Warcraft.MPQ.Tables.Block
         [PublicAPI]
         public BlockTableEntry([NotNull] byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     _blockOffset = br.ReadUInt32();
                     _blockSize = br.ReadUInt32();
@@ -227,9 +227,9 @@ namespace Warcraft.MPQ.Tables.Block
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.Write(_blockOffset);
                     bw.Write(_blockSize);

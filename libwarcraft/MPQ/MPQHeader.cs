@@ -102,9 +102,9 @@ namespace Warcraft.MPQ
         [PublicAPI]
         public MPQHeader([NotNull] byte[] data)
         {
-            using (MemoryStream dataStream = new MemoryStream(data))
+            using (var dataStream = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(dataStream))
+                using (var br = new BinaryReader(dataStream))
                 {
                     string dataSignature = new string(br.ReadChars(4));
                     if (dataSignature != ArchiveSignature)
@@ -353,9 +353,9 @@ namespace Warcraft.MPQ
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     // Write the archive signature
                     foreach (char c in ArchiveSignature)

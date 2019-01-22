@@ -60,16 +60,16 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     for (int y = 0; y < 64; ++y)
                     {
-                        List<bool> mapRow = new List<bool>();
+                        var mapRow = new List<bool>();
                         for (int x = 0; x < 2; ++x)
                         {
-                            BitArray valueBits = new BitArray(br.ReadInt32());
+                            var valueBits = new BitArray(br.ReadInt32());
 
                             for (int i = 0; i < 32; ++i)
                             {

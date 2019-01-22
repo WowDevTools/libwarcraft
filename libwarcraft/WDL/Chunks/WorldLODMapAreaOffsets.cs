@@ -57,9 +57,9 @@ namespace Warcraft.WDL.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     for (int y = 0; y < 64; ++y)
                     {
@@ -90,9 +90,9 @@ namespace Warcraft.WDL.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     foreach (uint mapAreaOffset in MapAreaOffsets)
                     {

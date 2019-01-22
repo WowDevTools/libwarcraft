@@ -67,7 +67,7 @@ namespace Warcraft.Core.Structures
 
             for (int y = 0; y < 3; ++y)
             {
-                List<short> coordinateRow = new List<short>();
+                var coordinateRow = new List<short>();
                 for (int x = 0; x < 3; ++x)
                 {
                     coordinateRow.Add(inAllCoordinates);

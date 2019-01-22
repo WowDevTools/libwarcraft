@@ -74,9 +74,9 @@ namespace Warcraft.BLP
         /// <param name="inData">ExtendedData.</param>
         public BLP(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     byte[] fileHeaderBytes;
                     if (PeekFormat(br) == BLPFormat.BLP2)
@@ -106,7 +106,7 @@ namespace Warcraft.BLP
                             // The alpha in the palette is not used, but is stored for the sake of completion.
                             byte a = br.ReadByte();
 
-                            Rgba32 paletteColor = new Rgba32(r, g, b, a);
+                            var paletteColor = new Rgba32(r, g, b, a);
                             _palette.Add(paletteColor);
                         }
                     }
@@ -115,7 +115,7 @@ namespace Warcraft.BLP
                         // Fill up an empty palette - the palette is always present, but we'll be going after offsets anyway
                         for (int i = 0; i < 256; ++i)
                         {
-                            Rgba32 paletteColor = default(Rgba32);
+                            var paletteColor = default(Rgba32);
                             _palette.Add(paletteColor);
                         }
                     }
@@ -173,12 +173,12 @@ namespace Warcraft.BLP
                 // Determine best alpha bit depth
                 if (image.HasAlpha())
                 {
-                    List<byte> alphaLevels = new List<byte>();
+                    var alphaLevels = new List<byte>();
                     for (int y = 0; y < image.Height; ++y)
                     {
                         for (int x = 0; x < image.Width; ++x)
                         {
-                            Rgba32 pixel = image[x, y];
+                            var pixel = image[x, y];
                             if (!alphaLevels.Contains(pixel.A))
                             {
                                 alphaLevels.Add(pixel.A);
@@ -244,7 +244,7 @@ namespace Warcraft.BLP
 
             // Calculate the offsets and sizes
             uint mipOffset = (uint)(Header.GetSize() + (_palette.Count * 4));
-            foreach (byte[] rawMipMap in _rawMipMaps)
+            foreach (var rawMipMap in _rawMipMaps)
             {
                 uint mipSize = (uint)rawMipMap.Length;
 
@@ -378,9 +378,9 @@ namespace Warcraft.BLP
                 case TextureCompressionType.Palettized:
                 {
                     map = new Image<Rgba32>((int)targetXRes, (int)targetYRes);
-                    using (MemoryStream ms = new MemoryStream(inData))
+                    using (var ms = new MemoryStream(inData))
                     {
-                        using (BinaryReader br = new BinaryReader(ms))
+                        using (var br = new BinaryReader(ms))
                         {
                             // Read colour information
                             for (int y = 0; y < targetYRes; ++y)
@@ -388,13 +388,13 @@ namespace Warcraft.BLP
                                 for (int x = 0; x < targetXRes; ++x)
                                 {
                                     byte colorIndex = br.ReadByte();
-                                    Rgba32 paletteColor = _palette[colorIndex];
+                                    var paletteColor = _palette[colorIndex];
                                     map[x, y] = paletteColor;
                                 }
                             }
 
                             // Read Alpha information
-                            List<byte> alphaValues = new List<byte>();
+                            var alphaValues = new List<byte>();
                             if (GetAlphaBitDepth() > 0)
                             {
                                 if (GetAlphaBitDepth() == 1)
@@ -440,8 +440,8 @@ namespace Warcraft.BLP
                                     int valueIndex = (int)(x + (targetXRes * y));
                                     byte alphaValue = alphaValues[valueIndex];
 
-                                    Rgba32 pixelColor = map[x, y];
-                                    Rgba32 finalPixel = new Rgba32(pixelColor.R, pixelColor.G, pixelColor.B, alphaValue);
+                                    var pixelColor = map[x, y];
+                                    var finalPixel = new Rgba32(pixelColor.R, pixelColor.G, pixelColor.B, alphaValue);
 
                                     map[x, y] = finalPixel;
                                 }
@@ -454,7 +454,7 @@ namespace Warcraft.BLP
 
                 case TextureCompressionType.DXTC:
                 {
-                    SquishOptions squishOptions = SquishOptions.DXT1;
+                    var squishOptions = SquishOptions.DXT1;
                     if (Header.PixelFormat == BLPPixelFormat.DXT3)
                     {
                         squishOptions = SquishOptions.DXT3;
@@ -472,9 +472,9 @@ namespace Warcraft.BLP
                 {
                     map = new Image<Rgba32>((int)targetXRes, (int)targetYRes);
 
-                    using (MemoryStream ms = new MemoryStream(inData))
+                    using (var ms = new MemoryStream(inData))
                     {
-                        using (BinaryReader br = new BinaryReader(ms))
+                        using (var br = new BinaryReader(ms))
                         {
                             for (int y = 0; y < targetYRes; ++y)
                             {
@@ -485,7 +485,7 @@ namespace Warcraft.BLP
                                     byte g = br.ReadByte();
                                     byte b = br.ReadByte();
 
-                                    Rgba32 pixelColor = new Rgba32(r, g, b, a);
+                                    var pixelColor = new Rgba32(r, g, b, a);
                                     map[x, y] = pixelColor;
                                 }
                             }
@@ -498,11 +498,11 @@ namespace Warcraft.BLP
                 case TextureCompressionType.JPEG:
                 {
                     // Merge the JPEG header with the data in the mipmap
-                    byte[] jpegImage = new byte[_jpegHeaderSize + inData.Length];
+                    var jpegImage = new byte[_jpegHeaderSize + inData.Length];
                     Buffer.BlockCopy(_jpegHeader, 0, jpegImage, 0, (int)_jpegHeaderSize);
                     Buffer.BlockCopy(inData, 0, jpegImage, (int)_jpegHeaderSize, inData.Length);
 
-                    using (MemoryStream ms = new MemoryStream(jpegImage))
+                    using (var ms = new MemoryStream(jpegImage))
                     {
                         map = Image.Load<Rgba32>(ms).Clone(cx => cx.Invert());
                     }
@@ -523,7 +523,7 @@ namespace Warcraft.BLP
         /// <param name="inImage">The image to be compressed.</param>
         private List<byte[]> CompressImage(Image<Rgba32> inImage)
         {
-            List<byte[]> mipMaps = new List<byte[]>();
+            var mipMaps = new List<byte[]>();
 
             // Generate a palette from the unmipped image for use with the mips
             if (Header.CompressionType == TextureCompressionType.Palettized)
@@ -559,9 +559,9 @@ namespace Warcraft.BLP
             uint targetXRes = GetLevelAdjustedResolutionValue(GetResolution().X, mipLevel);
             uint targetYRes = GetLevelAdjustedResolutionValue(GetResolution().Y, mipLevel);
 
-            List<byte> colourData = new List<byte>();
-            List<byte> alphaData = new List<byte>();
-            using (Image<Rgba32> resizedImage = ResizeImage(inImage, (int)targetXRes, (int)targetYRes))
+            var colourData = new List<byte>();
+            var alphaData = new List<byte>();
+            using (var resizedImage = ResizeImage(inImage, (int)targetXRes, (int)targetYRes))
             {
                 if (Header.CompressionType == TextureCompressionType.Palettized)
                 {
@@ -570,7 +570,7 @@ namespace Warcraft.BLP
                     {
                         for (int x = 0; x < targetXRes; ++x)
                         {
-                            Rgba32 nearestColor = FindClosestMatchingColor(resizedImage[x, y]);
+                            var nearestColor = FindClosestMatchingColor(resizedImage[x, y]);
                             byte paletteIndex = (byte)_palette.IndexOf(nearestColor);
 
                             colourData.Add(paletteIndex);
@@ -665,9 +665,9 @@ namespace Warcraft.BLP
                 }
                 else if (Header.CompressionType == TextureCompressionType.DXTC)
                 {
-                    using (MemoryStream rgbaStream = new MemoryStream())
+                    using (var rgbaStream = new MemoryStream())
                     {
-                        using (BinaryWriter bw = new BinaryWriter(rgbaStream))
+                        using (var bw = new BinaryWriter(rgbaStream))
                         {
                             for (int y = 0; y < targetYRes; ++y)
                             {
@@ -683,9 +683,9 @@ namespace Warcraft.BLP
                             // Finish writing the data
                             bw.Flush();
 
-                            byte[] rgbaBytes = rgbaStream.ToArray();
+                            var rgbaBytes = rgbaStream.ToArray();
 
-                            SquishOptions squishOptions = SquishOptions.DXT1;
+                            var squishOptions = SquishOptions.DXT1;
                             if (Header.PixelFormat == BLPPixelFormat.DXT3)
                             {
                                 squishOptions = SquishOptions.DXT3;
@@ -711,9 +711,9 @@ namespace Warcraft.BLP
                 }
                 else if (Header.CompressionType == TextureCompressionType.Uncompressed)
                 {
-                    using (MemoryStream argbStream = new MemoryStream())
+                    using (var argbStream = new MemoryStream())
                     {
-                        using (BinaryWriter bw = new BinaryWriter(argbStream))
+                        using (var bw = new BinaryWriter(argbStream))
                         {
                             for (int y = 0; y < targetYRes; ++y)
                             {
@@ -729,7 +729,7 @@ namespace Warcraft.BLP
                             // Finish writing the data
                             bw.Flush();
 
-                            byte[] argbBytes = argbStream.ToArray();
+                            var argbBytes = argbStream.ToArray();
                             colourData = new List<byte>(argbBytes);
                         }
                     }
@@ -737,7 +737,7 @@ namespace Warcraft.BLP
             }
 
             // After compression of the data, merge the color data and alpha data
-            byte[] compressedMipMap = new byte[colourData.Count + alphaData.Count];
+            var compressedMipMap = new byte[colourData.Count + alphaData.Count];
             Buffer.BlockCopy(colourData.ToArray(), 0, compressedMipMap, 0, colourData.ToArray().Length);
             Buffer.BlockCopy
             (
@@ -768,7 +768,7 @@ namespace Warcraft.BLP
                 Size = new Size(imageHeight, imageWidth),
             };
 
-            Image<Rgba32> resizedImage = inImage.Clone(cx => cx.Resize(resizeOptions));
+            var resizedImage = inImage.Clone(cx => cx.Resize(resizeOptions));
             return resizedImage;
         }
 
@@ -779,7 +779,7 @@ namespace Warcraft.BLP
         /// <param name="inColour">Input color.</param>
         private Rgba32 FindClosestMatchingColor(Rgba32 inColour)
         {
-            Rgba32 nearestColour = Rgba32.Black;
+            var nearestColour = Rgba32.Black;
 
             // Drop out if the palette contains an exact match
             if (_palette.Contains(inColour))
@@ -788,7 +788,7 @@ namespace Warcraft.BLP
             }
 
             double colourDistance = 250000.0;
-            foreach (Rgba32 paletteColour in _palette)
+            foreach (var paletteColour in _palette)
             {
                 double redTest = Math.Pow(Convert.ToDouble(paletteColour.R) - inColour.R, 2.0);
                 double greenTest = Math.Pow(Convert.ToDouble(paletteColour.G) - inColour.G, 2.0);
@@ -821,7 +821,7 @@ namespace Warcraft.BLP
         /// <returns>The decoded map.</returns>
         private static List<byte> Decode1BitAlpha(byte[] inData)
         {
-            List<byte> alphaValues = new List<byte>();
+            var alphaValues = new List<byte>();
 
             foreach (byte dataByte in inData)
             {
@@ -852,7 +852,7 @@ namespace Warcraft.BLP
         /// <returns>The decoded map.</returns>
         private static List<byte> Decode4BitAlpha(byte[] inData)
         {
-            List<byte> alphaValues = new List<byte>();
+            var alphaValues = new List<byte>();
 
             foreach (var alphaByte in inData)
             {
@@ -875,7 +875,7 @@ namespace Warcraft.BLP
         /// <param name="inMap">In map.</param>
         private List<byte> Encode1BitAlpha(Image<Rgba32> inMap)
         {
-            List<byte> alphaValues = new List<byte>();
+            var alphaValues = new List<byte>();
             for (int y = 0; y < inMap.Height; ++y)
             {
                 for (int x = 0; x < inMap.Width; ++x)
@@ -884,7 +884,7 @@ namespace Warcraft.BLP
                 }
             }
 
-            List<byte> packedAlphaValues = new List<byte>();
+            var packedAlphaValues = new List<byte>();
             for (int i = 0; i < alphaValues.Count; i += 8)
             {
                 byte packedAlphaValue = default(byte);
@@ -927,7 +927,7 @@ namespace Warcraft.BLP
         /// <param name="inMap">In map.</param>
         private List<byte> Encode4BitAlpha(Image<Rgba32> inMap)
         {
-            List<byte> alphaValues = new List<byte>();
+            var alphaValues = new List<byte>();
             for (int y = 0; y < inMap.Height; ++y)
             {
                 for (int x = 0; x < inMap.Width; ++x)
@@ -936,7 +936,7 @@ namespace Warcraft.BLP
                 }
             }
 
-            List<byte> packedAlphaValues = new List<byte>();
+            var packedAlphaValues = new List<byte>();
             for (int i = 0; i < alphaValues.Count; i += 2)
             {
                 byte packedAlphaValue = default(byte);
@@ -1000,15 +1000,15 @@ namespace Warcraft.BLP
         /// <param name="inImage">Image.</param>
         private IEnumerable<Rgba32> GeneratePalette(Image<Rgba32> inImage)
         {
-            List<Rgba32> knownColours = new List<Rgba32>();
+            var knownColours = new List<Rgba32>();
 
-            using (Image<Rgba32> quantizedImage = inImage.Clone(cx => cx.Quantize()))
+            using (var quantizedImage = inImage.Clone(cx => cx.Quantize()))
             {
                 var pixels = quantizedImage.GetPixelSpan();
 
                 for (int i = 0; i < pixels.Length; ++i)
                 {
-                    Rgba32 pixelColour = pixels[i];
+                    var pixelColour = pixels[i];
                     if (knownColours.Contains(pixelColour))
                     {
                         continue;
@@ -1027,8 +1027,8 @@ namespace Warcraft.BLP
         /// <returns>The palette bytes.</returns>
         private byte[] GetPaletteBytes(IEnumerable<Rgba32> palette)
         {
-            List<byte> bytes = new List<byte>();
-            foreach (Rgba32 color in palette)
+            var bytes = new List<byte>();
+            foreach (var color in palette)
             {
                 bytes.Add(color.B);
                 bytes.Add(color.G);
@@ -1045,8 +1045,8 @@ namespace Warcraft.BLP
         /// <returns>The mip map bytes.</returns>
         private byte[] GetMipMapBytes()
         {
-            List<byte> mipmapBytes = new List<byte>();
-            foreach (byte[] mipmap in _rawMipMaps)
+            var mipmapBytes = new List<byte>();
+            foreach (var mipmap in _rawMipMaps)
             {
                 foreach (byte mipbyte in mipmap)
                 {
@@ -1063,11 +1063,11 @@ namespace Warcraft.BLP
         /// <returns>The bytes.</returns>
         public byte[] Serialize()
         {
-            byte[] headerBytes = Header.Serialize();
-            byte[] paletteBytes = GetPaletteBytes(_palette);
-            byte[] mipBytes = GetMipMapBytes();
+            var headerBytes = Header.Serialize();
+            var paletteBytes = GetPaletteBytes(_palette);
+            var mipBytes = GetMipMapBytes();
 
-            byte[] imageBytes = new byte[headerBytes.Length + paletteBytes.Length + mipBytes.Length];
+            var imageBytes = new byte[headerBytes.Length + paletteBytes.Length + mipBytes.Length];
 
             Buffer.BlockCopy(headerBytes, 0, imageBytes, 0, headerBytes.Length);
             Buffer.BlockCopy(paletteBytes, 0, imageBytes, headerBytes.Length, paletteBytes.Length);

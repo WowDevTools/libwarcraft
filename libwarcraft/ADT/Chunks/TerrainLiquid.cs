@@ -58,28 +58,28 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     for (int i = 0; i < 256; ++i)
                     {
                         LiquidChunks.Add(new TerrainLiquidChunk(br.ReadBytes(TerrainLiquidChunk.GetSize())));
                     }
 
-                    foreach (TerrainLiquidChunk liquidChunk in LiquidChunks)
+                    foreach (var liquidChunk in LiquidChunks)
                     {
                         br.BaseStream.Position = liquidChunk.WaterInstanceOffset;
                         for (int i = 0; i < liquidChunk.LayerCount; ++i)
                         {
-                            byte[] instanceData = br.ReadBytes(TerrainLiquidInstance.GetSize());
+                            var instanceData = br.ReadBytes(TerrainLiquidInstance.GetSize());
                             liquidChunk.LiquidInstances.Add(new TerrainLiquidInstance(instanceData));
                         }
 
                         br.BaseStream.Position = liquidChunk.AttributesOffset;
                         if (liquidChunk.LayerCount > 0)
                         {
-                            byte[] attributeData = br.ReadBytes(TerrainLiquidAttributes.GetSize());
+                            var attributeData = br.ReadBytes(TerrainLiquidAttributes.GetSize());
                             liquidChunk.LiquidAttributes = new TerrainLiquidAttributes(attributeData);
                         }
                         else

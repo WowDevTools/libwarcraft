@@ -64,9 +64,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     for (int y = 0; y < 16; ++y)
                     {

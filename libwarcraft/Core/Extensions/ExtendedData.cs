@@ -39,7 +39,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>An array of floats.</returns>
         public static float[] Flatten(this Vector4 vector4)
         {
-            float[] outArr = new float[4];
+            var outArr = new float[4];
             vector4.CopyTo(outArr);
 
             return outArr;
@@ -53,7 +53,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>An array of floats.</returns>
         public static float[] Flatten(this Vector3 vector3)
         {
-            float[] outArr = new float[3];
+            var outArr = new float[3];
             vector3.CopyTo(outArr);
 
             return outArr;
@@ -67,7 +67,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>An array of floats.</returns>
         public static float[] Flatten(this Vector2 vector2)
         {
-            float[] outArr = new float[2];
+            var outArr = new float[2];
             vector2.CopyTo(outArr);
 
             return outArr;
@@ -81,9 +81,9 @@ namespace Warcraft.Core.Extensions
         /// <returns>A repacked vertex.</returns>
         public static byte[] PackForOpenGL(this MDXVertex vertex)
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.WriteVector3(vertex.Position, AxisConfiguration.YUp);
                     bw.Write(vertex.BoneWeights.ToArray());

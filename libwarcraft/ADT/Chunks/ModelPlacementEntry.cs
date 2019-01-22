@@ -67,9 +67,9 @@ namespace Warcraft.ADT.Chunks
         /// <param name="data">ExtendedData.</param>
         public ModelPlacementEntry(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     ModelEntryIndex = br.ReadUInt32();
                     UniqueID = br.ReadUInt32();

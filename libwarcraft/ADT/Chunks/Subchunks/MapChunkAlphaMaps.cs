@@ -70,11 +70,11 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
         private IEnumerable<byte> DecompressAlphaMap(uint mapOffset)
         {
-            List<byte> decompressedAlphaMap = new List<byte>();
+            var decompressedAlphaMap = new List<byte>();
 
-            using (MemoryStream ms = new MemoryStream(_data))
+            using (var ms = new MemoryStream(_data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     br.BaseStream.Position = mapOffset;
 
@@ -110,7 +110,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
         private List<byte> Read4BitAlphaMap(byte[] compressedAlphaMap, MapChunkFlags mapFlags)
         {
-            List<byte> decompressedAlphaMap = new List<byte>();
+            var decompressedAlphaMap = new List<byte>();
             for (int y = 0; y < 64; y++)
             {
                 for (int x = 0; x < 32; x++)

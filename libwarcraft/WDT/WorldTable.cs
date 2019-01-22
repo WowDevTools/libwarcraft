@@ -63,9 +63,9 @@ namespace Warcraft.WDT
         /// <param name="data">The binary data.</param>
         public WorldTable(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     Version = br.ReadIFFChunk<TerrainVersion>();
                     Header = br.ReadIFFChunk<WorldTableHeader>();
@@ -87,7 +87,7 @@ namespace Warcraft.WDT
         /// <returns>The loaded areas.</returns>
         public IEnumerable<AreaInfoEntry> GetLoadedAreas()
         {
-            foreach (AreaInfoEntry entry in AreaInfo.Entries)
+            foreach (var entry in AreaInfo.Entries)
             {
                 if (entry.Flags.HasFlag(AreaInfoFlags.IsLoaded))
                 {
@@ -102,7 +102,7 @@ namespace Warcraft.WDT
         /// <returns>The areas with terrain.</returns>
         public IEnumerable<AreaInfoEntry> GetAreasWithTerrain()
         {
-            foreach (AreaInfoEntry entry in AreaInfo.Entries)
+            foreach (var entry in AreaInfo.Entries)
             {
                 if (entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
                 {
@@ -128,7 +128,7 @@ namespace Warcraft.WDT
         /// <returns><c>true</c> if this instance has any terrain; otherwise, <c>false</c>.</returns>
         public bool HasAnyTerrain()
         {
-            foreach (AreaInfoEntry entry in AreaInfo.Entries)
+            foreach (var entry in AreaInfo.Entries)
             {
                 if (entry.Flags.HasFlag(AreaInfoFlags.HasTerrainData))
                 {
@@ -147,16 +147,16 @@ namespace Warcraft.WDT
         /// <param name="inTileY">0-based y coordinate of the tile.</param>
         public bool IsTilePopulated(uint inTileX, uint inTileY)
         {
-            AreaInfoEntry infoEntry = AreaInfo.GetAreaInfo(inTileX, inTileY);
+            var infoEntry = AreaInfo.GetAreaInfo(inTileX, inTileY);
             return infoEntry.Flags.HasFlag(AreaInfoFlags.HasTerrainData);
         }
 
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.WriteIFFChunk(Version);
                     bw.WriteIFFChunk(Header);

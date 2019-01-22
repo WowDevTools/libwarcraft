@@ -61,13 +61,13 @@ namespace Warcraft.WMO
 
         private void PostResolveStringReferences() // TODO: Refactor
         {
-            foreach (DoodadInstance doodadInstance in RootInformation.DoodadInstances.DoodadInstances)
+            foreach (var doodadInstance in RootInformation.DoodadInstances.DoodadInstances)
             {
                 string doodadPath = RootInformation.DoodadPaths.GetNameByOffset(doodadInstance.NameOffset);
                 doodadInstance.Name = doodadPath;
             }
 
-            foreach (ModelMaterial modelMaterial in RootInformation.Materials.Materials)
+            foreach (var modelMaterial in RootInformation.Materials.Materials)
             {
                 string texturePath0 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.DiffuseTextureOffset);
                 string texturePath1 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.EnvironmentMapTextureOffset);
@@ -118,7 +118,7 @@ namespace Warcraft.WMO
         /// <param name="inData">Byte array containing the model group.</param>
         public void AddModelGroup(byte[] inData)
         {
-            ModelGroup group = new ModelGroup(inData);
+            var group = new ModelGroup(inData);
             AddModelGroup(group);
         }
 

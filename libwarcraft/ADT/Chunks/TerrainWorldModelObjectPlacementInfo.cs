@@ -57,9 +57,9 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     long entryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
                     for (int i = 0; i < entryCount; ++i)
@@ -79,11 +79,11 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (WorldModelObjectPlacementEntry entry in Entries)
+                    foreach (var entry in Entries)
                     {
                         bw.Write(entry.Serialize());
                     }

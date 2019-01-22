@@ -60,9 +60,9 @@ namespace Warcraft.DBC
         /// <param name="data">ExtendedData.</param>
         public DBCHeader(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     string dataSignature = new string(br.ReadChars(4));
                     if (dataSignature != Signature)

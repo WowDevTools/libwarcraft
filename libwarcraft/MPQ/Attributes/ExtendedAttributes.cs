@@ -68,9 +68,9 @@ namespace Warcraft.MPQ.Attributes
                 throw new ArgumentNullException(nameof(data));
             }
 
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     // Initial length (without any attributes) should be at least 8 bytes
                     uint expectedDataLength = 8;
@@ -85,7 +85,7 @@ namespace Warcraft.MPQ.Attributes
                         Version = br.ReadUInt32();
                         AttributesPresent = (AttributeTypes)br.ReadUInt32();
 
-                        List<uint> crcHashes = new List<uint>();
+                        var crcHashes = new List<uint>();
                         if (AttributesPresent.HasFlag(AttributeTypes.CRC32))
                         {
                             expectedDataLength += sizeof(uint) * fileBlockCount;
@@ -110,7 +110,7 @@ namespace Warcraft.MPQ.Attributes
                             }
                         }
 
-                        List<ulong> timestamps = new List<ulong>();
+                        var timestamps = new List<ulong>();
                         if (AttributesPresent.HasFlag(AttributeTypes.Timestamp))
                         {
                             expectedDataLength += sizeof(ulong) * fileBlockCount;
@@ -135,7 +135,7 @@ namespace Warcraft.MPQ.Attributes
                             }
                         }
 
-                        List<string> md5Hashes = new List<string>();
+                        var md5Hashes = new List<string>();
                         if (AttributesPresent.HasFlag(AttributeTypes.MD5))
                         {
                             expectedDataLength += 16 * fileBlockCount;
@@ -144,7 +144,7 @@ namespace Warcraft.MPQ.Attributes
                             {
                                 if (data.Length >= expectedDataLength)
                                 {
-                                    byte[] md5Data = br.ReadBytes(16);
+                                    var md5Data = br.ReadBytes(16);
                                     string md5 = BitConverter.ToString(md5Data).Replace("-", string.Empty);
                                     md5Hashes.Add(md5);
                                 }

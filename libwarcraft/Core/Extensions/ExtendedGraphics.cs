@@ -39,7 +39,7 @@ namespace Warcraft.Core.Extensions
             {
                 for (int x = 0; x < map.Width; ++x)
                 {
-                    Rgba32 pixel = map[x, y];
+                    var pixel = map[x, y];
                     if (pixel.A != 255)
                     {
                         return true;

@@ -99,9 +99,9 @@ namespace Warcraft.ADT.Chunks
         /// <param name="data">The binary data.</param>
         public TerrainLiquidInstance(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     LiquidType = new ForeignKey<ushort>(DatabaseName.LiquidType, nameof(DBCRecord.ID), br.ReadUInt16());
                     LiquidObject = new ForeignKey<ushort>(DatabaseName.LiquidObject, nameof(DBCRecord.ID), br.ReadUInt16());

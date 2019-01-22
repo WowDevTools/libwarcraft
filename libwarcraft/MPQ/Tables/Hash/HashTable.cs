@@ -51,14 +51,14 @@ namespace Warcraft.MPQ.Tables.Hash
         [PublicAPI]
         public HashTable(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     for (long i = 0; i < data.Length; i += HashTableEntry.GetSize())
                     {
-                        byte[] entryBytes = br.ReadBytes((int)HashTableEntry.GetSize());
-                        HashTableEntry newEntry = new HashTableEntry(entryBytes);
+                        var entryBytes = br.ReadBytes((int)HashTableEntry.GetSize());
+                        var newEntry = new HashTableEntry(entryBytes);
                         _entries.Add(newEntry);
                     }
                 }
@@ -168,17 +168,17 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (HashTableEntry entry in _entries)
+                    foreach (var entry in _entries)
                     {
                         bw.Write(entry.Serialize());
                     }
                 }
 
-                byte[] encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), TableKey);
+                var encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), TableKey);
                 return encryptedTable;
             }
         }

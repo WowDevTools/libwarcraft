@@ -60,9 +60,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <param name="data">The binary data.</param>
         public TextureLayerEntry(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     TextureID = br.ReadUInt32();
                     Flags = (TextureLayerFlags)br.ReadUInt32();

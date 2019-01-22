@@ -73,13 +73,13 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <param name="inData">The binary data.</param>
         public DoodadSet(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     // The name of the doodad set can be up to 20 bytes, and is always padded to this length.
                     // Therefore, we read 20 bytes, convert it to a string and trim the end of any null characters.
-                    byte[] nameBytes = br.ReadBytes(20);
+                    var nameBytes = br.ReadBytes(20);
                     Name = Encoding.UTF8.GetString(nameBytes).TrimEnd('\0');
 
                     FirstDoodadInstanceIndex = br.ReadUInt32();
@@ -104,9 +104,9 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.Write(Name.PadRight(20, '\0').ToCharArray());
                     bw.Write(FirstDoodadInstanceIndex);

@@ -80,9 +80,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <param name="worldModelObjectCount">The number of world model objects in the chunk.</param>
         public void PostLoadReferences(uint gameModelObjectCount, uint worldModelObjectCount)
         {
-            using (MemoryStream ms = new MemoryStream(_data))
+            using (var ms = new MemoryStream(_data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     for (int i = 0; i < gameModelObjectCount; ++i)
                     {

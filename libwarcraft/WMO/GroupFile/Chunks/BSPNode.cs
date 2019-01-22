@@ -63,9 +63,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <param name="inData">The binary data.</param>
         public BSPNode(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     Type = (BSPPlaneType)br.ReadUInt16();
                     FirstChildIndex = br.ReadInt16();
@@ -89,9 +89,9 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.Write((ushort)Type);
                     bw.Write(FirstChildIndex);

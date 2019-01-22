@@ -78,9 +78,9 @@ namespace Warcraft.WDL
         /// <param name="inData">The input data.</param>
         public WorldLOD(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     // Set up the two area lists with default values
                     for (int i = 0; i < 4096; ++i)
@@ -178,9 +178,9 @@ namespace Warcraft.WDL
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.WriteIFFChunk(Version);
 

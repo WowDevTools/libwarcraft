@@ -121,9 +121,9 @@ namespace Warcraft.MDX.Geometry.Skin
         /// <param name="data">The data containing the skin section.</param>
         public MDXSkinSection(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     SkinSectionID = new BaseSkinSectionIdentifier(br.ReadUInt16());
                     Level = br.ReadUInt16();

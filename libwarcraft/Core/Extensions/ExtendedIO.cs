@@ -338,7 +338,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>The string.</returns>
         public static LocalizedStringReference ReadLocalizedStringReference(this BinaryReader binaryReader, WarcraftVersion version)
         {
-            LocalizedStringReference locRef = new LocalizedStringReference();
+            var locRef = new LocalizedStringReference();
 
             if (version < WarcraftVersion.Cataclysm)
             {
@@ -444,7 +444,7 @@ namespace Warcraft.Core.Extensions
             byte b = binaryReader.ReadByte();
             byte a = binaryReader.ReadByte();
 
-            RGBA rgba = new RGBA(r, g, b, a);
+            var rgba = new RGBA(r, g, b, a);
 
             return rgba;
         }
@@ -461,7 +461,7 @@ namespace Warcraft.Core.Extensions
             byte r = binaryReader.ReadByte();
             byte a = binaryReader.ReadByte();
 
-            BGRA bgra = new BGRA(b, g, r, a);
+            var bgra = new BGRA(b, g, r, a);
 
             return bgra;
         }
@@ -478,7 +478,7 @@ namespace Warcraft.Core.Extensions
             byte g = binaryReader.ReadByte();
             byte b = binaryReader.ReadByte();
 
-            ARGB argb = new ARGB(b, g, r, a);
+            var argb = new ARGB(b, g, r, a);
 
             return argb;
         }
@@ -490,7 +490,7 @@ namespace Warcraft.Core.Extensions
         /// <param name="binaryReader">The reader.</param>
         public static string ReadNullTerminatedString(this BinaryReader binaryReader)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             char c;
             while ((c = binaryReader.ReadChar()) != 0)
@@ -510,7 +510,7 @@ namespace Warcraft.Core.Extensions
         {
             // The signatures are stored in reverse in the file, so we'll need to read them backwards into
             // the buffer.
-            char[] signatureBuffer = new char[4];
+            var signatureBuffer = new char[4];
             for (int i = 0; i < 4; ++i)
             {
                 signatureBuffer[3 - i] = binaryReader.ReadChar();
@@ -545,9 +545,9 @@ namespace Warcraft.Core.Extensions
         {
             string chunkSignature = reader.ReadBinarySignature();
             uint chunkSize = reader.ReadUInt32();
-            byte[] chunkData = reader.ReadBytes((int)chunkSize);
+            var chunkData = reader.ReadBytes((int)chunkSize);
 
-            T chunk = new T();
+            var chunk = new T();
             if (chunk.GetSignature() != chunkSignature)
             {
                 throw new InvalidChunkSignatureException($"An unknown chunk with the signature \"{chunkSignature}\" was read.");
@@ -571,7 +571,7 @@ namespace Warcraft.Core.Extensions
         public static T ReadRecord<T>(this BinaryReader reader, int fieldCount, int recordSize, WarcraftVersion version = WarcraftVersion.Classic)
             where T : IDBCRecord, new()
         {
-            T record = Activator.CreateInstance<T>();
+            var record = Activator.CreateInstance<T>();
             record.Version = version;
 
             var reflectionInfo = RecordInformationCache.Instance.GetRecordInformation(typeof(T), version);
@@ -609,10 +609,10 @@ namespace Warcraft.Core.Extensions
         /// <param name="binaryReader">The reader.</param>
         public static ShortPlane ReadShortPlane(this BinaryReader binaryReader)
         {
-            ShortPlane shortPlane = default(ShortPlane);
+            var shortPlane = default(ShortPlane);
             for (int y = 0; y < 3; ++y)
             {
-                List<short> coordinateRow = new List<short>();
+                var coordinateRow = new List<short>();
                 for (int x = 0; x < 3; ++x)
                 {
                     coordinateRow.Add(binaryReader.ReadInt16());
@@ -945,7 +945,7 @@ namespace Warcraft.Core.Extensions
         /// <param name="chunk">The chunk.</param>
         public static void WriteIFFChunk<T>(this BinaryWriter binaryWriter, T chunk) where T : IIFFChunk, IBinarySerializable
         {
-            byte[] serializedChunk = chunk.Serialize();
+            var serializedChunk = chunk.Serialize();
 
             binaryWriter.WriteChunkSignature(chunk.GetSignature());
             binaryWriter.Write((uint)serializedChunk.Length);

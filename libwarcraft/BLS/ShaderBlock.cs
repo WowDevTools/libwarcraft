@@ -58,9 +58,9 @@ namespace Warcraft.BLS
         /// <param name="inData">The binary data.</param>
         public ShaderBlock(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     Flags1 = (ShaderFlags1)br.ReadUInt32();
                     Flags2 = (ShaderFlags2)br.ReadUInt32();
@@ -77,9 +77,9 @@ namespace Warcraft.BLS
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.Write((uint)Flags1);
                     bw.Write((uint)Flags2);

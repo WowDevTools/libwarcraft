@@ -175,9 +175,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <param name="data">The binary data.</param>
         public MapChunkHeader(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     Flags = (MapChunkFlags)br.ReadUInt32();
                     MapIndexX = br.ReadUInt32();

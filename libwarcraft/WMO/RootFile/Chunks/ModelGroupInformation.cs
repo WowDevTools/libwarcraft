@@ -57,9 +57,9 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     long groupInfoCount = ms.Length / GroupInformation.GetSize();
                     for (int i = 0; i < groupInfoCount; ++i)
@@ -79,11 +79,11 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (GroupInformation groupInformation in GroupInformations)
+                    foreach (var groupInformation in GroupInformations)
                     {
                         bw.Write(groupInformation.Serialize());
                     }

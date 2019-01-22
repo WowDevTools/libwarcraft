@@ -63,9 +63,9 @@ namespace Warcraft.MPQ
                 throw new InvalidDataException("The data cannot be null.");
             }
 
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     string dataSignature = br.ReadChars(4).ToString();
                     if (dataSignature != Signature)
@@ -85,9 +85,9 @@ namespace Warcraft.MPQ
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.WriteChunkSignature(Signature);
                     bw.Write(_shuntedArchiveAllocatedSize);

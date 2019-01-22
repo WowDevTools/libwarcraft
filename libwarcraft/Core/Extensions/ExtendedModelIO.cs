@@ -46,7 +46,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>A fully read skin.</returns>
         public static MDXSkin ReadMDXSkin(this BinaryReader binaryReader, WarcraftVersion version)
         {
-            MDXSkin skin = new MDXSkin
+            var skin = new MDXSkin
             {
                 VertexIndices = binaryReader.ReadMDXArray<ushort>(),
                 Triangles = binaryReader.ReadMDXArray<ushort>(),

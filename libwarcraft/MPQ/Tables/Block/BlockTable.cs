@@ -45,13 +45,13 @@ namespace Warcraft.MPQ.Tables.Block
         [PublicAPI]
         public BlockTable([NotNull] byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     for (long i = 0; i < data.Length; i += BlockTableEntry.GetSize())
                     {
-                        byte[] entryBytes = br.ReadBytes((int)BlockTableEntry.GetSize());
+                        var entryBytes = br.ReadBytes((int)BlockTableEntry.GetSize());
                         _entries.Add(new BlockTableEntry(entryBytes));
                     }
                 }
@@ -64,17 +64,17 @@ namespace Warcraft.MPQ.Tables.Block
         /// <returns>The serialized bytes.</returns>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (BlockTableEntry entry in _entries)
+                    foreach (var entry in _entries)
                     {
                         bw.Write(entry.Serialize());
                     }
                 }
 
-                byte[] encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), TableKey);
+                var encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), TableKey);
                 return encryptedTable;
             }
         }

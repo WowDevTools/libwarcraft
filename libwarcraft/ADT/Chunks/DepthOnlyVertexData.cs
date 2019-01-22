@@ -40,9 +40,9 @@ namespace Warcraft.ADT.Chunks
         /// <param name="height">The height of the vertex block.</param>
         public DepthOnlyVertexData(byte[] data, byte width, byte height)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     int arrayEntryCount = (width + 1) * (height + 1);
 

@@ -46,15 +46,15 @@ namespace Warcraft.BLS
         /// <param name="inData">The binary data containing the BLS file.</param>
         public BLS(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     Header = new BLSHeader(br.ReadBytes(BLSHeader.GetSize()));
 
                     for (int i = 0; i < Header.ShaderBlockCount; ++i)
                     {
-                        ShaderBlock shaderBlock = new ShaderBlock(br.ReadBytes(ShaderBlock.GetSize()));
+                        var shaderBlock = new ShaderBlock(br.ReadBytes(ShaderBlock.GetSize()));
                         shaderBlock.Data = br.ReadChars((int)shaderBlock.DataSize);
 
                         Shaders.Add(shaderBlock);
@@ -77,12 +77,12 @@ namespace Warcraft.BLS
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.Write(Header.Serialize());
-                    foreach (ShaderBlock shaderBlock in Shaders)
+                    foreach (var shaderBlock in Shaders)
                     {
                         bw.Write(shaderBlock.Serialize());
                     }

@@ -218,9 +218,9 @@ namespace Warcraft.WMO.GroupFile
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     GroupNameOffset = br.ReadUInt32();
                     DescriptiveGroupNameOffset = br.ReadUInt32();
@@ -317,9 +317,9 @@ namespace Warcraft.WMO.GroupFile
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.Write(GroupNameOffset);
                     bw.Write(DescriptiveGroupNameOffset);

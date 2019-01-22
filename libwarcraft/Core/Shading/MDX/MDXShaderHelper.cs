@@ -289,7 +289,7 @@ namespace Warcraft.Core.Shading.MDX
                 }
 
                 int textureMappingOverrideIndex = renderBatch.TextureMappingLookupTableIndex + opIndex;
-                MDXTextureMappingType textureSlotOverride = model.TextureMappingLookupTable[textureMappingOverrideIndex];
+                var textureSlotOverride = model.TextureMappingLookupTable[textureMappingOverrideIndex];
                 bool isEnvMapped = textureSlotOverride == MDXTextureMappingType.Environment;
 
                 if (isEnvMapped)

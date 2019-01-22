@@ -54,7 +54,7 @@ namespace Warcraft.Core.Reflection.DBC
                     var elementType = reflectionInfo.PropertyFieldArrayElementTypes[databaseProperty];
                     var arrayAttribute = reflectionInfo.PropertyFieldArrayAttributes[databaseProperty];
 
-                    List<object> values = new List<object>();
+                    var values = new List<object>();
                     for (int i = 0; i < arrayAttribute.Count; ++i)
                     {
                         values.Add(ReadPropertyValue(reader, reflectionInfo, databaseProperty, elementType, version));
@@ -94,11 +94,11 @@ namespace Warcraft.Core.Reflection.DBC
             }
 
             // Create type info for a list of the property's type
-            Type specificListType = typeof(List<>).MakeGenericType(elementType);
+            var specificListType = typeof(List<>).MakeGenericType(elementType);
 
             if (propertyType == specificListType)
             {
-                IList list = (IList)Activator.CreateInstance(propertyType);
+                var list = (IList)Activator.CreateInstance(propertyType);
                 foreach (var value in values)
                 {
                     list.Add(value);

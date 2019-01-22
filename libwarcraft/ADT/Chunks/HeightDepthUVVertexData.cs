@@ -51,9 +51,9 @@ namespace Warcraft.ADT.Chunks
         /// <param name="height">The height of the vertex block.</param>
         public HeightDepthUVVertexData(byte[] data, byte width, byte height)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     int arrayEntryCount = (width + 1) * (height + 1);
                     for (int i = 0; i < arrayEntryCount; ++i)
@@ -63,7 +63,7 @@ namespace Warcraft.ADT.Chunks
 
                     for (int i = 0; i < arrayEntryCount; ++i)
                     {
-                        Tuple<ushort, ushort> uvEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
+                        var uvEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
                         UVMap.Add(uvEntry);
                     }
 

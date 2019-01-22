@@ -107,9 +107,9 @@ namespace Warcraft.MDX.Visual
         /// <param name="data">The binary data containing the batch.</param>
         public MDXRenderBatch(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     Flags = (MDXRenderBatchFlags)br.ReadByte();
                     PriorityPlane = br.ReadSByte();

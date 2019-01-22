@@ -58,9 +58,9 @@ namespace Warcraft.ADT.Chunks
         /// <param name="data">The binary data.</param>
         public TerrainLiquidChunk(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     WaterInstanceOffset = br.ReadUInt32();
                     LayerCount = br.ReadUInt32();

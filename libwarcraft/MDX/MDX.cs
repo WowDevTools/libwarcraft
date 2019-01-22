@@ -251,7 +251,7 @@ namespace Warcraft.MDX
         /// <param name="data">The binary data.</param>
         public MDX(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
                 LoadFromStream(ms);
             }
@@ -268,7 +268,7 @@ namespace Warcraft.MDX
 
         private void LoadFromStream(Stream dataStream)
         {
-            using (BinaryReader br = new BinaryReader(dataStream))
+            using (var br = new BinaryReader(dataStream))
             {
                 string dataSignature = new string(br.ReadBinarySignature().Reverse().ToArray());
                 if (dataSignature != Signature)

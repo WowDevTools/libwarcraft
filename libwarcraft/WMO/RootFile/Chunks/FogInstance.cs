@@ -65,9 +65,9 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <param name="inData">The binary data.</param>
         public FogInstance(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     Flags = (FogFlags)br.ReadUInt32();
                     Position = br.ReadVector3();
@@ -93,9 +93,9 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                using (BinaryWriter bw = new BinaryWriter(ms))
+                using (var bw = new BinaryWriter(ms))
                 {
                     bw.Write((uint)Flags);
                     bw.WriteVector3(Position);

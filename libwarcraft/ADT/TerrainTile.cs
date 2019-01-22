@@ -102,9 +102,9 @@ namespace Warcraft.ADT
         /// <param name="data">The binary data.</param>
         public TerrainTile(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     // In all ADT files, the version chunk and header chunk are at the beginning of the file,
                     // with the header following the version. From them, the rest of the chunks can be
@@ -161,7 +161,7 @@ namespace Warcraft.ADT
                     }
 
                     // Read and fill the map chunks
-                    foreach (MapChunkOffsetEntry entry in MapChunkOffsets.Entries)
+                    foreach (var entry in MapChunkOffsets.Entries)
                     {
                         br.BaseStream.Position = entry.MapChunkOffset;
                         MapChunks.Add(br.ReadIFFChunk<TerrainMapChunk>());

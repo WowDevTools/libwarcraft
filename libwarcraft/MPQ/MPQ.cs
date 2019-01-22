@@ -121,7 +121,7 @@ namespace Warcraft.MPQ
             // Seek to the hash table and load it
             _archiveReader.BaseStream.Position = (long)Header.GetHashTableOffset();
 
-            byte[] encryptedHashTable = _archiveReader.ReadBytes((int)Header.GetHashTableSize());
+            var encryptedHashTable = _archiveReader.ReadBytes((int)Header.GetHashTableSize());
             var hashTableData = MPQCrypt.DecryptData(encryptedHashTable, HashTable.TableKey);
 
             ArchiveHashTable = new HashTable(hashTableData);
@@ -129,7 +129,7 @@ namespace Warcraft.MPQ
             // Seek to the block table and load it
             _archiveReader.BaseStream.Position = (long)Header.GetBlockTableOffset();
 
-            byte[] encryptedBlockTable = _archiveReader.ReadBytes((int)Header.GetBlockTableSize());
+            var encryptedBlockTable = _archiveReader.ReadBytes((int)Header.GetBlockTableSize());
             var blockTableData = MPQCrypt.DecryptData(encryptedBlockTable, BlockTable.TableKey);
 
             ArchiveBlockTable = new BlockTable(blockTableData);
@@ -204,7 +204,7 @@ namespace Warcraft.MPQ
                 return _fileAttributes;
             }
 
-            byte[] attributeData = ExtractFile(ExtendedAttributes.InternalFileName);
+            var attributeData = ExtractFile(ExtendedAttributes.InternalFileName);
             _fileAttributes = new ExtendedAttributes(attributeData, Header.BlockTableEntryCount);
 
             return _fileAttributes;
@@ -265,9 +265,9 @@ namespace Warcraft.MPQ
                 yield break;
             }
 
-            byte[] listfileBytes = ExtractFile("(listfile)");
+            var listfileBytes = ExtractFile("(listfile)");
 
-            using (MemoryStream listfileStream = new MemoryStream(listfileBytes))
+            using (var listfileStream = new MemoryStream(listfileBytes))
             {
                 using (TextReader tr = new StreamReader(listfileStream))
                 {
@@ -356,8 +356,8 @@ namespace Warcraft.MPQ
                 throw new FileNotFoundException("The given file was not present in the archive.", filePath);
             }
 
-            HashTableEntry hashEntry = ArchiveHashTable.FindEntry(filePath);
-            BlockTableEntry blockEntry = ArchiveBlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
+            var hashEntry = ArchiveHashTable.FindEntry(filePath);
+            var blockEntry = ArchiveBlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
 
             if (HasFileAttributes())
             {
@@ -389,7 +389,7 @@ namespace Warcraft.MPQ
                 throw new FileNotFoundException("No file found at the given path.", filePath, fex);
             }
 
-            BlockTableEntry fileBlockEntry = ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
+            var fileBlockEntry = ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
 
             // Drop out if the file has been deleted
             if (fileBlockEntry.IsDeleted())
@@ -452,10 +452,10 @@ namespace Warcraft.MPQ
         {
             // This file is sectored, and is compressed. It may be encrypted.
             // Retrieve the offsets for each sector - these are relative to the beginning of the data.
-            List<uint> sectorOffsets = ReadFileSectorOffsetTable(fileBlockEntry, fileKey);
+            var sectorOffsets = ReadFileSectorOffsetTable(fileBlockEntry, fileKey);
 
             // Read all of the raw file sectors.
-            List<byte[]> compressedSectors = new List<byte[]>();
+            var compressedSectors = new List<byte[]>();
             for (int i = 0; i < sectorOffsets.Count - 1; ++i)
             {
                 long sectorStartPosition = adjustedBlockOffset + sectorOffsets[i];
@@ -472,7 +472,7 @@ namespace Warcraft.MPQ
             // produce a valid hash. CRC32, Adler32, CRC32B, nothing.
             // Some flags (listfiles mostly) are flagged as having checksums but don't have a checksum sector.
             // Perhaps related to attributes file?
-            List<byte[]> decompressedSectors = new List<byte[]>();
+            var decompressedSectors = new List<byte[]>();
 
             /*
             List<uint> SectorChecksums = new List<uint>();
@@ -499,9 +499,9 @@ namespace Warcraft.MPQ
              */
 
             uint sectorIndex = 0;
-            foreach (byte[] compressedSector in compressedSectors)
+            foreach (var compressedSector in compressedSectors)
             {
-                byte[] pendingSector = compressedSector;
+                var pendingSector = compressedSector;
                 if (fileBlockEntry.IsEncrypted())
                 {
                     // Decrypt the block
@@ -564,7 +564,7 @@ namespace Warcraft.MPQ
             uint fileKey = 0
         )
         {
-            List<uint> sectorOffsets = new List<uint>();
+            var sectorOffsets = new List<uint>();
             if (fileBlockEntry.IsEncrypted())
             {
                 MPQCrypt.DecryptSectorOffsetTable(_archiveReader, ref sectorOffsets, fileBlockEntry.GetBlockSize(), fileKey - 1);
@@ -631,7 +631,7 @@ namespace Warcraft.MPQ
             // All the even sectors you can fit into the file size
             uint sectorCount = (fileBlockEntry.GetFileSize() - finalSectorSize) / GetMaxSectorSize();
 
-            List<byte[]> rawSectors = new List<byte[]>();
+            var rawSectors = new List<byte[]>();
             for (int i = 0; i < sectorCount; ++i)
             {
                 // Read a normal sector (usually 4096 bytes)
@@ -645,10 +645,10 @@ namespace Warcraft.MPQ
             }
 
             uint sectorIndex = 0;
-            List<byte[]> finalSectors = new List<byte[]>();
-            foreach (byte[] rawSector in rawSectors)
+            var finalSectors = new List<byte[]>();
+            foreach (var rawSector in rawSectors)
             {
-                byte[] pendingSector = rawSector;
+                var pendingSector = rawSector;
                 if (fileBlockEntry.IsEncrypted())
                 {
                     // Decrypt the block
@@ -676,7 +676,7 @@ namespace Warcraft.MPQ
         )
         {
             // This file does not use sectoring, but may still be encrypted or compressed.
-            byte[] fileData = _archiveReader.ReadBytes((int)fileBlockEntry.GetBlockSize());
+            var fileData = _archiveReader.ReadBytes((int)fileBlockEntry.GetBlockSize());
 
             if (fileBlockEntry.IsEncrypted())
             {
@@ -712,16 +712,16 @@ namespace Warcraft.MPQ
         private static byte[] StitchSectors([NotNull, ItemNotNull] IReadOnlyCollection<byte[]> sectors)
         {
             long finalSize = 0;
-            foreach (byte[] sector in sectors)
+            foreach (var sector in sectors)
             {
                 finalSize += sector.Length;
             }
 
-            byte[] finalBlock = new byte[finalSize];
+            var finalBlock = new byte[finalSize];
 
             // Pull out your sowing kit, it's stitching time!
             int writtenBytes = 0;
-            foreach (byte[] sector in sectors)
+            foreach (var sector in sectors)
             {
                 Buffer.BlockCopy(sector, 0, finalBlock, writtenBytes, sector.Length);
                 writtenBytes += sector.Length;

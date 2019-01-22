@@ -124,7 +124,7 @@ namespace Warcraft.Core
 
                 case "wmo":
                 {
-                    Regex groupDetectRegex = new Regex("(.+_[0-9]{3}.wmo)", RegexOptions.Multiline);
+                    var groupDetectRegex = new Regex("(.+_[0-9]{3}.wmo)", RegexOptions.Multiline);
 
                     if (groupDetectRegex.IsMatch(path))
                     {

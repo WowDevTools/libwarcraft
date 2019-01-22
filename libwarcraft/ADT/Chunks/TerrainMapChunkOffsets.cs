@@ -57,16 +57,16 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (MemoryStream ms = new MemoryStream(inData))
+            using (var ms = new MemoryStream(inData))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                using (var br = new BinaryReader(ms))
                 {
                     // read size, n of entries is size / 16
                     long nEntries = br.BaseStream.Length / 16;
 
                     for (int i = 0; i < nEntries; ++i)
                     {
-                        MapChunkOffsetEntry entry = new MapChunkOffsetEntry
+                        var entry = new MapChunkOffsetEntry
                         {
                             MapChunkOffset = br.ReadInt32(),
                             MapChunkSize = br.ReadInt32(),
