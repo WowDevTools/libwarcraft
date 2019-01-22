@@ -19,13 +19,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
+
 using JetBrains.Annotations;
+
 using Warcraft.Core;
 using Warcraft.Core.Compression;
-
 using Warcraft.MPQ.Attributes;
 using Warcraft.MPQ.Crypto;
 using Warcraft.MPQ.FileInfo;
@@ -238,7 +238,7 @@ namespace Warcraft.MPQ
         /// that one is prioritized over the one stored in the archive.
         /// </summary>
         /// <returns>The listfile.</returns>
-        [PublicAPI, NotNull, ItemNotNull]
+        [PublicAPI]
         public IEnumerable<string> GetFileList()
         {
             ThrowIfDisposed();
@@ -327,7 +327,7 @@ namespace Warcraft.MPQ
 
         /// <inheritdoc />
         /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
-        public bool ContainsFile([NotNull] string filePath)
+        public bool ContainsFile(string filePath)
         {
             ThrowIfDisposed();
 
@@ -346,8 +346,8 @@ namespace Warcraft.MPQ
         /// <inheritdoc />
         /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
         /// <exception cref="FileNotFoundException">Thrown if the archive does not contain a file at the given path.</exception>
-        [PublicAPI, NotNull]
-        public MPQFileInfo GetFileInfo([NotNull] string filePath)
+        [PublicAPI]
+        public MPQFileInfo GetFileInfo(string filePath)
         {
             ThrowIfDisposed();
 
@@ -371,8 +371,8 @@ namespace Warcraft.MPQ
         /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
         /// <exception cref="FileNotFoundException">Thrown if the archive does not contain a file at the given path.</exception>
         /// <exception cref="FileDeletedException">Thrown if the file is deleted in the archive.</exception>
-        [PublicAPI, NotNull]
-        public byte[] ExtractFile([NotNull] string filePath)
+        [PublicAPI]
+        public byte[] ExtractFile(string filePath)
         {
             ThrowIfDisposed();
 
