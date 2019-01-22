@@ -325,16 +325,7 @@ namespace Warcraft.MPQ
         {
             ThrowIfDisposed();
 
-            try
-            {
-                ArchiveHashTable.FindEntry(filePath.ToUpperInvariant());
-            }
-            catch (FileNotFoundException)
-            {
-                return false;
-            }
-
-            return true;
+            return ArchiveHashTable.TryFindEntry(filePath.ToUpperInvariant(), out _);
         }
 
         /// <inheritdoc />
@@ -344,12 +335,11 @@ namespace Warcraft.MPQ
         {
             ThrowIfDisposed();
 
-            if (!ContainsFile(filePath))
+            if (!ArchiveHashTable.TryFindEntry(filePath, out var hashEntry))
             {
                 throw new FileNotFoundException("The given file was not present in the archive.", filePath);
             }
 
-            var hashEntry = ArchiveHashTable.FindEntry(filePath);
             var blockEntry = ArchiveBlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
 
             if (HasFileAttributes())
@@ -371,14 +361,9 @@ namespace Warcraft.MPQ
             // Reset all positions to be safe
             _archiveReader.BaseStream.Position = 0;
 
-            HashTableEntry fileHashEntry;
-            try
+            if (!ArchiveHashTable.TryFindEntry(filePath, out var fileHashEntry))
             {
-                fileHashEntry = ArchiveHashTable.FindEntry(filePath);
-            }
-            catch (FileNotFoundException fex)
-            {
-                throw new FileNotFoundException("No file found at the given path.", filePath, fex);
+                throw new FileNotFoundException("No file found at the given path.", filePath);
             }
 
             var fileBlockEntry = ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());

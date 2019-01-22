@@ -49,7 +49,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// </summary>
         /// <param name="data">ExtendedData.</param>
         [PublicAPI]
-        public HashTable(byte[] data)
+        public HashTable([NotNull] byte[] data)
         {
             using (var ms = new MemoryStream(data))
             {
@@ -68,39 +68,97 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <summary>
         /// Finds a valid entry for a given filename.
         /// </summary>
+        /// <param name="fileName">The file name.</param>
         /// <returns>The entry.</returns>
-        /// <param name="fileName">File name.</param>
+        /// <exception cref="FileNotFoundException">
+        /// Thrown if the given file path has no entry in the table.
+        /// </exception>
         [PublicAPI, NotNull]
         public HashTableEntry FindEntry([NotNull] string fileName)
         {
-            var entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint)_entries.Count - 1;
-            var hashA = MPQCrypt.Hash(fileName, HashType.FilePathA);
-            var hashB = MPQCrypt.Hash(fileName, HashType.FilePathB);
+            if (!TryFindEntry(fileName, out var entry))
+            {
+                throw new FileNotFoundException("The given file has no entry in the hash table.", fileName);
+            }
 
-            return FindEntry(hashA, hashB, entryHomeIndex);
+            return entry;
         }
 
         /// <summary>
         /// Finds a valid entry for a given hash pair, starting at the specified offset.
         /// </summary>
-        /// <returns>The entry.</returns>
         /// <param name="hashA">A hash of the filename (Algorithm A).</param>
         /// <param name="hashB">A hash of the filename (Algorithm B).</param>
         /// <param name="entryHomeIndex">The home index for the file we're searching for. Reduces lookup times.</param>
+        /// <returns>The entry.</returns>
+        /// <exception cref="FileNotFoundException">
+        /// Thrown if the given hash combination has no entry in the table.
+        /// </exception>
         [PublicAPI, NotNull]
         public HashTableEntry FindEntry(uint hashA, uint hashB, uint entryHomeIndex)
         {
+            if (!TryFindEntry(hashA, hashB, entryHomeIndex, out var entry))
+            {
+                throw new FileNotFoundException("The given hash combination has no entry in the hash table.");
+            }
+
+            return entry;
+        }
+
+        /// <summary>
+        /// Attempts to find a valid entry for a given filename.
+        /// </summary>
+        /// <param name="fileName">The file name.</param>
+        /// <param name="tableEntry">The entry, or null.</param>
+        /// <returns>The entry.</returns>
+        [PublicAPI]
+        [ContractAnnotation("true <= tableEntry : notnull; false <= tableEntry : null")]
+        public bool TryFindEntry([NotNull] string fileName, out HashTableEntry tableEntry)
+        {
+            var entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint)_entries.Count - 1;
+            var hashA = MPQCrypt.Hash(fileName, HashType.FilePathA);
+            var hashB = MPQCrypt.Hash(fileName, HashType.FilePathB);
+
+            if (!TryFindEntry(hashA, hashB, entryHomeIndex, out tableEntry))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Attempts to find a valid entry for a given hash pair, starting at the specified offset.
+        /// </summary>
+        /// <param name="hashA">A hash of the filename (Algorithm A).</param>
+        /// <param name="hashB">A hash of the filename (Algorithm B).</param>
+        /// <param name="entryHomeIndex">The home index for the file we're searching for. Reduces lookup times.</param>
+        /// <param name="tableEntry">The entry, or null.</param>
+        /// <returns>The entry.</returns>
+        [PublicAPI]
+        [ContractAnnotation("true <= tableEntry : notnull; false <= tableEntry : null")]
+        public bool TryFindEntry
+        (
+            uint hashA,
+            uint hashB,
+            uint entryHomeIndex,
+            out HashTableEntry tableEntry
+        )
+        {
+            tableEntry = null;
+
             // First, see if the file has ever existed. If it has and matches, return it.
             if (_entries[(int)entryHomeIndex].HasFileEverExisted())
             {
                 if (_entries[(int)entryHomeIndex].GetPrimaryHash() == hashA && _entries[(int)entryHomeIndex].GetSecondaryHash() == hashB)
                 {
-                    return _entries[(int)entryHomeIndex];
+                    tableEntry = _entries[(int)entryHomeIndex];
+                    return true;
                 }
             }
             else
             {
-                throw new FileNotFoundException($"No file has ever existed at the home index {entryHomeIndex}.");
+                return false;
             }
 
             // If that file doesn't match (but has existed, or is occupied, let's keep looking down the table.
@@ -122,7 +180,8 @@ namespace Warcraft.MPQ.Tables.Hash
                 if (currentEntry.DoesFileExist())
                 {
                     // Found it!
-                    return currentEntry;
+                    tableEntry = currentEntry;
+                    return true;
                 }
 
                 // The file might have been deleted. Store it as a possible return candidate, but keep looking.
@@ -146,7 +205,8 @@ namespace Warcraft.MPQ.Tables.Hash
                 if (currentEntry.DoesFileExist())
                 {
                     // Found it!
-                    return currentEntry;
+                    tableEntry = currentEntry;
+                    return true;
                 }
 
                 // The file might have been deleted. Store it as a possible return candidate, but keep looking.
@@ -155,11 +215,12 @@ namespace Warcraft.MPQ.Tables.Hash
 
             if (deletionEntry is null)
             {
-                throw new FileNotFoundException("The requested file was not found.");
+                return false;
             }
 
             // We found the file, but it's been deleted.
-            return deletionEntry;
+            tableEntry = deletionEntry;
+            return true;
         }
 
         /// <summary>
