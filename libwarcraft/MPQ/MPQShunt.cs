@@ -18,6 +18,7 @@
 //
 
 using System.IO;
+using JetBrains.Annotations;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
 
@@ -54,7 +55,8 @@ namespace Warcraft.MPQ
         /// <exception cref="InvalidDataException">
         /// Thrown if the input data is null, or if it does not contain a valid signature.
         /// </exception>
-        public MPQShunt(byte[] data)
+        [PublicAPI]
+        public MPQShunt([NotNull] byte[] data)
         {
             if (data == null)
             {

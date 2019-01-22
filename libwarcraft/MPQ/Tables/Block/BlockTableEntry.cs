@@ -18,6 +18,7 @@
 //
 
 using System.IO;
+using JetBrains.Annotations;
 using Warcraft.Core.Interfaces;
 
 namespace Warcraft.MPQ.Tables.Block
@@ -26,6 +27,7 @@ namespace Warcraft.MPQ.Tables.Block
     /// Represents a table entry in the block table, which holds information about how a file is stored in the
     /// archive, its size, and where it is.
     /// </summary>
+    [PublicAPI]
     public class BlockTableEntry : IBinarySerializable
     {
         /// <summary>
@@ -53,7 +55,8 @@ namespace Warcraft.MPQ.Tables.Block
         /// Deserializes a <see cref="BlockTableEntry"/> from provided binary data.
         /// </summary>
         /// <param name="data">The serialized data.</param>
-        public BlockTableEntry(byte[] data)
+        [PublicAPI]
+        public BlockTableEntry([NotNull] byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))
             {
@@ -71,6 +74,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Gets the offset of the block with file data.
         /// </summary>
         /// <returns>The block offset.</returns>
+        [PublicAPI]
         public uint GetBlockOffset()
         {
             return _blockOffset;
@@ -82,6 +86,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// </summary>
         /// <param name="highBits">The bits to merge in.</param>
         /// <returns>The final offset.</returns>
+        [PublicAPI]
         public ulong GetExtendedBlockOffset(ushort highBits)
         {
             return MPQHeader.MergeHighBits(_blockOffset, highBits);
@@ -91,6 +96,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Gets the size of the data block.
         /// </summary>
         /// <returns>The block size.</returns>
+        [PublicAPI]
         public uint GetBlockSize()
         {
             return _blockSize;
@@ -100,6 +106,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Gets the flags.
         /// </summary>
         /// <returns>The flags.</returns>
+        [PublicAPI]
         public BlockFlags GetFlags()
         {
             return Flags;
@@ -109,6 +116,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Gets the size of the decompressed and decrypted file.
         /// </summary>
         /// <returns>The file size.</returns>
+        [PublicAPI]
         public uint GetFileSize()
         {
             return _fileSize;
@@ -118,6 +126,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Determines whether this data block is empty.
         /// </summary>
         /// <returns><c>true</c> if this instance is block empty; otherwise, <c>false</c>.</returns>
+        [PublicAPI]
         public bool IsBlockEmpty()
         {
             return (_blockOffset != 0) && (_blockSize != 0) && (_fileSize == 0) && (Flags == 0);
@@ -127,6 +136,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Determines whether this data block is unused.
         /// </summary>
         /// <returns><c>true</c> if this instance is block unused; otherwise, <c>false</c>.</returns>
+        [PublicAPI]
         public bool IsBlockUnused()
         {
             return (_blockOffset == 0) && (_blockSize == 0) && (_fileSize == 0) && (Flags == 0);
@@ -139,6 +149,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// is done by this method.
         /// </summary>
         /// <returns><value>true</value> if the block is compressed; otherwise, <value>false</value>.</returns>
+        [PublicAPI]
         public bool IsCompressed()
         {
             bool isCompressedInAnyWay = Flags.HasFlag(BlockFlags.IsCompressed) ||
@@ -154,6 +165,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Determines whether or not the file data contained in this block is encrypted or not.
         /// </summary>
         /// <returns><value>true</value> if the block is encrypted; otherwise, <value>false</value>.</returns>
+        [PublicAPI]
         public bool IsEncrypted()
         {
             return Flags.HasFlag(BlockFlags.IsEncrypted);
@@ -163,6 +175,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Determines whether or not the file data is stored as a set of sectors. If not, it's in a single unit.
         /// </summary>
         /// <returns><value>true</value> if the block is stored in sectors; otherwise, <value>false</value>.</returns>
+        [PublicAPI]
         public bool HasSectors()
         {
             return !Flags.HasFlag(BlockFlags.IsSingleUnit);
@@ -172,6 +185,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Determines whether or not this block entry is pointing to any file data at all.
         /// </summary>
         /// <returns><value>true</value> if the block points to any data; otherwise, <value>false</value>.</returns>
+        [PublicAPI]
         public bool HasData()
         {
             return Flags.HasFlag(BlockFlags.Exists) && !Flags.HasFlag(BlockFlags.IsDeletionMarker);
@@ -181,6 +195,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Determines whether or not this block entry is pointing to a deleted file.
         /// </summary>
         /// <returns>true if the file is deleted; otherwise, false.</returns>
+        [PublicAPI]
         public bool IsDeleted()
         {
             return Flags.HasFlag(BlockFlags.IsDeletionMarker);
@@ -190,6 +205,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Determines whether or not the file data is stored as a single unit. If not, it's in sectors.
         /// </summary>
         /// <returns><value>true</value> if the block is stored as a single unit; otherwise, <value>false</value>.</returns>
+        [PublicAPI]
         public bool IsSingleUnit()
         {
             return Flags.HasFlag(BlockFlags.IsSingleUnit);
@@ -199,6 +215,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Determined whether or not the encryption key should be adjusted by the block offset.
         /// </summary>
         /// <returns><value>true</value> if the key should be adjusted; otherwise, <value>false</value>.</returns>
+        [PublicAPI]
         public bool ShouldEncryptionKeyBeAdjusted()
         {
             return Flags.HasFlag(BlockFlags.HasAdjustedEncryptionKey);
@@ -228,6 +245,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// Gets the size of a block table entry.
         /// </summary>
         /// <returns>The size.</returns>
+        [PublicAPI]
         public static long GetSize()
         {
             return 16;

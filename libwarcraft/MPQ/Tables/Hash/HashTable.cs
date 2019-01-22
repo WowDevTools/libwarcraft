@@ -19,6 +19,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
 using Warcraft.Core.Interfaces;
 using Warcraft.MPQ.Crypto;
 
@@ -28,11 +29,13 @@ namespace Warcraft.MPQ.Tables.Hash
     /// The hash table is a table containing hashed file paths for quick lookup in the archive. When stored
     /// in binary format, it can be both compressed and encrypted.
     /// </summary>
+    [PublicAPI]
     public class HashTable : IBinarySerializable
     {
         /// <summary>
         /// The encryption key for the hash table data.
         /// </summary>
+        [PublicAPI]
         public static readonly uint TableKey = MPQCrypt.Hash("(hash table)", HashType.FileKey);
 
         /// <summary>
@@ -41,17 +44,11 @@ namespace Warcraft.MPQ.Tables.Hash
         private readonly List<HashTableEntry> _entries = new List<HashTableEntry>(65536);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HashTable"/> class.
-        /// </summary>
-        public HashTable()
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="HashTable"/> class from
         /// a block of data containing hash table entries.
         /// </summary>
         /// <param name="data">ExtendedData.</param>
+        [PublicAPI]
         public HashTable(byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))
@@ -73,7 +70,8 @@ namespace Warcraft.MPQ.Tables.Hash
         /// </summary>
         /// <returns>The entry.</returns>
         /// <param name="fileName">File name.</param>
-        public HashTableEntry FindEntry(string fileName)
+        [PublicAPI, NotNull]
+        public HashTableEntry FindEntry([NotNull] string fileName)
         {
             uint entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint)_entries.Count - 1;
             uint hashA = MPQCrypt.Hash(fileName, HashType.FilePathA);
@@ -89,6 +87,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <param name="hashA">A hash of the filename (Algorithm A).</param>
         /// <param name="hashB">A hash of the filename (Algorithm B).</param>
         /// <param name="entryHomeIndex">The home index for the file we're searching for. Reduces lookup times.</param>
+        [PublicAPI, NotNull]
         public HashTableEntry FindEntry(uint hashA, uint hashB, uint entryHomeIndex)
         {
             // First, see if the file has ever existed. If it has and matches, return it.
@@ -154,6 +153,11 @@ namespace Warcraft.MPQ.Tables.Hash
                 deletionEntry = currentEntry;
             }
 
+            if (deletionEntry is null)
+            {
+                throw new FileNotFoundException("The requested file was not found.");
+            }
+
             // We found the file, but it's been deleted.
             return deletionEntry;
         }
@@ -183,6 +187,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// Gets the size of the entire hash table.
         /// </summary>
         /// <returns>The size.</returns>
+        [PublicAPI]
         public ulong GetSize()
         {
             return (ulong)(_entries.Count * HashTableEntry.GetSize());

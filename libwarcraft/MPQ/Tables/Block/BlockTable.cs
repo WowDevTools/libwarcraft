@@ -19,6 +19,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
 using Warcraft.MPQ.Crypto;
 
 namespace Warcraft.MPQ.Tables.Block
@@ -26,26 +27,23 @@ namespace Warcraft.MPQ.Tables.Block
     /// <summary>
     /// Represents the block table in an archive.
     /// </summary>
+    [PublicAPI]
     public class BlockTable
     {
         /// <summary>
         /// Holds the table encryption key.
         /// </summary>
+        [PublicAPI]
         public static readonly uint TableKey = MPQCrypt.Hash("(block table)", HashType.FileKey);
+
         private readonly List<BlockTableEntry> _entries = new List<BlockTableEntry>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockTable"/> class.
         /// </summary>
-        public BlockTable()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlockTable"/> class.
-        /// </summary>
         /// <param name="data">The binary data.</param>
-        public BlockTable(byte[] data)
+        [PublicAPI]
+        public BlockTable([NotNull] byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))
             {
@@ -86,6 +84,7 @@ namespace Warcraft.MPQ.Tables.Block
         /// </summary>
         /// <param name="index">The element index.</param>
         /// <returns>The entry at the index.</returns>
+        [PublicAPI]
         public BlockTableEntry GetEntry(int index)
         {
             return _entries[index];

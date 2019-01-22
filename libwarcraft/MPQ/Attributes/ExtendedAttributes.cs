@@ -20,32 +20,38 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Warcraft.MPQ.Attributes
 {
     /// <summary>
     /// Container class for the extended file attributes contained in an MPQ archive.
     /// </summary>
+    [PublicAPI]
     public class ExtendedAttributes
     {
         /// <summary>
         /// The internal filename of the attributes.
         /// </summary>
+        [PublicAPI, NotNull]
         public const string InternalFileName = "(attributes)";
 
         /// <summary>
         /// Gets or sets the version of the attribute file format.
         /// </summary>
+        [PublicAPI]
         public uint Version { get; set; }
 
         /// <summary>
         /// Gets or sets the attributes present in the attribute file.
         /// </summary>
+        [PublicAPI]
         public AttributeTypes AttributesPresent { get; set; }
 
         /// <summary>
         /// Gets or sets the list of file attributes.
         /// </summary>
+        [PublicAPI, NotNull, ItemNotNull]
         public List<FileAttributes> FileAttributes { get; set; }
 
         /// <summary>
@@ -54,7 +60,8 @@ namespace Warcraft.MPQ.Attributes
         /// <param name="data">The data.</param>
         /// <param name="fileBlockCount">The expected file block count.</param>
         /// <exception cref="ArgumentNullException">Thrown if the data is null.</exception>
-        public ExtendedAttributes(byte[] data, uint fileBlockCount)
+        [PublicAPI]
+        public ExtendedAttributes([NotNull] byte[] data, uint fileBlockCount)
         {
             if (data == null)
             {
@@ -71,7 +78,7 @@ namespace Warcraft.MPQ.Attributes
                     {
                         Version = 0;
                         AttributesPresent = 0;
-                        FileAttributes = null;
+                        FileAttributes = new List<FileAttributes>();
                     }
                     else
                     {
@@ -169,6 +176,7 @@ namespace Warcraft.MPQ.Attributes
         /// Determines whether or not the stored attributes are valid.
         /// </summary>
         /// <returns>true if the attributes are valid; otherwise, false.</returns>
+        [PublicAPI]
         public bool AreAttributesValid()
         {
             return Version == 100 && AttributesPresent > 0;

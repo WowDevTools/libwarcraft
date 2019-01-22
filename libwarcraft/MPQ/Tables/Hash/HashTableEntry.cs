@@ -17,6 +17,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System.IO;
+using JetBrains.Annotations;
 using Warcraft.Core.Interfaces;
 using Warcraft.Core.Locale;
 
@@ -26,6 +27,7 @@ namespace Warcraft.MPQ.Tables.Hash
     /// An entry in the hash table of an MPQ archive, containing data about where to
     /// find the block entry for information about the file data.
     /// </summary>
+    [PublicAPI]
     public class HashTableEntry : IBinarySerializable
     {
         /// <summary>
@@ -60,7 +62,8 @@ namespace Warcraft.MPQ.Tables.Hash
         /// Initializes a new instance of the <see cref="HashTableEntry"/> class.
         /// </summary>
         /// <param name="data">The serialized hash table data.</param>
-        public HashTableEntry(byte[] data)
+        [PublicAPI]
+        public HashTableEntry([NotNull] byte[] data)
         {
             using (MemoryStream ms = new MemoryStream(data))
             {
@@ -83,6 +86,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// Determines whether this has file ever existed.
         /// </summary>
         /// <returns><c>true</c> if this file ever existed; otherwise, <c>false</c>.</returns>
+        [PublicAPI]
         public bool HasFileEverExisted()
         {
             return _fileBlockIndex != 0xFFFFFFFF;
@@ -93,6 +97,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// table entry, it is most likely a deletion marker.
         /// </summary>
         /// <returns><c>true</c>, if the file exists, <c>false</c> otherwise.</returns>
+        [PublicAPI]
         public bool DoesFileExist()
         {
             return _fileBlockIndex != 0xFFFFFFFE || _fileBlockIndex != 0xFFFFFFFF;
@@ -102,6 +107,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// Gets the primary hash of the file's name.
         /// </summary>
         /// <returns>The primary hash.</returns>
+        [PublicAPI]
         public uint GetPrimaryHash()
         {
             return _filePathHashA;
@@ -111,6 +117,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// Gets the secondary hash of the file's name.
         /// </summary>
         /// <returns>The secondary hash.</returns>
+        [PublicAPI]
         public uint GetSecondaryHash()
         {
             return _filePathHashB;
@@ -120,6 +127,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// Gets the localization ID.
         /// </summary>
         /// <returns>The localization ID.</returns>
+        [PublicAPI]
         public LocaleID GetLocalizationID()
         {
             return _localization;
@@ -129,6 +137,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// Gets the platform ID.
         /// </summary>
         /// <returns>The platform ID.</returns>
+        [PublicAPI]
         public ushort GetPlatformID()
         {
             return _platform;
@@ -138,6 +147,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// Gets the index of the block entry referenced by this entry.
         /// </summary>
         /// <returns>The block entry index.</returns>
+        [PublicAPI]
         public uint GetBlockEntryIndex()
         {
             return _fileBlockIndex;
@@ -168,6 +178,7 @@ namespace Warcraft.MPQ.Tables.Hash
         /// Gets the size of an entry.
         /// </summary>
         /// <returns>The size.</returns>
+        [PublicAPI]
         public static long GetSize()
         {
             return 16;

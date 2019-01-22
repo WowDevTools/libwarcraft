@@ -18,6 +18,8 @@
 //
 
 using System.Collections.Generic;
+using System.IO;
+using JetBrains.Annotations;
 using Warcraft.MPQ.FileInfo;
 
 namespace Warcraft.MPQ
@@ -26,40 +28,48 @@ namespace Warcraft.MPQ
     /// Interface for file-providing packages. A package must be able to provide a file list and output data
     /// for files stored in it.
     /// </summary>
+    [PublicAPI]
     public interface IPackage
     {
         /// <summary>
-        /// Extract the file at <paramref name="filePath"/> from the archive.
+        /// Extract the file at <paramref name="filePath"/> from the package.
         /// </summary>
-        /// <returns>The file as a byte array, or null if the file could not be found.</returns>
-        /// <param name="filePath">Path to the file in the archive.</param>
-        byte[] ExtractFile(string filePath);
+        /// <returns>The bytes contained in the file.</returns>
+        /// <param name="filePath">The full path to the file in the package.</param>
+        /// <exception cref="FileNotFoundException">Thrown if the file is not present in the package.</exception>
+        [PublicAPI, NotNull]
+        byte[] ExtractFile([NotNull] string filePath);
 
         /// <summary>
-        /// Determines whether this archive has a listfile.
+        /// Determines whether this package has a file list.
         /// </summary>
-        /// <returns><c>true</c> if this archive has a listfile; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if this package has a listfile; otherwise, <c>false</c>.</returns>
+        [PublicAPI]
         bool HasFileList();
 
         /// <summary>
-        /// Gets the best available listfile from the archive. If an external listfile has been provided,
+        /// Gets the best available file list from the package. If an external file list has been provided,
         /// that one is prioritized over the one stored in the archive.
         /// </summary>
-        /// <returns>The listfile.</returns>
+        /// <returns>The file list.</returns>
+        [PublicAPI, NotNull, ItemNotNull]
         IEnumerable<string> GetFileList();
 
         /// <summary>
-        /// Checks if the specified file path exists in the archive.
+        /// Checks if the specified file exists in the package.
         /// </summary>
         /// <returns><c>true</c>, if the file exists, <c>false</c> otherwise.</returns>
-        /// <param name="filePath">File path.</param>
-        bool ContainsFile(string filePath);
+        /// <param name="filePath">The full path to the file.</param>
+        [PublicAPI]
+        bool ContainsFile([NotNull] string filePath);
 
         /// <summary>
         /// Gets the file info of the provided path.
         /// </summary>
-        /// <returns>The file info, or null if the file doesn't exist in the archive.</returns>
-        /// <param name="filePath">File path.</param>
-        MPQFileInfo GetFileInfo(string filePath);
+        /// <returns>The file info.</returns>
+        /// <param name="filePath">The full path to the file.</param>
+        /// <exception cref="FileNotFoundException">Thrown if the file is not present in the package.</exception>
+        [PublicAPI, NotNull]
+        MPQFileInfo GetFileInfo([NotNull] string filePath);
     }
 }

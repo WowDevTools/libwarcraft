@@ -17,11 +17,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Warcraft.MPQ
 {
     /// <summary>
     /// This enum contains all known versions of the MPQ archive format.
     /// </summary>
+    [PublicAPI]
     public enum MPQFormat : ushort
     {
         /// <summary>
@@ -32,16 +35,6 @@ namespace Warcraft.MPQ
         /// <summary>
         /// The extended v1 archive format. Used in games after and including World of Warcraft: The Burning Crusade.
         /// </summary>
-        ExtendedV1 = 1,
-
-        /// <summary>
-        /// The extended v2 archive format. Used briefly during the Cataclysm Beta.
-        /// </summary>
-        ExtendedV2 = 2,
-
-        /// <summary>
-        /// The extended v3 archive format. Used in games after and including World of Warcraft: Cataclysm.
-        /// </summary>
-        ExtendedV3 = 3
+        ExtendedV1 = 1
     }
 }

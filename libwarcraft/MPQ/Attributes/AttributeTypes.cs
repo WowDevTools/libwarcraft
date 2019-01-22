@@ -18,13 +18,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Warcraft.MPQ.Attributes
 {
     /// <summary>
     /// The types of attributes which a file might have.
     /// </summary>
-    [Flags]
+    [PublicAPI, Flags]
     public enum AttributeTypes : uint
     {
         /// <summary>

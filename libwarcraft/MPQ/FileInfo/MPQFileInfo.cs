@@ -17,6 +17,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Warcraft.Core.Locale;
 using Warcraft.MPQ.Attributes;
 using Warcraft.MPQ.Tables.Block;
@@ -27,12 +28,14 @@ namespace Warcraft.MPQ.FileInfo
     /// <summary>
     /// Holds a set of information about a given file in an MPQ archive.
     /// </summary>
+    [PublicAPI]
     public class MPQFileInfo
     {
         /// <summary>
         /// Gets the path of the file in the archive.
         /// </summary>
         /// <value>The path.</value>
+        [PublicAPI, NotNull]
         public string Path
         {
             get;
@@ -43,6 +46,7 @@ namespace Warcraft.MPQ.FileInfo
         /// Gets the hash entry that points to this file.
         /// </summary>
         /// <value>A hash entry.</value>
+        [PublicAPI, NotNull]
         public HashTableEntry HashEntry
         {
             get;
@@ -53,6 +57,7 @@ namespace Warcraft.MPQ.FileInfo
         /// Gets the block entry describing the storage of the file.
         /// </summary>
         /// <value>The block entry.</value>
+        [PublicAPI, NotNull]
         public BlockTableEntry BlockEntry
         {
             get;
@@ -63,6 +68,7 @@ namespace Warcraft.MPQ.FileInfo
         /// Gets the file attributes.
         /// </summary>
         /// <value>The attributes.</value>
+        [PublicAPI, CanBeNull]
         public FileAttributes Attributes
         {
             get;
@@ -73,6 +79,7 @@ namespace Warcraft.MPQ.FileInfo
         /// Gets a value indicating whether this reference is deleted in the archive.
         /// </summary>
         /// <value><c>true</c> if this reference is deleted; otherwise, <c>false</c>.</value>
+        [PublicAPI]
         public bool IsDeleted => GetFlags().HasFlag(BlockFlags.IsDeletionMarker);
 
         /// <summary>
@@ -82,7 +89,14 @@ namespace Warcraft.MPQ.FileInfo
         /// <param name="inHashEntry">In hash entry.</param>
         /// <param name="inBlockEntry">In block entry.</param>
         /// <param name="inAttributes">In attributes.</param>
-        public MPQFileInfo(string inPath, HashTableEntry inHashEntry, BlockTableEntry inBlockEntry, FileAttributes inAttributes)
+        [PublicAPI]
+        public MPQFileInfo
+        (
+            [NotNull] string inPath,
+            [NotNull] HashTableEntry inHashEntry,
+            [NotNull] BlockTableEntry inBlockEntry,
+            [NotNull] FileAttributes inAttributes
+        )
             : this(inPath, inHashEntry, inBlockEntry)
         {
             Attributes = inAttributes;
@@ -94,7 +108,13 @@ namespace Warcraft.MPQ.FileInfo
         /// <param name="inPath">In path.</param>
         /// <param name="inHashEntry">In hash entry.</param>
         /// <param name="inBlockEntry">In block entry.</param>
-        public MPQFileInfo(string inPath, HashTableEntry inHashEntry, BlockTableEntry inBlockEntry)
+        [PublicAPI]
+        public MPQFileInfo
+        (
+            [NotNull] string inPath,
+            [NotNull] HashTableEntry inHashEntry,
+            [NotNull] BlockTableEntry inBlockEntry
+        )
         {
             Path = inPath;
             HashEntry = inHashEntry;
@@ -106,6 +126,7 @@ namespace Warcraft.MPQ.FileInfo
         /// files are most commonly set to 0 (default or neutral locale).
         /// </summary>
         /// <returns>The locale.</returns>
+        [PublicAPI]
         public LocaleID GetLocale()
         {
             return HashEntry.GetLocalizationID();
@@ -115,6 +136,7 @@ namespace Warcraft.MPQ.FileInfo
         /// Gets the platform that the file is meant for. A 0 indicates default or platform-neutral.
         /// </summary>
         /// <returns>The platform.</returns>
+        [PublicAPI]
         public ushort GetPlatform()
         {
             return HashEntry.GetPlatformID();
@@ -125,6 +147,7 @@ namespace Warcraft.MPQ.FileInfo
         /// than <see cref="GetActualSize"/>.
         /// </summary>
         /// <returns>The stored size.</returns>
+        [PublicAPI]
         public long GetStoredSize()
         {
             return BlockEntry.GetBlockSize();
@@ -134,6 +157,7 @@ namespace Warcraft.MPQ.FileInfo
         /// Gets the actual size of the file, once it's been decrypted and decompressed.
         /// </summary>
         /// <returns>The actual size.</returns>
+        [PublicAPI]
         public long GetActualSize()
         {
             return BlockEntry.GetFileSize();
@@ -143,6 +167,7 @@ namespace Warcraft.MPQ.FileInfo
         /// Gets a set of flags describing the way the file is stored in the archive.
         /// </summary>
         /// <returns>The flags.</returns>
+        [PublicAPI]
         public BlockFlags GetFlags()
         {
             return BlockEntry.GetFlags();

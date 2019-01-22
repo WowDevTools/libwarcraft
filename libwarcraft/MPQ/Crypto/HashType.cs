@@ -17,11 +17,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Warcraft.MPQ.Crypto
 {
     /// <summary>
     /// Different types of hashes that can be produced by the hashing function.
     /// </summary>
+    [PublicAPI]
     public enum HashType : uint
     {
         /// <summary>

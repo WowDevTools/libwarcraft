@@ -18,29 +18,34 @@
 //
 
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Warcraft.MPQ.Crypto
 {
     /// <summary>
     /// Represents a weak archive signature.
     /// </summary>
+    [PublicAPI]
     public class WeakPackageSignature
     {
         /// <summary>
         /// Holds the internal filename of the signature file.
         /// </summary>
+        [PublicAPI, NotNull]
         public const string InternalFilename = "(signature)";
 
         /// <summary>
         /// Gets the package signature.
         /// </summary>
+        [PublicAPI, NotNull]
         public byte[] PackageSignature { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WeakPackageSignature"/> class.
         /// </summary>
         /// <param name="data">The binary data.</param>
-        public WeakPackageSignature(byte[] data)
+        [PublicAPI]
+        public WeakPackageSignature([NotNull] byte[] data)
         {
             if (data.Length != 72)
             {

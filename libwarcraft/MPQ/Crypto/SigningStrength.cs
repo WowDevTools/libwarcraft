@@ -17,11 +17,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Warcraft.MPQ.Crypto
 {
     /// <summary>
     /// The strength of the signing algorithm.
     /// </summary>
+    [PublicAPI]
     public enum SigningStrength : byte
     {
         /// <summary>

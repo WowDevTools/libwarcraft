@@ -18,13 +18,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Warcraft.MPQ.Tables.Block
 {
     /// <summary>
     /// Possible flags for a block entry, designating different flags for a stored file.
     /// </summary>
-    [Flags]
+    [PublicAPI, Flags]
     public enum BlockFlags : uint
     {
         /// <summary>

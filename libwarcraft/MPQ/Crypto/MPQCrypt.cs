@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Warcraft.Core;
 using Warcraft.Core.Hashing;
 
@@ -37,6 +38,7 @@ namespace Warcraft.MPQ.Crypto
         /// A table of int32s used as a lookup table for decryption of bytes.
         /// It is statically initialized, and is always the same.
         /// </summary>
+        [NotNull]
         private static readonly uint[] EncryptionTable = new uint[0x500];
 
         static MPQCrypt()
@@ -75,7 +77,8 @@ namespace Warcraft.MPQ.Crypto
         /// <returns>The encrypted data.</returns>
         /// <param name="data">ExtendedData to be encrypted.</param>
         /// <param name="key">The encryption key to use.</param>
-        public static byte[] EncryptData(byte[] data, uint key)
+        [NotNull]
+        public static byte[] EncryptData([NotNull] byte[] data, uint key)
         {
             return InternalEncryptDecrypt(data, key);
         }
@@ -87,7 +90,8 @@ namespace Warcraft.MPQ.Crypto
         /// <returns>The decrypted data.</returns>
         /// <param name="data">ExtendedData to be decrypted.</param>
         /// <param name="key">The decryption key to use.</param>
-        public static byte[] DecryptData(byte[] data, uint key)
+        [NotNull]
+        public static byte[] DecryptData([NotNull] byte[] data, uint key)
         {
             return InternalEncryptDecrypt(data, key);
         }
@@ -98,7 +102,8 @@ namespace Warcraft.MPQ.Crypto
         /// <returns>The encrypted or decrypted data.</returns>
         /// <param name="data">ExtendedData.</param>
         /// <param name="key">Key.</param>
-        private static byte[] InternalEncryptDecrypt(byte[] data, uint key)
+        [NotNull]
+        private static byte[] InternalEncryptDecrypt([NotNull] byte[] data, uint key)
         {
             if (data == null)
             {
@@ -164,7 +169,7 @@ namespace Warcraft.MPQ.Crypto
         /// <returns>The hash.</returns>
         /// <param name="inputString">Input string.</param>
         /// <param name="hashType">Hash type.</param>
-        public static uint Hash(string inputString, HashType hashType)
+        public static uint Hash([NotNull] string inputString, HashType hashType)
         {
             uint seed1 = 0x7FED7FED;
             var seed2 = 0xEEEEEEEE;
@@ -187,7 +192,7 @@ namespace Warcraft.MPQ.Crypto
         /// <param name="isAdjusted">If set to <c>true</c>, the key is adjusted by the given block offset and file size.</param>
         /// <param name="blockOffset">The block offset of the file.</param>
         /// <param name="fileSize">The size of the file.</param>
-        public static uint GetFileKey(string fileName, bool isAdjusted = false, uint blockOffset = 0, uint fileSize = 0)
+        public static uint GetFileKey([NotNull] string fileName, bool isAdjusted = false, uint blockOffset = 0, uint fileSize = 0)
         {
             uint fileKey = Hash(fileName, HashType.FileKey);
 
@@ -210,7 +215,13 @@ namespace Warcraft.MPQ.Crypto
         /// <param name="sectorOffsets">The output sector offsets.</param>
         /// <param name="blockSize">The size of the block to be decrypted.</param>
         /// <param name="key">The decryption key for the offset table.</param>
-        public static void DecryptSectorOffsetTable(BinaryReader br, ref List<uint> sectorOffsets, uint blockSize, uint key)
+        public static void DecryptSectorOffsetTable
+        (
+            [NotNull] BinaryReader br,
+            [NotNull] ref List<uint> sectorOffsets,
+            uint blockSize,
+            uint key
+        )
         {
             uint decryptionSeed = 0xEEEEEEEE;
 
@@ -263,7 +274,7 @@ namespace Warcraft.MPQ.Crypto
         /// <returns><c>true</c>, if the sector integrity is not compromised, <c>false</c> otherwise.</returns>
         /// <param name="sector">Sector data.</param>
         /// <param name="checksum">Sector checksum.</param>
-        public static bool VerifySectorChecksum(byte[] sector, uint checksum)
+        public static bool VerifySectorChecksum([NotNull] byte[] sector, uint checksum)
         {
             using (MemoryStream ms = new MemoryStream(sector))
             {
@@ -292,7 +303,13 @@ namespace Warcraft.MPQ.Crypto
         /// <param name="adjustedBlockOffset">The offset into the archive where the file data begins.</param>
         /// <param name="fileSize">The absolute size of the file.</param>
         /// <returns>An encryption key for the provied file path.</returns>
-        public static uint CreateFileEncryptionKey(string filePath, bool adjustKeyByOffset, long adjustedBlockOffset = 0, uint fileSize = 0)
+        public static uint CreateFileEncryptionKey
+        (
+            [NotNull] string filePath,
+            bool adjustKeyByOffset,
+            long adjustedBlockOffset = 0,
+            uint fileSize = 0
+        )
         {
             uint fileKey;
             if (adjustKeyByOffset)
