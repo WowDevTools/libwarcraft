@@ -57,7 +57,7 @@ namespace Warcraft.DBC
         /// <inheritdoc />
         public bool MoveNext()
         {
-            long recordBlockEnd = _stringBlockOffset;
+            var recordBlockEnd = _stringBlockOffset;
             if (_databaseReader.BaseStream.Position >= recordBlockEnd)
             {
                 return false;

@@ -97,7 +97,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (ushort bspFaceIndex in BSPFaceIndices)
+                    foreach (var bspFaceIndex in BSPFaceIndices)
                     {
                         bw.Write(bspFaceIndex);
                     }

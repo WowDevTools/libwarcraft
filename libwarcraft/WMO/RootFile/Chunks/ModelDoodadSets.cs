@@ -70,7 +70,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int setCount = inData.Length / DoodadSet.GetSize();
+                    var setCount = inData.Length / DoodadSet.GetSize();
                     for (uint i = 0; i < setCount; ++i)
                     {
                         DoodadSets.Add(new DoodadSet(br.ReadBytes(DoodadSet.GetSize())));

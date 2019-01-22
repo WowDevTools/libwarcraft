@@ -64,14 +64,14 @@ namespace Warcraft.ADT.Chunks.Subchunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    for (int y = 0; y < 64; ++y)
+                    for (var y = 0; y < 64; ++y)
                     {
                         var mapRow = new List<bool>();
-                        for (int x = 0; x < 2; ++x)
+                        for (var x = 0; x < 2; ++x)
                         {
                             var valueBits = new BitArray(br.ReadInt32());
 
-                            for (int i = 0; i < 32; ++i)
+                            for (var i = 0; i < 32; ++i)
                             {
                                 mapRow.Add(valueBits.Get(i));
                             }

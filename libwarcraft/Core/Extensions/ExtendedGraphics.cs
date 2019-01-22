@@ -35,9 +35,9 @@ namespace Warcraft.Core.Extensions
         /// <returns><value>true</value> if the bitmap has any alpha values; otherwise, <value>false</value>.</returns>
         public static bool HasAlpha(this Image<Rgba32> map)
         {
-            for (int y = 0; y < map.Height; ++y)
+            for (var y = 0; y < map.Height; ++y)
             {
-                for (int x = 0; x < map.Width; ++x)
+                for (var x = 0; x < map.Width; ++x)
                 {
                     var pixel = map[x, y];
                     if (pixel.A != 255)

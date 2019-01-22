@@ -77,8 +77,8 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int planeCount = inData.Length / 16;
-                    for (int i = 0; i < planeCount; ++i)
+                    var planeCount = inData.Length / 16;
+                    for (var i = 0; i < planeCount; ++i)
                     {
                         ConvexPlanes.Add(br.ReadPlane());
                     }

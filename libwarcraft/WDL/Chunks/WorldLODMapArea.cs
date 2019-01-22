@@ -67,17 +67,17 @@ namespace Warcraft.WDL.Chunks
                 using (var br = new BinaryReader(ms))
                 {
                     // TODO: Verify if this isn't mapped the same way as ADT.Chunks.MapChunkHeightmap
-                    for (int y = 0; y < 17; ++y)
+                    for (var y = 0; y < 17; ++y)
                     {
-                        for (int x = 0; x < 17; ++x)
+                        for (var x = 0; x < 17; ++x)
                         {
                             HighResVertices.Add(br.ReadInt16());
                         }
                     }
 
-                    for (int y = 0; y < 16; ++y)
+                    for (var y = 0; y < 16; ++y)
                     {
-                        for (int x = 0; x < 16; ++x)
+                        for (var x = 0; x < 16; ++x)
                         {
                             LowResVertices.Add(br.ReadInt16());
                         }
@@ -108,12 +108,12 @@ namespace Warcraft.WDL.Chunks
             {
                 using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (short lodVertex in HighResVertices)
+                    foreach (var lodVertex in HighResVertices)
                     {
                         bw.Write(lodVertex);
                     }
 
-                    foreach (short lodVertex in LowResVertices)
+                    foreach (var lodVertex in LowResVertices)
                     {
                         bw.Write(lodVertex);
                     }

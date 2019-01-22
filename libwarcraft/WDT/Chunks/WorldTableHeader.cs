@@ -99,7 +99,7 @@ namespace Warcraft.WDT.Chunks
                     bw.Write(Unknown);
 
                     // Write the six unused fields
-                    for (int i = 0; i < 6; ++i)
+                    for (var i = 0; i < 6; ++i)
                     {
                         bw.Write(0U);
                     }

@@ -61,7 +61,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int portalCount = inData.Length / Portal.GetSize();
+                    var portalCount = inData.Length / Portal.GetSize();
                     for (uint i = 0; i < portalCount; ++i)
                     {
                         Portals.Add(new Portal(br.ReadBytes(Portal.GetSize())));

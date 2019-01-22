@@ -90,7 +90,7 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <exception cref="ArgumentException">Thrown if the name was not found.</exception>
         public string GetInternalGroupName(ModelGroup modelGroup)
         {
-            int internalNameOffset = (int)modelGroup.GetInternalNameOffset();
+            var internalNameOffset = (int)modelGroup.GetInternalNameOffset();
             if (GroupNames.ContainsKey(internalNameOffset))
             {
                 return GroupNames[internalNameOffset];
@@ -107,7 +107,7 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <exception cref="ArgumentException">Thrown if the name was not found.</exception>
         public string GetInternalDescriptiveGroupName(ModelGroup modelGroup)
         {
-            int internalDescriptiveNameOffset = (int)modelGroup.GetInternalDescriptiveNameOffset();
+            var internalDescriptiveNameOffset = (int)modelGroup.GetInternalDescriptiveNameOffset();
             if (GroupNames.ContainsKey(internalDescriptiveNameOffset))
             {
                 return GroupNames[internalDescriptiveNameOffset];
@@ -128,13 +128,13 @@ namespace Warcraft.WMO.RootFile.Chunks
                     bw.Write('\0');
 
                     // Then the actual data
-                    for (int i = 0; i < GroupNames.Count; ++i)
+                    for (var i = 0; i < GroupNames.Count; ++i)
                     {
                         bw.WriteNullTerminatedString(GroupNames.ElementAt(i).Value);
                     }
 
                     // Then zero padding to an even 4-byte boundary at the end
-                    long count = 4 - (ms.Position % 4);
+                    var count = 4 - (ms.Position % 4);
                     if (count >= 4)
                     {
                         return ms.ToArray();

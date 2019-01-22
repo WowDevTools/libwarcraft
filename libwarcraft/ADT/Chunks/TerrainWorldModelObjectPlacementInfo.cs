@@ -61,8 +61,8 @@ namespace Warcraft.ADT.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    long entryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
-                    for (int i = 0; i < entryCount; ++i)
+                    var entryCount = br.BaseStream.Length / WorldModelObjectPlacementEntry.GetSize();
+                    for (var i = 0; i < entryCount; ++i)
                     {
                         Entries.Add(new WorldModelObjectPlacementEntry(br.ReadBytes(WorldModelObjectPlacementEntry.GetSize())));
                     }

@@ -63,8 +63,8 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int vertexCount = inData.Length / 12;
-                    for (int i = 0; i < vertexCount; ++i)
+                    var vertexCount = inData.Length / 12;
+                    for (var i = 0; i < vertexCount; ++i)
                     {
                         VisibleVertices.Add(br.ReadVector3());
                     }

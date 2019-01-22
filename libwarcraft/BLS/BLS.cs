@@ -52,7 +52,7 @@ namespace Warcraft.BLS
                 {
                     Header = new BLSHeader(br.ReadBytes(BLSHeader.GetSize()));
 
-                    for (int i = 0; i < Header.ShaderBlockCount; ++i)
+                    for (var i = 0; i < Header.ShaderBlockCount; ++i)
                     {
                         var shaderBlock = new ShaderBlock(br.ReadBytes(ShaderBlock.GetSize()));
                         shaderBlock.Data = br.ReadChars((int)shaderBlock.DataSize);
@@ -64,7 +64,7 @@ namespace Warcraft.BLS
                             continue;
                         }
 
-                        long padCount = 4 - (ms.Position % 4);
+                        var padCount = 4 - (ms.Position % 4);
                         ms.Position += padCount;
                     }
                 }

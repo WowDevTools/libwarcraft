@@ -44,7 +44,7 @@ namespace Warcraft.TRS
                 {
                     while (ms.Position != ms.Length)
                     {
-                        string mappingLine = tr.ReadLine();
+                        var mappingLine = tr.ReadLine();
                         if (mappingLine.StartsWith("dir:"))
                         {
                             continue;

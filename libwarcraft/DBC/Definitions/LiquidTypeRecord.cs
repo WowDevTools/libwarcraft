@@ -165,7 +165,7 @@ namespace Warcraft.DBC.Definitions
                 return _internalType;
             }
 
-            int baseValue = (int)_internalType;
+            var baseValue = (int)_internalType;
             switch (baseValue)
             {
                 case 0:

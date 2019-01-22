@@ -72,7 +72,7 @@ namespace Warcraft.WDL.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    for (int i = 0; i < 16; ++i)
+                    for (var i = 0; i < 16; ++i)
                     {
                         HoleMasks.Add(br.ReadInt16());
                     }
@@ -111,7 +111,7 @@ namespace Warcraft.WDL.Chunks
             {
                 using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (short holeMask in HoleMasks)
+                    foreach (var holeMask in HoleMasks)
                     {
                         bw.Write(holeMask);
                     }

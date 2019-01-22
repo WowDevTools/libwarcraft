@@ -82,7 +82,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (ushort doodadReference in DoodadReferences)
+                    foreach (var doodadReference in DoodadReferences)
                     {
                         bw.Write(doodadReference);
                     }

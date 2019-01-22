@@ -40,7 +40,7 @@ namespace Warcraft.Core
                 throw new ArgumentNullException(nameof(path));
             }
 
-            string fileExtension = Path.GetExtension(path).Replace(".", string.Empty).ToLowerInvariant();
+            var fileExtension = Path.GetExtension(path).Replace(".", string.Empty).ToLowerInvariant();
 
             switch (fileExtension)
             {

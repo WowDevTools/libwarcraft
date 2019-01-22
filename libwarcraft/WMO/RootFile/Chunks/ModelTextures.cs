@@ -117,8 +117,8 @@ namespace Warcraft.WMO.RootFile.Chunks
                         else
                         {
                             // Pad with nulls, then write
-                            long stringPadCount = 4 - (ms.Position % 4);
-                            for (int i = 0; i < stringPadCount; ++i)
+                            var stringPadCount = 4 - (ms.Position % 4);
+                            for (var i = 0; i < stringPadCount; ++i)
                             {
                                 bw.Write('\0');
                             }
@@ -128,8 +128,8 @@ namespace Warcraft.WMO.RootFile.Chunks
                     }
 
                     // Finally, pad until the next alignment
-                    long padCount = 4 - (ms.Position % 4);
-                    for (int i = 0; i < padCount; ++i)
+                    var padCount = 4 - (ms.Position % 4);
+                    for (var i = 0; i < padCount; ++i)
                     {
                         bw.Write('\0');
                     }

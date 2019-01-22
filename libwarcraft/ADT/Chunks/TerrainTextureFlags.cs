@@ -55,9 +55,9 @@ namespace Warcraft.ADT.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    long entryCount = br.BaseStream.Length / 4;
+                    var entryCount = br.BaseStream.Length / 4;
 
-                    for (int i = 0; i < entryCount; ++i)
+                    for (var i = 0; i < entryCount; ++i)
                     {
                         TextureFlags.Add((TerrainTextureFlag)br.ReadUInt32());
                     }

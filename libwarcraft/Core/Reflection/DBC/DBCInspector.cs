@@ -387,7 +387,7 @@ namespace Warcraft.Core.Reflection.DBC
         /// <returns>The absolute size in bytes of the record.</returns>
         public static int GetRecordSize(WarcraftVersion version, Type recordType)
         {
-            int size = 0;
+            var size = 0;
             foreach (var recordProperty in GetVersionRelevantProperties(version, recordType))
             {
                 switch (recordProperty.PropertyType)
@@ -448,7 +448,7 @@ namespace Warcraft.Core.Reflection.DBC
         /// <returns>The number of properties in the type.</returns>
         public static int GetPropertyCount(WarcraftVersion version, Type recordType)
         {
-            int count = 0;
+            var count = 0;
             var properties = GetVersionRelevantProperties(version, recordType);
             foreach (var recordProperty in properties)
             {

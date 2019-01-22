@@ -61,8 +61,8 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    long indexCount = ms.Length / sizeof(ushort);
-                    for (int i = 0; i < indexCount; ++i)
+                    var indexCount = ms.Length / sizeof(ushort);
+                    for (var i = 0; i < indexCount; ++i)
                     {
                         VertexIndices.Add(br.ReadUInt16());
                     }
@@ -83,7 +83,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (ushort vertexIndex in VertexIndices)
+                    foreach (var vertexIndex in VertexIndices)
                     {
                         bw.Write(vertexIndex);
                     }

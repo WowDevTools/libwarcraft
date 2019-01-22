@@ -61,8 +61,8 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int materialCount = inData.Length / ModelMaterial.GetSize();
-                    for (int i = 0; i < materialCount; ++i)
+                    var materialCount = inData.Length / ModelMaterial.GetSize();
+                    for (var i = 0; i < materialCount; ++i)
                     {
                         Materials.Add(new ModelMaterial(br.ReadBytes(ModelMaterial.GetSize())));
                     }

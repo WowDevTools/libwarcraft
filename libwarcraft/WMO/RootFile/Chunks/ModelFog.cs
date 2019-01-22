@@ -61,8 +61,8 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int fogInstanceCount = inData.Length / FogInstance.GetSize();
-                    for (int i = 0; i < fogInstanceCount; ++i)
+                    var fogInstanceCount = inData.Length / FogInstance.GetSize();
+                    for (var i = 0; i < fogInstanceCount; ++i)
                     {
                         FogInstances.Add(new FogInstance(br.ReadBytes(FogInstance.GetSize())));
                     }

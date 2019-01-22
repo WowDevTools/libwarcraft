@@ -73,9 +73,9 @@ namespace Warcraft.MPQ.Tables.Hash
         [PublicAPI, NotNull]
         public HashTableEntry FindEntry([NotNull] string fileName)
         {
-            uint entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint)_entries.Count - 1;
-            uint hashA = MPQCrypt.Hash(fileName, HashType.FilePathA);
-            uint hashB = MPQCrypt.Hash(fileName, HashType.FilePathB);
+            var entryHomeIndex = MPQCrypt.Hash(fileName, HashType.FileHashTableOffset) & (uint)_entries.Count - 1;
+            var hashA = MPQCrypt.Hash(fileName, HashType.FilePathA);
+            var hashB = MPQCrypt.Hash(fileName, HashType.FilePathB);
 
             return FindEntry(hashA, hashB, entryHomeIndex);
         }
@@ -106,7 +106,7 @@ namespace Warcraft.MPQ.Tables.Hash
             // If that file doesn't match (but has existed, or is occupied, let's keep looking down the table.
             HashTableEntry currentEntry;
             HashTableEntry deletionEntry = null;
-            for (int i = (int)entryHomeIndex + 1; i < _entries.Count - 1; ++i)
+            for (var i = (int)entryHomeIndex + 1; i < _entries.Count - 1; ++i)
             {
                 currentEntry = _entries[i];
                 if (!currentEntry.HasFileEverExisted())
@@ -130,7 +130,7 @@ namespace Warcraft.MPQ.Tables.Hash
             }
 
             // Still nothing? Loop around and scan the start of the table as well
-            for (int i = 0; i < entryHomeIndex; ++i)
+            for (var i = 0; i < entryHomeIndex; ++i)
             {
                 currentEntry = _entries[i];
                 if (!currentEntry.HasFileEverExisted())

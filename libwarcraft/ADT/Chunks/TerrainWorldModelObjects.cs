@@ -83,7 +83,7 @@ namespace Warcraft.ADT.Chunks
             {
                 using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (string filename in Filenames)
+                    foreach (var filename in Filenames)
                     {
                         bw.WriteNullTerminatedString(filename);
                     }

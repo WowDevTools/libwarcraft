@@ -69,12 +69,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    for (int y = 0; y < 16; ++y)
+                    for (var y = 0; y < 16; ++y)
                     {
                         if (y % 2 == 0)
                         {
                             // Read a block of 9 high res vertices
-                            for (int x = 0; x < 9; ++x)
+                            for (var x = 0; x < 9; ++x)
                             {
                                 HighResVertexLights.Add(br.ReadRGBA());
                             }
@@ -82,7 +82,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
                         else
                         {
                             // Read a block of 8 low res vertices
-                            for (int x = 0; x < 8; ++x)
+                            for (var x = 0; x < 8; ++x)
                             {
                                 LowResVertexLights.Add(br.ReadRGBA());
                             }

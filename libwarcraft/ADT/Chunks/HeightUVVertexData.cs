@@ -50,13 +50,13 @@ namespace Warcraft.ADT.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int arrayEntryCount = (width + 1) * (height + 1);
-                    for (int i = 0; i < arrayEntryCount; ++i)
+                    var arrayEntryCount = (width + 1) * (height + 1);
+                    for (var i = 0; i < arrayEntryCount; ++i)
                     {
                         Heightmap.Add(br.ReadSingle());
                     }
 
-                    for (int i = 0; i < arrayEntryCount; ++i)
+                    for (var i = 0; i < arrayEntryCount; ++i)
                     {
                         var uvEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
                         UVMap.Add(uvEntry);
@@ -73,7 +73,7 @@ namespace Warcraft.ADT.Chunks
         /// <returns>The byte size of the vertex block.</returns>
         public static int GetBlockSize(byte width, byte height)
         {
-            int arrayEntryCount = (width + 1) * (height + 1);
+            var arrayEntryCount = (width + 1) * (height + 1);
 
             return (sizeof(float) + (sizeof(ushort) * 2)) * arrayEntryCount;
         }

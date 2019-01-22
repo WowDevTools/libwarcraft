@@ -53,10 +53,10 @@ namespace Warcraft.Core.Interpolation
         /// <returns>The interpolated value.</returns>
         public static float InterpolateHermite(float a, float tangentA, float b, float tangentB, float alpha)
         {
-            float inter1 = (-a / 2.0f) + ((3.0f * tangentA) / 2.0f) - ((3.0f * b) / 2.0f) + (tangentB / 2.0f);
-            float inter2 = a - ((5.0f * tangentA) / 2.0f) + (2.0f * b) - (tangentB / 2.0f);
-            float inter3 = (-a / 2.0f) + (b / 2.0f);
-            float inter4 = tangentB;
+            var inter1 = (-a / 2.0f) + ((3.0f * tangentA) / 2.0f) - ((3.0f * b) / 2.0f) + (tangentB / 2.0f);
+            var inter2 = a - ((5.0f * tangentA) / 2.0f) + (2.0f * b) - (tangentB / 2.0f);
+            var inter3 = (-a / 2.0f) + (b / 2.0f);
+            var inter4 = tangentB;
 
             return (float)((inter1 * Math.Pow(alpha, 3)) + (inter2 * Math.Pow(alpha, 2)) + (inter3 * alpha) + inter4);
         }

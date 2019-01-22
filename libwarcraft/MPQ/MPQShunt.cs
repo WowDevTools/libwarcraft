@@ -69,7 +69,7 @@ namespace Warcraft.MPQ
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    string dataSignature = br.ReadChars(4).ToString();
+                    var dataSignature = br.ReadChars(4).ToString();
                     if (dataSignature != Signature)
                     {
                         throw new InvalidDataException("The data did not contain a valid shunt signature.");

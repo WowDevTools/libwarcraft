@@ -61,8 +61,8 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int instanceCount = inData.Length / DoodadInstance.GetSize();
-                    for (int i = 0; i < instanceCount; ++i)
+                    var instanceCount = inData.Length / DoodadInstance.GetSize();
+                    for (var i = 0; i < instanceCount; ++i)
                     {
                         DoodadInstances.Add(new DoodadInstance(br.ReadBytes(DoodadInstance.GetSize())));
                     }

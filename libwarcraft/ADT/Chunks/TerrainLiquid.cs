@@ -62,7 +62,7 @@ namespace Warcraft.ADT.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    for (int i = 0; i < 256; ++i)
+                    for (var i = 0; i < 256; ++i)
                     {
                         LiquidChunks.Add(new TerrainLiquidChunk(br.ReadBytes(TerrainLiquidChunk.GetSize())));
                     }
@@ -70,7 +70,7 @@ namespace Warcraft.ADT.Chunks
                     foreach (var liquidChunk in LiquidChunks)
                     {
                         br.BaseStream.Position = liquidChunk.WaterInstanceOffset;
-                        for (int i = 0; i < liquidChunk.LayerCount; ++i)
+                        for (var i = 0; i < liquidChunk.LayerCount; ++i)
                         {
                             var instanceData = br.ReadBytes(TerrainLiquidInstance.GetSize());
                             liquidChunk.LiquidInstances.Add(new TerrainLiquidInstance(instanceData));

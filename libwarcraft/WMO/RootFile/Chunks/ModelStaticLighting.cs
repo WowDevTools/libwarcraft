@@ -61,7 +61,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int lightCount = inData.Length / StaticLight.GetSize();
+                    var lightCount = inData.Length / StaticLight.GetSize();
                     for (uint i = 0; i < lightCount; ++i)
                     {
                         StaticLights.Add(new StaticLight(br.ReadBytes(StaticLight.GetSize())));

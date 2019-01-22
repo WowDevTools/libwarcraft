@@ -56,7 +56,7 @@ namespace Warcraft.MPQ.Crypto
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    long identifier = br.ReadInt64();
+                    var identifier = br.ReadInt64();
 
                     if (identifier != 0)
                     {

@@ -80,7 +80,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
                     while (decompressedAlphaMap.Count > 4096)
                     {
-                        sbyte headerByte = br.ReadSByte();
+                        var headerByte = br.ReadSByte();
                         int compressionCount = Math.Abs(headerByte);
 
                         // The mode of the compression depends on the sign bit being true or false.
@@ -94,9 +94,9 @@ namespace Warcraft.ADT.Chunks.Subchunks
                         else
                         {
                             // Fill mode
-                            byte fillByte = br.ReadByte();
+                            var fillByte = br.ReadByte();
 
-                            for (int i = 0; i < compressionCount; ++i)
+                            for (var i = 0; i < compressionCount; ++i)
                             {
                                 decompressedAlphaMap.Add(fillByte);
                             }
@@ -111,18 +111,18 @@ namespace Warcraft.ADT.Chunks.Subchunks
         private List<byte> Read4BitAlphaMap(byte[] compressedAlphaMap, MapChunkFlags mapFlags)
         {
             var decompressedAlphaMap = new List<byte>();
-            for (int y = 0; y < 64; y++)
+            for (var y = 0; y < 64; y++)
             {
-                for (int x = 0; x < 32; x++)
+                for (var x = 0; x < 32; x++)
                 {
                     if (mapFlags.HasFlag(MapChunkFlags.DoNotRepairAlphaMaps))
                     {
                         // Fill in normally
-                        byte alpha1 = (byte)(compressedAlphaMap[x + (y * 32)] & 0xf0);
-                        byte alpha2 = (byte)((compressedAlphaMap[x + (y * 32)] << 4) & 0xf0);
+                        var alpha1 = (byte)(compressedAlphaMap[x + (y * 32)] & 0xf0);
+                        var alpha2 = (byte)((compressedAlphaMap[x + (y * 32)] << 4) & 0xf0);
 
-                        byte normalizedAlpha1 = (byte)(alpha1 * 17);
-                        byte normalizedAlpha2 = (byte)(alpha2 * 17);
+                        var normalizedAlpha1 = (byte)(alpha1 * 17);
+                        var normalizedAlpha2 = (byte)(alpha2 * 17);
 
                         decompressedAlphaMap.Add(normalizedAlpha1);
                         decompressedAlphaMap.Add(normalizedAlpha2);
@@ -132,36 +132,36 @@ namespace Warcraft.ADT.Chunks.Subchunks
                         // Bottom row
                         if (y == 63)
                         {
-                            int yminus = y - 1;
+                            var yminus = y - 1;
 
                             // Attempt to repair map on vertical axis
-                            byte alpha1 = (byte)(compressedAlphaMap[x + (yminus * 32)] & 0xf0);
-                            byte alpha2 = (byte)((compressedAlphaMap[x + 1 + (yminus * 32)] << 4) & 0xf0);
+                            var alpha1 = (byte)(compressedAlphaMap[x + (yminus * 32)] & 0xf0);
+                            var alpha2 = (byte)((compressedAlphaMap[x + 1 + (yminus * 32)] << 4) & 0xf0);
 
-                            byte normalizedAlpha1 = (byte)(alpha1 * 17);
-                            byte normalizedAlpha2 = (byte)(alpha2 * 17);
+                            var normalizedAlpha1 = (byte)(alpha1 * 17);
+                            var normalizedAlpha2 = (byte)(alpha2 * 17);
 
                             decompressedAlphaMap.Add(normalizedAlpha1);
                             decompressedAlphaMap.Add(normalizedAlpha2);
                         }
                         else if (x == 31)
                         {
-                            int xminus = x - 1;
+                            var xminus = x - 1;
 
                             // Attempt to repair map on horizontal axis
-                            byte alpha = (byte)(compressedAlphaMap[xminus + (y * 32)] << 4 & 0xf0);
-                            byte normalizedAlpha = (byte)(alpha * 17);
+                            var alpha = (byte)(compressedAlphaMap[xminus + (y * 32)] << 4 & 0xf0);
+                            var normalizedAlpha = (byte)(alpha * 17);
 
                             decompressedAlphaMap.Add(normalizedAlpha);
                         }
                         else
                         {
                             // Fill in normally
-                            byte alpha1 = (byte)(compressedAlphaMap[x + (y * 32)] & 0xf0);
-                            byte alpha2 = (byte)((compressedAlphaMap[x + (y * 32)] << 4) & 0xf0);
+                            var alpha1 = (byte)(compressedAlphaMap[x + (y * 32)] & 0xf0);
+                            var alpha2 = (byte)((compressedAlphaMap[x + (y * 32)] << 4) & 0xf0);
 
-                            byte normalizedAlpha1 = (byte)(alpha1 * 17);
-                            byte normalizedAlpha2 = (byte)(alpha2 * 17);
+                            var normalizedAlpha1 = (byte)(alpha1 * 17);
+                            var normalizedAlpha2 = (byte)(alpha2 * 17);
 
                             decompressedAlphaMap.Add(normalizedAlpha1);
                             decompressedAlphaMap.Add(normalizedAlpha2);

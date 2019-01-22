@@ -44,9 +44,9 @@ namespace Warcraft.ADT.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int arrayEntryCount = (width + 1) * (height + 1);
+                    var arrayEntryCount = (width + 1) * (height + 1);
 
-                    for (int i = 0; i < arrayEntryCount; ++i)
+                    for (var i = 0; i < arrayEntryCount; ++i)
                     {
                         Depthmap.Add(br.ReadByte());
                     }
@@ -62,7 +62,7 @@ namespace Warcraft.ADT.Chunks
         /// <returns>The byte size of the vertex block.</returns>
         public static int GetBlockSize(byte width, byte height)
         {
-            int arrayEntryCount = (width + 1) * (height + 1);
+            var arrayEntryCount = (width + 1) * (height + 1);
 
             return sizeof(byte) * arrayEntryCount;
         }

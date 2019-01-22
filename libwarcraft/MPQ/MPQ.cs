@@ -148,7 +148,7 @@ namespace Warcraft.MPQ
             _archiveReader.BaseStream.Position = (long)Header.GetExtendedBlockTableOffset();
             var extendedTable = new List<ushort>();
 
-            for (int i = 0; i < Header.GetBlockTableEntryCount(); ++i)
+            for (var i = 0; i < Header.GetBlockTableEntryCount(); ++i)
             {
                 extendedTable.Add(_archiveReader.ReadUInt16());
             }
@@ -163,10 +163,10 @@ namespace Warcraft.MPQ
         /// <returns>The header size.</returns>
         private uint PeekHeaderSize()
         {
-            long originalPosition = _archiveReader.BaseStream.Position;
+            var originalPosition = _archiveReader.BaseStream.Position;
 
             _archiveReader.BaseStream.Position = 4;
-            uint headerSize = _archiveReader.ReadUInt32();
+            var headerSize = _archiveReader.ReadUInt32();
             _archiveReader.BaseStream.Position = originalPosition;
 
             return headerSize;
@@ -393,7 +393,7 @@ namespace Warcraft.MPQ
             long adjustedBlockOffset;
             if (Header.GetFormat() == MPQFormat.ExtendedV1 && RequiresExtendedFormat())
             {
-                ushort upperOffsetBits = ExtendedBlockTable[(int)fileHashEntry.GetBlockEntryIndex()];
+                var upperOffsetBits = ExtendedBlockTable[(int)fileHashEntry.GetBlockEntryIndex()];
                 adjustedBlockOffset = (long)fileBlockEntry.GetExtendedBlockOffset(upperOffsetBits);
             }
             else
@@ -404,7 +404,7 @@ namespace Warcraft.MPQ
             _archiveReader.BaseStream.Position = adjustedBlockOffset;
 
             // Calculate the decryption key if necessary
-            uint fileKey = MPQCrypt.CreateFileEncryptionKey
+            var fileKey = MPQCrypt.CreateFileEncryptionKey
             (
                 filePath,
                 fileBlockEntry.ShouldEncryptionKeyBeAdjusted(),
@@ -448,12 +448,12 @@ namespace Warcraft.MPQ
 
             // Read all of the raw file sectors.
             var compressedSectors = new List<byte[]>();
-            for (int i = 0; i < sectorOffsets.Count - 1; ++i)
+            for (var i = 0; i < sectorOffsets.Count - 1; ++i)
             {
-                long sectorStartPosition = adjustedBlockOffset + sectorOffsets[i];
+                var sectorStartPosition = adjustedBlockOffset + sectorOffsets[i];
                 _archiveReader.BaseStream.Position = sectorStartPosition;
 
-                uint sectorLength = sectorOffsets[i + 1] - sectorOffsets[i];
+                var sectorLength = sectorOffsets[i + 1] - sectorOffsets[i];
                 compressedSectors.Add(_archiveReader.ReadBytes((int)sectorLength));
             }
 
@@ -526,8 +526,8 @@ namespace Warcraft.MPQ
                 // Decompress the sector if necessary
                 if (pendingSector.Length < GetMaxSectorSize())
                 {
-                    int currentFileSize = CountBytesInSectors(decompressedSectors);
-                    bool canSectorCompleteFile = currentFileSize + pendingSector.Length == fileBlockEntry.GetFileSize();
+                    var currentFileSize = CountBytesInSectors(decompressedSectors);
+                    var canSectorCompleteFile = currentFileSize + pendingSector.Length == fileBlockEntry.GetFileSize();
 
                     if (!canSectorCompleteFile && currentFileSize != fileBlockEntry.GetFileSize())
                     {
@@ -618,13 +618,13 @@ namespace Warcraft.MPQ
         )
         {
             // This file uses sectoring, but is not compressed. It may be encrypted.
-            uint finalSectorSize = fileBlockEntry.GetFileSize() % GetMaxSectorSize();
+            var finalSectorSize = fileBlockEntry.GetFileSize() % GetMaxSectorSize();
 
             // All the even sectors you can fit into the file size
-            uint sectorCount = (fileBlockEntry.GetFileSize() - finalSectorSize) / GetMaxSectorSize();
+            var sectorCount = (fileBlockEntry.GetFileSize() - finalSectorSize) / GetMaxSectorSize();
 
             var rawSectors = new List<byte[]>();
-            for (int i = 0; i < sectorCount; ++i)
+            for (var i = 0; i < sectorCount; ++i)
             {
                 // Read a normal sector (usually 4096 bytes)
                 rawSectors.Add(_archiveReader.ReadBytes((int)GetMaxSectorSize()));
@@ -712,7 +712,7 @@ namespace Warcraft.MPQ
             var finalBlock = new byte[finalSize];
 
             // Pull out your sowing kit, it's stitching time!
-            int writtenBytes = 0;
+            var writtenBytes = 0;
             foreach (var sector in sectors)
             {
                 Buffer.BlockCopy(sector, 0, finalBlock, writtenBytes, sector.Length);

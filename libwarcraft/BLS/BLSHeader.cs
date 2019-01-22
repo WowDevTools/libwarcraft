@@ -65,7 +65,7 @@ namespace Warcraft.BLS
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    string dataSignature = br.ReadBinarySignature();
+                    var dataSignature = br.ReadBinarySignature();
                     if (dataSignature != VertexShaderSignature && dataSignature != FragmentShaderSignature)
                     {
                         throw new FileLoadException("BLS data must begin with a valid shader signature.");

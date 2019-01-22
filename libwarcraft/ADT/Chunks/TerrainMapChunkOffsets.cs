@@ -62,9 +62,9 @@ namespace Warcraft.ADT.Chunks
                 using (var br = new BinaryReader(ms))
                 {
                     // read size, n of entries is size / 16
-                    long nEntries = br.BaseStream.Length / 16;
+                    var nEntries = br.BaseStream.Length / 16;
 
-                    for (int i = 0; i < nEntries; ++i)
+                    for (var i = 0; i < nEntries; ++i)
                     {
                         var entry = new MapChunkOffsetEntry
                         {

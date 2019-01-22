@@ -98,7 +98,7 @@ namespace Warcraft.WDT.Chunks
                 throw new ArgumentOutOfRangeException(nameof(inTileY), "The tile coordinate may not be more than 63 in either dimension.");
             }
 
-            int tileIndex = (int)((inTileY * 64) + inTileX);
+            var tileIndex = (int)((inTileY * 64) + inTileX);
             return Entries[tileIndex];
         }
 

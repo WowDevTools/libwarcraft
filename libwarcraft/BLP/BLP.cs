@@ -97,14 +97,14 @@ namespace Warcraft.BLP
                     }
                     else if (Header.CompressionType == TextureCompressionType.Palettized)
                     {
-                        for (int i = 0; i < 256; ++i)
+                        for (var i = 0; i < 256; ++i)
                         {
-                            byte b = br.ReadByte();
-                            byte g = br.ReadByte();
-                            byte r = br.ReadByte();
+                            var b = br.ReadByte();
+                            var g = br.ReadByte();
+                            var r = br.ReadByte();
 
                             // The alpha in the palette is not used, but is stored for the sake of completion.
-                            byte a = br.ReadByte();
+                            var a = br.ReadByte();
 
                             var paletteColor = new Rgba32(r, g, b, a);
                             _palette.Add(paletteColor);
@@ -113,7 +113,7 @@ namespace Warcraft.BLP
                     else
                     {
                         // Fill up an empty palette - the palette is always present, but we'll be going after offsets anyway
-                        for (int i = 0; i < 256; ++i)
+                        for (var i = 0; i < 256; ++i)
                         {
                             var paletteColor = default(Rgba32);
                             _palette.Add(paletteColor);
@@ -121,7 +121,7 @@ namespace Warcraft.BLP
                     }
 
                     // Read the raw mipmap data
-                    for (int i = 0; i < Header.GetNumMipMaps(); ++i)
+                    for (var i = 0; i < Header.GetNumMipMaps(); ++i)
                     {
                         br.BaseStream.Position = Header.MipMapOffsets[i];
                         _rawMipMaps.Add(br.ReadBytes((int)Header.MipMapSizes[i]));
@@ -138,8 +138,8 @@ namespace Warcraft.BLP
         /// <exception cref="FileLoadException">If no format was detected, a FileLoadException will be thrown.</exception>
         private static BLPFormat PeekFormat(BinaryReader br)
         {
-            long startPosition = br.BaseStream.Position;
-            string dataSignature = new string(br.ReadChars(4));
+            var startPosition = br.BaseStream.Position;
+            var dataSignature = new string(br.ReadChars(4));
 
             BLPFormat format;
             if (!Enum.TryParse(dataSignature, out format))
@@ -174,9 +174,9 @@ namespace Warcraft.BLP
                 if (image.HasAlpha())
                 {
                     var alphaLevels = new List<byte>();
-                    for (int y = 0; y < image.Height; ++y)
+                    for (var y = 0; y < image.Height; ++y)
                     {
-                        for (int x = 0; x < image.Width; ++x)
+                        for (var x = 0; x < image.Width; ++x)
                         {
                             var pixel = image[x, y];
                             if (!alphaLevels.Contains(pixel.A))
@@ -243,10 +243,10 @@ namespace Warcraft.BLP
             _rawMipMaps = CompressImage(image);
 
             // Calculate the offsets and sizes
-            uint mipOffset = (uint)(Header.GetSize() + (_palette.Count * 4));
+            var mipOffset = (uint)(Header.GetSize() + (_palette.Count * 4));
             foreach (var rawMipMap in _rawMipMaps)
             {
-                uint mipSize = (uint)rawMipMap.Length;
+                var mipSize = (uint)rawMipMap.Length;
 
                 Header.MipMapOffsets.Add(mipOffset);
                 Header.MipMapSizes.Add(mipSize);
@@ -284,8 +284,8 @@ namespace Warcraft.BLP
         /// <param name="mipLevel">Mip level.</param>
         public Resolution GetMipLevelResolution(uint mipLevel)
         {
-            uint targetXRes = GetLevelAdjustedResolutionValue(GetResolution().X, mipLevel);
-            uint targetYRes = GetLevelAdjustedResolutionValue(GetResolution().Y, mipLevel);
+            var targetXRes = GetLevelAdjustedResolutionValue(GetResolution().X, mipLevel);
+            var targetYRes = GetLevelAdjustedResolutionValue(GetResolution().Y, mipLevel);
 
             return new Resolution(targetXRes, targetYRes);
         }
@@ -361,8 +361,8 @@ namespace Warcraft.BLP
             }
 
             Image<Rgba32> map = null;
-            uint targetXRes = GetLevelAdjustedResolutionValue(GetResolution().X, mipLevel);
-            uint targetYRes = GetLevelAdjustedResolutionValue(GetResolution().Y, mipLevel);
+            var targetXRes = GetLevelAdjustedResolutionValue(GetResolution().X, mipLevel);
+            var targetYRes = GetLevelAdjustedResolutionValue(GetResolution().Y, mipLevel);
 
             if (targetXRes <= 0 || targetYRes <= 0)
             {
@@ -383,11 +383,11 @@ namespace Warcraft.BLP
                         using (var br = new BinaryReader(ms))
                         {
                             // Read colour information
-                            for (int y = 0; y < targetYRes; ++y)
+                            for (var y = 0; y < targetYRes; ++y)
                             {
-                                for (int x = 0; x < targetXRes; ++x)
+                                for (var x = 0; x < targetXRes; ++x)
                                 {
-                                    byte colorIndex = br.ReadByte();
+                                    var colorIndex = br.ReadByte();
                                     var paletteColor = _palette[colorIndex];
                                     map[x, y] = paletteColor;
                                 }
@@ -399,22 +399,22 @@ namespace Warcraft.BLP
                             {
                                 if (GetAlphaBitDepth() == 1)
                                 {
-                                    int alphaByteCount = (int)Math.Ceiling((double)(targetXRes * targetYRes) / 8);
+                                    var alphaByteCount = (int)Math.Ceiling((double)(targetXRes * targetYRes) / 8);
                                     alphaValues = Decode1BitAlpha(br.ReadBytes(alphaByteCount));
                                 }
                                 else if (GetAlphaBitDepth() == 4)
                                 {
-                                    int alphaByteCount = (int)Math.Ceiling((double)(targetXRes * targetYRes) / 2);
+                                    var alphaByteCount = (int)Math.Ceiling((double)(targetXRes * targetYRes) / 2);
                                     alphaValues = Decode4BitAlpha(br.ReadBytes(alphaByteCount));
                                 }
                                 else if (GetAlphaBitDepth() == 8)
                                 {
                                     // Directly read the alpha values
-                                    for (int y = 0; y < targetYRes; ++y)
+                                    for (var y = 0; y < targetYRes; ++y)
                                     {
-                                        for (int x = 0; x < targetXRes; ++x)
+                                        for (var x = 0; x < targetXRes; ++x)
                                         {
-                                            byte alphaValue = br.ReadByte();
+                                            var alphaValue = br.ReadByte();
                                             alphaValues.Add(alphaValue);
                                         }
                                     }
@@ -423,9 +423,9 @@ namespace Warcraft.BLP
                             else
                             {
                                 // The map is fully opaque
-                                for (int y = 0; y < targetYRes; ++y)
+                                for (var y = 0; y < targetYRes; ++y)
                                 {
-                                    for (int x = 0; x < targetXRes; ++x)
+                                    for (var x = 0; x < targetXRes; ++x)
                                     {
                                         alphaValues.Add(255);
                                     }
@@ -433,12 +433,12 @@ namespace Warcraft.BLP
                             }
 
                             // Build the final map
-                            for (int y = 0; y < targetYRes; ++y)
+                            for (var y = 0; y < targetYRes; ++y)
                             {
-                                for (int x = 0; x < targetXRes; ++x)
+                                for (var x = 0; x < targetXRes; ++x)
                                 {
-                                    int valueIndex = (int)(x + (targetXRes * y));
-                                    byte alphaValue = alphaValues[valueIndex];
+                                    var valueIndex = (int)(x + (targetXRes * y));
+                                    var alphaValue = alphaValues[valueIndex];
 
                                     var pixelColor = map[x, y];
                                     var finalPixel = new Rgba32(pixelColor.R, pixelColor.G, pixelColor.B, alphaValue);
@@ -476,14 +476,14 @@ namespace Warcraft.BLP
                     {
                         using (var br = new BinaryReader(ms))
                         {
-                            for (int y = 0; y < targetYRes; ++y)
+                            for (var y = 0; y < targetYRes; ++y)
                             {
-                                for (int x = 0; x < targetXRes; ++x)
+                                for (var x = 0; x < targetXRes; ++x)
                                 {
-                                    byte a = br.ReadByte();
-                                    byte r = br.ReadByte();
-                                    byte g = br.ReadByte();
-                                    byte b = br.ReadByte();
+                                    var a = br.ReadByte();
+                                    var r = br.ReadByte();
+                                    var g = br.ReadByte();
+                                    var b = br.ReadByte();
 
                                     var pixelColor = new Rgba32(r, g, b, a);
                                     map[x, y] = pixelColor;
@@ -556,8 +556,8 @@ namespace Warcraft.BLP
         /// <param name="mipLevel">Mip level.</param>
         private byte[] CompressImage(Image<Rgba32> inImage, uint mipLevel)
         {
-            uint targetXRes = GetLevelAdjustedResolutionValue(GetResolution().X, mipLevel);
-            uint targetYRes = GetLevelAdjustedResolutionValue(GetResolution().Y, mipLevel);
+            var targetXRes = GetLevelAdjustedResolutionValue(GetResolution().X, mipLevel);
+            var targetYRes = GetLevelAdjustedResolutionValue(GetResolution().Y, mipLevel);
 
             var colourData = new List<byte>();
             var alphaData = new List<byte>();
@@ -566,12 +566,12 @@ namespace Warcraft.BLP
                 if (Header.CompressionType == TextureCompressionType.Palettized)
                 {
                     // Generate the colour data
-                    for (int y = 0; y < targetYRes; ++y)
+                    for (var y = 0; y < targetYRes; ++y)
                     {
-                        for (int x = 0; x < targetXRes; ++x)
+                        for (var x = 0; x < targetXRes; ++x)
                         {
                             var nearestColor = FindClosestMatchingColor(resizedImage[x, y]);
-                            byte paletteIndex = (byte)_palette.IndexOf(nearestColor);
+                            var paletteIndex = (byte)_palette.IndexOf(nearestColor);
 
                             colourData.Add(paletteIndex);
                         }
@@ -583,16 +583,16 @@ namespace Warcraft.BLP
                         if (GetAlphaBitDepth() == 1)
                         {
                             // We're going to be attempting to map 8 pixels on each X iteration
-                            for (int y = 0; y < targetYRes; ++y)
+                            for (var y = 0; y < targetYRes; ++y)
                             {
-                                for (int x = 0; x < targetXRes; x += 8)
+                                for (var x = 0; x < targetXRes; x += 8)
                                 {
                                     // The alpha value is stored per-bit in the byte (8 alpha values per byte)
                                     byte alphaByte = 0;
 
                                     for (byte i = 0; (i < 8) && (i < targetXRes); ++i)
                                     {
-                                        byte pixelAlpha = resizedImage[x + i, y].A;
+                                        var pixelAlpha = resizedImage[x + i, y].A;
                                         if (pixelAlpha > 0)
                                         {
                                             pixelAlpha = 1;
@@ -610,9 +610,9 @@ namespace Warcraft.BLP
                         else if (GetAlphaBitDepth() == 4)
                         {
                             // We're going to be attempting to map 2 pixels on each X iteration
-                            for (int y = 0; y < targetYRes; ++y)
+                            for (var y = 0; y < targetYRes; ++y)
                             {
-                                for (int x = 0; x < targetXRes; x += 2)
+                                for (var x = 0; x < targetXRes; x += 2)
                                 {
                                     // The alpha value is stored as half a byte (2 alpha values per byte)
                                     // Extract these two values and map them to a byte size (4 bits can hold 0 - 15
@@ -622,7 +622,7 @@ namespace Warcraft.BLP
                                     for (byte i = 0; (i < 2) && (i < targetXRes); ++i)
                                     {
                                         // Get the value from the image
-                                        byte pixelAlpha = resizedImage[x + i, y].A;
+                                        var pixelAlpha = resizedImage[x + i, y].A;
 
                                         // Map the value to a 4-bit integer
                                         pixelAlpha = (byte)ExtendedMath.Map(pixelAlpha, 0, 255, 0, 15);
@@ -640,12 +640,12 @@ namespace Warcraft.BLP
                         }
                         else if (GetAlphaBitDepth() == 8)
                         {
-                            for (int y = 0; y < targetYRes; ++y)
+                            for (var y = 0; y < targetYRes; ++y)
                             {
-                                for (int x = 0; x < targetXRes; ++x)
+                                for (var x = 0; x < targetXRes; ++x)
                                 {
                                     // The alpha value is stored as a whole byte
-                                    byte alphaValue = resizedImage[x, y].A;
+                                    var alphaValue = resizedImage[x, y].A;
                                     alphaData.Add(alphaValue);
                                 }
                             }
@@ -654,9 +654,9 @@ namespace Warcraft.BLP
                     else
                     {
                         // The map is fully opaque
-                        for (int y = 0; y < targetYRes; ++y)
+                        for (var y = 0; y < targetYRes; ++y)
                         {
-                            for (int x = 0; x < targetXRes; ++x)
+                            for (var x = 0; x < targetXRes; ++x)
                             {
                                 alphaData.Add(255);
                             }
@@ -669,9 +669,9 @@ namespace Warcraft.BLP
                     {
                         using (var bw = new BinaryWriter(rgbaStream))
                         {
-                            for (int y = 0; y < targetYRes; ++y)
+                            for (var y = 0; y < targetYRes; ++y)
                             {
-                                for (int x = 0; x < targetXRes; ++x)
+                                for (var x = 0; x < targetXRes; ++x)
                                 {
                                     bw.Write(resizedImage[x, y].R);
                                     bw.Write(resizedImage[x, y].G);
@@ -715,9 +715,9 @@ namespace Warcraft.BLP
                     {
                         using (var bw = new BinaryWriter(argbStream))
                         {
-                            for (int y = 0; y < targetYRes; ++y)
+                            for (var y = 0; y < targetYRes; ++y)
                             {
-                                for (int x = 0; x < targetXRes; ++x)
+                                for (var x = 0; x < targetXRes; ++x)
                                 {
                                     bw.Write(resizedImage[x, y].A);
                                     bw.Write(resizedImage[x, y].R);
@@ -787,14 +787,14 @@ namespace Warcraft.BLP
                 return inColour;
             }
 
-            double colourDistance = 250000.0;
+            var colourDistance = 250000.0;
             foreach (var paletteColour in _palette)
             {
-                double redTest = Math.Pow(Convert.ToDouble(paletteColour.R) - inColour.R, 2.0);
-                double greenTest = Math.Pow(Convert.ToDouble(paletteColour.G) - inColour.G, 2.0);
-                double blueTest = Math.Pow(Convert.ToDouble(paletteColour.B) - inColour.B, 2.0);
+                var redTest = Math.Pow(Convert.ToDouble(paletteColour.R) - inColour.R, 2.0);
+                var greenTest = Math.Pow(Convert.ToDouble(paletteColour.G) - inColour.G, 2.0);
+                var blueTest = Math.Pow(Convert.ToDouble(paletteColour.B) - inColour.B, 2.0);
 
-                double distanceResult = Math.Sqrt(blueTest + greenTest + redTest);
+                var distanceResult = Math.Sqrt(blueTest + greenTest + redTest);
 
                 if (distanceResult <= 0.0001)
                 {
@@ -823,12 +823,12 @@ namespace Warcraft.BLP
         {
             var alphaValues = new List<byte>();
 
-            foreach (byte dataByte in inData)
+            foreach (var dataByte in inData)
             {
                 // The alpha value is stored per-bit in the byte (8 alpha values per byte)
                 for (byte i = 0; i < 8; ++i)
                 {
-                    byte alphaBit = (byte)ExtendedMath.Map((dataByte >> (7 - i)) & 0x01, 0, 1, 0, 255);
+                    var alphaBit = (byte)ExtendedMath.Map((dataByte >> (7 - i)) & 0x01, 0, 1, 0, 255);
 
                     // At this point, alphaBit will be either 0 or 1. Map this to 0 or 255.
                     if (alphaBit > 0)
@@ -858,8 +858,8 @@ namespace Warcraft.BLP
             {
                 // The alpha value is stored as half a byte (2 alpha values per byte)
                 // Extract these two values and map them to a byte size (4 bits can hold 0 - 15 alpha)
-                byte alphaValue1 = (byte)ExtendedMath.Map(alphaByte >> 4, 0, 15, 0, 255);
-                byte alphaValue2 = (byte)ExtendedMath.Map(alphaByte & 0x0F, 0, 15, 0, 255);
+                var alphaValue1 = (byte)ExtendedMath.Map(alphaByte >> 4, 0, 15, 0, 255);
+                var alphaValue2 = (byte)ExtendedMath.Map(alphaByte & 0x0F, 0, 15, 0, 255);
                 alphaValues.Add(alphaValue1);
                 alphaValues.Add(alphaValue2);
             }
@@ -876,19 +876,19 @@ namespace Warcraft.BLP
         private List<byte> Encode1BitAlpha(Image<Rgba32> inMap)
         {
             var alphaValues = new List<byte>();
-            for (int y = 0; y < inMap.Height; ++y)
+            for (var y = 0; y < inMap.Height; ++y)
             {
-                for (int x = 0; x < inMap.Width; ++x)
+                for (var x = 0; x < inMap.Width; ++x)
                 {
                     alphaValues.Add(inMap[x, y].A);
                 }
             }
 
             var packedAlphaValues = new List<byte>();
-            for (int i = 0; i < alphaValues.Count; i += 8)
+            for (var i = 0; i < alphaValues.Count; i += 8)
             {
-                byte packedAlphaValue = default(byte);
-                for (int j = 0; j < 8; ++j)
+                var packedAlphaValue = default(byte);
+                for (var j = 0; j < 8; ++j)
                 {
                     byte alphaValue;
                     if ((i + j) < alphaValues.Count)
@@ -900,7 +900,7 @@ namespace Warcraft.BLP
                         alphaValue = 0;
                     }
 
-                    byte alphaMask = (byte)(1 << j);
+                    var alphaMask = (byte)(1 << j);
                     if (alphaValue > 0)
                     {
                         // Set the bit to 1 (fully opaque)
@@ -928,19 +928,19 @@ namespace Warcraft.BLP
         private List<byte> Encode4BitAlpha(Image<Rgba32> inMap)
         {
             var alphaValues = new List<byte>();
-            for (int y = 0; y < inMap.Height; ++y)
+            for (var y = 0; y < inMap.Height; ++y)
             {
-                for (int x = 0; x < inMap.Width; ++x)
+                for (var x = 0; x < inMap.Width; ++x)
                 {
                     alphaValues.Add(inMap[x, y].A);
                 }
             }
 
             var packedAlphaValues = new List<byte>();
-            for (int i = 0; i < alphaValues.Count; i += 2)
+            for (var i = 0; i < alphaValues.Count; i += 2)
             {
-                byte packedAlphaValue = default(byte);
-                for (int j = 0; j < 2; ++j)
+                var packedAlphaValue = default(byte);
+                for (var j = 0; j < 2; ++j)
                 {
                     byte alphaValue;
                     if ((i + j) < alphaValues.Count)
@@ -977,8 +977,8 @@ namespace Warcraft.BLP
         /// <returns>The number of reasonable mip map levels.</returns>
         private uint GetNumReasonableMipMapLevels()
         {
-            uint smallestXRes = GetResolution().X;
-            uint smallestYRes = GetResolution().Y;
+            var smallestXRes = GetResolution().X;
+            var smallestYRes = GetResolution().Y;
 
             uint mipLevels = 0;
             while (smallestXRes > 1 && smallestYRes > 1)
@@ -1006,7 +1006,7 @@ namespace Warcraft.BLP
             {
                 var pixels = quantizedImage.GetPixelSpan();
 
-                for (int i = 0; i < pixels.Length; ++i)
+                for (var i = 0; i < pixels.Length; ++i)
                 {
                     var pixelColour = pixels[i];
                     if (knownColours.Contains(pixelColour))
@@ -1048,7 +1048,7 @@ namespace Warcraft.BLP
             var mipmapBytes = new List<byte>();
             foreach (var mipmap in _rawMipMaps)
             {
-                foreach (byte mipbyte in mipmap)
+                foreach (var mipbyte in mipmap)
                 {
                     mipmapBytes.Add(mipbyte);
                 }
@@ -1085,8 +1085,8 @@ namespace Warcraft.BLP
         public Image<Rgba32> GetBestMipMap(uint maxResolution)
         {
             // Calulcate the best mip level
-            double xMip = Math.Ceiling((double)GetResolution().X / maxResolution) - 1;
-            double yMip = Math.Ceiling((double)GetResolution().Y / maxResolution) - 1;
+            var xMip = Math.Ceiling((double)GetResolution().X / maxResolution) - 1;
+            var yMip = Math.Ceiling((double)GetResolution().Y / maxResolution) - 1;
 
             if (xMip > yMip)
             {

@@ -98,9 +98,9 @@ namespace Warcraft.Core.Structures
         /// <returns>The cross product of the two vectors.</returns>
         public static Vector3s Cross(Vector3s start, Vector3s end)
         {
-            short x = (short)((start.Y * end.Z) - (end.Y * start.Z));
-            short y = (short)(((start.X * end.Z) - (end.X * start.Z)) * -1);
-            short z = (short)((start.X * end.Y) - (end.X * start.Y));
+            var x = (short)((start.Y * end.Z) - (end.Y * start.Z));
+            var y = (short)(((start.X * end.Z) - (end.X * start.Z)) * -1);
+            var z = (short)((start.X * end.Y) - (end.X * start.Y));
 
             var rtnvector = new Vector3s(x, y, z);
             return rtnvector;

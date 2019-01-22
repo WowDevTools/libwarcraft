@@ -84,12 +84,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    for (int i = 0; i < gameModelObjectCount; ++i)
+                    for (var i = 0; i < gameModelObjectCount; ++i)
                     {
                         GameModelObjectReferences.Add(br.ReadUInt32());
                     }
 
-                    for (int i = 0; i < worldModelObjectCount; ++i)
+                    for (var i = 0; i < worldModelObjectCount; ++i)
                     {
                         WorldModelObjectReferences.Add(br.ReadUInt32());
                     }

@@ -106,7 +106,7 @@ namespace Warcraft.MPQ
             {
                 using (var br = new BinaryReader(dataStream))
                 {
-                    string dataSignature = new string(br.ReadChars(4));
+                    var dataSignature = new string(br.ReadChars(4));
                     if (dataSignature != ArchiveSignature)
                     {
                         throw new FileLoadException("The provided file was not an MPQ file.");
@@ -286,9 +286,9 @@ namespace Warcraft.MPQ
 
             // Calculate the size from the start of the header to the end of the
             // hash table, block table or extended block table (whichever is furthest away)
-            ulong hashTableOffset = GetHashTableOffset();
-            ulong blockTableOffset = GetBlockTableOffset();
-            ulong extendedBlockTableOffset = GetExtendedBlockTableOffset();
+            var hashTableOffset = GetHashTableOffset();
+            var blockTableOffset = GetBlockTableOffset();
+            var extendedBlockTableOffset = GetExtendedBlockTableOffset();
 
             ulong furthestOffset = 0;
             ulong archiveSize = 0;
@@ -339,9 +339,9 @@ namespace Warcraft.MPQ
         public static ulong MergeHighBits(uint baseBits, ushort highBits)
         {
             ulong lower32Bits = baseBits;
-            ulong high16Bits = (ulong)highBits << 32 & 0x0000FFFF00000000;
+            var high16Bits = (ulong)highBits << 32 & 0x0000FFFF00000000;
 
-            ulong mergedBits = (high16Bits + lower32Bits) & 0x0000FFFFFFFFFFFF;
+            var mergedBits = (high16Bits + lower32Bits) & 0x0000FFFFFFFFFFFF;
             return mergedBits;
         }
 
@@ -356,7 +356,7 @@ namespace Warcraft.MPQ
                 using (var bw = new BinaryWriter(ms))
                 {
                     // Write the archive signature
-                    foreach (char c in ArchiveSignature)
+                    foreach (var c in ArchiveSignature)
                     {
                         bw.Write(c);
                     }

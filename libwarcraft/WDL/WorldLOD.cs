@@ -83,7 +83,7 @@ namespace Warcraft.WDL
                 using (var br = new BinaryReader(ms))
                 {
                     // Set up the two area lists with default values
-                    for (int i = 0; i < 4096; ++i)
+                    for (var i = 0; i < 4096; ++i)
                     {
                         MapAreas.Add(null);
                         MapAreaHoles.Add(null);
@@ -109,12 +109,12 @@ namespace Warcraft.WDL
                     MapAreaOffsets = br.ReadIFFChunk<WorldLODMapAreaOffsets>();
 
                     // Read the map areas and their holes
-                    for (int y = 0; y < 64; ++y)
+                    for (var y = 0; y < 64; ++y)
                     {
-                        for (int x = 0; x < 64; ++x)
+                        for (var x = 0; x < 64; ++x)
                         {
-                            int mapAreaOffsetIndex = (y * 64) + x;
-                            uint mapAreaOffset = MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex];
+                            var mapAreaOffsetIndex = (y * 64) + x;
+                            var mapAreaOffset = MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex];
 
                             if (mapAreaOffset > 0)
                             {
@@ -202,17 +202,17 @@ namespace Warcraft.WDL
 
                     // Populate the offset table
                     long writtenMapAreaSize = 0;
-                    for (int y = 0; y < 64; ++y)
+                    for (var y = 0; y < 64; ++y)
                     {
-                        for (int x = 0; x < 64; ++x)
+                        for (var x = 0; x < 64; ++x)
                         {
-                            int mapAreaOffsetIndex = (y * 64) + x;
+                            var mapAreaOffsetIndex = (y * 64) + x;
                             const uint offsetChunkHeaderSize = 8;
 
                             if (MapAreas[mapAreaOffsetIndex] != null)
                             {
                                 // This tile is populated, so we update the offset table
-                                uint newOffset = (uint)(ms.Position + offsetChunkHeaderSize + WorldLODMapAreaOffsets.GetSize() + writtenMapAreaSize);
+                                var newOffset = (uint)(ms.Position + offsetChunkHeaderSize + WorldLODMapAreaOffsets.GetSize() + writtenMapAreaSize);
                                 MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex] = newOffset;
 
                                 writtenMapAreaSize += WorldLODMapArea.GetSize() + offsetChunkHeaderSize;
@@ -229,11 +229,11 @@ namespace Warcraft.WDL
                     bw.WriteIFFChunk(MapAreaOffsets);
 
                     // Write the valid entries
-                    for (int y = 0; y < 64; ++y)
+                    for (var y = 0; y < 64; ++y)
                     {
-                        for (int x = 0; x < 64; ++x)
+                        for (var x = 0; x < 64; ++x)
                         {
-                            int mapAreaOffsetIndex = (y * 64) + x;
+                            var mapAreaOffsetIndex = (y * 64) + x;
 
                             if (MapAreas[mapAreaOffsetIndex] != null)
                             {

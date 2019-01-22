@@ -152,7 +152,7 @@ namespace Warcraft.MPQ.Tables.Block
         [PublicAPI]
         public bool IsCompressed()
         {
-            bool isCompressedInAnyWay = Flags.HasFlag(BlockFlags.IsCompressed) ||
+            var isCompressedInAnyWay = Flags.HasFlag(BlockFlags.IsCompressed) ||
                                         Flags.HasFlag(BlockFlags.IsCompressedMultiple) ||
                                         Flags.HasFlag(BlockFlags.IsImploded);
 

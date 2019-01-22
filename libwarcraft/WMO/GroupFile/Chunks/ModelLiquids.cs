@@ -108,14 +108,14 @@ namespace Warcraft.WMO.GroupFile.Chunks
                     Location = br.ReadVector3();
                     MaterialIndex = br.ReadUInt16();
 
-                    uint vertexCount = XVertexCount * YVertexCount;
-                    for (int i = 0; i < vertexCount; ++i)
+                    var vertexCount = XVertexCount * YVertexCount;
+                    for (var i = 0; i < vertexCount; ++i)
                     {
                         LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
                     }
 
-                    uint tileFlagCount = WidthTileFlags * HeightTileFlags;
-                    for (int i = 0; i < tileFlagCount; ++i)
+                    var tileFlagCount = WidthTileFlags * HeightTileFlags;
+                    for (var i = 0; i < tileFlagCount; ++i)
                     {
                         LiquidTileFlags.Add((LiquidFlags)br.ReadByte());
                     }

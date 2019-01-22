@@ -198,7 +198,7 @@ namespace Warcraft.MDX.Geometry.Skin
         /// <returns>The minor type.</returns>
         protected virtual string GetMinorType(string majorType)
         {
-            int minorTypeValue = int.Parse(_internalValue.ToString("D4").Substring(2));
+            var minorTypeValue = int.Parse(_internalValue.ToString("D4").Substring(2));
 
             switch (majorType)
             {

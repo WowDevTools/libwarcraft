@@ -55,7 +55,7 @@ namespace Warcraft.Core.Reflection.DBC
                     var arrayAttribute = reflectionInfo.PropertyFieldArrayAttributes[databaseProperty];
 
                     var values = new List<object>();
-                    for (int i = 0; i < arrayAttribute.Count; ++i)
+                    for (var i = 0; i < arrayAttribute.Count; ++i)
                     {
                         values.Add(ReadPropertyValue(reader, reflectionInfo, databaseProperty, elementType, version));
                     }
@@ -179,8 +179,8 @@ namespace Warcraft.Core.Reflection.DBC
         /// <returns>true if the property is compatible; otherwise, false.</returns>
         public static bool IsPropertyTypeCompatibleWithArrayAttribute(Type propertyType)
         {
-            bool isArray = propertyType.IsArray;
-            bool implementsGenericIList = propertyType.GetInterfaces()
+            var isArray = propertyType.IsArray;
+            var implementsGenericIList = propertyType.GetInterfaces()
                 .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IList<>));
 
             return isArray || implementsGenericIList;

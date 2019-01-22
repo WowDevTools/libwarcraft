@@ -102,7 +102,7 @@ namespace Warcraft.Core.Reflection.DBC
                 orderedProperties.Remove(property);
 
                 // Then, find the preceding property
-                int precedingPropertyIndex = orderedProperties.IndexOf(propertyBefore);
+                var precedingPropertyIndex = orderedProperties.IndexOf(propertyBefore);
 
                 // Finally, insert the original property after that one
                 orderedProperties.Insert(precedingPropertyIndex + 1, property);
@@ -160,7 +160,7 @@ namespace Warcraft.Core.Reflection.DBC
         {
             var precedingProperty = OriginalProperties.First(p => p.Name == order.ComesAfter);
 
-            bool willPropertyMove = MovingProperties.ContainsKey(precedingProperty);
+            var willPropertyMove = MovingProperties.ContainsKey(precedingProperty);
             if (willPropertyMove && !yieldedProperties.Contains(precedingProperty))
             {
                 yieldedProperties.Add(precedingProperty);

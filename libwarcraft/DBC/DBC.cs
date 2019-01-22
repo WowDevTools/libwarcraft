@@ -113,7 +113,7 @@ namespace Warcraft.DBC
             _records = new List<TRecord>(Count);
 
             // Initialize the record list with null values
-            for (int i = 0; i < Count; ++i)
+            for (var i = 0; i < Count; ++i)
             {
                 _records.Add(null);
             }
@@ -206,7 +206,7 @@ namespace Warcraft.DBC
 
                 using (var databaseReader = new BinaryReader(new MemoryStream(_databaseContents)))
                 {
-                    long recordOffset = DBCHeader.GetSize() + (_header.RecordSize * i);
+                    var recordOffset = DBCHeader.GetSize() + (_header.RecordSize * i);
                     databaseReader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
 
                     var record = databaseReader.ReadRecord<TRecord>((int)_header.FieldCount, (int)_header.RecordSize, Version);

@@ -46,7 +46,7 @@ namespace Warcraft.Core.Structures
                 throw new ArgumentException("The input coordinate list must be a 3x3 grid of coordinates.", nameof(inCoordinates));
             }
 
-            for (int i = 0; i < 3; ++i)
+            for (var i = 0; i < 3; ++i)
             {
                 if (inCoordinates[i].Count != 3)
                 {
@@ -65,10 +65,10 @@ namespace Warcraft.Core.Structures
         {
             Coordinates = new List<List<short>>();
 
-            for (int y = 0; y < 3; ++y)
+            for (var y = 0; y < 3; ++y)
             {
                 var coordinateRow = new List<short>();
-                for (int x = 0; x < 3; ++x)
+                for (var x = 0; x < 3; ++x)
                 {
                     coordinateRow.Add(inAllCoordinates);
                 }

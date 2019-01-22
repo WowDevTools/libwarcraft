@@ -177,8 +177,8 @@ namespace Warcraft.WMO.RootFile
         /// <returns>true if the model contains the group; otherwise, false.</returns>
         public bool ContainsGroup(ModelGroup modelGroup)
         {
-            bool containsGroupName = GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalNameOffset()) > 0;
-            bool containsDescriptiveGroupName = GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalDescriptiveNameOffset()) > 0;
+            var containsGroupName = GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalNameOffset()) > 0;
+            var containsDescriptiveGroupName = GroupNames.GroupNames.Count(kvp => kvp.Key == modelGroup.GetInternalDescriptiveNameOffset()) > 0;
 
             // sometimes, model groups don't contain a descriptive name.
             if (modelGroup.GetInternalDescriptiveNameOffset() > 0)

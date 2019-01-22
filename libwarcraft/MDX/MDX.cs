@@ -270,7 +270,7 @@ namespace Warcraft.MDX
         {
             using (var br = new BinaryReader(dataStream))
             {
-                string dataSignature = new string(br.ReadBinarySignature().Reverse().ToArray());
+                var dataSignature = new string(br.ReadBinarySignature().Reverse().ToArray());
                 if (dataSignature != Signature)
                 {
                     throw new ArgumentException("The provided data stream does not contain a valid MDX signature. " +

@@ -155,9 +155,9 @@ namespace Warcraft.BLP
                         }
 
                         MipMapOffsets = new List<uint>();
-                        for (int i = 0; i < 16; ++i)
+                        for (var i = 0; i < 16; ++i)
                         {
-                            uint offset = br.ReadUInt32();
+                            var offset = br.ReadUInt32();
                             if (offset > 0)
                             {
                                 MipMapOffsets.Add(offset);
@@ -165,9 +165,9 @@ namespace Warcraft.BLP
                         }
 
                         MipMapSizes = new List<uint>();
-                        for (int i = 0; i < 16; ++i)
+                        for (var i = 0; i < 16; ++i)
                         {
-                            uint size = br.ReadUInt32();
+                            var size = br.ReadUInt32();
                             if (size > 0)
                             {
                                 MipMapSizes.Add(size);
@@ -222,7 +222,7 @@ namespace Warcraft.BLP
                     bw.Write(Resolution.X);
                     bw.Write(Resolution.Y);
 
-                    for (int i = 0; i < 16; ++i)
+                    for (var i = 0; i < 16; ++i)
                     {
                         if (i < MipMapOffsets.Count)
                         {
@@ -236,7 +236,7 @@ namespace Warcraft.BLP
                         }
                     }
 
-                    for (int i = 0; i < 16; ++i)
+                    for (var i = 0; i < 16; ++i)
                     {
                         if (i < MipMapSizes.Count)
                         {

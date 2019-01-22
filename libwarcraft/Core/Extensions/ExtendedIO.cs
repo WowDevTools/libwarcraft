@@ -439,10 +439,10 @@ namespace Warcraft.Core.Extensions
         /// <param name="binaryReader">The reader.</param>
         public static RGBA ReadRGBA(this BinaryReader binaryReader)
         {
-            byte r = binaryReader.ReadByte();
-            byte g = binaryReader.ReadByte();
-            byte b = binaryReader.ReadByte();
-            byte a = binaryReader.ReadByte();
+            var r = binaryReader.ReadByte();
+            var g = binaryReader.ReadByte();
+            var b = binaryReader.ReadByte();
+            var a = binaryReader.ReadByte();
 
             var rgba = new RGBA(r, g, b, a);
 
@@ -456,10 +456,10 @@ namespace Warcraft.Core.Extensions
         /// <param name="binaryReader">The reader.</param>
         public static BGRA ReadBGRA(this BinaryReader binaryReader)
         {
-            byte b = binaryReader.ReadByte();
-            byte g = binaryReader.ReadByte();
-            byte r = binaryReader.ReadByte();
-            byte a = binaryReader.ReadByte();
+            var b = binaryReader.ReadByte();
+            var g = binaryReader.ReadByte();
+            var r = binaryReader.ReadByte();
+            var a = binaryReader.ReadByte();
 
             var bgra = new BGRA(b, g, r, a);
 
@@ -473,10 +473,10 @@ namespace Warcraft.Core.Extensions
         /// <param name="binaryReader">The reader.</param>
         public static ARGB ReadARGB(this BinaryReader binaryReader)
         {
-            byte a = binaryReader.ReadByte();
-            byte r = binaryReader.ReadByte();
-            byte g = binaryReader.ReadByte();
-            byte b = binaryReader.ReadByte();
+            var a = binaryReader.ReadByte();
+            var r = binaryReader.ReadByte();
+            var g = binaryReader.ReadByte();
+            var b = binaryReader.ReadByte();
 
             var argb = new ARGB(b, g, r, a);
 
@@ -511,12 +511,12 @@ namespace Warcraft.Core.Extensions
             // The signatures are stored in reverse in the file, so we'll need to read them backwards into
             // the buffer.
             var signatureBuffer = new char[4];
-            for (int i = 0; i < 4; ++i)
+            for (var i = 0; i < 4; ++i)
             {
                 signatureBuffer[3 - i] = binaryReader.ReadChar();
             }
 
-            string signature = new string(signatureBuffer);
+            var signature = new string(signatureBuffer);
             return signature;
         }
 
@@ -544,7 +544,7 @@ namespace Warcraft.Core.Extensions
         public static T ReadIFFChunk<T>(this BinaryReader reader) where T : IIFFChunk, new()
         {
             string chunkSignature = reader.ReadBinarySignature();
-            uint chunkSize = reader.ReadUInt32();
+            var chunkSize = reader.ReadUInt32();
             var chunkData = reader.ReadBytes((int)chunkSize);
 
             var chunk = new T();
@@ -610,10 +610,10 @@ namespace Warcraft.Core.Extensions
         public static ShortPlane ReadShortPlane(this BinaryReader binaryReader)
         {
             var shortPlane = default(ShortPlane);
-            for (int y = 0; y < 3; ++y)
+            for (var y = 0; y < 3; ++y)
             {
                 var coordinateRow = new List<short>();
-                for (int x = 0; x < 3; ++x)
+                for (var x = 0; x < 3; ++x)
                 {
                     coordinateRow.Add(binaryReader.ReadInt16());
                 }
@@ -644,7 +644,7 @@ namespace Warcraft.Core.Extensions
         public static Quaternion ReadQuaternion16(this BinaryReader binaryReader)
         {
             var vector = binaryReader.ReadVector3s();
-            short w = binaryReader.ReadInt16();
+            var w = binaryReader.ReadInt16();
 
             return new Quaternion
             (
@@ -684,26 +684,26 @@ namespace Warcraft.Core.Extensions
 
                 case AxisConfiguration.YUp:
                 {
-                    float x1 = binaryReader.ReadSingle();
-                    float y1 = binaryReader.ReadSingle();
-                    float z1 = binaryReader.ReadSingle();
+                    var x1 = binaryReader.ReadSingle();
+                    var y1 = binaryReader.ReadSingle();
+                    var z1 = binaryReader.ReadSingle();
 
-                    float x = x1;
-                    float y = z1;
-                    float z = -y1;
+                    var x = x1;
+                    var y = z1;
+                    var z = -y1;
 
                     return new Vector3(x, y, z);
                 }
 
                 case AxisConfiguration.ZUp:
                 {
-                    float x1 = binaryReader.ReadSingle();
-                    float y1 = binaryReader.ReadSingle();
-                    float z1 = binaryReader.ReadSingle();
+                    var x1 = binaryReader.ReadSingle();
+                    var y1 = binaryReader.ReadSingle();
+                    var z1 = binaryReader.ReadSingle();
 
-                    float x = x1;
-                    float y = -z1;
-                    float z = y1;
+                    var x = x1;
+                    var y = -z1;
+                    var z = y1;
 
                     return new Vector3(x, y, z);
                 }
@@ -733,30 +733,30 @@ namespace Warcraft.Core.Extensions
 
                 case AxisConfiguration.YUp:
                 {
-                    float x1 = binaryReader.ReadSingle();
-                    float y1 = binaryReader.ReadSingle();
-                    float z1 = binaryReader.ReadSingle();
+                    var x1 = binaryReader.ReadSingle();
+                    var y1 = binaryReader.ReadSingle();
+                    var z1 = binaryReader.ReadSingle();
 
-                    float x = x1;
-                    float y = z1;
-                    float z = -y1;
+                    var x = x1;
+                    var y = z1;
+                    var z = -y1;
 
-                    float w = binaryReader.ReadSingle();
+                    var w = binaryReader.ReadSingle();
 
                     return new Vector4(x, y, z, w);
                 }
 
                 case AxisConfiguration.ZUp:
                 {
-                    float x1 = binaryReader.ReadSingle();
-                    float y1 = binaryReader.ReadSingle();
-                    float z1 = binaryReader.ReadSingle();
+                    var x1 = binaryReader.ReadSingle();
+                    var y1 = binaryReader.ReadSingle();
+                    var z1 = binaryReader.ReadSingle();
 
-                    float x = x1;
-                    float y = -z1;
-                    float z = y1;
+                    var x = x1;
+                    var y = -z1;
+                    var z = y1;
 
-                    float w = binaryReader.ReadSingle();
+                    var w = binaryReader.ReadSingle();
 
                     return new Vector4(x, y, z, w);
                 }
@@ -786,26 +786,26 @@ namespace Warcraft.Core.Extensions
 
                 case AxisConfiguration.YUp:
                 {
-                    short x1 = binaryReader.ReadInt16();
-                    short y1 = binaryReader.ReadInt16();
-                    short z1 = binaryReader.ReadInt16();
+                    var x1 = binaryReader.ReadInt16();
+                    var y1 = binaryReader.ReadInt16();
+                    var z1 = binaryReader.ReadInt16();
 
-                    short x = x1;
-                    short y = z1;
-                    short z = (short)-y1;
+                    var x = x1;
+                    var y = z1;
+                    var z = (short)-y1;
 
                     return new Vector3s(x, y, z);
                 }
 
                 case AxisConfiguration.ZUp:
                 {
-                    short x1 = binaryReader.ReadInt16();
-                    short y1 = binaryReader.ReadInt16();
-                    short z1 = binaryReader.ReadInt16();
+                    var x1 = binaryReader.ReadInt16();
+                    var y1 = binaryReader.ReadInt16();
+                    var z1 = binaryReader.ReadInt16();
 
-                    short x = x1;
-                    short y = (short)-z1;
-                    short z = y1;
+                    var x = x1;
+                    var y = (short)-z1;
+                    var z = y1;
 
                     return new Vector3s(x, y, z);
                 }
@@ -911,7 +911,7 @@ namespace Warcraft.Core.Extensions
         /// <param name="inputString">Input string.</param>
         public static void WriteNullTerminatedString(this BinaryWriter binaryWriter, string inputString)
         {
-            foreach (char c in inputString)
+            foreach (var c in inputString)
             {
                 binaryWriter.Write(c);
             }
@@ -931,7 +931,7 @@ namespace Warcraft.Core.Extensions
                 throw new InvalidDataException("The signature must be an ASCII string of exactly four characters.");
             }
 
-            for (int i = 3; i >= 0; --i)
+            for (var i = 3; i >= 0; --i)
             {
                 binaryWriter.Write(signature[i]);
             }
@@ -970,9 +970,9 @@ namespace Warcraft.Core.Extensions
         /// <param name="shortPlane">The plane to write.</param>
         public static void WriteShortPlane(this BinaryWriter binaryWriter, ShortPlane shortPlane)
         {
-            for (int y = 0; y < 3; ++y)
+            for (var y = 0; y < 3; ++y)
             {
-                for (int x = 0; x < 3; ++x)
+                for (var x = 0; x < 3; ++x)
                 {
                     binaryWriter.Write(shortPlane.Coordinates[y][x]);
                 }

@@ -91,7 +91,7 @@ namespace Warcraft.MPQ.Attributes
                     {
                         expectedDataLength += sizeof(uint) * fileBlockCount;
 
-                        for (int i = 0; i < fileBlockCount; ++i)
+                        for (var i = 0; i < fileBlockCount; ++i)
                         {
                             if (data.Length >= expectedDataLength)
                             {
@@ -105,7 +105,7 @@ namespace Warcraft.MPQ.Attributes
                     }
                     else
                     {
-                        for (int i = 0; i < fileBlockCount; ++i)
+                        for (var i = 0; i < fileBlockCount; ++i)
                         {
                             crcHashes.Add(0);
                         }
@@ -116,7 +116,7 @@ namespace Warcraft.MPQ.Attributes
                     {
                         expectedDataLength += sizeof(ulong) * fileBlockCount;
 
-                        for (int i = 0; i < fileBlockCount; ++i)
+                        for (var i = 0; i < fileBlockCount; ++i)
                         {
                             if (data.Length >= expectedDataLength)
                             {
@@ -130,7 +130,7 @@ namespace Warcraft.MPQ.Attributes
                     }
                     else
                     {
-                        for (int i = 0; i < fileBlockCount; ++i)
+                        for (var i = 0; i < fileBlockCount; ++i)
                         {
                             timestamps.Add(0);
                         }
@@ -141,12 +141,12 @@ namespace Warcraft.MPQ.Attributes
                     {
                         expectedDataLength += 16 * fileBlockCount;
 
-                        for (int i = 0; i < fileBlockCount; ++i)
+                        for (var i = 0; i < fileBlockCount; ++i)
                         {
                             if (data.Length >= expectedDataLength)
                             {
                                 var md5Data = br.ReadBytes(16);
-                                string md5 = BitConverter.ToString(md5Data).Replace("-", string.Empty);
+                                var md5 = BitConverter.ToString(md5Data).Replace("-", string.Empty);
                                 md5Hashes.Add(md5);
                             }
                             else
@@ -157,14 +157,14 @@ namespace Warcraft.MPQ.Attributes
                     }
                     else
                     {
-                        for (int i = 0; i < fileBlockCount; ++i)
+                        for (var i = 0; i < fileBlockCount; ++i)
                         {
                             md5Hashes.Add(string.Empty);
                         }
                     }
 
                     FileAttributes = new List<FileAttributes>();
-                    for (int i = 0; i < fileBlockCount; ++i)
+                    for (var i = 0; i < fileBlockCount; ++i)
                     {
                         FileAttributes.Add(new FileAttributes(crcHashes[i], timestamps[i], md5Hashes[i]));
                     }

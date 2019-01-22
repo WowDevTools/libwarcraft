@@ -63,15 +63,15 @@ namespace Warcraft.WMO
         {
             foreach (var doodadInstance in RootInformation.DoodadInstances.DoodadInstances)
             {
-                string doodadPath = RootInformation.DoodadPaths.GetNameByOffset(doodadInstance.NameOffset);
+                var doodadPath = RootInformation.DoodadPaths.GetNameByOffset(doodadInstance.NameOffset);
                 doodadInstance.Name = doodadPath;
             }
 
             foreach (var modelMaterial in RootInformation.Materials.Materials)
             {
-                string texturePath0 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.DiffuseTextureOffset);
-                string texturePath1 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.EnvironmentMapTextureOffset);
-                string texturePath2 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.SpecularTextureOffset);
+                var texturePath0 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.DiffuseTextureOffset);
+                var texturePath1 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.EnvironmentMapTextureOffset);
+                var texturePath2 = RootInformation.Textures.GetTexturePathByOffset(modelMaterial.SpecularTextureOffset);
 
                 if (string.IsNullOrEmpty(texturePath0))
                 {

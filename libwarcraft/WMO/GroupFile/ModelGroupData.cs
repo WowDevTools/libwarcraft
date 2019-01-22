@@ -237,7 +237,7 @@ namespace Warcraft.WMO.GroupFile
                     RenderBatchCountExterior = br.ReadUInt16();
                     Unknown = br.ReadUInt16();
 
-                    for (int i = 0; i < 4; ++i)
+                    for (var i = 0; i < 4; ++i)
                     {
                         FogIndices.Add(br.ReadByte());
                     }
@@ -338,7 +338,7 @@ namespace Warcraft.WMO.GroupFile
                     bw.Write(RenderBatchCountExterior);
                     bw.Write(Unknown);
 
-                    foreach (byte fogIndex in FogIndices)
+                    foreach (var fogIndex in FogIndices)
                     {
                         bw.Write(fogIndex);
                     }

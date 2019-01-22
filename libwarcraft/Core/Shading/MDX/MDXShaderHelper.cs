@@ -80,7 +80,7 @@ namespace Warcraft.Core.Shading.MDX
         {
             if ((shaderID & 0x8000) > 0)
             {
-                ushort shaderTableIndex = (ushort)(shaderID & ~0x8000);
+                var shaderTableIndex = (ushort)(shaderID & ~0x8000);
                 if (shaderTableIndex >= ShaderTable.Count)
                 {
                     throw new ArgumentException("The shader ID did not fall in an expected range.", nameof(shaderID));
@@ -138,7 +138,7 @@ namespace Warcraft.Core.Shading.MDX
         {
             if ((shaderID & 0x8000) > 0)
             {
-                ushort shaderTableIndex = (ushort)(shaderID & ~0x8000);
+                var shaderTableIndex = (ushort)(shaderID & ~0x8000);
                 if (shaderTableIndex >= ShaderTable.Count)
                 {
                     throw new ArgumentException("The shader ID did not fall in an expected range.", nameof(shaderID));
@@ -161,7 +161,7 @@ namespace Warcraft.Core.Shading.MDX
         {
             if ((shaderID & 0x8000) > 0)
             {
-                ushort shaderTableIndex = (ushort)(shaderID & ~0x8000);
+                var shaderTableIndex = (ushort)(shaderID & ~0x8000);
                 if (shaderTableIndex >= ShaderTable.Count)
                 {
                     throw new ArgumentException("The shader ID did not fall in an expected range.", nameof(shaderID));
@@ -184,7 +184,7 @@ namespace Warcraft.Core.Shading.MDX
         {
             if ((shaderID & 0x8000) > 0)
             {
-                ushort shaderTableIndex = (ushort)(shaderID & ~0x8000);
+                var shaderTableIndex = (ushort)(shaderID & ~0x8000);
                 if (shaderTableIndex >= ShaderTable.Count)
                 {
                     throw new ArgumentException("The shader ID did not fall in an expected range.", nameof(shaderID));
@@ -200,7 +200,7 @@ namespace Warcraft.Core.Shading.MDX
                     : Combiners_Opaque;
             }
 
-            uint lower = (uint)(shaderID & 7);
+            var lower = (uint)(shaderID & 7);
             if ((shaderID & 0x70) > 0)
             {
                 switch (lower)
@@ -249,8 +249,8 @@ namespace Warcraft.Core.Shading.MDX
             if (!model.GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
             {
                 var textureMapping = model.TextureMappingLookupTable[renderBatch.TextureMappingLookupTableIndex];
-                bool isEnvMapped = textureMapping == MDXTextureMappingType.Environment;
-                bool nonOpaqueBlendingMode = material.BlendMode != BlendingMode.Opaque;
+                var isEnvMapped = textureMapping == MDXTextureMappingType.Environment;
+                var nonOpaqueBlendingMode = material.BlendMode != BlendingMode.Opaque;
 
                 if (nonOpaqueBlendingMode)
                 {
@@ -278,9 +278,9 @@ namespace Warcraft.Core.Shading.MDX
 
             var v19 = new short[] { 0, 0 };
 
-            for (int opIndex = 0; opIndex < operationCount; ++opIndex)
+            for (var opIndex = 0; opIndex < operationCount; ++opIndex)
             {
-                int blendingOverrideIndex = baseShaderID + opIndex;
+                var blendingOverrideIndex = baseShaderID + opIndex;
                 var blendingOverride = model.BlendMapOverrides[blendingOverrideIndex];
 
                 if (opIndex == 0 && material.BlendMode == BlendingMode.Opaque)
@@ -288,9 +288,9 @@ namespace Warcraft.Core.Shading.MDX
                     blendingOverride = BlendingMode.Opaque;
                 }
 
-                int textureMappingOverrideIndex = renderBatch.TextureMappingLookupTableIndex + opIndex;
+                var textureMappingOverrideIndex = renderBatch.TextureMappingLookupTableIndex + opIndex;
                 var textureSlotOverride = model.TextureMappingLookupTable[textureMappingOverrideIndex];
-                bool isEnvMapped = textureSlotOverride == MDXTextureMappingType.Environment;
+                var isEnvMapped = textureSlotOverride == MDXTextureMappingType.Environment;
 
                 if (isEnvMapped)
                 {

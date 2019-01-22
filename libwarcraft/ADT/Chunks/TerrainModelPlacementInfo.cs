@@ -54,9 +54,9 @@ namespace Warcraft.ADT.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    long entryCount = br.BaseStream.Length / ModelPlacementEntry.GetSize();
+                    var entryCount = br.BaseStream.Length / ModelPlacementEntry.GetSize();
 
-                    for (int i = 0; i < entryCount; ++i)
+                    for (var i = 0; i < entryCount; ++i)
                     {
                         Entries.Add(new ModelPlacementEntry(br.ReadBytes(ModelPlacementEntry.GetSize())));
                     }

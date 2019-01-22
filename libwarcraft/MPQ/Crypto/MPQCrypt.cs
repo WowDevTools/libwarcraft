@@ -55,14 +55,14 @@ namespace Warcraft.MPQ.Crypto
 
             for (uint loopIndex = 0; loopIndex < 0x100; loopIndex++)
             {
-                int i = 0;
-                for (uint tableIndex = loopIndex; i < 5; i++, tableIndex += 0x100)
+                var i = 0;
+                for (var tableIndex = loopIndex; i < 5; i++, tableIndex += 0x100)
                 {
                     seed = ((seed * 125) + 3) % 0x2AAAAB;
-                    uint temp1 = (seed & 0xFFFF) << 0x10;
+                    var temp1 = (seed & 0xFFFF) << 0x10;
 
                     seed = ((seed * 125) + 3) % 0x2AAAAB;
-                    uint temp2 = seed & 0xFFFF;
+                    var temp2 = seed & 0xFFFF;
 
                     // Add to Encryption table
                     EncryptionTable[tableIndex] = temp1 | temp2;
@@ -114,18 +114,18 @@ namespace Warcraft.MPQ.Crypto
             // cut out the dangling bytes and don't XOR them
 
             // Find out how many dangling bytes we have
-            uint danglingBytes = (uint)data.Length % 4;
+            var danglingBytes = (uint)data.Length % 4;
             var dataToBeModified = new byte[data.Length - danglingBytes];
 
             // Copy the aligned bytes to the new array
             Buffer.BlockCopy(data, 0, dataToBeModified, 0, (int)(data.Length - danglingBytes));
 
-            uint encryptionSeed = 0xEEEEEEEE;
+            var encryptionSeed = 0xEEEEEEEE;
             var finalizedData = new List<byte>();
 
-            for (int i = 0; i < dataToBeModified.Length; i += sizeof(uint))
+            for (var i = 0; i < dataToBeModified.Length; i += sizeof(uint))
             {
-                uint encryptionTarget = BitConverter.ToUInt32(dataToBeModified, i);
+                var encryptionTarget = BitConverter.ToUInt32(dataToBeModified, i);
 
                 // Retrieve the decryption seed from the generated table
                 encryptionSeed += EncryptionTable[0x400 + (key & 0xFF)];
@@ -138,7 +138,7 @@ namespace Warcraft.MPQ.Crypto
                 encryptionSeed = encryptionTarget + encryptionSeed + (encryptionSeed << 5) + 3;
 
                 var encryptedBytes = BitConverter.GetBytes(encryptionTarget);
-                foreach (byte encryptedByte in encryptedBytes)
+                foreach (var encryptedByte in encryptedBytes)
                 {
                     finalizedData.Add(encryptedByte);
                 }
@@ -198,7 +198,7 @@ namespace Warcraft.MPQ.Crypto
             uint fileSize = 0
         )
         {
-            uint fileKey = Hash(fileName, HashType.FileKey);
+            var fileKey = Hash(fileName, HashType.FileKey);
 
             if (isAdjusted)
             {
@@ -227,7 +227,7 @@ namespace Warcraft.MPQ.Crypto
             uint key
         )
         {
-            uint decryptionSeed = 0xEEEEEEEE;
+            var decryptionSeed = 0xEEEEEEEE;
 
             uint decryptionTarget = 0;
             while (decryptionTarget != blockSize)
@@ -287,7 +287,7 @@ namespace Warcraft.MPQ.Crypto
                     return true;
                 }
 
-                uint sectorChecksum = (uint)Adler32.ComputeChecksum(ms);
+                var sectorChecksum = (uint)Adler32.ComputeChecksum(ms);
 
                 if (sectorChecksum == 0)
                 {

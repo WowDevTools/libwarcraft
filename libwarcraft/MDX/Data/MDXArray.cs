@@ -163,10 +163,10 @@ namespace Warcraft.MDX.Data
         /// <param name="br">The reader to read the instance from.</param>
         public void Fill(BinaryReader br)
         {
-            long initialPositionBeforeJumpToData = br.BaseStream.Position;
+            var initialPositionBeforeJumpToData = br.BaseStream.Position;
             br.BaseStream.Position = ElementsOffset;
 
-            for (int i = 0; i < Count; ++i)
+            for (var i = 0; i < Count; ++i)
             {
                 _values.Add(br.Read<T>());
             }
@@ -184,10 +184,10 @@ namespace Warcraft.MDX.Data
         /// <param name="version">The version to read the instance in the context of.</param>
         public void Fill(BinaryReader br, WarcraftVersion version)
         {
-            long initialPositionBeforeJumpToData = br.BaseStream.Position;
+            var initialPositionBeforeJumpToData = br.BaseStream.Position;
             br.BaseStream.Position = ElementsOffset;
 
-            for (int i = 0; i < Count; ++i)
+            for (var i = 0; i < Count; ++i)
             {
                 _values.Add(br.Read<T>(version));
             }

@@ -61,8 +61,8 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    long groupInfoCount = ms.Length / GroupInformation.GetSize();
-                    for (int i = 0; i < groupInfoCount; ++i)
+                    var groupInfoCount = ms.Length / GroupInformation.GetSize();
+                    for (var i = 0; i < groupInfoCount; ++i)
                     {
                         GroupInformations.Add(new GroupInformation(br.ReadBytes(GroupInformation.GetSize())));
                     }

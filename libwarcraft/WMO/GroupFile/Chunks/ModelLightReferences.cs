@@ -82,7 +82,7 @@ namespace Warcraft.WMO.GroupFile.Chunks
             {
                 using (var bw = new BinaryWriter(ms))
                 {
-                    foreach (ushort lightReference in LightReferences)
+                    foreach (var lightReference in LightReferences)
                     {
                         bw.Write(lightReference);
                     }

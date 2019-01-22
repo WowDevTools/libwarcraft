@@ -61,8 +61,8 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    int visibleBlockCount = inData.Length / VisibleBlock.GetSize();
-                    for (int i = 0; i < visibleBlockCount; ++i)
+                    var visibleBlockCount = inData.Length / VisibleBlock.GetSize();
+                    for (var i = 0; i < visibleBlockCount; ++i)
                     {
                         VisibleBlocks.Add(new VisibleBlock(br.ReadBytes(VisibleBlock.GetSize())));
                     }
