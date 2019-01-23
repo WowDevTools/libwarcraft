@@ -74,6 +74,17 @@ namespace Warcraft.MPQ
         bool ContainsFile([NotNull] string filePath);
 
         /// <summary>
+        /// Attempts to retrieve the file info of the provided path.
+        /// </summary>
+        /// <param name="filePath">The full path to the file.</param>
+        /// <param name="fileInfo">The file info.</param>
+        /// <returns>true if the file info was successfully retrieved; otherwise, false.</returns>
+        /// <exception cref="FileNotFoundException">Thrown if the file is not present in the package.</exception>
+        [PublicAPI]
+        [ContractAnnotation("=> false, fileInfo : null; => true, fileInfo : notnull")]
+        bool TryGetFileInfo([NotNull] string filePath, out MPQFileInfo fileInfo);
+
+        /// <summary>
         /// Gets the file info of the provided path.
         /// </summary>
         /// <returns>The file info.</returns>

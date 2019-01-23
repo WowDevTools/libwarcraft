@@ -148,6 +148,18 @@
   <member name="M:Warcraft.MPQ.IPackage.HasFileList">
     <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
   </member>
+  <member name="M:Warcraft.MPQ.IPackage.TryExtractFile(System.String,System.Byte[]@)">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ContractAnnotationAttribute.#ctor(System.String)">
+      <argument>=&gt; false, data : null; =&gt; true, data : notnull</argument>
+    </attribute>
+    <parameter name="filePath">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="data">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="T:Warcraft.MPQ.MPQ">
     <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
   </member>
@@ -208,6 +220,9 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
       <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
     </parameter>
+  </member>
+  <member name="M:Warcraft.MPQ.MPQ.TryExtractFile(System.String,System.Byte[]@)">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
   </member>
   <member name="T:Warcraft.MPQ.MPQFormat">
     <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
@@ -377,7 +392,7 @@
   <member name="M:Warcraft.MPQ.Tables.Hash.HashTable.TryFindEntry(System.String,Warcraft.MPQ.Tables.Hash.HashTableEntry@)">
     <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
     <attribute ctor="M:JetBrains.Annotations.ContractAnnotationAttribute.#ctor(System.String)">
-      <argument>true &lt;= tableEntry : notnull; false &lt;= tableEntry : null</argument>
+      <argument>=&gt; false, tableEntry : null; =&gt; true, tableEntry : notnull</argument>
     </attribute>
     <parameter name="fileName">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -386,7 +401,7 @@
   <member name="M:Warcraft.MPQ.Tables.Hash.HashTable.TryFindEntry(System.UInt32,System.UInt32,System.UInt32,Warcraft.MPQ.Tables.Hash.HashTableEntry@)">
     <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
     <attribute ctor="M:JetBrains.Annotations.ContractAnnotationAttribute.#ctor(System.String)">
-      <argument>true &lt;= tableEntry : notnull; false &lt;= tableEntry : null</argument>
+      <argument>=&gt; false, tableEntry : null; =&gt; true, tableEntry : notnull</argument>
     </attribute>
   </member>
   <member name="T:Warcraft.MPQ.Tables.Hash.HashTableEntry">

@@ -329,25 +329,48 @@ namespace Warcraft.MPQ
         }
 
         /// <inheritdoc />
-        /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
-        [PublicAPI]
-        public MPQFileInfo GetFileInfo(string filePath)
+        public bool TryGetFileInfo(string filePath, out MPQFileInfo fileInfo)
         {
-            ThrowIfDisposed();
+            fileInfo = null;
 
             if (!ArchiveHashTable.TryFindEntry(filePath, out var hashEntry))
             {
-                throw new FileNotFoundException("The given file was not present in the archive.", filePath);
+                return false;
             }
 
             var blockEntry = ArchiveBlockTable.GetEntry((int)hashEntry.GetBlockEntryIndex());
 
             if (HasFileAttributes())
             {
-                return new MPQFileInfo(filePath, hashEntry, blockEntry);
+                fileInfo = new MPQFileInfo(filePath, hashEntry, blockEntry);
+            }
+            else
+            {
+                fileInfo = new MPQFileInfo
+                (
+                    filePath,
+                    hashEntry,
+                    blockEntry,
+                    _fileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]
+                );
             }
 
-            return new MPQFileInfo(filePath, hashEntry, blockEntry, _fileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]);
+            return true;
+        }
+
+        /// <inheritdoc />
+        /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
+        [PublicAPI]
+        public MPQFileInfo GetFileInfo(string filePath)
+        {
+            ThrowIfDisposed();
+
+            if (!TryGetFileInfo(filePath, out var fileInfo))
+            {
+                throw new FileNotFoundException("The given file was not present in the archive.", filePath);
+            }
+
+            return fileInfo;
         }
 
         /// <inheritdoc />
