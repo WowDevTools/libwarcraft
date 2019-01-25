@@ -76,6 +76,11 @@ namespace Warcraft.MDX.Visual
 
             if (blendingMode > 3)
             {
+                if (blendingMode == 7)
+                {
+                    return BlendingMode.BlendAdditive;
+                }
+
                 return (BlendingMode)(blendingMode - 1);
             }
 
