@@ -1,29 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <RootNamespace>Warcraft</RootNamespace>
-    <AssemblyName>libwarcraft</AssemblyName>
-    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+    <PropertyGroup>
+        <RootNamespace>Warcraft</RootNamespace>
+        <AssemblyName>libwarcraft</AssemblyName>
+        <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <Title>$(AssemblyName)</Title>
-    <Authors>Jarl Gullberg</Authors>
-    <Copyright>Jarl Gullberg 2020</Copyright>
-    <Version>3.0.0-alpha2</Version>
-    <Description>An open-source World of Warcraft file format library.</Description>
-  </PropertyGroup>
+    <PropertyGroup>
+        <Title>$(AssemblyName)</Title>
+        <Authors>Jarl Gullberg</Authors>
+        <Copyright>Jarl Gullberg 2020</Copyright>
+        <Version>3.0.0-alpha2</Version>
+        <Description>An open-source World of Warcraft file format library.</Description>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <PackageReleaseNotes>Correct some of the added records.</PackageReleaseNotes>
-    <PackageTags>warcraft;cross-platform;file-format</PackageTags>
-  </PropertyGroup>
+    <PropertyGroup>
+        <PackageReleaseNotes>Correct some of the added records.</PackageReleaseNotes>
+        <PackageTags>warcraft;cross-platform;file-format</PackageTags>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="SharpCompress" Version="0.25.0" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+        <PackageReference Include="SharpCompress" Version="0.25.0" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
+        <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    </ItemGroup>
 </Project>
