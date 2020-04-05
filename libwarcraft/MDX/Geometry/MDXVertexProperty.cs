@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Warcraft.MDX.Geometry
 {
     /// <summary>
     /// A quartet of bone indices into the <see cref="MDX.KeyBoneLookupTable"/>, which are associated with a vertex.
     /// </summary>
+    [PublicAPI]
     public class MDXVertexProperty
     {
         /// <summary>

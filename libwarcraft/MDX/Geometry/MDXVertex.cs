@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+using JetBrains.Annotations;
 using Warcraft.Core.Extensions;
 
 namespace Warcraft.MDX.Geometry
@@ -30,6 +31,7 @@ namespace Warcraft.MDX.Geometry
     /// <summary>
     /// A vertex in an <see cref="MDX"/> model.
     /// </summary>
+    [PublicAPI]
     public class MDXVertex
     {
         /// <summary>
@@ -40,13 +42,13 @@ namespace Warcraft.MDX.Geometry
         /// <summary>
         /// Gets or sets the weights of any affecting bones onto this vertex. Up to four bones may affect the vertex.
         /// </summary>
-        public List<byte> BoneWeights { get; set; } = null!;
+        public List<byte> BoneWeights { get; set; }
 
         /// <summary>
         /// Gets or sets the indexes of up to four bones which affect this vertex. A bone may be listed more than once, but will
         /// only affect the vertex once.
         /// </summary>
-        public List<byte> BoneIndices { get; set; } = null!;
+        public List<byte> BoneIndices { get; set; }
 
         /// <summary>
         /// Gets or sets the normal vector of this vertex.
@@ -68,26 +70,15 @@ namespace Warcraft.MDX.Geometry
         /// <summary>
         /// Initializes a new instance of the <see cref="MDXVertex"/> class.
         /// </summary>
-        /// <param name="data">The binary data in which the vertex is stored.</param>
-        public MDXVertex(byte[] data)
+        /// <param name="br">A binary reader pointing at a valid starting point for the data.</param>
+        public MDXVertex(BinaryReader br)
         {
-            using var ms = new MemoryStream(data);
-            using var br = new BinaryReader(ms);
             Position = br.ReadVector3();
             BoneWeights = new List<byte>(br.ReadBytes(4));
             BoneIndices = new List<byte>(br.ReadBytes(4));
             Normal = br.ReadVector3();
             UV1 = br.ReadVector2();
             UV2 = br.ReadVector2();
-        }
-
-        /// <summary>
-        /// Gets the absolute byte size of a serialized object.
-        /// </summary>
-        /// <returns>The size.</returns>
-        public static int GetSize()
-        {
-            return 48;
         }
     }
 }

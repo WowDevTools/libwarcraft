@@ -22,6 +22,7 @@
 
 using System.IO;
 using System.Numerics;
+using JetBrains.Annotations;
 using Warcraft.Core;
 using Warcraft.Core.Extensions;
 using Warcraft.Core.Interfaces;
@@ -32,6 +33,7 @@ namespace Warcraft.MDX.Geometry.Skin
     /// A section of an <see cref="MDXSkin"/>. Each section is associated with a single material or distinct rendering
     /// operation.
     /// </summary>
+    [PublicAPI]
     public class MDXSkinSection : IVersionedClass
     {
         /// <summary>
@@ -121,11 +123,10 @@ namespace Warcraft.MDX.Geometry.Skin
         /// Initializes a new instance of the <see cref="MDXSkinSection"/> class. The data is expected to be
         /// 32 or 48 bytes long, depending on the version of the originating file.
         /// </summary>
-        /// <param name="data">The data containing the skin section.</param>
-        public MDXSkinSection(byte[] data)
+        /// <param name="br">A binary reader pointing at a valid starting point for the data.</param>
+        /// <param name="version">The version to deserialize.</param>
+        public MDXSkinSection(BinaryReader br, WarcraftVersion version)
         {
-            using var ms = new MemoryStream(data);
-            using var br = new BinaryReader(ms);
             SkinSectionID = new BaseSkinSectionIdentifier(br.ReadUInt16());
             Level = br.ReadUInt16();
             StartVertexIndex = br.ReadUInt16();
@@ -138,7 +139,7 @@ namespace Warcraft.MDX.Geometry.Skin
             CenterBoneIndex = br.ReadUInt16();
             CenterPosition = br.ReadVector3();
 
-            if (br.BaseStream.Length <= 32)
+            if (version > WarcraftVersion.BurningCrusade)
             {
                 return;
             }

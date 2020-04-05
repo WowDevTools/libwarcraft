@@ -49,17 +49,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>A fully read skin.</returns>
         public static MDXSkin ReadMDXSkin(this BinaryReader binaryReader, WarcraftVersion version)
         {
-            var skin = new MDXSkin
-            {
-                VertexIndices = binaryReader.ReadMDXArray<ushort>(),
-                Triangles = binaryReader.ReadMDXArray<ushort>(),
-                VertexProperties = binaryReader.ReadMDXArray<MDXVertexProperty>(),
-                Sections = binaryReader.ReadMDXArray<MDXSkinSection>(version),
-                RenderBatches = binaryReader.ReadMDXArray<MDXRenderBatch>(),
-                BoneCountMax = binaryReader.ReadUInt32()
-            };
-
-            return skin;
+            return new MDXSkin(binaryReader, version);
         }
 
         /// <summary>
@@ -301,7 +291,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>The value.</returns>
         public static MDXVertex ReadMDXVertex(this BinaryReader binaryReader)
         {
-            return new MDXVertex(binaryReader.ReadBytes(MDXVertex.GetSize()));
+            return new MDXVertex(binaryReader);
         }
 
         /// <summary>
@@ -339,7 +329,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>The value.</returns>
         public static MDXSkinSection ReadMDXSkinSection(this BinaryReader binaryReader, WarcraftVersion version)
         {
-            return new MDXSkinSection(binaryReader.ReadBytes(MDXSkinSection.GetSize(version)));
+            return new MDXSkinSection(binaryReader, version);
         }
 
         /// <summary>
@@ -349,7 +339,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>The value.</returns>
         public static MDXRenderBatch ReadMDXRenderBatch(this BinaryReader binaryReader)
         {
-            return new MDXRenderBatch(binaryReader.ReadBytes(MDXRenderBatch.GetSize()));
+            return new MDXRenderBatch(binaryReader);
         }
     }
 }

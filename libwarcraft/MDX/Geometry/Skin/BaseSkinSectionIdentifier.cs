@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Warcraft.MDX.Geometry.Skin
 {
@@ -32,6 +33,7 @@ namespace Warcraft.MDX.Geometry.Skin
     /// The class can be inherited from, and override the meanings of the numeric values to ease human understanding of
     /// nongeneric section identifiers.
     /// </summary>
+    [PublicAPI]
     public class BaseSkinSectionIdentifier
     {
         private readonly ushort _internalValue;
