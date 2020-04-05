@@ -11,7 +11,7 @@
         <Title>$(AssemblyName)</Title>
         <Authors>Jarl Gullberg</Authors>
         <Copyright>Jarl Gullberg 2020</Copyright>
-        <Version>3.0.0-alpha3</Version>
+        <Version>3.0.0-alpha4</Version>
         <Description>An open-source World of Warcraft file format library.</Description>
     </PropertyGroup>
 
@@ -21,7 +21,7 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageProjectUrl>https://github.com/WowDevTools/libwarcraft</PackageProjectUrl>
         <RepositoryUrl>https://github.com/WowDevTools/libwarcraft</RepositoryUrl>
-        <PackageReleaseNotes>Modernization and tooling updates..</PackageReleaseNotes>
+        <PackageReleaseNotes>Modernization and tooling updates.</PackageReleaseNotes>
         <PackageTags>warcraft;cross-platform;file-format</PackageTags>
     </PropertyGroup>
 
