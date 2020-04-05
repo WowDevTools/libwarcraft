@@ -37,6 +37,7 @@ namespace Warcraft.MDX.Animation
     /// </summary>
     /// <typeparam name="T">The contained type.</typeparam>
     public class MDXTrack<T> : IVersionedClass
+        where T : unmanaged
     {
         /// <summary>
         /// Gets a value indicating whether the timelines are as one composite timeline, or as separate timelines.

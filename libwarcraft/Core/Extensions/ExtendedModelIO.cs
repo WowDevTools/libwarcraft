@@ -70,6 +70,7 @@ namespace Warcraft.Core.Extensions
         /// <typeparam name="T">The type which the array encapsulates.</typeparam>
         /// <returns>A new array, filled with the values it references.</returns>
         public static MDXArray<T> ReadMDXArray<T>(this BinaryReader binaryReader)
+            where T : notnull
         {
             if (typeof(T).GetInterfaces().Contains(typeof(IVersionedClass)))
             {
@@ -88,6 +89,7 @@ namespace Warcraft.Core.Extensions
         /// <typeparam name="T">The type which the array encapsulates.</typeparam>
         /// <returns>A new array, filled with the values it references.</returns>
         public static MDXArray<T> ReadMDXArray<T>(this BinaryReader binaryReader, WarcraftVersion version)
+            where T : notnull
         {
             // Quaternion hack, since it's packed into 16 bits in some versions
             var containsQuaternion = FindInnermostGenericType(typeof(T)) == typeof(Quaternion);
@@ -259,7 +261,13 @@ namespace Warcraft.Core.Extensions
         /// </param>
         /// <typeparam name="T">The type of the track.</typeparam>
         /// <returns>The value.</returns>
-        public static MDXTrack<T> ReadMDXTrack<T>(this BinaryReader binaryReader, WarcraftVersion version, bool valueless = false)
+        public static MDXTrack<T> ReadMDXTrack<T>
+        (
+            this BinaryReader binaryReader,
+            WarcraftVersion version,
+            bool valueless = false
+        )
+            where T : unmanaged
         {
             return new MDXTrack<T>(binaryReader, version, valueless);
         }
