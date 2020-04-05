@@ -16,7 +16,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageReleaseNotes>Correct some of the added records.</PackageReleaseNotes>
+        <PackageId>libwarcraft</PackageId>
+        <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageProjectUrl>https://github.com/WowDevTools/libwarcraft</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/WowDevTools/libwarcraft</RepositoryUrl>
+        <PackageReleaseNotes>Modernization and tooling updates..</PackageReleaseNotes>
         <PackageTags>warcraft;cross-platform;file-format</PackageTags>
     </PropertyGroup>
 
