@@ -11,7 +11,7 @@
         <Title>$(AssemblyName)</Title>
         <Authors>Jarl Gullberg</Authors>
         <Copyright>Jarl Gullberg 2020</Copyright>
-        <Version>3.0.0-alpha5</Version>
+        <Version>3.0.0-alpha6</Version>
         <Description>An open-source World of Warcraft file format library.</Description>
     </PropertyGroup>
 
