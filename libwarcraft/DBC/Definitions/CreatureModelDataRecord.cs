@@ -1,7 +1,10 @@
 ﻿//
 //  CreatureModelDataRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -41,7 +44,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the path to the model.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference ModelPath { get; set; }
+        public StringReference ModelPath { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the size class of the model.
@@ -59,13 +62,13 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the blood level - that is, the gore level.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.UnitBloodLevels, nameof(ID))]
-        public ForeignKey<uint> BloodLevel { get; set; }
+        public ForeignKey<uint> BloodLevel { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the footprint decal texture.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.FootprintTextures, nameof(ID))]
-        public ForeignKey<uint> FootprintDecal { get; set; }
+        public ForeignKey<uint> FootprintDecal { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the length of the footprint.
@@ -95,19 +98,19 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the footstep shake.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.CameraShakes, nameof(ID))]
-        public ForeignKey<uint> FootstepShakeSize { get; set; }
+        public ForeignKey<uint> FootstepShakeSize { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the death thud shake.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.CameraShakes, nameof(ID))]
-        public ForeignKey<uint> DeathThudShakeSize { get; set; }
+        public ForeignKey<uint> DeathThudShakeSize { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the sound pack.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade), ForeignKeyInfo(DatabaseName.CreatureSoundData, nameof(ID))]
-        public ForeignKey<uint> Sound { get; set; }
+        public ForeignKey<uint> Sound { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the model's collision width.

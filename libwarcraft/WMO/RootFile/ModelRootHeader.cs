@@ -1,7 +1,10 @@
 ﻿//
 //  ModelRootHeader.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -80,7 +83,7 @@ namespace Warcraft.WMO.RootFile
         /// <summary>
         /// Gets or sets the ID of the WMO information.
         /// </summary>
-        public ForeignKey<uint> WMOID { get; set; }
+        public ForeignKey<uint> WMOID { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the model's complete bounding box.

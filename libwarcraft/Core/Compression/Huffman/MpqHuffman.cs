@@ -6,6 +6,8 @@ using System;
 using System.IO;
 using Warcraft.Core.Compression.ADPCM;
 
+#nullable disable
+
 namespace Warcraft.Core.Compression.Huffman
 {
     /// <summary>
@@ -347,3 +349,5 @@ namespace Warcraft.Core.Compression.Huffman
         }
     }
 }
+
+#nullable enable

@@ -1,7 +1,10 @@
 ﻿//
 //  DoodadInstance.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -34,7 +37,7 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <summary>
         /// Gets or sets the name of the doodad instance.
         /// </summary>
-        public string Name
+        public string? Name
         {
             get;
             set;

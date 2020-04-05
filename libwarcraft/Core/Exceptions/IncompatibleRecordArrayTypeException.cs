@@ -1,7 +1,10 @@
 //
 //  IncompatibleRecordArrayTypeException.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -29,7 +32,7 @@ namespace Warcraft.Core
         /// <summary>
         /// Gets the incompatible type.
         /// </summary>
-        public Type IncompatibType { get; }
+        public Type? IncompatibType { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IncompatibleRecordArrayTypeException"/> class, along with a specified

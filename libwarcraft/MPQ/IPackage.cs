@@ -1,7 +1,10 @@
 ﻿//
 //  IPackage.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
 using Warcraft.MPQ.FileInfo;
@@ -39,16 +44,7 @@ namespace Warcraft.MPQ
         /// <returns>true if the file was successfully extracted; Otherwise, false.</returns>
         [PublicAPI]
         [ContractAnnotation("=> false, data : null; => true, data : notnull")]
-        bool TryExtractFile([NotNull] string filePath, [CanBeNull] out byte[] data);
-
-        /// <summary>
-        /// Extract the file at <paramref name="filePath"/> from the package.
-        /// </summary>
-        /// <returns>The bytes contained in the file.</returns>
-        /// <param name="filePath">The full path to the file in the package.</param>
-        /// <exception cref="FileNotFoundException">Thrown if the file is not present in the package.</exception>
-        [PublicAPI, NotNull]
-        byte[] ExtractFile([NotNull] string filePath);
+        bool TryExtractFile(string filePath, [NotNullWhen(true)] out byte[]? data);
 
         /// <summary>
         /// Determines whether this package has a file list.
@@ -62,7 +58,7 @@ namespace Warcraft.MPQ
         /// that one is prioritized over the one stored in the archive.
         /// </summary>
         /// <returns>The file list.</returns>
-        [PublicAPI, NotNull, ItemNotNull]
+        [PublicAPI]
         IEnumerable<string> GetFileList();
 
         /// <summary>
@@ -71,7 +67,7 @@ namespace Warcraft.MPQ
         /// <returns><c>true</c>, if the file exists, <c>false</c> otherwise.</returns>
         /// <param name="filePath">The full path to the file.</param>
         [PublicAPI]
-        bool ContainsFile([NotNull] string filePath);
+        bool ContainsFile(string filePath);
 
         /// <summary>
         /// Attempts to retrieve the file info of the provided path.
@@ -82,15 +78,6 @@ namespace Warcraft.MPQ
         /// <exception cref="FileNotFoundException">Thrown if the file is not present in the package.</exception>
         [PublicAPI]
         [ContractAnnotation("=> false, fileInfo : null; => true, fileInfo : notnull")]
-        bool TryGetFileInfo([NotNull] string filePath, out MPQFileInfo fileInfo);
-
-        /// <summary>
-        /// Gets the file info of the provided path.
-        /// </summary>
-        /// <returns>The file info.</returns>
-        /// <param name="filePath">The full path to the file.</param>
-        /// <exception cref="FileNotFoundException">Thrown if the file is not present in the package.</exception>
-        [PublicAPI, NotNull]
-        MPQFileInfo GetFileInfo([NotNull] string filePath);
+        bool TryGetFileInfo(string filePath, [NotNullWhen(true)] out MPQFileInfo? fileInfo);
     }
 }

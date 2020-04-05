@@ -1,7 +1,10 @@
 //
 //  SoundAmbianceRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -33,12 +36,12 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the ambiance sound to play during the day.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-        public ForeignKey<uint> AmbianceDay { get; set; }
+        public ForeignKey<uint> AmbianceDay { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the ambiance sound to play during the night.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-        public ForeignKey<uint> AmbianceNight { get; set; }
+        public ForeignKey<uint> AmbianceNight { get; set; } = null!;
     }
 }

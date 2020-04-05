@@ -1,7 +1,10 @@
 ﻿//
 //  InheritanceChainComparer.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -26,11 +29,26 @@ namespace Warcraft.Core.Reflection.DBC
     /// Compares types by their inheritance chain. A subclass is considered more (that is, more derived) than a parent
     /// class.
     /// </summary>
-    public class InheritanceChainComparer : IComparer<Type>
+    public class InheritanceChainComparer : IComparer<Type?>
     {
         /// <inheritdoc />
-        public int Compare(Type x, Type y)
+        public int Compare(Type? x, Type? y)
         {
+            if (x == y)
+            {
+                return 0;
+            }
+
+            if (x is null)
+            {
+                return 1;
+            }
+
+            if (y is null)
+            {
+                return -1;
+            }
+
             if (x.IsSubclassOf(y))
             {
                 return 1;

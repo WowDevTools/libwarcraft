@@ -1,7 +1,10 @@
 //
 //  DBC.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -33,7 +36,7 @@ namespace Warcraft.DBC
     /// DBC file handler. Parses and presents DBC files in a statically typed, easy to use fashion.
     /// </summary>
     /// <typeparam name="TRecord">The record type.</typeparam>
-    public class DBC<TRecord> : IDBC, IReadOnlyList<TRecord> where TRecord : DBCRecord, new()
+    public class DBC<TRecord> : IDBC, IReadOnlyList<TRecord?> where TRecord : DBCRecord, new()
     {
         /// <summary>
         /// The header of the database file. Describes the sizes and field counts of the records in the database.
@@ -85,7 +88,7 @@ namespace Warcraft.DBC
         /// <summary>
         /// The records in the database. Used as a procedural cache.
         /// </summary>
-        private readonly List<TRecord> _records;
+        private readonly List<TRecord?> _records;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DBC{TRecord}"/> class.
@@ -110,7 +113,7 @@ namespace Warcraft.DBC
                 }
             }
 
-            _records = new List<TRecord>(Count);
+            _records = new List<TRecord?>(Count);
 
             // Initialize the record list with null values
             for (var i = 0; i < Count; ++i)
@@ -124,9 +127,9 @@ namespace Warcraft.DBC
         /// </summary>
         /// <returns>The record.</returns>
         /// <param name="id">Primary key ID.</param>
-        public TRecord GetRecordByID(int id)
+        public TRecord? GetRecordByID(int id)
         {
-            return this.FirstOrDefault(record => record.ID == id);
+            return this.FirstOrDefault(record => record?.ID == id);
         }
 
         /// <summary>
@@ -185,7 +188,7 @@ namespace Warcraft.DBC
         }
 
         /// <inheritdoc />
-        public IEnumerator<TRecord> GetEnumerator()
+        public IEnumerator<TRecord?> GetEnumerator()
         {
             return new DBCEnumerator<TRecord>(this, _databaseContents, _stringBlockOffset);
         }
@@ -201,7 +204,7 @@ namespace Warcraft.DBC
             {
                 if (HasCachedRecordAtIndex(i))
                 {
-                    return _records[i];
+                    return _records[i] !;
                 }
 
                 using (var databaseReader = new BinaryReader(new MemoryStream(_databaseContents)))

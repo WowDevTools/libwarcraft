@@ -1,7 +1,10 @@
 ﻿//
 //  MapRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -35,7 +38,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the directory under which the map is stored.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference Directory { get; set; }
+        public StringReference Directory { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the type of instance this map is.
@@ -59,7 +62,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the name of the map.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public LocalizedStringReference MapName { get; set; }
+        public LocalizedStringReference MapName { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the minimum level of the map.
@@ -106,28 +109,28 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.AreaTable, nameof(ID))]
-        public ForeignKey<uint> AreaTableID { get; set; }
+        public ForeignKey<uint> AreaTableID { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the description of the map.
         /// TODO: Unknown behaviour, improve comment.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public LocalizedStringReference MapDescription1 { get; set; }
+        public LocalizedStringReference MapDescription1 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the description of the map.
         /// TODO: Unknown behaviour, improve comment.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public LocalizedStringReference MapDescription2 { get; set; }
+        public LocalizedStringReference MapDescription2 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the ID of the loading screen for this map.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.LoadingScreens, nameof(ID))]
-        public ForeignKey<uint> LoadingScreenID { get; set; }
+        public ForeignKey<uint> LoadingScreenID { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the raid offset.
@@ -161,26 +164,26 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the text displayed to players that do not meet the map requirements.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
-        public LocalizedStringReference RequirementText { get; set; }
+        public LocalizedStringReference RequirementText { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the text displayed to players that do not meet the Heroic requirements.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
-        public LocalizedStringReference HeroicText { get; set; }
+        public LocalizedStringReference HeroicText { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets an unknown piece of text.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
-        public LocalizedStringReference EmptyText2 { get; set; }
+        public LocalizedStringReference EmptyText2 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the parent map.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade)]
         [ForeignKeyInfo(DatabaseName.Map, nameof(ID))]
-        public ForeignKey<int> ParentMap { get; set; }
+        public ForeignKey<int> ParentMap { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the entrance coordinates of the map.

@@ -1,7 +1,10 @@
 //
 //  ModelMaterial.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -77,7 +80,7 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <summary>
         /// Gets or sets the ground type of the material.
         /// </summary>
-        public ForeignKey<uint> GroundType { get; set; }
+        public ForeignKey<uint> GroundType { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the offset to the specular texture.
@@ -121,7 +124,7 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <summary>
         /// Gets or sets the name of the diffuse texture.
         /// </summary>
-        public string DiffuseTexture
+        public string? DiffuseTexture
         {
             get;
             set;
@@ -130,7 +133,7 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <summary>
         /// Gets or sets the name of the environment map texture.
         /// </summary>
-        public string EnvironmentMapTexture
+        public string? EnvironmentMapTexture
         {
             get;
             set;
@@ -139,7 +142,7 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <summary>
         /// Gets or sets the name of the specularity texture.
         /// </summary>
-        public string SpecularTexture
+        public string? SpecularTexture
         {
             get;
             set;

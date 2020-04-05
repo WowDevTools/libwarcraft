@@ -1,7 +1,10 @@
 //
 //  WMOAreaTableRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -53,35 +56,35 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundProviderPreferences, nameof(ID))]
-        public ForeignKey<uint> SoundProviderPref { get; set; }
+        public ForeignKey<uint> SoundProviderPref { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the underwater sound settings of the area.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundProviderPreferences, nameof(ID))]
-        public ForeignKey<uint> SoundProviderPrefUnderwater { get; set; }
+        public ForeignKey<uint> SoundProviderPrefUnderwater { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the ambiance in the area.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundAmbiance, nameof(ID))]
-        public ForeignKey<uint> AmbianceID { get; set; }
+        public ForeignKey<uint> AmbianceID { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the music in the area.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.ZoneMusic, nameof(ID))]
-        public ForeignKey<uint> ZoneMusic { get; set; }
+        public ForeignKey<uint> ZoneMusic { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the intro sound of the area.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.ZoneIntroMusicTable, nameof(ID))]
-        public ForeignKey<uint> IntroSound { get; set; }
+        public ForeignKey<uint> IntroSound { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the flags of the area.
@@ -94,13 +97,13 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.AreaTable, nameof(ID))]
-        public ForeignKey<uint> AreaTableID { get; set; }
+        public ForeignKey<uint> AreaTableID { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the name of the area.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public LocalizedStringReference AreaName { get; set; }
+        public LocalizedStringReference AreaName { get; set; } = null!;
 
         /*
             Cataclysm and up
@@ -111,21 +114,21 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordField(WarcraftVersion.Cataclysm)]
         [ForeignKeyInfo(DatabaseName.ZoneIntroMusicTable, nameof(ID))]
-        public ForeignKey<uint> UnderwaterIntroSound { get; set; }
+        public ForeignKey<uint> UnderwaterIntroSound { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the underwater zone music.
         /// </summary>
         [RecordField(WarcraftVersion.Cataclysm)]
         [ForeignKeyInfo(DatabaseName.ZoneMusic, nameof(ID))]
-        public ForeignKey<uint> UnderwaterZoneMusic { get; set; }
+        public ForeignKey<uint> UnderwaterZoneMusic { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the ambiance underwater.
         /// </summary>
         [RecordField(WarcraftVersion.Cataclysm)]
         [ForeignKeyInfo(DatabaseName.SoundAmbiance, nameof(ID))]
-        public ForeignKey<uint> UnderwaterAmbiance { get; set; }
+        public ForeignKey<uint> UnderwaterAmbiance { get; set; } = null!;
 
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()

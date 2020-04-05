@@ -1,7 +1,10 @@
 ﻿//
 //  LiquidTypeRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -37,7 +40,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the name of the liquid body.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference Name { get; set; }
+        public StringReference Name { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the flags of the liquid body.
@@ -60,14 +63,14 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordField(WarcraftVersion.Wrath)]
         [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-        public ForeignKey<uint> Sound { get; set; }
+        public ForeignKey<uint> Sound { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the spell effect applied to creatures in the liquid body.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.Spell, nameof(ID))]
-        public ForeignKey<uint> SpellEffect { get; set; }
+        public ForeignKey<uint> SpellEffect { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the maximum screen-space depth to which underwater fog goes.
@@ -127,25 +130,25 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the textures of the liquid body.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Wrath, Count = 6)]
-        public StringReference[] Textures { get; set; }
+        public StringReference[] Textures { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the colours of the liquid body.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Wrath, Count = 2)]
-        public int[] Colour { get; set; }
+        public int[] Colour { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets a set of unknown values.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Wrath, Count = 18)]
-        public float[] Unknown1 { get; set; }
+        public float[] Unknown1 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets another set of unknown values.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Wrath, Count = 4)]
-        public int[] Unknown2 { get; set; }
+        public int[] Unknown2 { get; set; } = null!;
 
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()

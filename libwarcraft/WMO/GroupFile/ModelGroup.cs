@@ -1,7 +1,10 @@
 //
 //  ModelGroup.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -46,7 +49,7 @@ namespace Warcraft.WMO.GroupFile
         /// <summary>
         /// Gets or sets the name of the model group.
         /// </summary>
-        public string Name
+        public string? Name
         {
             get;
             set;
@@ -55,7 +58,7 @@ namespace Warcraft.WMO.GroupFile
         /// <summary>
         /// Gets or sets the descriptive name of the model group.
         /// </summary>
-        public string DescriptiveName
+        public string? DescriptiveName
         {
             get;
             set;
@@ -119,7 +122,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>A list of vertex positions.</returns>
         public IEnumerable<Vector3> GetVertices()
         {
-            return GroupData.Vertices.Vertices;
+            return GroupData.Vertices!.Vertices;
         }
 
         /// <summary>
@@ -128,7 +131,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>A list of vertex normals.</returns>
         public IEnumerable<Vector3> GetNormals()
         {
-            return GroupData.Normals.Normals;
+            return GroupData.Normals!.Normals;
         }
 
         /// <summary>
@@ -137,7 +140,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>A list of texture coordinates.</returns>
         public IEnumerable<Vector2> GetTextureCoordinates()
         {
-            return GroupData.TextureCoordinates.TextureCoordinates;
+            return GroupData.TextureCoordinates!.TextureCoordinates;
         }
 
         /// <summary>
@@ -146,7 +149,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>A list of the vertex indices.</returns>
         public IEnumerable<ushort> GetVertexIndices()
         {
-            return GroupData.VertexIndices.VertexIndices;
+            return GroupData.VertexIndices!.VertexIndices;
         }
 
         /// <summary>
@@ -155,7 +158,7 @@ namespace Warcraft.WMO.GroupFile
         /// <returns>A list of the render batches.</returns>
         public IEnumerable<RenderBatch> GetRenderBatches()
         {
-            return GroupData.RenderBatches.RenderBatches;
+            return GroupData.RenderBatches!.RenderBatches;
         }
 
         /// <summary>

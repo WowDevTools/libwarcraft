@@ -1,7 +1,10 @@
 //
 //  ZoneIntroMusicTableRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -34,14 +37,14 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the name of the intro.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference Name { get; set; }
+        public StringReference Name { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the sound track to use.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-        public ForeignKey<uint> Sound { get; set; }
+        public ForeignKey<uint> Sound { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the priority of the sound.

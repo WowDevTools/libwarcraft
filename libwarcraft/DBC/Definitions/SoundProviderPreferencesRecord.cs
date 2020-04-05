@@ -1,7 +1,10 @@
 //
 //  SoundProviderPreferencesRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -34,7 +37,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the description of the reverb settings.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference Description { get; set; }
+        public StringReference Description { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the flags of the reverb settings.

@@ -1,7 +1,10 @@
 ﻿//
 //  CreatureDisplayInfoExtraRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -35,13 +38,13 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the race the display info is valid for.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ChrRaces, nameof(ID))]
-        public ForeignKey<uint> Race { get; set; }
+        public ForeignKey<uint> Race { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the creature type the display info is valid for.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath), ForeignKeyInfo(DatabaseName.CreatureType, nameof(ID))]
-        public ForeignKey<uint> CreatureType { get; set; }
+        public ForeignKey<uint> CreatureType { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets a value indicating whether the display info is for a female character.
@@ -65,13 +68,13 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the hair type.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.CharHairGeosets, nameof(ID))]
-        public ForeignKey<uint> HairType { get; set; }
+        public ForeignKey<uint> HairType { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the hair variation.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.CharSections, nameof(ID))]
-        public ForeignKey<uint> HairVariation { get; set; }
+        public ForeignKey<uint> HairVariation { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the beard type.
@@ -83,67 +86,67 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the equipped helmet.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Helmet { get; set; }
+        public ForeignKey<uint> Helmet { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the equipped shoulder pad.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Shoulder { get; set; }
+        public ForeignKey<uint> Shoulder { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the equipped shirt.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Shirt { get; set; }
+        public ForeignKey<uint> Shirt { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the equipped cuirass.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Cuirass { get; set; }
+        public ForeignKey<uint> Cuirass { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the equipped belt.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Belt { get; set; }
+        public ForeignKey<uint> Belt { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the equipped leggings.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Legs { get; set; }
+        public ForeignKey<uint> Legs { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the equipped boots.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Boots { get; set; }
+        public ForeignKey<uint> Boots { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the equipped wristguard.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Wrist { get; set; }
+        public ForeignKey<uint> Wrist { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the equipped gloves.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Gloves { get; set; }
+        public ForeignKey<uint> Gloves { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the equipped tabard.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Tabard { get; set; }
+        public ForeignKey<uint> Tabard { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the equipped cape.
         /// </summary>
         [RecordField(WarcraftVersion.Wrath), ForeignKeyInfo(DatabaseName.ItemDisplayInfo, nameof(ID))]
-        public ForeignKey<uint> Cape { get; set; }
+        public ForeignKey<uint> Cape { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the display flags.
@@ -155,7 +158,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the baked name of the display info.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference BakedName { get; set; }
+        public StringReference BakedName { get; set; } = null!;
 
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()

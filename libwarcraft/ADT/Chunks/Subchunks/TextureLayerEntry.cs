@@ -1,7 +1,10 @@
 ﻿//
 //  TextureLayerEntry.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -47,7 +50,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <summary>
         /// Gets or sets the ground effect ID. This is a foreign key entry into GroundEffectTexture::ID.
         /// </summary>
-        public ForeignKey<ushort> EffectID { get; set; }
+        public ForeignKey<ushort> EffectID { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets a currently unused value.

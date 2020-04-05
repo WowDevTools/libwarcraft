@@ -1,7 +1,10 @@
 ﻿//
 //  FileDeletedException.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -29,7 +32,7 @@ namespace Warcraft.Core
         /// <summary>
         /// Gets the path to the deleted file.
         /// </summary>
-        public string FilePath { get; }
+        public string? FilePath { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileDeletedException"/> class, along with a specified

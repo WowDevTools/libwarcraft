@@ -1,7 +1,10 @@
 ﻿//
 //  TerrainMapChunkOffsets.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -62,9 +65,9 @@ namespace Warcraft.ADT.Chunks
                 using (var br = new BinaryReader(ms))
                 {
                     // read size, n of entries is size / 16
-                    var nEntries = br.BaseStream.Length / 16;
+                    var entryCount = br.BaseStream.Length / 16;
 
-                    for (var i = 0; i < nEntries; ++i)
+                    for (var i = 0; i < entryCount; ++i)
                     {
                         var entry = new MapChunkOffsetEntry
                         {

@@ -1,7 +1,10 @@
 ﻿//
 //  TerrainLiquidInstance.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -34,12 +37,12 @@ namespace Warcraft.ADT.Chunks
         /// <summary>
         /// Gets or sets the type of the liquid. Foreign key reference to LiquidTypeRec::ID.
         /// </summary>
-        public ForeignKey<ushort> LiquidType { get; set; }
+        public ForeignKey<ushort> LiquidType { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the liquid object. Foreign key reference to LiquidObjectRec::ID.
         /// </summary>
-        public ForeignKey<ushort> LiquidObject { get; set; }
+        public ForeignKey<ushort> LiquidObject { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the height level range.
@@ -91,7 +94,7 @@ namespace Warcraft.ADT.Chunks
         /// <summary>
         /// Gets or sets the vertex data.
         /// </summary>
-        public LiquidVertexData VertexData { get; set; }
+        public LiquidVertexData? VertexData { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TerrainLiquidInstance"/> class.

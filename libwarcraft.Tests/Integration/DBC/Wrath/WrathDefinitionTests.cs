@@ -1,5 +1,5 @@
 ﻿//
-//  LiquidFlags.cs
+//  WrathDefinitionTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,39 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
+using NUnit.Framework;
+using Warcraft.Core;
 
-namespace Warcraft.ADT.Chunks.Subchunks
+#pragma warning disable 1591, SA1600
+
+namespace Warcraft.Integration.DBC.Wrath
 {
-    /// <summary>
-    /// Holds flags for the liquid chunk.
-    /// </summary>
-    [Flags]
-    public enum LiquidFlags : byte
+    [TestFixture]
+    public class WrathDefinitionTests : RecordDefinitionTests
     {
-        /// <summary>
-        /// The liquid is present, but hidden.
-        /// </summary>
-        Hidden = 0x08,
-
-        /// <summary>
-        /// Unknown.
-        /// </summary>
-        Unknown1 = 0x10,
-
-        /// <summary>
-        /// Unknown.
-        /// </summary>
-        Unknown2 = 0x20,
-
-        /// <summary>
-        /// The liquid is fishable.
-        /// </summary>
-        Fishable = 0x40,
-
-        /// <summary>
-        /// The liquid is shared.
-        /// </summary>
-        Shared = 0x80
+        [SetUp]
+        public override void Setup()
+        {
+            Version = WarcraftVersion.Wrath;
+        }
     }
 }

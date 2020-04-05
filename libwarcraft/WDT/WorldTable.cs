@@ -1,7 +1,10 @@
 ﻿//
 //  WorldTable.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -55,7 +58,7 @@ namespace Warcraft.WDT
         /// <summary>
         /// Gets or sets the global model placement info.
         /// </summary>
-        public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo { get; set; }
+        public TerrainWorldModelObjectPlacementInfo? WorldModelObjectPlacementInfo { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldTable"/> class.

@@ -1,7 +1,10 @@
 ﻿//
 //  ExtendedIO.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,8 +19,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-
-// ReSharper disable MemberCanBePrivate.Global
 
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,8 @@ using Warcraft.MDX.Geometry;
 using Warcraft.MDX.Geometry.Skin;
 using Warcraft.MDX.Visual;
 using Warcraft.MDX.Visual.FX;
+
+using Range = Warcraft.Core.Structures.Range;
 
 namespace Warcraft.Core.Extensions
 {
@@ -609,7 +612,7 @@ namespace Warcraft.Core.Extensions
         /// <param name="binaryReader">The reader.</param>
         public static ShortPlane ReadShortPlane(this BinaryReader binaryReader)
         {
-            var shortPlane = default(ShortPlane);
+            var coordinates = new List<List<short>>();
             for (var y = 0; y < 3; ++y)
             {
                 var coordinateRow = new List<short>();
@@ -618,10 +621,10 @@ namespace Warcraft.Core.Extensions
                     coordinateRow.Add(binaryReader.ReadInt16());
                 }
 
-                shortPlane.Coordinates.Add(coordinateRow);
+                coordinates.Add(coordinateRow);
             }
 
-            return shortPlane;
+            return new ShortPlane(coordinates);
         }
 
         /// <summary>
@@ -943,7 +946,8 @@ namespace Warcraft.Core.Extensions
         /// <typeparam name="T">The chunk type.</typeparam>
         /// <param name="binaryWriter">The writer.</param>
         /// <param name="chunk">The chunk.</param>
-        public static void WriteIFFChunk<T>(this BinaryWriter binaryWriter, T chunk) where T : IIFFChunk, IBinarySerializable
+        public static void WriteIFFChunk<T>(this BinaryWriter binaryWriter, T chunk)
+            where T : IIFFChunk, IBinarySerializable
         {
             var serializedChunk = chunk.Serialize();
 

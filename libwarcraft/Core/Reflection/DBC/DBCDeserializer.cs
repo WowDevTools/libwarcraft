@@ -1,7 +1,10 @@
 ﻿//
 //  DBCDeserializer.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -98,7 +101,7 @@ namespace Warcraft.Core.Reflection.DBC
 
             if (propertyType == specificListType)
             {
-                var list = (IList)Activator.CreateInstance(propertyType);
+                var list = Activator.CreateInstance(propertyType) as IList ?? throw new InvalidOperationException();
                 foreach (var value in values)
                 {
                     list.Add(value);
@@ -168,7 +171,7 @@ namespace Warcraft.Core.Reflection.DBC
                 }
             }
 
-            return fieldValue;
+            return fieldValue ?? throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -198,7 +201,7 @@ namespace Warcraft.Core.Reflection.DBC
                 return wrappingType;
             }
 
-            Type innerType = null;
+            Type? innerType = null;
             if (wrappingType.IsGenericType)
             {
                 // Something implementing IList<T>, or a ForeignKey
@@ -219,6 +222,11 @@ namespace Warcraft.Core.Reflection.DBC
             if (wrappingType == typeof(StringReference) || wrappingType == typeof(LocalizedStringReference))
             {
                 return typeof(uint);
+            }
+
+            if (innerType is null)
+            {
+                throw new InvalidOperationException();
             }
 
             return GetUnderlyingStoredPrimitiveType(innerType);

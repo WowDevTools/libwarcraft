@@ -1,7 +1,10 @@
 ﻿//
 //  MPQ.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
@@ -62,20 +66,20 @@ namespace Warcraft.MPQ
         /// Gets or sets the header of the MPQ archive. Contains information about sizes and offsets of relational structures
         /// such as the hash and block table in the archive.
         /// </summary>
-        [PublicAPI, NotNull]
+        [PublicAPI, JetBrains.Annotations.NotNull]
         public MPQHeader Header { get; set; }
 
         /// <summary>
         /// Gets or sets the hash table. Contains hash entries for all files stored in the archive, and for any overrides.
         /// </summary>
-        [PublicAPI, NotNull]
+        [PublicAPI, JetBrains.Annotations.NotNull]
         public HashTable ArchiveHashTable { get; set; }
 
         /// <summary>
         /// Gets or sets the block table. Contains block entries for all files stored in the archive. These entries contain
         /// information about the state of the file.
         /// </summary>
-        [PublicAPI, NotNull]
+        [PublicAPI, JetBrains.Annotations.NotNull]
         public BlockTable ArchiveBlockTable { get; set; }
 
         /// <summary>
@@ -84,14 +88,14 @@ namespace Warcraft.MPQ
         /// archives to grow larger than 4GB in size.
         /// </summary>
         [PublicAPI, CanBeNull]
-        public List<ushort> ExtendedBlockTable { get; }
+        public List<ushort>? ExtendedBlockTable { get; }
 
         /// <summary>
         /// The archive reader. A BinaryReader that exists for the lifetime of the MPQ object and handles all
         /// the file reading inside it. As archives are far too big to be loaded into memory all at once,
         /// we seek to the desired parts and read them as we need them.
         /// </summary>
-        [NotNull]
+        [JetBrains.Annotations.NotNull]
         private readonly BinaryReader _archiveReader;
 
         /// <summary>
@@ -99,20 +103,20 @@ namespace Warcraft.MPQ
         /// and may be empty or zeroed for some archives.
         /// </summary>
         [CanBeNull]
-        private ExtendedAttributes _fileAttributes;
+        private ExtendedAttributes? _fileAttributes;
 
         /// <summary>
         /// The external listfile. Instead of extracting the listfile from the archive, the user can provide one
         /// to be used instead. This file is prioritized over the one stored in the archive.
         /// </summary>
         [CanBeNull, ItemNotNull]
-        private List<string> _externalListfile;
+        private List<string>? _externalListfile;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Warcraft.MPQ.MPQ"/> class.
         /// </summary>
         /// <param name="mpqStream">An open stream to data containing an MPQ archive.</param>
-        public MPQ([NotNull] Stream mpqStream)
+        public MPQ([JetBrains.Annotations.NotNull] Stream mpqStream)
         {
             _archiveReader = new BinaryReader(mpqStream);
 
@@ -185,43 +189,56 @@ namespace Warcraft.MPQ
         }
 
         /// <summary>
-        /// Gets the extended file attributes stored in the archive, if there are any.
+        /// Attempts to get the extended file attributes stored in the archive.
         /// </summary>
-        /// <returns>The attributes.</returns>
-        [PublicAPI, CanBeNull]
-        public ExtendedAttributes GetFileAttributes()
+        /// <param name="extendedAttributes">The attributes.</param>
+        /// <returns>true if a set of extended attributes were successfully extracted; otherwise, false.</returns>
+        [PublicAPI]
+        public bool TryGetFileAttributes([NotNullWhen(true)] out ExtendedAttributes? extendedAttributes)
         {
             ThrowIfDisposed();
+            extendedAttributes = null;
 
             if (!ContainsFile(ExtendedAttributes.InternalFileName))
             {
-                throw new FileNotFoundException(
-                    "The archive does not contain any extended attributes.",
-                    ExtendedAttributes.InternalFileName
-                );
+                return false;
             }
 
             if (_fileAttributes != null)
             {
-                return _fileAttributes;
+                extendedAttributes = _fileAttributes;
+                return true;
             }
 
-            var attributeData = ExtractFile(ExtendedAttributes.InternalFileName);
-            _fileAttributes = new ExtendedAttributes(attributeData, Header.BlockTableEntryCount);
+            if (!TryExtractFile(ExtendedAttributes.InternalFileName, out var attributeData))
+            {
+                return false;
+            }
 
-            return _fileAttributes;
+            _fileAttributes = new ExtendedAttributes(attributeData, Header.BlockTableEntryCount);
+            extendedAttributes = _fileAttributes;
+
+            return true;
         }
 
         /// <summary>
-        /// Gets the weak signature stored in the archive.
+        /// Attempts to get the weak signature stored in the archive.
         /// </summary>
-        /// <returns>The weak signature.</returns>
-        [PublicAPI, NotNull]
-        public WeakPackageSignature GetWeakSignature()
+        /// <param name="signature">The weak signature.</param>
+        /// <returns>true if a signature was successfully extracted; otherwise, false.</returns>
+        [PublicAPI]
+        public bool GetWeakSignature([NotNullWhen(true)] out WeakPackageSignature? signature)
         {
             ThrowIfDisposed();
+            signature = null;
 
-            return new WeakPackageSignature(ExtractFile(WeakPackageSignature.InternalFilename));
+            if (!TryExtractFile(WeakPackageSignature.InternalFilename, out var fileData))
+            {
+                return false;
+            }
+
+            signature = new WeakPackageSignature(fileData);
+            return true;
         }
 
         /// <inheritdoc />
@@ -249,7 +266,7 @@ namespace Warcraft.MPQ
         /// Gets the internal file list. If no listfile is stored in the archive, this may not return anything.
         /// </summary>
         /// <returns>The internal file list.</returns>
-        [PublicAPI, NotNull, ItemNotNull]
+        [PublicAPI, JetBrains.Annotations.NotNull, ItemNotNull]
         public IEnumerable<string> GetInternalFileList()
         {
             ThrowIfDisposed();
@@ -259,13 +276,16 @@ namespace Warcraft.MPQ
                 yield break;
             }
 
-            var listfileBytes = ExtractFile("(listfile)");
+            if (!TryExtractFile("(listfile)", out var listfileBytes))
+            {
+                yield break;
+            }
 
             using (var listfileStream = new MemoryStream(listfileBytes))
             {
                 using (TextReader tr = new StreamReader(listfileStream))
                 {
-                    string line;
+                    string? line;
                     while ((line = tr.ReadLine()) != null)
                     {
                         yield return line;
@@ -280,7 +300,7 @@ namespace Warcraft.MPQ
         /// <returns>The external file list.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the archive doesn't have an external file list.</exception>
         /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
-        [PublicAPI, NotNull, ItemNotNull]
+        [PublicAPI, JetBrains.Annotations.NotNull, ItemNotNull]
         public IEnumerable<string> GetExternalFileList()
         {
             ThrowIfDisposed();
@@ -299,7 +319,7 @@ namespace Warcraft.MPQ
         /// <param name="inExternalListfile">In external listfile.</param>
         /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
         [PublicAPI]
-        public void SetExternalFileList([NotNull, ItemNotNull] List<string> inExternalListfile)
+        public void SetExternalFileList([JetBrains.Annotations.NotNull, ItemNotNull] List<string> inExternalListfile)
         {
             ThrowIfDisposed();
 
@@ -329,7 +349,7 @@ namespace Warcraft.MPQ
         }
 
         /// <inheritdoc />
-        public bool TryGetFileInfo(string filePath, out MPQFileInfo fileInfo)
+        public bool TryGetFileInfo(string filePath, [NotNullWhen(true)] out MPQFileInfo? fileInfo)
         {
             fileInfo = null;
 
@@ -351,7 +371,7 @@ namespace Warcraft.MPQ
                     filePath,
                     hashEntry,
                     blockEntry,
-                    _fileAttributes.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]
+                    _fileAttributes!.FileAttributes[(int)hashEntry.GetBlockEntryIndex()]
                 );
             }
 
@@ -359,50 +379,8 @@ namespace Warcraft.MPQ
         }
 
         /// <inheritdoc />
-        /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
         [PublicAPI]
-        public MPQFileInfo GetFileInfo(string filePath)
-        {
-            ThrowIfDisposed();
-
-            if (!TryGetFileInfo(filePath, out var fileInfo))
-            {
-                throw new FileNotFoundException("The given file was not present in the archive.", filePath);
-            }
-
-            return fileInfo;
-        }
-
-        /// <inheritdoc />
-        /// <exception cref="ObjectDisposedException">Thrown if the archive has been disposed.</exception>
-        /// <exception cref="FileDeletedException">Thrown if the file is deleted in the archive.</exception>
-        [PublicAPI]
-        public byte[] ExtractFile(string filePath)
-        {
-            ThrowIfDisposed();
-
-            if (!TryExtractFile(filePath, out var data))
-            {
-                if (!ArchiveHashTable.TryFindEntry(filePath, out var fileHashEntry))
-                {
-                    throw new FileNotFoundException("No file found at the given path.", filePath);
-                }
-
-                var fileBlockEntry = ArchiveBlockTable.GetEntry((int)fileHashEntry.GetBlockEntryIndex());
-                if (fileBlockEntry.IsDeleted())
-                {
-                    throw new FileDeletedException("The given file is deleted.", filePath);
-                }
-
-                throw new IOException("An unknown failure prevented the file from being extracted.");
-            }
-
-            return data;
-        }
-
-        /// <inheritdoc />
-        [PublicAPI]
-        public bool TryExtractFile(string filePath, out byte[] data)
+        public bool TryExtractFile(string filePath, [NotNullWhen(true)] out byte[]? data)
         {
             ThrowIfDisposed();
 
@@ -428,7 +406,7 @@ namespace Warcraft.MPQ
             long adjustedBlockOffset;
             if (Header.GetFormat() == MPQFormat.ExtendedV1 && RequiresExtendedFormat())
             {
-                var upperOffsetBits = ExtendedBlockTable[(int)fileHashEntry.GetBlockEntryIndex()];
+                var upperOffsetBits = ExtendedBlockTable![(int)fileHashEntry.GetBlockEntryIndex()];
                 adjustedBlockOffset = (long)fileBlockEntry.GetExtendedBlockOffset(upperOffsetBits);
             }
             else
@@ -472,10 +450,10 @@ namespace Warcraft.MPQ
         /// <param name="adjustedBlockOffset">The offset to where the file sectors begin.</param>
         /// <returns>The complete file data.</returns>
         /// <exception cref="InvalidFileSectorTableException">Thrown if the sector table is found to be inconsistent in any way.</exception>
-        [NotNull]
+        [JetBrains.Annotations.NotNull]
         private byte[] ExtractCompressedSectoredFile
         (
-            [NotNull] BlockTableEntry fileBlockEntry,
+            [JetBrains.Annotations.NotNull] BlockTableEntry fileBlockEntry,
             uint fileKey,
             long adjustedBlockOffset
         )
@@ -587,10 +565,10 @@ namespace Warcraft.MPQ
         /// <param name="fileKey">The encryption key of the file. Optional, in the case that the file is not encrypted.</param>
         /// <returns>A list of sector offsets.</returns>
         /// <exception cref="InvalidFileSectorTableException">Thrown if the sector table is found to be inconsistent in any way.</exception>
-        [NotNull]
+        [JetBrains.Annotations.NotNull]
         private List<uint> ReadFileSectorOffsetTable
         (
-            [NotNull] BlockTableEntry fileBlockEntry,
+            [JetBrains.Annotations.NotNull] BlockTableEntry fileBlockEntry,
             uint fileKey = 0
         )
         {
@@ -648,10 +626,10 @@ namespace Warcraft.MPQ
         /// <param name="fileBlockEntry">The block entry of the file.</param>
         /// <param name="fileKey">The encryption key of the file.</param>
         /// <returns>The complete file data.</returns>
-        [NotNull]
+        [JetBrains.Annotations.NotNull]
         private byte[] ExtractUncompressedSectoredFile
         (
-            [NotNull] BlockTableEntry fileBlockEntry,
+            [JetBrains.Annotations.NotNull] BlockTableEntry fileBlockEntry,
             uint fileKey
         )
         {
@@ -698,10 +676,10 @@ namespace Warcraft.MPQ
         /// <param name="fileBlockEntry">The block entry of the file.</param>
         /// <param name="fileKey">The encryption key of the file.</param>
         /// <returns>The complete file data.</returns>
-        [NotNull]
+        [JetBrains.Annotations.NotNull]
         private byte[] ExtractSingleUnitFile
         (
-            [NotNull] BlockTableEntry fileBlockEntry,
+            [JetBrains.Annotations.NotNull] BlockTableEntry fileBlockEntry,
             uint fileKey
         )
         {
@@ -728,7 +706,7 @@ namespace Warcraft.MPQ
         /// </summary>
         /// <returns>The number of bytes.</returns>
         /// <param name="sectors">The sectors.</param>
-        private static int CountBytesInSectors([NotNull, ItemNotNull] IEnumerable<byte[]> sectors)
+        private static int CountBytesInSectors([JetBrains.Annotations.NotNull, ItemNotNull] IEnumerable<byte[]> sectors)
         {
             return sectors.Sum(sector => sector.Length);
         }
@@ -738,8 +716,8 @@ namespace Warcraft.MPQ
         /// </summary>
         /// <returns>A byte array representing the final file.</returns>
         /// <param name="sectors">Input file sectors.</param>
-        [NotNull]
-        private static byte[] StitchSectors([NotNull, ItemNotNull] IReadOnlyCollection<byte[]> sectors)
+        [JetBrains.Annotations.NotNull]
+        private static byte[] StitchSectors([JetBrains.Annotations.NotNull, ItemNotNull] IReadOnlyCollection<byte[]> sectors)
         {
             long finalSize = 0;
             foreach (var sector in sectors)
@@ -783,7 +761,7 @@ namespace Warcraft.MPQ
         {
             if (_isDisposed)
             {
-                throw new ObjectDisposedException(ToString(), "Cannot use a disposed archive.");
+                throw new ObjectDisposedException(ToString() ?? nameof(MPQ), "Cannot use a disposed archive.");
             }
         }
 

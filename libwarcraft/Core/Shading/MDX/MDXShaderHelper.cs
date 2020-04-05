@@ -1,7 +1,10 @@
 ﻿//
 //  MDXShaderHelper.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -242,13 +245,13 @@ namespace Warcraft.Core.Shading.MDX
             }
 
             var operationCount = renderBatch.TextureCount;
-            var material = model.Materials[renderBatch.MaterialIndex];
+            var material = model.Materials![renderBatch.MaterialIndex];
 
             ushort newShaderID = 0;
 
             if (!model.GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
             {
-                var textureMapping = model.TextureMappingLookupTable[renderBatch.TextureMappingLookupTableIndex];
+                var textureMapping = model.TextureMappingLookupTable![renderBatch.TextureMappingLookupTableIndex];
                 var isEnvMapped = textureMapping == MDXTextureMappingType.Environment;
                 var nonOpaqueBlendingMode = material.BlendMode != BlendingMode.Opaque;
 
@@ -278,30 +281,30 @@ namespace Warcraft.Core.Shading.MDX
 
             var v19 = new short[] { 0, 0 };
 
-            for (var opIndex = 0; opIndex < operationCount; ++opIndex)
+            for (var operationIndex = 0; operationIndex < operationCount; ++operationIndex)
             {
-                var blendingOverrideIndex = baseShaderID + opIndex;
-                var blendingOverride = model.BlendMapOverrides[blendingOverrideIndex];
+                var blendingOverrideIndex = baseShaderID + operationIndex;
+                var blendingOverride = model.BlendMapOverrides![blendingOverrideIndex];
 
-                if (opIndex == 0 && material.BlendMode == BlendingMode.Opaque)
+                if (operationIndex == 0 && material.BlendMode == BlendingMode.Opaque)
                 {
                     blendingOverride = BlendingMode.Opaque;
                 }
 
-                var textureMappingOverrideIndex = renderBatch.TextureMappingLookupTableIndex + opIndex;
-                var textureSlotOverride = model.TextureMappingLookupTable[textureMappingOverrideIndex];
+                var textureMappingOverrideIndex = renderBatch.TextureMappingLookupTableIndex + operationIndex;
+                var textureSlotOverride = model.TextureMappingLookupTable![textureMappingOverrideIndex];
                 var isEnvMapped = textureSlotOverride == MDXTextureMappingType.Environment;
 
                 if (isEnvMapped)
                 {
-                    v19[opIndex] = (short)((short)blendingOverride | 8);
+                    v19[operationIndex] = (short)((short)blendingOverride | 8);
                 }
                 else
                 {
-                    v19[opIndex] = (short)blendingOverride;
+                    v19[operationIndex] = (short)blendingOverride;
                 }
 
-                if (textureSlotOverride == MDXTextureMappingType.Environment && (opIndex + 1) == operationCount)
+                if (textureSlotOverride == MDXTextureMappingType.Environment && (operationIndex + 1) == operationCount)
                 {
                     newShaderID |= 0x4000;
                 }

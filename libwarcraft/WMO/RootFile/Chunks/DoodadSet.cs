@@ -1,7 +1,10 @@
 ﻿//
 //  DoodadSet.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -29,20 +32,20 @@ namespace Warcraft.WMO.RootFile.Chunks
     /// </summary>
     public class DoodadSet : IBinarySerializable
     {
-        private string _internalName;
+        private string? _internalName;
 
         /// <summary>
         /// Gets or sets the name of the doodad set. This name is stored in the block as binary data, and may not be
         /// longer than 20 characters.
         /// </summary>
         /// <exception cref="ArgumentException">Thrown if the assigned name is longer than 20 characters.</exception>
-        public string Name
+        public string? Name
         {
             get => _internalName;
 
             set
             {
-                if (value.Length > 20)
+                if (value?.Length > 20)
                 {
                     throw new ArgumentException("Doodad set names may not be longer than 20 characters.", nameof(Name));
                 }
@@ -108,7 +111,7 @@ namespace Warcraft.WMO.RootFile.Chunks
             {
                 using (var bw = new BinaryWriter(ms))
                 {
-                    bw.Write(Name.PadRight(20, '\0').ToCharArray());
+                    bw.Write((Name ?? string.Empty).PadRight(20, '\0').ToCharArray());
                     bw.Write(FirstDoodadInstanceIndex);
                     bw.Write(DoodadInstanceCount);
                     bw.Write(Unused);

@@ -1,7 +1,10 @@
 ﻿//
 //  LocalizedStringReference.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -32,82 +35,82 @@ namespace Warcraft.DBC.SpecialFields
         /// <summary>
         /// Gets or sets the reference to the English version of the string.
         /// </summary>
-        public StringReference English { get; set; }
+        public StringReference English { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to the Korean version of the string.
         /// </summary>
-        public StringReference Korean { get; set; }
+        public StringReference Korean { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to the French version of the string.
         /// </summary>
-        public StringReference French { get; set; }
+        public StringReference French { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to the German version of the string.
         /// </summary>
-        public StringReference German { get; set; }
+        public StringReference German { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to the Chinese version of the string.
         /// </summary>
-        public StringReference Chinese { get; set; }
+        public StringReference Chinese { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to the Taiwan version of the string.
         /// </summary>
-        public StringReference Taiwan { get; set; }
+        public StringReference Taiwan { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to the Spanish version of the string.
         /// </summary>
-        public StringReference Spanish { get; set; }
+        public StringReference Spanish { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to the Mexican Spanish version of the string.
         /// </summary>
-        public StringReference SpanishMexican { get; set; }
+        public StringReference SpanishMexican { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to the Russian version of the string.
         /// </summary>
-        public StringReference Russian { get; set; }
+        public StringReference Russian { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to an unknown version of the string.
         /// </summary>
-        public StringReference Unknown1 { get; set; }
+        public StringReference Unknown1 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to the Portugese version of the string.
         /// </summary>
-        public StringReference Portugese { get; set; }
+        public StringReference Portugese { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to the Italian version of the string.
         /// </summary>
-        public StringReference Italian { get; set; }
+        public StringReference Italian { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to an unknown version of the string.
         /// </summary>
-        public StringReference Unknown2 { get; set; }
+        public StringReference Unknown2 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to an unknown version of the string.
         /// </summary>
-        public StringReference Unknown3 { get; set; }
+        public StringReference Unknown3 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to an unknown version of the string.
         /// </summary>
-        public StringReference Unknown4 { get; set; }
+        public StringReference Unknown4 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the reference to an unknown version of the string.
         /// </summary>
-        public StringReference Unknown5 { get; set; }
+        public StringReference Unknown5 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the flags.
@@ -117,7 +120,7 @@ namespace Warcraft.DBC.SpecialFields
         /// <summary>
         /// Gets or sets the locale of the client.
         /// </summary>
-        public StringReference ClientLocale { get; set; }
+        public StringReference ClientLocale { get; set; } = null!;
 
         /// <summary>
         /// Gets the actual localized references.

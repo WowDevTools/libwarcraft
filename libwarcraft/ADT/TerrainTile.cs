@@ -1,7 +1,10 @@
 ﻿//
 //  TerrainTile.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -43,52 +46,52 @@ namespace Warcraft.ADT
         /// <summary>
         /// Gets or sets the contains an array of offsets where MCNKs are in the file.
         /// </summary>
-        public TerrainMapChunkOffsets MapChunkOffsets { get; set; }
+        public TerrainMapChunkOffsets? MapChunkOffsets { get; set; }
 
         /// <summary>
         /// Gets or sets the contains a list of all textures referenced by this ADT.
         /// </summary>
-        public TerrainTextures Textures { get; set; }
+        public TerrainTextures? Textures { get; set; }
 
         /// <summary>
         /// Gets or sets the contains a list of all M2 models refereced by this ADT.
         /// </summary>
-        public TerrainModels Models { get; set; }
+        public TerrainModels? Models { get; set; }
 
         /// <summary>
         /// Gets or sets the contains M2 model indexes for the list in ADTModels (MMDX chunk).
         /// </summary>
-        public TerrainModelIndices ModelIndices { get; set; }
+        public TerrainModelIndices? ModelIndices { get; set; }
 
         /// <summary>
         /// Gets or sets the contains a list of all WMOs referenced by this ADT.
         /// </summary>
-        public TerrainWorldModelObjects WorldModelObjects { get; set; }
+        public TerrainWorldModelObjects? WorldModelObjects { get; set; }
 
         /// <summary>
         /// Gets or sets the contains WMO indexes for the list in ADTWMOs (MWMO chunk).
         /// </summary>
-        public TerrainWorldModelObjectIndices WorldModelObjectIndices { get; set; }
+        public TerrainWorldModelObjectIndices? WorldModelObjectIndices { get; set; }
 
         /// <summary>
         /// Gets or sets the contains position information for all M2 models in this ADT.
         /// </summary>
-        public TerrainModelPlacementInfo ModelPlacementInfo { get; set; }
+        public TerrainModelPlacementInfo? ModelPlacementInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the contains position information for all WMO models in this ADT.
         /// </summary>
-        public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo { get; set; }
+        public TerrainWorldModelObjectPlacementInfo? WorldModelObjectPlacementInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the contains water data for this ADT. This chunk is present in WOTLK chunks and above.
         /// </summary>
-        public TerrainLiquid Liquids { get; set; }
+        public TerrainLiquid? Liquids { get; set; }
 
         /// <summary>
         /// Gets or sets the the texture flags. This chunk is present in WOTLK chunks and above.
         /// </summary>
-        public TerrainTextureFlags TextureFlags { get; set; }
+        public TerrainTextureFlags? TextureFlags { get; set; }
 
         /// <summary>
         /// Gets or sets the contains an array of all MCNKs in this ADT.
@@ -161,6 +164,11 @@ namespace Warcraft.ADT
                     }
 
                     // Read and fill the map chunks
+                    if (MapChunkOffsets is null)
+                    {
+                        return;
+                    }
+
                     foreach (var entry in MapChunkOffsets.Entries)
                     {
                         br.BaseStream.Position = entry.MapChunkOffset;

@@ -1,7 +1,10 @@
 //
 //  ZoneMusicRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -35,7 +38,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the name of the music set.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference SetName { get; set; }
+        public StringReference SetName { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the minimum silence between tracks during the day.
@@ -76,14 +79,14 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-        public ForeignKey<uint> DayMusic { get; set; }
+        public ForeignKey<uint> DayMusic { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the music to use during the night.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundEntries, nameof(ID))]
-        public ForeignKey<uint> NightMusic { get; set; }
+        public ForeignKey<uint> NightMusic { get; set; } = null!;
 
         /// <inheritdoc />
         public override IEnumerable<StringReference> GetStringReferences()

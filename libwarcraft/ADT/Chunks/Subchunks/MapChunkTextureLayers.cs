@@ -1,7 +1,10 @@
 ﻿//
 //  MapChunkTextureLayers.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -61,8 +64,8 @@ namespace Warcraft.ADT.Chunks.Subchunks
             {
                 using (var br = new BinaryReader(ms))
                 {
-                    var nLayers = br.BaseStream.Length / TextureLayerEntry.GetSize();
-                    for (var i = 0; i < nLayers; i++)
+                    var layerCount = br.BaseStream.Length / TextureLayerEntry.GetSize();
+                    for (var i = 0; i < layerCount; i++)
                     {
                         Layers.Add(new TextureLayerEntry(br.ReadBytes(TextureLayerEntry.GetSize())));
                     }

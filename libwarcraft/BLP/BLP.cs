@@ -1,7 +1,10 @@
 //
 //  BLP.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -61,7 +64,7 @@ namespace Warcraft.BLP
         /// The JPEG header. This is not used for palettized or DXTC-compressed
         /// textures.
         /// </summary>
-        private readonly byte[] _jpegHeader;
+        private readonly byte[]? _jpegHeader;
 
         /// <summary>
         /// A list of byte arrays containing the compressed mipmaps.
@@ -360,7 +363,7 @@ namespace Warcraft.BLP
                 throw new ArgumentException("No image data provided.", nameof(inData));
             }
 
-            Image<Rgba32> map = null;
+            Image<Rgba32>? map = null;
             var targetXRes = GetLevelAdjustedResolutionValue(GetResolution().X, mipLevel);
             var targetYRes = GetLevelAdjustedResolutionValue(GetResolution().Y, mipLevel);
 
@@ -498,6 +501,12 @@ namespace Warcraft.BLP
                 case TextureCompressionType.JPEG:
                 {
                     // Merge the JPEG header with the data in the mipmap
+                    if (_jpegHeader is null)
+                    {
+                        // TODO: generate header?
+                        throw new InvalidOperationException();
+                    }
+
                     var jpegImage = new byte[_jpegHeaderSize + inData.Length];
                     Buffer.BlockCopy(_jpegHeader, 0, jpegImage, 0, (int)_jpegHeaderSize);
                     Buffer.BlockCopy(inData, 0, jpegImage, (int)_jpegHeaderSize, inData.Length);
@@ -511,7 +520,7 @@ namespace Warcraft.BLP
                 }
             }
 
-            return map;
+            return map ?? throw new InvalidOperationException();
         }
 
         /// <summary>

@@ -1,7 +1,10 @@
 ﻿//
 //  DatabaseSoundEmitter.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -32,7 +35,7 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <summary>
         /// Gets or sets the ID of the sound entry in the database.
         /// </summary>
-        public ForeignKey<uint> SoundEntryID { get; set; }
+        public ForeignKey<uint> SoundEntryID { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the position of the emitter.

@@ -1,7 +1,10 @@
 ﻿//
 //  DBCEnumerator.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -29,7 +32,7 @@ namespace Warcraft.DBC
     /// Enumerator object of a DBC object.
     /// </summary>
     /// <typeparam name="TRecord">The record type.</typeparam>
-    public class DBCEnumerator<TRecord> : IEnumerator<TRecord> where TRecord : DBCRecord, new()
+    public class DBCEnumerator<TRecord> : IEnumerator<TRecord?> where TRecord : DBCRecord, new()
     {
         private readonly DBC<TRecord> _parentDatabase;
         private readonly BinaryReader _databaseReader;
@@ -94,10 +97,10 @@ namespace Warcraft.DBC
         }
 
         /// <inheritdoc />
-        public TRecord Current { get; private set; }
+        public TRecord? Current { get; private set; }
 
         /// <inheritdoc/>
-        object IEnumerator.Current => Current;
+        object? IEnumerator.Current => Current;
 
         /// <inheritdoc />
         public void Dispose()

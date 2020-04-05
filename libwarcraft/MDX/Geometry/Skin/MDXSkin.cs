@@ -1,7 +1,10 @@
 //
 //  MDXSkin.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -34,30 +37,30 @@ namespace Warcraft.MDX.Geometry.Skin
         /// <summary>
         /// Gets or sets a list of vertices from the global vertex list which are used in this skin.
         /// </summary>
-        public MDXArray<ushort> VertexIndices { get; set; }
+        public MDXArray<ushort>? VertexIndices { get; set; }
 
         /// <summary>
         /// Gets or sets a list of indices into the <see cref="VertexIndices"/> list, which constitute the triangles in the skin.
         /// Each triplet of indices in this list corresponds to one triangle.
         /// </summary>
-        public MDXArray<ushort> Triangles { get; set; }
+        public MDXArray<ushort>? Triangles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of bone index quantets for the vertices in the skin. The given indices are indexed into the
         /// <see cref="MDX.BoneLookupTable"/>.
         /// </summary>
-        public MDXArray<MDXVertexProperty> VertexProperties { get; set; }
+        public MDXArray<MDXVertexProperty>? VertexProperties { get; set; }
 
         /// <summary>
         /// Gets or sets a list of <see cref="MDXSkinSection"/> objects, which constitute the parts of the whole skin. These
         /// separations act to divide the skin into different shading zones.
         /// </summary>
-        public MDXArray<MDXSkinSection> Sections { get; set; }
+        public MDXArray<MDXSkinSection>? Sections { get; set; }
 
         /// <summary>
         /// Gets or sets a list of <see cref="MDXRenderBatch"/> objects. These render batches act as shader layers for skin sections.
         /// </summary>
-        public MDXArray<MDXRenderBatch> RenderBatches { get; set; }
+        public MDXArray<MDXRenderBatch>? RenderBatches { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of bones in each draw call.

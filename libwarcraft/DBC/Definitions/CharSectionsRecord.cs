@@ -1,7 +1,10 @@
 ﻿//
 //  CharSectionsRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -34,7 +37,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the ID of the race that the section belongs to.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.ChrRaces, nameof(ID))]
-        public ForeignKey<uint> Race { get; set; }
+        public ForeignKey<uint> Race { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets a value indicating whether the section belongs to a female character.
@@ -64,19 +67,19 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the first section texture.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference SectionTexture0 { get; set; }
+        public StringReference SectionTexture0 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the second section texture.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference SectionTexture1 { get; set; }
+        public StringReference SectionTexture1 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the third section texture.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference SectionTexture2 { get; set; }
+        public StringReference SectionTexture2 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the section flags.

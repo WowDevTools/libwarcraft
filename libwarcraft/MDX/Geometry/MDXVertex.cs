@@ -1,7 +1,10 @@
 //
 //  MDXVertex.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -37,13 +40,13 @@ namespace Warcraft.MDX.Geometry
         /// <summary>
         /// Gets or sets the weights of any affecting bones onto this vertex. Up to four bones may affect the vertex.
         /// </summary>
-        public List<byte> BoneWeights { get; set; }
+        public List<byte> BoneWeights { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the indexes of up to four bones which affect this vertex. A bone may be listed more than once, but will
         /// only affect the vertex once.
         /// </summary>
-        public List<byte> BoneIndices { get; set; }
+        public List<byte> BoneIndices { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the normal vector of this vertex.

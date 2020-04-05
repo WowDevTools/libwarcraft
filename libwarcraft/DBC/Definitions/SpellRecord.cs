@@ -1,7 +1,10 @@
 ﻿//
 //  SpellRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -44,7 +47,7 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SpellCategory, nameof(ID))]
-        public ForeignKey<uint> Category { get; set; }
+        public ForeignKey<uint> Category { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the UI type to use when casting.
@@ -58,7 +61,7 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SpellDispelType, nameof(ID))]
-        public ForeignKey<uint> DispelType { get; set; }
+        public ForeignKey<uint> DispelType { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the mechanic type of the spell. This is a reference to a row in another
@@ -66,7 +69,7 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SpellMechanic, nameof(ID))]
-        public ForeignKey<uint> Mechanic { get; set; }
+        public ForeignKey<uint> Mechanic { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the first block of spell attributes. This is a set of flags, defining different behaviour for the spell
@@ -356,19 +359,19 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the totems required.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 2)]
-        public uint[] Totem { get; set; }
+        public uint[] Totem { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the required reagents.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 8)]
-        public uint[] Reagent { get; set; }
+        public uint[] Reagent { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the number of each reagent required.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 8)]
-        public uint[] ReagentCount { get; set; }
+        public uint[] ReagentCount { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the item class that the spell requires a player to have equipped.
@@ -392,145 +395,145 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the random effects the spell has.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] Effect { get; set; }
+        public uint[] Effect { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the number of sides on each random effect's die.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] EffectDieSides { get; set; }
+        public uint[] EffectDieSides { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the base number of dice of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath, Count = 3)]
-        public uint[] EffectBaseDice { get; set; }
+        public uint[] EffectBaseDice { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the number of dice per level.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath, Count = 3)]
-        public float[] EffectDicePerLevel { get; set; }
+        public float[] EffectDicePerLevel { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the number of real points per level.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public float[] EffectRealPointsPerLevel { get; set; }
+        public float[] EffectRealPointsPerLevel { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the base points per level.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public float[] EffectBasePoints { get; set; }
+        public float[] EffectBasePoints { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the mechanic of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] EffectMechanic { get; set; }
+        public uint[] EffectMechanic { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the implicit targets of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] ImplicitTargetA { get; set; }
+        public uint[] ImplicitTargetA { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the implicit targets of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] ImplicitTargetB { get; set; }
+        public uint[] ImplicitTargetB { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the radius of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] EffectRadiusIndex { get; set; }
+        public uint[] EffectRadiusIndex { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the aura of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] EffectAura { get; set; }
+        public uint[] EffectAura { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the aura period of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
-        public uint[] EffectAuraPeriod { get; set; }
+        public uint[] EffectAuraPeriod { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the amplitude of each ranomd effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, RemovedIn = WarcraftVersion.Wrath, Count = 3)]
-        public float[] EffectAmplitude { get; set; }
+        public float[] EffectAmplitude { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the multiplier of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public float[] EffectMultipleValue { get; set; }
+        public float[] EffectMultipleValue { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the chain target of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] EffectChainTarget { get; set; }
+        public uint[] EffectChainTarget { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the required item type of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] EffectItemType { get; set; }
+        public uint[] EffectItemType { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets an unknown value of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] EffectMiscValue { get; set; }
+        public uint[] EffectMiscValue { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets an unknown value of each random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.BurningCrusade, Count = 3)]
-        public uint[] EffectMiscValueB { get; set; }
+        public uint[] EffectMiscValueB { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the spell to be triggered by the random effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public uint[] EffectTriggerSpell { get; set; }
+        public uint[] EffectTriggerSpell { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the number of required points per combo per effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public float[] EffectPointsPerCombo { get; set; }
+        public float[] EffectPointsPerCombo { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the classes of the effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
-        public uint[] EffectClassMaskA { get; set; }
+        public uint[] EffectClassMaskA { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the classes of the effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
-        public uint[] EffectClassMaskB { get; set; }
+        public uint[] EffectClassMaskB { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the classes of the effect.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
-        public uint[] EffectClassMaskC { get; set; }
+        public uint[] EffectClassMaskC { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the visual effects of the spell.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 2)]
-        public uint[] SpellVisualID { get; set; }
+        public uint[] SpellVisualID { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the spell icon.
@@ -554,25 +557,25 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the name of the spell.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public LocalizedStringReference Name { get; set; }
+        public LocalizedStringReference Name { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the subtext of the spell.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public LocalizedStringReference Subtext { get; set; }
+        public LocalizedStringReference Subtext { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the full description of the spell.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public LocalizedStringReference Description { get; set; }
+        public LocalizedStringReference Description { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the quick tooltip of the spell.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public LocalizedStringReference Tooltip { get; set; }
+        public LocalizedStringReference Tooltip { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the percentile mana cost of the spell.
@@ -609,7 +612,7 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 2)]
         [RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
-        public uint[] SpellClassMask { get; set; }
+        public uint[] SpellClassMask { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the maximum number of targets the spell can have.
@@ -639,7 +642,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the damage multipliers of the spell.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 3)]
-        public float[] DamageMultiplier { get; set; }
+        public float[] DamageMultiplier { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the minimum faction ID of the spell.
@@ -663,7 +666,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the required totem categories.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.BurningCrusade, Count = 2)]
-        public uint[] RequiredTotemCategoryID { get; set; }
+        public uint[] RequiredTotemCategoryID { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the ID of the area a player has to be in to use the spell.
@@ -699,7 +702,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the bonus multipliers of the spell.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Wrath, Count = 3)]
-        public float[] EffectBonusMultiplier { get; set; }
+        public float[] EffectBonusMultiplier { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the description variable.

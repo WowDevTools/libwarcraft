@@ -1,7 +1,10 @@
 ﻿//
 //  CreatureDisplayInfoRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -34,19 +37,19 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the model to use.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.CreatureModelData, nameof(ID))]
-        public ForeignKey<uint> Model { get; set; }
+        public ForeignKey<uint> Model { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the sound data to use.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.CreatureSoundData, nameof(ID))]
-        public ForeignKey<uint> Sound { get; set; }
+        public ForeignKey<uint> Sound { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets eventual extra display information to use.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.CreatureDisplayInfoExtra, nameof(ID))]
-        public ForeignKey<uint> ExtraDisplayInformation { get; set; }
+        public ForeignKey<uint> ExtraDisplayInformation { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the scale of the model.
@@ -64,25 +67,25 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the first texture.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference TextureVariation1 { get; set; }
+        public StringReference TextureVariation1 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets second texture.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference TextureVariation2 { get; set; }
+        public StringReference TextureVariation2 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the third texture.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference TextureVariation3 { get; set; }
+        public StringReference TextureVariation3 { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the portrait texture.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade)]
-        public StringReference PortraitTexture { get; set; }
+        public StringReference PortraitTexture { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the size class.
@@ -94,19 +97,19 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the blood level - that is, the gore level.
         /// </summary>
         [RecordField(WarcraftVersion.Wrath), ForeignKeyInfo(DatabaseName.UnitBloodLevels, nameof(ID))]
-        public ForeignKey<uint> BloodLevel { get; set; }
+        public ForeignKey<uint> BloodLevel { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the blood splatter.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.UnitBlood, nameof(ID))]
-        public ForeignKey<uint> Blood { get; set; }
+        public ForeignKey<uint> Blood { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the sound pack for the NPC.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.NPCSounds, nameof(ID))]
-        public ForeignKey<uint> NPCSound { get; set; }
+        public ForeignKey<uint> NPCSound { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the base colour of particles.

@@ -1,7 +1,10 @@
 //
 //  AnimationDataRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -35,7 +38,7 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the name of the animation.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference Name { get; set; }
+        public StringReference Name { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the weapon flags. This affects how the model's weapons are held during the animation.
@@ -59,13 +62,13 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the fallback animation that precedes this one.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.AnimationData, nameof(ID))]
-        public ForeignKey<uint> FallbackAnimation { get; set; }
+        public ForeignKey<uint> FallbackAnimation { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the top-level behaviour animation that this animation is a child of.
         /// </summary>
         [RecordField(WarcraftVersion.Classic), ForeignKeyInfo(DatabaseName.AnimationData, nameof(ID))]
-        public ForeignKey<uint> BehaviourAnimation { get; set; }
+        public ForeignKey<uint> BehaviourAnimation { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the behaviour tier of the animation. In most cases, this indicates whether or not the animation

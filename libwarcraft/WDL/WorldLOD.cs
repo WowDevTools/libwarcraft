@@ -1,7 +1,10 @@
 ﻿//
 //  WorldLOD.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -45,17 +48,17 @@ namespace Warcraft.WDL
         /// <summary>
         /// Gets the WMOs included in the LOD level.
         /// </summary>
-        public TerrainWorldModelObjects WorldModelObjects { get; }
+        public TerrainWorldModelObjects? WorldModelObjects { get; }
 
         /// <summary>
         /// Gets the WMO indexes in the LOD level.
         /// </summary>
-        public TerrainWorldModelObjectIndices WorldModelObjectIndices { get; }
+        public TerrainWorldModelObjectIndices? WorldModelObjectIndices { get; }
 
         /// <summary>
         /// Gets the placement info of the WMOs.
         /// </summary>
-        public TerrainWorldModelObjectPlacementInfo WorldModelObjectPlacementInfo { get; }
+        public TerrainWorldModelObjectPlacementInfo? WorldModelObjectPlacementInfo { get; }
 
         /// <summary>
         /// Gets the map area offsets.
@@ -65,12 +68,12 @@ namespace Warcraft.WDL
         /// <summary>
         /// Gets or sets the map areas.
         /// </summary>
-        public List<WorldLODMapArea> MapAreas { get; set; } = new List<WorldLODMapArea>(4096);
+        public List<WorldLODMapArea?> MapAreas { get; set; } = new List<WorldLODMapArea?>(4096);
 
         /// <summary>
         /// Gets or sets the map area holes.
         /// </summary>
-        public List<WorldLODMapAreaHoles> MapAreaHoles { get; set; } = new List<WorldLODMapAreaHoles>(4096);
+        public List<WorldLODMapAreaHoles?> MapAreaHoles { get; set; } = new List<WorldLODMapAreaHoles?>(4096);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldLOD"/> class.
@@ -172,7 +175,13 @@ namespace Warcraft.WDL
             }
 
             var index = x + (y * 64);
-            return MapAreas[index];
+            var entry = MapAreas[index];
+            if (entry is null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return entry;
         }
 
         /// <inheritdoc/>
@@ -237,12 +246,12 @@ namespace Warcraft.WDL
 
                             if (MapAreas[mapAreaOffsetIndex] != null)
                             {
-                                bw.WriteIFFChunk(MapAreas[mapAreaOffsetIndex]);
+                                bw.WriteIFFChunk(MapAreas[mapAreaOffsetIndex] !);
                             }
 
                             if (MapAreaHoles[mapAreaOffsetIndex] != null)
                             {
-                                bw.WriteIFFChunk(MapAreaHoles[mapAreaOffsetIndex]);
+                                bw.WriteIFFChunk(MapAreaHoles[mapAreaOffsetIndex] !);
                             }
                         }
                     }

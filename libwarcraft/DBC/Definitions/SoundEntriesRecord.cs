@@ -1,7 +1,10 @@
 //
 //  SoundEntriesRecord.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -40,25 +43,25 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the name of the sound set.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference Name { get; set; }
+        public StringReference Name { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the sounds included in the sound set.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 10)]
-        public List<StringReference> SoundFiles { get; set; }
+        public List<StringReference> SoundFiles { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the playback frequencies of the sounds.
         /// </summary>
         [RecordFieldArray(WarcraftVersion.Classic, Count = 10)]
-        public List<uint> PlayFrequencies { get; set; }
+        public List<uint> PlayFrequencies { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the base directory of the sound references.
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
-        public StringReference DirectoryBase { get; set; }
+        public StringReference DirectoryBase { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the volume of the sound set.
@@ -89,7 +92,7 @@ namespace Warcraft.DBC.Definitions
         /// </summary>
         [RecordField(WarcraftVersion.Classic)]
         [ForeignKeyInfo(DatabaseName.SoundProviderPreferences, nameof(ID))]
-        public ForeignKey<uint> EAXDefinition { get; set; }
+        public ForeignKey<uint> EAXDefinition { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets the advanced properties ID.

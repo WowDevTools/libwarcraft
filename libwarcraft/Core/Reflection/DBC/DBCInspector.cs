@@ -1,7 +1,10 @@
 ﻿//
 //  DBCInspector.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -99,7 +102,7 @@ namespace Warcraft.Core.Reflection.DBC
         {
             if (propertyType.IsArray)
             {
-                return propertyType.GetElementType();
+                return propertyType.GetElementType()!;
             }
 
             if (propertyType.IsGenericType)
@@ -144,7 +147,7 @@ namespace Warcraft.Core.Reflection.DBC
                 .Cast<RecordFieldArrayAttribute>()
                 .OrderBy(a => a.IntroducedIn);
 
-            return attributes.LastOrDefault(a => IsPropertyRelevantForVersion(version, a));
+            return attributes.Last(a => IsPropertyRelevantForVersion(version, a));
         }
 
         /// <summary>

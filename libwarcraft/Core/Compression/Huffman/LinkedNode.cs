@@ -33,6 +33,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#nullable disable
+
 namespace Warcraft.Core.Compression.Huffman
 {
     // A node which is both hierachcical (parent/child) and doubly linked (next/prev)
@@ -91,3 +93,5 @@ namespace Warcraft.Core.Compression.Huffman
         }
     }
 }
+
+#nullable enable

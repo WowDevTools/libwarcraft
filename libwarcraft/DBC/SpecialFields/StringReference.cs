@@ -1,7 +1,10 @@
 //
 //  StringReference.cs
 //
-//  Copyright (c) 2018 Jarl Gullberg
+//  Author:
+//       Jarl Gullberg <jarl.gullberg@gmail.com>
+//
+//  Copyright (c) 2017 Jarl Gullberg
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -36,7 +39,7 @@ namespace Warcraft.DBC.SpecialFields
         /// <summary>
         /// Gets or sets the actual string.
         /// </summary>
-        public string Value { get; set; }
+        public string? Value { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringReference"/> class.
@@ -50,7 +53,7 @@ namespace Warcraft.DBC.SpecialFields
         /// <inheritdoc />
         public override string ToString()
         {
-            return Value;
+            return Value ?? "[Unresolved]";
         }
     }
 }
