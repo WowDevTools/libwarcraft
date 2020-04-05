@@ -34,7 +34,7 @@ namespace Warcraft.MDX.Data
     /// stored.
     /// </summary>
     /// <typeparam name="T">The contained type.</typeparam>
-    public class MDXArray<T> : IEnumerable<T>
+    public class MDXArray<T> : IEnumerable<T> where T : notnull
     {
         /// <summary>
         /// Gets or sets the number of elements in the array.
