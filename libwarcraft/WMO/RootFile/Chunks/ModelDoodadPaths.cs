@@ -75,12 +75,10 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
             using (var ms = new MemoryStream(inData))
             {
-                using (var br = new BinaryReader(ms))
+                using var br = new BinaryReader(ms);
+                while (ms.Position < ms.Length)
                 {
-                    while (ms.Position < ms.Length)
-                    {
-                        DoodadNames.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
-                    }
+                    DoodadNames.Add(new KeyValuePair<long, string>(ms.Position, br.ReadNullTerminatedString()));
                 }
             }
 
@@ -122,18 +120,16 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var doodadName in DoodadNames)
                 {
-                    foreach (var doodadName in DoodadNames)
-                    {
-                        bw.WriteNullTerminatedString(doodadName.Value);
-                    }
+                    bw.WriteNullTerminatedString(doodadName.Value);
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

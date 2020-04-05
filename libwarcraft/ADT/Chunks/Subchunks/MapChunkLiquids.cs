@@ -76,30 +76,26 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            MinimumLiquidLevel = br.ReadSingle();
+            MaxiumLiquidLevel = br.ReadSingle();
+
+            // Future note: New information suggests there may be more than one liquid layer here, based on
+            // the chunk flags (i.e, one layer for river, one layer for ocean, etc)
+            for (var y = 0; y < 9; ++y)
             {
-                using (var br = new BinaryReader(ms))
+                for (var x = 0; x < 9; ++x)
                 {
-                    MinimumLiquidLevel = br.ReadSingle();
-                    MaxiumLiquidLevel = br.ReadSingle();
+                    LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
+                }
+            }
 
-                    // Future note: New information suggests there may be more than one liquid layer here, based on
-                    // the chunk flags (i.e, one layer for river, one layer for ocean, etc)
-                    for (var y = 0; y < 9; ++y)
-                    {
-                        for (var x = 0; x < 9; ++x)
-                        {
-                            LiquidVertices.Add(new LiquidVertex(br.ReadBytes(LiquidVertex.GetSize())));
-                        }
-                    }
-
-                    for (var y = 0; y < 8; ++y)
-                    {
-                        for (var x = 0; x < 8; ++x)
-                        {
-                            LiquidTileFlags.Add((LiquidFlags)br.ReadByte());
-                        }
-                    }
+            for (var y = 0; y < 8; ++y)
+            {
+                for (var x = 0; x < 8; ++x)
+                {
+                    LiquidTileFlags.Add((LiquidFlags)br.ReadByte());
                 }
             }
         }

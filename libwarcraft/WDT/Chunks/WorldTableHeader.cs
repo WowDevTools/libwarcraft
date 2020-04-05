@@ -66,14 +66,10 @@ namespace Warcraft.WDT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Flags = (WorldTableFlags)br.ReadUInt32();
-                    Unknown = br.ReadUInt32();
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            Flags = (WorldTableFlags)br.ReadUInt32();
+            Unknown = br.ReadUInt32();
         }
 
         /// <inheritdoc/>
@@ -94,22 +90,20 @@ namespace Warcraft.WDT.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                bw.Write((uint)Flags);
+                bw.Write(Unknown);
+
+                // Write the six unused fields
+                for (var i = 0; i < 6; ++i)
                 {
-                    bw.Write((uint)Flags);
-                    bw.Write(Unknown);
-
-                    // Write the six unused fields
-                    for (var i = 0; i < 6; ++i)
-                    {
-                        bw.Write(0U);
-                    }
+                    bw.Write(0U);
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

@@ -124,28 +124,24 @@ namespace Warcraft.MDX.Geometry.Skin
         /// <param name="data">The data containing the skin section.</param>
         public MDXSkinSection(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    SkinSectionID = new BaseSkinSectionIdentifier(br.ReadUInt16());
-                    Level = br.ReadUInt16();
-                    StartVertexIndex = br.ReadUInt16();
-                    VertexCount = br.ReadUInt16();
-                    StartTriangleIndex = br.ReadUInt16();
-                    TriangleCount = br.ReadUInt16();
-                    BoneCount = br.ReadUInt16();
-                    StartBoneIndex = br.ReadUInt16();
-                    InfluencingBonesCount = br.ReadUInt16();
-                    CenterBoneIndex = br.ReadUInt16();
-                    CenterPosition = br.ReadVector3();
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            SkinSectionID = new BaseSkinSectionIdentifier(br.ReadUInt16());
+            Level = br.ReadUInt16();
+            StartVertexIndex = br.ReadUInt16();
+            VertexCount = br.ReadUInt16();
+            StartTriangleIndex = br.ReadUInt16();
+            TriangleCount = br.ReadUInt16();
+            BoneCount = br.ReadUInt16();
+            StartBoneIndex = br.ReadUInt16();
+            InfluencingBonesCount = br.ReadUInt16();
+            CenterBoneIndex = br.ReadUInt16();
+            CenterPosition = br.ReadVector3();
 
-                    if (br.BaseStream.Length > 32)
-                    {
-                        SortCenterPosition = br.ReadVector3();
-                        SortRadius = br.ReadSingle();
-                    }
-                }
+            if (br.BaseStream.Length > 32)
+            {
+                SortCenterPosition = br.ReadVector3();
+                SortRadius = br.ReadSingle();
             }
         }
 

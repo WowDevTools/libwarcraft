@@ -66,18 +66,14 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <param name="inData">The binary data.</param>
         public BSPNode(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Type = (BSPPlaneType)br.ReadUInt16();
-                    FirstChildIndex = br.ReadInt16();
-                    SecondChildIndex = br.ReadInt16();
-                    FaceCount = br.ReadUInt16();
-                    FirstFaceIndex = br.ReadUInt32();
-                    DistanceFromCenter = br.ReadSingle();
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            Type = (BSPPlaneType)br.ReadUInt16();
+            FirstChildIndex = br.ReadInt16();
+            SecondChildIndex = br.ReadInt16();
+            FaceCount = br.ReadUInt16();
+            FirstFaceIndex = br.ReadUInt32();
+            DistanceFromCenter = br.ReadSingle();
         }
 
         /// <summary>
@@ -92,20 +88,18 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.Write((ushort)Type);
-                    bw.Write(FirstChildIndex);
-                    bw.Write(SecondChildIndex);
-                    bw.Write(FaceCount);
-                    bw.Write(FirstFaceIndex);
-                    bw.Write(DistanceFromCenter);
-                }
-
-                return ms.ToArray();
+                bw.Write((ushort)Type);
+                bw.Write(FirstChildIndex);
+                bw.Write(SecondChildIndex);
+                bw.Write(FaceCount);
+                bw.Write(FirstFaceIndex);
+                bw.Write(DistanceFromCenter);
             }
+
+            return ms.ToArray();
         }
     }
 }

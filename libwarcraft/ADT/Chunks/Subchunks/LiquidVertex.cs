@@ -47,14 +47,10 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <param name="data">The binary data.</param>
         public LiquidVertex(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    TextureCoordinates = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-                    Height = br.ReadSingle();
-                }
-            }
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            TextureCoordinates = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
+            Height = br.ReadSingle();
         }
 
         /// <summary>
@@ -69,18 +65,16 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.Write(TextureCoordinates.Item1);
-                    bw.Write(TextureCoordinates.Item2);
+                bw.Write(TextureCoordinates.Item1);
+                bw.Write(TextureCoordinates.Item2);
 
-                    bw.Write(Height);
-                }
-
-                return ms.ToArray();
+                bw.Write(Height);
             }
+
+            return ms.ToArray();
         }
     }
 }

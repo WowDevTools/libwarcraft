@@ -83,32 +83,30 @@ namespace Warcraft.ADT.Chunks.Subchunks
 
             using (var ms = new MemoryStream(_data))
             {
-                using (var br = new BinaryReader(ms))
+                using var br = new BinaryReader(ms);
+                br.BaseStream.Position = mapOffset;
+
+                while (decompressedAlphaMap.Count < 4096)
                 {
-                    br.BaseStream.Position = mapOffset;
+                    var headerByte = br.ReadSByte();
+                    int compressionCount = Math.Abs(headerByte);
 
-                    while (decompressedAlphaMap.Count < 4096)
+                    // The mode of the compression depends on the sign bit being true or false.
+                    // Thus, we can simply switch depending on whether or not the "header byte" is
+                    // negative or not.
+                    if (headerByte > 0)
                     {
-                        var headerByte = br.ReadSByte();
-                        int compressionCount = Math.Abs(headerByte);
+                        // Copy mode
+                        decompressedAlphaMap.AddRange(br.ReadBytes(compressionCount));
+                    }
+                    else
+                    {
+                        // Fill mode
+                        var fillByte = br.ReadByte();
 
-                        // The mode of the compression depends on the sign bit being true or false.
-                        // Thus, we can simply switch depending on whether or not the "header byte" is
-                        // negative or not.
-                        if (headerByte > 0)
+                        for (var i = 0; i < compressionCount; ++i)
                         {
-                            // Copy mode
-                            decompressedAlphaMap.AddRange(br.ReadBytes(compressionCount));
-                        }
-                        else
-                        {
-                            // Fill mode
-                            var fillByte = br.ReadByte();
-
-                            for (var i = 0; i < compressionCount; ++i)
-                            {
-                                decompressedAlphaMap.Add(fillByte);
-                            }
+                            decompressedAlphaMap.Add(fillByte);
                         }
                     }
                 }

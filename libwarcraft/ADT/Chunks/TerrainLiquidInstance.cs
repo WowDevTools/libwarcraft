@@ -102,28 +102,24 @@ namespace Warcraft.ADT.Chunks
         /// <param name="data">The binary data.</param>
         public TerrainLiquidInstance(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    LiquidType = new ForeignKey<ushort>(DatabaseName.LiquidType, nameof(DBCRecord.ID), br.ReadUInt16());
-                    LiquidObject = new ForeignKey<ushort>(DatabaseName.LiquidObject, nameof(DBCRecord.ID), br.ReadUInt16());
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            LiquidType = new ForeignKey<ushort>(DatabaseName.LiquidType, nameof(DBCRecord.ID), br.ReadUInt16());
+            LiquidObject = new ForeignKey<ushort>(DatabaseName.LiquidObject, nameof(DBCRecord.ID), br.ReadUInt16());
 
-                    HeightLevelRange = new Range(br.ReadSingle(), br.ReadSingle());
+            HeightLevelRange = new Range(br.ReadSingle(), br.ReadSingle());
 
-                    XLiquidOffset = br.ReadByte();
-                    YLiquidOffset = br.ReadByte();
-                    Width = br.ReadByte();
-                    Height = br.ReadByte();
+            XLiquidOffset = br.ReadByte();
+            YLiquidOffset = br.ReadByte();
+            Width = br.ReadByte();
+            Height = br.ReadByte();
 
-                    LiquidBooleanMapOffset = br.ReadUInt32();
-                    VertexDataOffset = br.ReadUInt32();
+            LiquidBooleanMapOffset = br.ReadUInt32();
+            VertexDataOffset = br.ReadUInt32();
 
-                    // TODO: Read boolean map
+            // TODO: Read boolean map
 
-                    // TODO: [#9] Accept DBC liquid type and read vertex data
-                }
-            }
+            // TODO: [#9] Accept DBC liquid type and read vertex data
         }
 
         /// <summary>

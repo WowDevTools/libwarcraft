@@ -76,16 +76,12 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            var planeCount = inData.Length / 16;
+            for (var i = 0; i < planeCount; ++i)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var planeCount = inData.Length / 16;
-                    for (var i = 0; i < planeCount; ++i)
-                    {
-                        ConvexPlanes.Add(br.ReadPlane());
-                    }
-                }
+                ConvexPlanes.Add(br.ReadPlane());
             }
         }
 
@@ -105,18 +101,16 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var convexPlane in ConvexPlanes)
                 {
-                    foreach (var convexPlane in ConvexPlanes)
-                    {
-                        bw.WritePlane(convexPlane);
-                    }
+                    bw.WritePlane(convexPlane);
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

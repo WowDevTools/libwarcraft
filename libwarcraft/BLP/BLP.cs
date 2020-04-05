@@ -77,59 +77,55 @@ namespace Warcraft.BLP
         /// <param name="inData">ExtendedData.</param>
         public BLP(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            byte[] fileHeaderBytes;
+            if (PeekFormat(br) == BLPFormat.BLP2)
             {
-                using (var br = new BinaryReader(ms))
+                fileHeaderBytes = br.ReadBytes(148);
+            }
+            else
+            {
+                fileHeaderBytes = br.ReadBytes(156);
+            }
+
+            Header = new BLPHeader(fileHeaderBytes);
+
+            if (Header.CompressionType == TextureCompressionType.JPEG)
+            {
+                _jpegHeaderSize = br.ReadUInt32();
+                _jpegHeader = br.ReadBytes((int)_jpegHeaderSize);
+            }
+            else if (Header.CompressionType == TextureCompressionType.Palettized)
+            {
+                for (var i = 0; i < 256; ++i)
                 {
-                    byte[] fileHeaderBytes;
-                    if (PeekFormat(br) == BLPFormat.BLP2)
-                    {
-                        fileHeaderBytes = br.ReadBytes(148);
-                    }
-                    else
-                    {
-                        fileHeaderBytes = br.ReadBytes(156);
-                    }
+                    var b = br.ReadByte();
+                    var g = br.ReadByte();
+                    var r = br.ReadByte();
 
-                    Header = new BLPHeader(fileHeaderBytes);
+                    // The alpha in the palette is not used, but is stored for the sake of completion.
+                    var a = br.ReadByte();
 
-                    if (Header.CompressionType == TextureCompressionType.JPEG)
-                    {
-                        _jpegHeaderSize = br.ReadUInt32();
-                        _jpegHeader = br.ReadBytes((int)_jpegHeaderSize);
-                    }
-                    else if (Header.CompressionType == TextureCompressionType.Palettized)
-                    {
-                        for (var i = 0; i < 256; ++i)
-                        {
-                            var b = br.ReadByte();
-                            var g = br.ReadByte();
-                            var r = br.ReadByte();
-
-                            // The alpha in the palette is not used, but is stored for the sake of completion.
-                            var a = br.ReadByte();
-
-                            var paletteColor = new Rgba32(r, g, b, a);
-                            _palette.Add(paletteColor);
-                        }
-                    }
-                    else
-                    {
-                        // Fill up an empty palette - the palette is always present, but we'll be going after offsets anyway
-                        for (var i = 0; i < 256; ++i)
-                        {
-                            var paletteColor = default(Rgba32);
-                            _palette.Add(paletteColor);
-                        }
-                    }
-
-                    // Read the raw mipmap data
-                    for (var i = 0; i < Header.GetNumMipMaps(); ++i)
-                    {
-                        br.BaseStream.Position = Header.MipMapOffsets[i];
-                        _rawMipMaps.Add(br.ReadBytes((int)Header.MipMapSizes[i]));
-                    }
+                    var paletteColor = new Rgba32(r, g, b, a);
+                    _palette.Add(paletteColor);
                 }
+            }
+            else
+            {
+                // Fill up an empty palette - the palette is always present, but we'll be going after offsets anyway
+                for (var i = 0; i < 256; ++i)
+                {
+                    var paletteColor = default(Rgba32);
+                    _palette.Add(paletteColor);
+                }
+            }
+
+            // Read the raw mipmap data
+            for (var i = 0; i < Header.GetNumMipMaps(); ++i)
+            {
+                br.BaseStream.Position = Header.MipMapOffsets[i];
+                _rawMipMaps.Add(br.ReadBytes((int)Header.MipMapSizes[i]));
             }
         }
 
@@ -381,74 +377,70 @@ namespace Warcraft.BLP
                 case TextureCompressionType.Palettized:
                 {
                     map = new Image<Rgba32>((int)targetXRes, (int)targetYRes);
-                    using (var ms = new MemoryStream(inData))
+                    using var ms = new MemoryStream(inData);
+                    using var br = new BinaryReader(ms);
+                    // Read colour information
+                    for (var y = 0; y < targetYRes; ++y)
                     {
-                        using (var br = new BinaryReader(ms))
+                        for (var x = 0; x < targetXRes; ++x)
                         {
-                            // Read colour information
+                            var colorIndex = br.ReadByte();
+                            var paletteColor = _palette[colorIndex];
+                            map[x, y] = paletteColor;
+                        }
+                    }
+
+                    // Read Alpha information
+                    var alphaValues = new List<byte>();
+                    if (GetAlphaBitDepth() > 0)
+                    {
+                        if (GetAlphaBitDepth() == 1)
+                        {
+                            var alphaByteCount = (int)Math.Ceiling((double)(targetXRes * targetYRes) / 8);
+                            alphaValues = Decode1BitAlpha(br.ReadBytes(alphaByteCount));
+                        }
+                        else if (GetAlphaBitDepth() == 4)
+                        {
+                            var alphaByteCount = (int)Math.Ceiling((double)(targetXRes * targetYRes) / 2);
+                            alphaValues = Decode4BitAlpha(br.ReadBytes(alphaByteCount));
+                        }
+                        else if (GetAlphaBitDepth() == 8)
+                        {
+                            // Directly read the alpha values
                             for (var y = 0; y < targetYRes; ++y)
                             {
                                 for (var x = 0; x < targetXRes; ++x)
                                 {
-                                    var colorIndex = br.ReadByte();
-                                    var paletteColor = _palette[colorIndex];
-                                    map[x, y] = paletteColor;
+                                    var alphaValue = br.ReadByte();
+                                    alphaValues.Add(alphaValue);
                                 }
                             }
-
-                            // Read Alpha information
-                            var alphaValues = new List<byte>();
-                            if (GetAlphaBitDepth() > 0)
+                        }
+                    }
+                    else
+                    {
+                        // The map is fully opaque
+                        for (var y = 0; y < targetYRes; ++y)
+                        {
+                            for (var x = 0; x < targetXRes; ++x)
                             {
-                                if (GetAlphaBitDepth() == 1)
-                                {
-                                    var alphaByteCount = (int)Math.Ceiling((double)(targetXRes * targetYRes) / 8);
-                                    alphaValues = Decode1BitAlpha(br.ReadBytes(alphaByteCount));
-                                }
-                                else if (GetAlphaBitDepth() == 4)
-                                {
-                                    var alphaByteCount = (int)Math.Ceiling((double)(targetXRes * targetYRes) / 2);
-                                    alphaValues = Decode4BitAlpha(br.ReadBytes(alphaByteCount));
-                                }
-                                else if (GetAlphaBitDepth() == 8)
-                                {
-                                    // Directly read the alpha values
-                                    for (var y = 0; y < targetYRes; ++y)
-                                    {
-                                        for (var x = 0; x < targetXRes; ++x)
-                                        {
-                                            var alphaValue = br.ReadByte();
-                                            alphaValues.Add(alphaValue);
-                                        }
-                                    }
-                                }
+                                alphaValues.Add(255);
                             }
-                            else
-                            {
-                                // The map is fully opaque
-                                for (var y = 0; y < targetYRes; ++y)
-                                {
-                                    for (var x = 0; x < targetXRes; ++x)
-                                    {
-                                        alphaValues.Add(255);
-                                    }
-                                }
-                            }
+                        }
+                    }
 
-                            // Build the final map
-                            for (var y = 0; y < targetYRes; ++y)
-                            {
-                                for (var x = 0; x < targetXRes; ++x)
-                                {
-                                    var valueIndex = (int)(x + (targetXRes * y));
-                                    var alphaValue = alphaValues[valueIndex];
+                    // Build the final map
+                    for (var y = 0; y < targetYRes; ++y)
+                    {
+                        for (var x = 0; x < targetXRes; ++x)
+                        {
+                            var valueIndex = (int)(x + (targetXRes * y));
+                            var alphaValue = alphaValues[valueIndex];
 
-                                    var pixelColor = map[x, y];
-                                    var finalPixel = new Rgba32(pixelColor.R, pixelColor.G, pixelColor.B, alphaValue);
+                            var pixelColor = map[x, y];
+                            var finalPixel = new Rgba32(pixelColor.R, pixelColor.G, pixelColor.B, alphaValue);
 
-                                    map[x, y] = finalPixel;
-                                }
-                            }
+                            map[x, y] = finalPixel;
                         }
                     }
 
@@ -475,23 +467,19 @@ namespace Warcraft.BLP
                 {
                     map = new Image<Rgba32>((int)targetXRes, (int)targetYRes);
 
-                    using (var ms = new MemoryStream(inData))
+                    using var ms = new MemoryStream(inData);
+                    using var br = new BinaryReader(ms);
+                    for (var y = 0; y < targetYRes; ++y)
                     {
-                        using (var br = new BinaryReader(ms))
+                        for (var x = 0; x < targetXRes; ++x)
                         {
-                            for (var y = 0; y < targetYRes; ++y)
-                            {
-                                for (var x = 0; x < targetXRes; ++x)
-                                {
-                                    var a = br.ReadByte();
-                                    var r = br.ReadByte();
-                                    var g = br.ReadByte();
-                                    var b = br.ReadByte();
+                            var a = br.ReadByte();
+                            var r = br.ReadByte();
+                            var g = br.ReadByte();
+                            var b = br.ReadByte();
 
-                                    var pixelColor = new Rgba32(r, g, b, a);
-                                    map[x, y] = pixelColor;
-                                }
-                            }
+                            var pixelColor = new Rgba32(r, g, b, a);
+                            map[x, y] = pixelColor;
                         }
                     }
 
@@ -511,10 +499,8 @@ namespace Warcraft.BLP
                     Buffer.BlockCopy(_jpegHeader, 0, jpegImage, 0, (int)_jpegHeaderSize);
                     Buffer.BlockCopy(inData, 0, jpegImage, (int)_jpegHeaderSize, inData.Length);
 
-                    using (var ms = new MemoryStream(jpegImage))
-                    {
-                        map = Image.Load<Rgba32>(ms).Clone(cx => cx.Invert());
-                    }
+                    using var ms = new MemoryStream(jpegImage);
+                    map = Image.Load<Rgba32>(ms).Clone(cx => cx.Invert());
 
                     break;
                 }
@@ -674,74 +660,66 @@ namespace Warcraft.BLP
                 }
                 else if (Header.CompressionType == TextureCompressionType.DXTC)
                 {
-                    using (var rgbaStream = new MemoryStream())
+                    using var rgbaStream = new MemoryStream();
+                    using var bw = new BinaryWriter(rgbaStream);
+                    for (var y = 0; y < targetYRes; ++y)
                     {
-                        using (var bw = new BinaryWriter(rgbaStream))
+                        for (var x = 0; x < targetXRes; ++x)
                         {
-                            for (var y = 0; y < targetYRes; ++y)
-                            {
-                                for (var x = 0; x < targetXRes; ++x)
-                                {
-                                    bw.Write(resizedImage[x, y].R);
-                                    bw.Write(resizedImage[x, y].G);
-                                    bw.Write(resizedImage[x, y].B);
-                                    bw.Write(resizedImage[x, y].A);
-                                }
-                            }
-
-                            // Finish writing the data
-                            bw.Flush();
-
-                            var rgbaBytes = rgbaStream.ToArray();
-
-                            var squishOptions = SquishOptions.DXT1;
-                            if (Header.PixelFormat == BLPPixelFormat.DXT3)
-                            {
-                                squishOptions = SquishOptions.DXT3;
-                            }
-                            else if (Header.PixelFormat == BLPPixelFormat.DXT5)
-                            {
-                                squishOptions = SquishOptions.DXT5;
-                            }
-
-                            // TODO: Implement squish compression
-                            colourData = new List<byte>
-                            (
-                                SquishCompression.CompressImage
-                                (
-                                    rgbaBytes,
-                                    (int)targetXRes,
-                                    (int)targetYRes,
-                                    squishOptions
-                                )
-                            );
+                            bw.Write(resizedImage[x, y].R);
+                            bw.Write(resizedImage[x, y].G);
+                            bw.Write(resizedImage[x, y].B);
+                            bw.Write(resizedImage[x, y].A);
                         }
                     }
+
+                    // Finish writing the data
+                    bw.Flush();
+
+                    var rgbaBytes = rgbaStream.ToArray();
+
+                    var squishOptions = SquishOptions.DXT1;
+                    if (Header.PixelFormat == BLPPixelFormat.DXT3)
+                    {
+                        squishOptions = SquishOptions.DXT3;
+                    }
+                    else if (Header.PixelFormat == BLPPixelFormat.DXT5)
+                    {
+                        squishOptions = SquishOptions.DXT5;
+                    }
+
+                    // TODO: Implement squish compression
+                    colourData = new List<byte>
+                    (
+                        SquishCompression.CompressImage
+                        (
+                            rgbaBytes,
+                            (int)targetXRes,
+                            (int)targetYRes,
+                            squishOptions
+                        )
+                    );
                 }
                 else if (Header.CompressionType == TextureCompressionType.Uncompressed)
                 {
-                    using (var argbStream = new MemoryStream())
+                    using var argbStream = new MemoryStream();
+                    using var bw = new BinaryWriter(argbStream);
+                    for (var y = 0; y < targetYRes; ++y)
                     {
-                        using (var bw = new BinaryWriter(argbStream))
+                        for (var x = 0; x < targetXRes; ++x)
                         {
-                            for (var y = 0; y < targetYRes; ++y)
-                            {
-                                for (var x = 0; x < targetXRes; ++x)
-                                {
-                                    bw.Write(resizedImage[x, y].A);
-                                    bw.Write(resizedImage[x, y].R);
-                                    bw.Write(resizedImage[x, y].G);
-                                    bw.Write(resizedImage[x, y].B);
-                                }
-                            }
-
-                            // Finish writing the data
-                            bw.Flush();
-
-                            var argbBytes = argbStream.ToArray();
-                            colourData = new List<byte>(argbBytes);
+                            bw.Write(resizedImage[x, y].A);
+                            bw.Write(resizedImage[x, y].R);
+                            bw.Write(resizedImage[x, y].G);
+                            bw.Write(resizedImage[x, y].B);
                         }
                     }
+
+                    // Finish writing the data
+                    bw.Flush();
+
+                    var argbBytes = argbStream.ToArray();
+                    colourData = new List<byte>(argbBytes);
                 }
             }
 

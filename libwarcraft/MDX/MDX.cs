@@ -254,10 +254,8 @@ namespace Warcraft.MDX
         /// <param name="data">The binary data.</param>
         public MDX(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                LoadFromStream(ms);
-            }
+            using var ms = new MemoryStream(data);
+            LoadFromStream(ms);
         }
 
         /// <summary>
@@ -271,92 +269,90 @@ namespace Warcraft.MDX
 
         private void LoadFromStream(Stream dataStream)
         {
-            using (var br = new BinaryReader(dataStream))
+            using var br = new BinaryReader(dataStream);
+            var dataSignature = new string(br.ReadBinarySignature().Reverse().ToArray());
+            if (dataSignature != Signature)
             {
-                var dataSignature = new string(br.ReadBinarySignature().Reverse().ToArray());
-                if (dataSignature != Signature)
-                {
-                    throw new ArgumentException("The provided data stream does not contain a valid MDX signature. " +
-                                                "It might be a Legion file, or you may have omitted the signature, which should be \"MD20\".");
-                }
+                throw new ArgumentException("The provided data stream does not contain a valid MDX signature. " +
+                                            "It might be a Legion file, or you may have omitted the signature, which should be \"MD20\".");
+            }
 
-                Version = GetModelVersion(br.ReadUInt32());
-                Name = new string(br.ReadMDXArray<char>().GetValues().ToArray());
-                GlobalModelFlags = (ModelObjectFlags)br.ReadUInt32();
+            Version = GetModelVersion(br.ReadUInt32());
+            Name = new string(br.ReadMDXArray<char>().GetValues().ToArray());
+            GlobalModelFlags = (ModelObjectFlags)br.ReadUInt32();
 
-                GlobalSequenceTimestamps = br.ReadMDXArray<uint>();
-                AnimationSequences = br.ReadMDXArray<MDXAnimationSequence>(Version);
-                AnimationSequenceLookupTable = br.ReadMDXArray<ushort>();
+            GlobalSequenceTimestamps = br.ReadMDXArray<uint>();
+            AnimationSequences = br.ReadMDXArray<MDXAnimationSequence>(Version);
+            AnimationSequenceLookupTable = br.ReadMDXArray<ushort>();
 
-                if (Version < WarcraftVersion.Wrath)
-                {
-                    PlayableAnimationLookupTable = br.ReadMDXArray<MDXPlayableAnimationLookupTableEntry>();
-                }
+            if (Version < WarcraftVersion.Wrath)
+            {
+                PlayableAnimationLookupTable = br.ReadMDXArray<MDXPlayableAnimationLookupTableEntry>();
+            }
 
-                Bones = br.ReadMDXArray<MDXBone>(Version);
-                KeyBoneLookupTable = br.ReadMDXArray<ushort>();
-                Vertices = br.ReadMDXArray<MDXVertex>();
+            Bones = br.ReadMDXArray<MDXBone>(Version);
+            KeyBoneLookupTable = br.ReadMDXArray<ushort>();
+            Vertices = br.ReadMDXArray<MDXVertex>();
 
-                if (Version < WarcraftVersion.Wrath)
-                {
-                    Skins = br.ReadMDXArray<MDXSkin>(Version);
-                }
-                else
-                {
-                    // Skins are stored out of file, figure out a clean solution
-                    SkinCount = br.ReadUInt32();
-                }
+            if (Version < WarcraftVersion.Wrath)
+            {
+                Skins = br.ReadMDXArray<MDXSkin>(Version);
+            }
+            else
+            {
+                // Skins are stored out of file, figure out a clean solution
+                SkinCount = br.ReadUInt32();
+            }
 
-                ColourAnimations = br.ReadMDXArray<MDXColourAnimation>(Version);
-                Textures = br.ReadMDXArray<MDXTexture>();
-                TransparencyAnimations = br.ReadMDXArray<MDXTextureWeight>(Version);
+            ColourAnimations = br.ReadMDXArray<MDXColourAnimation>(Version);
+            Textures = br.ReadMDXArray<MDXTexture>();
+            TransparencyAnimations = br.ReadMDXArray<MDXTextureWeight>(Version);
 
-                if (Version <= WarcraftVersion.BurningCrusade)
-                {
-                    // There's an array of something here, but we've no idea what type of data it is. Thus, we'll skip
-                    // over it.
-                    br.BaseStream.Position += 8;
-                }
-
-                TextureTransformations = br.ReadMDXArray<MDXTextureTransform>(Version);
-                ReplaceableTextureLookupTable = br.ReadMDXArray<short>();
-                Materials = br.ReadMDXArray<MDXMaterial>(Version);
-
-                BoneLookupTable = br.ReadMDXArray<short>();
-                TextureLookupTable = br.ReadMDXArray<short>();
-                TextureMappingLookupTable = br.ReadMDXArray<MDXTextureMappingType>();
-                TransparencyLookupTable = br.ReadMDXArray<short>();
-                TextureTransformationLookupTable = br.ReadMDXArray<short>();
-
-                BoundingBox = br.ReadBox();
-                BoundingSphereRadius = br.ReadSingle();
-
-                CollisionBox = br.ReadBox();
-                CollisionSphereRadius = br.ReadSingle();
-
-                CollisionTriangles = br.ReadMDXArray<ushort>();
-                CollisionVertices = br.ReadMDXArray<Vector3>();
-                CollisionNormals = br.ReadMDXArray<Vector3>();
-
-                Attachments = br.ReadMDXArray<MDXAttachment>(Version);
-                AttachmentLookupTable = br.ReadMDXArray<MDXAttachmentType>();
-
-                AnimationEvents = br.ReadMDXArray<MDXAnimationEvent>(Version);
-                Lights = br.ReadMDXArray<MDXLight>(Version);
-
-                Cameras = br.ReadMDXArray<MDXCamera>(Version);
-                CameraTypeLookupTable = br.ReadMDXArray<MDXCameraType>();
-
-                RibbonEmitters = br.ReadMDXArray<MDXRibbonEmitter>(Version);
-
-                // TODO: Particle Emitters
-                // Skip for now
+            if (Version <= WarcraftVersion.BurningCrusade)
+            {
+                // There's an array of something here, but we've no idea what type of data it is. Thus, we'll skip
+                // over it.
                 br.BaseStream.Position += 8;
+            }
 
-                if (Version >= WarcraftVersion.Wrath && GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
-                {
-                    BlendMapOverrides = br.ReadMDXArray<BlendingMode>();
-                }
+            TextureTransformations = br.ReadMDXArray<MDXTextureTransform>(Version);
+            ReplaceableTextureLookupTable = br.ReadMDXArray<short>();
+            Materials = br.ReadMDXArray<MDXMaterial>(Version);
+
+            BoneLookupTable = br.ReadMDXArray<short>();
+            TextureLookupTable = br.ReadMDXArray<short>();
+            TextureMappingLookupTable = br.ReadMDXArray<MDXTextureMappingType>();
+            TransparencyLookupTable = br.ReadMDXArray<short>();
+            TextureTransformationLookupTable = br.ReadMDXArray<short>();
+
+            BoundingBox = br.ReadBox();
+            BoundingSphereRadius = br.ReadSingle();
+
+            CollisionBox = br.ReadBox();
+            CollisionSphereRadius = br.ReadSingle();
+
+            CollisionTriangles = br.ReadMDXArray<ushort>();
+            CollisionVertices = br.ReadMDXArray<Vector3>();
+            CollisionNormals = br.ReadMDXArray<Vector3>();
+
+            Attachments = br.ReadMDXArray<MDXAttachment>(Version);
+            AttachmentLookupTable = br.ReadMDXArray<MDXAttachmentType>();
+
+            AnimationEvents = br.ReadMDXArray<MDXAnimationEvent>(Version);
+            Lights = br.ReadMDXArray<MDXLight>(Version);
+
+            Cameras = br.ReadMDXArray<MDXCamera>(Version);
+            CameraTypeLookupTable = br.ReadMDXArray<MDXCameraType>();
+
+            RibbonEmitters = br.ReadMDXArray<MDXRibbonEmitter>(Version);
+
+            // TODO: Particle Emitters
+            // Skip for now
+            br.BaseStream.Position += 8;
+
+            if (Version >= WarcraftVersion.Wrath && GlobalModelFlags.HasFlag(ModelObjectFlags.HasBlendModeOverrides))
+            {
+                BlendMapOverrides = br.ReadMDXArray<BlendingMode>();
             }
         }
 

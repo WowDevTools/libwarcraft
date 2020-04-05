@@ -61,13 +61,9 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Filenames.Add(br.ReadNullTerminatedString());
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            Filenames.Add(br.ReadNullTerminatedString());
         }
 
         /// <inheritdoc/>

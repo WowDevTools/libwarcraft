@@ -60,13 +60,9 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    SkyboxName = br.ReadNullTerminatedString();
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            SkyboxName = br.ReadNullTerminatedString();
         }
 
         /// <inheritdoc/>
@@ -78,22 +74,20 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                if (string.IsNullOrEmpty(SkyboxName))
                 {
-                    if (string.IsNullOrEmpty(SkyboxName))
-                    {
-                        bw.Write(new byte[4]);
-                    }
-                    else
-                    {
-                        bw.WriteNullTerminatedString(SkyboxName!);
-                    }
+                    bw.Write(new byte[4]);
                 }
-
-                return ms.ToArray();
+                else
+                {
+                    bw.WriteNullTerminatedString(SkyboxName!);
+                }
             }
+
+            return ms.ToArray();
         }
     }
 }

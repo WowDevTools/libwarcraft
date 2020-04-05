@@ -60,16 +60,12 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            var portalReferenceCount = inData.Length / PortalReference.GetSize();
+            for (var i = 0; i < portalReferenceCount; ++i)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var portalReferenceCount = inData.Length / PortalReference.GetSize();
-                    for (var i = 0; i < portalReferenceCount; ++i)
-                    {
-                        PortalReferences.Add(new PortalReference(br.ReadBytes(PortalReference.GetSize())));
-                    }
-                }
+                PortalReferences.Add(new PortalReference(br.ReadBytes(PortalReference.GetSize())));
             }
         }
 
@@ -82,18 +78,16 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var portalReference in PortalReferences)
                 {
-                    foreach (var portalReference in PortalReferences)
-                    {
-                        bw.Write(portalReference.Serialize());
-                    }
+                    bw.Write(portalReference.Serialize());
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

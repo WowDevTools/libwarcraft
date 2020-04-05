@@ -61,21 +61,17 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            while (ms.Position < ms.Length)
             {
-                using (var br = new BinaryReader(ms))
+                if (ms.Position % 4 == 0)
                 {
-                    while (ms.Position < ms.Length)
-                    {
-                        if (ms.Position % 4 == 0)
-                        {
-                            Textures.Add(ms.Position, br.ReadNullTerminatedString());
-                        }
-                        else
-                        {
-                            ms.Position += 4 - (ms.Position % 4);
-                        }
-                    }
+                    Textures.Add(ms.Position, br.ReadNullTerminatedString());
+                }
+                else
+                {
+                    ms.Position += 4 - (ms.Position % 4);
                 }
             }
         }
@@ -107,39 +103,37 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var texture in Textures)
                 {
-                    foreach (var texture in Textures)
+                    if (ms.Position % 4 == 0)
                     {
-                        if (ms.Position % 4 == 0)
-                        {
-                            bw.WriteNullTerminatedString(texture.Value);
-                        }
-                        else
-                        {
-                            // Pad with nulls, then write
-                            var stringPadCount = 4 - (ms.Position % 4);
-                            for (var i = 0; i < stringPadCount; ++i)
-                            {
-                                bw.Write('\0');
-                            }
-
-                            bw.WriteNullTerminatedString(texture.Value);
-                        }
+                        bw.WriteNullTerminatedString(texture.Value);
                     }
-
-                    // Finally, pad until the next alignment
-                    var padCount = 4 - (ms.Position % 4);
-                    for (var i = 0; i < padCount; ++i)
+                    else
                     {
-                        bw.Write('\0');
+                        // Pad with nulls, then write
+                        var stringPadCount = 4 - (ms.Position % 4);
+                        for (var i = 0; i < stringPadCount; ++i)
+                        {
+                            bw.Write('\0');
+                        }
+
+                        bw.WriteNullTerminatedString(texture.Value);
                     }
                 }
 
-                return ms.ToArray();
+                // Finally, pad until the next alignment
+                var padCount = 4 - (ms.Position % 4);
+                for (var i = 0; i < padCount; ++i)
+                {
+                    bw.Write('\0');
+                }
             }
+
+            return ms.ToArray();
         }
     }
 }

@@ -85,23 +85,19 @@ namespace Warcraft.ADT.Chunks
         /// <param name="data">ExtendedData.</param>
         public WorldModelObjectPlacementEntry(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    WorldModelObjectEntryIndex = br.ReadUInt32();
-                    UniqueID = br.ReadInt32();
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            WorldModelObjectEntryIndex = br.ReadUInt32();
+            UniqueID = br.ReadInt32();
 
-                    Position = br.ReadVector3();
-                    Rotation = br.ReadRotator();
-                    BoundingBox = br.ReadBox();
+            Position = br.ReadVector3();
+            Rotation = br.ReadRotator();
+            BoundingBox = br.ReadBox();
 
-                    Flags = (WorldModelObjectFlags)br.ReadUInt16();
-                    DoodadSet = br.ReadUInt16();
-                    NameSet = br.ReadUInt16();
-                    Unused = br.ReadUInt16();
-                }
-            }
+            Flags = (WorldModelObjectFlags)br.ReadUInt16();
+            DoodadSet = br.ReadUInt16();
+            NameSet = br.ReadUInt16();
+            Unused = br.ReadUInt16();
         }
 
         /// <summary>
@@ -116,25 +112,23 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.Write(WorldModelObjectEntryIndex);
-                    bw.Write(UniqueID);
+                bw.Write(WorldModelObjectEntryIndex);
+                bw.Write(UniqueID);
 
-                    bw.WriteVector3(Position);
-                    bw.WriteRotator(Rotation);
-                    bw.WriteBox(BoundingBox);
+                bw.WriteVector3(Position);
+                bw.WriteRotator(Rotation);
+                bw.WriteBox(BoundingBox);
 
-                    bw.Write((ushort)Flags);
-                    bw.Write(DoodadSet);
-                    bw.Write(NameSet);
-                    bw.Write(Unused);
-                }
-
-                return ms.ToArray();
+                bw.Write((ushort)Flags);
+                bw.Write(DoodadSet);
+                bw.Write(NameSet);
+                bw.Write(Unused);
             }
+
+            return ms.ToArray();
         }
     }
 }

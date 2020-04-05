@@ -221,86 +221,82 @@ namespace Warcraft.WMO.GroupFile
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            GroupNameOffset = br.ReadUInt32();
+            DescriptiveGroupNameOffset = br.ReadUInt32();
+
+            Flags = (GroupFlags)br.ReadUInt32();
+
+            BoundingBox = br.ReadBox();
+
+            FirstPortalReferenceIndex = br.ReadUInt16();
+            PortalReferenceCount = br.ReadUInt16();
+
+            RenderBatchCountA = br.ReadUInt16();
+            RenderBatchCountInterior = br.ReadUInt16();
+            RenderBatchCountExterior = br.ReadUInt16();
+            Unknown = br.ReadUInt16();
+
+            for (var i = 0; i < 4; ++i)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    GroupNameOffset = br.ReadUInt32();
-                    DescriptiveGroupNameOffset = br.ReadUInt32();
+                FogIndices.Add(br.ReadByte());
+            }
 
-                    Flags = (GroupFlags)br.ReadUInt32();
+            LiquidType = br.ReadUInt32();
+            GroupID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, nameof(WMOAreaTableRecord.WMOGroupID), br.ReadUInt32());
 
-                    BoundingBox = br.ReadBox();
+            UnknownFlags = br.ReadUInt32();
+            Unused = br.ReadUInt32();
 
-                    FirstPortalReferenceIndex = br.ReadUInt16();
-                    PortalReferenceCount = br.ReadUInt16();
+            // Required subchunks
+            PolygonMaterials = br.ReadIFFChunk<ModelPolygonMaterials>();
+            VertexIndices = br.ReadIFFChunk<ModelVertexIndices>();
+            Vertices = br.ReadIFFChunk<ModelVertices>();
+            Normals = br.ReadIFFChunk<ModelNormals>();
+            TextureCoordinates = br.ReadIFFChunk<ModelTextureCoordinates>();
+            RenderBatches = br.ReadIFFChunk<ModelRenderBatches>();
 
-                    RenderBatchCountA = br.ReadUInt16();
-                    RenderBatchCountInterior = br.ReadUInt16();
-                    RenderBatchCountExterior = br.ReadUInt16();
-                    Unknown = br.ReadUInt16();
+            // Optional chunks
+            if (Flags.HasFlag(GroupFlags.HasLights))
+            {
+                LightReferences = br.ReadIFFChunk<ModelLightReferences>();
+            }
 
-                    for (var i = 0; i < 4; ++i)
-                    {
-                        FogIndices.Add(br.ReadByte());
-                    }
+            if (Flags.HasFlag(GroupFlags.HasDoodads))
+            {
+                DoodadReferences = br.ReadIFFChunk<ModelDoodadReferences>();
+            }
 
-                    LiquidType = br.ReadUInt32();
-                    GroupID = new ForeignKey<uint>(DatabaseName.WMOAreaTable, nameof(WMOAreaTableRecord.WMOGroupID), br.ReadUInt32());
+            if (Flags.HasFlag(GroupFlags.HasBSP))
+            {
+                BSPNodes = br.ReadIFFChunk<ModelBSPNodes>();
+                BSPFaceIndices = br.ReadIFFChunk<ModelBSPFaceIndices>();
+            }
 
-                    UnknownFlags = br.ReadUInt32();
-                    Unused = br.ReadUInt32();
+            if (Flags.HasFlag(GroupFlags.HasVertexColours))
+            {
+                VertexColours = br.ReadIFFChunk<ModelVertexColours>();
+            }
 
-                    // Required subchunks
-                    PolygonMaterials = br.ReadIFFChunk<ModelPolygonMaterials>();
-                    VertexIndices = br.ReadIFFChunk<ModelVertexIndices>();
-                    Vertices = br.ReadIFFChunk<ModelVertices>();
-                    Normals = br.ReadIFFChunk<ModelNormals>();
-                    TextureCoordinates = br.ReadIFFChunk<ModelTextureCoordinates>();
-                    RenderBatches = br.ReadIFFChunk<ModelRenderBatches>();
+            if (Flags.HasFlag(GroupFlags.HasLiquids))
+            {
+                Liquids = br.ReadIFFChunk<ModelLiquids>();
+            }
 
-                    // Optional chunks
-                    if (Flags.HasFlag(GroupFlags.HasLights))
-                    {
-                        LightReferences = br.ReadIFFChunk<ModelLightReferences>();
-                    }
+            if (Flags.HasFlag(GroupFlags.HasTwoTextureCoordinateSets))
+            {
+                AdditionalTextureCoordinates = br.ReadIFFChunk<ModelTextureCoordinates>();
+            }
 
-                    if (Flags.HasFlag(GroupFlags.HasDoodads))
-                    {
-                        DoodadReferences = br.ReadIFFChunk<ModelDoodadReferences>();
-                    }
+            if (Flags.HasFlag(GroupFlags.HasTwoVertexShadingSets))
+            {
+                AdditionalVertexColours = br.ReadIFFChunk<ModelVertexColours>();
+            }
 
-                    if (Flags.HasFlag(GroupFlags.HasBSP))
-                    {
-                        BSPNodes = br.ReadIFFChunk<ModelBSPNodes>();
-                        BSPFaceIndices = br.ReadIFFChunk<ModelBSPFaceIndices>();
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasVertexColours))
-                    {
-                        VertexColours = br.ReadIFFChunk<ModelVertexColours>();
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasLiquids))
-                    {
-                        Liquids = br.ReadIFFChunk<ModelLiquids>();
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasTwoTextureCoordinateSets))
-                    {
-                        AdditionalTextureCoordinates = br.ReadIFFChunk<ModelTextureCoordinates>();
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasTwoVertexShadingSets))
-                    {
-                        AdditionalVertexColours = br.ReadIFFChunk<ModelVertexColours>();
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasThreeTextureCoordinateSets))
-                    {
-                        SecondAddtionalTextureCoordinates = br.ReadIFFChunk<ModelTextureCoordinates>();
-                    }
-                }
+            if (Flags.HasFlag(GroupFlags.HasThreeTextureCoordinateSets))
+            {
+                SecondAddtionalTextureCoordinates = br.ReadIFFChunk<ModelTextureCoordinates>();
             }
         }
 
@@ -320,91 +316,89 @@ namespace Warcraft.WMO.GroupFile
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                bw.Write(GroupNameOffset);
+                bw.Write(DescriptiveGroupNameOffset);
+
+                // Set the flags according to present chunks
+                UpdateFlags();
+                bw.Write((uint)Flags);
+
+                bw.WriteBox(BoundingBox);
+
+                bw.Write(FirstPortalReferenceIndex);
+                bw.Write(PortalReferenceCount);
+
+                bw.Write(RenderBatchCountA);
+                bw.Write(RenderBatchCountInterior);
+                bw.Write(RenderBatchCountExterior);
+                bw.Write(Unknown);
+
+                foreach (var fogIndex in FogIndices)
                 {
-                    bw.Write(GroupNameOffset);
-                    bw.Write(DescriptiveGroupNameOffset);
-
-                    // Set the flags according to present chunks
-                    UpdateFlags();
-                    bw.Write((uint)Flags);
-
-                    bw.WriteBox(BoundingBox);
-
-                    bw.Write(FirstPortalReferenceIndex);
-                    bw.Write(PortalReferenceCount);
-
-                    bw.Write(RenderBatchCountA);
-                    bw.Write(RenderBatchCountInterior);
-                    bw.Write(RenderBatchCountExterior);
-                    bw.Write(Unknown);
-
-                    foreach (var fogIndex in FogIndices)
-                    {
-                        bw.Write(fogIndex);
-                    }
-
-                    bw.Write(LiquidType);
-                    bw.Write(GroupID.Key);
-
-                    bw.Write(UnknownFlags);
-                    bw.Write(Unused);
-
-                    // Write the mandatory chunks
-                    bw.WriteIFFChunk(PolygonMaterials!);
-                    bw.WriteIFFChunk(VertexIndices!);
-                    bw.WriteIFFChunk(Vertices!);
-                    bw.WriteIFFChunk(Normals!);
-                    bw.WriteIFFChunk(TextureCoordinates!);
-                    bw.WriteIFFChunk(RenderBatches!);
-
-                    // Write the optional chunks based on flags
-                    if (Flags.HasFlag(GroupFlags.HasLights))
-                    {
-                        bw.WriteIFFChunk(LightReferences!);
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasDoodads))
-                    {
-                        bw.WriteIFFChunk(DoodadReferences!);
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasBSP))
-                    {
-                        bw.WriteIFFChunk(BSPNodes!);
-                        bw.WriteIFFChunk(BSPFaceIndices!);
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasVertexColours))
-                    {
-                        bw.WriteIFFChunk(VertexColours!);
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasLiquids))
-                    {
-                        bw.WriteIFFChunk(Liquids!);
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasTwoTextureCoordinateSets))
-                    {
-                        bw.WriteIFFChunk(AdditionalTextureCoordinates!);
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasTwoVertexShadingSets))
-                    {
-                        bw.WriteIFFChunk(AdditionalVertexColours!);
-                    }
-
-                    if (Flags.HasFlag(GroupFlags.HasThreeTextureCoordinateSets))
-                    {
-                        bw.WriteIFFChunk(SecondAddtionalTextureCoordinates!);
-                    }
+                    bw.Write(fogIndex);
                 }
 
-                return ms.ToArray();
+                bw.Write(LiquidType);
+                bw.Write(GroupID.Key);
+
+                bw.Write(UnknownFlags);
+                bw.Write(Unused);
+
+                // Write the mandatory chunks
+                bw.WriteIFFChunk(PolygonMaterials!);
+                bw.WriteIFFChunk(VertexIndices!);
+                bw.WriteIFFChunk(Vertices!);
+                bw.WriteIFFChunk(Normals!);
+                bw.WriteIFFChunk(TextureCoordinates!);
+                bw.WriteIFFChunk(RenderBatches!);
+
+                // Write the optional chunks based on flags
+                if (Flags.HasFlag(GroupFlags.HasLights))
+                {
+                    bw.WriteIFFChunk(LightReferences!);
+                }
+
+                if (Flags.HasFlag(GroupFlags.HasDoodads))
+                {
+                    bw.WriteIFFChunk(DoodadReferences!);
+                }
+
+                if (Flags.HasFlag(GroupFlags.HasBSP))
+                {
+                    bw.WriteIFFChunk(BSPNodes!);
+                    bw.WriteIFFChunk(BSPFaceIndices!);
+                }
+
+                if (Flags.HasFlag(GroupFlags.HasVertexColours))
+                {
+                    bw.WriteIFFChunk(VertexColours!);
+                }
+
+                if (Flags.HasFlag(GroupFlags.HasLiquids))
+                {
+                    bw.WriteIFFChunk(Liquids!);
+                }
+
+                if (Flags.HasFlag(GroupFlags.HasTwoTextureCoordinateSets))
+                {
+                    bw.WriteIFFChunk(AdditionalTextureCoordinates!);
+                }
+
+                if (Flags.HasFlag(GroupFlags.HasTwoVertexShadingSets))
+                {
+                    bw.WriteIFFChunk(AdditionalVertexColours!);
+                }
+
+                if (Flags.HasFlag(GroupFlags.HasThreeTextureCoordinateSets))
+                {
+                    bw.WriteIFFChunk(SecondAddtionalTextureCoordinates!);
+                }
             }
+
+            return ms.ToArray();
         }
 
         /// <summary>

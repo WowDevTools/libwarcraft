@@ -64,15 +64,11 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            while (ms.Position < ms.Length)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    while (ms.Position < ms.Length)
-                    {
-                        GroupNames.Add(ms.Position, br.ReadNullTerminatedString());
-                    }
-                }
+                GroupNames.Add(ms.Position, br.ReadNullTerminatedString());
             }
         }
 
@@ -119,35 +115,33 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                // Each block begins with two empty strings
+                bw.Write('\0');
+                bw.Write('\0');
+
+                // Then the actual data
+                for (var i = 0; i < GroupNames.Count; ++i)
                 {
-                    // Each block begins with two empty strings
-                    bw.Write('\0');
-                    bw.Write('\0');
-
-                    // Then the actual data
-                    for (var i = 0; i < GroupNames.Count; ++i)
-                    {
-                        bw.WriteNullTerminatedString(GroupNames.ElementAt(i).Value);
-                    }
-
-                    // Then zero padding to an even 4-byte boundary at the end
-                    var count = 4 - (ms.Position % 4);
-                    if (count >= 4)
-                    {
-                        return ms.ToArray();
-                    }
-
-                    for (long i = 0; i < count; ++i)
-                    {
-                        bw.Write('\0');
-                    }
+                    bw.WriteNullTerminatedString(GroupNames.ElementAt(i).Value);
                 }
 
-                return ms.ToArray();
+                // Then zero padding to an even 4-byte boundary at the end
+                var count = 4 - (ms.Position % 4);
+                if (count >= 4)
+                {
+                    return ms.ToArray();
+                }
+
+                for (long i = 0; i < count; ++i)
+                {
+                    bw.Write('\0');
+                }
             }
+
+            return ms.ToArray();
         }
     }
 }

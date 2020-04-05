@@ -58,13 +58,9 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Version = br.ReadUInt32();
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            Version = br.ReadUInt32();
         }
 
         /// <inheritdoc/>
@@ -85,15 +81,13 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.Write(Version);
-                }
-
-                return ms.ToArray();
+                bw.Write(Version);
             }
+
+            return ms.ToArray();
         }
     }
 }

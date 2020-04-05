@@ -71,15 +71,11 @@ namespace Warcraft.WDL.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            for (var i = 0; i < 16; ++i)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    for (var i = 0; i < 16; ++i)
-                    {
-                        HoleMasks.Add(br.ReadInt16());
-                    }
-                }
+                HoleMasks.Add(br.ReadInt16());
             }
         }
 
@@ -110,18 +106,16 @@ namespace Warcraft.WDL.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var holeMask in HoleMasks)
                 {
-                    foreach (var holeMask in HoleMasks)
-                    {
-                        bw.Write(holeMask);
-                    }
+                    bw.Write(holeMask);
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

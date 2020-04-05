@@ -62,15 +62,11 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            while (ms.Position < ms.Length)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    while (ms.Position < ms.Length)
-                    {
-                        VertexColours.Add(br.ReadBGRA());
-                    }
-                }
+                VertexColours.Add(br.ReadBGRA());
             }
         }
 
@@ -83,18 +79,16 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var vertexColour in VertexColours)
                 {
-                    foreach (var vertexColour in VertexColours)
-                    {
-                        bw.WriteBGRA(vertexColour);
-                    }
+                    bw.WriteBGRA(vertexColour);
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

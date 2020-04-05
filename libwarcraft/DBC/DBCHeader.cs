@@ -63,22 +63,18 @@ namespace Warcraft.DBC
         /// <param name="data">ExtendedData.</param>
         public DBCHeader(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            var dataSignature = new string(br.ReadChars(4));
+            if (dataSignature != Signature)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var dataSignature = new string(br.ReadChars(4));
-                    if (dataSignature != Signature)
-                    {
-                        throw new FileLoadException("The loaded data did not have a valid DBC signature.");
-                    }
-
-                    RecordCount = br.ReadUInt32();
-                    FieldCount = br.ReadUInt32();
-                    RecordSize = br.ReadUInt32();
-                    StringBlockSize = br.ReadUInt32();
-                }
+                throw new FileLoadException("The loaded data did not have a valid DBC signature.");
             }
+
+            RecordCount = br.ReadUInt32();
+            FieldCount = br.ReadUInt32();
+            RecordSize = br.ReadUInt32();
+            StringBlockSize = br.ReadUInt32();
         }
 
         /// <summary>

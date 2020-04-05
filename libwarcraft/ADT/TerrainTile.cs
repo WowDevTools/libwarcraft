@@ -105,76 +105,72 @@ namespace Warcraft.ADT
         /// <param name="data">The binary data.</param>
         public TerrainTile(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            // In all ADT files, the version chunk and header chunk are at the beginning of the file,
+            // with the header following the version. From them, the rest of the chunks can be
+            // seeked to and read.
+
+            // Read Version Chunk
+            Version = br.ReadIFFChunk<TerrainVersion>();
+
+            // Read the header chunk
+            Header = br.ReadIFFChunk<TerrainHeader>();
+
+            if (Header.MapChunkOffsetsOffset > 0)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    // In all ADT files, the version chunk and header chunk are at the beginning of the file,
-                    // with the header following the version. From them, the rest of the chunks can be
-                    // seeked to and read.
+                br.BaseStream.Position = Header.MapChunkOffsetsOffset;
+                MapChunkOffsets = br.ReadIFFChunk<TerrainMapChunkOffsets>();
+            }
 
-                    // Read Version Chunk
-                    Version = br.ReadIFFChunk<TerrainVersion>();
+            if (Header.TexturesOffset > 0)
+            {
+                br.BaseStream.Position = Header.TexturesOffset;
+                Textures = br.ReadIFFChunk<TerrainTextures>();
+            }
 
-                    // Read the header chunk
-                    Header = br.ReadIFFChunk<TerrainHeader>();
+            if (Header.ModelsOffset > 0)
+            {
+                br.BaseStream.Position = Header.ModelsOffset;
+                Models = br.ReadIFFChunk<TerrainModels>();
+            }
 
-                    if (Header.MapChunkOffsetsOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.MapChunkOffsetsOffset;
-                        MapChunkOffsets = br.ReadIFFChunk<TerrainMapChunkOffsets>();
-                    }
+            if (Header.ModelIndicesOffset > 0)
+            {
+                br.BaseStream.Position = Header.ModelIndicesOffset;
+                ModelIndices = br.ReadIFFChunk<TerrainModelIndices>();
+            }
 
-                    if (Header.TexturesOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.TexturesOffset;
-                        Textures = br.ReadIFFChunk<TerrainTextures>();
-                    }
+            if (Header.WorldModelObjectsOffset > 0)
+            {
+                br.BaseStream.Position = Header.WorldModelObjectsOffset;
+                WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
+            }
 
-                    if (Header.ModelsOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.ModelsOffset;
-                        Models = br.ReadIFFChunk<TerrainModels>();
-                    }
+            if (Header.WorldModelObjectIndicesOffset > 0)
+            {
+                br.BaseStream.Position = Header.WorldModelObjectIndicesOffset;
+                WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldModelObjectIndices>();
+            }
 
-                    if (Header.ModelIndicesOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.ModelIndicesOffset;
-                        ModelIndices = br.ReadIFFChunk<TerrainModelIndices>();
-                    }
+            if (Header.LiquidOffset > 0)
+            {
+                br.BaseStream.Position = Header.LiquidOffset;
+                Liquids = br.ReadIFFChunk<TerrainLiquid>();
 
-                    if (Header.WorldModelObjectsOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.WorldModelObjectsOffset;
-                        WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
-                    }
+                // TODO: [#9] Pass in DBC liquid type to load the vertex data
+            }
 
-                    if (Header.WorldModelObjectIndicesOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.WorldModelObjectIndicesOffset;
-                        WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldModelObjectIndices>();
-                    }
+            // Read and fill the map chunks
+            if (MapChunkOffsets is null)
+            {
+                return;
+            }
 
-                    if (Header.LiquidOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.LiquidOffset;
-                        Liquids = br.ReadIFFChunk<TerrainLiquid>();
-
-                        // TODO: [#9] Pass in DBC liquid type to load the vertex data
-                    }
-
-                    // Read and fill the map chunks
-                    if (MapChunkOffsets is null)
-                    {
-                        return;
-                    }
-
-                    foreach (var entry in MapChunkOffsets.Entries)
-                    {
-                        br.BaseStream.Position = entry.MapChunkOffset;
-                        MapChunks.Add(br.ReadIFFChunk<TerrainMapChunk>());
-                    }
-                }
+            foreach (var entry in MapChunkOffsets.Entries)
+            {
+                br.BaseStream.Position = entry.MapChunkOffset;
+                MapChunks.Add(br.ReadIFFChunk<TerrainMapChunk>());
             }
         }
     }

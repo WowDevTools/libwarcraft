@@ -68,20 +68,16 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <param name="inData">The binary data.</param>
         public FogInstance(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Flags = (FogFlags)br.ReadUInt32();
-                    Position = br.ReadVector3();
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            Flags = (FogFlags)br.ReadUInt32();
+            Position = br.ReadVector3();
 
-                    GlobalStartRadius = br.ReadSingle();
-                    GlobalEndRadius = br.ReadSingle();
+            GlobalStartRadius = br.ReadSingle();
+            GlobalEndRadius = br.ReadSingle();
 
-                    LandFog = new FogDefinition(br.ReadBytes(FogDefinition.GetSize()));
-                    UnderwaterFog = new FogDefinition(br.ReadBytes(FogDefinition.GetSize()));
-                }
-            }
+            LandFog = new FogDefinition(br.ReadBytes(FogDefinition.GetSize()));
+            UnderwaterFog = new FogDefinition(br.ReadBytes(FogDefinition.GetSize()));
         }
 
         /// <summary>
@@ -96,22 +92,20 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.Write((uint)Flags);
-                    bw.WriteVector3(Position);
+                bw.Write((uint)Flags);
+                bw.WriteVector3(Position);
 
-                    bw.Write(GlobalStartRadius);
-                    bw.Write(GlobalEndRadius);
+                bw.Write(GlobalStartRadius);
+                bw.Write(GlobalEndRadius);
 
-                    bw.Write(LandFog.Serialize());
-                    bw.Write(UnderwaterFog.Serialize());
-                }
-
-                return ms.ToArray();
+                bw.Write(LandFog.Serialize());
+                bw.Write(UnderwaterFog.Serialize());
             }
+
+            return ms.ToArray();
         }
     }
 }

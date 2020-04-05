@@ -84,20 +84,16 @@ namespace Warcraft.Core.Extensions
         /// <returns>A repacked vertex.</returns>
         public static byte[] PackForOpenGL(this MDXVertex vertex)
         {
-            using (var ms = new MemoryStream())
-            {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.WriteVector3(vertex.Position, AxisConfiguration.YUp);
-                    bw.Write(vertex.BoneWeights.ToArray());
-                    bw.Write(vertex.BoneIndices.ToArray());
-                    bw.WriteVector3(vertex.Normal, AxisConfiguration.YUp);
-                    bw.WriteVector2(vertex.UV1);
-                    bw.WriteVector2(vertex.UV2);
+            using var ms = new MemoryStream();
+            using var bw = new BinaryWriter(ms);
+            bw.WriteVector3(vertex.Position, AxisConfiguration.YUp);
+            bw.Write(vertex.BoneWeights.ToArray());
+            bw.Write(vertex.BoneIndices.ToArray());
+            bw.WriteVector3(vertex.Normal, AxisConfiguration.YUp);
+            bw.WriteVector2(vertex.UV1);
+            bw.WriteVector2(vertex.UV2);
 
-                    return ms.ToArray();
-                }
-            }
+            return ms.ToArray();
         }
 
         /// <summary>

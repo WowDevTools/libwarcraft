@@ -65,26 +65,22 @@ namespace Warcraft.WDL.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            // TODO: Verify if this isn't mapped the same way as ADT.Chunks.MapChunkHeightmap
+            for (var y = 0; y < 17; ++y)
             {
-                using (var br = new BinaryReader(ms))
+                for (var x = 0; x < 17; ++x)
                 {
-                    // TODO: Verify if this isn't mapped the same way as ADT.Chunks.MapChunkHeightmap
-                    for (var y = 0; y < 17; ++y)
-                    {
-                        for (var x = 0; x < 17; ++x)
-                        {
-                            HighResVertices.Add(br.ReadInt16());
-                        }
-                    }
+                    HighResVertices.Add(br.ReadInt16());
+                }
+            }
 
-                    for (var y = 0; y < 16; ++y)
-                    {
-                        for (var x = 0; x < 16; ++x)
-                        {
-                            LowResVertices.Add(br.ReadInt16());
-                        }
-                    }
+            for (var y = 0; y < 16; ++y)
+            {
+                for (var x = 0; x < 16; ++x)
+                {
+                    LowResVertices.Add(br.ReadInt16());
                 }
             }
         }
@@ -107,23 +103,21 @@ namespace Warcraft.WDL.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var lodVertex in HighResVertices)
                 {
-                    foreach (var lodVertex in HighResVertices)
-                    {
-                        bw.Write(lodVertex);
-                    }
-
-                    foreach (var lodVertex in LowResVertices)
-                    {
-                        bw.Write(lodVertex);
-                    }
+                    bw.Write(lodVertex);
                 }
 
-                return ms.ToArray();
+                foreach (var lodVertex in LowResVertices)
+                {
+                    bw.Write(lodVertex);
+                }
             }
+
+            return ms.ToArray();
         }
     }
 }

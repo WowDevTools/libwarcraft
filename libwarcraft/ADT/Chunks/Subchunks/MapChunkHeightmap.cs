@@ -69,28 +69,24 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            for (var y = 0; y < 16; ++y)
             {
-                using (var br = new BinaryReader(ms))
+                if (y % 2 == 0)
                 {
-                    for (var y = 0; y < 16; ++y)
+                    // Read a block of 9 high res vertices
+                    for (var x = 0; x < 9; ++x)
                     {
-                        if (y % 2 == 0)
-                        {
-                            // Read a block of 9 high res vertices
-                            for (var x = 0; x < 9; ++x)
-                            {
-                                HighResVertices.Add(br.ReadSingle());
-                            }
-                        }
-                        else
-                        {
-                            // Read a block of 8 low res vertices
-                            for (var x = 0; x < 8; ++x)
-                            {
-                                LowResVertices.Add(br.ReadSingle());
-                            }
-                        }
+                        HighResVertices.Add(br.ReadSingle());
+                    }
+                }
+                else
+                {
+                    // Read a block of 8 low res vertices
+                    for (var x = 0; x < 8; ++x)
+                    {
+                        LowResVertices.Add(br.ReadSingle());
                     }
                 }
             }

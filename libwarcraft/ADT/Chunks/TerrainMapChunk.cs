@@ -112,74 +112,70 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            Header = new MapChunkHeader(br.ReadBytes(MapChunkHeader.GetSize()));
+
+            if (Header.HeightmapOffset > 0)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    Header = new MapChunkHeader(br.ReadBytes(MapChunkHeader.GetSize()));
+                br.BaseStream.Position = Header.HeightmapOffset;
+                Heightmap = br.ReadIFFChunk<MapChunkHeightmap>();
+            }
 
-                    if (Header.HeightmapOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.HeightmapOffset;
-                        Heightmap = br.ReadIFFChunk<MapChunkHeightmap>();
-                    }
+            if (Header.VertexNormalOffset > 0)
+            {
+                br.BaseStream.Position = Header.VertexNormalOffset;
+                VertexNormals = br.ReadIFFChunk<MapChunkVertexNormals>();
+            }
 
-                    if (Header.VertexNormalOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.VertexNormalOffset;
-                        VertexNormals = br.ReadIFFChunk<MapChunkVertexNormals>();
-                    }
+            if (Header.TextureLayersOffset > 0)
+            {
+                br.BaseStream.Position = Header.TextureLayersOffset;
+                TextureLayers = br.ReadIFFChunk<MapChunkTextureLayers>();
+            }
 
-                    if (Header.TextureLayersOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.TextureLayersOffset;
-                        TextureLayers = br.ReadIFFChunk<MapChunkTextureLayers>();
-                    }
+            if (Header.ModelReferencesOffset > 0)
+            {
+                br.BaseStream.Position = Header.ModelReferencesOffset;
+                ModelReferences = br.ReadIFFChunk<MapChunkModelReferences>();
 
-                    if (Header.ModelReferencesOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.ModelReferencesOffset;
-                        ModelReferences = br.ReadIFFChunk<MapChunkModelReferences>();
+                ModelReferences.PostLoadReferences(Header.ModelReferenceCount, Header.WorldModelObjectReferenceCount);
+            }
 
-                        ModelReferences.PostLoadReferences(Header.ModelReferenceCount, Header.WorldModelObjectReferenceCount);
-                    }
+            if (Header.AlphaMapsOffset > 0)
+            {
+                br.BaseStream.Position = Header.AlphaMapsOffset;
+                AlphaMaps = br.ReadIFFChunk<MapChunkAlphaMaps>();
+            }
 
-                    if (Header.AlphaMapsOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.AlphaMapsOffset;
-                        AlphaMaps = br.ReadIFFChunk<MapChunkAlphaMaps>();
-                    }
+            if (Header.BakedShadowsOffset > 0 && Header.Flags.HasFlag(MapChunkFlags.HasBakedShadows))
+            {
+                br.BaseStream.Position = Header.BakedShadowsOffset;
+                BakedShadows = br.ReadIFFChunk<MapChunkBakedShadows>();
+            }
 
-                    if (Header.BakedShadowsOffset > 0 && Header.Flags.HasFlag(MapChunkFlags.HasBakedShadows))
-                    {
-                        br.BaseStream.Position = Header.BakedShadowsOffset;
-                        BakedShadows = br.ReadIFFChunk<MapChunkBakedShadows>();
-                    }
+            if (Header.SoundEmittersOffset > 0 && Header.SoundEmitterCount > 0)
+            {
+                br.BaseStream.Position = Header.SoundEmittersOffset;
+                SoundEmitters = br.ReadIFFChunk<MapChunkSoundEmitters>();
+            }
 
-                    if (Header.SoundEmittersOffset > 0 && Header.SoundEmitterCount > 0)
-                    {
-                        br.BaseStream.Position = Header.SoundEmittersOffset;
-                        SoundEmitters = br.ReadIFFChunk<MapChunkSoundEmitters>();
-                    }
+            if (Header.LiquidOffset > 0 && Header.LiquidSize > 8)
+            {
+                br.BaseStream.Position = Header.LiquidOffset;
+                Liquid = br.ReadIFFChunk<MapChunkLiquids>();
+            }
 
-                    if (Header.LiquidOffset > 0 && Header.LiquidSize > 8)
-                    {
-                        br.BaseStream.Position = Header.LiquidOffset;
-                        Liquid = br.ReadIFFChunk<MapChunkLiquids>();
-                    }
+            if (Header.VertexShadingOffset > 0 && Header.Flags.HasFlag(MapChunkFlags.HasVertexShading))
+            {
+                br.BaseStream.Position = Header.SoundEmittersOffset;
+                VertexShading = br.ReadIFFChunk<MapChunkVertexShading>();
+            }
 
-                    if (Header.VertexShadingOffset > 0 && Header.Flags.HasFlag(MapChunkFlags.HasVertexShading))
-                    {
-                        br.BaseStream.Position = Header.SoundEmittersOffset;
-                        VertexShading = br.ReadIFFChunk<MapChunkVertexShading>();
-                    }
-
-                    if (Header.VertexLightingOffset > 0)
-                    {
-                        br.BaseStream.Position = Header.VertexLightingOffset;
-                        VertexLighting = br.ReadIFFChunk<MapChunkVertexLighting>();
-                    }
-                }
+            if (Header.VertexLightingOffset > 0)
+            {
+                br.BaseStream.Position = Header.VertexLightingOffset;
+                VertexLighting = br.ReadIFFChunk<MapChunkVertexLighting>();
             }
         }
 

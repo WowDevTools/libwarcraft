@@ -55,20 +55,16 @@ namespace Warcraft.MPQ.Crypto
                 throw new InvalidDataException("The provided data had an invalid length.");
             }
 
-            using (var ms = new MemoryStream(data))
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            var identifier = br.ReadInt64();
+
+            if (identifier != 0)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var identifier = br.ReadInt64();
-
-                    if (identifier != 0)
-                    {
-                        throw new InvalidDataException("The signature did not begin with 0.");
-                    }
-
-                    PackageSignature = br.ReadBytes(64);
-                }
+                throw new InvalidDataException("The signature did not begin with 0.");
             }
+
+            PackageSignature = br.ReadBytes(64);
         }
     }
 }

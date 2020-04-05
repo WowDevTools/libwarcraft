@@ -105,35 +105,31 @@ namespace Warcraft.MPQ
         [PublicAPI]
         public MPQHeader([NotNull] byte[] data)
         {
-            using (var dataStream = new MemoryStream(data))
+            using var dataStream = new MemoryStream(data);
+            using var br = new BinaryReader(dataStream);
+            var dataSignature = new string(br.ReadChars(4));
+            if (dataSignature != ArchiveSignature)
             {
-                using (var br = new BinaryReader(dataStream))
-                {
-                    var dataSignature = new string(br.ReadChars(4));
-                    if (dataSignature != ArchiveSignature)
-                    {
-                        throw new FileLoadException("The provided file was not an MPQ file.");
-                    }
-
-                    HeaderSize = br.ReadUInt32();
-                    _basicArchiveSize = br.ReadUInt32();
-                    _format = (MPQFormat)br.ReadUInt16();
-                    _sectorSizeExponent = br.ReadUInt16();
-                    _hashTableOffset = br.ReadUInt32();
-                    _blockTableOffset = br.ReadUInt32();
-                    HashTableEntryCount = br.ReadUInt32();
-                    BlockTableEntryCount = br.ReadUInt32();
-
-                    if (_format < MPQFormat.ExtendedV1)
-                    {
-                        return;
-                    }
-
-                    _extendedBlockTableOffset = br.ReadUInt64();
-                    _extendedFormatHashTableOffsetBits = br.ReadUInt16();
-                    _extendedFormatBlockTableOffsetBits = br.ReadUInt16();
-                }
+                throw new FileLoadException("The provided file was not an MPQ file.");
             }
+
+            HeaderSize = br.ReadUInt32();
+            _basicArchiveSize = br.ReadUInt32();
+            _format = (MPQFormat)br.ReadUInt16();
+            _sectorSizeExponent = br.ReadUInt16();
+            _hashTableOffset = br.ReadUInt32();
+            _blockTableOffset = br.ReadUInt32();
+            HashTableEntryCount = br.ReadUInt32();
+            BlockTableEntryCount = br.ReadUInt32();
+
+            if (_format < MPQFormat.ExtendedV1)
+            {
+                return;
+            }
+
+            _extendedBlockTableOffset = br.ReadUInt64();
+            _extendedFormatHashTableOffsetBits = br.ReadUInt16();
+            _extendedFormatBlockTableOffsetBits = br.ReadUInt16();
         }
 
         /// <summary>
@@ -354,37 +350,35 @@ namespace Warcraft.MPQ
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                // Write the archive signature
+                foreach (var c in ArchiveSignature)
                 {
-                    // Write the archive signature
-                    foreach (var c in ArchiveSignature)
-                    {
-                        bw.Write(c);
-                    }
-
-                    bw.Write(HeaderSize);
-                    bw.Write(ArchiveSize);
-                    bw.Write((ushort)_format);
-                    bw.Write(_sectorSizeExponent);
-                    bw.Write(_hashTableOffset);
-                    bw.Write(_blockTableOffset);
-                    bw.Write(HashTableEntryCount);
-                    bw.Write(BlockTableEntryCount);
-
-                    if (_format <= MPQFormat.Basic)
-                    {
-                        return ms.ToArray();
-                    }
-
-                    bw.Write(_extendedBlockTableOffset);
-                    bw.Write(_extendedFormatHashTableOffsetBits);
-                    bw.Write(_extendedFormatBlockTableOffsetBits);
+                    bw.Write(c);
                 }
 
-                return ms.ToArray();
+                bw.Write(HeaderSize);
+                bw.Write(ArchiveSize);
+                bw.Write((ushort)_format);
+                bw.Write(_sectorSizeExponent);
+                bw.Write(_hashTableOffset);
+                bw.Write(_blockTableOffset);
+                bw.Write(HashTableEntryCount);
+                bw.Write(BlockTableEntryCount);
+
+                if (_format <= MPQFormat.Basic)
+                {
+                    return ms.ToArray();
+                }
+
+                bw.Write(_extendedBlockTableOffset);
+                bw.Write(_extendedFormatHashTableOffsetBits);
+                bw.Write(_extendedFormatBlockTableOffsetBits);
             }
+
+            return ms.ToArray();
         }
     }
 }

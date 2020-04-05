@@ -81,64 +81,60 @@ namespace Warcraft.WDL
         /// <param name="inData">The input data.</param>
         public WorldLOD(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            // Set up the two area lists with default values
+            for (var i = 0; i < 4096; ++i)
             {
-                using (var br = new BinaryReader(ms))
+                MapAreas.Add(null);
+                MapAreaHoles.Add(null);
+            }
+
+            Version = br.ReadIFFChunk<TerrainVersion>();
+
+            if (br.PeekChunkSignature() == TerrainWorldModelObjects.Signature)
+            {
+                WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
+            }
+
+            if (br.PeekChunkSignature() == TerrainWorldModelObjectIndices.Signature)
+            {
+                WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldModelObjectIndices>();
+            }
+
+            if (br.PeekChunkSignature() == TerrainWorldModelObjectPlacementInfo.Signature)
+            {
+                WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
+            }
+
+            MapAreaOffsets = br.ReadIFFChunk<WorldLODMapAreaOffsets>();
+
+            // Read the map areas and their holes
+            for (var y = 0; y < 64; ++y)
+            {
+                for (var x = 0; x < 64; ++x)
                 {
-                    // Set up the two area lists with default values
-                    for (var i = 0; i < 4096; ++i)
+                    var mapAreaOffsetIndex = (y * 64) + x;
+                    var mapAreaOffset = MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex];
+
+                    if (mapAreaOffset > 0)
                     {
-                        MapAreas.Add(null);
-                        MapAreaHoles.Add(null);
-                    }
+                        br.BaseStream.Position = mapAreaOffset;
+                        MapAreas[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapArea>();
 
-                    Version = br.ReadIFFChunk<TerrainVersion>();
-
-                    if (br.PeekChunkSignature() == TerrainWorldModelObjects.Signature)
-                    {
-                        WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
-                    }
-
-                    if (br.PeekChunkSignature() == TerrainWorldModelObjectIndices.Signature)
-                    {
-                        WorldModelObjectIndices = br.ReadIFFChunk<TerrainWorldModelObjectIndices>();
-                    }
-
-                    if (br.PeekChunkSignature() == TerrainWorldModelObjectPlacementInfo.Signature)
-                    {
-                        WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
-                    }
-
-                    MapAreaOffsets = br.ReadIFFChunk<WorldLODMapAreaOffsets>();
-
-                    // Read the map areas and their holes
-                    for (var y = 0; y < 64; ++y)
-                    {
-                        for (var x = 0; x < 64; ++x)
+                        if (br.PeekChunkSignature() == WorldLODMapAreaHoles.Signature)
                         {
-                            var mapAreaOffsetIndex = (y * 64) + x;
-                            var mapAreaOffset = MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex];
-
-                            if (mapAreaOffset > 0)
-                            {
-                                br.BaseStream.Position = mapAreaOffset;
-                                MapAreas[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapArea>();
-
-                                if (br.PeekChunkSignature() == WorldLODMapAreaHoles.Signature)
-                                {
-                                    MapAreaHoles[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapAreaHoles>();
-                                }
-                                else
-                                {
-                                    MapAreaHoles[mapAreaOffsetIndex] = WorldLODMapAreaHoles.CreateEmpty();
-                                }
-                            }
-                            else
-                            {
-                                MapAreas[mapAreaOffsetIndex] = null;
-                                MapAreaHoles[mapAreaOffsetIndex] = null;
-                            }
+                            MapAreaHoles[mapAreaOffsetIndex] = br.ReadIFFChunk<WorldLODMapAreaHoles>();
                         }
+                        else
+                        {
+                            MapAreaHoles[mapAreaOffsetIndex] = WorldLODMapAreaHoles.CreateEmpty();
+                        }
+                    }
+                    else
+                    {
+                        MapAreas[mapAreaOffsetIndex] = null;
+                        MapAreaHoles[mapAreaOffsetIndex] = null;
                     }
                 }
             }
@@ -187,78 +183,76 @@ namespace Warcraft.WDL
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                bw.WriteIFFChunk(Version);
+
+                // >= Wrath stores WMO data here as well
+                if (WorldModelObjects != null)
                 {
-                    bw.WriteIFFChunk(Version);
+                    bw.WriteIFFChunk(WorldModelObjects);
+                }
 
-                    // >= Wrath stores WMO data here as well
-                    if (WorldModelObjects != null)
-                    {
-                        bw.WriteIFFChunk(WorldModelObjects);
-                    }
+                if (WorldModelObjectIndices != null)
+                {
+                    bw.WriteIFFChunk(WorldModelObjectIndices);
+                }
 
-                    if (WorldModelObjectIndices != null)
-                    {
-                        bw.WriteIFFChunk(WorldModelObjectIndices);
-                    }
+                if (WorldModelObjectPlacementInfo != null)
+                {
+                    bw.WriteIFFChunk(WorldModelObjectPlacementInfo);
+                }
 
-                    if (WorldModelObjectPlacementInfo != null)
+                // Populate the offset table
+                long writtenMapAreaSize = 0;
+                for (var y = 0; y < 64; ++y)
+                {
+                    for (var x = 0; x < 64; ++x)
                     {
-                        bw.WriteIFFChunk(WorldModelObjectPlacementInfo);
-                    }
+                        var mapAreaOffsetIndex = (y * 64) + x;
+                        const uint offsetChunkHeaderSize = 8;
 
-                    // Populate the offset table
-                    long writtenMapAreaSize = 0;
-                    for (var y = 0; y < 64; ++y)
-                    {
-                        for (var x = 0; x < 64; ++x)
+                        if (MapAreas[mapAreaOffsetIndex] != null)
                         {
-                            var mapAreaOffsetIndex = (y * 64) + x;
-                            const uint offsetChunkHeaderSize = 8;
+                            // This tile is populated, so we update the offset table
+                            var newOffset = (uint)(ms.Position + offsetChunkHeaderSize + WorldLODMapAreaOffsets.GetSize() + writtenMapAreaSize);
+                            MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex] = newOffset;
 
-                            if (MapAreas[mapAreaOffsetIndex] != null)
-                            {
-                                // This tile is populated, so we update the offset table
-                                var newOffset = (uint)(ms.Position + offsetChunkHeaderSize + WorldLODMapAreaOffsets.GetSize() + writtenMapAreaSize);
-                                MapAreaOffsets.MapAreaOffsets[mapAreaOffsetIndex] = newOffset;
-
-                                writtenMapAreaSize += WorldLODMapArea.GetSize() + offsetChunkHeaderSize;
-                            }
-
-                            if (MapAreaHoles[mapAreaOffsetIndex] != null)
-                            {
-                                writtenMapAreaSize += WorldLODMapAreaHoles.GetSize() + offsetChunkHeaderSize;
-                            }
+                            writtenMapAreaSize += WorldLODMapArea.GetSize() + offsetChunkHeaderSize;
                         }
-                    }
 
-                    // Write the offset table
-                    bw.WriteIFFChunk(MapAreaOffsets);
-
-                    // Write the valid entries
-                    for (var y = 0; y < 64; ++y)
-                    {
-                        for (var x = 0; x < 64; ++x)
+                        if (MapAreaHoles[mapAreaOffsetIndex] != null)
                         {
-                            var mapAreaOffsetIndex = (y * 64) + x;
-
-                            if (MapAreas[mapAreaOffsetIndex] != null)
-                            {
-                                bw.WriteIFFChunk(MapAreas[mapAreaOffsetIndex] !);
-                            }
-
-                            if (MapAreaHoles[mapAreaOffsetIndex] != null)
-                            {
-                                bw.WriteIFFChunk(MapAreaHoles[mapAreaOffsetIndex] !);
-                            }
+                            writtenMapAreaSize += WorldLODMapAreaHoles.GetSize() + offsetChunkHeaderSize;
                         }
                     }
                 }
 
-                return ms.ToArray();
+                // Write the offset table
+                bw.WriteIFFChunk(MapAreaOffsets);
+
+                // Write the valid entries
+                for (var y = 0; y < 64; ++y)
+                {
+                    for (var x = 0; x < 64; ++x)
+                    {
+                        var mapAreaOffsetIndex = (y * 64) + x;
+
+                        if (MapAreas[mapAreaOffsetIndex] != null)
+                        {
+                            bw.WriteIFFChunk(MapAreas[mapAreaOffsetIndex] !);
+                        }
+
+                        if (MapAreaHoles[mapAreaOffsetIndex] != null)
+                        {
+                            bw.WriteIFFChunk(MapAreaHoles[mapAreaOffsetIndex] !);
+                        }
+                    }
+                }
             }
+
+            return ms.ToArray();
         }
     }
 }

@@ -110,28 +110,24 @@ namespace Warcraft.MDX.Visual
         /// <param name="data">The binary data containing the batch.</param>
         public MDXRenderBatch(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Flags = (MDXRenderBatchFlags)br.ReadByte();
-                    PriorityPlane = br.ReadSByte();
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            Flags = (MDXRenderBatchFlags)br.ReadByte();
+            PriorityPlane = br.ReadSByte();
 
-                    ShaderID = br.ReadUInt16();
+            ShaderID = br.ReadUInt16();
 
-                    SkinSectionIndex = br.ReadUInt16();
-                    GeosetIndex = br.ReadUInt16();
-                    ColorIndex = br.ReadInt16();
-                    MaterialIndex = br.ReadUInt16();
-                    MaterialLayer = br.ReadUInt16();
-                    TextureCount = br.ReadUInt16();
+            SkinSectionIndex = br.ReadUInt16();
+            GeosetIndex = br.ReadUInt16();
+            ColorIndex = br.ReadInt16();
+            MaterialIndex = br.ReadUInt16();
+            MaterialLayer = br.ReadUInt16();
+            TextureCount = br.ReadUInt16();
 
-                    TextureLookupTableIndex = br.ReadUInt16();
-                    TextureMappingLookupTableIndex = br.ReadUInt16();
-                    TransparencyLookupTableIndex = br.ReadUInt16();
-                    TextureTransformLookupTableIndex = br.ReadUInt16();
-                }
-            }
+            TextureLookupTableIndex = br.ReadUInt16();
+            TextureMappingLookupTableIndex = br.ReadUInt16();
+            TransparencyLookupTableIndex = br.ReadUInt16();
+            TextureTransformLookupTableIndex = br.ReadUInt16();
         }
 
         /// <summary>

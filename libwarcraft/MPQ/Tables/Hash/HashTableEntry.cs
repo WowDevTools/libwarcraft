@@ -68,21 +68,17 @@ namespace Warcraft.MPQ.Tables.Hash
         [PublicAPI]
         public HashTableEntry([NotNull] byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    _filePathHashA = br.ReadUInt32();
-                    _filePathHashB = br.ReadUInt32();
-                    _localization = (LocaleID)br.ReadUInt16();
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            _filePathHashA = br.ReadUInt32();
+            _filePathHashB = br.ReadUInt32();
+            _localization = (LocaleID)br.ReadUInt16();
 
-                    // Read the platform as an int8 and skip the next byte
-                    _platform = br.ReadByte();
-                    br.BaseStream.Position += 1;
+            // Read the platform as an int8 and skip the next byte
+            _platform = br.ReadByte();
+            br.BaseStream.Position += 1;
 
-                    _fileBlockIndex = br.ReadUInt32();
-                }
-            }
+            _fileBlockIndex = br.ReadUInt32();
         }
 
         /// <summary>
@@ -162,19 +158,17 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.Write(_filePathHashA);
-                    bw.Write(_filePathHashB);
-                    bw.Write((ushort)_localization);
-                    bw.Write(_platform);
-                    bw.Write(_fileBlockIndex);
-                }
-
-                return ms.ToArray();
+                bw.Write(_filePathHashA);
+                bw.Write(_filePathHashB);
+                bw.Write((ushort)_localization);
+                bw.Write(_platform);
+                bw.Write(_fileBlockIndex);
             }
+
+            return ms.ToArray();
         }
 
         /// <summary>

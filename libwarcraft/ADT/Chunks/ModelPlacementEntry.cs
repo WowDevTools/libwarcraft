@@ -70,19 +70,15 @@ namespace Warcraft.ADT.Chunks
         /// <param name="data">ExtendedData.</param>
         public ModelPlacementEntry(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    ModelEntryIndex = br.ReadUInt32();
-                    UniqueID = br.ReadUInt32();
-                    Position = br.ReadVector3();
-                    Rotation = br.ReadRotator();
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            ModelEntryIndex = br.ReadUInt32();
+            UniqueID = br.ReadUInt32();
+            Position = br.ReadVector3();
+            Rotation = br.ReadRotator();
 
-                    ScalingFactor = br.ReadUInt16();
-                    Flags = (ModelPlacementFlags)br.ReadUInt16();
-                }
-            }
+            ScalingFactor = br.ReadUInt16();
+            Flags = (ModelPlacementFlags)br.ReadUInt16();
         }
 
         /// <summary>

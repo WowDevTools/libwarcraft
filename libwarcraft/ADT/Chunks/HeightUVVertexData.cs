@@ -49,22 +49,18 @@ namespace Warcraft.ADT.Chunks
         /// <param name="height">The height of the vertex block.</param>
         public HeightUVVertexData(byte[] data, byte width, byte height)
         {
-            using (var ms = new MemoryStream(data))
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            var arrayEntryCount = (width + 1) * (height + 1);
+            for (var i = 0; i < arrayEntryCount; ++i)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var arrayEntryCount = (width + 1) * (height + 1);
-                    for (var i = 0; i < arrayEntryCount; ++i)
-                    {
-                        Heightmap.Add(br.ReadSingle());
-                    }
+                Heightmap.Add(br.ReadSingle());
+            }
 
-                    for (var i = 0; i < arrayEntryCount; ++i)
-                    {
-                        var uvEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
-                        UVMap.Add(uvEntry);
-                    }
-                }
+            for (var i = 0; i < arrayEntryCount; ++i)
+            {
+                var uvEntry = new Tuple<ushort, ushort>(br.ReadUInt16(), br.ReadUInt16());
+                UVMap.Add(uvEntry);
             }
         }
 

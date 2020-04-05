@@ -60,16 +60,12 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            var groupInfoCount = ms.Length / GroupInformation.GetSize();
+            for (var i = 0; i < groupInfoCount; ++i)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var groupInfoCount = ms.Length / GroupInformation.GetSize();
-                    for (var i = 0; i < groupInfoCount; ++i)
-                    {
-                        GroupInformations.Add(new GroupInformation(br.ReadBytes(GroupInformation.GetSize())));
-                    }
-                }
+                GroupInformations.Add(new GroupInformation(br.ReadBytes(GroupInformation.GetSize())));
             }
         }
 
@@ -82,18 +78,16 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var groupInformation in GroupInformations)
                 {
-                    foreach (var groupInformation in GroupInformations)
-                    {
-                        bw.Write(groupInformation.Serialize());
-                    }
+                    bw.Write(groupInformation.Serialize());
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

@@ -45,14 +45,10 @@ namespace Warcraft.ADT.Chunks
         /// <param name="data">The binary data.</param>
         public TerrainLiquidAttributes(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Fishable = br.ReadUInt64();
-                    Deep = br.ReadUInt64();
-                }
-            }
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            Fishable = br.ReadUInt64();
+            Deep = br.ReadUInt64();
         }
 
         /// <summary>

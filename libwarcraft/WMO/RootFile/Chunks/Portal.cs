@@ -53,15 +53,11 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <param name="inData">The binary data.</param>
         public Portal(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    BaseVertexIndex = br.ReadUInt16();
-                    VertexCount = br.ReadUInt16();
-                    PortalPlane = br.ReadPlane();
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            BaseVertexIndex = br.ReadUInt16();
+            VertexCount = br.ReadUInt16();
+            PortalPlane = br.ReadPlane();
         }
 
         /// <summary>
@@ -76,17 +72,15 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.Write(BaseVertexIndex);
-                    bw.Write(VertexCount);
-                    bw.WritePlane(PortalPlane);
-                }
-
-                return ms.ToArray();
+                bw.Write(BaseVertexIndex);
+                bw.Write(VertexCount);
+                bw.WritePlane(PortalPlane);
             }
+
+            return ms.ToArray();
         }
     }
 }

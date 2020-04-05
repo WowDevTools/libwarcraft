@@ -60,16 +60,12 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            var visibleBlockCount = inData.Length / VisibleBlock.GetSize();
+            for (var i = 0; i < visibleBlockCount; ++i)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var visibleBlockCount = inData.Length / VisibleBlock.GetSize();
-                    for (var i = 0; i < visibleBlockCount; ++i)
-                    {
-                        VisibleBlocks.Add(new VisibleBlock(br.ReadBytes(VisibleBlock.GetSize())));
-                    }
-                }
+                VisibleBlocks.Add(new VisibleBlock(br.ReadBytes(VisibleBlock.GetSize())));
             }
         }
 
@@ -82,18 +78,16 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var visibleBlock in VisibleBlocks)
                 {
-                    foreach (var visibleBlock in VisibleBlocks)
-                    {
-                        bw.Write(visibleBlock.Serialize());
-                    }
+                    bw.Write(visibleBlock.Serialize());
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

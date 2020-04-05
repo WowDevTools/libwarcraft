@@ -73,20 +73,16 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <param name="inData">The binary data.</param>
         public RenderBatch(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    BoundingBox = br.ReadShortBox();
-                    FirstPolygonIndex = br.ReadUInt32();
-                    PolygonIndexCount = br.ReadUInt16();
-                    FirstVertexIndex = br.ReadUInt16();
-                    LastVertexIndex = br.ReadUInt16();
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            BoundingBox = br.ReadShortBox();
+            FirstPolygonIndex = br.ReadUInt32();
+            PolygonIndexCount = br.ReadUInt16();
+            FirstVertexIndex = br.ReadUInt16();
+            LastVertexIndex = br.ReadUInt16();
 
-                    UnknownFlags = br.ReadByte();
-                    MaterialIndex = br.ReadByte();
-                }
-            }
+            UnknownFlags = br.ReadByte();
+            MaterialIndex = br.ReadByte();
         }
 
         /// <summary>
@@ -101,24 +97,22 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.WriteShortBox(BoundingBox);
+                bw.WriteShortBox(BoundingBox);
 
-                    bw.Write(FirstPolygonIndex);
-                    bw.Write(PolygonIndexCount);
+                bw.Write(FirstPolygonIndex);
+                bw.Write(PolygonIndexCount);
 
-                    bw.Write(FirstVertexIndex);
-                    bw.Write(LastVertexIndex);
+                bw.Write(FirstVertexIndex);
+                bw.Write(LastVertexIndex);
 
-                    bw.Write(UnknownFlags);
-                    bw.Write(MaterialIndex);
-                }
-
-                return ms.ToArray();
+                bw.Write(UnknownFlags);
+                bw.Write(MaterialIndex);
             }
+
+            return ms.ToArray();
         }
     }
 }

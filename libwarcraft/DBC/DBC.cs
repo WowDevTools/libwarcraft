@@ -207,22 +207,20 @@ namespace Warcraft.DBC
                     return _records[i] !;
                 }
 
-                using (var databaseReader = new BinaryReader(new MemoryStream(_databaseContents)))
+                using var databaseReader = new BinaryReader(new MemoryStream(_databaseContents));
+                var recordOffset = DBCHeader.GetSize() + (_header.RecordSize * i);
+                databaseReader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
+
+                var record = databaseReader.ReadRecord<TRecord>((int)_header.FieldCount, (int)_header.RecordSize, Version);
+
+                foreach (var stringReference in record.GetStringReferences())
                 {
-                    var recordOffset = DBCHeader.GetSize() + (_header.RecordSize * i);
-                    databaseReader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
-
-                    var record = databaseReader.ReadRecord<TRecord>((int)_header.FieldCount, (int)_header.RecordSize, Version);
-
-                    foreach (var stringReference in record.GetStringReferences())
-                    {
-                        ResolveStringReference(stringReference);
-                    }
-
-                    _records[i] = record;
-
-                    return record;
+                    ResolveStringReference(stringReference);
                 }
+
+                _records[i] = record;
+
+                return record;
             }
         }
     }

@@ -56,16 +56,12 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <param name="inData">The binary data.</param>
         public PortalReference(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    PortalIndex = br.ReadUInt16();
-                    GroupIndex = br.ReadUInt16();
-                    Side = br.ReadInt16();
-                    Unknown = br.ReadUInt16();
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            PortalIndex = br.ReadUInt16();
+            GroupIndex = br.ReadUInt16();
+            Side = br.ReadInt16();
+            Unknown = br.ReadUInt16();
         }
 
         /// <summary>
@@ -80,18 +76,16 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.Write(PortalIndex);
-                    bw.Write(GroupIndex);
-                    bw.Write(Side);
-                    bw.Write(Unknown);
-                }
-
-                return ms.ToArray();
+                bw.Write(PortalIndex);
+                bw.Write(GroupIndex);
+                bw.Write(Side);
+                bw.Write(Unknown);
             }
+
+            return ms.ToArray();
         }
     }
 }

@@ -68,31 +68,25 @@ namespace Warcraft.WDT.Chunks
         {
             TileX = inTileX;
             TileY = inTileY;
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Flags = (AreaInfoFlags)br.ReadUInt32();
-                    AreaID = br.ReadUInt32();
-                }
-            }
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            Flags = (AreaInfoFlags)br.ReadUInt32();
+            AreaID = br.ReadUInt32();
         }
 
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream(8))
+            using var ms = new MemoryStream(8);
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.Write((uint)Flags);
-                    bw.Write(AreaID);
+                bw.Write((uint)Flags);
+                bw.Write(AreaID);
 
-                    bw.Flush();
-                }
-
-                return ms.ToArray();
+                bw.Flush();
             }
+
+            return ms.ToArray();
         }
 
         /// <summary>

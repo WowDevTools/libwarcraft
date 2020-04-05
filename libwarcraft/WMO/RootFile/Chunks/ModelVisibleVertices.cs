@@ -62,16 +62,12 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            var vertexCount = inData.Length / 12;
+            for (var i = 0; i < vertexCount; ++i)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var vertexCount = inData.Length / 12;
-                    for (var i = 0; i < vertexCount; ++i)
-                    {
-                        VisibleVertices.Add(br.ReadVector3());
-                    }
-                }
+                VisibleVertices.Add(br.ReadVector3());
             }
         }
 
@@ -84,18 +80,16 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var visibleVertex in VisibleVertices)
                 {
-                    foreach (var visibleVertex in VisibleVertices)
-                    {
-                        bw.WriteVector3(visibleVertex);
-                    }
+                    bw.WriteVector3(visibleVertex);
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

@@ -54,15 +54,11 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <param name="inData">The binary data.</param>
         public GroupInformation(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Flags = (GroupFlags)br.ReadUInt32();
-                    BoundingBox = br.ReadBox();
-                    GroupNameOffset = br.ReadInt32();
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            Flags = (GroupFlags)br.ReadUInt32();
+            BoundingBox = br.ReadBox();
+            GroupNameOffset = br.ReadInt32();
         }
 
         /// <summary>
@@ -86,17 +82,15 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.Write((uint)Flags);
-                    bw.WriteBox(BoundingBox);
-                    bw.Write(GroupNameOffset);
-                }
-
-                return ms.ToArray();
+                bw.Write((uint)Flags);
+                bw.WriteBox(BoundingBox);
+                bw.Write(GroupNameOffset);
             }
+
+            return ms.ToArray();
         }
     }
 }

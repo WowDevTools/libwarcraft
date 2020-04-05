@@ -43,17 +43,13 @@ namespace Warcraft.ADT.Chunks
         /// <param name="height">The height of the vertex block.</param>
         public DepthOnlyVertexData(byte[] data, byte width, byte height)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    var arrayEntryCount = (width + 1) * (height + 1);
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            var arrayEntryCount = (width + 1) * (height + 1);
 
-                    for (var i = 0; i < arrayEntryCount; ++i)
-                    {
-                        Depthmap.Add(br.ReadByte());
-                    }
-                }
+            for (var i = 0; i < arrayEntryCount; ++i)
+            {
+                Depthmap.Add(br.ReadByte());
             }
         }
 

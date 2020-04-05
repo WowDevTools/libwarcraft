@@ -60,16 +60,12 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            var layerCount = br.BaseStream.Length / TextureLayerEntry.GetSize();
+            for (var i = 0; i < layerCount; i++)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var layerCount = br.BaseStream.Length / TextureLayerEntry.GetSize();
-                    for (var i = 0; i < layerCount; i++)
-                    {
-                        Layers.Add(new TextureLayerEntry(br.ReadBytes(TextureLayerEntry.GetSize())));
-                    }
-                }
+                Layers.Add(new TextureLayerEntry(br.ReadBytes(TextureLayerEntry.GetSize())));
             }
         }
 

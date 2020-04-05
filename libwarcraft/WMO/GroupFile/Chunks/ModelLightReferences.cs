@@ -60,15 +60,11 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            while (ms.Position < ms.Length)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    while (ms.Position < ms.Length)
-                    {
-                        LightReferences.Add(br.ReadUInt16());
-                    }
-                }
+                LightReferences.Add(br.ReadUInt16());
             }
         }
 
@@ -81,18 +77,16 @@ namespace Warcraft.WMO.GroupFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var lightReference in LightReferences)
                 {
-                    foreach (var lightReference in LightReferences)
-                    {
-                        bw.Write(lightReference);
-                    }
+                    bw.Write(lightReference);
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

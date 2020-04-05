@@ -66,20 +66,16 @@ namespace Warcraft.WDT
         /// <param name="data">The binary data.</param>
         public WorldTable(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Version = br.ReadIFFChunk<TerrainVersion>();
-                    Header = br.ReadIFFChunk<WorldTableHeader>();
-                    AreaInfo = br.ReadIFFChunk<WorldTableAreaInfo>();
-                    WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            Version = br.ReadIFFChunk<TerrainVersion>();
+            Header = br.ReadIFFChunk<WorldTableHeader>();
+            AreaInfo = br.ReadIFFChunk<WorldTableAreaInfo>();
+            WorldModelObjects = br.ReadIFFChunk<TerrainWorldModelObjects>();
 
-                    if (WorldModelObjects.Filenames.Count > 0)
-                    {
-                        WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
-                    }
-                }
+            if (WorldModelObjects.Filenames.Count > 0)
+            {
+                WorldModelObjectPlacementInfo = br.ReadIFFChunk<TerrainWorldModelObjectPlacementInfo>();
             }
         }
 
@@ -157,23 +153,21 @@ namespace Warcraft.WDT
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                bw.WriteIFFChunk(Version);
+                bw.WriteIFFChunk(Header);
+                bw.WriteIFFChunk(AreaInfo);
+                bw.WriteIFFChunk(WorldModelObjects);
+
+                if (WorldModelObjects.Filenames.Count > 0 && WorldModelObjectPlacementInfo != null)
                 {
-                    bw.WriteIFFChunk(Version);
-                    bw.WriteIFFChunk(Header);
-                    bw.WriteIFFChunk(AreaInfo);
-                    bw.WriteIFFChunk(WorldModelObjects);
-
-                    if (WorldModelObjects.Filenames.Count > 0 && WorldModelObjectPlacementInfo != null)
-                    {
-                        bw.WriteIFFChunk(WorldModelObjectPlacementInfo);
-                    }
+                    bw.WriteIFFChunk(WorldModelObjectPlacementInfo);
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

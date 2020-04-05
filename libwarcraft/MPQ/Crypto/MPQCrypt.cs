@@ -283,23 +283,21 @@ namespace Warcraft.MPQ.Crypto
         /// <param name="checksum">Sector checksum.</param>
         public static bool VerifySectorChecksum([NotNull] byte[] sector, uint checksum)
         {
-            using (var ms = new MemoryStream(sector))
+            using var ms = new MemoryStream(sector);
+            if (checksum == 0)
             {
-                if (checksum == 0)
-                {
-                    return true;
-                }
-
-                var sectorChecksum = (uint)Adler32.ComputeChecksum(ms);
-
-                if (sectorChecksum == 0)
-                {
-                    // We can't handle a 0 checksum.
-                    sectorChecksum = uint.MaxValue;
-                }
-
-                return sectorChecksum == checksum;
+                return true;
             }
+
+            var sectorChecksum = (uint)Adler32.ComputeChecksum(ms);
+
+            if (sectorChecksum == 0)
+            {
+                // We can't handle a 0 checksum.
+                sectorChecksum = uint.MaxValue;
+            }
+
+            return sectorChecksum == checksum;
         }
 
         /// <summary>

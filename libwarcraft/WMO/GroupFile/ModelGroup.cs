@@ -70,14 +70,10 @@ namespace Warcraft.WMO.GroupFile
         /// <param name="inData">The binary data containing the object.</param>
         public ModelGroup(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Version = br.ReadIFFChunk<TerrainVersion>();
-                    GroupData = br.ReadIFFChunk<ModelGroupData>();
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            Version = br.ReadIFFChunk<TerrainVersion>();
+            GroupData = br.ReadIFFChunk<ModelGroupData>();
         }
 
         /// <summary>
@@ -167,16 +163,14 @@ namespace Warcraft.WMO.GroupFile
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.WriteIFFChunk(Version);
-                    bw.WriteIFFChunk(GroupData);
-                }
-
-                return ms.ToArray();
+                bw.WriteIFFChunk(Version);
+                bw.WriteIFFChunk(GroupData);
             }
+
+            return ms.ToArray();
         }
     }
 }

@@ -75,10 +75,8 @@ namespace Warcraft.Integration.DBC.IO
 
                 using (var ms = new MemoryStream(MultiMoveClassicBytes))
                 {
-                    using (var br = new BinaryReader(ms))
-                    {
-                        DBCDeserializer.DeserializeRecord(br, record, testVersion);
-                    }
+                    using var br = new BinaryReader(ms);
+                    DBCDeserializer.DeserializeRecord(br, record, testVersion);
                 }
 
                 Assert.AreEqual(1, record.ID);
@@ -99,10 +97,8 @@ namespace Warcraft.Integration.DBC.IO
 
                 using (var ms = new MemoryStream(MultiMoveBCBytes))
                 {
-                    using (var br = new BinaryReader(ms))
-                    {
-                        DBCDeserializer.DeserializeRecord(br, record, testVersion);
-                    }
+                    using var br = new BinaryReader(ms);
+                    DBCDeserializer.DeserializeRecord(br, record, testVersion);
                 }
 
                 Assert.AreEqual(1, record.ID);
@@ -123,10 +119,8 @@ namespace Warcraft.Integration.DBC.IO
 
                 using (var ms = new MemoryStream(MultiMoveWrathBytes))
                 {
-                    using (var br = new BinaryReader(ms))
-                    {
-                        DBCDeserializer.DeserializeRecord(br, record, testVersion);
-                    }
+                    using var br = new BinaryReader(ms);
+                    DBCDeserializer.DeserializeRecord(br, record, testVersion);
                 }
 
                 Assert.AreEqual(1, record.ID);
@@ -147,10 +141,8 @@ namespace Warcraft.Integration.DBC.IO
 
                 using (var ms = new MemoryStream(SimpleClassicBytes))
                 {
-                    using (var br = new BinaryReader(ms))
-                    {
-                        DBCDeserializer.DeserializeRecord(br, record, testVersion);
-                    }
+                    using var br = new BinaryReader(ms);
+                    DBCDeserializer.DeserializeRecord(br, record, testVersion);
                 }
 
                 Assert.AreEqual(1, record.ID);
@@ -169,10 +161,8 @@ namespace Warcraft.Integration.DBC.IO
 
                 using (var ms = new MemoryStream(SimpleWrathBytes))
                 {
-                    using (var br = new BinaryReader(ms))
-                    {
-                        DBCDeserializer.DeserializeRecord(br, record, testVersion);
-                    }
+                    using var br = new BinaryReader(ms);
+                    DBCDeserializer.DeserializeRecord(br, record, testVersion);
                 }
 
                 Assert.AreEqual(1, record.ID);
@@ -192,10 +182,8 @@ namespace Warcraft.Integration.DBC.IO
 
                 using (var ms = new MemoryStream(SimpleCataBytes))
                 {
-                    using (var br = new BinaryReader(ms))
-                    {
-                        DBCDeserializer.DeserializeRecord(br, record, testVersion);
-                    }
+                    using var br = new BinaryReader(ms);
+                    DBCDeserializer.DeserializeRecord(br, record, testVersion);
                 }
 
                 Assert.AreEqual(1, record.ID);

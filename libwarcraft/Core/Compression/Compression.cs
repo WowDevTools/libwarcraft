@@ -132,10 +132,8 @@ namespace Warcraft.Core.Compression
         /// <returns>The decompressed data.</returns>
         public static byte[] DecompressADPCMMono(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                return ADPCM.ADPCM.Decompress(ms, 1);
-            }
+            using var ms = new MemoryStream(inData);
+            return ADPCM.ADPCM.Decompress(ms, 1);
         }
 
         /// <summary>
@@ -145,10 +143,8 @@ namespace Warcraft.Core.Compression
         /// <returns>The decompressed data.</returns>
         public static byte[] DecompressADPCMStereo(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                return ADPCM.ADPCM.Decompress(ms, 2);
-            }
+            using var ms = new MemoryStream(inData);
+            return ADPCM.ADPCM.Decompress(ms, 2);
         }
 
         /// <summary>
@@ -158,10 +154,8 @@ namespace Warcraft.Core.Compression
         /// <returns>The decompressed data.</returns>
         public static byte[] DecompressHuffman(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                return MpqHuffman.Decompress(ms).ToArray();
-            }
+            using var ms = new MemoryStream(inData);
+            return MpqHuffman.Decompress(ms).ToArray();
         }
 
         /// <summary>
@@ -171,17 +165,11 @@ namespace Warcraft.Core.Compression
         /// <returns>The decompressed data.</returns>
         public static byte[] DecompressDeflate(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var ds = new ZlibStream(ms, CompressionMode.Decompress))
-                {
-                    using (var output = new MemoryStream())
-                    {
-                        ds.CopyTo(output);
-                        return output.ToArray();
-                    }
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var ds = new ZlibStream(ms, CompressionMode.Decompress);
+            using var output = new MemoryStream();
+            ds.CopyTo(output);
+            return output.ToArray();
         }
 
         /// <summary>
@@ -191,14 +179,10 @@ namespace Warcraft.Core.Compression
         /// <returns>The decompressed data.</returns>
         public static byte[] DecompressPKWAREImplode(byte[] inData)
         {
-            using (var decompressedStream = new MemoryStream())
-            {
-                using (var compressedStream = new MemoryStream(inData))
-                {
-                    new Blast.Blast(compressedStream, decompressedStream).Decompress();
-                    return decompressedStream.ToArray();
-                }
-            }
+            using var decompressedStream = new MemoryStream();
+            using var compressedStream = new MemoryStream(inData);
+            new Blast.Blast(compressedStream, decompressedStream).Decompress();
+            return decompressedStream.ToArray();
         }
 
         /// <summary>
@@ -208,17 +192,11 @@ namespace Warcraft.Core.Compression
         /// <returns>The decompressed data.</returns>
         public static byte[] DecompressBZip2(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var input = new BZip2Stream(ms, CompressionMode.Decompress, false))
-                {
-                    using (var decompressedData = new MemoryStream())
-                    {
-                        input.CopyTo(decompressedData);
-                        return decompressedData.ToArray();
-                    }
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var input = new BZip2Stream(ms, CompressionMode.Decompress, false);
+            using var decompressedData = new MemoryStream();
+            input.CopyTo(decompressedData);
+            return decompressedData.ToArray();
         }
 
         /// <summary>
@@ -228,17 +206,11 @@ namespace Warcraft.Core.Compression
         /// <returns>The decompressed data.</returns>
         public static byte[] DecompressLZMA(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var input = new LZipStream(ms, CompressionMode.Decompress))
-                {
-                    using (var decompressedData = new MemoryStream())
-                    {
-                        input.CopyTo(decompressedData);
-                        return decompressedData.ToArray();
-                    }
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var input = new LZipStream(ms, CompressionMode.Decompress);
+            using var decompressedData = new MemoryStream();
+            input.CopyTo(decompressedData);
+            return decompressedData.ToArray();
         }
     }
 }

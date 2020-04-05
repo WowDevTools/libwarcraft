@@ -88,20 +88,16 @@ namespace Warcraft.ADT.Chunks.Subchunks
                 return;
             }
 
-            using (var ms = new MemoryStream(_data))
+            using var ms = new MemoryStream(_data);
+            using var br = new BinaryReader(ms);
+            for (var i = 0; i < gameModelObjectCount; ++i)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    for (var i = 0; i < gameModelObjectCount; ++i)
-                    {
-                        GameModelObjectReferences.Add(br.ReadUInt32());
-                    }
+                GameModelObjectReferences.Add(br.ReadUInt32());
+            }
 
-                    for (var i = 0; i < worldModelObjectCount; ++i)
-                    {
-                        WorldModelObjectReferences.Add(br.ReadUInt32());
-                    }
-                }
+            for (var i = 0; i < worldModelObjectCount; ++i)
+            {
+                WorldModelObjectReferences.Add(br.ReadUInt32());
             }
         }
     }

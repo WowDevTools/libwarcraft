@@ -178,59 +178,55 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <param name="data">The binary data.</param>
         public MapChunkHeader(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            Flags = (MapChunkFlags)br.ReadUInt32();
+            MapIndexX = br.ReadUInt32();
+            MapIndexY = br.ReadUInt32();
+            TextureLayerCount = br.ReadUInt32();
+            ModelReferenceCount = br.ReadUInt32();
+
+            if (Flags.HasFlag(MapChunkFlags.UsesHighResHoles))
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    Flags = (MapChunkFlags)br.ReadUInt32();
-                    MapIndexX = br.ReadUInt32();
-                    MapIndexY = br.ReadUInt32();
-                    TextureLayerCount = br.ReadUInt32();
-                    ModelReferenceCount = br.ReadUInt32();
+                HighResHoles = br.ReadUInt64();
+            }
 
-                    if (Flags.HasFlag(MapChunkFlags.UsesHighResHoles))
-                    {
-                        HighResHoles = br.ReadUInt64();
-                    }
+            HeightmapOffset = br.ReadUInt32();
+            VertexNormalOffset = br.ReadUInt32();
+            TextureLayersOffset = br.ReadUInt32();
+            ModelReferencesOffset = br.ReadUInt32();
+            AlphaMapsOffset = br.ReadUInt32();
+            AlphaMapsSize = br.ReadUInt32();
+            BakedShadowsOffset = br.ReadUInt32();
+            BakedShadowsSize = br.ReadUInt32();
 
-                    HeightmapOffset = br.ReadUInt32();
-                    VertexNormalOffset = br.ReadUInt32();
-                    TextureLayersOffset = br.ReadUInt32();
-                    ModelReferencesOffset = br.ReadUInt32();
-                    AlphaMapsOffset = br.ReadUInt32();
-                    AlphaMapsSize = br.ReadUInt32();
-                    BakedShadowsOffset = br.ReadUInt32();
-                    BakedShadowsSize = br.ReadUInt32();
+            AreaID = br.ReadUInt32();
+            WorldModelObjectReferenceCount = br.ReadUInt32();
 
-                    AreaID = br.ReadUInt32();
-                    WorldModelObjectReferenceCount = br.ReadUInt32();
+            // TODO: Turn into bitmapped boolean field
+            if (!Flags.HasFlag(MapChunkFlags.UsesHighResHoles))
+            {
+                LowResHoles = br.ReadUInt16();
+            }
 
-                    // TODO: Turn into bitmapped boolean field
-                    if (!Flags.HasFlag(MapChunkFlags.UsesHighResHoles))
-                    {
-                        LowResHoles = br.ReadUInt16();
-                    }
+            Unknown = br.ReadUInt16();
 
-                    Unknown = br.ReadUInt16();
+            // TODO: This is a set of 8 by 8 2-bit integers. Shift and read into a byte array.
+            LowResTextureMap = br.ReadUInt16();
 
-                    // TODO: This is a set of 8 by 8 2-bit integers. Shift and read into a byte array.
-                    LowResTextureMap = br.ReadUInt16();
+            PredTex = br.ReadUInt32();
+            NoEffectDoodad = br.ReadUInt32();
 
-                    PredTex = br.ReadUInt32();
-                    NoEffectDoodad = br.ReadUInt32();
+            SoundEmittersOffset = br.ReadUInt32();
+            SoundEmitterCount = br.ReadUInt32();
+            LiquidOffset = br.ReadUInt32();
+            LiquidSize = br.ReadUInt32();
 
-                    SoundEmittersOffset = br.ReadUInt32();
-                    SoundEmitterCount = br.ReadUInt32();
-                    LiquidOffset = br.ReadUInt32();
-                    LiquidSize = br.ReadUInt32();
+            MapTilePosition = br.ReadVector3();
 
-                    MapTilePosition = br.ReadVector3();
-
-                    if (Flags.HasFlag(MapChunkFlags.HasVertexShading))
-                    {
-                        VertexShadingOffset = br.ReadUInt32();
-                    }
-                }
+            if (Flags.HasFlag(MapChunkFlags.HasVertexShading))
+            {
+                VertexShadingOffset = br.ReadUInt32();
             }
         }
 

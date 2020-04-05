@@ -114,29 +114,25 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Flags = (TerrainHeaderFlags)br.ReadInt32();
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            Flags = (TerrainHeaderFlags)br.ReadInt32();
 
-                    MapChunkOffsetsOffset = br.ReadInt32();
-                    TexturesOffset = br.ReadInt32();
+            MapChunkOffsetsOffset = br.ReadInt32();
+            TexturesOffset = br.ReadInt32();
 
-                    ModelsOffset = br.ReadInt32();
-                    ModelIndicesOffset = br.ReadInt32();
+            ModelsOffset = br.ReadInt32();
+            ModelIndicesOffset = br.ReadInt32();
 
-                    WorldModelObjectsOffset = br.ReadInt32();
-                    WorldModelObjectIndicesOffset = br.ReadInt32();
+            WorldModelObjectsOffset = br.ReadInt32();
+            WorldModelObjectIndicesOffset = br.ReadInt32();
 
-                    ModelPlacementInformationOffset = br.ReadInt32();
-                    WorldModelObjectPlacementInformationOffset = br.ReadInt32();
+            ModelPlacementInformationOffset = br.ReadInt32();
+            WorldModelObjectPlacementInformationOffset = br.ReadInt32();
 
-                    BoundingBoxOffset = br.ReadInt32();
-                    LiquidOffset = br.ReadInt32();
-                    TextureFlagsOffset = br.ReadInt32();
-                }
-            }
+            BoundingBoxOffset = br.ReadInt32();
+            LiquidOffset = br.ReadInt32();
+            TextureFlagsOffset = br.ReadInt32();
         }
 
         /// <inheritdoc/>

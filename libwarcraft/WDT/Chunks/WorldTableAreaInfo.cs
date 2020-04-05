@@ -61,17 +61,13 @@ namespace Warcraft.WDT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            for (uint y = 0; y < 64; ++y)
             {
-                using (var br = new BinaryReader(ms))
+                for (uint x = 0; x < 64; ++x)
                 {
-                    for (uint y = 0; y < 64; ++y)
-                    {
-                        for (uint x = 0; x < 64; ++x)
-                        {
-                            Entries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize()), x, y));
-                        }
-                    }
+                    Entries.Add(new AreaInfoEntry(br.ReadBytes((int)AreaInfoEntry.GetSize()), x, y));
                 }
             }
         }
@@ -108,20 +104,18 @@ namespace Warcraft.WDT.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var entry in Entries)
                 {
-                    foreach (var entry in Entries)
-                    {
-                        bw.Write(entry.Serialize());
-                    }
-
-                    bw.Flush();
+                    bw.Write(entry.Serialize());
                 }
 
-                return ms.ToArray();
+                bw.Flush();
             }
+
+            return ms.ToArray();
         }
     }
 }

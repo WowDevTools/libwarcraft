@@ -59,14 +59,10 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Maximum = br.ReadShortPlane();
-                    Minimum = br.ReadShortPlane();
-                }
-            }
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            Maximum = br.ReadShortPlane();
+            Minimum = br.ReadShortPlane();
         }
 
         /// <inheritdoc/>
@@ -78,16 +74,14 @@ namespace Warcraft.ADT.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    bw.WriteShortPlane(Maximum);
-                    bw.WriteShortPlane(Minimum);
-                }
-
-                return ms.ToArray();
+                bw.WriteShortPlane(Maximum);
+                bw.WriteShortPlane(Minimum);
             }
+
+            return ms.ToArray();
         }
     }
 }

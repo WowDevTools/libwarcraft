@@ -71,18 +71,14 @@ namespace Warcraft.MDX.Geometry
         /// <param name="data">The binary data in which the vertex is stored.</param>
         public MDXVertex(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    Position = br.ReadVector3();
-                    BoneWeights = new List<byte>(br.ReadBytes(4));
-                    BoneIndices = new List<byte>(br.ReadBytes(4));
-                    Normal = br.ReadVector3();
-                    UV1 = br.ReadVector2();
-                    UV2 = br.ReadVector2();
-                }
-            }
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            Position = br.ReadVector3();
+            BoneWeights = new List<byte>(br.ReadBytes(4));
+            BoneIndices = new List<byte>(br.ReadBytes(4));
+            Normal = br.ReadVector3();
+            UV1 = br.ReadVector2();
+            UV2 = br.ReadVector2();
         }
 
         /// <summary>

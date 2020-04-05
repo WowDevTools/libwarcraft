@@ -63,17 +63,13 @@ namespace Warcraft.ADT.Chunks.Subchunks
         /// <param name="data">The binary data.</param>
         public TextureLayerEntry(byte[] data)
         {
-            using (var ms = new MemoryStream(data))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    TextureID = br.ReadUInt32();
-                    Flags = (TextureLayerFlags)br.ReadUInt32();
-                    AlphaMapOffset = br.ReadUInt32();
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            TextureID = br.ReadUInt32();
+            Flags = (TextureLayerFlags)br.ReadUInt32();
+            AlphaMapOffset = br.ReadUInt32();
 
-                    EffectID = new ForeignKey<ushort>(DatabaseName.GroundEffectTexture, nameof(DBCRecord.ID), br.ReadUInt16()); // TODO: Implement GroundEffectTextureRecord
-                }
-            }
+            EffectID = new ForeignKey<ushort>(DatabaseName.GroundEffectTexture, nameof(DBCRecord.ID), br.ReadUInt16()); // TODO: Implement GroundEffectTextureRecord
         }
 
         /// <summary>

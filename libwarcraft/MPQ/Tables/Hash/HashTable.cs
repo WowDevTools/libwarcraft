@@ -55,17 +55,13 @@ namespace Warcraft.MPQ.Tables.Hash
         [PublicAPI]
         public HashTable([JetBrains.Annotations.NotNull] byte[] data)
         {
-            using (var ms = new MemoryStream(data))
+            using var ms = new MemoryStream(data);
+            using var br = new BinaryReader(ms);
+            for (long i = 0; i < data.Length; i += HashTableEntry.GetSize())
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    for (long i = 0; i < data.Length; i += HashTableEntry.GetSize())
-                    {
-                        var entryBytes = br.ReadBytes((int)HashTableEntry.GetSize());
-                        var newEntry = new HashTableEntry(entryBytes);
-                        _entries.Add(newEntry);
-                    }
-                }
+                var entryBytes = br.ReadBytes((int)HashTableEntry.GetSize());
+                var newEntry = new HashTableEntry(entryBytes);
+                _entries.Add(newEntry);
             }
         }
 
@@ -237,19 +233,17 @@ namespace Warcraft.MPQ.Tables.Hash
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var entry in _entries)
                 {
-                    foreach (var entry in _entries)
-                    {
-                        bw.Write(entry.Serialize());
-                    }
+                    bw.Write(entry.Serialize());
                 }
-
-                var encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), TableKey);
-                return encryptedTable;
             }
+
+            var encryptedTable = MPQCrypt.EncryptData(ms.ToArray(), TableKey);
+            return encryptedTable;
         }
 
         /// <summary>

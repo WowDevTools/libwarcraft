@@ -60,16 +60,12 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public void LoadBinaryData(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            var fogInstanceCount = inData.Length / FogInstance.GetSize();
+            for (var i = 0; i < fogInstanceCount; ++i)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var fogInstanceCount = inData.Length / FogInstance.GetSize();
-                    for (var i = 0; i < fogInstanceCount; ++i)
-                    {
-                        FogInstances.Add(new FogInstance(br.ReadBytes(FogInstance.GetSize())));
-                    }
-                }
+                FogInstances.Add(new FogInstance(br.ReadBytes(FogInstance.GetSize())));
             }
         }
 
@@ -82,18 +78,16 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                foreach (var fogInstance in FogInstances)
                 {
-                    foreach (var fogInstance in FogInstances)
-                    {
-                        bw.Write(fogInstance.Serialize());
-                    }
+                    bw.Write(fogInstance.Serialize());
                 }
-
-                return ms.ToArray();
             }
+
+            return ms.ToArray();
         }
     }
 }

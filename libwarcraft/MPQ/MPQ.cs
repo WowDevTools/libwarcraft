@@ -281,16 +281,12 @@ namespace Warcraft.MPQ
                 yield break;
             }
 
-            using (var listfileStream = new MemoryStream(listfileBytes))
+            using var listfileStream = new MemoryStream(listfileBytes);
+            using TextReader tr = new StreamReader(listfileStream);
+            string? line;
+            while ((line = tr.ReadLine()) != null)
             {
-                using (TextReader tr = new StreamReader(listfileStream))
-                {
-                    string? line;
-                    while ((line = tr.ReadLine()) != null)
-                    {
-                        yield return line;
-                    }
-                }
+                yield return line;
             }
         }
 

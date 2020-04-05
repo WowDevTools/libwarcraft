@@ -82,27 +82,23 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <param name="inData">The binary data.</param>
         public DoodadInstance(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
-            {
-                using (var br = new BinaryReader(ms))
-                {
-                    var finalNameBytes = new byte[4];
-                    var nameOffsetBytes = br.ReadBytes(3);
-                    Buffer.BlockCopy(nameOffsetBytes, 0, finalNameBytes, 0, 3);
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            var finalNameBytes = new byte[4];
+            var nameOffsetBytes = br.ReadBytes(3);
+            Buffer.BlockCopy(nameOffsetBytes, 0, finalNameBytes, 0, 3);
 
-                    NameOffset = BitConverter.ToUInt32(finalNameBytes, 0);
+            NameOffset = BitConverter.ToUInt32(finalNameBytes, 0);
 
-                    Flags = (DoodadInstanceFlags)br.ReadByte();
+            Flags = (DoodadInstanceFlags)br.ReadByte();
 
-                    Position = br.ReadVector3();
+            Position = br.ReadVector3();
 
-                    // TODO: Investigate whether or not this is a Quat16 in >= BC
-                    Orientation = br.ReadQuaternion32();
+            // TODO: Investigate whether or not this is a Quat16 in >= BC
+            Orientation = br.ReadQuaternion32();
 
-                    Scale = br.ReadSingle();
-                    StaticLightingColour = br.ReadBGRA();
-                }
-            }
+            Scale = br.ReadSingle();
+            StaticLightingColour = br.ReadBGRA();
         }
 
         /// <summary>
@@ -117,27 +113,25 @@ namespace Warcraft.WMO.RootFile.Chunks
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
-                {
-                    var nameOffsetBytes = BitConverter.GetBytes(NameOffset);
-                    var finalNameOffsetBytes = new byte[3];
-                    Buffer.BlockCopy(nameOffsetBytes, 0, finalNameOffsetBytes, 0, 3);
+                var nameOffsetBytes = BitConverter.GetBytes(NameOffset);
+                var finalNameOffsetBytes = new byte[3];
+                Buffer.BlockCopy(nameOffsetBytes, 0, finalNameOffsetBytes, 0, 3);
 
-                    bw.Write(finalNameOffsetBytes);
-                    bw.Write((byte)Flags);
+                bw.Write(finalNameOffsetBytes);
+                bw.Write((byte)Flags);
 
-                    bw.WriteVector3(Position);
+                bw.WriteVector3(Position);
 
-                    // TODO: Investigate whether or not this is a Quat16 in >= BC
-                    bw.WriteQuaternion32(Orientation);
-                    bw.Write(Scale);
-                    bw.WriteBGRA(StaticLightingColour);
-                }
-
-                return ms.ToArray();
+                // TODO: Investigate whether or not this is a Quat16 in >= BC
+                bw.WriteQuaternion32(Orientation);
+                bw.Write(Scale);
+                bw.WriteBGRA(StaticLightingColour);
             }
+
+            return ms.ToArray();
         }
     }
 }

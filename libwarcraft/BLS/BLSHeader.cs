@@ -64,29 +64,25 @@ namespace Warcraft.BLS
         /// <exception cref="FileLoadException">Thrown if no matching signatures could be found in the data.</exception>
         public BLSHeader(byte[] inData)
         {
-            using (var ms = new MemoryStream(inData))
+            using var ms = new MemoryStream(inData);
+            using var br = new BinaryReader(ms);
+            var dataSignature = br.ReadBinarySignature();
+            if (dataSignature != VertexShaderSignature && dataSignature != FragmentShaderSignature)
             {
-                using (var br = new BinaryReader(ms))
-                {
-                    var dataSignature = br.ReadBinarySignature();
-                    if (dataSignature != VertexShaderSignature && dataSignature != FragmentShaderSignature)
-                    {
-                        throw new FileLoadException("BLS data must begin with a valid shader signature.");
-                    }
-
-                    if (dataSignature == VertexShaderSignature)
-                    {
-                        ContainerType = ShaderContainerType.Vertex;
-                    }
-                    else
-                    {
-                        ContainerType = ShaderContainerType.Fragment;
-                    }
-
-                    Version = br.ReadUInt32();
-                    ShaderBlockCount = br.ReadUInt32();
-                }
+                throw new FileLoadException("BLS data must begin with a valid shader signature.");
             }
+
+            if (dataSignature == VertexShaderSignature)
+            {
+                ContainerType = ShaderContainerType.Vertex;
+            }
+            else
+            {
+                ContainerType = ShaderContainerType.Fragment;
+            }
+
+            Version = br.ReadUInt32();
+            ShaderBlockCount = br.ReadUInt32();
         }
 
         /// <summary>
@@ -95,25 +91,23 @@ namespace Warcraft.BLS
         /// <inheritdoc/>
         public byte[] Serialize()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using (var bw = new BinaryWriter(ms))
             {
-                using (var bw = new BinaryWriter(ms))
+                if (ContainerType == ShaderContainerType.Vertex)
                 {
-                    if (ContainerType == ShaderContainerType.Vertex)
-                    {
-                        bw.WriteChunkSignature(VertexShaderSignature);
-                    }
-                    else
-                    {
-                        bw.WriteChunkSignature(FragmentShaderSignature);
-                    }
-
-                    bw.Write(Version);
-                    bw.Write(ShaderBlockCount);
+                    bw.WriteChunkSignature(VertexShaderSignature);
+                }
+                else
+                {
+                    bw.WriteChunkSignature(FragmentShaderSignature);
                 }
 
-                return ms.ToArray();
+                bw.Write(Version);
+                bw.Write(ShaderBlockCount);
             }
+
+            return ms.ToArray();
         }
 
         /// <summary>
