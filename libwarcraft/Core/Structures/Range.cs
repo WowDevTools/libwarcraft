@@ -87,7 +87,7 @@ namespace Warcraft.Core.Structures
         /// Creates a string representation of the current instance.
         /// </summary>
         /// <returns>A string representation of the current instance.</returns>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"Range: {Minimum} to {Maximum}";
         }

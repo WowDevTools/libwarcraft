@@ -58,11 +58,13 @@ namespace Warcraft.Core.Reflection.DBC
         public RecordFieldInformation GetRecordInformation(Type recordType, WarcraftVersion version)
         {
             var infoKey = new RecordInformationIdentifier(recordType, version);
-            if (!_informationCache.ContainsKey(infoKey))
+            if (_informationCache.ContainsKey(infoKey))
             {
-                var recordInfo = new RecordFieldInformation(recordType, version);
-                _informationCache.Add(infoKey, recordInfo);
+                return _informationCache[infoKey];
             }
+
+            var recordInfo = new RecordFieldInformation(recordType, version);
+            _informationCache.Add(infoKey, recordInfo);
 
             return _informationCache[infoKey];
         }

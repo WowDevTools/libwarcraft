@@ -155,11 +155,13 @@ namespace Warcraft.MDX.Visual.FX
             TextureSlot = br.ReadMDXTrack<ushort>(version);
             Visibility = br.ReadMDXTrack<bool>(version);
 
-            if (version >= WarcraftVersion.Wrath)
+            if (version < WarcraftVersion.Wrath)
             {
-                PriorityPlane = br.ReadInt16();
-                Unknown = br.ReadInt16();
+                return;
             }
+
+            PriorityPlane = br.ReadInt16();
+            Unknown = br.ReadInt16();
         }
     }
 }

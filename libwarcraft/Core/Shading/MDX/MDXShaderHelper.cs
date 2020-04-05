@@ -139,18 +139,18 @@ namespace Warcraft.Core.Shading.MDX
         /// <exception cref="ArgumentException">Thrown if the shader ID parameter cannot be used as an indexer into the shader table.</exception>
         public static MDXControlShaderType GetControlShaderType(uint operationCount, ushort shaderID)
         {
-            if ((shaderID & 0x8000) > 0)
+            if ((shaderID & 0x8000) <= 0)
             {
-                var shaderTableIndex = (ushort)(shaderID & ~0x8000);
-                if (shaderTableIndex >= ShaderTable.Count)
-                {
-                    throw new ArgumentException("The shader ID did not fall in an expected range.", nameof(shaderID));
-                }
-
-                return ShaderTable[shaderTableIndex].ControlShader;
+                return operationCount == 1 ? MDXControlShaderType.T1 : MDXControlShaderType.T1T2;
             }
 
-            return operationCount == 1 ? MDXControlShaderType.T1 : MDXControlShaderType.T1T2;
+            var shaderTableIndex = (ushort)(shaderID & ~0x8000);
+            if (shaderTableIndex >= ShaderTable.Count)
+            {
+                throw new ArgumentException("The shader ID did not fall in an expected range.", nameof(shaderID));
+            }
+
+            return ShaderTable[shaderTableIndex].ControlShader;
         }
 
         /// <summary>
@@ -162,18 +162,18 @@ namespace Warcraft.Core.Shading.MDX
         /// <exception cref="ArgumentException">Thrown if the shader ID parameter cannot be used as an indexer into the shader table.</exception>
         public static MDXEvaluationShaderType GetEvaluationShaderType(uint operationCount, ushort shaderID)
         {
-            if ((shaderID & 0x8000) > 0)
+            if ((shaderID & 0x8000) <= 0)
             {
-                var shaderTableIndex = (ushort)(shaderID & ~0x8000);
-                if (shaderTableIndex >= ShaderTable.Count)
-                {
-                    throw new ArgumentException("The shader ID did not fall in an expected range.", nameof(shaderID));
-                }
-
-                return ShaderTable[shaderTableIndex].EvaluationShader;
+                return operationCount == 1 ? MDXEvaluationShaderType.T1 : MDXEvaluationShaderType.T1T2;
             }
 
-            return operationCount == 1 ? MDXEvaluationShaderType.T1 : MDXEvaluationShaderType.T1T2;
+            var shaderTableIndex = (ushort)(shaderID & ~0x8000);
+            if (shaderTableIndex >= ShaderTable.Count)
+            {
+                throw new ArgumentException("The shader ID did not fall in an expected range.", nameof(shaderID));
+            }
+
+            return ShaderTable[shaderTableIndex].EvaluationShader;
         }
 
         /// <summary>

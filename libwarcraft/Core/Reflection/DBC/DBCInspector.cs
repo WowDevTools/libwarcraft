@@ -229,12 +229,6 @@ namespace Warcraft.Core.Reflection.DBC
                 if (IsPropertyFieldArray(recordProperty))
                 {
                     versionAttribute = GetVersionRelevantPropertyFieldArrayAttribute(version, recordProperty);
-
-                    if (versionAttribute == null)
-                    {
-                        // There was no property defined for the version.
-                        continue;
-                    }
                 }
                 else
                 {
@@ -396,9 +390,9 @@ namespace Warcraft.Core.Reflection.DBC
                 switch (recordProperty.PropertyType)
                 {
                     // Single-field types
-                    case Type foreignKeyType when foreignKeyType.IsGenericType && foreignKeyType.GetGenericTypeDefinition() == typeof(ForeignKey<>):
-                    case Type stringRefType when stringRefType == typeof(StringReference):
-                    case Type enumType when enumType.IsEnum:
+                    case { } foreignKeyType when foreignKeyType.IsGenericType && foreignKeyType.GetGenericTypeDefinition() == typeof(ForeignKey<>):
+                    case { } stringRefType when stringRefType == typeof(StringReference):
+                    case { } enumType when enumType.IsEnum:
                     {
                         var underlyingType = DBCDeserializer.GetUnderlyingStoredPrimitiveType(recordProperty.PropertyType);
 
@@ -407,8 +401,8 @@ namespace Warcraft.Core.Reflection.DBC
                     }
 
                     // Multi-field types
-                    case Type genericListType when genericListType.IsGenericType && genericListType.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IList<>)):
-                    case Type arrayType when arrayType.IsArray:
+                    case { } genericListType when genericListType.IsGenericType && genericListType.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IList<>)):
+                    case { } arrayType when arrayType.IsArray:
                     {
                         var elementSize = Marshal.SizeOf(DBCDeserializer.GetUnderlyingStoredPrimitiveType(recordProperty.PropertyType));
                         var arrayInfoAttribute = GetVersionRelevantPropertyFieldArrayAttribute(version, recordProperty);
@@ -419,13 +413,13 @@ namespace Warcraft.Core.Reflection.DBC
                     }
 
                     // Special version-variant length handling
-                    case Type locStringRefType when locStringRefType == typeof(LocalizedStringReference):
+                    case { } locStringRefType when locStringRefType == typeof(LocalizedStringReference):
                     {
                         size += LocalizedStringReference.GetFieldCount(version) * sizeof(uint);
                         break;
                     }
 
-                    case Type registeredType when CustomFieldTypeStorageSizes.ContainsKey(registeredType):
+                    case { } registeredType when CustomFieldTypeStorageSizes.ContainsKey(registeredType):
                     {
                         size += CustomFieldTypeStorageSizes[registeredType];
                         break;
@@ -457,7 +451,7 @@ namespace Warcraft.Core.Reflection.DBC
             {
                 switch (recordProperty.PropertyType)
                 {
-                    case Type _ when IsPropertyFieldArray(recordProperty):
+                    case { } _ when IsPropertyFieldArray(recordProperty):
                     {
                         var arrayInfoAttribute = GetVersionRelevantPropertyFieldArrayAttribute(version, recordProperty);
                         count += (int)arrayInfoAttribute.Count;
@@ -465,13 +459,13 @@ namespace Warcraft.Core.Reflection.DBC
                         break;
                     }
 
-                    case Type locStringRefType when locStringRefType == typeof(LocalizedStringReference):
+                    case { } locStringRefType when locStringRefType == typeof(LocalizedStringReference):
                     {
                         count += LocalizedStringReference.GetFieldCount(version);
                         break;
                     }
 
-                    case Type registeredType when CustomFieldTypeFieldCounts.ContainsKey(registeredType):
+                    case { } registeredType when CustomFieldTypeFieldCounts.ContainsKey(registeredType):
                     {
                         count += CustomFieldTypeFieldCounts[registeredType];
                         break;

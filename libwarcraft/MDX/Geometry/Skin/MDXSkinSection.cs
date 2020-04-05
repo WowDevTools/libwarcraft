@@ -138,11 +138,13 @@ namespace Warcraft.MDX.Geometry.Skin
             CenterBoneIndex = br.ReadUInt16();
             CenterPosition = br.ReadVector3();
 
-            if (br.BaseStream.Length > 32)
+            if (br.BaseStream.Length <= 32)
             {
-                SortCenterPosition = br.ReadVector3();
-                SortRadius = br.ReadSingle();
+                return;
             }
+
+            SortCenterPosition = br.ReadVector3();
+            SortRadius = br.ReadSingle();
         }
 
         /// <summary>

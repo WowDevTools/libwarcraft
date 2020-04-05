@@ -78,6 +78,7 @@ namespace Warcraft.WMO.RootFile.Chunks
         {
             using var ms = new MemoryStream(inData);
             using var br = new BinaryReader(ms);
+
             // The name of the doodad set can be up to 20 bytes, and is always padded to this length.
             // Therefore, we read 20 bytes, convert it to a string and trim the end of any null characters.
             var nameBytes = br.ReadBytes(20);

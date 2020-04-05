@@ -163,13 +163,13 @@ namespace Warcraft.Core.Structures
         }
 
         /// <inheritdoc />
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"{X}, {Y}, {Z}";
         }
 
         /// <inheritdoc />
-        public IReadOnlyCollection<short> Flatten()
+        public readonly IReadOnlyCollection<short> Flatten()
         {
             return new[] { X, Y, Z };
         }

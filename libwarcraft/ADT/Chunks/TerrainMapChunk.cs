@@ -172,11 +172,13 @@ namespace Warcraft.ADT.Chunks
                 VertexShading = br.ReadIFFChunk<MapChunkVertexShading>();
             }
 
-            if (Header.VertexLightingOffset > 0)
+            if (Header.VertexLightingOffset <= 0)
             {
-                br.BaseStream.Position = Header.VertexLightingOffset;
-                VertexLighting = br.ReadIFFChunk<MapChunkVertexLighting>();
+                return;
             }
+
+            br.BaseStream.Position = Header.VertexLightingOffset;
+            VertexLighting = br.ReadIFFChunk<MapChunkVertexLighting>();
         }
 
         /// <inheritdoc/>

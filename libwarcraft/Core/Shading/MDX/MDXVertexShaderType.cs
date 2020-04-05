@@ -21,7 +21,6 @@
 //
 
 // ReSharper disable InconsistentNaming
-
 namespace Warcraft.Core.Shading.MDX
 {
     /// <summary>

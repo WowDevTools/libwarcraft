@@ -39,7 +39,7 @@ namespace Warcraft.Core.Structures
         /// </summary>
         public float Pitch
         {
-            get => _values.X;
+            readonly get => _values.X;
             set => _values.X = value;
         }
 
@@ -48,7 +48,7 @@ namespace Warcraft.Core.Structures
         /// </summary>
         public float Yaw
         {
-            get => _values.Y;
+            readonly get => _values.Y;
             set => _values.Y = value;
         }
 
@@ -57,7 +57,7 @@ namespace Warcraft.Core.Structures
         /// </summary>
         public float Roll
         {
-            get => _values.Z;
+            readonly get => _values.Z;
             set => _values.Z = value;
         }
 
@@ -82,13 +82,13 @@ namespace Warcraft.Core.Structures
         }
 
         /// <inheritdoc />
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"Pitch: {Pitch}, Yaw: {Yaw}, Roll: {Roll}";
         }
 
         /// <inheritdoc />
-        public IReadOnlyCollection<float> Flatten()
+        public readonly IReadOnlyCollection<float> Flatten()
         {
             return _values.Flatten();
         }

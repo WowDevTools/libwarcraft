@@ -61,7 +61,7 @@ namespace Warcraft.Core.Structures
         /// Creates a string representation of the current object.
         /// </summary>
         /// <returns>A string representation of the current object.</returns>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"{X}x{Y}";
         }

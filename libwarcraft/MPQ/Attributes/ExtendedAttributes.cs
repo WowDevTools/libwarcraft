@@ -73,6 +73,7 @@ namespace Warcraft.MPQ.Attributes
 
             using var ms = new MemoryStream(data);
             using var br = new BinaryReader(ms);
+
             // Initial length (without any attributes) should be at least 8 bytes
             uint expectedDataLength = 8;
             if (data.Length < expectedDataLength)

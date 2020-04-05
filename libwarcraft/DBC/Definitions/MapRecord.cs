@@ -164,19 +164,19 @@ namespace Warcraft.DBC.Definitions
         /// Gets or sets the text displayed to players that do not meet the map requirements.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
-        public LocalizedStringReference RequirementText { get; set; } = null!;
+        public LocalizedStringReference? RequirementText { get; set; }
 
         /// <summary>
         /// Gets or sets the text displayed to players that do not meet the Heroic requirements.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
-        public LocalizedStringReference HeroicText { get; set; } = null!;
+        public LocalizedStringReference? HeroicText { get; set; }
 
         /// <summary>
         /// Gets or sets an unknown piece of text.
         /// </summary>
         [RecordField(WarcraftVersion.BurningCrusade, RemovedIn = WarcraftVersion.Wrath)]
-        public LocalizedStringReference EmptyText2 { get; set; } = null!;
+        public LocalizedStringReference? EmptyText2 { get; set; }
 
         /// <summary>
         /// Gets or sets the parent map.
@@ -257,12 +257,14 @@ namespace Warcraft.DBC.Definitions
                 }
             }
 
-            if (EmptyText2 != null)
+            if (EmptyText2 == null)
             {
-                foreach (var text in EmptyText2.GetReferences())
-                {
-                    yield return text;
-                }
+                yield break;
+            }
+
+            foreach (var text in EmptyText2.GetReferences())
+            {
+                yield return text;
             }
         }
     }

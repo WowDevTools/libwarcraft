@@ -148,19 +148,20 @@ namespace Warcraft.MPQ.Crypto
             }
 
             // If we did have some dangling bytes, copy them to a new array
-            if (danglingBytes > 0)
+            if (danglingBytes <= 0)
             {
-                var decryptedDataBlock = finalizedData.ToArray();
-                var finalDecryptedData = new byte[decryptedDataBlock.Length + danglingBytes];
-
-                Buffer.BlockCopy(decryptedDataBlock, 0, finalDecryptedData, 0, decryptedDataBlock.Length);
-                Buffer.BlockCopy(data, (int)(data.Length - danglingBytes), finalDecryptedData, decryptedDataBlock.Length, (int)danglingBytes);
-
-                return finalDecryptedData;
+                return finalizedData.ToArray();
             }
 
+            var decryptedDataBlock = finalizedData.ToArray();
+            var finalDecryptedData = new byte[decryptedDataBlock.Length + danglingBytes];
+
+            Buffer.BlockCopy(decryptedDataBlock, 0, finalDecryptedData, 0, decryptedDataBlock.Length);
+            Buffer.BlockCopy(data, (int)(data.Length - danglingBytes), finalDecryptedData, decryptedDataBlock.Length, (int)danglingBytes);
+
+            return finalDecryptedData;
+
             // Else we can just return the data as-is
-            return finalizedData.ToArray();
         }
 
         /// <summary>

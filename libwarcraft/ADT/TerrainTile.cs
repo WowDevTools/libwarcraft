@@ -107,6 +107,7 @@ namespace Warcraft.ADT
         {
             using var ms = new MemoryStream(data);
             using var br = new BinaryReader(ms);
+
             // In all ADT files, the version chunk and header chunk are at the beginning of the file,
             // with the header following the version. From them, the rest of the chunks can be
             // seeked to and read.

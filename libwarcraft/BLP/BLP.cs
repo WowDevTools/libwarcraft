@@ -379,6 +379,7 @@ namespace Warcraft.BLP
                     map = new Image<Rgba32>((int)targetXRes, (int)targetYRes);
                     using var ms = new MemoryStream(inData);
                     using var br = new BinaryReader(ms);
+
                     // Read colour information
                     for (var y = 0; y < targetYRes; ++y)
                     {

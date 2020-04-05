@@ -83,6 +83,7 @@ namespace Warcraft.WDL
         {
             using var ms = new MemoryStream(inData);
             using var br = new BinaryReader(ms);
+
             // Set up the two area lists with default values
             for (var i = 0; i < 4096; ++i)
             {

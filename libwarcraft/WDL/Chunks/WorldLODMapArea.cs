@@ -67,6 +67,7 @@ namespace Warcraft.WDL.Chunks
         {
             using var ms = new MemoryStream(inData);
             using var br = new BinaryReader(ms);
+
             // TODO: Verify if this isn't mapped the same way as ADT.Chunks.MapChunkHeightmap
             for (var y = 0; y < 17; ++y)
             {

@@ -77,17 +77,17 @@ namespace Warcraft.MDX.Visual
                 return BlendingMode.NoAlphaAdditive;
             }
 
-            if (blendingMode > 3)
+            if (blendingMode <= 3)
             {
-                if (blendingMode == 7)
-                {
-                    return BlendingMode.BlendAdditive;
-                }
-
-                return (BlendingMode)(blendingMode - 1);
+                return (BlendingMode)blendingMode;
             }
 
-            return (BlendingMode)blendingMode;
+            if (blendingMode == 7)
+            {
+                return BlendingMode.BlendAdditive;
+            }
+
+            return (BlendingMode)(blendingMode - 1);
         }
     }
 }

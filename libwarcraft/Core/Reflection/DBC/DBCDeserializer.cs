@@ -99,18 +99,20 @@ namespace Warcraft.Core.Reflection.DBC
             // Create type info for a list of the property's type
             var specificListType = typeof(List<>).MakeGenericType(elementType);
 
-            if (propertyType == specificListType)
+            if (propertyType != specificListType)
             {
-                var list = Activator.CreateInstance(propertyType) as IList ?? throw new InvalidOperationException();
-                foreach (var value in values)
-                {
-                    list.Add(value);
-                }
-
-                return list;
+                throw new ArgumentException(
+                    $"No compatible object could be created for a property of type {propertyType}",
+                    nameof(propertyType));
             }
 
-            throw new ArgumentException($"No compatible object could be created for a property of type {propertyType}", nameof(propertyType));
+            var list = Activator.CreateInstance(propertyType) as IList ?? throw new InvalidOperationException();
+            foreach (var value in values)
+            {
+                list.Add(value);
+            }
+
+            return list;
         }
 
         /// <summary>

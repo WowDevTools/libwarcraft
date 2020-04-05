@@ -55,7 +55,7 @@ namespace Warcraft.Core.Structures
         }
 
         /// <inheritdoc />
-        public IReadOnlyCollection<short> Flatten()
+        public readonly IReadOnlyCollection<short> Flatten()
         {
             return BottomCorner.Flatten().Concat(TopCorner.Flatten()).ToArray();
         }
