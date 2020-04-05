@@ -139,7 +139,7 @@ namespace Warcraft.MDX.Geometry.Skin
             CenterBoneIndex = br.ReadUInt16();
             CenterPosition = br.ReadVector3();
 
-            if (version > WarcraftVersion.BurningCrusade)
+            if (version < WarcraftVersion.BurningCrusade)
             {
                 return;
             }
