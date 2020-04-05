@@ -59,7 +59,7 @@ namespace Warcraft.MDX
         /// <summary>
         /// Gets or sets the name of the model.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the model flags.
@@ -69,17 +69,17 @@ namespace Warcraft.MDX
         /// <summary>
         /// Gets or sets the global sequence timestamps.
         /// </summary>
-        public MDXArray<uint>? GlobalSequenceTimestamps { get; set; }
+        public MDXArray<uint> GlobalSequenceTimestamps { get; set; }
 
         /// <summary>
         /// Gets or sets the animation sequences.
         /// </summary>
-        public MDXArray<MDXAnimationSequence>? AnimationSequences { get; set; }
+        public MDXArray<MDXAnimationSequence> AnimationSequences { get; set; }
 
         /// <summary>
         /// Gets or sets the animation sequence lookup table.
         /// </summary>
-        public MDXArray<ushort>? AnimationSequenceLookupTable { get; set; }
+        public MDXArray<ushort> AnimationSequenceLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the playable animation lookup table.
@@ -89,17 +89,17 @@ namespace Warcraft.MDX
         /// <summary>
         /// Gets or sets the bones of the model.
         /// </summary>
-        public MDXArray<MDXBone>? Bones { get; set; }
+        public MDXArray<MDXBone> Bones { get; set; }
 
         /// <summary>
         /// Gets or sets the key bone lookup table.
         /// </summary>
-        public MDXArray<ushort>? KeyBoneLookupTable { get; set; }
+        public MDXArray<ushort> KeyBoneLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the vertices of the model.
         /// </summary>
-        public MDXArray<MDXVertex>? Vertices { get; set; }
+        public MDXArray<MDXVertex> Vertices { get; set; }
 
         /// <summary>
         /// Gets or sets the skins of the model.
@@ -114,57 +114,57 @@ namespace Warcraft.MDX
         /// <summary>
         /// Gets or sets the colour animations.
         /// </summary>
-        public MDXArray<MDXColourAnimation>? ColourAnimations { get; set; }
+        public MDXArray<MDXColourAnimation> ColourAnimations { get; set; }
 
         /// <summary>
         /// Gets or sets the model's textures.
         /// </summary>
-        public MDXArray<MDXTexture>? Textures { get; set; }
+        public MDXArray<MDXTexture> Textures { get; set; }
 
         /// <summary>
         /// Gets or sets the transparency animations.
         /// </summary>
-        public MDXArray<MDXTextureWeight>? TransparencyAnimations { get; set; }
+        public MDXArray<MDXTextureWeight> TransparencyAnimations { get; set; }
 
         /// <summary>
         /// Gets or sets the texture transformations.
         /// </summary>
-        public MDXArray<MDXTextureTransform>? TextureTransformations { get; set; }
+        public MDXArray<MDXTextureTransform> TextureTransformations { get; set; }
 
         /// <summary>
         /// Gets or sets the replaceable texture lookup table.
         /// </summary>
-        public MDXArray<short>? ReplaceableTextureLookupTable { get; set; }
+        public MDXArray<short> ReplaceableTextureLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the model's materials.
         /// </summary>
-        public MDXArray<MDXMaterial>? Materials { get; set; }
+        public MDXArray<MDXMaterial> Materials { get; set; }
 
         /// <summary>
         /// Gets or sets the bone lookup table.
         /// </summary>
-        public MDXArray<short>? BoneLookupTable { get; set; }
+        public MDXArray<short> BoneLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the texture lookup table.
         /// </summary>
-        public MDXArray<short>? TextureLookupTable { get; set; }
+        public MDXArray<short> TextureLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the texture mapping lookup table.
         /// </summary>
-        public MDXArray<MDXTextureMappingType>? TextureMappingLookupTable { get; set; }
+        public MDXArray<MDXTextureMappingType> TextureMappingLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the transparency lookup table.
         /// </summary>
-        public MDXArray<short>? TransparencyLookupTable { get; set; }
+        public MDXArray<short> TransparencyLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the texture transformation lookup table.
         /// </summary>
-        public MDXArray<short>? TextureTransformationLookupTable { get; set; }
+        public MDXArray<short> TextureTransformationLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the model's bounding box.
@@ -189,52 +189,52 @@ namespace Warcraft.MDX
         /// <summary>
         /// Gets or sets the triangle indexes of the convex collision hull.
         /// </summary>
-        public MDXArray<ushort>? CollisionTriangles { get; set; }
+        public MDXArray<ushort> CollisionTriangles { get; set; }
 
         /// <summary>
         /// Gets or sets the vertices of the convex collision hull.
         /// </summary>
-        public MDXArray<Vector3>? CollisionVertices { get; set; }
+        public MDXArray<Vector3> CollisionVertices { get; set; }
 
         /// <summary>
         /// Gets or sets the normals of the convex collision hull.
         /// </summary>
-        public MDXArray<Vector3>? CollisionNormals { get; set; }
+        public MDXArray<Vector3> CollisionNormals { get; set; }
 
         /// <summary>
         /// Gets or sets the attachments of the model.
         /// </summary>
-        public MDXArray<MDXAttachment>? Attachments { get; set; }
+        public MDXArray<MDXAttachment> Attachments { get; set; }
 
         /// <summary>
         /// Gets or sets the attachment lookup table.
         /// </summary>
-        public MDXArray<MDXAttachmentType>? AttachmentLookupTable { get; set; }
+        public MDXArray<MDXAttachmentType> AttachmentLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the animation events.
         /// </summary>
-        public MDXArray<MDXAnimationEvent>? AnimationEvents { get; set; }
+        public MDXArray<MDXAnimationEvent> AnimationEvents { get; set; }
 
         /// <summary>
         /// Gets or sets the lights in the model.
         /// </summary>
-        public MDXArray<MDXLight>? Lights { get; set; }
+        public MDXArray<MDXLight> Lights { get; set; }
 
         /// <summary>
         /// Gets or sets the cameras in the model.
         /// </summary>
-        public MDXArray<MDXCamera>? Cameras { get; set; }
+        public MDXArray<MDXCamera> Cameras { get; set; }
 
         /// <summary>
         /// Gets or sets the camera type lookup table.
         /// </summary>
-        public MDXArray<MDXCameraType>? CameraTypeLookupTable { get; set; }
+        public MDXArray<MDXCameraType> CameraTypeLookupTable { get; set; }
 
         /// <summary>
         /// Gets or sets the ribbon emitters in the model.
         /// </summary>
-        public MDXArray<MDXRibbonEmitter>? RibbonEmitters { get; set; }
+        public MDXArray<MDXRibbonEmitter> RibbonEmitters { get; set; }
 
         /// <summary>
         /// Gets or sets the particle emitters in the model.
@@ -253,9 +253,8 @@ namespace Warcraft.MDX
         /// </summary>
         /// <param name="data">The binary data.</param>
         public MDX(byte[] data)
+            : this(new MemoryStream(data))
         {
-            using var ms = new MemoryStream(data);
-            LoadFromStream(ms);
         }
 
         /// <summary>
@@ -263,11 +262,6 @@ namespace Warcraft.MDX
         /// </summary>
         /// <param name="dataStream">The stream to load the model from.</param>
         public MDX(Stream dataStream)
-        {
-            LoadFromStream(dataStream);
-        }
-
-        private void LoadFromStream(Stream dataStream)
         {
             using var br = new BinaryReader(dataStream);
             var dataSignature = new string(br.ReadBinarySignature().Reverse().ToArray());
