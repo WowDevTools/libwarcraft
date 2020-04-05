@@ -22,7 +22,7 @@ namespace Warcraft.Core.Compression.Squish
         private SingleColourFit(ColourSet colours, SquishOptions flags)
             : base(colours, flags)
         {
-            Vector3 values = _Colours.Points[0];
+            var values = _Colours.Points[0];
 
             colour[0] = (byte) FloatToInt(255.0f * values.X, 255);
             colour[1] = (byte) FloatToInt(255.0f * values.Y, 255);
@@ -33,7 +33,7 @@ namespace Warcraft.Core.Compression.Squish
 
         private static int FloatToInt(float a, int limit)
         {
-            int i = (int) (a + 0.5f);
+            var i = (int) (a + 0.5f);
 
             // clamp to limit
             if (i < 0)

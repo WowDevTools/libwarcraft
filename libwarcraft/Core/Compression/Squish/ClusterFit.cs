@@ -62,16 +62,16 @@ namespace Warcraft.Core.Compression.Squish
             // Build the list of dot products.
             var dps = new float[16];
             var ordOff = 16 * iteration;
-            for (int i = 0; i < _Colours.Count; ++i)
+            for (var i = 0; i < _Colours.Count; ++i)
             {
                 dps[i] = Vector3.Dot(_Colours.Points[i], axis);
                 _Order[ordOff + i] = (byte)i;
             }
 
             // Stable sort using them.
-            for (int i = 0; i < _Colours.Count; ++i)
+            for (var i = 0; i < _Colours.Count; ++i)
             {
-                for (int j = i; j > 0 && dps[j] < dps[j - 1]; --j)
+                for (var j = i; j > 0 && dps[j] < dps[j - 1]; --j)
                 {
                     var _dps = dps[j];
                     var _order = _Order[ordOff + j];
@@ -84,11 +84,11 @@ namespace Warcraft.Core.Compression.Squish
             }
 
             // Check this ordering is unique
-            for (int it = 0; it < iteration; ++it)
+            for (var it = 0; it < iteration; ++it)
             {
                 var prevOff = 16 * it;
                 var same = true;
-                for (int i = 0; i < _Colours.Count; ++i)
+                for (var i = 0; i < _Colours.Count; ++i)
                 {
                     if (_Order[ordOff + i] != _Order[prevOff + i])
                     {
@@ -104,7 +104,7 @@ namespace Warcraft.Core.Compression.Squish
 
             // Copy the ordering and weight all the points
             _XSumWSum = new Vector4(0f);
-            for (int i = 0; i < _Colours.Count; ++i)
+            for (var i = 0; i < _Colours.Count; ++i)
             {
                 var j = _Order[ordOff + i];
                 var p = new Vector4(_Colours.Points[j].X, _Colours.Points[j].Y, _Colours.Points[j].Z, 1f);

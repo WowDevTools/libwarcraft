@@ -142,7 +142,7 @@ namespace Warcraft.Integration.DBC.IO
             {
                 var testVersion = WarcraftVersion.Classic;
 
-                TestDBCRecord record = new TestDBCRecord();
+                var record = new TestDBCRecord();
                 record.Version = testVersion;
 
                 using (var ms = new MemoryStream(SimpleClassicBytes))
@@ -164,7 +164,7 @@ namespace Warcraft.Integration.DBC.IO
             {
                 var testVersion = WarcraftVersion.Wrath;
 
-                TestDBCRecord record = new TestDBCRecord();
+                var record = new TestDBCRecord();
                 record.Version = testVersion;
 
                 using (var ms = new MemoryStream(SimpleWrathBytes))
@@ -187,7 +187,7 @@ namespace Warcraft.Integration.DBC.IO
             {
                 var testVersion = WarcraftVersion.Cataclysm;
 
-                TestDBCRecord record = new TestDBCRecord();
+                var record = new TestDBCRecord();
                 record.Version = testVersion;
 
                 using (var ms = new MemoryStream(SimpleCataBytes))

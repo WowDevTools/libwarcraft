@@ -34,7 +34,7 @@ namespace Warcraft.Core.Compression.Squish
             var b = Unpack565(block, blockOffset + 2, codes, 4);
 
             // Generate the midpoints.
-            for (int i = 0; i < 3; ++i)
+            for (var i = 0; i < 3; ++i)
             {
                 var c = codes[i];
                 var d = codes[4 + i];
@@ -57,7 +57,7 @@ namespace Warcraft.Core.Compression.Squish
 
             // Unpack the indices
             var indices = new byte[16];
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
                 var packed = block[blockOffset + 4 + i];
 
@@ -69,10 +69,10 @@ namespace Warcraft.Core.Compression.Squish
 
             // Store the colours
             var rgba = new byte[4 * 16];
-            for (int i = 0; i < 16; ++i)
+            for (var i = 0; i < 16; ++i)
             {
                 var offset = 4 * indices[i];
-                for (int j = 0; j < 4; ++j)
+                for (var j = 0; j < 4; ++j)
                 {
                     rgba[4 * i + j] = codes[offset + j];
                 }

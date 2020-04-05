@@ -531,7 +531,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>The signature.</returns>
         public static string PeekChunkSignature(this BinaryReader binaryReader)
         {
-            string chunkSignature = binaryReader.ReadBinarySignature();
+            var chunkSignature = binaryReader.ReadBinarySignature();
             binaryReader.BaseStream.Position -= chunkSignature.Length;
 
             return chunkSignature;
@@ -546,7 +546,7 @@ namespace Warcraft.Core.Extensions
         /// <returns>The chunk.</returns>
         public static T ReadIFFChunk<T>(this BinaryReader reader) where T : IIFFChunk, new()
         {
-            string chunkSignature = reader.ReadBinarySignature();
+            var chunkSignature = reader.ReadBinarySignature();
             var chunkSize = reader.ReadUInt32();
             var chunkData = reader.ReadBytes((int)chunkSize);
 

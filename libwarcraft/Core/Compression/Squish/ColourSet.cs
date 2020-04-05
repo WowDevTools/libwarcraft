@@ -41,10 +41,10 @@ namespace Warcraft.Core.Compression.Squish
             var weightByAlpha = flags.HasFlag(SquishOptions.WeightColourByAlpha);
 
             // Create he minimal set.
-            for (int i = 0; i < 16; ++i)
+            for (var i = 0; i < 16; ++i)
             {
                 // Check this pixel is enabled.
-                int bit = 1 << i;
+                var bit = 1 << i;
                 if ((mask & bit) == 0)
                 {
                     _Remap[i] = -1;
@@ -59,7 +59,7 @@ namespace Warcraft.Core.Compression.Squish
                 }
 
                 // Loop over previous points for a match.
-                for (int j = 0;; ++j)
+                for (var j = 0;; ++j)
                 {
                     // Allocate a new point.
                     if (j == i)
@@ -83,7 +83,7 @@ namespace Warcraft.Core.Compression.Squish
                     }
 
                     // Check for a match.
-                    int oldBit = 1 << j;
+                    var oldBit = 1 << j;
                     var match = ((mask & oldBit) != 0)
                                                && (rgba[4 * i] == rgba[4 * j])
                                                && (rgba[4 * i + 1] == rgba[4 * j + 1])
@@ -106,7 +106,7 @@ namespace Warcraft.Core.Compression.Squish
             }
 
             // Square root the weights.
-            for (int i = 0; i < _Count; ++i)
+            for (var i = 0; i < _Count; ++i)
             {
                 _Weights[i] = (float)Math.Sqrt(_Weights[i]);
             }
@@ -118,7 +118,7 @@ namespace Warcraft.Core.Compression.Squish
 
         public void RemapIndices(byte[] source, byte[] target, int targetOffset)
         {
-            for (int i = 0; i < 16; ++i)
+            for (var i = 0; i < 16; ++i)
             {
                 var j = _Remap[i];
                 if (j == -1)

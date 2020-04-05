@@ -30,9 +30,9 @@ namespace Warcraft.Core.Compression.Squish {
         public static SquishOptions FixFlags(this SquishOptions flags)
         {
             // grab the flag bits
-            int method = (int)(flags & (SquishOptions.DXT1 | SquishOptions.DXT3 | SquishOptions.DXT5));
-            int fit = (int) (flags & (SquishOptions.ColourIterativeClusterFit | SquishOptions.ColourClusterFit | SquishOptions.ColourRangeFit));
-            int extra = (int) (flags & SquishOptions.WeightColourByAlpha);
+            var method = (int)(flags & (SquishOptions.DXT1 | SquishOptions.DXT3 | SquishOptions.DXT5));
+            var fit = (int) (flags & (SquishOptions.ColourIterativeClusterFit | SquishOptions.ColourClusterFit | SquishOptions.ColourRangeFit));
+            var extra = (int) (flags & SquishOptions.WeightColourByAlpha);
 
             // set defaults
             if (method != (int)SquishOptions.DXT3 && method != (int)SquishOptions.DXT5)

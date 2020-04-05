@@ -68,27 +68,27 @@ namespace Warcraft.Core.Compression.ADPCM
 
         public static byte[] Decompress(Stream data, int channelCount)
         {
-            int[] array1 = new int[] { 0x2c, 0x2c };
-            int[] array2 = new int[channelCount];
+            var array1 = new int[] { 0x2c, 0x2c };
+            var array2 = new int[channelCount];
 
-            BinaryReader input = new BinaryReader(data);
-            MemoryStream outputstream = new MemoryStream();
-            BinaryWriter output = new BinaryWriter(outputstream);
+            var input = new BinaryReader(data);
+            var outputstream = new MemoryStream();
+            var output = new BinaryWriter(outputstream);
 
             input.ReadByte();
-            byte shift = input.ReadByte();
+            var shift = input.ReadByte();
 
-            for (int i = 0; i < channelCount; i++)
+            for (var i = 0; i < channelCount; i++)
             {
-                short temp = input.ReadInt16();
+                var temp = input.ReadInt16();
                 array2[i] = temp;
                 output.Write(temp);
             }
 
-            int channel = channelCount - 1;
+            var channel = channelCount - 1;
             while (data.Position < data.Length)
             {
-                byte value = input.ReadByte();
+                var value = input.ReadByte();
 
                 if (channelCount == 2)
                 {
@@ -150,8 +150,8 @@ namespace Warcraft.Core.Compression.ADPCM
                 }
                 else
                 {
-                    int temp1 = StaticLookup[array1[channel]];
-                    int temp2 = temp1 >> shift;
+                    var temp1 = StaticLookup[array1[channel]];
+                    var temp2 = temp1 >> shift;
 
                     if ((value & 1) != 0)
                     {
@@ -183,7 +183,7 @@ namespace Warcraft.Core.Compression.ADPCM
                         temp2 += temp1 >> 5;
                     }
 
-                    int temp3 = array2[channel];
+                    var temp3 = array2[channel];
                     if ((value & 0x40) != 0)
                     {
                         temp3 -= temp2;

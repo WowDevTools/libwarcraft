@@ -32,7 +32,7 @@ namespace Warcraft.Core.Compression.Squish
         {
             flags = flags.FixFlags();
 
-            ColourSet colours = new ColourSet(rgba, mask, flags);
+            var colours = new ColourSet(rgba, mask, flags);
 
             if (colours.Count == 1)
             {
@@ -107,18 +107,18 @@ namespace Warcraft.Core.Compression.Squish
 
             var blockOffset = offset;
             // Loop over blocks.
-            for (int y = 0; y < height; y += 4)
+            for (var y = 0; y < height; y += 4)
             {
-                for (int x = 0; x < width; x += 4)
+                for (var x = 0; x < width; x += 4)
                 {
                     // Decompress the block.
                     var targetRgba = DecompressBlock(blocks, blockOffset, flags);
 
                     // Write the decompressed pixels to the correct image locations.
                     var sourcePixelOffset = 0;
-                    for (int py = 0; py < 4; ++py)
+                    for (var py = 0; py < 4; ++py)
                     {
-                        for (int px = 0; px < 4; ++px)
+                        for (var px = 0; px < 4; ++px)
                         {
                             // Get the target location.
                             var sx = x + px;
@@ -150,31 +150,31 @@ namespace Warcraft.Core.Compression.Squish
 
         public static Image<Rgba32> DecompressToImage(byte[] blocks, int offset, int width, int height, SquishOptions flags)
         {
-            Image<Rgba32> result = new Image<Rgba32>(width, height);
+            var result = new Image<Rgba32>(width, height);
             var bufferOffset = 0;
 
             var bytesPerBlock = flags.HasFlag(SquishOptions.DXT1) ? 8 : 16;
             var blockOffset = offset;
             // Loop over blocks.
-            for (int y = 0; y < height; y += 4)
+            for (var y = 0; y < height; y += 4)
             {
-                for (int x = 0; x < width; x += 4)
+                for (var x = 0; x < width; x += 4)
                 {
                     // Decompress the block.
                     var targetRgba = DecompressBlock(blocks, blockOffset, flags);
 
                     // Write the decompressed pixels to the correct image locations.
                     var sourcePixelOffset = 0;
-                    for (int py = 0; py < 4; ++py)
+                    for (var py = 0; py < 4; ++py)
                     {
-                        for (int px = 0; px < 4; ++px)
+                        for (var px = 0; px < 4; ++px)
                         {
                             // Get the target location.
                             var sx = x + px;
                             var sy = y + py;
                             if (sx < width && sy < height)
                             {
-                                Rgba32 sourceColour = new Rgba32
+                                var sourceColour = new Rgba32
                                 (
                                     targetRgba[sourcePixelOffset + 0],
                                     targetRgba[sourcePixelOffset + 1],

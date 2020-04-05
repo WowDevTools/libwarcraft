@@ -16,7 +16,7 @@ namespace Warcraft.Core.Compression.Squish {
 
         public Sym3x3() { }
         public Sym3x3(float s) {
-            for (int i = 0; i < 6; ++i)
+            for (var i = 0; i < 6; ++i)
             {
                 _X[i] = s;
             }
@@ -26,7 +26,7 @@ namespace Warcraft.Core.Compression.Squish {
             // Compute the centroid.
             var total = 0f;
             var centroid = new Vector3(0f);
-            for (int i = 0; i < n; ++i) {
+            for (var i = 0; i < n; ++i) {
                 total += weights[i];
                 centroid += weights[i] * points[i];
             }
@@ -34,7 +34,7 @@ namespace Warcraft.Core.Compression.Squish {
 
             // Accumulate the covariance matrix.
             var covariance = new Sym3x3(0f);
-            for (int i = 0; i < n; ++i) {
+            for (var i = 0; i < n; ++i) {
                 var a = points[i] - centroid;
                 var b = weights[i] * a;
 
@@ -70,7 +70,7 @@ namespace Warcraft.Core.Compression.Squish {
             // Find the largest component.
             var mc = Math.Abs(u[0]);
             var mi = 0;
-            for (int i = 1; i < 6; ++i) {
+            for (var i = 1; i < 6; ++i) {
                 var c = Math.Abs(u[i]);
                 if (c > mc) {
                     mc = c;
@@ -102,7 +102,7 @@ namespace Warcraft.Core.Compression.Squish {
             // Find the largest component.
             var mc = Math.Abs(m[0]);
             var mi = 0;
-            for (int i = 1; i < 6; ++i) {
+            for (var i = 1; i < 6; ++i) {
                 var c = Math.Abs(m[i]);
                 if (c > mc) {
                     mc = c;

@@ -25,7 +25,7 @@ namespace Warcraft.Core.Compression.Squish {
         }
         public static void CompressAlphaDxt3(byte[] rgba, byte[] target, int targetOffset, int mask) {
             // Quantise and pack alpha values pairwise.
-            for (int i = 0; i < 8; ++i) {
+            for (var i = 0; i < 8; ++i) {
                 // Qnatise down to 4 bits.
                 var alpha1 = rgba[8 * i + 3] * (15f / 255f);
                 var alpha2 = rgba[8 * i + 7] * (15f / 255f);
@@ -50,7 +50,7 @@ namespace Warcraft.Core.Compression.Squish {
         }
         public static void DecompressAlphaDxt3(byte[] block, int blockOffset, byte[] target, int targetOffset) {
             // Unpack the alpha values pairwise.
-            for (int i = 0; i < 8; ++i) {
+            for (var i = 0; i < 8; ++i) {
                 // Quantise down to 4 bits.
                 var quant = block[blockOffset + i];
 
@@ -81,7 +81,7 @@ namespace Warcraft.Core.Compression.Squish {
 
             // Fit each alpha value to the codebook.
             var err = 0;
-            for (int i = 0; i < 16; ++i) {
+            for (var i = 0; i < 16; ++i) {
                 // Check this pixel is valid.
                 var bit = 1 << i;
                 if ((mask & bit) == 0) {
@@ -94,7 +94,7 @@ namespace Warcraft.Core.Compression.Squish {
                 var value = rgba[4 * i + 3];
                 var least = int.MaxValue;
                 var index = 0;
-                for (int j = 0; j < 8; ++j) {
+                for (var j = 0; j < 8; ++j) {
                     // Get the squared error from this code.
                     var dist = ((int)value) - ((int)codes[j]);
                     dist *= dist;
@@ -121,16 +121,16 @@ namespace Warcraft.Core.Compression.Squish {
 
             var indOff = 0;
             var retOff = 2;
-            for (int i = 0; i < 2; ++i) {
+            for (var i = 0; i < 2; ++i) {
                 // Pack 8 3-bit values.
                 var value = 0;
-                for (int j = 0; j < 8; ++j) {
+                for (var j = 0; j < 8; ++j) {
                     var index = indices[indOff++];
                     value |= (index << 3 * j);
                 }
 
                 // Store in 3 bytes
-                for (int j = 0; j < 3; ++j) {
+                for (var j = 0; j < 3; ++j) {
                     var b = (value >> (8 * j)) & 0xFF;
                     target[targetOffset + retOff++] = (byte)b;
                 }
@@ -140,7 +140,7 @@ namespace Warcraft.Core.Compression.Squish {
             // Check the relative values of the endpoints.
             if (alpha0 > alpha1) {
                 var swapped = new byte[16];
-                for (int i = 0; i < 16; ++i) {
+                for (var i = 0; i < 16; ++i) {
                     var index = indices[i];
                     if (index == 0)
                     {
@@ -171,7 +171,7 @@ namespace Warcraft.Core.Compression.Squish {
             // Check the relative values of the endpoints.
             if (alpha0 > alpha1) {
                 var swapped = new byte[16];
-                for (int i = 0; i < 16; ++i) {
+                for (var i = 0; i < 16; ++i) {
                     var index = indices[i];
                     if (index == 0)
                     {
@@ -198,7 +198,7 @@ namespace Warcraft.Core.Compression.Squish {
             // Get the range for 5-alpha and 7-alpha interpolation.
             int min5 = 255, max5 = 0;
             int min7 = 255, max7 = 0;
-            for (int i = 0; i < 16; ++i) {
+            for (var i = 0; i < 16; ++i) {
                 // Check this pixel is valid.
                 var bit = 1 << i;
                 if ((mask & bit) == 0)
@@ -244,7 +244,7 @@ namespace Warcraft.Core.Compression.Squish {
             var codes5 = new byte[8];
             codes5[0] = (byte)min5;
             codes5[1] = (byte)max5;
-            for (int i = 1; i < 5; ++i)
+            for (var i = 1; i < 5; ++i)
             {
                 codes5[i + 1] = (byte)(((5 - i) * min5 + i * max5) / 5);
             }
@@ -255,7 +255,7 @@ namespace Warcraft.Core.Compression.Squish {
             var codes7 = new byte[8];
             codes7[0] = (byte)min7;
             codes7[1] = (byte)max7;
-            for (int i = 1; i < 7; ++i)
+            for (var i = 1; i < 7; ++i)
             {
                 codes7[i + 1] = (byte)(((7 - i) * min7 + i * max7) / 7);
             }
@@ -286,7 +286,7 @@ namespace Warcraft.Core.Compression.Squish {
             codes[1] = alpha1;
             if (alpha0 <= alpha1) {
                 // Use the 5-alpha codebook.
-                for (int i = 1; i < 5; ++i)
+                for (var i = 1; i < 5; ++i)
                 {
                     codes[1 + i] = (byte)(((5 - i) * alpha0 + i * alpha1) / 5);
                 }
@@ -294,7 +294,7 @@ namespace Warcraft.Core.Compression.Squish {
                 codes[7] = 255;
             } else {
                 // Use the 7-alpha codebook.
-                for (int i = 1; i < 7; ++i)
+                for (var i = 1; i < 7; ++i)
                 {
                     codes[1 + i] = (byte)(((7 - i) * alpha0 + i * alpha1) / 7);
                 }
@@ -304,23 +304,23 @@ namespace Warcraft.Core.Compression.Squish {
             var indices = new byte[16];
             var blOff = 2;
             var indOff = 0;
-            for (int i = 0; i < 2; ++i) {
+            for (var i = 0; i < 2; ++i) {
                 // Grab 3 bytes
-                int value = 0;
-                for (int j = 0; j < 3; ++j) {
+                var value = 0;
+                for (var j = 0; j < 3; ++j) {
                     var b = block[blockOffset + blOff++];
                     value |= (b << 8 * j);
                 }
 
                 // Unpack 8 3-bit values from it
-                for (int j = 0; j < 8; ++j) {
+                for (var j = 0; j < 8; ++j) {
                     var index = (value >> 3 * j) & 0x7;
                     indices[indOff++] = (byte)index;
                 }
             }
 
             // Write out the index codebook values.
-            for (int i = 0; i < 16; ++i)
+            for (var i = 0; i < 16; ++i)
             {
                 target[targetOffset + 4 * i + 3] = codes[indices[i]];
             }

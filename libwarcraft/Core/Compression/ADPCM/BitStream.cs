@@ -62,7 +62,7 @@ namespace Warcraft.Core.Compression.ADPCM
             {
                 return -1;
             }
-            int result = _current & (0xffff >> (16 - bitCount));
+            var result = _current & (0xffff >> (16 - bitCount));
             WasteBits(bitCount);
             return result;
         }
@@ -87,7 +87,7 @@ namespace Warcraft.Core.Compression.ADPCM
             {
                 return false;
             }
-            int nextvalue = _baseStream.ReadByte();
+            var nextvalue = _baseStream.ReadByte();
             _current |= nextvalue << _bitCount;
             _bitCount += 8;
             return true;

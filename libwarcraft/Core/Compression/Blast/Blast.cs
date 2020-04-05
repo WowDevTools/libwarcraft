@@ -295,14 +295,14 @@ namespace Warcraft.Core.Compression.Blast
         /// </summary>
         private int Decode(HuffmanTable h)
         {
-            int len = 1;            // current number of bits in code
-            int code = 0;           // len bits being decoded
-            int first = 0;          // first code of length len
+            var len = 1;            // current number of bits in code
+            var code = 0;           // len bits being decoded
+            var first = 0;          // first code of length len
             int count;          // number of codes of length len
-            int index = 0;          // index of first code of length len in symbol table
+            var index = 0;          // index of first code of length len in symbol table
             int bitbuf;         // bits from stream
             int left;           // bits left in next or left to process
-            int next = 1;           // next number of codes
+            var next = 1;           // next number of codes
 
             bitbuf = _bitBuffer;
             left = _bitBufferCount;
@@ -348,7 +348,7 @@ namespace Warcraft.Core.Compression.Blast
 
         private int GetBits(int need)
         {
-            int val = _bitBuffer;
+            var val = _bitBuffer;
 
             while (_bitBufferCount < need)
             {
@@ -379,7 +379,7 @@ namespace Warcraft.Core.Compression.Blast
                 }
             }
 
-            byte b = _inputBuffer[_inputBufferPos++];
+            var b = _inputBuffer[_inputBufferPos++];
             _inputBufferRemaining--;
 
             return b;
@@ -436,7 +436,7 @@ namespace Warcraft.Core.Compression.Blast
             if (_outputBufferPos + required >= _outputBuffer.Length)
             {
                 // flush the initial section
-                int startWindowOffset = _outputBufferPos - MAX_WIN;
+                var startWindowOffset = _outputBufferPos - MAX_WIN;
 
                 FlushOutputBufferSection(startWindowOffset); // only flush the section that's not part of the window
 
@@ -532,14 +532,14 @@ namespace Warcraft.Core.Compression.Blast
                 short symbol;// current symbol when stepping through length[]
                 int len;// current length when stepping through h->count[]
                 int left;// number of possible codes left of current length
-                short[] offs = new short[MAX_BITS + 1]; // offsets in symbol table for each length
-                short[] length = new short[256]; // code lengths
+                var offs = new short[MAX_BITS + 1]; // offsets in symbol table for each length
+                var length = new short[256]; // code lengths
 
                 int n;
 
                 // convert compact repeat counts into symbol bit length list
                 symbol = 0;
-                for (int ri = 0; ri < rep.Length; ri++)
+                for (var ri = 0; ri < rep.Length; ri++)
                 {
                     len = rep[ri];
                     left = (len >> 4) + 1;

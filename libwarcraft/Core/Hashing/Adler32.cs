@@ -45,18 +45,18 @@ namespace Warcraft.Core.Hashing
             {
                 throw new ArgumentNullException(nameof(data));
             }
-            uint s1 = (uint)(initial & 0xffff);
-            uint s2 = (uint)((initial >> 16) & 0xffff);
+            var s1 = (uint)(initial & 0xffff);
+            var s2 = (uint)((initial >> 16) & 0xffff);
 
-            int index = start;
-            int len = length;
+            var index = start;
+            var len = length;
 
             while (len > 0)
             {
-                int k = (len < NMax) ? len : NMax;
+                var k = (len < NMax) ? len : NMax;
                 len -= k;
 
-                for (int i = 0; i < k; i++)
+                for (var i = 0; i < k; i++)
                 {
                     s1 += data[index++];
                     s2 += s1;
@@ -100,9 +100,9 @@ namespace Warcraft.Core.Hashing
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            byte[] buffer = new byte[8172];
+            var buffer = new byte[8172];
             int size;
-            int checksum = 1;
+            var checksum = 1;
             while ((size = stream.Read(buffer, 0, buffer.Length)) > 0)
             {
                 checksum = ComputeChecksum(checksum, buffer, 0, size);
@@ -117,7 +117,7 @@ namespace Warcraft.Core.Hashing
         /// <returns>The checksum for the file</returns>
         public static int ComputeChecksum(string path)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return ComputeChecksum(stream);
             }
