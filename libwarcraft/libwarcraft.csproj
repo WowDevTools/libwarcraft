@@ -28,7 +28,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
         <PackageReference Include="SharpCompress" Version="0.29.0" />
-        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="2.1.7" />
         <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
     </ItemGroup>
 </Project>
